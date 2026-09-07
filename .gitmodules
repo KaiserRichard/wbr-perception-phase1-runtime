@@ -1,0 +1,10 @@
+[submodule "third_party/ORB_SLAM3"]
+	path = third_party/ORB_SLAM3
+	url = https://github.com/UZ-SLAMLab/ORB_SLAM3.git
+[submodule "third_party/ORB_SLAM3_ROS2"]
+	path = third_party/ORB_SLAM3_ROS2
+	url = https://github.com/gjcliff/ORB_SLAM3_ROS2.git
+[submodule "third_party/realsense-ros"]
+	path = third_party/realsense-ros
+	url = https://github.com/realsenseai/realsense-ros.git
+	branch = ros2-master
