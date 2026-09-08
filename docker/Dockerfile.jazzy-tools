@@ -1,0 +1,11 @@
+FROM ros:jazzy-ros-base
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        ros-jazzy-rosbag2 \
+        ros-jazzy-tf2-tools \
+        && \
+    rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT ["/ros_entrypoint.sh"]
+CMD ["bash"]
