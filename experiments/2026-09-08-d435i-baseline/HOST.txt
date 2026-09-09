@@ -1,0 +1,116 @@
+
+$ date -Is; git rev-parse HEAD; git status --short; git submodule status --recursive; docker --version; docker compose version; uname -a; cat /etc/os-release; printenv ROS_DISTRO ROS_DOMAIN_ID FASTDDS_BUILTIN_TRANSPORTS
+2026-09-08T18:50:45+07:00
+1b16be7b62b45eecc608a03f2f6f377e8ace8a9b
+?? experiments/
+ 4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4 third_party/ORB_SLAM3 (v1.0-release-2-g4452a3c)
+ efd7acd9ea31bfdbcd843a4c90eeaa85f7e80dd8 third_party/ORB_SLAM3_ROS2 (heads/main)
+ 0f29ad5f563269a13109d81eb886916cc5960136 third_party/ORB_SLAM3_ROS2/ORB_SLAM3 (v1.0-release-16-g0f29ad5)
+ 92ad7a5b4ad9616b98221ae140301f8bbc0a0782 third_party/ORB_SLAM3_ROS2/ros2_realsense_d435i_camera_calibration (92ad7a5)
+ 9a11121700cb4780e273e34141f6402fe184321d third_party/realsense-ros (4.58.4)
+Docker version 29.2.1, build a5c7197
+Docker Compose version v5.1.0
+Linux richard 7.0.0-31-generic #31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+PRETTY_NAME="Ubuntu 24.04.4 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.4 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=noble
+LOGO=ubuntu-logo
+jazzy
+42
+UDPv4
+
+$ docker run --rm realsense:latest bash -c 'dpkg-query -W ros-jazzy-realsense2-camera ros-jazzy-librealsense2; cat /opt/ros/jazzy/share/realsense2_camera/package.xml; command -v rs-enumerate-devices'
+ros-jazzy-librealsense2	2.58.1-1noble.20260524.190754
+ros-jazzy-realsense2-camera	4.58.1-1noble.20260615.150439
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>realsense2_camera</name>
+  <version>4.58.1</version>
+  <description>RealSense camera package allowing access to RealSense D400 3D cameras</description>
+  <maintainer email="rsswsdk@realsensecloud.onmicrosoft.com">LibRealSense ROS Team</maintainer>
+  <maintainer email="nir.azkiel@realsenseai.com">Nir Azkiel</maintainer>
+  <license>Apache License 2.0</license>
+  
+  <url type="website">http://www.ros.org/wiki/RealSense</url>
+  <url type="bugtracker">https://github.com/intel-ros/realsense/issues</url>
+
+  <author email="rsswsdk@realsensecloud.onmicrosoft.com">LibRealSense Team</author>
+ 
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>eigen</depend>
+  <depend>builtin_interfaces</depend>
+  <depend>cv_bridge</depend>
+  <depend>image_transport</depend>
+  <depend>librealsense2</depend>
+  <depend>rclcpp</depend>
+
+  <!-- Lifecycle dependencies are optional -DUSE_LIFECYCLE_NODE -->
+  <depend>rclcpp_lifecycle</depend>
+  <depend>lifecycle_msgs</depend>
+
+  <depend>rclcpp_components</depend>
+  <depend>realsense2_camera_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>std_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>diagnostic_updater</depend>
+  <test_depend condition="$ROS_DISTRO != foxy">ament_cmake_gtest</test_depend>
+  <test_depend condition="$ROS_DISTRO != foxy">launch_testing</test_depend>
+  <test_depend condition="$ROS_DISTRO != foxy">ament_cmake_pytest</test_depend>
+  <test_depend condition="$ROS_DISTRO != foxy">launch_pytest</test_depend>
+  <test_depend condition="$ROS_DISTRO != foxy">sensor_msgs_py</test_depend>
+  <test_depend condition="$ROS_DISTRO != foxy">python3-numpy</test_depend>
+  <test_depend condition="$ROS_DISTRO != foxy">python3-tqdm</test_depend>
+  <test_depend condition="$ROS_DISTRO != foxy">sensor_msgs_py</test_depend>
+  <test_depend condition="$ROS_DISTRO != foxy">python3-requests</test_depend>
+  <test_depend condition="$ROS_DISTRO != foxy">tf2_ros_py</test_depend>
+  <test_depend condition="$ROS_DISTRO != foxy">ros2topic</test_depend>
+  
+  <exec_depend>launch_ros</exec_depend>
+  <build_depend>ros_environment</build_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
+/opt/ros/jazzy/bin/rs-enumerate-devices
+
+$ printenv RMW_IMPLEMENTATION ROS_DOMAIN_ID FASTDDS_BUILTIN_TRANSPORTS ROS_DISTRO
+rmw_cyclonedds_cpp
+42
+UDPv4
+jazzy
+
+$ git check-ignore -v data/bags/2026-09-08/audit_probe/metadata.yaml data/bags/2026-09-08/audit_probe/test.mcap
+.gitignore:2:data/bags/*	data/bags/2026-09-08/audit_probe/metadata.yaml
+.gitignore:2:data/bags/*	data/bags/2026-09-08/audit_probe/test.mcap
+
+$ ls -la data/datasets data/bags
+data/bags:
+total 8
+drwxrwxr-x 2 richard richard 4096 Sep  8 12:41 .
+drwxrwxr-x 4 richard richard 4096 Sep  8 12:41 ..
+-rw-rw-r-- 1 richard richard    0 Sep  8 12:41 .gitkeep
+
+data/datasets:
+total 8
+drwxrwxr-x 2 richard richard 4096 Sep  8 12:41 .
+drwxrwxr-x 4 richard richard 4096 Sep  8 12:41 ..
+-rw-rw-r-- 1 richard richard    0 Sep  8 12:41 .gitkeep
+
+$ docker image inspect realsense:latest --format "{{.Id}}"
+sha256:f05425cd25e92f1e1a54d0e5a255d87d781251f0f9dc6579296a98458c7364e8

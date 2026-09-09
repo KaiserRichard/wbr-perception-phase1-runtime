@@ -1,0 +1,229 @@
+{
+  "A": {
+    "start": "2026-09-08T12:13:33.156001+00:00",
+    "end": "2026-09-08T12:14:03.158849+00:00",
+    "topics": {
+      "/camera/image_raw": {
+        "count": 23,
+        "arrival_hz": 2.6598019837268803,
+        "stamp_hz": 2.6678742759815766,
+        "max_stamp_gap": 6.514565944671631,
+        "max_arrival_gap": 6.524461232000249,
+        "nonpositive_stamp_steps": 0,
+        "count_per_window_second": 0.7665928312815472
+      },
+      "/camera/infra2/image_rect_raw": {
+        "count": 22,
+        "arrival_hz": 2.5648347542755703,
+        "stamp_hz": 2.5672901956232788,
+        "max_stamp_gap": 6.514565944671631,
+        "max_arrival_gap": 6.526945132999572,
+        "nonpositive_stamp_steps": 0,
+        "count_per_window_second": 0.7332627081823495
+      },
+      "/camera/gyro/sample": {
+        "count": 4903,
+        "arrival_hz": 163.40429453720134,
+        "stamp_hz": 163.37479183210198,
+        "max_stamp_gap": 0.04981827735900879,
+        "max_arrival_gap": 0.06158180400052515,
+        "nonpositive_stamp_steps": 0,
+        "mean_xyz_gyro_accel": [
+          -0.0036951947330728756,
+          -0.004596229203501912,
+          -0.0020066302112110306,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_accel_norm": 0.0,
+        "count_per_window_second": 163.41759355536635
+      },
+      "/camera/accel/sample": {
+        "count": 2996,
+        "arrival_hz": 99.86428040834323,
+        "stamp_hz": 99.85569011769292,
+        "max_stamp_gap": 0.04931068420410156,
+        "max_arrival_gap": 0.0758320349996211,
+        "nonpositive_stamp_steps": 0,
+        "mean_xyz_gyro_accel": [
+          0.0,
+          0.0,
+          0.0,
+          0.1334372116134655,
+          -4.403657185378794,
+          -8.70346422125405
+        ],
+        "mean_accel_norm": 9.757887941956694,
+        "count_per_window_second": 99.85704880519631
+      },
+      "/camera/imu": {
+        "count": 4580,
+        "arrival_hz": 152.66610929158048,
+        "stamp_hz": 152.66059963159657,
+        "max_stamp_gap": 0.03985452651977539,
+        "max_arrival_gap": 0.07437203599965869,
+        "nonpositive_stamp_steps": 0,
+        "mean_xyz_gyro_accel": [
+          -0.0036945242668714527,
+          -0.004599092183769356,
+          -0.0020073313062947537,
+          0.13143266060889808,
+          -4.40358838243776,
+          -8.70347697245502
+        ],
+        "mean_accel_norm": 9.757402309921675,
+        "count_per_window_second": 152.65196379432547
+      },
+      "/camera/camera_info": {
+        "count": 25,
+        "arrival_hz": 2.9015568861539904,
+        "stamp_hz": 2.910408301070811,
+        "max_stamp_gap": 6.514565944671631,
+        "max_arrival_gap": 6.524945942999693,
+        "nonpositive_stamp_steps": 0,
+        "count_per_window_second": 0.8332530774799426
+      }
+    },
+    "incomplete_notifications_in_window": 18,
+    "calibration_warning_in_run": true,
+    "imu_correlation": {
+      "united": 4580,
+      "gyro_stamp_and_vector_match": 3096,
+      "accel_exact_any_raw": 4578,
+      "bracketed": 4579,
+      "copy_previous_exact": 3490,
+      "linear_match_1e_6": 18,
+      "distinguishable": 4557,
+      "distinguishable_copy": 3471,
+      "distinguishable_linear": 0
+    }
+  },
+  "B": {
+    "start": "2026-09-08T12:14:48.220847+00:00",
+    "end": "2026-09-08T12:15:18.221705+00:00",
+    "topics": {
+      "/camera/image_raw": {
+        "count": 15,
+        "arrival_hz": 14.958810509250124,
+        "stamp_hz": 15.117807680286537,
+        "max_stamp_gap": 0.06640338897705078,
+        "max_arrival_gap": 0.07103998699949443,
+        "nonpositive_stamp_steps": 0,
+        "count_per_window_second": 0.4999853960765535
+      },
+      "/camera/infra2/image_rect_raw": {
+        "count": 0,
+        "count_per_window_second": 0.0
+      },
+      "/camera/gyro/sample": {
+        "count": 5016,
+        "arrival_hz": 167.17341451566742,
+        "stamp_hz": 166.98303049569182,
+        "max_stamp_gap": 0.0398101806640625,
+        "max_arrival_gap": 0.08248336900032882,
+        "nonpositive_stamp_steps": 0,
+        "mean_xyz_gyro_accel": [
+          -0.0037471100801494874,
+          -0.004518919282012056,
+          -0.0023954465687854223,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_accel_norm": 0.0,
+        "count_per_window_second": 167.1951164479995
+      },
+      "/camera/accel/sample": {
+        "count": 3024,
+        "arrival_hz": 100.77794583514319,
+        "stamp_hz": 100.69472981018363,
+        "max_stamp_gap": 0.029715299606323242,
+        "max_arrival_gap": 0.09158532900073624,
+        "nonpositive_stamp_steps": 0,
+        "mean_xyz_gyro_accel": [
+          0.0,
+          0.0,
+          0.0,
+          0.150735081408774,
+          -4.399813156910043,
+          -8.706709762414297
+        ],
+        "mean_accel_norm": 9.777517280757039,
+        "count_per_window_second": 100.79705584903319
+      },
+      "/camera/imu": {
+        "count": 4658,
+        "arrival_hz": 155.43619208693056,
+        "stamp_hz": 155.2695787854009,
+        "max_stamp_gap": 0.0398101806640625,
+        "max_arrival_gap": 0.08429426199927548,
+        "nonpositive_stamp_steps": 0,
+        "mean_xyz_gyro_accel": [
+          -0.0037500702045432433,
+          -0.004532026391052119,
+          -0.002389067898467647,
+          0.14069321181924238,
+          -4.40002991611633,
+          -8.705519931313304
+        ],
+        "mean_accel_norm": 9.77657890560233,
+        "count_per_window_second": 155.2621316616391
+      },
+      "/camera/camera_info": {
+        "count": 15,
+        "arrival_hz": 14.990962607190067,
+        "stamp_hz": 15.117807680286537,
+        "max_stamp_gap": 0.06640338897705078,
+        "max_arrival_gap": 0.07052985199970863,
+        "nonpositive_stamp_steps": 0,
+        "count_per_window_second": 0.4999853960765535
+      }
+    },
+    "incomplete_notifications_in_window": 15,
+    "calibration_warning_in_run": true,
+    "imu_correlation": {
+      "united": 4658,
+      "gyro_stamp_and_vector_match": 3251,
+      "accel_exact_any_raw": 4655,
+      "bracketed": 4658,
+      "copy_previous_exact": 3363,
+      "linear_match_1e_6": 9,
+      "distinguishable": 4648,
+      "distinguishable_copy": 3353,
+      "distinguishable_linear": 0
+    }
+  },
+  "C": {
+    "start": "2026-09-08T12:16:00.740640+00:00",
+    "end": "2026-09-08T12:16:30.805489+00:00",
+    "topics": {
+      "/camera/image_raw": {
+        "count": 0,
+        "count_per_window_second": 0.0
+      },
+      "/camera/infra2/image_rect_raw": {
+        "count": 0,
+        "count_per_window_second": 0.0
+      },
+      "/camera/gyro/sample": {
+        "count": 0,
+        "count_per_window_second": 0.0
+      },
+      "/camera/accel/sample": {
+        "count": 0,
+        "count_per_window_second": 0.0
+      },
+      "/camera/imu": {
+        "count": 0,
+        "count_per_window_second": 0.0
+      },
+      "/camera/camera_info": {
+        "count": 0,
+        "count_per_window_second": 0.0
+      }
+    },
+    "incomplete_notifications_in_window": 0,
+    "calibration_warning_in_run": true
+  }
+}

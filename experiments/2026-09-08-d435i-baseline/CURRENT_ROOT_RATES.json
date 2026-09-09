@@ -1,0 +1,631 @@
+{
+  "start_epoch": 1788868372.5336773,
+  "end_epoch": 1788868402.5345771,
+  "duration_seconds": 30.000928990999455,
+  "topics": {
+    "/camera/image_raw": {
+      "sample": {
+        "width": 640,
+        "height": 480,
+        "encoding": "mono8",
+        "step": 640,
+        "is_bigendian": 0,
+        "frame_id": "camera_infra1_optical_frame"
+      },
+      "count": 45,
+      "arrival_hz": 1.4687468572958922,
+      "stamp_hz": 1.4612906634700122,
+      "first_stamp": 1788868372.3361897,
+      "last_stamp": 1788868402.446558,
+      "nonpositive_stamp_steps": 0,
+      "max_stamp_gap": 26.065096139907837,
+      "max_arrival_gap": 26.03594423100003
+    },
+    "/camera/infra2/image_rect_raw": {
+      "sample": {
+        "width": 640,
+        "height": 480,
+        "encoding": "mono8",
+        "step": 640,
+        "is_bigendian": 0,
+        "frame_id": "camera_infra2_optical_frame"
+      },
+      "count": 45,
+      "arrival_hz": 1.4687543493498603,
+      "stamp_hz": 1.4612906634700122,
+      "first_stamp": 1788868372.3361897,
+      "last_stamp": 1788868402.446558,
+      "nonpositive_stamp_steps": 0,
+      "max_stamp_gap": 26.065096139907837,
+      "max_arrival_gap": 26.038101210000605
+    },
+    "/camera/gyro/sample": {
+      "sample": {
+        "header": {
+          "stamp": {
+            "sec": 1788868372,
+            "nanosec": 522149902
+          },
+          "frame_id": "camera_gyro_optical_frame"
+        },
+        "orientation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "orientation_covariance": [
+          -1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "angular_velocity": {
+          "x": -0.0010646508308127522,
+          "y": -0.005859069991856813,
+          "z": -0.0031956976745277643
+        },
+        "angular_velocity_covariance": [
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.01
+        ],
+        "linear_acceleration": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "linear_acceleration_covariance": [
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.01
+        ]
+      },
+      "count": 5018,
+      "arrival_hz": 167.27926867773934,
+      "stamp_hz": 167.12140251638834,
+      "first_stamp": 1788868372.5221498,
+      "last_stamp": 1788868402.5422425,
+      "nonpositive_stamp_steps": 0,
+      "max_stamp_gap": 0.030469417572021484,
+      "max_arrival_gap": 0.07903880599951663,
+      "mean_xyz_gyro_accel": [
+        -0.0036232606240695,
+        -0.004710688355369341,
+        -0.0021152565497593212,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stdev_xyz_gyro_accel": [
+        0.002766491470798913,
+        0.0029548211384679023,
+        0.005210077182496773,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_accel_norm": 0.0
+    },
+    "/camera/accel/sample": {
+      "sample": {
+        "header": {
+          "stamp": {
+            "sec": 1788868372,
+            "nanosec": 500889160
+          },
+          "frame_id": "camera_accel_optical_frame"
+        },
+        "orientation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "orientation_covariance": [
+          -1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "angular_velocity": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "angular_velocity_covariance": [
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.01
+        ],
+        "linear_acceleration": {
+          "x": 0.04903324693441391,
+          "y": -4.422799110412598,
+          "z": -8.678885459899902
+        },
+        "linear_acceleration_covariance": [
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.01
+        ]
+      },
+      "count": 3021,
+      "arrival_hz": 100.6972478065722,
+      "stamp_hz": 100.51516513697928,
+      "first_stamp": 1788868372.500889,
+      "last_stamp": 1788868402.5461066,
+      "nonpositive_stamp_steps": 0,
+      "max_stamp_gap": 0.039306640625,
+      "max_arrival_gap": 0.08974491400022089,
+      "mean_xyz_gyro_accel": [
+        0.0,
+        0.0,
+        0.0,
+        0.13745215861203852,
+        -4.406201518714448,
+        -8.702900492564924
+      ],
+      "stdev_xyz_gyro_accel": [
+        0.0,
+        0.0,
+        0.0,
+        0.21786918236176367,
+        0.030429623336177616,
+        0.02783898939116419
+      ],
+      "mean_accel_norm": 9.75821323118698
+    },
+    "/camera/imu": {
+      "sample": {
+        "header": {
+          "stamp": {
+            "sec": 1788868372,
+            "nanosec": 522149888
+          },
+          "frame_id": "camera_imu_optical_frame"
+        },
+        "orientation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "orientation_covariance": [
+          -1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "angular_velocity": {
+          "x": -0.0010646508308127522,
+          "y": -0.005859069991856813,
+          "z": -0.0031956976745277643
+        },
+        "angular_velocity_covariance": [
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.01
+        ],
+        "linear_acceleration": {
+          "x": 0.32361945509910583,
+          "y": -4.37376594543457,
+          "z": -8.678885459899902
+        },
+        "linear_acceleration_covariance": [
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.01
+        ]
+      },
+      "count": 4634,
+      "arrival_hz": 154.50633688738353,
+      "stamp_hz": 154.35552940803603,
+      "first_stamp": 1788868372.5221498,
+      "last_stamp": 1788868402.5372715,
+      "nonpositive_stamp_steps": 0,
+      "max_stamp_gap": 0.035317182540893555,
+      "max_arrival_gap": 0.0859750810004698,
+      "mean_xyz_gyro_accel": [
+        -0.0035857475664759844,
+        -0.004675360267641132,
+        -0.002088736457964542,
+        0.13677461825055542,
+        -4.406161267746096,
+        -8.70295126416532
+      ],
+      "stdev_xyz_gyro_accel": [
+        0.0027520600377228745,
+        0.0029482031641974164,
+        0.005224901431405601,
+        0.22237049018438199,
+        0.03078880094929023,
+        0.02801536011159065
+      ],
+      "mean_accel_norm": 9.75833363940379
+    },
+    "/camera/camera_info": {
+      "sample": {
+        "header": {
+          "stamp": {
+            "sec": 1788868372,
+            "nanosec": 468741943
+          },
+          "frame_id": "camera_infra1_optical_frame"
+        },
+        "height": 480,
+        "width": 640,
+        "distortion_model": "plumb_bob",
+        "d": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "k": [
+          388.5274353027344,
+          0.0,
+          319.10430908203125,
+          0.0,
+          388.5274353027344,
+          239.55616760253906,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "r": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "p": [
+          388.5274353027344,
+          0.0,
+          319.10430908203125,
+          0.0,
+          0.0,
+          388.5274353027344,
+          239.55616760253906,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "binning_x": 0,
+        "binning_y": 0,
+        "roi": {
+          "x_offset": 0,
+          "y_offset": 0,
+          "height": 0,
+          "width": 0,
+          "do_rectify": false
+        }
+      },
+      "count": 43,
+      "arrival_hz": 1.4020469951558467,
+      "stamp_hz": 1.4010360145331084,
+      "first_stamp": 1788868372.468742,
+      "last_stamp": 1788868402.446558,
+      "nonpositive_stamp_steps": 0,
+      "max_stamp_gap": 26.065096139907837,
+      "max_arrival_gap": 26.03608754800007
+    }
+  },
+  "tf_static": [
+    {
+      "transforms": [
+        {
+          "header": {
+            "stamp": {
+              "sec": 1788868310,
+              "nanosec": 8863366
+            },
+            "frame_id": "camera_link"
+          },
+          "child_frame_id": "camera_infra1_frame",
+          "transform": {
+            "translation": {
+              "x": 0.0,
+              "y": -0.0,
+              "z": -0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            }
+          }
+        },
+        {
+          "header": {
+            "stamp": {
+              "sec": 1788868310,
+              "nanosec": 8863366
+            },
+            "frame_id": "camera_aligned_depth_to_infra1_frame"
+          },
+          "child_frame_id": "camera_infra1_optical_frame",
+          "transform": {
+            "translation": {
+              "x": 0.0,
+              "y": -0.0,
+              "z": -0.0
+            },
+            "rotation": {
+              "x": -0.5,
+              "y": 0.4999999999999999,
+              "z": -0.5,
+              "w": 0.5000000000000001
+            }
+          }
+        },
+        {
+          "header": {
+            "stamp": {
+              "sec": 1788868310,
+              "nanosec": 8863366
+            },
+            "frame_id": "camera_link"
+          },
+          "child_frame_id": "camera_aligned_depth_to_infra1_frame",
+          "transform": {
+            "translation": {
+              "x": 0.0,
+              "y": -0.0,
+              "z": -0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            }
+          }
+        },
+        {
+          "header": {
+            "stamp": {
+              "sec": 1788868310,
+              "nanosec": 8952204
+            },
+            "frame_id": "camera_link"
+          },
+          "child_frame_id": "camera_infra2_frame",
+          "transform": {
+            "translation": {
+              "x": 0.0,
+              "y": -0.050031330436468124,
+              "z": -0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            }
+          }
+        },
+        {
+          "header": {
+            "stamp": {
+              "sec": 1788868310,
+              "nanosec": 8952204
+            },
+            "frame_id": "camera_infra2_frame"
+          },
+          "child_frame_id": "camera_infra2_optical_frame",
+          "transform": {
+            "translation": {
+              "x": 0.0,
+              "y": -0.0,
+              "z": -0.0
+            },
+            "rotation": {
+              "x": -0.5,
+              "y": 0.4999999999999999,
+              "z": -0.5,
+              "w": 0.5000000000000001
+            }
+          }
+        },
+        {
+          "header": {
+            "stamp": {
+              "sec": 1788868310,
+              "nanosec": 175335264
+            },
+            "frame_id": "camera_link"
+          },
+          "child_frame_id": "camera_accel_frame",
+          "transform": {
+            "translation": {
+              "x": -0.011739999987185001,
+              "y": -0.005520000122487545,
+              "z": 0.005100000184029341
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            }
+          }
+        },
+        {
+          "header": {
+            "stamp": {
+              "sec": 1788868310,
+              "nanosec": 175335264
+            },
+            "frame_id": "camera_accel_frame"
+          },
+          "child_frame_id": "camera_accel_optical_frame",
+          "transform": {
+            "translation": {
+              "x": 0.0,
+              "y": -0.0,
+              "z": -0.0
+            },
+            "rotation": {
+              "x": -0.5,
+              "y": 0.4999999999999999,
+              "z": -0.5,
+              "w": 0.5000000000000001
+            }
+          }
+        },
+        {
+          "header": {
+            "stamp": {
+              "sec": 1788868310,
+              "nanosec": 175519364
+            },
+            "frame_id": "camera_link"
+          },
+          "child_frame_id": "camera_gyro_frame",
+          "transform": {
+            "translation": {
+              "x": -0.011739999987185001,
+              "y": -0.005520000122487545,
+              "z": 0.005100000184029341
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            }
+          }
+        },
+        {
+          "header": {
+            "stamp": {
+              "sec": 1788868310,
+              "nanosec": 175519364
+            },
+            "frame_id": "camera_gyro_frame"
+          },
+          "child_frame_id": "camera_gyro_optical_frame",
+          "transform": {
+            "translation": {
+              "x": 0.0,
+              "y": -0.0,
+              "z": -0.0
+            },
+            "rotation": {
+              "x": -0.5,
+              "y": 0.4999999999999999,
+              "z": -0.5,
+              "w": 0.5000000000000001
+            }
+          }
+        },
+        {
+          "header": {
+            "stamp": {
+              "sec": 1788868310,
+              "nanosec": 175519364
+            },
+            "frame_id": "camera_gyro_frame"
+          },
+          "child_frame_id": "camera_imu_frame",
+          "transform": {
+            "translation": {
+              "x": 0.0,
+              "y": -0.0,
+              "z": -0.0
+            },
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            }
+          }
+        },
+        {
+          "header": {
+            "stamp": {
+              "sec": 1788868310,
+              "nanosec": 175519364
+            },
+            "frame_id": "camera_imu_frame"
+          },
+          "child_frame_id": "camera_imu_optical_frame",
+          "transform": {
+            "translation": {
+              "x": 0.0,
+              "y": -0.0,
+              "z": -0.0
+            },
+            "rotation": {
+              "x": -0.5,
+              "y": 0.4999999999999999,
+              "z": -0.5,
+              "w": 0.5000000000000001
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

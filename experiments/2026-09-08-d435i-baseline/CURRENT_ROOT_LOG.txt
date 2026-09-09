@@ -1,0 +1,884 @@
+2026-09-08T11:51:47.798870857Z [INFO] [1788868307.797722953] [camera]: RealSense ROS v4.58.1
+2026-09-08T11:51:47.799551945Z [INFO] [1788868307.798166861] [camera]: Built with LibRealSense v2.58.1
+2026-09-08T11:51:47.799629050Z [INFO] [1788868307.798333921] [camera]: Running with LibRealSense v2.58.1
+2026-09-08T11:51:47.801662816Z  08/09 11:51:47,800 WARNING [133071231772352] (context.cpp:41) No valid configuration file found at : /root/.realsense-config.json loading defaults
+2026-09-08T11:51:48.062956518Z [INFO] [1788868308.061905552] [camera]: Device with serial number 243322073847 was found.
+2026-09-08T11:51:48.063038371Z 
+2026-09-08T11:51:48.063133355Z [INFO] [1788868308.062088535] [camera]: Device with physical ID /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.0/video4linux/video0 was found.
+2026-09-08T11:51:48.063304325Z [INFO] [1788868308.062701459] [camera]: Device with name Intel RealSense D435I was found.
+2026-09-08T11:51:48.063577543Z [INFO] [1788868308.063212415] [camera]: Device with port number 5-3 was found.
+2026-09-08T11:51:48.063598495Z [INFO] [1788868308.063377519] [camera]: Device USB type: 2.1
+2026-09-08T11:51:48.063620286Z [WARN] [1788868308.063471385] [camera]: Device 243322073847 is connected using a 2.1 port. Reduced performance is expected.
+2026-09-08T11:51:48.065109293Z [INFO] [1788868308.063617492] [camera]: getParameters...
+2026-09-08T11:51:48.073665359Z [WARN] [1788868308.071949229] [camera]: For the 'unite_imu_method' param update to take effect, re-enable either gyro or accel stream.
+2026-09-08T11:51:48.966511124Z [INFO] [1788868308.965799305] [camera]: JSON file is loaded! (/config/advanced.json)
+2026-09-08T11:51:48.966577333Z [INFO] [1788868308.966016091] [camera]: Device Name: Intel RealSense D435I
+2026-09-08T11:51:48.966673154Z [INFO] [1788868308.966100180] [camera]: Device Serial No: 243322073847
+2026-09-08T11:51:48.966712265Z [INFO] [1788868308.966194325] [camera]: Device physical port: /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.0/video4linux/video0
+2026-09-08T11:51:48.966829319Z [INFO] [1788868308.966315290] [camera]: Device FW version: 5.17.3.10
+2026-09-08T11:51:48.967308148Z [INFO] [1788868308.966507213] [camera]: Device Product ID: 0x0B3A
+2026-09-08T11:51:48.968351291Z [INFO] [1788868308.967234116] [camera]: Sync Mode: Off
+2026-09-08T11:51:49.951263635Z [INFO] [1788868309.950016556] [camera]: Stopping Sensor: Depth Module
+2026-09-08T11:51:49.951348562Z [INFO] [1788868309.950160708] [camera]: Stopping Sensor: Motion Module
+2026-09-08T11:51:50.010685375Z [INFO] [1788868310.009011149] [camera]: Starting Sensor: Depth Module
+2026-09-08T11:51:50.109209633Z [INFO] [1788868310.107854720] [camera]: Open profile: stream_type: Infra(1), Format: Y8, Width: 640, Height: 480, FPS: 15
+2026-09-08T11:51:50.109286738Z [INFO] [1788868310.108101678] [camera]: Open profile: stream_type: Infra(2), Format: Y8, Width: 640, Height: 480, FPS: 15
+2026-09-08T11:51:50.159317396Z  08/09 11:51:50,158 WARNING [133071231772352] (ds-calib-parsers.cpp:36) IMU Calibration is not available, default intrinsic and extrinsic will be used.
+2026-09-08T11:51:50.177649232Z [INFO] [1788868310.176068314] [camera]: Starting Sensor: Motion Module
+2026-09-08T11:51:50.213262217Z [INFO] [1788868310.212107049] [camera]: Open profile: stream_type: Accel(0)Format: MOTION_XYZ32F, FPS: 100
+2026-09-08T11:51:50.213307195Z [INFO] [1788868310.212346184] [camera]: Open profile: stream_type: Gyro(0)Format: MOTION_XYZ32F, FPS: 200
+2026-09-08T11:51:50.273318674Z [INFO] [1788868310.271953704] [camera]: RealSense Node Is Up!
+2026-09-08T11:51:51.016783566Z [WARN] [1788868311.015350711] [camera]: XXX Hardware Notification:Left MIPI error,1.78887e+12,Error,Hardware Error
+2026-09-08T11:51:51.016840557Z [WARN] [1788868311.015514697] [camera]: Hardware Notification:Left MIPI error,1.78887e+12,Error,Hardware Error
+2026-09-08T11:51:51.861862814Z [WARN] [1788868311.861146805] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:51:51.861941873Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:51:53.513470949Z [WARN] [1788868313.512889873] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:51:53.513515927Z Size 16384 out of 614655 bytes (2%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:51:55.810825517Z [WARN] [1788868315.804616661] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:51:55.816260537Z Size 312072 out of 614655 bytes (50%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:51:57.364203398Z [WARN] [1788868317.362368537] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:51:57.364318496Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:51:58.915692654Z [WARN] [1788868318.913881539] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:51:58.915776463Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:01.564634324Z [WARN] [1788868321.563223538] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:01.564731543Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:03.112233875Z [WARN] [1788868323.111298844] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:03.112580845Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:04.664246703Z [WARN] [1788868324.661798638] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:04.664294754Z Size 262920 out of 614655 bytes (42%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:07.162692154Z [WARN] [1788868327.160922104] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:07.162761157Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:08.865257662Z [WARN] [1788868328.862263440] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:08.865328621Z Size 279304 out of 614655 bytes (45%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:10.365228095Z [WARN] [1788868330.364396987] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:10.365421973Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:12.060143853Z [WARN] [1788868332.058933927] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:12.060205871Z Size 328456 out of 614655 bytes (53%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:13.563037586Z [WARN] [1788868333.561691610] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:13.563320581Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:15.224835935Z [WARN] [1788868335.222615829] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:15.224946005Z Size 295688 out of 614655 bytes (48%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:17.406768400Z [WARN] [1788868337.405175466] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:17.406877352Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:18.960974556Z [WARN] [1788868338.959496440] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:18.961090492Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:20.504706682Z [WARN] [1788868340.503130790] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:20.504748866Z Size 230152 out of 614655 bytes (37%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:22.006165289Z [WARN] [1788868342.005557392] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:22.006210266Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:23.557462060Z [WARN] [1788868343.556420032] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:23.557548942Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:25.752804607Z [WARN] [1788868345.750817490] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:25.752953509Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:27.248609670Z [WARN] [1788868347.247860695] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:27.248676718Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:29.654268204Z [WARN] [1788868349.652746228] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:29.654434985Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:31.199803549Z [WARN] [1788868351.198345547] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:31.199878419Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:32.750060024Z [WARN] [1788868352.748615990] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:32.750137967Z Size 213768 out of 614655 bytes (34%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:34.245320706Z [WARN] [1788868354.244459705] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:34.245398648Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:36.201034350Z [WARN] [1788868356.199074329] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:36.201195263Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:37.748352395Z [WARN] [1788868357.745875271] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:37.748421398Z Size 148232 out of 614655 bytes (24%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:39.252129686Z [WARN] [1788868359.249412587] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:39.252209584Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:40.948146454Z [WARN] [1788868360.946264375] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:40.949223403Z Size 312072 out of 614655 bytes (50%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:42.448264931Z [WARN] [1788868362.446694065] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:42.448412157Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:43.995053610Z [WARN] [1788868363.993238579] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:43.995200556Z Size 148232 out of 614655 bytes (24%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:45.496684290Z [WARN] [1788868365.495162312] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:45.496757484Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:47.995407463Z [WARN] [1788868367.994301459] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:47.995454396Z Size 230152 out of 614655 bytes (37%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:49.492548561Z [WARN] [1788868369.491977540] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:49.492586554Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:51.047600671Z [WARN] [1788868371.046468686] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:51.047699846Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:53.995911846Z [WARN] [1788868373.994675937] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:53.999334901Z Size 262920 out of 614655 bytes (42%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:55.499662696Z [WARN] [1788868375.498672627] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:55.499793718Z Size 115464 out of 614655 bytes (18%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:57.045197411Z [WARN] [1788868377.043393274] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:57.045774299Z Size 148232 out of 614655 bytes (24%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:52:58.544565300Z [WARN] [1788868378.543311511] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:52:58.544732360Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:00.094104433Z [WARN] [1788868380.092642517] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:00.094200534Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:01.643768593Z [WARN] [1788868381.642169788] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:01.643853520Z Size 181000 out of 614655 bytes (29%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:03.299278917Z [WARN] [1788868383.297937965] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:03.299385913Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:04.844229361Z [WARN] [1788868384.841972372] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:04.844334402Z Size 213768 out of 614655 bytes (34%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:06.346506964Z [WARN] [1788868386.344910953] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:06.346599993Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:07.901991975Z [WARN] [1788868387.900033906] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:07.902052876Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:09.442562679Z [WARN] [1788868389.439628789] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:09.442673866Z Size 213768 out of 614655 bytes (34%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:10.947429832Z [WARN] [1788868390.945327890] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:10.947521743Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:12.499273188Z [WARN] [1788868392.497574928] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:12.499393035Z Size 99080 out of 614655 bytes (16%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:13.998446309Z [WARN] [1788868393.996714525] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:13.998499388Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:15.545544924Z [WARN] [1788868395.543200772] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:15.545656950Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:17.091322548Z [WARN] [1788868397.089582383] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:17.092100580Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:18.595433296Z [WARN] [1788868398.593940090] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:18.595526325Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:23.195142221Z [WARN] [1788868403.193194207] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:23.195185243Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:24.898040527Z [WARN] [1788868404.896100615] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:24.898123498Z Size 262920 out of 614655 bytes (42%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:26.393805906Z [WARN] [1788868406.390218019] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:26.395398009Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:27.944036447Z [WARN] [1788868407.942786567] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:27.944116625Z Size 148232 out of 614655 bytes (24%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:31.539638267Z [WARN] [1788868411.537986380] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:31.539768451Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:33.044753433Z [WARN] [1788868413.043351298] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:33.044807350Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:34.595308345Z [WARN] [1788868414.593745575] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:34.595442440Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:36.197598774Z [WARN] [1788868416.190538652] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:36.198331828Z Size 246536 out of 614655 bytes (40%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:37.645817106Z [WARN] [1788868417.644542083] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:37.645913208Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:39.193627640Z [WARN] [1788868419.191247726] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:39.193715640Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:42.593688448Z [WARN] [1788868422.592060306] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:42.593746277Z Size 393992 out of 614655 bytes (64%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:45.898260795Z [WARN] [1788868425.896561694] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:45.898511665Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:48.094010933Z [WARN] [1788868428.092906881] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:48.094115975Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:50.842755152Z [WARN] [1788868430.841525385] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:50.843384284Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:52.396260830Z [WARN] [1788868432.393424990] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:52.396351903Z Size 262920 out of 614655 bytes (42%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:53.896394666Z [WARN] [1788868433.895162663] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:53.896480710Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:56.545625501Z [WARN] [1788868436.543995682] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:56.545710708Z Size 492296 out of 614655 bytes (80%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:53:58.147506887Z [WARN] [1788868438.146853730] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:53:58.147563878Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:00.144554009Z [WARN] [1788868440.142717179] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:00.144648155Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:01.697238559Z [WARN] [1788868441.694972344] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:01.697337455Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:03.242903051Z [WARN] [1788868443.241048901] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:03.242949985Z Size 213768 out of 614655 bytes (34%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:04.746604415Z [WARN] [1788868444.745175459] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:04.746738510Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:06.454148791Z [WARN] [1788868446.452594679] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:06.454393795Z Size 246536 out of 614655 bytes (40%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:07.939518416Z [WARN] [1788868447.938641486] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:07.939579317Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:09.490839458Z [WARN] [1788868449.489971468] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:09.491023560Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:11.047744580Z [WARN] [1788868451.046490786] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:11.047834536Z Size 279304 out of 614655 bytes (45%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:13.595480806Z [WARN] [1788868453.593957703] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:13.595531651Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:15.143574220Z [WARN] [1788868455.142113136] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:15.143723401Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:16.692534913Z [WARN] [1788868456.691186973] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:16.692665936Z Size 164616 out of 614655 bytes (26%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:18.193718556Z [WARN] [1788868458.192995557] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:18.193774429Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:19.747830439Z [WARN] [1788868459.747199351] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:19.747876255Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:21.291916277Z [WARN] [1788868461.291283234] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:21.291975224Z Size 213768 out of 614655 bytes (34%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:22.795550311Z [WARN] [1788868462.794913077] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:22.795626299Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:24.394414487Z [WARN] [1788868464.392868475] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:24.394493547Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:25.897786707Z [WARN] [1788868465.896372835] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:25.897889793Z Size 279304 out of 614655 bytes (45%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:27.393368086Z [WARN] [1788868467.392060094] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:27.393540176Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:29.796614613Z [WARN] [1788868469.794915788] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:29.796708760Z Size 131848 out of 614655 bytes (21%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:31.348675459Z [WARN] [1788868471.347394565] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T11:54:31.348873530Z Size 181000 out of 614655 bytes (29%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T11:54:32.559001182Z  08/09 11:54:32,557 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.559619978Z  08/09 11:54:32,558 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.559652943Z  08/09 11:54:32,558 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.559697083Z  08/09 11:54:32,559 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.559740105Z  08/09 11:54:32,559 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.560955069Z  08/09 11:54:32,559 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.561001164Z  08/09 11:54:32,559 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.561121012Z  08/09 11:54:32,560 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.562666187Z  08/09 11:54:32,561 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.562858111Z  08/09 11:54:32,562 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.564139005Z  08/09 11:54:32,563 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.564736011Z  08/09 11:54:32,564 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.565471023Z  08/09 11:54:32,564 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.566038975Z  08/09 11:54:32,564 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.568355200Z  08/09 11:54:32,565 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.568449067Z  08/09 11:54:32,566 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.568523099Z  08/09 11:54:32,566 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.568558019Z  08/09 11:54:32,568 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.568932091Z  08/09 11:54:32,568 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.570662206Z  08/09 11:54:32,568 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.570789038Z  08/09 11:54:32,569 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.572077195Z  08/09 11:54:32,570 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.572545134Z  08/09 11:54:32,570 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.572782036Z  08/09 11:54:32,571 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.572884005Z  08/09 11:54:32,571 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.573375131Z  08/09 11:54:32,572 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.573517049Z  08/09 11:54:32,573 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.574949080Z  08/09 11:54:32,573 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.575021994Z  08/09 11:54:32,573 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.575083175Z  08/09 11:54:32,574 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.575385170Z  08/09 11:54:32,574 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.575486021Z  08/09 11:54:32,575 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.577886056Z  08/09 11:54:32,576 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.577949193Z  08/09 11:54:32,576 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.578025181Z  08/09 11:54:32,576 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.578128267Z  08/09 11:54:32,577 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.578272140Z  08/09 11:54:32,577 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.578410147Z  08/09 11:54:32,578 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.579756133Z  08/09 11:54:32,578 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.580037176Z  08/09 11:54:32,578 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.580128249Z  08/09 11:54:32,579 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.580797052Z  08/09 11:54:32,579 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.582652043Z  08/09 11:54:32,580 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.582755129Z  08/09 11:54:32,580 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.582786139Z  08/09 11:54:32,580 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.582818266Z  08/09 11:54:32,580 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.583353252Z  08/09 11:54:32,581 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.583475056Z  08/09 11:54:32,581 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.583532047Z  08/09 11:54:32,581 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.583575069Z  08/09 11:54:32,581 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.583638206Z  08/09 11:54:32,581 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.583676200Z  08/09 11:54:32,581 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.583697152Z  08/09 11:54:32,581 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.583730117Z  08/09 11:54:32,581 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.583747159Z  08/09 11:54:32,581 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.583912264Z  08/09 11:54:32,581 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.584409256Z  08/09 11:54:32,581 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.585675065Z  08/09 11:54:32,585 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.586108082Z  08/09 11:54:32,585 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.586310064Z  08/09 11:54:32,586 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.587012111Z  08/09 11:54:32,586 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.589451257Z  08/09 11:54:32,587 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.589485061Z  08/09 11:54:32,587 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.589507131Z  08/09 11:54:32,587 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.589531156Z  08/09 11:54:32,587 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.589548197Z  08/09 11:54:32,587 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.589577251Z  08/09 11:54:32,588 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.589628096Z  08/09 11:54:32,588 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.589664134Z  08/09 11:54:32,588 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.589730065Z  08/09 11:54:32,588 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.589807170Z  08/09 11:54:32,588 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.589864161Z  08/09 11:54:32,588 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.589921151Z  08/09 11:54:32,588 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.589989317Z  08/09 11:54:32,588 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.590062231Z  08/09 11:54:32,588 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.590109165Z  08/09 11:54:32,588 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.590289076Z  08/09 11:54:32,590 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.590500277Z  08/09 11:54:32,590 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.594807266Z  08/09 11:54:32,591 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.594835202Z  08/09 11:54:32,591 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.594853082Z  08/09 11:54:32,591 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.594870123Z  08/09 11:54:32,591 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.594887164Z  08/09 11:54:32,591 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.594904206Z  08/09 11:54:32,591 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.594920130Z  08/09 11:54:32,591 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.594946111Z  08/09 11:54:32,591 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.594973209Z  08/09 11:54:32,591 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.595008130Z  08/09 11:54:32,592 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.595029082Z  08/09 11:54:32,593 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.595054225Z  08/09 11:54:32,593 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.595071267Z  08/09 11:54:32,593 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.595089146Z  08/09 11:54:32,593 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.595117083Z  08/09 11:54:32,593 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598263305Z  08/09 11:54:32,595 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598295152Z  08/09 11:54:32,595 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598314149Z  08/09 11:54:32,595 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598339292Z  08/09 11:54:32,595 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598392092Z  08/09 11:54:32,595 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598458302Z  08/09 11:54:32,595 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598486239Z  08/09 11:54:32,596 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598504118Z  08/09 11:54:32,596 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598553287Z  08/09 11:54:32,596 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598607204Z  08/09 11:54:32,596 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598641287Z  08/09 11:54:32,596 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598659167Z  08/09 11:54:32,596 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598693249Z  08/09 11:54:32,596 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598716157Z  08/09 11:54:32,596 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598736272Z  08/09 11:54:32,596 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598753313Z  08/09 11:54:32,596 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598772310Z  08/09 11:54:32,597 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598819243Z  08/09 11:54:32,597 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598876234Z  08/09 11:54:32,597 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.598904171Z  08/09 11:54:32,597 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.601612346Z  08/09 11:54:32,600 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.601745325Z  08/09 11:54:32,601 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.605596108Z  08/09 11:54:32,602 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.605658127Z  08/09 11:54:32,602 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.605676286Z  08/09 11:54:32,602 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.605694166Z  08/09 11:54:32,602 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.605730204Z  08/09 11:54:32,602 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.605776299Z  08/09 11:54:32,602 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.605793341Z  08/09 11:54:32,603 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.605855360Z  08/09 11:54:32,603 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.605887208Z  08/09 11:54:32,603 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.605920173Z  08/09 11:54:32,603 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.605979119Z  08/09 11:54:32,603 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.606025215Z  08/09 11:54:32,603 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.606076339Z  08/09 11:54:32,603 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.606133329Z  08/09 11:54:32,604 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.606161266Z  08/09 11:54:32,604 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.606197304Z  08/09 11:54:32,604 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.606236136Z  08/09 11:54:32,604 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.606299273Z  08/09 11:54:32,604 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.606352352Z  08/09 11:54:32,604 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.606406270Z  08/09 11:54:32,604 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.606446219Z  08/09 11:54:32,604 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.606487286Z  08/09 11:54:32,604 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.606524163Z  08/09 11:54:32,604 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.606562156Z  08/09 11:54:32,605 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.607804218Z  08/09 11:54:32,606 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.607876295Z  08/09 11:54:32,606 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.607949209Z  08/09 11:54:32,606 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.607990276Z  08/09 11:54:32,606 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.608496208Z  08/09 11:54:32,608 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.609629318Z  08/09 11:54:32,608 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.609910360Z  08/09 11:54:32,609 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.610183301Z  08/09 11:54:32,610 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.610436127Z  08/09 11:54:32,610 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.611637402Z  08/09 11:54:32,610 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.612192223Z  08/09 11:54:32,612 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.616357293Z  08/09 11:54:32,613 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.616390259Z  08/09 11:54:32,613 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.616430208Z  08/09 11:54:32,613 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.616516253Z  08/09 11:54:32,613 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.616554247Z  08/09 11:54:32,613 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.616594196Z  08/09 11:54:32,613 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.616611237Z  08/09 11:54:32,613 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.616644202Z  08/09 11:54:32,613 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.616662361Z  08/09 11:54:32,613 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.616698399Z  08/09 11:54:32,613 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.616752317Z  08/09 11:54:32,614 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.616828305Z  08/09 11:54:32,614 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.616877194Z  08/09 11:54:32,614 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.616946197Z  08/09 11:54:32,614 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.617010172Z  08/09 11:54:32,615 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.617036153Z  08/09 11:54:32,615 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.617076382Z  08/09 11:54:32,615 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.617097334Z  08/09 11:54:32,615 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.617114376Z  08/09 11:54:32,615 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.617138401Z  08/09 11:54:32,615 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.617156281Z  08/09 11:54:32,615 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.617172205Z  08/09 11:54:32,615 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.618757328Z  08/09 11:54:32,616 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.619036415Z  08/09 11:54:32,618 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.619364391Z  08/09 11:54:32,619 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.620650313Z  08/09 11:54:32,620 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.621196195Z  08/09 11:54:32,621 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.621600438Z  08/09 11:54:32,621 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.621903271Z  08/09 11:54:32,621 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.624485452Z  08/09 11:54:32,622 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.624541326Z  08/09 11:54:32,623 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.624596361Z  08/09 11:54:32,623 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.624665364Z  08/09 11:54:32,623 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.624726266Z  08/09 11:54:32,623 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.624800298Z  08/09 11:54:32,623 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.624836336Z  08/09 11:54:32,623 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.625189455Z  08/09 11:54:32,625 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.626390450Z  08/09 11:54:32,625 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.626667302Z  08/09 11:54:32,626 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.627044447Z  08/09 11:54:32,626 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.628301315Z  08/09 11:54:32,627 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.630162452Z  08/09 11:54:32,628 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.630480371Z  08/09 11:54:32,630 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.632793244Z  08/09 11:54:32,632 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.633674365Z  08/09 11:54:32,633 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.635330447Z  08/09 11:54:32,633 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.637813454Z  08/09 11:54:32,634 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.639451378Z  08/09 11:54:32,634 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.639494400Z  08/09 11:54:32,635 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.639528483Z  08/09 11:54:32,635 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.639567315Z  08/09 11:54:32,635 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.639586312Z  08/09 11:54:32,635 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.639623468Z  08/09 11:54:32,636 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.639652242Z  08/09 11:54:32,636 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.639669284Z  08/09 11:54:32,636 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.639685487Z  08/09 11:54:32,636 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.639742478Z  08/09 11:54:32,636 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.639826287Z  08/09 11:54:32,636 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.639921272Z  08/09 11:54:32,637 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.640792336Z  08/09 11:54:32,637 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.640866368Z  08/09 11:54:32,637 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.640912463Z  08/09 11:54:32,637 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.640973365Z  08/09 11:54:32,637 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.641036502Z  08/09 11:54:32,637 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.641064438Z  08/09 11:54:32,637 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.641297430Z  08/09 11:54:32,639 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.641327322Z  08/09 11:54:32,639 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.641345481Z  08/09 11:54:32,639 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.641400516Z  08/09 11:54:32,640 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.641431246Z  08/09 11:54:32,640 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.641470357Z  08/09 11:54:32,640 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.641488516Z  08/09 11:54:32,641 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.643162478Z  08/09 11:54:32,641 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.643246288Z  08/09 11:54:32,641 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.643306352Z  08/09 11:54:32,641 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.643367254Z  08/09 11:54:32,642 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.644556516Z  08/09 11:54:32,643 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.644590319Z  08/09 11:54:32,643 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.644654294Z  08/09 11:54:32,643 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.644791462Z  08/09 11:54:32,644 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.645856406Z  08/09 11:54:32,644 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.645899429Z  08/09 11:54:32,645 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.646063417Z  08/09 11:54:32,645 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.646083531Z  08/09 11:54:32,645 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.646100293Z  08/09 11:54:32,645 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.646120407Z  08/09 11:54:32,646 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.646243328Z  08/09 11:54:32,646 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.646278529Z  08/09 11:54:32,646 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.646432459Z  08/09 11:54:32,646 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.646454529Z  08/09 11:54:32,646 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.646673273Z  08/09 11:54:32,646 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.646727470Z  08/09 11:54:32,646 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.650208373Z  08/09 11:54:32,646 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.650302519Z  08/09 11:54:32,647 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.650365376Z  08/09 11:54:32,647 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.650407281Z  08/09 11:54:32,647 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.650425440Z  08/09 11:54:32,647 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.650476285Z  08/09 11:54:32,647 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.650500310Z  08/09 11:54:32,648 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.650542495Z  08/09 11:54:32,648 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.650565403Z  08/09 11:54:32,648 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.650597530Z  08/09 11:54:32,648 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.650631333Z  08/09 11:54:32,648 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.650651447Z  08/09 11:54:32,648 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.651098433Z  08/09 11:54:32,648 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.651352377Z  08/09 11:54:32,648 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.651406295Z  08/09 11:54:32,648 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.651565534Z  08/09 11:54:32,648 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.651730360Z  08/09 11:54:32,648 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.651864455Z  08/09 11:54:32,649 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.651894348Z  08/09 11:54:32,650 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.652039339Z  08/09 11:54:32,650 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.652066437Z  08/09 11:54:32,650 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.652884421Z  08/09 11:54:32,651 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.653374430Z  08/09 11:54:32,652 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.654408364Z  08/09 11:54:32,653 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.654546371Z  08/09 11:54:32,654 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.654823502Z  08/09 11:54:32,654 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.655824471Z  08/09 11:54:32,655 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.656121437Z  08/09 11:54:32,655 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.656472321Z  08/09 11:54:32,656 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.656685478Z  08/09 11:54:32,656 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.657614370Z  08/09 11:54:32,656 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.657656554Z  08/09 11:54:32,657 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.657904352Z  08/09 11:54:32,657 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.658176455Z  08/09 11:54:32,658 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.660312489Z  08/09 11:54:32,658 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.660372552Z  08/09 11:54:32,658 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.660420324Z  08/09 11:54:32,658 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.660442394Z  08/09 11:54:32,659 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.660459435Z  08/09 11:54:32,659 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.660492400Z  08/09 11:54:32,660 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.662359405Z  08/09 11:54:32,660 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.662386503Z  08/09 11:54:32,660 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.662415557Z  08/09 11:54:32,660 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.662437348Z  08/09 11:54:32,660 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.662458580Z  08/09 11:54:32,660 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.662532332Z  08/09 11:54:32,660 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.662551329Z  08/09 11:54:32,660 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.662567532Z  08/09 11:54:32,660 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.662584574Z  08/09 11:54:32,661 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.662620333Z  08/09 11:54:32,662 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.662680396Z  08/09 11:54:32,662 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.662986582Z  08/09 11:54:32,662 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.663696451Z  08/09 11:54:32,662 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.663978332Z  08/09 11:54:32,663 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.664071361Z  08/09 11:54:32,663 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.664363578Z  08/09 11:54:32,664 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.664650487Z  08/09 11:54:32,664 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.665305600Z  08/09 11:54:32,664 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.667330446Z  08/09 11:54:32,665 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.667386599Z  08/09 11:54:32,665 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.667431577Z  08/09 11:54:32,665 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.667483539Z  08/09 11:54:32,665 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.667540530Z  08/09 11:54:32,665 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.667580479Z  08/09 11:54:32,666 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.667597520Z  08/09 11:54:32,666 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.667614562Z  08/09 11:54:32,666 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.667660378Z  08/09 11:54:32,666 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.667684403Z  08/09 11:54:32,666 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.667747540Z  08/09 11:54:32,666 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.667780505Z  08/09 11:54:32,666 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.668109599Z  08/09 11:54:32,667 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.668247606Z  08/09 11:54:32,667 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.668921437Z  08/09 11:54:32,668 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.668992396Z  08/09 11:54:32,668 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.669401388Z  08/09 11:54:32,669 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.669578506Z  08/09 11:54:32,669 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.669937492Z  08/09 11:54:32,669 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.671087363Z  08/09 11:54:32,670 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.672692601Z  08/09 11:54:32,670 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.672742607Z  08/09 11:54:32,670 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.672814405Z  08/09 11:54:32,670 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.672885364Z  08/09 11:54:32,671 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.672940399Z  08/09 11:54:32,671 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.673035383Z  08/09 11:54:32,671 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.673071421Z  08/09 11:54:32,671 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.673126457Z  08/09 11:54:32,671 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.673182609Z  08/09 11:54:32,671 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.673206635Z  08/09 11:54:32,671 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.673223397Z  08/09 11:54:32,671 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.673272565Z  08/09 11:54:32,671 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.673290444Z  08/09 11:54:32,671 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.673329556Z  08/09 11:54:32,672 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.673351626Z  08/09 11:54:32,672 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.673374534Z  08/09 11:54:32,673 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.674624418Z  08/09 11:54:32,673 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.674802374Z  08/09 11:54:32,674 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.674829473Z  08/09 11:54:32,674 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.675131468Z  08/09 11:54:32,674 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.675184547Z  08/09 11:54:32,675 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.675574542Z  08/09 11:54:32,675 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.675730429Z  08/09 11:54:32,675 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.676354533Z  08/09 11:54:32,675 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.677304657Z  08/09 11:54:32,676 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.677345445Z  08/09 11:54:32,676 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.677417521Z  08/09 11:54:32,676 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.677464455Z  08/09 11:54:32,676 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.677518652Z  08/09 11:54:32,676 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.677565585Z  08/09 11:54:32,677 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.677652468Z  08/09 11:54:32,677 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.677715605Z  08/09 11:54:32,677 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.678675507Z  08/09 11:54:32,677 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.678744510Z  08/09 11:54:32,678 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.678767418Z  08/09 11:54:32,678 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.679184512Z  08/09 11:54:32,678 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.679212449Z  08/09 11:54:32,678 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.680120668Z  08/09 11:54:32,679 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.680152516Z  08/09 11:54:32,679 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.680294434Z  08/09 11:54:32,679 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.681058500Z  08/09 11:54:32,680 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.681133650Z  08/09 11:54:32,680 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.681453524Z  08/09 11:54:32,681 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.682371522Z  08/09 11:54:32,681 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.682820463Z  08/09 11:54:32,682 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.682856501Z  08/09 11:54:32,682 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.682891422Z  08/09 11:54:32,682 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.683286446Z  08/09 11:54:32,682 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.683337570Z  08/09 11:54:32,683 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.684457549Z  08/09 11:54:32,683 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.684547505Z  08/09 11:54:32,683 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.684575441Z  08/09 11:54:32,684 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.685032484Z  08/09 11:54:32,684 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.685118529Z  08/09 11:54:32,684 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.685772525Z  08/09 11:54:32,685 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.685869465Z  08/09 11:54:32,685 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.686395512Z  08/09 11:54:32,685 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.686492452Z  08/09 11:54:32,686 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.687341446Z  08/09 11:54:32,686 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.688004661Z  08/09 11:54:32,687 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.688069474Z  08/09 11:54:32,687 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.689816630Z  08/09 11:54:32,688 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.689934523Z  08/09 11:54:32,688 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.689981456Z  08/09 11:54:32,689 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.690110523Z  08/09 11:54:32,689 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.690154663Z  08/09 11:54:32,689 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.690542703Z  08/09 11:54:32,690 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.691150604Z  08/09 11:54:32,690 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.691356497Z  08/09 11:54:32,690 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.691675533Z  08/09 11:54:32,691 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.691739508Z  08/09 11:54:32,691 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.691978645Z  08/09 11:54:32,691 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.692293491Z  08/09 11:54:32,691 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.692350481Z  08/09 11:54:32,692 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.692560565Z  08/09 11:54:32,692 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.692585708Z  08/09 11:54:32,692 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.693510689Z  08/09 11:54:32,692 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.693572708Z  08/09 11:54:32,692 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.694271683Z  08/09 11:54:32,693 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.694313588Z  08/09 11:54:32,693 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.694397677Z  08/09 11:54:32,693 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.694434553Z  08/09 11:54:32,694 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.695867702Z  08/09 11:54:32,694 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.695900667Z  08/09 11:54:32,694 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.695971626Z  08/09 11:54:32,695 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.696123601Z  08/09 11:54:32,695 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.697448635Z  08/09 11:54:32,696 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.697529651Z  08/09 11:54:32,696 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.697810693Z  08/09 11:54:32,697 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.698242594Z  08/09 11:54:32,697 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.698586493Z  08/09 11:54:32,698 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.699305582Z  08/09 11:54:32,698 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.700098702Z  08/09 11:54:32,699 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.700185585Z  08/09 11:54:32,699 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.700277497Z  08/09 11:54:32,699 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.700355719Z  08/09 11:54:32,699 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.700398742Z  08/09 11:54:32,700 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.701576549Z  08/09 11:54:32,700 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.701761490Z  08/09 11:54:32,700 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.701937491Z  08/09 11:54:32,700 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.701978557Z  08/09 11:54:32,701 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.702434483Z  08/09 11:54:32,701 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.702480578Z  08/09 11:54:32,702 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.702747653Z  08/09 11:54:32,702 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.703046574Z  08/09 11:54:32,702 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.703678501Z  08/09 11:54:32,702 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.703739682Z  08/09 11:54:32,703 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.704772499Z  08/09 11:54:32,703 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.704952690Z  08/09 11:54:32,704 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.704977553Z  08/09 11:54:32,704 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.705045719Z  08/09 11:54:32,704 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.705413644Z  08/09 11:54:32,705 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.706071551Z  08/09 11:54:32,705 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.707005752Z  08/09 11:54:32,706 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.707034527Z  08/09 11:54:32,706 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.707060508Z  08/09 11:54:32,706 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.708128524Z  08/09 11:54:32,706 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.708182722Z  08/09 11:54:32,707 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.708233566Z  08/09 11:54:32,707 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.708631663Z  08/09 11:54:32,708 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.709251577Z  08/09 11:54:32,708 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.709613635Z  08/09 11:54:32,708 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.710034640Z  08/09 11:54:32,709 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.710080735Z  08/09 11:54:32,709 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.710638630Z  08/09 11:54:32,710 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.710710706Z  08/09 11:54:32,710 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.711363585Z  08/09 11:54:32,710 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.711998584Z  08/09 11:54:32,710 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.712053619Z  08/09 11:54:32,711 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.712503678Z  08/09 11:54:32,711 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.712554523Z  08/09 11:54:32,712 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.713412736Z  08/09 11:54:32,712 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.713444584Z  08/09 11:54:32,712 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.713616673Z  08/09 11:54:32,712 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.714626582Z  08/09 11:54:32,713 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.714726595Z  08/09 11:54:32,714 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.714862646Z  08/09 11:54:32,714 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.715590675Z  08/09 11:54:32,714 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.716343566Z  08/09 11:54:32,715 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.716368709Z  08/09 11:54:32,715 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.716468722Z  08/09 11:54:32,715 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.716494703Z  08/09 11:54:32,716 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.717491761Z  08/09 11:54:32,716 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.717558809Z  08/09 11:54:32,717 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.717773642Z  08/09 11:54:32,717 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.718454737Z  08/09 11:54:32,717 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.719034701Z  08/09 11:54:32,718 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.719066549Z  08/09 11:54:32,718 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.719237800Z  08/09 11:54:32,718 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.719263781Z  08/09 11:54:32,719 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.721305668Z  08/09 11:54:32,719 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.721370761Z  08/09 11:54:32,720 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.721444793Z  08/09 11:54:32,720 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.721470774Z  08/09 11:54:32,720 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.722164719Z  08/09 11:54:32,720 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.723016786Z  08/09 11:54:32,721 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.723117637Z  08/09 11:54:32,722 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.723162615Z  08/09 11:54:32,722 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.723247822Z  08/09 11:54:32,722 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.723622732Z  08/09 11:54:32,722 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.723643684Z  08/09 11:54:32,723 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.723695646Z  08/09 11:54:32,723 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.725505660Z  08/09 11:54:32,723 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.725593660Z  08/09 11:54:32,724 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.725629698Z  08/09 11:54:32,724 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.725901801Z  08/09 11:54:32,724 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.726259669Z  08/09 11:54:32,725 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.726296825Z  08/09 11:54:32,725 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.726378679Z  08/09 11:54:32,726 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.727536652Z  08/09 11:54:32,726 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.727656779Z  08/09 11:54:32,726 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.727747573Z  08/09 11:54:32,727 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.727790596Z  08/09 11:54:32,727 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.728192603Z  08/09 11:54:32,727 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.728221658Z  08/09 11:54:32,727 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.728338712Z  08/09 11:54:32,728 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.729181839Z  08/09 11:54:32,728 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.730102630Z  08/09 11:54:32,729 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.730156827Z  08/09 11:54:32,729 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.730402669Z  08/09 11:54:32,730 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.731567626Z  08/09 11:54:32,730 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.731617633Z  08/09 11:54:32,730 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.731701722Z  08/09 11:54:32,730 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.733922683Z  08/09 11:54:32,731 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.733977718Z  08/09 11:54:32,731 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.734114608Z  08/09 11:54:32,731 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.734183611Z  08/09 11:54:32,731 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.734283624Z  08/09 11:54:32,731 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.734370787Z  08/09 11:54:32,732 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.734432806Z  08/09 11:54:32,732 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.734460742Z  08/09 11:54:32,732 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.734487841Z  08/09 11:54:32,732 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.734534774Z  08/09 11:54:32,732 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.734599867Z  08/09 11:54:32,732 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.734630876Z  08/09 11:54:32,732 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.734681721Z  08/09 11:54:32,733 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.734733683Z  08/09 11:54:32,733 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.735198828Z  08/09 11:54:32,733 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.735343819Z  08/09 11:54:32,734 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.735396619Z  08/09 11:54:32,734 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.735449699Z  08/09 11:54:32,734 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.735997815Z  08/09 11:54:32,735 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.736423849Z  08/09 11:54:32,735 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.736556827Z  08/09 11:54:32,735 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.737085667Z  08/09 11:54:32,735 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.737126734Z  08/09 11:54:32,736 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.737163610Z  08/09 11:54:32,736 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.737221718Z  08/09 11:54:32,737 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.737586850Z  08/09 11:54:32,737 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.738295881Z  08/09 11:54:32,737 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.738627768Z  08/09 11:54:32,738 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.738695654Z  08/09 11:54:32,738 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.739278692Z  08/09 11:54:32,738 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.739304673Z  08/09 11:54:32,738 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.740167635Z  08/09 11:54:32,739 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.740598697Z  08/09 11:54:32,739 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.740644792Z  08/09 11:54:32,740 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.741125861Z  08/09 11:54:32,740 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.741190674Z  08/09 11:54:32,740 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.741652745Z  08/09 11:54:32,741 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.741700796Z  08/09 11:54:32,741 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.742406755Z  08/09 11:54:32,741 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.742497828Z  08/09 11:54:32,741 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.743181716Z  08/09 11:54:32,741 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.743243736Z  08/09 11:54:32,742 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.743289831Z  08/09 11:54:32,742 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.743315812Z  08/09 11:54:32,743 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.743459686Z  08/09 11:54:32,743 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.744232692Z  08/09 11:54:32,743 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.744301695Z  08/09 11:54:32,743 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.745520849Z  08/09 11:54:32,744 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.745591808Z  08/09 11:54:32,745 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.746509806Z  08/09 11:54:32,745 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.746614847Z  08/09 11:54:32,746 ERROR [133071189808832] (librealsense-exception.h:52) get_xu(...). xioctl(UVCIOC_CTRL_QUERY) failed on control 7 Last Error: No such device
+2026-09-08T11:54:32.746686645Z  08/09 11:54:32,746 ERROR [133071189808832] (error-handling.cpp:99) Error during polling error handler: get_xu(...). xioctl(UVCIOC_CTRL_QUERY) failed on control 7 Last Error: No such device
+2026-09-08T11:54:32.748741662Z  08/09 11:54:32,746 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.748776862Z  08/09 11:54:32,747 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.748827707Z  08/09 11:54:32,747 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.748903695Z  08/09 11:54:32,747 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.748967669Z  08/09 11:54:32,748 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.749092825Z  08/09 11:54:32,748 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.749608815Z  08/09 11:54:32,748 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.749682847Z  08/09 11:54:32,749 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.749762746Z  08/09 11:54:32,749 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.750738851Z  08/09 11:54:32,749 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.750803664Z  08/09 11:54:32,750 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.751007881Z  08/09 11:54:32,750 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.751470790Z  08/09 11:54:32,751 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.751532810Z  08/09 11:54:32,751 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.752805881Z  08/09 11:54:32,751 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.752836891Z  08/09 11:54:32,752 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.754057721Z  08/09 11:54:32,752 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.754089848Z  08/09 11:54:32,752 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.754136782Z  08/09 11:54:32,753 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.754490739Z  08/09 11:54:32,754 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.755658769Z  08/09 11:54:32,754 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.756033958Z  08/09 11:54:32,755 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.756111901Z  08/09 11:54:32,756 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.757593938Z  08/09 11:54:32,756 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.757660707Z  08/09 11:54:32,757 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.757732783Z  08/09 11:54:32,757 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.758030867Z  08/09 11:54:32,757 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.758456900Z  08/09 11:54:32,757 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.758536799Z  08/09 11:54:32,758 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.759290808Z  08/09 11:54:32,758 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.759342771Z  08/09 11:54:32,758 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.760071916Z  08/09 11:54:32,758 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.760106837Z  08/09 11:54:32,759 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.760151815Z  08/09 11:54:32,759 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.760265796Z  08/09 11:54:32,759 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.760790725Z  08/09 11:54:32,760 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.763618749Z  08/09 11:54:32,760 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.763735804Z  08/09 11:54:32,760 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.764683973Z  08/09 11:54:32,761 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.764872824Z  08/09 11:54:32,761 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.764901878Z  08/09 11:54:32,762 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.764919758Z  08/09 11:54:32,763 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.764951885Z  08/09 11:54:32,763 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.764992952Z  08/09 11:54:32,764 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.765034856Z  08/09 11:54:32,764 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.765460890Z  08/09 11:54:32,764 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.765498884Z  08/09 11:54:32,764 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.765567887Z  08/09 11:54:32,765 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.765983863Z  08/09 11:54:32,765 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.766653783Z  08/09 11:54:32,765 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.766671942Z  08/09 11:54:32,765 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.766729771Z  08/09 11:54:32,765 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.766793746Z  08/09 11:54:32,766 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.766886775Z  08/09 11:54:32,766 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.766941810Z  08/09 11:54:32,766 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.767004947Z  08/09 11:54:32,766 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.767272859Z  08/09 11:54:32,766 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.767572898Z  08/09 11:54:32,767 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.768463797Z  08/09 11:54:32,767 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.769390734Z  08/09 11:54:32,768 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.769421744Z  08/09 11:54:32,768 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.769467839Z  08/09 11:54:32,768 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.769504995Z  08/09 11:54:32,769 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.769683789Z  08/09 11:54:32,769 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.769734913Z [ERROR] [1788868472.768620801] [camera]: The device has been disconnected!
+2026-09-08T11:54:32.774001952Z  08/09 11:54:32,770 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.774034917Z  08/09 11:54:32,770 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.774064809Z [INFO] [1788868472.770850981] [camera]: Stop Sensor: Depth Module
+2026-09-08T11:54:32.774062016Z  08/09 11:54:32,770 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.774126829Z [INFO] [1788868472.770925013] [camera]: Close Sensor. 
+2026-09-08T11:54:32.774204772Z  08/09 11:54:32,771 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.774274893Z  08/09 11:54:32,771 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.774393903Z  08/09 11:54:32,771 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.774411782Z  08/09 11:54:32,771 ERROR [133070996874944] (backend-v4l2.cpp:3442) xioctl(VIDIOC_QBUF) failed when requesting new frame! fd: 26 error: No such device
+2026-09-08T11:54:32.775559977Z [INFO] [1788868472.773802764] [camera]: Close Sensor - Done. 
+2026-09-08T11:54:32.775598809Z  08/09 11:54:32,773 ERROR [133071223379648] (librealsense-exception.h:52) xioctl(VIDIOC_STREAMOFF) failed for buf_type=13 Last Error: No such device
+2026-09-08T11:54:32.775647978Z  08/09 11:54:32,773 ERROR [133071223379648] (uvc-sensor.cpp:452) release_power failed: xioctl(VIDIOC_STREAMOFF) failed for buf_type=13 Last Error: No such device
+2026-09-08T11:54:32.775703851Z [INFO] [1788868472.775382021] [camera]: Stop Sensor: Motion Module
+2026-09-08T11:54:32.777241762Z  08/09 11:54:32,775 WARNING [133070988482240] (backend-hid.h:49) write_fs_attribute with 0 failed. The specified path /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-200076.4.auto/iio:device1/buffer/enable is not valid
+2026-09-08T11:54:32.777291768Z  08/09 11:54:32,775 WARNING [133070988482240] (backend-hid.cpp:740) HID set_power 0 failed for /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-200076.4.auto/iio:device1/buffer/enable
+2026-09-08T11:54:32.781630046Z [ERROR] [1788868472.781121879] [camera]: Exception: ./src/ros_sensor.cpp:289:Failed to enable_sensor /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-2000e1.5.auto/enable_sensor Last Error: No such file or directory
+2026-09-08T11:54:32.781691786Z [INFO] [1788868472.781356825] [camera]: Close Sensor. 
+2026-09-08T11:54:32.781685919Z  08/09 11:54:32,779 WARNING [133070829119168] (backend-hid.h:49) write_fs_attribute with 0 failed. The specified path /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-200073.3.auto/iio:device0/buffer/enable is not valid
+2026-09-08T11:54:32.781729779Z  08/09 11:54:32,779 WARNING [133070829119168] (backend-hid.cpp:740) HID set_power 0 failed for /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-200073.3.auto/iio:device0/buffer/enable
+2026-09-08T11:54:32.781764979Z  08/09 11:54:32,780 ERROR [133071223379648] (librealsense-exception.h:52) Failed to enable_sensor /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-2000e1.5.auto/enable_sensor Last Error: No such file or directory
+2026-09-08T11:54:32.781789005Z  08/09 11:54:32,781 ERROR [133071223379648] (rs.cpp:280) [rs2_stop( sensor:0x790704029b40 ) Backend] Failed to enable_sensor /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-2000e1.5.auto/enable_sensor Last Error: No such file or directory
+2026-09-08T11:54:32.783076883Z  08/09 11:54:32,782 ERROR [133071223379648] (rs.cpp:280) [rs2_close( sensor:0x790704029b40 ) Wrong Api Call Sequence] close() failed. Hid device is streaming!
+2026-09-08T11:54:32.783107893Z [ERROR] [1788868472.782532957] [camera]: Exception: ./src/ros_sensor.cpp:298:close() failed. Hid device is streaming!
+2026-09-08T11:54:32.783126051Z [INFO] [1788868472.782667053] [camera]: Close Sensor - Done. 
+2026-09-08T11:54:32.783147004Z [INFO] [1788868472.782834952] [camera]: Stop Sensor: Motion Module
+2026-09-08T11:54:32.783171029Z  08/09 11:54:32,783 ERROR [133071223379648] (librealsense-exception.h:52) Failed to enable_sensor /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-2000e1.5.auto/enable_sensor Last Error: No such file or directory
+2026-09-08T11:54:32.783229976Z  08/09 11:54:32,783 ERROR [133071223379648] (rs.cpp:280) [rs2_stop( sensor:0x790704029b40 ) Backend] Failed to enable_sensor /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-2000e1.5.auto/enable_sensor Last Error: No such file or directory
+2026-09-08T11:54:32.783287805Z [ERROR] [1788868472.783161810] [camera]: Exception: ./src/ros_sensor.cpp:289:Failed to enable_sensor /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-2000e1.5.auto/enable_sensor Last Error: No such file or directory
+2026-09-08T11:54:32.784075896Z  08/09 11:54:32,783 ERROR [133071223379648] (rs.cpp:280) [rs2_close( sensor:0x790704029b40 ) Wrong Api Call Sequence] close() failed. Hid device is streaming!
+2026-09-08T11:54:32.784260837Z [INFO] [1788868472.783276909] [camera]: Close Sensor. 
+2026-09-08T11:54:32.784351910Z [ERROR] [1788868472.783448999] [camera]: Exception: ./src/ros_sensor.cpp:298:close() failed. Hid device is streaming!
+2026-09-08T11:54:32.784403034Z [INFO] [1788868472.783571920] [camera]: Close Sensor - Done. 
+2026-09-08T11:54:33.191985448Z  08/09 11:54:33,189 ERROR [133071214986944] (librealsense-exception.h:52) map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T11:54:33.192168433Z  08/09 11:54:33,189 ERROR [133071214986944] (uvc-sensor.cpp:428) acquire_power failed: map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T11:54:33.192569603Z  08/09 11:54:33,191 ERROR [133071214986944] (global_timestamp_reader.cpp:253) Error during time_diff_keeper polling: map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T11:54:33.747791753Z  08/09 11:54:33,746 ERROR [133071189808832] (librealsense-exception.h:52) map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T11:54:33.747881709Z  08/09 11:54:33,747 ERROR [133071189808832] (uvc-sensor.cpp:428) acquire_power failed: map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T11:54:33.747945683Z  08/09 11:54:33,747 ERROR [133071189808832] (error-handling.cpp:99) Error during polling error handler: map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T11:54:34.197519371Z  08/09 11:54:34,196 ERROR [133071223379648] (librealsense-exception.h:52) Failed to enable_sensor /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-2000e1.5.auto/enable_sensor Last Error: No such file or directory
+2026-09-08T11:54:34.197609327Z  08/09 11:54:34,196 ERROR [133071223379648] (sensor.cpp:445) An error has occurred while stop_streaming()!
+2026-09-08T11:54:34.197674419Z  08/09 11:54:34,197 ERROR [133071223379648] (librealsense-exception.h:52) Failed to enable_sensor /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-2000e1.5.auto/enable_sensor Last Error: No such file or directory
+2026-09-08T11:54:34.197751245Z  08/09 11:54:34,197 ERROR [133071223379648] (hid-sensor.cpp:87) An error has occurred while stop_streaming()!
+2026-09-08T11:54:34.198983250Z  08/09 11:54:34,197 ERROR [133071223379648] (librealsense-exception.h:52) open() failed with all retries! Last Error: No such file or directory
+2026-09-08T11:54:34.199032418Z  08/09 11:54:34,198 ERROR [133071223379648] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_x_en Last Error: No such file or directory
+2026-09-08T11:54:34.199077396Z  08/09 11:54:34,198 ERROR [133071223379648] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_y_en Last Error: No such file or directory
+2026-09-08T11:54:34.199172381Z  08/09 11:54:34,198 ERROR [133071223379648] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_timestamp_en Last Error: No such file or directory
+2026-09-08T11:54:34.199206463Z  08/09 11:54:34,198 ERROR [133071223379648] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_z_en Last Error: No such file or directory
+2026-09-08T11:54:34.201083525Z  08/09 11:54:34,200 ERROR [133071223379648] (librealsense-exception.h:52) open() failed with all retries! Last Error: No such file or directory
+2026-09-08T11:54:34.201163424Z  08/09 11:54:34,200 ERROR [133071223379648] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-200073.3.auto/iio:device0/scan_elements/in_accel_y_en Last Error: No such file or directory
+2026-09-08T11:54:34.201220414Z  08/09 11:54:34,200 ERROR [133071223379648] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-200073.3.auto/iio:device0/scan_elements/in_timestamp_en Last Error: No such file or directory
+2026-09-08T11:54:34.201313443Z  08/09 11:54:34,200 ERROR [133071223379648] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-200073.3.auto/iio:device0/scan_elements/in_accel_z_en Last Error: No such file or directory
+2026-09-08T11:54:34.201339424Z  08/09 11:54:34,200 ERROR [133071223379648] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/HID-SENSOR-200073.3.auto/iio:device0/scan_elements/in_accel_x_en Last Error: No such file or directory

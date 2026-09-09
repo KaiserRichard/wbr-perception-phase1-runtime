@@ -1,0 +1,60 @@
+Sep 08 18:50:47 richard kernel: docker0: port 1(veth8e8b9dd) entered blocking state
+Sep 08 18:50:47 richard kernel: docker0: port 1(veth8e8b9dd) entered disabled state
+Sep 08 18:50:47 richard kernel: veth8e8b9dd: entered allmulticast mode
+Sep 08 18:50:47 richard kernel: veth8e8b9dd: entered promiscuous mode
+Sep 08 18:50:47 richard kernel: eth0: renamed from vethcda8709
+Sep 08 18:50:47 richard kernel: docker0: port 1(veth8e8b9dd) entered blocking state
+Sep 08 18:50:47 richard kernel: docker0: port 1(veth8e8b9dd) entered forwarding state
+Sep 08 18:50:48 richard kernel: docker0: port 1(veth8e8b9dd) entered disabled state
+Sep 08 18:50:48 richard kernel: vethcda8709: renamed from eth0
+Sep 08 18:50:48 richard kernel: docker0: port 1(veth8e8b9dd) entered disabled state
+Sep 08 18:50:48 richard kernel: veth8e8b9dd (unregistering): left allmulticast mode
+Sep 08 18:50:48 richard kernel: veth8e8b9dd (unregistering): left promiscuous mode
+Sep 08 18:50:48 richard kernel: docker0: port 1(veth8e8b9dd) entered disabled state
+Sep 08 18:50:49 richard kernel: docker0: port 1(veth300b01b) entered blocking state
+Sep 08 18:50:49 richard kernel: docker0: port 1(veth300b01b) entered disabled state
+Sep 08 18:50:49 richard kernel: veth300b01b: entered allmulticast mode
+Sep 08 18:50:49 richard kernel: veth300b01b: entered promiscuous mode
+Sep 08 18:50:49 richard kernel: eth0: renamed from veth3e52b64
+Sep 08 18:50:49 richard kernel: docker0: port 1(veth300b01b) entered blocking state
+Sep 08 18:50:49 richard kernel: docker0: port 1(veth300b01b) entered forwarding state
+Sep 08 18:50:50 richard kernel: docker0: port 1(veth300b01b) entered disabled state
+Sep 08 18:50:50 richard kernel: veth3e52b64: renamed from eth0
+Sep 08 18:50:50 richard kernel: docker0: port 1(veth300b01b) entered disabled state
+Sep 08 18:50:50 richard kernel: veth300b01b (unregistering): left allmulticast mode
+Sep 08 18:50:50 richard kernel: veth300b01b (unregistering): left promiscuous mode
+Sep 08 18:50:50 richard kernel: docker0: port 1(veth300b01b) entered disabled state
+Sep 08 18:50:50 richard kernel: docker0: port 1(veth822573c) entered blocking state
+Sep 08 18:50:50 richard kernel: docker0: port 1(veth822573c) entered disabled state
+Sep 08 18:50:50 richard kernel: veth822573c: entered allmulticast mode
+Sep 08 18:50:50 richard kernel: veth822573c: entered promiscuous mode
+Sep 08 18:50:50 richard kernel: eth0: renamed from vethc19ff90
+Sep 08 18:50:50 richard kernel: docker0: port 1(veth822573c) entered blocking state
+Sep 08 18:50:50 richard kernel: docker0: port 1(veth822573c) entered forwarding state
+Sep 08 18:50:51 richard kernel: docker0: port 1(veth822573c) entered disabled state
+Sep 08 18:50:51 richard kernel: vethc19ff90: renamed from eth0
+Sep 08 18:50:51 richard kernel: docker0: port 1(veth822573c) entered disabled state
+Sep 08 18:50:51 richard kernel: veth822573c (unregistering): left allmulticast mode
+Sep 08 18:50:51 richard kernel: veth822573c (unregistering): left promiscuous mode
+Sep 08 18:50:51 richard kernel: docker0: port 1(veth822573c) entered disabled state
+Sep 08 18:50:52 richard kernel: docker0: port 1(veth3874653) entered blocking state
+Sep 08 18:50:52 richard kernel: docker0: port 1(veth3874653) entered disabled state
+Sep 08 18:50:52 richard kernel: veth3874653: entered allmulticast mode
+Sep 08 18:50:52 richard kernel: veth3874653: entered promiscuous mode
+Sep 08 18:50:52 richard kernel: eth0: renamed from veth0077764
+Sep 08 18:50:52 richard kernel: docker0: port 1(veth3874653) entered blocking state
+Sep 08 18:50:52 richard kernel: docker0: port 1(veth3874653) entered forwarding state
+Sep 08 18:50:52 richard kernel: docker0: port 1(veth3874653) entered disabled state
+Sep 08 18:50:52 richard kernel: veth0077764: renamed from eth0
+Sep 08 18:50:52 richard kernel: docker0: port 1(veth3874653) entered disabled state
+Sep 08 18:50:52 richard kernel: veth3874653 (unregistering): left allmulticast mode
+Sep 08 18:50:52 richard kernel: veth3874653 (unregistering): left promiscuous mode
+Sep 08 18:50:52 richard kernel: docker0: port 1(veth3874653) entered disabled state
+Sep 08 18:51:50 richard kernel: hid-sensor-hub 0003:8086:0B3A.0004: No report with id 0xffffffff found
+Sep 08 18:51:50 richard kernel: hid-sensor-hub 0003:8086:0B3A.0004: No report with id 0xffffffff found
+Sep 08 18:54:31 richard kernel: uvcvideo 5-3:1.2: Failed to set UVC probe control : -32 (exp. 48).
+Sep 08 18:54:31 richard kernel: uvcvideo 5-3:1.2: Failed to set UVC probe control : -32 (exp. 48).
+Sep 08 18:54:32 richard kernel: usb 5-3: USB disconnect, device number 2
+Sep 08 18:54:32 richard kernel: show_signal_msg: 2 callbacks suppressed
+Sep 08 18:54:32 richard kernel: realsense2_came[14847]: segfault at 7fae0292d84f ip 00007faa1df5a4cd sp 00007faa037f99f0 error 4 in librealsense2.so.2.58.1[6844cd,7faa1daa3000+694000] likely on CPU 4 (core 4, socket 0)
+Sep 08 18:54:32 richard kernel: Code: 45 c8 31 c0 48 85 ff 0f 84 f8 52 c0 ff 44 8b a5 24 fe ff ff 41 83 fc 12 77 63 48 89 fb 48 8b 3f 4c 8d b5 50 fe ff ff 44 89 e6 <48> 8b 07 48 03 78 b8 48 8b 07 ff 50 28 84 c0 0f 84 12 53 c0 ff 48

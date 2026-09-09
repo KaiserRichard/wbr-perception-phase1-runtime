@@ -1,0 +1,369 @@
+Source: https://raw.githubusercontent.com/realsenseai/librealsense/v2.58.1/src/ds/ds-calib-parsers.cpp
+1: // License: Apache 2.0. See LICENSE file in root directory.
+2: // Copyright(c) 2022 RealSense, Inc. All Rights Reserved.
+3: 
+4: #include "ds-calib-parsers.h"
+5: #include "ds-private.h"
+6: 
+7: #include "ds/d400/d400-private.h"
+8: #include "ds/d500/d500-private.h"
+9: 
+10: namespace librealsense
+11: {
+12:     using namespace ds;
+13: 
+14:     mm_calib_handler::mm_calib_handler(std::shared_ptr<hw_monitor> hw_monitor, uint16_t pid) :
+15:         _hw_monitor(hw_monitor), _pid(pid)
+16:     {
+17:         _imu_eeprom_raw = [this]() {
+18:             return get_imu_eeprom_raw();
+19:         };
+20: 
+21:         _calib_parser = [this]() {
+22: 
+23:             std::vector<uint8_t> raw(tm1_eeprom_size);
+24:             uint16_t calib_id = dm_v2_eeprom_id; //assume DM V2 IMU as default platform
+25:             bool valid = false;
+26: 
+27:             try
+28:             {
+29:                 raw = *_imu_eeprom_raw;
+30:                 calib_id = *reinterpret_cast<uint16_t*>(raw.data());
+31:                 valid = true;
+32:             }
+33:             catch (const std::exception&)
+34:             {
+35:                 // in case calibration table errors (invalid table, empty table, or corrupted table), data is invalid and default intrinsic and extrinsic will be used
+36:                 LOG_WARNING("IMU Calibration is not available, default intrinsic and extrinsic will be used.");
+37:             }
+38: 
+39:             std::shared_ptr<mm_calib_parser> prs = nullptr;
+40:             switch (calib_id)
+41:             {
+42:             case dm_v2_eeprom_id: // DM V2 id
+43:                 prs = std::make_shared<dm_v2_imu_calib_parser>(raw, _pid, valid); break;
+44:             case tm1_eeprom_id: // TM1 id
+45:                 prs = std::make_shared<tm1_imu_calib_parser>(raw); break;
+46:             case l500_eeprom_id: // L515
+47:                 prs = std::make_shared<l500_imu_calib_parser>(raw, valid); break;
+48:             default:
+49:                 throw recoverable_exception(rsutils::string::from() << "Motion Intrinsics unresolved - "
+50:                     << ((valid) ? "device is not calibrated" : "invalid calib type "),
+51:                     RS2_EXCEPTION_TYPE_BACKEND);
+52:             }
+53:             return prs;
+54:         };
+55:     }
+56: 
+57:     std::vector<uint8_t> mm_calib_handler::get_imu_eeprom_raw() const
+58:     {
+59:         const int offset = 0;
+60:         const int size = eeprom_imu_table_size;
+61:         command cmd(MMER, offset, size);
+62:         return _hw_monitor->send(cmd);
+63:     }
+64: 
+65:     ds::imu_intrinsic mm_calib_handler::get_intrinsic(rs2_stream stream)
+66:     {
+67:         return (*_calib_parser)->get_intrinsic(stream);
+68:     }
+69: 
+70:     rs2_extrinsics mm_calib_handler::get_extrinsic(rs2_stream stream)
+71:     {
+72:         return (*_calib_parser)->get_extrinsic_to(stream);
+73:     }
+74: 
+75:     const std::vector<uint8_t> mm_calib_handler::get_fisheye_calib_raw()
+76:     {
+77:         auto fe_calib_table = (*(ds::check_calib<ds::tm1_eeprom>(*_imu_eeprom_raw))).calibration_table.calib_model.fe_calibration;
+78:         uint8_t* fe_calib_ptr = reinterpret_cast<uint8_t*>(&fe_calib_table);
+79:         return std::vector<uint8_t>(fe_calib_ptr, fe_calib_ptr + ds::fisheye_calibration_table_size);
+80:     }
+81: 
+82:     rs2_extrinsics tm1_imu_calib_parser::get_extrinsic_to(rs2_stream stream)
+83:     {
+84:         if (!(RS2_STREAM_ACCEL == stream) && !(RS2_STREAM_GYRO == stream) && !(RS2_STREAM_FISHEYE == stream))
+85:             throw std::runtime_error(rsutils::string::from() << "TM1 Calibration does not provide extrinsic for : " << rs2_stream_to_string(stream) << " !");
+86: 
+87:         auto fe_calib = calib_table.calibration_table.calib_model.fe_calibration;
+88: 
+89:         auto rot = fe_calib.fisheye_to_imu.rotation;
+90:         auto trans = fe_calib.fisheye_to_imu.translation;
+91: 
+92:         pose ex = { { { rot(0,0), rot(1,0),rot(2,0)},
+93:                       { rot(0,1), rot(1,1),rot(2,1) },
+94:                       { rot(0,2), rot(1,2),rot(2,2) } },
+95:                       { trans[0], trans[1], trans[2] } };
+96: 
+97:         if (RS2_STREAM_FISHEYE == stream)
+98:             return inverse(from_pose(ex));
+99:         else
+100:             return from_pose(ex);
+101:     }
+102: 
+103:     ds::imu_intrinsic tm1_imu_calib_parser::get_intrinsic(rs2_stream stream)
+104:     {
+105:         ds::imu_intrinsics in_intr;
+106:         switch (stream)
+107:         {
+108:         case RS2_STREAM_ACCEL:
+109:             in_intr = calib_table.calibration_table.imu_calib_table.accel_intrinsics; break;
+110:         case RS2_STREAM_GYRO:
+111:             in_intr = calib_table.calibration_table.imu_calib_table.gyro_intrinsics; break;
+112:         default:
+113:             throw std::runtime_error(rsutils::string::from() << "TM1 IMU Calibration does not support intrinsic for : " << rs2_stream_to_string(stream) << " !");
+114:         }
+115:         ds::imu_intrinsic out_intr{};
+116:         for (auto i = 0; i < 3; i++)
+117:         {
+118:             out_intr.sensitivity(i, i) = in_intr.scale[i];
+119:             out_intr.bias[i] = in_intr.bias[i];
+120:         }
+121:         return out_intr;
+122:     }
+123: 
+124:     dm_v2_imu_calib_parser::dm_v2_imu_calib_parser(const std::vector<uint8_t>& raw_data, uint16_t pid, bool valid)
+125:     {
+126:         // product id to identify platform specific parameters, imu models and physical location
+127:         _pid = pid;
+128: 
+129:         _calib_table.module_info.dm_v2_calib_table.extrinsic_valid = 0;
+130:         _calib_table.module_info.dm_v2_calib_table.intrinsic_valid = 0;
+131: 
+132:         _valid_intrinsic = false;
+133:         _valid_extrinsic = false;
+134: 
+135:         // default parser to be applied when no FW calibration is available
+136:         if (valid)
+137:         {
+138:             try
+139:             {
+140:                 _calib_table = *(ds::check_calib<ds::dm_v2_eeprom>(raw_data));
+141:                 _valid_intrinsic = (_calib_table.module_info.dm_v2_calib_table.intrinsic_valid == 1) ? true : false;
+142:                 _valid_extrinsic = (_calib_table.module_info.dm_v2_calib_table.extrinsic_valid == 1) ? true : false;
+143:             }
+144:             catch (...)
+145:             {
+146:                 _valid_intrinsic = false;
+147:                 _valid_extrinsic = false;
+148:             }
+149:         }
+150: 
+151:         // TODO - review possibly refactor into a map if necessary
+152:         //
+153:         // predefined platform specific extrinsic, IMU assembly transformation based on mechanical drawing (meters)
+154:         rs2_extrinsics _def_extr;
+155: 
+156:         if (_pid == ds::RS435I_PID || _pid == ds::RS436_PID)
+157:         {
+158:             // D435i specific - Bosch BMI055
+159:             _def_extr = { { 1, 0, 0, 0, 1, 0, 0, 0, 1 }, { -0.00552f, 0.0051f, 0.01174f} };
+160:             _imu_2_depth_rot = { {-1,0,0},{0,1,0},{0,0,-1} };
+161:         }
+162:         else if (_pid == ds::RS455_PID)
+163:         {
+164:             // D455 specific - Bosch BMI055
+165:             _def_extr = { { 1, 0, 0, 0, 1, 0, 0, 0, 1 },{ -0.03022f, 0.0074f, 0.01602f } };
+166:             _imu_2_depth_rot = { { -1,0,0 },{ 0,1,0 },{ 0,0,-1 } };
+167:         }
+168:         else if( _pid == ds::RS457_PID )
+169:         {
+170:             _def_extr = { { 1, 0, 0, 0, 1, 0, 0, 0, 1 },{ -0.09530f, -0.00056f, 0.01740f } };
+171:             _imu_2_depth_rot = { { -1,0,0 },{ 0,1,0 },{ 0,0,-1 } };
+172:         }
+173:         else if( _pid == ds::D555_PID )
+174:         {
+175:             _def_extr = { { 1, 0, 0, 0, 1, 0, 0, 0, 1 },{ -0.0374f, 0.00719f, 0.0223f } };
+176:             _imu_2_depth_rot = { { -1,0,0 },{ 0,1,0 },{ 0,0,-1 } };
+177:         }
+178:         else if ( _pid == ds::D585_PID || _pid == ds::D585S_PID )
+179:         {
+180:             // D585/D585S specific - Bosch BMI085
+181:             _def_extr = { { 1, 0, 0, 0, 1, 0, 0, 0, 1 },{ -0.0195f, 0.0f, -0.0114f } };
+182:             _imu_2_depth_rot = { { -1,0,0 },{ 0,-1,0 },{ 0,0,1 } };
+183:         }
+184:         else // unmapped configurations
+185:         {
+186:             // IMU on new devices is oriented such that FW output is consistent with D435i
+187:             // use same rotation matrix as D435i so that librealsense output from unsupported
+188:             // devices will still be correctly aligned with depth coordinate system.
+189:             _def_extr = { { 1, 0, 0, 0, 1, 0, 0, 0, 1 },{ 0.f, 0.f, 0.f } };
+190:             _imu_2_depth_rot = { { -1,0,0 },{ 0,1,0 },{ 0,0,-1 } };
+191:             LOG_ERROR("Undefined platform with IMU, use default intrinsic/extrinsic data, PID: " << _pid);
+192:         }
+193: 
+194:         // default intrinsic in case no valid calibration data is available
+195:         // scale = 1 and offset = 0
+196:         _def_intr = { { 1, 0, 0, 0, 1, 0, 0, 0, 1 },{ 0.0, 0.0, 0.0 } };
+197: 
+198:         // handling extrinsic
+199:         if (_valid_extrinsic)
+200:         {
+201:             // extrinsic from calibration table, by user custom calibration, The extrinsic is stored as array of floats / little-endian
+202:             std::memcpy( &_extr, &_calib_table.module_info.dm_v2_calib_table.depth_to_imu, sizeof( rs2_extrinsics ) );
+203:         }
+204:         else
+205:         {
+206:             LOG_INFO("IMU extrinsic table not found; using CAD values");
+207:             // default extrinsic based on mechanical drawing
+208:             _extr = _def_extr;
+209:         }
+210:     }
+211: 
+212:     rs2_extrinsics dm_v2_imu_calib_parser::get_extrinsic_to(rs2_stream stream)
+213:     {
+214:         if (!(RS2_STREAM_ACCEL == stream) && !(RS2_STREAM_GYRO == stream))
+215:             throw std::runtime_error(rsutils::string::from() << "Depth Module V2 does not support extrinsic for : " << rs2_stream_to_string(stream) << " !");
+216: 
+217:         return _extr;
+218:     }
+219: 
+220:     ds::imu_intrinsic dm_v2_imu_calib_parser::get_intrinsic(rs2_stream stream)
+221:     {
+222:         ds::dm_v2_imu_intrinsic in_intr;
+223:         switch (stream)
+224:         {
+225:         case RS2_STREAM_ACCEL:
+226:             if (_valid_intrinsic)
+227:             {
+228:                 in_intr = _calib_table.module_info.dm_v2_calib_table.accel_intrinsic;
+229:             }
+230:             else
+231:             {
+232:                 LOG_INFO("Depth Module V2 IMU " << rs2_stream_to_string(stream) << "no valid intrinsic available, use default values.");
+233:                 in_intr = _def_intr;
+234:             }
+235:             break;
+236:         case RS2_STREAM_GYRO:
+237:             if (_valid_intrinsic)
+238:             {
+239:                 in_intr = _calib_table.module_info.dm_v2_calib_table.gyro_intrinsic;
+240:                 in_intr.bias = in_intr.bias * static_cast<float>(d2r);        // The gyro bias is calculated in Deg/sec
+241:             }
+242:             else
+243:             {
+244:                 LOG_INFO("Depth Module V2 IMU " << rs2_stream_to_string(stream) << "intrinsic not valid, use default values.");
+245:                 in_intr = _def_intr;
+246:             }
+247:             break;
+248:         default:
+249:             throw std::runtime_error(rsutils::string::from() << "Depth Module V2 does not provide intrinsic for stream type : " << rs2_stream_to_string(stream) << " !");
+250:         }
+251: 
+252:         return { in_intr.sensitivity, in_intr.bias, {0,0,0}, {0,0,0} };
+253:     }
+254: 
+255:     l500_imu_calib_parser::l500_imu_calib_parser(const std::vector<uint8_t>& raw_data, bool valid)
+256:     {
+257:         // default parser to be applied when no FW calibration is available
+258:         _valid_intrinsic = false;
+259:         _valid_extrinsic = false;
+260: 
+261:         // in case calibration table is provided but with incorrect header and CRC, both intrinsic and extrinsic will use default values
+262:         // calibration table has flags to indicate if it contains valid intrinsic and extrinsic, use this as further indication if the data is valid
+263:         // currently, the imu calibration script only calibrates intrinsic so only the intrinsic_valid field is set during calibration, extrinsic
+264:         // will use default values derived from mechanical CAD drawing, however, if the calibration script in the future or user calibration provide
+265:         // valid extrinsic, the extrinsic_valid field should be set in the table and detected here so the values from the table can be used.
+266:         if (valid)
+267:         {
+268:             try
+269:             {
+270:                 imu_calib_table = *(ds::check_calib<ds::dm_v2_calibration_table>(raw_data));
+271:                 _valid_intrinsic = (imu_calib_table.intrinsic_valid == 1) ? true : false;
+272:                 _valid_extrinsic = (imu_calib_table.extrinsic_valid == 1) ? true : false;
+273:             }
+274:             catch (...)
+275:             {
+276:                 _valid_intrinsic = false;
+277:                 _valid_extrinsic = false;
+278:             }
+279:         }
+280: 
+281:         // L515 specific
+282:         // Bosch BMI085 assembly transformation based on mechanical drawing (meters)
+283:         // device thickness 26 mm from front glass to back surface
+284:         // depth ground zero is 4.5mm from front glass into the device
+285:         // IMU reference in z direction is at 20.93mm from back surface
+286:         //
+287:         // IMU offset in Z direction = 4.5 mm - (26 mm - 20.93 mm) = 4.5 mm - 5.07mm = - 0.57mm
+288:         // IMU offset in x and Y direction (12.45mm, -16.42mm) from center
+289:         //
+290:         // coordinate system as reference, looking from back of the camera towards front,
+291:         // the positive x-axis points to the right, the positive y-axis points down, and the
+292:         // positive z-axis points forward.
+293:         // origin in the center but z-direction 4.5mm from front glass into the device
+294:         // the matrix below is such that output of motion data is consistent with convention
+295:         // that positive direction aligned with gravity leads to -1g and opposite direction
+296:         // leads to +1g, for example, positive z_aixs points forward away from front glass of
+297:         // the device, 1) if place the device flat on a table, facing up, positive z-axis points
+298:         // up, z-axis acceleration is around +1g; 2) facing down, positive z-axis points down,
+299:         // z-axis accleration would be around -1g
+300:         rs2_extrinsics _def_extr;
+301:         _def_extr = { { 1, 0, 0, 0, 1, 0, 0, 0, 1 },{ -0.01245f, 0.01642f, 0.00057f } };
+302:         _imu_2_depth_rot = { { -1, 0, 0 },{ 0, 1, 0 },{ 0, 0, -1 } };
+303: 
+304:         // default intrinsic in case no valid calibration data is available
+305:         // scale = 1 and offset = 0
+306:         _def_intr = { { 1, 0, 0, 0, 1, 0, 0, 0, 1 },{ 0.0, 0.0, 0.0 } };
+307: 
+308: 
+309:         // handling extrinsic
+310:         if (_valid_extrinsic)
+311:         {
+312:             // only in case valid extrinsic is available in calibration data by calibration script in future or user custom calibration
+313:             std::memcpy( &_extr, &imu_calib_table.depth_to_imu, sizeof( rs2_extrinsics ) );
+314:         }
+315:         else
+316:         {
+317:             // L515 - BMI085 assembly transformation based on mechanical drawing
+318:             LOG_INFO("IMU extrinsic using CAD values");
+319:             _extr = _def_extr;
+320:         }
+321:     }
+322: 
+323: 
+324:     ds::imu_intrinsic l500_imu_calib_parser::get_intrinsic(rs2_stream stream)
+325:     {
+326:         ds::dm_v2_imu_intrinsic in_intr;
+327:         switch (stream)
+328:         {
+329:         case RS2_STREAM_ACCEL:
+330:             if (_valid_intrinsic)
+331:             {
+332:                 in_intr = imu_calib_table.accel_intrinsic;
+333:             }
+334:             else
+335:             {
+336:                 LOG_INFO("L515 IMU " << rs2_stream_to_string(stream) << "no valid intrinsic available, use default values.");
+337:                 in_intr = _def_intr;
+338:             }
+339:             break;
+340:         case RS2_STREAM_GYRO:
+341:             if (_valid_intrinsic)
+342:             {
+343:                 in_intr = imu_calib_table.gyro_intrinsic;
+344:                 in_intr.bias = in_intr.bias * static_cast<float>(d2r);        // The gyro bias is calculated in Deg/sec
+345:             }
+346:             else
+347:             {
+348:                 LOG_INFO("L515 IMU " << rs2_stream_to_string(stream) << "no valid intrinsic available, use default values.");
+349:                 in_intr = _def_intr;
+350:             }
+351:             break;
+352:         default:
+353:             throw std::runtime_error(rsutils::string::from() << "L515 does not provide intrinsic for stream type : " << rs2_stream_to_string(stream) << " !");
+354:         }
+355: 
+356:         return{ in_intr.sensitivity, in_intr.bias,{ 0,0,0 },{ 0,0,0 } };
+357:     }
+358: 
+359:     rs2_extrinsics l500_imu_calib_parser::get_extrinsic_to(rs2_stream stream)
+360:     {
+361:         if (!(RS2_STREAM_ACCEL == stream) && !(RS2_STREAM_GYRO == stream))
+362:             throw std::runtime_error(rsutils::string::from() << "L515 does not support extrinsic for : " << rs2_stream_to_string(stream) << " !");
+363: 
+364:         return _extr;
+365:     }
+366: 
+367: 
+368: }

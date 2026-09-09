@@ -1,0 +1,16 @@
+2026-09-08T19:16:57+07:00
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+Bus 001 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 002: ID 0627:0001 Adomax Technology Co., Ltd QEMU Tablet
+Bus 002 Device 003: ID 0627:0001 Adomax Technology Co., Ltd QEMU Tablet
+Bus 002 Device 004: ID 0627:0001 Adomax Technology Co., Ltd QEMU Tablet
+Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 005 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 006 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+crw------- 1 root root 239, 0 Sep  8 16:58 /dev/hidraw0
+crw------- 1 root root 239, 1 Sep  8 16:58 /dev/hidraw1
+crw------- 1 root root 239, 2 Sep  8 16:58 /dev/hidraw2
+?? D435I_BASELINE_AUDIT.md
+?? experiments/

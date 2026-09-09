@@ -1,0 +1,96 @@
+=== DATE ===
+2026-09-08T17:58:15+07:00
+
+=== LSUSB ===
+Bus 001 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 002: ID 0627:0001 Adomax Technology Co., Ltd QEMU Tablet
+Bus 002 Device 003: ID 0627:0001 Adomax Technology Co., Ltd QEMU Tablet
+Bus 002 Device 004: ID 0627:0001 Adomax Technology Co., Ltd QEMU Tablet
+Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 005 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 005 Device 002: ID 8086:0b3a Intel Corp. Intel(R) RealSense(TM) Depth Camera 435i
+Bus 006 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+
+=== USB TREE ===
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=uhci_hcd/2p, 12M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=ehci-pci/6p, 480M
+    |__ Port 001: Dev 002, If 0, Class=Human Interface Device, Driver=usbhid, 480M
+    |__ Port 002: Dev 003, If 0, Class=Human Interface Device, Driver=usbhid, 480M
+    |__ Port 003: Dev 004, If 0, Class=Human Interface Device, Driver=usbhid, 480M
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=uhci_hcd/2p, 12M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=uhci_hcd/2p, 12M
+/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 480M
+    |__ Port 003: Dev 002, If 0, Class=Video, Driver=uvcvideo, 480M
+    |__ Port 003: Dev 002, If 1, Class=Video, Driver=uvcvideo, 480M
+    |__ Port 003: Dev 002, If 2, Class=Video, Driver=uvcvideo, 480M
+    |__ Port 003: Dev 002, If 3, Class=Video, Driver=uvcvideo, 480M
+    |__ Port 003: Dev 002, If 4, Class=Video, Driver=uvcvideo, 480M
+    |__ Port 003: Dev 002, If 5, Class=Human Interface Device, Driver=usbhid, 480M
+/:  Bus 006.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 5000M
+
+$ date -Is; lsusb; lsusb -t; ls -l /dev/video* /dev/hidraw*; id; getent group video; find /sys/bus/iio/devices -maxdepth 2 -name name -exec cat {} \; ; ls -l /sys/class/hidraw; cat /sys/bus/usb/devices/5-3/speed
+2026-09-08T18:50:46+07:00
+Bus 001 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 002: ID 0627:0001 Adomax Technology Co., Ltd QEMU Tablet
+Bus 002 Device 003: ID 0627:0001 Adomax Technology Co., Ltd QEMU Tablet
+Bus 002 Device 004: ID 0627:0001 Adomax Technology Co., Ltd QEMU Tablet
+Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 005 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 005 Device 002: ID 8086:0b3a Intel Corp. Intel(R) RealSense(TM) Depth Camera 435i
+Bus 006 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=uhci_hcd/2p, 12M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=ehci-pci/6p, 480M
+    |__ Port 001: Dev 002, If 0, Class=Human Interface Device, Driver=usbhid, 480M
+    |__ Port 002: Dev 003, If 0, Class=Human Interface Device, Driver=usbhid, 480M
+    |__ Port 003: Dev 004, If 0, Class=Human Interface Device, Driver=usbhid, 480M
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=uhci_hcd/2p, 12M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=uhci_hcd/2p, 12M
+/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 480M
+    |__ Port 003: Dev 002, If 0, Class=Video, Driver=uvcvideo, 480M
+    |__ Port 003: Dev 002, If 1, Class=Video, Driver=uvcvideo, 480M
+    |__ Port 003: Dev 002, If 2, Class=Video, Driver=uvcvideo, 480M
+    |__ Port 003: Dev 002, If 3, Class=Video, Driver=uvcvideo, 480M
+    |__ Port 003: Dev 002, If 4, Class=Video, Driver=uvcvideo, 480M
+    |__ Port 003: Dev 002, If 5, Class=Human Interface Device, Driver=usbhid, 480M
+/:  Bus 006.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 5000M
+crw-------  1 root root  239, 0 Sep  8 16:58 /dev/hidraw0
+crw-------  1 root root  239, 1 Sep  8 16:58 /dev/hidraw1
+crw-------  1 root root  239, 2 Sep  8 16:58 /dev/hidraw2
+crw-------  1 root root  239, 3 Sep  8 17:53 /dev/hidraw3
+crw-rw----+ 1 root video  81, 0 Sep  8 17:53 /dev/video0
+crw-rw----+ 1 root video  81, 1 Sep  8 17:53 /dev/video1
+crw-rw----+ 1 root video  81, 2 Sep  8 17:53 /dev/video2
+crw-rw----+ 1 root video  81, 3 Sep  8 17:53 /dev/video3
+crw-rw----+ 1 root video  81, 4 Sep  8 17:53 /dev/video4
+crw-rw----+ 1 root video  81, 5 Sep  8 17:53 /dev/video5
+uid=1000(richard) gid=1000(richard) groups=1000(richard),4(adm),24(cdrom),27(sudo),30(dip),44(video),46(plugdev),100(users),114(lpadmin),984(docker),992(render)
+video:x:44:richard
+total 0
+lrwxrwxrwx 1 root root 0 Sep  8 16:58 hidraw0 -> ../../devices/pci0000:00/0000:00:1d.7/usb2/2-1/2-1:1.0/0003:0627:0001.0001/hidraw/hidraw0
+lrwxrwxrwx 1 root root 0 Sep  8 16:58 hidraw1 -> ../../devices/pci0000:00/0000:00:1d.7/usb2/2-2/2-2:1.0/0003:0627:0001.0002/hidraw/hidraw1
+lrwxrwxrwx 1 root root 0 Sep  8 16:58 hidraw2 -> ../../devices/pci0000:00/0000:00:1d.7/usb2/2-3/2-3:1.0/0003:0627:0001.0003/hidraw/hidraw2
+lrwxrwxrwx 1 root root 0 Sep  8 18:50 hidraw3 -> ../../devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0004/hidraw/hidraw3
+480
+
+FINAL DEVICE CHECK
+2026-09-08T19:01:23+07:00
+Bus 001 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 002: ID 0627:0001 Adomax Technology Co., Ltd QEMU Tablet
+Bus 002 Device 003: ID 0627:0001 Adomax Technology Co., Ltd QEMU Tablet
+Bus 002 Device 004: ID 0627:0001 Adomax Technology Co., Ltd QEMU Tablet
+Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 005 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 006 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+ls: cannot access '/dev/video*': No such file or directory
+crw------- 1 root root 239, 0 Sep  8 16:58 /dev/hidraw0
+crw------- 1 root root 239, 1 Sep  8 16:58 /dev/hidraw1
+crw------- 1 root root 239, 2 Sep  8 16:58 /dev/hidraw2
+total 0
+drwxr-xr-x 2 root root 0 Sep  8 19:01 .
+drwxr-xr-x 4 root root 0 Sep  8 17:53 ..

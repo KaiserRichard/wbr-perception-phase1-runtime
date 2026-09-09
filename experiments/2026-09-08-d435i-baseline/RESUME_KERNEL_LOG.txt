@@ -1,0 +1,4 @@
+Sep 08 19:13:21 richard kernel: uvcvideo 5-3:1.0: Failed to resubmit status URB (-1).
+Sep 08 19:13:22 richard kernel: hid-sensor-hub 0003:8086:0B3A.0005: No report with id 0xffffffff found
+Sep 08 19:15:49 richard kernel: uvcvideo 5-3:1.0: Failed to resubmit status URB (-1).
+Sep 08 19:15:51 richard kernel: usb 5-3: USB disconnect, device number 3

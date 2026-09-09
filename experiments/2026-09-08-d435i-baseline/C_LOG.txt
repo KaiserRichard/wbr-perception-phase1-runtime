@@ -1,0 +1,73 @@
+2026-09-08T12:15:48.366053190Z [INFO] [1788869748.364987104] [camera]: RealSense ROS v4.58.1
+2026-09-08T12:15:48.366117166Z [INFO] [1788869748.365579095] [camera]: Built with LibRealSense v2.58.1
+2026-09-08T12:15:48.366188965Z [INFO] [1788869748.365733029] [camera]: Running with LibRealSense v2.58.1
+2026-09-08T12:15:48.368312198Z  08/09 12:15:48,366 WARNING [139849811924672] (context.cpp:41) No valid configuration file found at : /home/richard/.realsense-config.json loading defaults
+2026-09-08T12:15:48.509168824Z [INFO] [1788869748.508529060] [camera]: Device with serial number 243322073847 was found.
+2026-09-08T12:15:48.509211009Z 
+2026-09-08T12:15:48.509237829Z [INFO] [1788869748.508679921] [camera]: Device with physical ID /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.0/video4linux/video0 was found.
+2026-09-08T12:15:48.509311024Z [INFO] [1788869748.508767086] [camera]: Device with name Intel RealSense D435I was found.
+2026-09-08T12:15:48.509478089Z [INFO] [1788869748.509050928] [camera]: Device with port number 5-3 was found.
+2026-09-08T12:15:48.509525862Z [INFO] [1788869748.509235873] [camera]: Device USB type: 2.1
+2026-09-08T12:15:48.510320118Z [WARN] [1788869748.509337006] [camera]: Device 243322073847 is connected using a 2.1 port. Reduced performance is expected.
+2026-09-08T12:15:48.511121918Z [INFO] [1788869748.509471105] [camera]: getParameters...
+2026-09-08T12:15:48.515552210Z [WARN] [1788869748.514586977] [camera]: For the 'unite_imu_method' param update to take effect, re-enable either gyro or accel stream.
+2026-09-08T12:15:49.510058007Z [INFO] [1788869749.508817872] [camera]: JSON file is loaded! (/config/advanced.json)
+2026-09-08T12:15:49.510152155Z [INFO] [1788869749.509026004] [camera]: Device Name: Intel RealSense D435I
+2026-09-08T12:15:49.510313074Z [INFO] [1788869749.509112889] [camera]: Device Serial No: 243322073847
+2026-09-08T12:15:49.510447173Z [INFO] [1788869749.509176027] [camera]: Device physical port: /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.0/video4linux/video0
+2026-09-08T12:15:49.510515899Z [INFO] [1788869749.509481940] [camera]: Device FW version: 5.17.3.10
+2026-09-08T12:15:49.512530176Z [INFO] [1788869749.510265022] [camera]: Device Product ID: 0x0B3A
+2026-09-08T12:15:49.512612032Z [INFO] [1788869749.510610047] [camera]: Sync Mode: Off
+2026-09-08T12:15:50.791974589Z [INFO] [1788869750.791147646] [camera]: Stopping Sensor: Depth Module
+2026-09-08T12:15:50.792104776Z [INFO] [1788869750.791301580] [camera]: Stopping Sensor: Motion Module
+2026-09-08T12:15:50.809814210Z [INFO] [1788869750.807980128] [camera]: Starting Sensor: Depth Module
+2026-09-08T12:15:50.910178842Z [INFO] [1788869750.908899874] [camera]: Open profile: stream_type: Infra(1), Format: Y8, Width: 640, Height: 480, FPS: 15
+2026-09-08T12:15:50.958688274Z  08/09 12:15:50,956 WARNING [139849811924672] (ds-calib-parsers.cpp:36) IMU Calibration is not available, default intrinsic and extrinsic will be used.
+2026-09-08T12:15:50.974924576Z [INFO] [1788869750.974303530] [camera]: Starting Sensor: Motion Module
+2026-09-08T12:15:50.977322711Z  08/09 12:15:50,976 WARNING [139849218643648] (backend-hid.h:49) write_fs_attribute with gyro_3d-dev1 failed. The specified path /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/trigger/current_trigger is not valid
+2026-09-08T12:15:50.977396744Z  08/09 12:15:50,976 ERROR [139849811924672] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_x_en Last Error: Permission denied
+2026-09-08T12:15:50.979286701Z [ERROR] [1788869750.978913738] [camera]: ./src/rs_node_setup.cpp:550:An exception has been thrown: Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_x_en Last Error: Permission denied
+2026-09-08T12:15:50.979352633Z  08/09 12:15:50,978 ERROR [139849811924672] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_x_en Last Error: Permission denied
+2026-09-08T12:15:50.979389789Z  08/09 12:15:50,978 ERROR [139849811924672] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_y_en Last Error: Permission denied
+2026-09-08T12:15:50.979506846Z  08/09 12:15:50,978 ERROR [139849811924672] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_timestamp_en Last Error: Permission denied
+2026-09-08T12:15:50.979800746Z [ERROR] [1788869750.979043646] [camera]: ./src/rs_node_setup.cpp:432:An exception has been thrown: Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_x_en Last Error: Permission denied
+2026-09-08T12:15:50.979645694Z  08/09 12:15:50,978 ERROR [139849811924672] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_z_en Last Error: Permission denied
+2026-09-08T12:15:50.980249698Z  08/09 12:15:50,978 ERROR [139849811924672] (backend-hid.cpp:1082) Hid device is busy!
+2026-09-08T12:15:50.980361727Z  08/09 12:15:50,978 ERROR [139849811924672] (rs.cpp:280) [rs2_open_multiple( sensor:0x7f313c028d40, profiles:0x7f313c050138, count:2 ) Backend] Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_x_en Last Error: Permission denied
+2026-09-08T12:15:50.980520690Z Failed to start device: Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_x_en Last Error: Permission denied
+2026-09-08T12:15:50.981115753Z [INFO] [1788869750.980647804] [camera]: Stopping Sensor: Motion Module
+2026-09-08T12:15:51.008788455Z [INFO] [1788869751.007607546] [camera]: Starting Sensor: Motion Module
+2026-09-08T12:15:51.011290516Z  08/09 12:15:51,008 WARNING [139849201858240] (backend-hid.h:49) write_fs_attribute with gyro_3d-dev1 failed. The specified path /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/trigger/current_trigger is not valid
+2026-09-08T12:15:51.011483563Z  08/09 12:15:51,009 ERROR [139849520617152] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_x_en Last Error: Permission denied
+2026-09-08T12:15:51.011659568Z [ERROR] [1788869751.011443612] [camera]: ./src/rs_node_setup.cpp:550:An exception has been thrown: Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_x_en Last Error: Permission denied
+2026-09-08T12:15:51.011677727Z  08/09 12:15:51,010 ERROR [139849520617152] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_x_en Last Error: Permission denied
+2026-09-08T12:15:51.011762656Z  08/09 12:15:51,010 ERROR [139849520617152] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_y_en Last Error: Permission denied
+2026-09-08T12:15:51.011808753Z  08/09 12:15:51,010 ERROR [139849520617152] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_timestamp_en Last Error: Permission denied
+2026-09-08T12:15:51.011876640Z  08/09 12:15:51,010 ERROR [139849520617152] (librealsense-exception.h:52) Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_z_en Last Error: Permission denied
+2026-09-08T12:15:51.011928603Z  08/09 12:15:51,010 ERROR [139849520617152] (backend-hid.cpp:1082) Hid device is busy!
+2026-09-08T12:15:51.011948718Z  08/09 12:15:51,011 ERROR [139849520617152] (rs.cpp:280) [rs2_open_multiple( sensor:0x7f313c028d40, profiles:0x7f313c050138, count:2 ) Backend] Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_x_en Last Error: Permission denied
+2026-09-08T12:15:51.012892719Z [ERROR] [1788869751.011656494] [camera]: ./src/rs_node_setup.cpp:432:An exception has been thrown: Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_x_en Last Error: Permission denied
+2026-09-08T12:15:51.012920656Z [ERROR] [1788869751.011857643] [camera]: Error updating the sensors: Failed to open scan_element /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/scan_elements/in_anglvel_x_en Last Error: Permission denied
+2026-09-08T12:15:51.155624496Z [INFO] [1788869751.154141586] [camera]: Device with serial number 243322073847 was found.
+2026-09-08T12:15:51.155723394Z 
+2026-09-08T12:15:51.155812514Z [INFO] [1788869751.154629370] [camera]: Device with physical ID /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.0/video4linux/video0 was found.
+2026-09-08T12:15:51.156375450Z [INFO] [1788869751.155673665] [camera]: Device with name Intel RealSense D435I was found.
+2026-09-08T12:15:51.156462614Z [INFO] [1788869751.155963654] [camera]: Device with port number 5-3 was found.
+2026-09-08T12:15:51.156681642Z [INFO] [1788869751.156130440] [camera]: Device USB type: 2.1
+2026-09-08T12:15:51.157028623Z [WARN] [1788869751.156279625] [camera]: Device 243322073847 is connected using a 2.1 port. Reduced performance is expected.
+2026-09-08T12:15:51.158843707Z [INFO] [1788869751.157438463] [camera]: Stop Sensor: Depth Module
+2026-09-08T12:15:51.158885613Z [INFO] [1788869751.157556637] [camera]: Close Sensor. 
+2026-09-08T12:15:51.309261585Z [INFO] [1788869751.307278598] [camera]: Close Sensor - Done. 
+2026-09-08T12:15:51.802073022Z [ERROR] [1788869751.800697112] [camera]: The device has been disconnected!
+2026-09-08T12:15:51.810496108Z  08/09 12:15:51,809 ERROR [139849562580672] (librealsense-exception.h:52) map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T12:15:51.810577126Z  08/09 12:15:51,809 ERROR [139849562580672] (uvc-sensor.cpp:428) acquire_power failed: map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T12:15:51.810663173Z  08/09 12:15:51,809 ERROR [139849562580672] (error-handling.cpp:99) Error during polling error handler: map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T12:15:51.818967526Z  08/09 12:15:51,817 ERROR [139849811924672] (rs.cpp:280) [rs2_get_device_info( dev:nullptr, info:0 ) UNKNOWN] null pointer passed for argument "dev"
+2026-09-08T12:15:51.819034575Z [ERROR] [1788869751.817853387] [camera]: Error starting device: null pointer passed for argument "dev"
+2026-09-08T12:15:51.824433731Z [WARN] [1788869751.823312609] [camera]: No RealSense devices were found!
+2026-09-08T12:15:57.829148206Z [WARN] [1788869757.828527161] [camera]: No RealSense devices were found!
+2026-09-08T12:16:03.839103857Z [WARN] [1788869763.837505845] [camera]: No RealSense devices were found!
+2026-09-08T12:16:09.846933904Z [WARN] [1788869769.845908606] [camera]: No RealSense devices were found!
+2026-09-08T12:16:15.856821952Z [WARN] [1788869775.855861748] [camera]: No RealSense devices were found!
+2026-09-08T12:16:21.865224995Z [WARN] [1788869781.863815839] [camera]: No RealSense devices were found!
+2026-09-08T12:16:27.870990338Z [WARN] [1788869787.870208094] [camera]: No RealSense devices were found!

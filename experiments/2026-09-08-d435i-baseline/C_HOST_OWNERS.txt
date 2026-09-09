@@ -1,0 +1,3 @@
+2026-09-08T19:15:46+07:00
+  18726 bash -lc date -Is; ps -eo pid,args | rg '(realsense2_camera_node|rs-enumerate|realsense-viewer)' ; fuser /dev/video* /dev/hidraw* 2>&1
+  18732 rg (realsense2_camera_node|rs-enumerate|realsense-viewer)

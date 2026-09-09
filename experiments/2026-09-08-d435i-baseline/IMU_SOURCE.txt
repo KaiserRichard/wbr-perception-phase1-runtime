@@ -1,0 +1,763 @@
+
+REVISION HEAD 9a11121700cb4780e273e34141f6402fe184321d
+
+realsense2_camera/src/rs_node_setup.cpp
+140:         bool is_filter(_filters.end() != find_if(_filters.begin(), _filters.end(), [](std::shared_ptr<NamedFilter> f){return (f->is_enabled()); }));
+141:         if (_sync_frames || is_filter)
+142:             this->_asyncer.invoke(frame);
+143:         else
+144:             frame_callback(frame);
+145:     };
+146: 
+147:     std::function<void(rs2::frame)> imu_callback_function = [this](rs2::frame frame){
+148:         imu_callback(frame);
+149:         if (_imu_sync_method != imu_sync_method::NONE)
+150:             imu_callback_sync(frame);
+151:     };
+152: 
+153:     std::function<void(rs2::frame)> multiple_message_callback_function = [this](rs2::frame frame){multiple_message_callback(frame, _imu_sync_method);};
+154: 
+155:     std::function<void()> update_sensor_func = [this](){
+156:         {
+157:             std::lock_guard<std::mutex> lock_guard(_profile_changes_mutex);
+158:             _is_profile_changed = true;
+159:         }
+160:         _cv_mpc.notify_one();
+161:     };
+162: 
+163:     std::function<void()> hardware_reset_func = [this](){hardwareResetRequest();};
+164: 
+165:     for(auto&& sensor : _dev_sensors)
+166:     {
+167:         const std::string module_name(rs2_to_ros(sensor.get_info(RS2_CAMERA_INFO_NAME)));
+168:         std::unique_ptr<RosSensor> rosSensor;
+169:         if (sensor.is<rs2::depth_sensor>() ||
+170:             sensor.is<rs2::color_sensor>() ||
+171:             sensor.is<rs2::safety_sensor>() ||
+172:             sensor.is<rs2::depth_mapping_sensor>())
+173:         {
+174:             ROS_DEBUG_STREAM("Set " << module_name << " as VideoSensor.");
+175:             rosSensor = std::make_unique<RosSensor>(sensor, _parameters, frame_callback_function, update_sensor_func, hardware_reset_func, _diagnostics_updater, _logger, _use_intra_process, _dev.is<playback>());
+176:         }
+177:         else if (sensor.is<rs2::motion_sensor>())
+178:         {
+179:             ROS_DEBUG_STREAM("Set " << module_name << " as ImuSensor.");
+180:             rosSensor = std::make_unique<RosSensor>(sensor, _parameters, imu_callback_function, update_sensor_func, hardware_reset_func, _diagnostics_updater, _logger, false, _dev.is<playback>());
+181:         }
+182:         else
+183:         {
+184:             ROS_WARN_STREAM("Module Name \"" << module_name << "\" does not define a callback.");
+185:             continue;
+186:         }
+187:         _available_ros_sensors.push_back(std::move(rosSensor));
+188:     }
+189: 
+190: }
+
+realsense2_camera/src/parameters.cpp
+100:                         if (_accelerate_gpu_with_glsl != temp_value)
+101:                         {
+102:                             _accelerate_gpu_with_glsl = temp_value;
+103:                             std::lock_guard<std::mutex> lock_guard(_profile_changes_mutex);
+104:                             _is_accelerate_gpu_with_glsl_changed = true;
+105:                         }
+106:                         _cv_mpc.notify_one();
+107:                     });
+108:     _parameters_names.push_back(param_name);
+109: #endif
+110: 
+111: }
+112: 
+113: void BaseRealSenseNode::setDynamicParams()
+114: {
+115:     // Set default values:
+116:     _imu_sync_method = imu_sync_method::NONE;
+117: 
+118:     auto imu_sync_method_string = [](imu_sync_method value) 
+119:     { 
+120:         switch (value)
+121:         {
+122:         case imu_sync_method::COPY:
+123:             return "COPY";
+124:         case imu_sync_method::LINEAR_INTERPOLATION:
+125:             return "LINEAR_INTERPOLATION";
+126:         default:
+127:             return "NONE";
+128:         }
+129:     };
+130: 
+131:     // Register ROS parameter:
+132:     std::string param_name("unite_imu_method");
+133: 
+134:     std::vector<std::pair<std::string, int> > enum_vec;
+135:     size_t longest_desc(0);
+136:     for (int i=0; i<=int(imu_sync_method::LINEAR_INTERPOLATION); i++)
+137:     {
+138:         std::string enum_str(imu_sync_method_string(imu_sync_method(i)));
+139:         enum_vec.push_back(std::make_pair(enum_str, i));
+140:         longest_desc = std::max(longest_desc, enum_str.size());
+141:     }
+142:     sort(enum_vec.begin(), enum_vec.end(), [](std::pair<std::string, int> e1, std::pair<std::string, int> e2){return (e1.second < e2.second);});
+143:     std::stringstream enum_str_values;
+144:     for (auto vec_iter : enum_vec)
+145:     {
+146:         enum_str_values << std::setw(longest_desc+6) << std::left << vec_iter.first << " : " << vec_iter.second << std::endl;
+147:     }
+148: 
+149:     rcl_interfaces::msg::ParameterDescriptor crnt_descriptor;
+150:     rcl_interfaces::msg::IntegerRange range;
+151:     range.from_value = int(imu_sync_method::NONE);
+152:     range.to_value = int(imu_sync_method::LINEAR_INTERPOLATION);
+153:     crnt_descriptor.integer_range.push_back(range);
+154:     std::stringstream desc;
+155:     desc << "Available options are:" << std::endl << enum_str_values.str();
+156:     crnt_descriptor.description = desc.str();
+157:     _parameters->setParam<int>(param_name, int(imu_sync_method::NONE), 
+158:                             [this](const rclcpp::Parameter& parameter)
+159:                             {
+160:                                 _imu_sync_method = imu_sync_method(parameter.get_value<int>());
+161:                                 {
+162:                                     std::lock_guard<std::mutex> lock(_imu_callback_mutex);
+163:                                     _imu_history.clear();
+164:                                 }
+165:                                 ROS_WARN("For the 'unite_imu_method' param update to take effect, "
+166:                                          "re-enable either gyro or accel stream.");
+167:                             }, crnt_descriptor);
+168:     _parameters_names.push_back(param_name);
+169: }
+170: 
+
+realsense2_camera/src/base_realsense_node.cpp
+315:     int width = depth_frame.get_width();
+316:     int height = depth_frame.get_height();
+317: 
+318:     #ifdef _OPENMP
+319:     #pragma omp parallel for schedule(dynamic) //Using OpenMP to try to parallelise the loop
+320:     #endif
+321:     for (int y = 0; y < height; y++)
+322:     {
+323:         auto depth_pixel_index = y * width;
+324:         for (int x = 0; x < width; x++, ++depth_pixel_index)
+325:         {
+326:             // Check if the depth value is greater than the threashold
+327:             if (p_depth_frame[depth_pixel_index] > clipping_value)
+328:             {
+329:                 p_depth_frame[depth_pixel_index] = 0; //Set to invalid (<=0) value.
+330:             }
+331:         }
+332:     }
+333: }
+334: 
+335: sensor_msgs::msg::Imu BaseRealSenseNode::CreateUnitedMessage(const CimuData accel_data, const CimuData gyro_data)
+336: {
+337:     sensor_msgs::msg::Imu imu_msg;
+338:     rclcpp::Time t(gyro_data.m_time_ns);  //rclcpp::Time(uint64_t nanoseconds)
+339:     imu_msg.header.stamp = t;
+340: 
+341:     imu_msg.angular_velocity.x = gyro_data.m_data.x();
+342:     imu_msg.angular_velocity.y = gyro_data.m_data.y();
+343:     imu_msg.angular_velocity.z = gyro_data.m_data.z();
+344: 
+345:     imu_msg.linear_acceleration.x = accel_data.m_data.x();
+346:     imu_msg.linear_acceleration.y = accel_data.m_data.y();
+347:     imu_msg.linear_acceleration.z = accel_data.m_data.z();
+348:     return imu_msg;
+349: }
+350: 
+351: template <typename T> T lerp(const T &a, const T &b, const double t) {
+352:   return a * (1.0 - t) + b * t;
+353: }
+354: 
+355: void BaseRealSenseNode::FillImuData_LinearInterpolation(const CimuData imu_data, std::deque<sensor_msgs::msg::Imu>& imu_msgs)
+356: {
+357:     _imu_history.push_back(imu_data);
+358:     stream_index_pair type(imu_data.m_type);
+359:     imu_msgs.clear();
+360: 
+361:     if ((type != ACCEL) || _imu_history.size() < 3)
+362:         return;
+363:     
+364:     std::deque<CimuData> gyros_data;
+365:     CimuData accel0, accel1, crnt_imu;
+366: 
+367:     while (_imu_history.size()) 
+368:     {
+369:         crnt_imu = _imu_history.front();
+370:         _imu_history.pop_front();
+371:         if (!accel0.is_set() && crnt_imu.m_type == ACCEL) 
+372:         {
+373:             accel0 = crnt_imu;
+374:         } 
+375:         else if (accel0.is_set() && crnt_imu.m_type == ACCEL) 
+376:         {
+377:             accel1 = crnt_imu;
+378:             const double dt = accel1.m_time_ns - accel0.m_time_ns;
+379: 
+380:             while (gyros_data.size())
+381:             {
+382:                 CimuData crnt_gyro = gyros_data.front();
+383:                 gyros_data.pop_front();
+384:                 const double alpha = (crnt_gyro.m_time_ns - accel0.m_time_ns) / dt;
+385:                 CimuData crnt_accel(ACCEL, lerp(accel0.m_data, accel1.m_data, alpha), crnt_gyro.m_time_ns);
+386:                 imu_msgs.push_back(CreateUnitedMessage(crnt_accel, crnt_gyro));
+387:             }
+388:             accel0 = accel1;
+389:         } 
+390:         else if (accel0.is_set() && crnt_imu.m_time_ns >= accel0.m_time_ns && crnt_imu.m_type == GYRO)
+391:         {
+392:             gyros_data.push_back(crnt_imu);
+393:         }
+394:     }
+395:     _imu_history.push_back(crnt_imu);
+396:     return;
+397: }
+398: 
+399: void BaseRealSenseNode::FillImuData_Copy(const CimuData imu_data, std::deque<sensor_msgs::msg::Imu>& imu_msgs)
+400: {
+401:     stream_index_pair type(imu_data.m_type);
+402: 
+403:     if (ACCEL == type)
+404:     {
+405:         _imu_history.clear();
+406:         _imu_history.push_back(imu_data);
+407:         return;
+408:     }
+409:     if (_imu_history.empty())
+410:         return;
+411: 
+412:     imu_msgs.push_back(CreateUnitedMessage(_imu_history.back(), imu_data));
+413: }
+414: 
+415: void BaseRealSenseNode::ImuMessage_AddDefaultValues(sensor_msgs::msg::Imu& imu_msg)
+416: {
+417:     imu_msg.header.frame_id = IMU_OPTICAL_FRAME_ID;
+418:     imu_msg.orientation.x = 0.0;
+419:     imu_msg.orientation.y = 0.0;
+420:     imu_msg.orientation.z = 0.0;
+421:     imu_msg.orientation.w = 0.0;
+422: 
+423:     imu_msg.orientation_covariance = { -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+424:     imu_msg.linear_acceleration_covariance = { _linear_accel_cov, 0.0, 0.0, 0.0, _linear_accel_cov, 0.0, 0.0, 0.0, _linear_accel_cov};
+425:     imu_msg.angular_velocity_covariance = { _angular_velocity_cov, 0.0, 0.0, 0.0, _angular_velocity_cov, 0.0, 0.0, 0.0, _angular_velocity_cov};
+426: }
+427: 
+428: void BaseRealSenseNode::imu_callback_sync(rs2::frame frame, imu_sync_method sync_method)
+429: {
+430:     std::lock_guard<std::mutex> lock(_imu_callback_mutex);
+431: 
+432:     auto stream = frame.get_profile().stream_type();
+433:     auto stream_index = (stream == GYRO.first)?GYRO:ACCEL;
+434: 
+435:     if (_synced_imu_publisher && (0 != _synced_imu_publisher->getNumSubscribers()))
+436:     {
+437:         auto crnt_reading = *(reinterpret_cast<const float3*>(frame.get_data()));
+438:         Eigen::Vector3d v(crnt_reading.x, crnt_reading.y, crnt_reading.z);
+439:         CimuData imu_data(stream_index, v, frameSystemTimeSec(frame).nanoseconds());
+440:         std::deque<sensor_msgs::msg::Imu> imu_msgs;
+441:         switch (sync_method)
+442:         {
+443:             case imu_sync_method::COPY:
+444:                 FillImuData_Copy(imu_data, imu_msgs);
+445:                 break;
+446:             case imu_sync_method::LINEAR_INTERPOLATION:
+447:                 FillImuData_LinearInterpolation(imu_data, imu_msgs);
+448:                 break;
+449:             case imu_sync_method::NONE: //Cannot really be NONE. Just to avoid compilation warning.
+450:                 throw std::runtime_error("sync_method in this section can be either COPY or LINEAR_INTERPOLATION");
+451:                 break;
+452:         }
+453:         while (imu_msgs.size())
+454:         {
+455:             sensor_msgs::msg::Imu imu_msg = imu_msgs.front();
+456:             ImuMessage_AddDefaultValues(imu_msg);
+457:             _synced_imu_publisher->Publish(imu_msg);
+458:             ROS_DEBUG("Publish united %s stream", rs2_stream_to_string(frame.get_profile().stream_type()));
+459:             imu_msgs.pop_front();
+460:          }
+461:     }
+462: }
+463: 
+464: void BaseRealSenseNode::imu_callback(rs2::frame frame)
+465: {
+466:     auto stream = frame.get_profile().stream_type();
+467: 
+468:     ROS_DEBUG("Frame arrived: stream: %s ; index: %d ; Timestamp Domain: %s",
+469:                 ros_stream_to_string(frame.get_profile().stream_type()).c_str(),
+470:                 frame.get_profile().stream_index(),
+471:                 rs2_timestamp_domain_to_string(frame.get_frame_timestamp_domain()));
+472: 
+473:     stream_index_pair stream_index;
+474:     
+475:     if(stream == GYRO.first)
+476:     {
+477:         stream_index = GYRO;
+478:     }
+479:     else if(stream == ACCEL.first)
+480:     {
+481:         stream_index = ACCEL;
+482:     }
+483:     else if(stream == MOTION.first)
+484:     {
+485:         stream_index = MOTION;
+486:     }
+487:     else 
+488:     {
+489:         ROS_ERROR("Unknown IMU stream type.");
+490:         return;
+491:     }
+492: 
+493:     rclcpp::Time t(frameSystemTimeSec(frame));
+494: 
+495:     if(_imu_publishers.find(stream_index) == _imu_publishers.end())
+496:     {
+497:         ROS_DEBUG("Received IMU callback while topic does not exist");
+498:         return;
+499:     }
+500: 
+501:     if (0 != _imu_publishers[stream_index]->get_subscription_count())
+502:     {
+503:         auto imu_msg = sensor_msgs::msg::Imu();
+504:         ImuMessage_AddDefaultValues(imu_msg);
+505:         imu_msg.header.frame_id = OPTICAL_FRAME_ID(stream_index);
+506: 
+507:         if (MOTION == stream_index)
+508:         {
+509:             auto combined_motion_data = frame.as<rs2::motion_frame>().get_combined_motion_data();
+510: 
+
+realsense2_camera/include/base_realsense_node.h
+310:             const cv::Mat& depth_cv_matrix,
+311:             const rs2_format& depth_format,
+312:             const rclcpp::Time& t);
+313: 
+314:         void publishMetadata(rs2::frame f, const rclcpp::Time& header_time, const std::string& frame_id);
+315: 
+316:         sensor_msgs::msg::Imu CreateUnitedMessage(const CimuData accel_data, const CimuData gyro_data);
+317: 
+318:         void FillImuData_Copy(const CimuData imu_data, std::deque<sensor_msgs::msg::Imu>& imu_msgs);
+319:         void ImuMessage_AddDefaultValues(sensor_msgs::msg::Imu& imu_msg);
+320:         void FillImuData_LinearInterpolation(const CimuData imu_data, std::deque<sensor_msgs::msg::Imu>& imu_msgs);
+321:         void imu_callback(rs2::frame frame);
+322:         void imu_callback_sync(rs2::frame frame, imu_sync_method sync_method=imu_sync_method::COPY);
+323:         void multiple_message_callback(rs2::frame frame, imu_sync_method sync_method);
+324:         void frame_callback(rs2::frame frame);
+325:         
+
+REVISION 4.58.1 53aceeac29e2e848e5e1ede5430124f07b2fe924
+
+realsense2_camera/src/rs_node_setup.cpp
+140:         bool is_filter(_filters.end() != find_if(_filters.begin(), _filters.end(), [](std::shared_ptr<NamedFilter> f){return (f->is_enabled()); }));
+141:         if (_sync_frames || is_filter)
+142:             this->_asyncer.invoke(frame);
+143:         else
+144:             frame_callback(frame);
+145:     };
+146: 
+147:     std::function<void(rs2::frame)> imu_callback_function = [this](rs2::frame frame){
+148:         imu_callback(frame);
+149:         if (_imu_sync_method != imu_sync_method::NONE)
+150:             imu_callback_sync(frame);
+151:     };
+152: 
+153:     std::function<void(rs2::frame)> multiple_message_callback_function = [this](rs2::frame frame){multiple_message_callback(frame, _imu_sync_method);};
+154: 
+155:     std::function<void()> update_sensor_func = [this](){
+156:         {
+157:             std::lock_guard<std::mutex> lock_guard(_profile_changes_mutex);
+158:             _is_profile_changed = true;
+159:         }
+160:         _cv_mpc.notify_one();
+161:     };
+162: 
+163:     std::function<void()> hardware_reset_func = [this](){hardwareResetRequest();};
+164: 
+165:     for(auto&& sensor : _dev_sensors)
+166:     {
+167:         const std::string module_name(rs2_to_ros(sensor.get_info(RS2_CAMERA_INFO_NAME)));
+168:         std::unique_ptr<RosSensor> rosSensor;
+169:         if (sensor.is<rs2::depth_sensor>() ||
+170:             sensor.is<rs2::color_sensor>() ||
+171:             sensor.is<rs2::safety_sensor>() ||
+172:             sensor.is<rs2::depth_mapping_sensor>())
+173:         {
+174:             ROS_DEBUG_STREAM("Set " << module_name << " as VideoSensor.");
+175:             rosSensor = std::make_unique<RosSensor>(sensor, _parameters, frame_callback_function, update_sensor_func, hardware_reset_func, _diagnostics_updater, _logger, _use_intra_process, _dev.is<playback>());
+176:         }
+177:         else if (sensor.is<rs2::motion_sensor>())
+178:         {
+179:             ROS_DEBUG_STREAM("Set " << module_name << " as ImuSensor.");
+180:             rosSensor = std::make_unique<RosSensor>(sensor, _parameters, imu_callback_function, update_sensor_func, hardware_reset_func, _diagnostics_updater, _logger, false, _dev.is<playback>());
+181:         }
+182:         else
+183:         {
+184:             ROS_WARN_STREAM("Module Name \"" << module_name << "\" does not define a callback.");
+185:             continue;
+186:         }
+187:         _available_ros_sensors.push_back(std::move(rosSensor));
+188:     }
+189: 
+190: }
+
+realsense2_camera/src/parameters.cpp
+100:                             _is_accelerate_gpu_with_glsl_changed = true;
+101:                         }
+102:                         _cv_mpc.notify_one();
+103:                     });
+104:     _parameters_names.push_back(param_name);
+105: #endif
+106: 
+107: }
+108: 
+109: void BaseRealSenseNode::setDynamicParams()
+110: {
+111:     // Set default values:
+112:     _imu_sync_method = imu_sync_method::NONE;
+113: 
+114:     auto imu_sync_method_string = [](imu_sync_method value) 
+115:     { 
+116:         switch (value)
+117:         {
+118:         case imu_sync_method::COPY:
+119:             return "COPY";
+120:         case imu_sync_method::LINEAR_INTERPOLATION:
+121:             return "LINEAR_INTERPOLATION";
+122:         default:
+123:             return "NONE";
+124:         }
+125:     };
+126: 
+127:     // Register ROS parameter:
+128:     std::string param_name("unite_imu_method");
+129: 
+130:     std::vector<std::pair<std::string, int> > enum_vec;
+131:     size_t longest_desc(0);
+132:     for (int i=0; i<=int(imu_sync_method::LINEAR_INTERPOLATION); i++)
+133:     {
+134:         std::string enum_str(imu_sync_method_string(imu_sync_method(i)));
+135:         enum_vec.push_back(std::make_pair(enum_str, i));
+136:         longest_desc = std::max(longest_desc, enum_str.size());
+137:     }
+138:     sort(enum_vec.begin(), enum_vec.end(), [](std::pair<std::string, int> e1, std::pair<std::string, int> e2){return (e1.second < e2.second);});
+139:     std::stringstream enum_str_values;
+140:     for (auto vec_iter : enum_vec)
+141:     {
+142:         enum_str_values << std::setw(longest_desc+6) << std::left << vec_iter.first << " : " << vec_iter.second << std::endl;
+143:     }
+144: 
+145:     rcl_interfaces::msg::ParameterDescriptor crnt_descriptor;
+146:     rcl_interfaces::msg::IntegerRange range;
+147:     range.from_value = int(imu_sync_method::NONE);
+148:     range.to_value = int(imu_sync_method::LINEAR_INTERPOLATION);
+149:     crnt_descriptor.integer_range.push_back(range);
+150:     std::stringstream desc;
+151:     desc << "Available options are:" << std::endl << enum_str_values.str();
+152:     crnt_descriptor.description = desc.str();
+153:     _parameters->setParam<int>(param_name, int(imu_sync_method::NONE), 
+154:                             [this](const rclcpp::Parameter& parameter)
+155:                             {
+156:                                 _imu_sync_method = imu_sync_method(parameter.get_value<int>());
+157:                                 ROS_WARN("For the 'unite_imu_method' param update to take effect, "
+158:                                          "re-enable either gyro or accel stream.");
+159:                             }, crnt_descriptor);
+160:     _parameters_names.push_back(param_name);
+161: }
+162: 
+163: void BaseRealSenseNode::clearParameters()
+164: {
+165:     while ( !_parameters_names.empty() )
+166:     {
+167:         auto name = _parameters_names.back();
+168:         _parameters->removeParam(name);
+169:         _parameters_names.pop_back();        
+170:     }
+
+realsense2_camera/src/base_realsense_node.cpp
+315:     int height = depth_frame.get_height();
+316: 
+317:     #ifdef _OPENMP
+318:     #pragma omp parallel for schedule(dynamic) //Using OpenMP to try to parallelise the loop
+319:     #endif
+320:     for (int y = 0; y < height; y++)
+321:     {
+322:         auto depth_pixel_index = y * width;
+323:         for (int x = 0; x < width; x++, ++depth_pixel_index)
+324:         {
+325:             // Check if the depth value is greater than the threashold
+326:             if (p_depth_frame[depth_pixel_index] > clipping_value)
+327:             {
+328:                 p_depth_frame[depth_pixel_index] = 0; //Set to invalid (<=0) value.
+329:             }
+330:         }
+331:     }
+332: }
+333: 
+334: sensor_msgs::msg::Imu BaseRealSenseNode::CreateUnitedMessage(const CimuData accel_data, const CimuData gyro_data)
+335: {
+336:     sensor_msgs::msg::Imu imu_msg;
+337:     rclcpp::Time t(gyro_data.m_time_ns);  //rclcpp::Time(uint64_t nanoseconds)
+338:     imu_msg.header.stamp = t;
+339: 
+340:     imu_msg.angular_velocity.x = gyro_data.m_data.x();
+341:     imu_msg.angular_velocity.y = gyro_data.m_data.y();
+342:     imu_msg.angular_velocity.z = gyro_data.m_data.z();
+343: 
+344:     imu_msg.linear_acceleration.x = accel_data.m_data.x();
+345:     imu_msg.linear_acceleration.y = accel_data.m_data.y();
+346:     imu_msg.linear_acceleration.z = accel_data.m_data.z();
+347:     return imu_msg;
+348: }
+349: 
+350: template <typename T> T lerp(const T &a, const T &b, const double t) {
+351:   return a * (1.0 - t) + b * t;
+352: }
+353: 
+354: void BaseRealSenseNode::FillImuData_LinearInterpolation(const CimuData imu_data, std::deque<sensor_msgs::msg::Imu>& imu_msgs)
+355: {
+356:     static std::deque<CimuData> _imu_history;
+357:     _imu_history.push_back(imu_data);
+358:     stream_index_pair type(imu_data.m_type);
+359:     imu_msgs.clear();
+360: 
+361:     if ((type != ACCEL) || _imu_history.size() < 3)
+362:         return;
+363:     
+364:     std::deque<CimuData> gyros_data;
+365:     CimuData accel0, accel1, crnt_imu;
+366: 
+367:     while (_imu_history.size()) 
+368:     {
+369:         crnt_imu = _imu_history.front();
+370:         _imu_history.pop_front();
+371:         if (!accel0.is_set() && crnt_imu.m_type == ACCEL) 
+372:         {
+373:             accel0 = crnt_imu;
+374:         } 
+375:         else if (accel0.is_set() && crnt_imu.m_type == ACCEL) 
+376:         {
+377:             accel1 = crnt_imu;
+378:             const double dt = accel1.m_time_ns - accel0.m_time_ns;
+379: 
+380:             while (gyros_data.size())
+381:             {
+382:                 CimuData crnt_gyro = gyros_data.front();
+383:                 gyros_data.pop_front();
+384:                 const double alpha = (crnt_gyro.m_time_ns - accel0.m_time_ns) / dt;
+385:                 CimuData crnt_accel(ACCEL, lerp(accel0.m_data, accel1.m_data, alpha), crnt_gyro.m_time_ns);
+386:                 imu_msgs.push_back(CreateUnitedMessage(crnt_accel, crnt_gyro));
+387:             }
+388:             accel0 = accel1;
+389:         } 
+390:         else if (accel0.is_set() && crnt_imu.m_time_ns >= accel0.m_time_ns && crnt_imu.m_type == GYRO)
+391:         {
+392:             gyros_data.push_back(crnt_imu);
+393:         }
+394:     }
+395:     _imu_history.push_back(crnt_imu);
+396:     return;
+397: }
+398: 
+399: void BaseRealSenseNode::FillImuData_Copy(const CimuData imu_data, std::deque<sensor_msgs::msg::Imu>& imu_msgs)
+400: {
+401:     stream_index_pair type(imu_data.m_type);
+402: 
+403:     static CimuData _accel_data(ACCEL, {0,0,0}, -1.0);
+404:     if (ACCEL == type)
+405:     {
+406:         _accel_data = imu_data;
+407:         return;
+408:     }
+409:     if (!_accel_data.is_set())
+410:         return;
+411: 
+412:     imu_msgs.push_back(CreateUnitedMessage(_accel_data, imu_data));
+413: }
+414: 
+415: void BaseRealSenseNode::ImuMessage_AddDefaultValues(sensor_msgs::msg::Imu& imu_msg)
+416: {
+417:     imu_msg.header.frame_id = IMU_OPTICAL_FRAME_ID;
+418:     imu_msg.orientation.x = 0.0;
+419:     imu_msg.orientation.y = 0.0;
+420:     imu_msg.orientation.z = 0.0;
+421:     imu_msg.orientation.w = 0.0;
+422: 
+423:     imu_msg.orientation_covariance = { -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+424:     imu_msg.linear_acceleration_covariance = { _linear_accel_cov, 0.0, 0.0, 0.0, _linear_accel_cov, 0.0, 0.0, 0.0, _linear_accel_cov};
+425:     imu_msg.angular_velocity_covariance = { _angular_velocity_cov, 0.0, 0.0, 0.0, _angular_velocity_cov, 0.0, 0.0, 0.0, _angular_velocity_cov};
+426: }
+427: 
+428: void BaseRealSenseNode::imu_callback_sync(rs2::frame frame, imu_sync_method sync_method)
+429: {
+430:     static std::mutex m_mutex;
+431: 
+432:     m_mutex.lock();
+433: 
+434:     auto stream = frame.get_profile().stream_type();
+435:     auto stream_index = (stream == GYRO.first)?GYRO:ACCEL;
+436:     double frame_time = frame.get_timestamp();
+437: 
+438:     bool placeholder_false(false);
+439:     if (_is_initialized_time_base.compare_exchange_strong(placeholder_false, true) )
+440:     {
+441:         _is_initialized_time_base = setBaseTime(frame_time, frame.get_frame_timestamp_domain());
+442:     }
+443: 
+444:     if (_synced_imu_publisher && (0 != _synced_imu_publisher->getNumSubscribers()))
+445:     {
+446:         auto crnt_reading = *(reinterpret_cast<const float3*>(frame.get_data()));
+447:         Eigen::Vector3d v(crnt_reading.x, crnt_reading.y, crnt_reading.z);
+448:         CimuData imu_data(stream_index, v, frameSystemTimeSec(frame).nanoseconds());
+449:         std::deque<sensor_msgs::msg::Imu> imu_msgs;
+450:         switch (sync_method)
+451:         {
+452:             case imu_sync_method::COPY:
+453:                 FillImuData_Copy(imu_data, imu_msgs);
+454:                 break;
+455:             case imu_sync_method::LINEAR_INTERPOLATION:
+456:                 FillImuData_LinearInterpolation(imu_data, imu_msgs);
+457:                 break;
+458:             case imu_sync_method::NONE: //Cannot really be NONE. Just to avoid compilation warning.
+459:                 throw std::runtime_error("sync_method in this section can be either COPY or LINEAR_INTERPOLATION");
+460:                 break;
+461:         }
+462:         while (imu_msgs.size())
+463:         {
+464:             sensor_msgs::msg::Imu imu_msg = imu_msgs.front();
+465:             ImuMessage_AddDefaultValues(imu_msg);
+466:             _synced_imu_publisher->Publish(imu_msg);
+467:             ROS_DEBUG("Publish united %s stream", rs2_stream_to_string(frame.get_profile().stream_type()));
+468:             imu_msgs.pop_front();
+469:          }
+470:     }
+471:     m_mutex.unlock();
+472: }
+473: 
+474: void BaseRealSenseNode::imu_callback(rs2::frame frame)
+475: {
+476:     auto stream = frame.get_profile().stream_type();
+477:     double frame_time = frame.get_timestamp();
+478:     bool placeholder_false(false);
+479:     if (_is_initialized_time_base.compare_exchange_strong(placeholder_false, true) )
+480:     {
+481:         _is_initialized_time_base = setBaseTime(frame_time, frame.get_frame_timestamp_domain());
+482:     }
+483: 
+484:     ROS_DEBUG("Frame arrived: stream: %s ; index: %d ; Timestamp Domain: %s",
+485:                 ros_stream_to_string(frame.get_profile().stream_type()).c_str(),
+486:                 frame.get_profile().stream_index(),
+487:                 rs2_timestamp_domain_to_string(frame.get_frame_timestamp_domain()));
+488: 
+489:     stream_index_pair stream_index;
+490:     
+491:     if(stream == GYRO.first)
+492:     {
+493:         stream_index = GYRO;
+494:     }
+495:     else if(stream == ACCEL.first)
+496:     {
+497:         stream_index = ACCEL;
+498:     }
+499:     else if(stream == MOTION.first)
+500:     {
+501:         stream_index = MOTION;
+502:     }
+503:     else 
+504:     {
+505:         ROS_ERROR("Unknown IMU stream type.");
+506:         return;
+507:     }
+508: 
+509:     rclcpp::Time t(frameSystemTimeSec(frame));
+510: 
+
+realsense2_camera/include/base_realsense_node.h
+310:             const rs2_format& color_format,
+311:             const cv::Mat& depth_cv_matrix,
+312:             const rs2_format& depth_format,
+313:             const rclcpp::Time& t);
+314: 
+315:         void publishMetadata(rs2::frame f, const rclcpp::Time& header_time, const std::string& frame_id);
+316: 
+317:         sensor_msgs::msg::Imu CreateUnitedMessage(const CimuData accel_data, const CimuData gyro_data);
+318: 
+319:         void FillImuData_Copy(const CimuData imu_data, std::deque<sensor_msgs::msg::Imu>& imu_msgs);
+320:         void ImuMessage_AddDefaultValues(sensor_msgs::msg::Imu& imu_msg);
+321:         void FillImuData_LinearInterpolation(const CimuData imu_data, std::deque<sensor_msgs::msg::Imu>& imu_msgs);
+322:         void imu_callback(rs2::frame frame);
+323:         void imu_callback_sync(rs2::frame frame, imu_sync_method sync_method=imu_sync_method::COPY);
+324:         void multiple_message_callback(rs2::frame frame, imu_sync_method sync_method);
+325:         void frame_callback(rs2::frame frame);
+
+4.58.1 realsense2_camera/src/ros_sensor.cpp
+57: RosSensor::RosSensor(rs2::sensor sensor,
+58:     std::shared_ptr<Parameters> parameters, 
+59:     std::function<void(rs2::frame)> frame_callback,
+60:     std::function<void()> update_sensor_func,
+61:     std::function<void()> hardware_reset_func, 
+62:     std::shared_ptr<diagnostic_updater::Updater> diagnostics_updater,
+63:     rclcpp::Logger logger,
+64:     bool force_image_default_qos,
+65:     bool is_rosbag_file):
+66:     rs2::sensor(sensor),
+67:     _logger(logger),
+68:     _origin_frame_callback(frame_callback),
+69:     _params(parameters, _logger),
+70:     _update_sensor_func(update_sensor_func),
+71:     _hardware_reset_func(hardware_reset_func),
+72:     _diagnostics_updater(diagnostics_updater),
+73:     _force_image_default_qos(force_image_default_qos)
+74: {
+75:     _frame_callback = [this](rs2::frame frame)
+76:         {
+77:             auto stream_type = frame.get_profile().stream_type();
+78:             auto stream_index = frame.get_profile().stream_index();
+79:             stream_index_pair sip{stream_type, stream_index};
+80:             try
+81:             {
+82:                 _origin_frame_callback(frame);
+83:                 if (_frequency_diagnostics.find(sip) != _frequency_diagnostics.end())
+84:                     _frequency_diagnostics.at(sip).Tick();
+85:             }
+86:             catch(const std::exception& ex)
+87:             {
+88:                 // don't tick the frequency diagnostics for this publisher
+89:                 ROS_ERROR_STREAM("An error has occurred during frame callback: " << ex.what());
+90:             }
+91:         };
+92:     setParameters(is_rosbag_file);
+250:     {
+251:         _profile_managers.push_back(profile_manager);
+252:     }
+253: }
+254: 
+255: bool RosSensor::start(const std::vector<stream_profile>& profiles)
+256: {
+257:     if (get_active_streams().size() > 0)
+258:         return false;
+259:     setupErrorCallback();
+260:     rs2::sensor::open(profiles);
+261: 
+262:     for (auto& profile : profiles)
+263:     ROS_INFO_STREAM("Open profile: " << ProfilesManager::profile_string(profile));
+264: 
+265:     rs2::sensor::start(_frame_callback);
+266: 
+267:     for (auto& profile : profiles)
+268:     {
+
+4.58.1 realsense2_camera/include/base_realsense_node.h
+140:         ~BaseRealSenseNode();
+141:         void publishTopics();
+142: 
+143:     public:
+144:         using TriggeredCalibration = realsense2_camera_msgs::action::TriggeredCalibration;
+145:         using GoalHandleTriggeredCalibration = rclcpp_action::ServerGoalHandle<TriggeredCalibration>;
+146:         enum class imu_sync_method{NONE, COPY, LINEAR_INTERPOLATION};
+147: 
+317:         sensor_msgs::msg::Imu CreateUnitedMessage(const CimuData accel_data, const CimuData gyro_data);
+318: 
+319:         void FillImuData_Copy(const CimuData imu_data, std::deque<sensor_msgs::msg::Imu>& imu_msgs);
+320:         void ImuMessage_AddDefaultValues(sensor_msgs::msg::Imu& imu_msg);
+321:         void FillImuData_LinearInterpolation(const CimuData imu_data, std::deque<sensor_msgs::msg::Imu>& imu_msgs);
+322:         void imu_callback(rs2::frame frame);
+323:         void imu_callback_sync(rs2::frame frame, imu_sync_method sync_method=imu_sync_method::COPY);
+324:         void multiple_message_callback(rs2::frame frame, imu_sync_method sync_method);

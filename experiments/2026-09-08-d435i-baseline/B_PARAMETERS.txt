@@ -1,0 +1,3 @@
+Integer value is: 2
+Boolean value is: False
+/camera

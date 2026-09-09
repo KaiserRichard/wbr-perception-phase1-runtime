@@ -1,0 +1,26 @@
+{
+  "start_epoch": 1788869760.74064,
+  "end_epoch": 1788869790.805489,
+  "duration_seconds": 30.064874237999902,
+  "topics": {
+    "/camera/image_raw": {
+      "count": 0
+    },
+    "/camera/infra2/image_rect_raw": {
+      "count": 0
+    },
+    "/camera/gyro/sample": {
+      "count": 0
+    },
+    "/camera/accel/sample": {
+      "count": 0
+    },
+    "/camera/imu": {
+      "count": 0
+    },
+    "/camera/camera_info": {
+      "count": 0
+    }
+  },
+  "tf_static": []
+}

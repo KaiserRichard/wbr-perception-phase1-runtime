@@ -1,0 +1,45 @@
+2026-09-08T11:51:15.279379729Z [INFO] [1788868275.278108628] [camera]: RealSense ROS v4.58.1
+2026-09-08T11:51:15.279508795Z [INFO] [1788868275.278418721] [camera]: Built with LibRealSense v2.58.1
+2026-09-08T11:51:15.279603778Z [INFO] [1788868275.278488841] [camera]: Running with LibRealSense v2.58.1
+2026-09-08T11:51:15.281544791Z  08/09 11:51:15,280 WARNING [124455460267712] (context.cpp:41) No valid configuration file found at : /home/richard/.realsense-config.json loading defaults
+2026-09-08T11:51:15.283822716Z  08/09 11:51:15,282 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video0 Last Error: Permission denied
+2026-09-08T11:51:15.284066600Z  08/09 11:51:15,283 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video1 Last Error: Permission denied
+2026-09-08T11:51:15.284127780Z  08/09 11:51:15,283 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video2 Last Error: Permission denied
+2026-09-08T11:51:15.284345683Z  08/09 11:51:15,283 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video3 Last Error: Permission denied
+2026-09-08T11:51:15.284397645Z  08/09 11:51:15,284 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video4 Last Error: Permission denied
+2026-09-08T11:51:15.284693769Z  08/09 11:51:15,284 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video5 Last Error: Permission denied
+2026-09-08T11:51:15.297246660Z  08/09 11:51:15,296 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video0 Last Error: Permission denied
+2026-09-08T11:51:15.297280463Z  08/09 11:51:15,296 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video1 Last Error: Permission denied
+2026-09-08T11:51:15.297341643Z  08/09 11:51:15,296 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video2 Last Error: Permission denied
+2026-09-08T11:51:15.297712637Z  08/09 11:51:15,297 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video3 Last Error: Permission denied
+2026-09-08T11:51:15.298326677Z  08/09 11:51:15,297 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video4 Last Error: Permission denied
+2026-09-08T11:51:15.298387578Z  08/09 11:51:15,297 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video5 Last Error: Permission denied
+2026-09-08T11:51:15.298649620Z [WARN] [1788868275.298012673] [camera]: No RealSense devices were found!
+2026-09-08T11:51:21.310301211Z  08/09 11:51:21,309 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video0 Last Error: Permission denied
+2026-09-08T11:51:21.310386137Z  08/09 11:51:21,309 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video1 Last Error: Permission denied
+2026-09-08T11:51:21.311548287Z  08/09 11:51:21,310 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video2 Last Error: Permission denied
+2026-09-08T11:51:21.311594103Z  08/09 11:51:21,310 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video3 Last Error: Permission denied
+2026-09-08T11:51:21.311672045Z  08/09 11:51:21,310 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video4 Last Error: Permission denied
+2026-09-08T11:51:21.311698305Z  08/09 11:51:21,311 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video5 Last Error: Permission denied
+2026-09-08T11:51:21.311795244Z [WARN] [1788868281.311539068] [camera]: No RealSense devices were found!
+2026-09-08T11:51:27.322408529Z  08/09 11:51:27,321 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video0 Last Error: Permission denied
+2026-09-08T11:51:27.322522509Z  08/09 11:51:27,321 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video1 Last Error: Permission denied
+2026-09-08T11:51:27.322788463Z  08/09 11:51:27,322 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video2 Last Error: Permission denied
+2026-09-08T11:51:27.322821428Z  08/09 11:51:27,322 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video3 Last Error: Permission denied
+2026-09-08T11:51:27.323895300Z [WARN] [1788868287.323431278] [camera]: No RealSense devices were found!
+2026-09-08T11:51:27.323904519Z  08/09 11:51:27,322 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video4 Last Error: Permission denied
+2026-09-08T11:51:27.324005369Z  08/09 11:51:27,323 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video5 Last Error: Permission denied
+2026-09-08T11:51:33.333758268Z  08/09 11:51:33,332 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video0 Last Error: Permission denied
+2026-09-08T11:51:33.334712294Z  08/09 11:51:33,332 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video1 Last Error: Permission denied
+2026-09-08T11:51:33.336824280Z  08/09 11:51:33,335 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video2 Last Error: Permission denied
+2026-09-08T11:51:33.336865067Z  08/09 11:51:33,335 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video3 Last Error: Permission denied
+2026-09-08T11:51:33.336924292Z  08/09 11:51:33,335 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video4 Last Error: Permission denied
+2026-09-08T11:51:33.336992177Z [WARN] [1788868293.336407190] [camera]: No RealSense devices were found!
+2026-09-08T11:51:33.336982120Z  08/09 11:51:33,335 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video5 Last Error: Permission denied
+2026-09-08T11:51:39.347474518Z  08/09 11:51:39,346 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video0 Last Error: Permission denied
+2026-09-08T11:51:39.347534582Z  08/09 11:51:39,346 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video1 Last Error: Permission denied
+2026-09-08T11:51:39.347613362Z  08/09 11:51:39,346 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video2 Last Error: Permission denied
+2026-09-08T11:51:39.347706390Z  08/09 11:51:39,347 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video3 Last Error: Permission denied
+2026-09-08T11:51:39.348486372Z  08/09 11:51:39,347 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video4 Last Error: Permission denied
+2026-09-08T11:51:39.350083493Z  08/09 11:51:39,347 ERROR [124455460267712] (librealsense-exception.h:52) get_dev_capabilities: Cannot open '/dev/video5 Last Error: Permission denied
+2026-09-08T11:51:39.350243568Z [WARN] [1788868299.347548550] [camera]: No RealSense devices were found!

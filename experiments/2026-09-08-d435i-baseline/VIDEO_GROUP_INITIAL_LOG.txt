@@ -1,0 +1,68 @@
+2026-09-08T11:54:27.090049965Z [INFO] [1788868467.087658870] [camera]: RealSense ROS v4.58.1
+2026-09-08T11:54:27.091173854Z [INFO] [1788868467.089804960] [camera]: Built with LibRealSense v2.58.1
+2026-09-08T11:54:27.091290909Z [INFO] [1788868467.090044936] [camera]: Running with LibRealSense v2.58.1
+2026-09-08T11:54:27.094370082Z  08/09 11:54:27,093 WARNING [140368179881664] (context.cpp:41) No valid configuration file found at : /home/richard/.realsense-config.json loading defaults
+2026-09-08T11:54:27.391865935Z [INFO] [1788868467.390005077] [camera]: Device with serial number 243322073847 was found.
+2026-09-08T11:54:27.391917059Z 
+2026-09-08T11:54:27.396358142Z [INFO] [1788868467.391927954] [camera]: Device with physical ID /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.0/video4linux/video0 was found.
+2026-09-08T11:54:27.396457037Z [INFO] [1788868467.392017072] [camera]: Device with name Intel RealSense D435I was found.
+2026-09-08T11:54:27.396486091Z [INFO] [1788868467.392448972] [camera]: Device with port number 5-3 was found.
+2026-09-08T11:54:27.396512073Z [INFO] [1788868467.392579156] [camera]: Device USB type: 2.1
+2026-09-08T11:54:27.396562079Z [WARN] [1788868467.393537941] [camera]: Device 243322073847 is connected using a 2.1 port. Reduced performance is expected.
+2026-09-08T11:54:27.396608174Z [INFO] [1788868467.393829040] [camera]: getParameters...
+2026-09-08T11:54:27.406634065Z [WARN] [1788868467.404713982] [camera]: For the 'unite_imu_method' param update to take effect, re-enable either gyro or accel stream.
+2026-09-08T11:54:29.896078177Z [INFO] [1788868469.893980976] [camera]: JSON file is loaded! (/config/advanced.json)
+2026-09-08T11:54:29.896209200Z [INFO] [1788868469.894272075] [camera]: Device Name: Intel RealSense D435I
+2026-09-08T11:54:29.896332121Z [INFO] [1788868469.894442209] [camera]: Device Serial No: 243322073847
+2026-09-08T11:54:29.896516224Z [INFO] [1788868469.894522108] [camera]: Device physical port: /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.0/video4linux/video0
+2026-09-08T11:54:29.897638996Z [INFO] [1788868469.895859154] [camera]: Device FW version: 5.17.3.10
+2026-09-08T11:54:29.897799073Z [INFO] [1788868469.896052196] [camera]: Device Product ID: 0x0B3A
+2026-09-08T11:54:29.897981220Z [INFO] [1788868469.896279042] [camera]: Sync Mode: Off
+2026-09-08T11:54:31.690849843Z [INFO] [1788868471.689074750] [camera]: Stopping Sensor: Depth Module
+2026-09-08T11:54:31.691001818Z [INFO] [1788868471.689541851] [camera]: Stopping Sensor: Motion Module
+2026-09-08T11:54:31.745665117Z [INFO] [1788868471.743526848] [camera]: Starting Sensor: Depth Module
+2026-09-08T11:54:31.798283175Z  08/09 11:54:31,796 ERROR [140368179881664] (librealsense-exception.h:52) xioctl(VIDIOC_S_FMT) failed, errno=5 Last Error: Input/output error
+2026-09-08T11:54:31.804320278Z  08/09 11:54:31,803 ERROR [140368179881664] (rs.cpp:280) [rs2_open_multiple( sensor:0x61141826ce50, profiles:0x7fa9f8034230, count:1 ) Backend] xioctl(VIDIOC_S_FMT) failed, errno=5 Last Error: Input/output error
+2026-09-08T11:54:31.807119247Z [ERROR] [1788868471.806035307] [camera]: ./src/rs_node_setup.cpp:550:An exception has been thrown: xioctl(VIDIOC_S_FMT) failed, errno=5 Last Error: Input/output error
+2026-09-08T11:54:31.807180149Z [ERROR] [1788868471.806259079] [camera]: ./src/rs_node_setup.cpp:432:An exception has been thrown: xioctl(VIDIOC_S_FMT) failed, errno=5 Last Error: Input/output error
+2026-09-08T11:54:31.807242169Z Failed to start device: xioctl(VIDIOC_S_FMT) failed, errno=5 Last Error: Input/output error
+2026-09-08T11:54:31.807778272Z [INFO] [1788868471.807123159] [camera]: Stopping Sensor: Depth Module
+2026-09-08T11:54:31.807799225Z [INFO] [1788868471.807419287] [camera]: Stopping Sensor: Motion Module
+2026-09-08T11:54:31.831964398Z [INFO] [1788868471.830732393] [camera]: Starting Sensor: Depth Module
+2026-09-08T11:54:31.846385279Z  08/09 11:54:31,845 ERROR [140367953376960] (librealsense-exception.h:52) xioctl(VIDIOC_S_FMT) failed, errno=5 Last Error: Input/output error
+2026-09-08T11:54:31.846484454Z  08/09 11:54:31,845 ERROR [140367953376960] (rs.cpp:280) [rs2_open_multiple( sensor:0x61141826ce50, profiles:0x7fa9f8034230, count:1 ) Backend] xioctl(VIDIOC_S_FMT) failed, errno=5 Last Error: Input/output error
+2026-09-08T11:54:31.846573293Z [ERROR] [1788868471.845477339] [camera]: ./src/rs_node_setup.cpp:550:An exception has been thrown: xioctl(VIDIOC_S_FMT) failed, errno=5 Last Error: Input/output error
+2026-09-08T11:54:31.846620226Z [ERROR] [1788868471.845715359] [camera]: ./src/rs_node_setup.cpp:432:An exception has been thrown: xioctl(VIDIOC_S_FMT) failed, errno=5 Last Error: Input/output error
+2026-09-08T11:54:31.846651236Z [ERROR] [1788868471.846063450] [camera]: Error updating the sensors: xioctl(VIDIOC_S_FMT) failed, errno=5 Last Error: Input/output error
+2026-09-08T11:54:31.991364027Z [INFO] [1788868471.990283998] [camera]: Device with serial number 243322073847 was found.
+2026-09-08T11:54:31.991529971Z 
+2026-09-08T11:54:31.991640041Z [INFO] [1788868471.990555821] [camera]: Device with physical ID /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.0/video4linux/video0 was found.
+2026-09-08T11:54:31.992070824Z [INFO] [1788868471.990691872] [camera]: Device with name Intel RealSense D435I was found.
+2026-09-08T11:54:31.992102951Z [INFO] [1788868471.991022921] [camera]: Device with port number 5-3 was found.
+2026-09-08T11:54:31.992125859Z [INFO] [1788868471.991116788] [camera]: Device USB type: 2.1
+2026-09-08T11:54:31.992165808Z [WARN] [1788868471.991214007] [camera]: Device 243322073847 is connected using a 2.1 port. Reduced performance is expected.
+2026-09-08T11:54:32.746807889Z  08/09 11:54:32,745 ERROR [140368137918144] (librealsense-exception.h:52) map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T11:54:32.746874658Z  08/09 11:54:32,745 ERROR [140368137918144] (uvc-sensor.cpp:428) acquire_power failed: map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T11:54:32.746956792Z  08/09 11:54:32,745 ERROR [140368137918144] (error-handling.cpp:99) Error during polling error handler: map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T11:54:32.751168796Z [INFO] [1788868472.749661894] [camera]: getParameters...
+2026-09-08T11:54:32.766412970Z [WARN] [1788868472.765557830] [camera]: For the 'unite_imu_method' param update to take effect, re-enable either gyro or accel stream.
+2026-09-08T11:54:32.769614786Z  08/09 11:54:32,768 ERROR [140368179881664] (librealsense-exception.h:52) map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T11:54:32.769662837Z  08/09 11:54:32,768 ERROR [140368179881664] (uvc-sensor.cpp:428) acquire_power failed: map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T11:54:32.769729884Z [ERROR] [1788868472.769518963] [camera]: The device has been disconnected!
+2026-09-08T11:54:32.773998879Z [WARN] [1788868472.771309980] [camera]: Failed to load preset from JSON: map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T11:54:32.774298918Z  08/09 11:54:32,771 ERROR [140368179881664] (rs.cpp:280) [rs2_load_json( dev:0x7fa9f80bf700, json_content:0x7fa9f802e360, content_size:1716 ) Backend] map_device_descriptor Cannot open '/dev/video0 Last Error: No such file or directory
+2026-09-08T11:54:33.149399425Z [ros2run]: Segmentation fault
+2026-09-08T11:55:35.243074348Z [INFO] [1788868535.241743443] [camera]: RealSense ROS v4.58.1
+2026-09-08T11:55:35.243121561Z [INFO] [1788868535.242003534] [camera]: Built with LibRealSense v2.58.1
+2026-09-08T11:55:35.243233307Z [INFO] [1788868535.242169478] [camera]: Running with LibRealSense v2.58.1
+2026-09-08T11:55:35.245304534Z  08/09 11:55:35,244 WARNING [127258441303744] (context.cpp:41) No valid configuration file found at : /home/richard/.realsense-config.json loading defaults
+2026-09-08T11:55:35.256134475Z [WARN] [1788868535.255537468] [camera]: No RealSense devices were found!
+2026-09-08T11:55:41.263967763Z [WARN] [1788868541.262793863] [camera]: No RealSense devices were found!
+2026-09-08T11:55:47.269351445Z [WARN] [1788868547.268690463] [camera]: No RealSense devices were found!
+2026-09-08T11:55:53.278909858Z [WARN] [1788868553.277828986] [camera]: No RealSense devices were found!
+2026-09-08T11:55:59.288938854Z [WARN] [1788868559.287843734] [camera]: No RealSense devices were found!
+2026-09-08T11:56:05.297935141Z [WARN] [1788868565.296399179] [camera]: No RealSense devices were found!
+2026-09-08T11:56:11.308152078Z [WARN] [1788868571.306725907] [camera]: No RealSense devices were found!
+2026-09-08T11:56:17.317880478Z [WARN] [1788868577.317092383] [camera]: No RealSense devices were found!
+2026-09-08T11:56:23.325111113Z [WARN] [1788868583.324369113] [camera]: No RealSense devices were found!
+2026-09-08T11:56:29.332333408Z [WARN] [1788868589.330974284] [camera]: No RealSense devices were found!

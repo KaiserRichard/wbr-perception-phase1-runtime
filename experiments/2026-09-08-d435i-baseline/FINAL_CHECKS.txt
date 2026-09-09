@@ -1,0 +1,18 @@
+$ git diff --check
+exit=0
+$ git status --short
+exit=0
+?? D435I_BASELINE_AUDIT.md
+?? experiments/
+$ git submodule status --recursive
+exit=0
+ 4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4 third_party/ORB_SLAM3 (v1.0-release-2-g4452a3c)
+ efd7acd9ea31bfdbcd843a4c90eeaa85f7e80dd8 third_party/ORB_SLAM3_ROS2 (heads/main)
+ 0f29ad5f563269a13109d81eb886916cc5960136 third_party/ORB_SLAM3_ROS2/ORB_SLAM3 (v1.0-release-16-g0f29ad5)
+ 92ad7a5b4ad9616b98221ae140301f8bbc0a0782 third_party/ORB_SLAM3_ROS2/ros2_realsense_d435i_camera_calibration (92ad7a5)
+ 9a11121700cb4780e273e34141f6402fe184321d third_party/realsense-ros (4.58.4)
+$ docker ps
+exit=0
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+$ lsusb -d 8086:0b3a
+exit=1

@@ -1,0 +1,77 @@
+2026-09-08T12:14:35.545430571Z [INFO] [1788869675.544448576] [camera]: RealSense ROS v4.58.1
+2026-09-08T12:14:35.545568581Z [INFO] [1788869675.545201765] [camera]: Built with LibRealSense v2.58.1
+2026-09-08T12:14:35.545598753Z [INFO] [1788869675.545369667] [camera]: Running with LibRealSense v2.58.1
+2026-09-08T12:14:35.549874830Z  08/09 12:14:35,547 WARNING [130301716063936] (context.cpp:41) No valid configuration file found at : /root/.realsense-config.json loading defaults
+2026-09-08T12:14:35.756765310Z [INFO] [1788869675.755382416] [camera]: Device with serial number 243322073847 was found.
+2026-09-08T12:14:35.757469329Z 
+2026-09-08T12:14:35.757675227Z [INFO] [1788869675.755545290] [camera]: Device with physical ID /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.0/video4linux/video0 was found.
+2026-09-08T12:14:35.757981419Z [INFO] [1788869675.756405199] [camera]: Device with name Intel RealSense D435I was found.
+2026-09-08T12:14:35.758052380Z [INFO] [1788869675.757632483] [camera]: Device with port number 5-3 was found.
+2026-09-08T12:14:35.758139264Z [INFO] [1788869675.757845365] [camera]: Device USB type: 2.1
+2026-09-08T12:14:35.758626490Z [WARN] [1788869675.758146249] [camera]: Device 243322073847 is connected using a 2.1 port. Reduced performance is expected.
+2026-09-08T12:14:35.759177413Z [INFO] [1788869675.758499376] [camera]: getParameters...
+2026-09-08T12:14:35.763798515Z [WARN] [1788869675.762672364] [camera]: For the 'unite_imu_method' param update to take effect, re-enable either gyro or accel stream.
+2026-09-08T12:14:36.952427149Z [INFO] [1788869676.949907209] [camera]: JSON file is loaded! (/config/advanced.json)
+2026-09-08T12:14:36.953662255Z [INFO] [1788869676.950161158] [camera]: Device Name: Intel RealSense D435I
+2026-09-08T12:14:36.953742435Z [INFO] [1788869676.950379348] [camera]: Device Serial No: 243322073847
+2026-09-08T12:14:36.953793281Z [INFO] [1788869676.951487340] [camera]: Device physical port: /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.0/video4linux/video0
+2026-09-08T12:14:36.953837422Z [INFO] [1788869676.951825381] [camera]: Device FW version: 5.17.3.10
+2026-09-08T12:14:36.953907265Z [INFO] [1788869676.952247233] [camera]: Device Product ID: 0x0B3A
+2026-09-08T12:14:36.955064426Z [INFO] [1788869676.953592412] [camera]: Sync Mode: Off
+2026-09-08T12:14:38.189510451Z [INFO] [1788869678.188838280] [camera]: Stopping Sensor: Depth Module
+2026-09-08T12:14:38.189674443Z [INFO] [1788869678.189000317] [camera]: Stopping Sensor: Motion Module
+2026-09-08T12:14:38.209341993Z [INFO] [1788869678.208004916] [camera]: Starting Sensor: Depth Module
+2026-09-08T12:14:38.309666643Z [INFO] [1788869678.307675555] [camera]: Open profile: stream_type: Infra(1), Format: Y8, Width: 640, Height: 480, FPS: 15
+2026-09-08T12:14:38.403985062Z  08/09 12:14:38,402 WARNING [130301716063936] (ds-calib-parsers.cpp:36) IMU Calibration is not available, default intrinsic and extrinsic will be used.
+2026-09-08T12:14:38.417666496Z [INFO] [1788869678.416953537] [camera]: Starting Sensor: Motion Module
+2026-09-08T12:14:38.507039741Z [INFO] [1788869678.505733674] [camera]: Open profile: stream_type: Accel(0)Format: MOTION_XYZ32F, FPS: 100
+2026-09-08T12:14:38.507263798Z [INFO] [1788869678.505964715] [camera]: Open profile: stream_type: Gyro(0)Format: MOTION_XYZ32F, FPS: 200
+2026-09-08T12:14:38.509400998Z  08/09 12:14:38,508 WARNING [130301539882688] (backend-hid.cpp:740) HID set_power 1 failed for /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200076.4.auto/iio:device1/buffer/enable
+2026-09-08T12:14:38.509680929Z  08/09 12:14:38,509 WARNING [130301321803456] (backend-hid.cpp:740) HID set_power 1 failed for /sys/devices/pci0000:00/0000:00:04.0/usb5/5-3/5-3:1.5/0003:8086:0B3A.0005/HID-SENSOR-200073.3.auto/iio:device0/buffer/enable
+2026-09-08T12:14:38.541137723Z [INFO] [1788869678.540334806] [camera]: RealSense Node Is Up!
+2026-09-08T12:14:40.260590767Z [WARN] [1788869680.258525644] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:14:40.260742745Z Size 131848 out of 307455 bytes (42%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:14:41.959918102Z [WARN] [1788869681.958233206] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:14:41.960041026Z Size 262920 out of 307455 bytes (85%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:14:44.956988403Z [WARN] [1788869684.955912260] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:14:44.957077243Z Size 213768 out of 307455 bytes (69%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:14:49.506037212Z [WARN] [1788869689.504981184] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:14:49.506203997Z Size 131848 out of 307455 bytes (42%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:14:51.056004765Z [WARN] [1788869691.054112574] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:14:51.056128527Z Size 131848 out of 307455 bytes (42%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:14:52.604793098Z [WARN] [1788869692.603466078] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:14:52.604872160Z Size 213768 out of 307455 bytes (69%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:14:54.106348473Z [WARN] [1788869694.104786222] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:14:54.106425301Z Size 131848 out of 307455 bytes (42%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:14:55.665603243Z [WARN] [1788869695.663774190] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:14:55.665677277Z Size 164616 out of 307455 bytes (53%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:14:57.318852378Z [WARN] [1788869697.315388437] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:14:57.319124487Z Size 131848 out of 307455 bytes (42%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:14:59.412544736Z [WARN] [1788869699.410127604] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:14:59.412583568Z Size 262920 out of 307455 bytes (85%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:15:02.009444458Z [WARN] [1788869702.007472367] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:15:02.009569338Z Size 279304 out of 307455 bytes (90%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:15:05.862543741Z [WARN] [1788869705.860780621] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:15:05.862714717Z Size 197384 out of 307455 bytes (64%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:15:07.363460002Z [WARN] [1788869707.362187181] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:15:07.363511128Z Size 131848 out of 307455 bytes (42%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:15:08.911491627Z [WARN] [1788869708.909829640] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:15:08.911667632Z Size 131848 out of 307455 bytes (42%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:15:10.459484152Z [WARN] [1788869710.457596151] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:15:10.459584167Z Size 230152 out of 307455 bytes (74%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:15:11.958332526Z [WARN] [1788869711.956154537] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:15:11.958428631Z Size 131848 out of 307455 bytes (42%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:15:13.911444156Z [WARN] [1788869713.909948953] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:15:13.912062966Z Size 181000 out of 307455 bytes (58%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:15:17.459785535Z [WARN] [1788869717.456791499] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:15:17.459994506Z Size 279304 out of 307455 bytes (90%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:15:20.606662066Z [WARN] [1788869720.605048130] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:15:20.606706207Z Size 131848 out of 307455 bytes (42%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:15:22.157403975Z [WARN] [1788869722.155521003] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:15:22.157552880Z Size 131848 out of 307455 bytes (42%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:15:23.656112181Z [WARN] [1788869723.654682352] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:15:23.656204374Z Size 32768 out of 307455 bytes (10%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:15:26.309543793Z [WARN] [1788869726.308015625] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:15:26.309654704Z Size 246536 out of 307455 bytes (80%),1.78887e+12,Warn,Frame Corrupted
+2026-09-08T12:15:28.114572397Z [WARN] [1788869728.112812349] [camera]: XXX Hardware Notification:Incomplete video frame detected!
+2026-09-08T12:15:28.114719347Z Size 262920 out of 307455 bytes (85%),1.78887e+12,Warn,Frame Corrupted

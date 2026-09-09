@@ -1,0 +1,344 @@
+
+$ docker compose -f third_party/ORB_SLAM3_ROS2/docker-compose.yaml config; docker image inspect realsense:latest --format "{{json .Config}}"
+time="2026-09-08T18:50:46+07:00" level=warning msg="The \"DISPLAY\" variable is not set. Defaulting to a blank string."
+time="2026-09-08T18:50:46+07:00" level=warning msg="The \"DISPLAY\" variable is not set. Defaulting to a blank string."
+time="2026-09-08T18:50:46+07:00" level=warning msg="The \"DISPLAY\" variable is not set. Defaulting to a blank string."
+time="2026-09-08T18:50:46+07:00" level=warning msg="The \"DISPLAY\" variable is not set. Defaulting to a blank string."
+name: orb_slam3_ros2
+services:
+  base:
+    build:
+      context: /home/richard/wbr-perception-phase1-runtime/third_party/ORB_SLAM3_ROS2
+      dockerfile: Dockerfile
+      args:
+        USER_GID: "1001"
+        USER_UID: "1001"
+        USERNAME: richard
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities:
+                - gpu
+              driver: nvidia
+              count: 1
+    environment:
+      DISPLAY: ""
+      QT_X11_NO_MITSHM: "1"
+    init: true
+    ipc: host
+    network_mode: host
+    privileged: true
+    stdin_open: true
+    tty: true
+    volumes:
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+        bind: {}
+      - type: bind
+        source: /dev
+        target: /dev
+        bind: {}
+  cam2image:
+    build:
+      context: /home/richard/wbr-perception-phase1-runtime/third_party/ORB_SLAM3_ROS2/ros2_realsense_d435i_camera_calibration
+      dockerfile: camera.Dockerfile
+      args:
+        USER_GID: "1001"
+        USER_UID: "1001"
+        USERNAME: richard
+    command:
+      - ros2
+      - run
+      - image_tools
+      - cam2image
+      - --ros-args
+      - --params-file
+      - /config/cam2image_params.yaml
+      - -r
+      - /image:=/camera/image_raw
+      - --log-level
+      - warn
+    environment:
+      FASTDDS_BUILTIN_TRANSPORTS: UDPv4
+    image: cam2image:latest
+    init: true
+    ipc: host
+    network_mode: host
+    privileged: true
+    volumes:
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+        bind: {}
+      - type: bind
+        source: /dev
+        target: /dev
+        bind: {}
+  charuco-calibration:
+    build:
+      context: /home/richard/wbr-perception-phase1-runtime/third_party/ORB_SLAM3_ROS2/ros2_realsense_d435i_camera_calibration
+      dockerfile: camera.Dockerfile
+      args:
+        USER_GID: "1001"
+        USER_UID: "1001"
+        USERNAME: richard
+    command:
+      - ros2
+      - run
+      - camera_calibration
+      - cameracalibrator
+      - --no-service-check
+      - --square
+      - "0.0320"
+      - --pattern
+      - charuco
+      - --size
+      - 5x7
+      - --charuco_marker_size
+      - "0.0246"
+      - --aruco_dict
+      - 6x6_250
+      - --ros-args
+      - --remap
+      - image:=/camera/image_raw
+      - --remap
+      - camera:=/camera
+    device_cgroup_rules:
+      - c 81:* rmw
+      - c 189:* rmw
+    environment:
+      DISPLAY: ""
+      FASTDDS_BUILTIN_TRANSPORTS: UDPv4
+      QT_X11_NO_MITSHM: "1"
+    image: charuco_calibration:latest
+    init: true
+    ipc: host
+    network_mode: host
+    privileged: true
+    volumes:
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+        bind: {}
+      - type: bind
+        source: /dev
+        target: /dev
+        bind: {}
+  checkerboard-calibration:
+    build:
+      context: /home/richard/wbr-perception-phase1-runtime/third_party/ORB_SLAM3_ROS2/ros2_realsense_d435i_camera_calibration
+      dockerfile: camera.Dockerfile
+      args:
+        USER_GID: "1001"
+        USER_UID: "1001"
+        USERNAME: richard
+    command:
+      - ros2
+      - run
+      - camera_calibration
+      - cameracalibrator
+      - --no-service-check
+      - --size
+      - 5x8
+      - --square
+      - "0.0257"
+      - --ros-args
+      - --remap
+      - image:=/camera/image_raw
+      - --remap
+      - camera:=/camera
+    device_cgroup_rules:
+      - c 81:* rmw
+      - c 189:* rmw
+    environment:
+      DISPLAY: ""
+      FASTDDS_BUILTIN_TRANSPORTS: UDPv4
+      QT_X11_NO_MITSHM: "1"
+    image: checkerboard_calibration:latest
+    init: true
+    ipc: host
+    network_mode: host
+    privileged: true
+    volumes:
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+        bind: {}
+      - type: bind
+        source: /dev
+        target: /dev
+        bind: {}
+  orb_slam3:
+    build:
+      context: /home/richard/wbr-perception-phase1-runtime/third_party/ORB_SLAM3_ROS2
+      dockerfile: Dockerfile
+      args:
+        USER_GID: "1001"
+        USER_UID: "1001"
+        USERNAME: richard
+    command:
+      - bash
+      - -c
+      - ' source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash && ros2 launch orb_slam3_ros2 mapping.launch.py '
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities:
+                - gpu
+              driver: nvidia
+              count: 1
+    environment:
+      DISPLAY: ""
+      QT_X11_NO_MITSHM: "1"
+    image: orb_slam3:latest
+    init: true
+    ipc: host
+    network_mode: host
+    privileged: true
+    stdin_open: true
+    tty: true
+    volumes:
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+        bind: {}
+      - type: bind
+        source: /dev
+        target: /dev
+        bind: {}
+      - type: bind
+        source: /home/richard/wbr-perception-phase1-runtime/third_party/ORB_SLAM3_ROS2
+        target: /ros2_ws/src/ORB_SLAM3_ROS2
+        bind: {}
+  realsense:
+    build:
+      context: /home/richard/wbr-perception-phase1-runtime/third_party/ORB_SLAM3_ROS2/ros2_realsense_d435i_camera_calibration
+      dockerfile: camera.Dockerfile
+      args:
+        USER_GID: "1001"
+        USER_UID: "1001"
+        USERNAME: richard
+    command:
+      - ros2
+      - run
+      - realsense2_camera
+      - realsense2_camera_node
+      - --ros-args
+      - -r
+      - __node:=camera
+      - -r
+      - __ns:=/
+      - -r
+      - /camera/infra1/image_rect_raw:=/camera/image_raw
+      - -r
+      - /camera/infra1/camera_info:=/camera/camera_info
+      - -p
+      - enable_color:=false
+      - -p
+      - enable_depth:=false
+      - -p
+      - enable_infra1:=true
+      - -p
+      - enable_gyro:=true
+      - -p
+      - enable_accel:=true
+      - -p
+      - unite_imu_method:=2
+      - -p
+      - json_file_path:=/config/advanced.json
+    device_cgroup_rules:
+      - c 81:* rmw
+      - c 189:* rmw
+    environment:
+      FASTDDS_BUILTIN_TRANSPORTS: UDPv4
+    image: realsense:latest
+    init: true
+    ipc: host
+    network_mode: host
+    privileged: true
+    volumes:
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+        bind: {}
+      - type: bind
+        source: /dev
+        target: /dev
+        bind: {}
+  rviz:
+    build:
+      context: /home/richard/wbr-perception-phase1-runtime/third_party/ORB_SLAM3_ROS2/ros2_realsense_d435i_camera_calibration
+      dockerfile: camera.Dockerfile
+      args:
+        USER_GID: "1001"
+        USER_UID: "1001"
+        USERNAME: richard
+    command:
+      - ros2
+      - run
+      - rviz2
+      - rviz2
+    device_cgroup_rules:
+      - c 81:* rmw
+      - c 189:* rmw
+    environment:
+      DISPLAY: ""
+      FASTDDS_BUILTIN_TRANSPORTS: UDPv4
+      QT_X11_NO_MITSHM: "1"
+    image: rviz:latest
+    init: true
+    ipc: host
+    network_mode: host
+    privileged: true
+    volumes:
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+        bind: {}
+      - type: bind
+        source: /dev
+        target: /dev
+        bind: {}
+{"User":"richard","Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","LANG=C.UTF-8","LC_ALL=C.UTF-8","ROS_DISTRO=jazzy","DEBIAN_FRONTEND=noninteractive"],"Entrypoint":["/ros_entrypoint.sh"],"Labels":{"com.docker.compose.project":"orb_slam3_ros2","com.docker.compose.service":"realsense","com.docker.compose.version":"5.1.0","org.opencontainers.image.version":"24.04"}}
+
+$ docker run --rm --privileged -v /dev:/dev realsense:latest python3 -c 'import os,glob; print('"'"'uid/gid/groups'"'"',os.getuid(),os.getgid(),os.getgroups()); exec("for p in glob.glob('"'"'/dev/video*'"'"')+glob.glob('"'"'/dev/hidraw*'"'"'):\n try:\n  fd=os.open(p,os.O_RDWR|os.O_NONBLOCK); os.close(fd); print(p,'"'"'OPEN OK'"'"')\n except OSError as e: print(p,str(e))")'
+uid/gid/groups 1001 1001 [1001]
+/dev/video5 [Errno 13] Permission denied: '/dev/video5'
+/dev/video4 [Errno 13] Permission denied: '/dev/video4'
+/dev/video3 [Errno 13] Permission denied: '/dev/video3'
+/dev/video2 [Errno 13] Permission denied: '/dev/video2'
+/dev/video1 [Errno 13] Permission denied: '/dev/video1'
+/dev/video0 [Errno 13] Permission denied: '/dev/video0'
+/dev/hidraw3 [Errno 13] Permission denied: '/dev/hidraw3'
+/dev/hidraw2 [Errno 13] Permission denied: '/dev/hidraw2'
+/dev/hidraw1 [Errno 13] Permission denied: '/dev/hidraw1'
+/dev/hidraw0 [Errno 13] Permission denied: '/dev/hidraw0'
+
+$ docker run --rm --privileged -v /dev:/dev --user 0:0 realsense:latest python3 -c 'import os,glob; print('"'"'uid/gid/groups'"'"',os.getuid(),os.getgid(),os.getgroups()); exec("for p in glob.glob('"'"'/dev/video*'"'"')+glob.glob('"'"'/dev/hidraw*'"'"'):\n try:\n  fd=os.open(p,os.O_RDWR|os.O_NONBLOCK); os.close(fd); print(p,'"'"'OPEN OK'"'"')\n except OSError as e: print(p,str(e))")'
+uid/gid/groups 0 0 [0]
+/dev/video5 OPEN OK
+/dev/video4 OPEN OK
+/dev/video3 OPEN OK
+/dev/video2 OPEN OK
+/dev/video1 OPEN OK
+/dev/video0 OPEN OK
+/dev/hidraw3 OPEN OK
+/dev/hidraw2 OPEN OK
+/dev/hidraw1 OPEN OK
+/dev/hidraw0 OPEN OK
+
+$ docker run --rm --privileged -v /dev:/dev --group-add 44 realsense:latest python3 -c 'import os,glob; print('"'"'uid/gid/groups'"'"',os.getuid(),os.getgid(),os.getgroups()); exec("for p in glob.glob('"'"'/dev/video*'"'"')+glob.glob('"'"'/dev/hidraw*'"'"'):\n try:\n  fd=os.open(p,os.O_RDWR|os.O_NONBLOCK); os.close(fd); print(p,'"'"'OPEN OK'"'"')\n except OSError as e: print(p,str(e))")'
+uid/gid/groups 1001 1001 [44, 1001]
+/dev/video5 OPEN OK
+/dev/video4 OPEN OK
+/dev/video3 OPEN OK
+/dev/video2 OPEN OK
+/dev/video1 OPEN OK
+/dev/video0 OPEN OK
+/dev/hidraw3 [Errno 13] Permission denied: '/dev/hidraw3'
+/dev/hidraw2 [Errno 13] Permission denied: '/dev/hidraw2'
+/dev/hidraw1 [Errno 13] Permission denied: '/dev/hidraw1'
+/dev/hidraw0 [Errno 13] Permission denied: '/dev/hidraw0'
