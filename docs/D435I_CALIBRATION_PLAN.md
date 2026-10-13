@@ -132,7 +132,7 @@ ASSUMED gate dependency: S/C/I/A are native-librealsense calibration recordings,
 
 MEASURED [L1]: under-voltage at 87/178 samples (49%) during earlier SLAM runs. INFERRED recommendation: **do not start even the low-power IMU-only Allan run before the 5 A supply arrives**; the existing power evidence makes timestamp trust questionable. A new supply is not itself proof of stable power: record `vcgencmd get_throttled` before/after and periodically, preserve latched/live bits and abort/use a fresh take on new power faults; do not conceal them by resetting evidence.
 
-SOURCE-SUPPORTED repository rule: microSD is OS/tools/small logs; large bags require separately qualified storage. The 128 GB card does not waive this rule. Session capacity estimates describe capacity, not authorized bag placement. ASSUMED default: use a separately write-qualified external dataset volume, record its mount/free-space/sustained-write results, with no fallback to `/`. If only the 128 GB OS card exists, large captures wait for storage resolution; any policy exception needs explicit approval. Require ASSUMED sustained write margin ≥1.5×18.4=27.6 MB/s and ≥2× planned take size available beyond OS reserve; this supplements, not replaces, existing storage qualification.
+SOURCE-SUPPORTED repository rule: microSD is OS/tools/small logs; large bags require separately qualified storage. **USER DECISION 2026-10-13:** the separate 64 GB USB drive is no longer available, so calibration and VIO takes are recorded on the 128 GB microSD (KIOXIA EXCERIA G3, V30/A2) as an explicit exception to that rule. Conditions (ASSUMED): a dedicated data directory (e.g. `/data/wbr-takes/`), never mixed with OS or build paths; a sustained-write qualification of this card on the Pi before the first take, using a file larger than the largest planned take and at least the take duration, with a margin of ≥1.5×18.4=27.6 MB/s (if it fails, full-rate recording is BLOCKED; IMU-only A/I takes are unaffected); free space ≥2× the planned take plus an OS reserve checked before every take; copy each session's takes to the Mac and verify checksums before deleting from the card. INFERRED risk: OS writes and recording compete on one card, so dropped frames during a take must be checked in the audit, not assumed absent.
 
 ### Target, light and exposure
 
@@ -184,7 +184,7 @@ ASSUMED selection rule: require all review thresholds on held-out data; prefer l
 
 ## Mac now versus Pi later
 
-| Work | Mac now, no camera | Pi + D435i + 5.1 V/5 A supply + 128 GB card later |
+| Work | Mac now, no camera | Pi + D435i + 5.1 V/5 A supply + 128 GB card (OS and data, per user decision) later |
 |---|---|---|
 | This ticket | Write this plan only; status OPEN | No action authorized by this ticket |
 | Templates/target | Future ticket describes/generates factory camchain, measured target YAML/PDF, provisional/A/B IMU YAML; no files created here | Measure print, confirm IR visibility and optical/exposure behavior |
