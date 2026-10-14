@@ -1,0 +1,36 @@
+{
+  "utc": "2026-09-13T07:03:09.752714+00:00",
+  "statuses": {
+    "N0": "NOT DECIDED",
+    "N1": "PASS",
+    "N2": "PASS",
+    "Guided VIO-development dataset": "PASS",
+    "N3": "NOT RUN",
+    "Calibration readiness": "NOT QUALIFIED",
+    "ORB-SLAM3": "NOT RUN"
+  },
+  "n0_note": "Historical inventory exists; no formal N0 verdict issued in this review.",
+  "n2_statement": "N2 physical raw transport PASS based on current-run evidence.",
+  "checklist": {
+    "guided_60s_validated": "PASS: previous physical review retained; source data unchanged",
+    "guided_copied_to_mac": "PASS",
+    "guided_pi_mac_hashes": "PASS: 908 identical relative paths and hashes; zero mismatches",
+    "stationary_600s_formally_reviewed": "PASS",
+    "n2_formally_closed": "PASS: current-run timing, continuity, imagery, USB/power, stop and backup reviewed",
+    "realsense_ros_publisher_physically_validated": "BLOCKED: wrapper missing; sudo authentication required",
+    "actual_ros_topics_inspected": "NOT RUN",
+    "qos_frame_ids_ros_timestamps_captured": "NOT RUN",
+    "ros_camera_info_saved": "NOT RUN",
+    "available_ros_extrinsics_tf_saved": "NOT RUN; native SDK extrinsics/intrinsics preserved and hash verified",
+    "real_physical_rosbag_recorded": "NOT RUN",
+    "camera_publisher_stopped": "No ROS publisher was started",
+    "camera_off_rosbag_replay_validated": "NOT RUN",
+    "post_n3_usb_kernel_health": "NOT RUN: no N3 physical session yet",
+    "post_n3_get_throttled": "NOT RUN: most recent pre-N3 reading was 0x0",
+    "n3_physical_evidence_copied_to_mac": "NOT RUN: no physical N3 bag; preflight evidence retained",
+    "n3_physical_hashes_verified": "NOT RUN: no physical N3 bag"
+  },
+  "blocker": "RealSense ROS packages absent. The authorized real apt install returned sudo: a password is required. User terminal authentication is necessary before physical N3.",
+  "authorization": "Installation is already authorized; this is an authentication blocker, not an approval request.",
+  "operational_statement": "DO NOT RETURN D435i YET \u2014 remaining camera-dependent blocker: physical N3 publisher validation, explicit rosbag recording and camera-off replay are pending because ROS wrapper installation requires Pi sudo authentication."
+}

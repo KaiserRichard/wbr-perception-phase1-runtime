@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "apt-cache",
+    "policy",
+    "ros-jazzy-realsense2-camera",
+    "ros-jazzy-realsense2-camera-msgs",
+    "ros-jazzy-librealsense2"
+  ],
+  "utc": "2026-09-13T06:51:54.829109+00:00",
+  "returncode": 0,
+  "stdout": "ros-jazzy-realsense2-camera:\n  Installed: (none)\n  Candidate: 4.58.4-1noble.20260902.181721\n  Version table:\n     4.58.4-1noble.20260902.181721 500\n        500 http://packages.ros.org/ros2/ubuntu noble/main arm64 Packages\nros-jazzy-realsense2-camera-msgs:\n  Installed: (none)\n  Candidate: 4.58.4-1noble.20260902.134137\n  Version table:\n     4.58.4-1noble.20260902.134137 500\n        500 http://packages.ros.org/ros2/ubuntu noble/main arm64 Packages\nros-jazzy-librealsense2:\n  Installed: 2.58.4-1noble.20260831.020056\n  Candidate: 2.58.4-1noble.20260831.020056\n  Version table:\n *** 2.58.4-1noble.20260831.020056 500\n        500 http://packages.ros.org/ros2/ubuntu noble/main arm64 Packages\n        100 /var/lib/dpkg/status\n",
+  "stderr": ""
+}

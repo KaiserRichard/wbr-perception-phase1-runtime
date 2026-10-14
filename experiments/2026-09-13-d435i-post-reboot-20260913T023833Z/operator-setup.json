@@ -1,0 +1,16 @@
+{
+  "source": "Operator replies during post-reboot physical session",
+  "external_storage_available": false,
+  "proper_calibration_target_available": false,
+  "stationary_ready": "Pending operator confirmation",
+  "scene": "Operator can arrange well-lit textured indoor view after N2; later PGM review records actual scene",
+  "power_change": "Replaced charger after poweroff; user considers it insufficient for Pi but possibly better than previous one",
+  "operating_readings": {
+    "voltage_V": 5.065,
+    "current_A": "around 0.8 or higher",
+    "power_W": "around 3-4"
+  },
+  "charger_model_and_label_rating": "Unknown; readings are not label capacity",
+  "fan_running": true,
+  "guided_capture_label": "VIO-development; not Kalibr-qualified"
+}

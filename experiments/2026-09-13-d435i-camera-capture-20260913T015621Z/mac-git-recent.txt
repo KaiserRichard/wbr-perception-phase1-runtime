@@ -1,0 +1,5 @@
+5932457 docs: plan Raspberry Pi 5 native perception bring-up
+144746c exp: document D435i UTM baseline audit
+1b16be7 chore: add Phase-1 runtime structure and environment
+e39c8ff chore: initialize Phase-1 perception runtime workspace
+e3a97c1 first commit

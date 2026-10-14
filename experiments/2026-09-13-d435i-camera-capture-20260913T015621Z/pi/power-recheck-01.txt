@@ -1,0 +1,19 @@
+Sun Sep 13 02:09:01 AM UTC 2026
+ 09:09:01 up 28 min,  2 users,  load average: 0.00, 0.02, 0.07
+f049bad6-9d40-45d0-b79d-6c6ea4e12584
+throttled=0x50000
+temp=51.6'C
+[  583.777574] wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+[  587.873812] wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+[  940.193121] wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+[  942.240157] wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+[  993.440090] wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+[  995.488087] wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+[ 1013.984062] wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+[ 1016.032062] wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+[ 1188.062802] wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+[ 1192.158675] wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+[ 1214.686597] wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+[ 1218.782690] wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+[ 1319.134212] wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+[ 1321.182215] wbr-pi5 kernel: hwmon hwmon3: Voltage normalised

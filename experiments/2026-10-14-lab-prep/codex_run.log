@@ -1,0 +1,30 @@
+2026-10-14T05:48:11.454521Z ERROR codex_models_manager::manager: failed to refresh available models: unexpected status 401 Unauthorized: Your authentication token has expired. Please try refreshing it., url: https://chatgpt.com/backend-api/codex/models?client_version=0.162.1, cf-ray: a4a44b2a7a670930-HKG, request id: req_bcb7e3088ef0495db7f6857b85c5c761, auth error: 401, auth error code: token_expired
+2026-10-14T05:48:11.824463Z ERROR codex_models_manager::manager: failed to refresh available models: unexpected status 401 Unauthorized: Your authentication token has expired. Please try refreshing it., url: https://chatgpt.com/backend-api/codex/models?client_version=0.162.1, cf-ray: a4a44b299ec308bc-HKG, request id: req_8ce620beac7d49cfb077a18f9a1bc04c, auth error: 401, auth error code: token_expired
+OpenAI Codex v0.162.1
+--------
+workdir: /Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: high
+reasoning summaries: none
+session id: 01a138f4-34ca-73c3-b7f3-f687fa2f943e
+--------
+user
+# Ticket L: reading guide + tomorrow's lab runbook
+Audience and style (from the project owner, verbatim intent): the slides exist so that I UNDERSTAND THE SYSTEM. Do not cram logs, raw numbers or calculations that only AI agents need. Write it like a concise report to a supervisor: short, to the point, one idea per slide, plain English, diagrams over text, spell out abbreviations once. The reader is a 4th-year electronics/telecom student (strong embedded/STM32/C/C++/Linux), new to SLAM/VIO.
+Facts: use only experiments/2026-10-13-SESSION_FACTS_FOR_SLIDES.md, experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md, experiments/2026-10-13-n4a-euroc-mh01/REPORT.md, experiments/2026-10-13-n4b-d435i-prep/ (README, n4b_plan.md, calibration_notes.md), docs/*.md, slides_course/main.tex and slides_report/main.tex. Do not invent numbers. Mark anything unverified as such in one short phrase.
+Rules: no ssh, no network, no installs, no git commits/branches/stash. Do not edit slides_course/ or slides_report/ (another thread owns them). Write only in your own output folder.
+Output folder: experiments/2026-10-14-lab-prep/.
+1 READING_GUIDE.md: what the owner should read THIS AFTERNOON (about 3 hours) to run tomorrow smoothly, in order, with time per item:
+  - which pages of slides_course/main.pdf (give page/frame titles) are essential vs skippable for tomorrow;
+  - which repo docs sections;
+  - external must-reads with exact titles (no links needed if unsure): ORB-SLAM3 paper (Campos et al. 2021) sections on visual-inertial initialization and the Atlas; Intel RealSense D435i IMU / "IMU calibration" and "global time" docs; a beginner VIO explanation; EuRoC dataset paper (Burri et al. 2016). For each: why it matters for tomorrow, what to skim.
+  - 8-10 self-check questions with short answers at the end (e.g. why emitter off, why IMU init needs motion, why record into RAM).
+2 LAB_RUNBOOK_2026-10-15.md: a one-page, plain checklist for tomorrow with exact commands (Mac side and Pi side) based on the scripts in experiments/2026-10-13-n4b-d435i-prep/ (smoke_ram.sh, analyze_take.py, n4b_plan.md commands) and experiments/2026-10-14-d435i-demo/plot_run.py: physical setup (card in 8 GB Pi, camera on blue USB3 port directly, Pi + cables fixed, Wi-Fi M625 or taped Ethernet, how to find the Pi: ssh wbr-pi5-wifi / 192.168.50.2 / scan for host key), resume the ORB-SLAM3 rebuild after patch 4, 100 s hand-moved take into RAM with the motion recipe, offline run with --bag/--no-viewer, plotting, live run, what to look for in logs, and a short "if X fails do Y" table (pull the relevant rows from experiments/2026-10-14-d435i-demo/DEBUG_GUIDE.md). Paths on the Pi: binaries ~/wbr-runtime/n4b-20261013T080913Z/bin/, ORB-SLAM3 ~/orbslam3/ORB_SLAM3, YAML ~/wbr-runtime/n4b-prep-20261013/D435i_317422076650_stereo_inertial.yaml, evidence ~/wbr-evidence/.
+
+2026-10-14T05:48:13.548968Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when UnexpectedServerResponse("HTTP 401: {\n  \"error\": {\n    \"message\": \"Your authentication token has expired. Please try refreshing it.\",\n    \"type\": \"invalid_request_error\",\n    \"code\": \"token_expired\",\n    \"param\": null\n  },\n  \"status\": 401,\n  \"detail\": {\n    \"code\": \"token_expired\",\n    \"message\": \"Your authentication token has expired. Please try refreshing it.\"\n  }\n}")
+2026-10-14T05:48:13.940556Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when UnexpectedServerResponse("HTTP 401: {\n  \"error\": {\n    \"message\": \"Your authentication token has expired. Please try refreshing it.\",\n    \"type\": \"invalid_request_error\",\n    \"code\": \"token_expired\",\n    \"param\": null\n  },\n  \"status\": 401,\n  \"detail\": {\n    \"code\": \"token_expired\",\n    \"message\": \"Your authentication token has expired. Please try refreshing it.\"\n  }\n}")
+ERROR: {"type":"error","status":400,"error":{"type":"invalid_request_error","message":"The 'gpt-6.1-sol' model is not supported when using Codex with a ChatGPT account."}}
+ERROR: {"type":"error","status":400,"error":{"type":"invalid_request_error","message":"The 'gpt-6.1-sol' model is not supported when using Codex with a ChatGPT account."}}

@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=8",
+    "richard@fe80::2ecf:67ff:fea2:86d3%en7",
+    "python3 -"
+  ],
+  "returncode": 255,
+  "stderr": "Host key verification failed.\n"
+}

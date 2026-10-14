@@ -1,0 +1,6 @@
+NAME        MODEL SERIAL     TRAN  SIZE FSTYPE   UUID                                 MOUNTPOINTS
+loop0                             41.6M squashfs                                      /snap/snapd/25939
+loop1                             43.5M squashfs                                      /snap/snapd/27740
+mmcblk0           0x1070f2b0 mmc  29.1G                                               
+├─mmcblk0p1                  mmc   512M vfat     F766-26D3                            /boot/firmware
+└─mmcblk0p2                  mmc  28.6G ext4     c5da9c27-d622-4e80-89db-6af2e32618b4 /

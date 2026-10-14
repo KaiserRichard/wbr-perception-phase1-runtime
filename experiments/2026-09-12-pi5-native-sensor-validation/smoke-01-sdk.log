@@ -1,0 +1,39 @@
+Running rs-data-collect: -s 243322073847 -c /mnt/wbr-data/wbr-perception-phase1/2026-09-12/raw/sdk-smoke-01/profile.csv -t 20 -f /mnt/wbr-data/wbr-perception-phase1/2026-09-12/raw/sdk-smoke-01/frames.csv 
+
+ 12/09 16:32:59,644 WARNING [281473883635744] (context.cpp:41) No valid configuration file found at : /home/richard/.realsense-config.json loading defaults
+Request added for INFRARED,640,480,15,Y8,1
+Request added for GYRO,1,1,200,MOTION_XYZ32F,0
+Request added for ACCEL,1,1,100,MOTION_XYZ32F,0
+ 12/09 16:32:59,807 WARNING [281473883635744] (ds-calib-parsers.cpp:36) IMU Calibration is not available, default intrinsic and extrinsic will be used.
+
+Device selected: 
+	RealSense D435I. USB Type: 3.2 
+	S.N: 243322073847
+	FW Ver: 5.17.3.10
+
+User streams requested: 3, actual matches: 3
+
+Data collection started.... 
+
+Collecting data for 1 sec
+Collecting data for 2 sec
+Collecting data for 3 sec
+Collecting data for 4 sec
+Collecting data for 5 sec
+Collecting data for 6 sec
+Collecting data for 7 sec
+Collecting data for 8 sec
+Collecting data for 9 sec
+Collecting data for 10 sec
+Collecting data for 11 sec
+Collecting data for 12 sec
+Collecting data for 13 sec
+Collecting data for 14 sec
+Collecting data for 15 sec
+Collecting data for 16 sec
+Collecting data for 17 sec
+Collecting data for 18 sec
+Collecting data for 19 sec
+Collecting data for 20 sec
+ 12/09 16:33:19,817 ERROR [281473883635744] (librealsense-exception.h:53) Failed to enable_sensor /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0002/HID-SENSOR-2000e1.4.auto/enable_sensor Last Error: Permission denied
+ 12/09 16:33:19,818 ERROR [281473883635744] (rs.cpp:288) [rs2_stop( sensor:0xaaaae86613e0 ) Backend] Failed to enable_sensor /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0002/HID-SENSOR-2000e1.4.auto/enable_sensor Last Error: Permission denied

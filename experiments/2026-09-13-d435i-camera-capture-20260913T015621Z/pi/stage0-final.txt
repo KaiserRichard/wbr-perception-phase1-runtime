@@ -1,0 +1,190 @@
+Sun Sep 13 02:14:40 AM UTC 2026
+ 09:14:40 up 33 min,  2 users,  load average: 0.05, 0.04, 0.06
+f049bad6-9d40-45d0-b79d-6c6ea4e12584
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+eth0             UP             192.168.50.2/24 fe80::2ecf:67ff:fea2:86d3/64 
+wlan0            UP             15.15.14.219/22 metric 600 fe80::2ecf:67ff:fea2:86d4/64 
+default via 15.15.15.1 dev wlan0 proto dhcp src 15.15.14.219 metric 600 
+15.15.12.0/22 dev wlan0 proto kernel scope link src 15.15.14.219 metric 600 
+15.15.15.1 dev wlan0 proto dhcp scope link src 15.15.14.219 metric 600 
+192.168.50.0/24 dev eth0 proto kernel scope link src 192.168.50.2 
+Filesystem     Type   Size  Used Avail Use% Mounted on
+tmpfs          tmpfs  399M  3.5M  395M   1% /run
+/dev/mmcblk0p2 ext4    29G  7.4G   20G  28% /
+tmpfs          tmpfs  2.0G  8.0K  2.0G   1% /dev/shm
+tmpfs          tmpfs  5.0M     0  5.0M   0% /run/lock
+/dev/mmcblk0p1 vfat   505M  187M  318M  38% /boot/firmware
+tmpfs          tmpfs  399M   16K  399M   1% /run/user/1000
+               total        used        free      shared  buff/cache   available
+Mem:           3.9Gi       295Mi       3.0Gi       3.5Mi       745Mi       3.6Gi
+Swap:             0B          0B          0B
+throttled=0x50000
+temp=53.2'C
+52900
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 002: ID 346d:5678 USB Disk 2.0
+Bus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 004 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 005 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 005 Device 002: ID 8086:0b3a Intel Corp. Intel(R) RealSense(TM) Depth Camera 435i
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=dwc2/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M
+    |__ Port 001: Dev 002, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M
+/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M
+    |__ Port 001: Dev 002, If 0, Class=Video, Driver=uvcvideo, 5000M
+    |__ Port 001: Dev 002, If 1, Class=Video, Driver=uvcvideo, 5000M
+    |__ Port 001: Dev 002, If 2, Class=Video, Driver=uvcvideo, 5000M
+    |__ Port 001: Dev 002, If 3, Class=Video, Driver=uvcvideo, 5000M
+    |__ Port 001: Dev 002, If 4, Class=Video, Driver=uvcvideo, 5000M
+    |__ Port 001: Dev 002, If 5, Class=Human Interface Device, Driver=usbhid, 5000M
+    PID USER     COMMAND
+      1 root     /sbin/init fixrtc
+      2 root     [kthreadd]
+      3 root     [pool_workqueue_release]
+      4 root     [kworker/R-rcu_g]
+      5 root     [kworker/R-rcu_p]
+      6 root     [kworker/R-slub_]
+      7 root     [kworker/R-netns]
+     12 root     [kworker/R-mm_pe]
+     13 root     [rcu_tasks_kthread]
+     14 root     [rcu_tasks_rude_kthread]
+     15 root     [rcu_tasks_trace_kthread]
+     16 root     [ksoftirqd/0]
+     17 root     [rcu_preempt]
+     18 root     [migration/0]
+     19 root     [cpuhp/0]
+     20 root     [cpuhp/1]
+     21 root     [migration/1]
+     22 root     [ksoftirqd/1]
+     25 root     [cpuhp/2]
+     26 root     [migration/2]
+     27 root     [ksoftirqd/2]
+     30 root     [cpuhp/3]
+     31 root     [migration/3]
+     32 root     [ksoftirqd/3]
+     35 root     [kdevtmpfs]
+     36 root     [kworker/R-inet_]
+     37 root     [kauditd]
+     38 root     [kworker/0:2-events]
+     40 root     [khungtaskd]
+     41 root     [kworker/u8:1-flush-179:0]
+     42 root     [oom_reaper]
+     43 root     [kworker/R-write]
+     44 root     [kcompactd0]
+     45 root     [khugepaged]
+     46 root     [kworker/R-kinte]
+     47 root     [kworker/R-kbloc]
+     48 root     [kworker/R-blkcg]
+     49 root     [kworker/u8:2-events_power_efficient]
+     50 root     [kworker/u8:3-flush-179:0]
+     51 root     [kworker/R-tpm_d]
+     53 root     [kworker/R-edac-]
+     54 root     [kworker/R-devfr]
+     55 root     [watchdogd]
+     57 root     [kworker/R-quota]
+     58 root     [kworker/1:1H-kblockd]
+     59 root     [kswapd0]
+     60 root     [kworker/R-kthro]
+     65 root     [hwrng]
+     66 root     [kworker/R-mld]
+     67 root     [kworker/0:1H-mmc_complete]
+     68 root     [kworker/R-ipv6_]
+     76 root     [kworker/R-kstrp]
+     78 root     [kworker/u9:0-brcmf_wq/mmc1:0001:1]
+    108 root     [kworker/2:1H-kblockd]
+    134 root     [kworker/3:1H-kblockd]
+    146 root     [spi10]
+    154 root     [irq/42-aerdrv]
+    156 root     [kworker/R-sdhci]
+    157 root     [irq/165-mmc1]
+    158 root     [kworker/R-sdhci]
+    159 root     [irq/166-mmc0]
+    161 root     [spi0]
+    163 root     [kworker/R-mmc_c]
+    169 root     [scsi_eh_0]
+    170 root     [kworker/R-scsi_]
+    171 root     [usb-storage]
+    172 root     [kworker/R-uas]
+    194 root     [kworker/R-md]
+    195 root     [kworker/R-md_bi]
+    203 root     [kworker/R-raid5]
+    256 root     [jbd2/mmcblk0p2-8]
+    257 root     [kworker/R-ext4-]
+    336 root     /usr/lib/systemd/systemd-journald
+    375 root     [kworker/R-kmpat]
+    376 root     [kworker/R-kmpat]
+    399 root     /usr/lib/systemd/systemd-udevd
+    405 root     [psimon]
+    475 root     [kworker/R-cfg80]
+    476 root     [kworker/2:3+events]
+    481 root     [kworker/R-brcmf]
+    482 root     [brcmf_wdog/mmc1:0001:1]
+    506 root     [irq/170-1000800000.codec]
+    508 root     [irq/174-vc4 hdmi hpd connected]
+    509 root     [irq/175-vc4 hdmi hpd disconnected]
+    510 root     [cec-vc4-hdmi-0]
+    511 root     [irq/176-vc4 hdmi cec rx]
+    512 root     [irq/177-vc4 hdmi cec tx]
+    513 root     [irq/178-vc4 hdmi hpd connected]
+    514 root     [irq/179-vc4 hdmi hpd disconnected]
+    515 root     [cec-vc4-hdmi-1]
+    516 root     [irq/180-vc4 hdmi cec rx]
+    517 root     [irq/181-vc4 hdmi cec tx]
+    518 root     [card1-crtc0]
+    519 root     [card1-crtc1]
+    520 root     [card1-crtc2]
+    521 root     [card1-crtc3]
+    532 root     [kworker/u9:1-hci0]
+    582 systemd+ /usr/lib/systemd/systemd-resolved
+    594 systemd+ /usr/lib/systemd/systemd-timesyncd
+    722 systemd+ /usr/lib/systemd/systemd-networkd
+    735 avahi    avahi-daemon: running [wbr-pi5.local]
+    736 message+ @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    739 root     /usr/bin/lttng-sessiond
+    740 polkitd  /usr/lib/polkit-1/polkitd --no-debug
+    744 root     /snap/snapd/current/usr/lib/snapd/snapd
+    748 root     /usr/lib/systemd/systemd-logind
+    749 root     /usr/libexec/udisks2/udisksd
+    750 avahi    avahi-daemon: chroot helper
+    759 syslog   /usr/sbin/rsyslogd -n -iNONE
+    766 root     /usr/sbin/NetworkManager --no-daemon
+    767 root     /usr/sbin/wpa_supplicant -u -s -O DIR=/run/wpa_supplicant GROUP=netdev
+    792 root     /usr/bin/lttng-sessiond
+    830 root     /usr/sbin/ModemManager
+    960 root     /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+    985 root     /usr/sbin/cron -f -P
+   1011 root     /sbin/agetty -o -p -- \u --keep-baud 115200,57600,38400,9600 - vt220
+   1014 root     sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+   1018 root     /sbin/agetty -o -p -- \u --noclear - linux
+   1106 root     sshd: richard [priv]
+   1111 richard  /usr/lib/systemd/systemd --user
+   1112 richard  (sd-pam)
+   1205 richard  sshd: richard@pts/0
+   1206 richard  -bash
+   1434 root     [psimon]
+   1468 root     /sbin/wpa_supplicant -c /run/netplan/wpa-wlan0.conf -iwlan0 -Dnl80211,wext
+   1777 root     [kworker/u8:4-events_unbound]
+   2114 root     [kworker/3:2-mm_percpu_wq]
+   2616 root     [kworker/0:3-events]
+   2813 root     /usr/libexec/fwupd/fwupd
+   3112 root     [kworker/3:0-events]
+   3113 root     [kworker/2:1-rcu_gp]
+   3173 root     [kworker/1:0-events]
+   3177 root     [kworker/1:0H]
+   3253 root     [kworker/1:1-events]
+   3327 root     [kworker/2:2H]
+   3381 root     [kworker/2:0-cgroup_free]
+   3382 root     [kworker/3:0H]
+   3383 root     [kworker/0:2H]
+   3386 root     [kworker/2:2-rcu_gp]
+   3387 root     [kworker/1:2H]
+   3388 root     [kworker/0:0-events]
+   3676 root     [kworker/1:2-events]
+   3717 root     [kworker/3:1-events]
+   3952 root     sshd: richard [priv]
+   4000 richard  sshd: richard@notty
+   4001 richard  bash -s
+   4015 richard  ps -eo pid,user,args

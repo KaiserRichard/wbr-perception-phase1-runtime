@@ -1,0 +1,7 @@
+Filesystem     Type   Size  Used Avail Use% Mounted on
+tmpfs          tmpfs  399M  3.5M  395M   1% /run
+/dev/mmcblk0p2 ext4    29G  7.4G   20G  28% /
+tmpfs          tmpfs  2.0G  4.0K  2.0G   1% /dev/shm
+tmpfs          tmpfs  5.0M     0  5.0M   0% /run/lock
+/dev/mmcblk0p1 vfat   505M  187M  318M  38% /boot/firmware
+tmpfs          tmpfs  399M   16K  399M   1% /run/user/1000

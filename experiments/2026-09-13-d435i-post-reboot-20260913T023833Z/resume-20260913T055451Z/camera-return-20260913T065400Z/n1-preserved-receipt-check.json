@@ -1,0 +1,9 @@
+{
+  "stage": "N1_PRECHECK",
+  "verdict": "PASS",
+  "boot_id": "c86c7804-4d39-44e8-90a7-3ae379be6910",
+  "source_result_sha256": "92b0b1acb56379ef18f93820ac5f24042dc606008054ae6de239a2e0e7a2fc22",
+  "files_verified": 6,
+  "mismatches": [],
+  "receipt_failures": []
+}

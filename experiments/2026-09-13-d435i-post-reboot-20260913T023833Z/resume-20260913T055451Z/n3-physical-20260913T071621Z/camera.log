@@ -1,0 +1,40 @@
+[WARN] [1789283977.298277932] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[WARN] [1789283977.298332803] [rcl]: 'localhost_only' is enabled, 'automatic_discovery_range' and 'static_peers' will be ignored.
+[INFO] [1789283977.608334583] [camera.camera]: RealSense ROS v4.58.4
+[INFO] [1789283977.608460566] [camera.camera]: Built with LibRealSense v2.58.4
+[INFO] [1789283977.608480233] [camera.camera]: Running with LibRealSense v2.58.4
+ 13/09 14:19:37,609 WARNING [281472778100736] (context.cpp:41) No valid configuration file found at : /home/richard/.realsense-config.json loading defaults
+[INFO] [1789283977.729100390] [camera.camera]: Device with serial number 243322073847 was found.
+
+[INFO] [1789283977.729193465] [camera.camera]: Device with physical ID /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video0 was found.
+[INFO] [1789283977.729211521] [camera.camera]: Device with name RealSense D435I was found.
+[INFO] [1789283977.729543487] [camera.camera]: Device with port number 5-1 was found.
+[INFO] [1789283977.729566821] [camera.camera]: Device USB type: 3.2
+[INFO] [1789283977.729594673] [camera.camera]: Starting device RealSense D435I (Product ID: 0x0B3A)
+[INFO] [1789283977.729718841] [camera.camera]: getParameters...
+[INFO] [1789283977.730173789] [camera.camera]: JSON file is not provided
+[INFO] [1789283977.730204605] [camera.camera]: Device Name: RealSense D435I
+[INFO] [1789283977.730219512] [camera.camera]: Device Serial No: 243322073847
+[INFO] [1789283977.730232475] [camera.camera]: Device physical port: /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video0
+[INFO] [1789283977.730249790] [camera.camera]: Device FW version: 5.17.3.10
+[INFO] [1789283977.730264494] [camera.camera]: Device Product ID: 0x0B3A
+[INFO] [1789283977.730278976] [camera.camera]: Sync Mode: Off
+[WARN] [1789283977.877018862] [camera.camera]: re-enable the stream for the change to take effect.
+[INFO] [1789283977.889857428] [camera.camera]: Stopping Sensor: Depth Module
+[INFO] [1789283977.889941299] [camera.camera]: Stopping Sensor: Motion Module
+[INFO] [1789283977.926663164] [camera.camera]: Starting Sensor: Depth Module
+[INFO] [1789283977.935399487] [camera.camera]: Open profile: stream_type: Infra(1), Format: Y8, Width: 640, Height: 480, FPS: 15
+ 13/09 14:19:37,959 WARNING [281472778100736] (ds-calib-parsers.cpp:36) IMU Calibration is not available, default intrinsic and extrinsic will be used.
+[INFO] [1789283977.962156370] [camera.camera]: Starting Sensor: Motion Module
+[INFO] [1789283977.968458040] [camera.camera]: Open profile: stream_type: Accel(0)Format: MOTION_XYZ32F, FPS: 100
+[INFO] [1789283977.968539356] [camera.camera]: Open profile: stream_type: Gyro(0)Format: MOTION_XYZ32F, FPS: 200
+[INFO] [1789283977.993849502] [camera.camera]: RealSense Node Is Up!
+[WARN] [1789283978.928886387] [camera.camera]: XXX Hardware Notification:Left MIPI error,1.78928e+12,Error,Hardware Error
+[WARN] [1789283978.928997351] [camera.camera]: Hardware Notification:Left MIPI error,1.78928e+12,Error,Hardware Error
+[INFO] [1789283984.517945044] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[INFO] [1789283984.518376788] [camera.camera]: Stop Sensor: Depth Module
+[INFO] [1789283984.518417937] [camera.camera]: Close Sensor. 
+[INFO] [1789283984.519883154] [camera.camera]: Close Sensor - Done. 
+[INFO] [1789283984.519909840] [camera.camera]: Stop Sensor: Motion Module
+[INFO] [1789283984.520230176] [camera.camera]: Close Sensor. 
+[INFO] [1789283985.483490139] [camera.camera]: Close Sensor - Done. 

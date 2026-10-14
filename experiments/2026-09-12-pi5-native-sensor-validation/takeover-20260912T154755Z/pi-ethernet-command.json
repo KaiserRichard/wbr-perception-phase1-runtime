@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=8",
+    "-o",
+    "HostKeyAlias=wbr-pi5.local",
+    "richard@fe80::2ecf:67ff:fea2:86d3%en7",
+    "python3 -"
+  ],
+  "returncode": 0,
+  "stderr": ""
+}

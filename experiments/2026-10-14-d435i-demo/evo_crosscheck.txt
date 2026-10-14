@@ -1,0 +1,3 @@
+helper RMSE: 0.041461294158 m
+evo RMSE:    0.041461294158 m (3639 associated poses)
+Historical evo: 0.041461 m; copied trajectory SHA-256 values match originals.

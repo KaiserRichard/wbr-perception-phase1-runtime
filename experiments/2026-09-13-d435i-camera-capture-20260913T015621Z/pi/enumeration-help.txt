@@ -1,0 +1,76 @@
+
+USAGE: 
+
+   /opt/ros/jazzy/bin/rs-enumerate-devices  [--] [--version] [-h] [--debug]
+                                        [--eth] [--eth-only] [--no-eth]
+                                        [--domain-id <0-232>] [-s] [-S]
+                                        [-o] [-c] [--sw-only] [--format
+                                        <raw/basic/FULL>] [-v] [-d] [-p
+                                        <path>]
+
+
+Where: 
+
+   --,  --ignore_rest
+     Ignores the rest of the labeled arguments following this flag.
+
+   --version
+     Displays version information and exits.
+
+   -h,  --help
+     Displays usage information and exits.
+
+   --debug
+     Turn on librealsense debug logs
+
+   --eth
+     Detect DDS devices, even if disabled in the configuration.
+
+     NOTE - ignored when not built with DDS support
+
+   --eth-only
+     Use ONLY DDS devices; do not look for USB/MIPI devices.
+
+     NOTE - ignored when not built with DDS support
+
+   --no-eth
+     Do not detect DDS devices, even if enabled in the configuration.
+
+     NOTE - no-op when not built with DDS support
+
+   --domain-id <0-232>
+     Domain ID to use with DDS devices.
+
+     NOTE - ignored when not built with DDS support
+
+   -s,  --short
+     Provide a one-line summary of the devices
+
+   -S,  --compact
+     Provide a short summary of the devices
+
+   -o,  --option
+     Show all the supported options per subdevice
+
+   -c,  --calib_data
+     Show extrinsic and intrinsic of all subdevices
+
+   --sw-only
+     Show only software devices (playback, DDS, etc. -- but not
+     USB/HID/etc.)
+
+   --format <raw/basic/FULL>
+     Choose which 'format-conversion' to use
+
+   -v,  --verbose
+     Show extra information
+
+   -d,  --defaults
+     Show the default streams configuration
+
+   -p <path>,  --playback_device <path>
+     Inspect and enumerate playback device (from file)
+
+
+   librealsense rs-enumerate-devices tool
+

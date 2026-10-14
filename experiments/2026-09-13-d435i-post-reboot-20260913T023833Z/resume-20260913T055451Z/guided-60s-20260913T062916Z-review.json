@@ -1,0 +1,370 @@
+{
+  "recorded_utc": "2026-09-13T06:34:26.083470+00:00",
+  "scope": "Guided 60-second VIO-development capture only; physical sensor evidence, analyzed offline after capture.",
+  "dataset": "guided-60s-20260913T062916Z",
+  "verdict": "PASS",
+  "checks": {
+    "mac_backup": true,
+    "timing": true,
+    "collector_clean_stop": true,
+    "queue_overflow_zero": true,
+    "all_images_present_and_valid": true,
+    "usb_health": true,
+    "power_thermal_memory_storage": true,
+    "no_capture_failures": true,
+    "reanalysis_all_timing_fields_and_decisions_identical": true
+  },
+  "utc_start": "2026-09-13T06:29:17.557637+00:00",
+  "utc_end": "2026-09-13T06:30:19.324632+00:00",
+  "canonical_head": "593245740fa962ad2325dc531cdb48c21d5f15b2",
+  "runtime_bundle": "/home/richard/wbr-runtime/wbr-runtime-20260913T055800Z",
+  "collector_binary_sha256": "31d76f37b8f60d8269e9843525d6269d7cdd67a2af3862f7ffcc34b88e073816",
+  "source_result_sha256": "5f7b0e52450dcc841c2e62d5a06bbceefb547351eff1de41e7ce7f00ffe92d24",
+  "analysis_source_sha256": {
+    "analyze_precision.py": "6d3f2e646c2ee739c02deb92856532f1af593334028d156093c9c17a9b52391f",
+    "health_monitor.py": "bf213f56cafa9366025eaee4f4e08b72ae36f98ebce1a722d551728f29fb10b2",
+    "kernel_analysis.py": "aecc8430f4a510a9325cf8cc9fd1fc52915bc4ed499922cd5535f67d7f17a640"
+  },
+  "camera": {
+    "sysfs_path": "/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1",
+    "sysfs_name": "5-1",
+    "speed_mbps": 5000.0,
+    "usb_descriptor_serial": "251843061466",
+    "idVendor": "8086",
+    "idProduct": "0b3a",
+    "busnum": "5",
+    "devnum": "2",
+    "product": "Intel(R) RealSense(TM) Depth Camera 435i",
+    "device_serial": "243322073847",
+    "firmware": "5.17.3.10",
+    "sdk_usb_type_descriptor": "3.2",
+    "asic_serial": "251843061466",
+    "firmware_update_id": "251843061466",
+    "imu_type": "BMI085"
+  },
+  "profile": "IR1 640x480 Y8 15Hz; gyro XYZ32F 200Hz; accel XYZ32F 100Hz",
+  "streams": {
+    "Accel": {
+      "count": 6049,
+      "callback_span_s": 59.89789534400006,
+      "arrival_rate_hz": 100.97182822978478,
+      "domains": {
+        "Global Time": 6049
+      },
+      "first_sdk_s": 1789280958.141846,
+      "last_sdk_s": 1789281018.0414798,
+      "first_host_steady_ns": 2290383024490,
+      "last_host_steady_ns": 2350280919834,
+      "repeated_timestamps": 0,
+      "backward_timestamps": 0,
+      "max_timestamp_gap_s": 0.009908437728881836,
+      "max_arrival_gap_s": 0.010256838999794127,
+      "nonpositive_arrival_steps": 0,
+      "missing_frame_numbers": 0,
+      "nonpositive_frame_steps": 0,
+      "metadata_keys": [
+        "Backend Timestamp",
+        "Frame Timestamp",
+        "Time Of Arrival"
+      ],
+      "image_count": 0,
+      "automatic_timing_pass": true,
+      "xyz_mean": [
+        -0.0546815155600862,
+        8.651425134262496,
+        1.0409250565444113
+      ],
+      "xyz_min": [
+        -9.73800277709961,
+        -3.9226598739624023,
+        -6.952914714813232
+      ],
+      "xyz_max": [
+        10.110655784606934,
+        11.836626052856445,
+        9.590903282165527
+      ],
+      "xyz_stddev": [
+        2.6883984756551254,
+        2.146448763893812,
+        2.754203656123755
+      ]
+    },
+    "Infrared 1": {
+      "count": 898,
+      "callback_span_s": 59.804648420000376,
+      "arrival_rate_hz": 14.998834098989832,
+      "domains": {
+        "Global Time": 898
+      },
+      "first_sdk_s": 1789280958.1934338,
+      "last_sdk_s": 1789281017.9990385,
+      "first_host_steady_ns": 2290442087007,
+      "last_host_steady_ns": 2350246735427,
+      "repeated_timestamps": 0,
+      "backward_timestamps": 0,
+      "max_timestamp_gap_s": 0.06667780876159668,
+      "max_arrival_gap_s": 0.06681647300001714,
+      "nonpositive_arrival_steps": 0,
+      "missing_frame_numbers": 0,
+      "nonpositive_frame_steps": 0,
+      "metadata_keys": [
+        "Actual Exposure",
+        "Actual Fps",
+        "Auto Exposure",
+        "Backend Timestamp",
+        "Exposure Priority",
+        "Exposure Roi Bottom",
+        "Exposure Roi Left",
+        "Exposure Roi Right",
+        "Exposure Roi Top",
+        "Frame Counter",
+        "Frame Emitter Mode",
+        "Frame Laser Power",
+        "Frame Laser Power Mode",
+        "Frame Timestamp",
+        "Gain Level",
+        "Gpio Input Data",
+        "Raw Frame Size",
+        "Sensor Timestamp",
+        "Sequence Id",
+        "Sequence Name",
+        "Sequence Size",
+        "Time Of Arrival"
+      ],
+      "image_count": 898,
+      "automatic_timing_pass": true
+    },
+    "Gyro": {
+      "count": 11969,
+      "callback_span_s": 59.83582565400002,
+      "arrival_rate_hz": 200.01395266449273,
+      "domains": {
+        "Global Time": 11969
+      },
+      "first_sdk_s": 1789280958.208,
+      "last_sdk_s": 1789281018.0447156,
+      "first_host_steady_ns": 2290448345443,
+      "last_host_steady_ns": 2350284171097,
+      "repeated_timestamps": 0,
+      "backward_timestamps": 0,
+      "max_timestamp_gap_s": 0.0050008296966552734,
+      "max_arrival_gap_s": 0.005496072999903845,
+      "nonpositive_arrival_steps": 0,
+      "missing_frame_numbers": 0,
+      "nonpositive_frame_steps": 0,
+      "metadata_keys": [
+        "Backend Timestamp",
+        "Frame Timestamp",
+        "Time Of Arrival"
+      ],
+      "image_count": 0,
+      "automatic_timing_pass": true,
+      "xyz_mean": [
+        0.025358306661847393,
+        -0.025240903085791785,
+        -0.012706940003338848
+      ],
+      "xyz_min": [
+        -2.764976739883423,
+        -1.6645257472991943,
+        -1.9356434345245361
+      ],
+      "xyz_max": [
+        5.578958988189697,
+        1.9372421503067017,
+        2.8928134441375732
+      ],
+      "xyz_stddev": [
+        0.5190557069541117,
+        0.40414990722084904,
+        0.46099552683558714
+      ]
+    }
+  },
+  "collector": {
+    "frames": 18916,
+    "ir_frames": 898,
+    "queue_overflow": 0,
+    "queue_high_water": 18,
+    "interrupted": false,
+    "elapsed_seconds": 60.6354,
+    "clean_stop": true
+  },
+  "health": {
+    "samples": 62,
+    "failures": [],
+    "throttled_values": [
+      0
+    ],
+    "final_power": "throttled=0x0",
+    "temperature_c": {
+      "min": 47.4,
+      "max": 50.7,
+      "mean": 49.112096774193546
+    },
+    "vcgencmd_temperature_c": {
+      "min": 47.7,
+      "max": 51.0,
+      "mean": 49.43064516129032
+    },
+    "system_cpu_busy_percent": {
+      "min": 0.0,
+      "max": 7.213930348258701,
+      "mean": 1.4900682733517574
+    },
+    "process_cpu_percent": {
+      "min": 2.944161688899992,
+      "max": 7.91972163865414,
+      "mean": 3.8153017053016414
+    },
+    "process_rss_bytes": {
+      "min": 8519680,
+      "max": 18087936,
+      "mean": 17834530.133333333
+    },
+    "memory_available_kib": {
+      "min": 3746928,
+      "max": 3779152,
+      "mean": 3760444.5161290322
+    },
+    "storage_free_bytes": {
+      "min": 20174028800,
+      "max": 20460666880,
+      "mean": 20318375407.48387
+    }
+  },
+  "usb_camera_lines_after": [
+    "    |__ Port 001: Dev 002, If 0, Class=Video, Driver=uvcvideo, 5000M",
+    "    |__ Port 001: Dev 002, If 1, Class=Video, Driver=uvcvideo, 5000M",
+    "    |__ Port 001: Dev 002, If 2, Class=Video, Driver=uvcvideo, 5000M",
+    "    |__ Port 001: Dev 002, If 3, Class=Video, Driver=uvcvideo, 5000M",
+    "    |__ Port 001: Dev 002, If 4, Class=Video, Driver=uvcvideo, 5000M",
+    "    |__ Port 001: Dev 002, If 5, Class=Human Interface Device, Driver=usbhid, 5000M"
+  ],
+  "log_analysis": {
+    "journal.log": {
+      "faults": [],
+      "calibration_warnings": [],
+      "automatic_checks_pass": true,
+      "raw_log_review_required": true,
+      "vio_calibration_qualified": false
+    },
+    "collector.log": {
+      "faults": [],
+      "calibration_warnings": [],
+      "automatic_checks_pass": true,
+      "raw_log_review_required": true,
+      "vio_calibration_qualified": false
+    },
+    "data/sdk.log": {
+      "faults": [],
+      "calibration_warnings": [
+        {
+          "line": 58,
+          "text": " 13/09 13:29:18,041 WARNING [281473171951648] (ds-calib-parsers.cpp:36) IMU Calibration is not available, default intrinsic and extrinsic will be used."
+        }
+      ],
+      "automatic_checks_pass": true,
+      "raw_log_review_required": true,
+      "vio_calibration_qualified": false
+    }
+  },
+  "backup": {
+    "source": "richard@192.168.50.2:/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/guided-60s-20260913T062916Z",
+    "recorded_utc": "2026-09-13T06:33:10.402836+00:00",
+    "files_verified": 908,
+    "bytes_verified": 283006956,
+    "missing_files": [],
+    "extra_files": [],
+    "hash_mismatches": [],
+    "original_receipt_files_verified": 907,
+    "original_receipt_mismatches": [],
+    "verdict": "PASS"
+  },
+  "invalid_images": [],
+  "cue_times_file": "guided-60s-20260913T062916Z-cues.jsonl",
+  "motion_sequence_qualification": "All requested cues were issued in order. Recorded times are clock observations after dispatch, not exact cue or operator response times. Intended phase durations were not enforced; motion ground truth and compliance with each phase are unverified.",
+  "final_window_motion_observations": {
+    "5s": {
+      "gyro_norm_rms_rad_s": 0.10439036474226157,
+      "gyro_norm_max_rad_s": 0.39902895992944876
+    },
+    "2s": {
+      "gyro_norm_rms_rad_s": 0.04854902782551983,
+      "gyro_norm_max_rad_s": 0.09262689019552896
+    }
+  },
+  "calibration_qualified": false,
+  "limitations": [
+    "VIO-development only; no verified calibration target or motion ground truth.",
+    "SDK missing IMU calibration and CAD/default intrinsic/extrinsic fallback warnings remain in the raw SDK log.",
+    "Two startup HID No report with id 0xffffffff found messages and SDK startup frame-counter reset are retained; no stream frame-number gaps or USB reset/disconnect were observed.",
+    "All rows use Global Time, which does not establish physical camera/IMU synchronization.",
+    "Final stillness is not certified; final-window gyro magnitudes are reported without inventing an acceptance threshold.",
+    "The earlier guided-60s attempt remains FAIL and is preserved separately.",
+    "No stationary capture or earlier validation was repeated."
+  ],
+  "reproduction": {
+    "offline_timing_command": [
+      "python3",
+      "experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/wbr-runtime-20260913T055800Z/analyze_precision.py",
+      "experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/guided-60s-20260913T062916Z/data/frames.jsonl",
+      "--output",
+      "experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/guided-60s-20260913T062916Z-timing-independent-review.json"
+    ],
+    "backup_verification": "Compare SHA-256 and byte count for every relative path in the companion source-sha256.json against the Mac dataset; also compare result.json evidence_sha256.",
+    "raw_logs": [
+      "journal.log",
+      "collector.log",
+      "data/sdk.log"
+    ]
+  },
+  "analysis_comparison": {
+    "bitwise_all_fields_identical": false,
+    "differences": [
+      {
+        "stream": "Accel",
+        "field": "xyz_stddev",
+        "pi": [
+          2.688398475655127,
+          2.146448763893817,
+          2.7542036561237673
+        ],
+        "mac": [
+          2.6883984756551254,
+          2.146448763893812,
+          2.754203656123755
+        ],
+        "absolute_deltas": [
+          1.7763568394002505e-15,
+          4.884981308350689e-15,
+          1.2434497875801753e-14
+        ]
+      },
+      {
+        "stream": "Gyro",
+        "field": "xyz_stddev",
+        "pi": [
+          0.5190557069541125,
+          0.4041499072208524,
+          0.4609955268355873
+        ],
+        "mac": [
+          0.5190557069541117,
+          0.40414990722084904,
+          0.46099552683558714
+        ],
+        "absolute_deltas": [
+          7.771561172376096e-16,
+          3.3861802251067274e-15,
+          1.6653345369377348e-16
+        ]
+      }
+    ],
+    "interpretation": "Only descriptive IMU standard deviations differ, by at most 1.25e-14, consistent with floating-point rounding between environments. All timing fields, frame counts, rates, limits and pass decisions are exactly identical. No capture acceptance threshold was changed.",
+    "mac_python": "3.11.0rc2",
+    "pi_python": "3.12.3",
+    "initial_review_observation": "Exact JSON equality initially failed because of these descriptive standard-deviation differences; this does not indicate timestamp or dataset corruption."
+  }
+}

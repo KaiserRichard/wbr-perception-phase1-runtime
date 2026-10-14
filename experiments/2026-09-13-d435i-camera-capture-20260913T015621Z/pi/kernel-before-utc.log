@@ -1,0 +1,656 @@
+2026-09-11T11:08:04.825964+07:00 wbr-pi5 kernel: Booting Linux on physical CPU 0x0000000000 [0x414fd0b1]
+2026-09-11T11:08:04.826009+07:00 wbr-pi5 kernel: Linux version 6.8.0-1064-raspi (buildd@bos03-arm64-026) (aarch64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #68-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug 14 10:05:02 UTC 2026 (Ubuntu 6.8.0-1064.68-raspi 6.8.12)
+2026-09-11T11:08:04.826024+07:00 wbr-pi5 kernel: KASLR enabled
+2026-09-11T11:08:04.826035+07:00 wbr-pi5 kernel: random: crng init done
+2026-09-11T11:08:04.826046+07:00 wbr-pi5 kernel: Machine model: Raspberry Pi 5 Model B Rev 1.0
+2026-09-11T11:08:04.826057+07:00 wbr-pi5 kernel: efi: UEFI not found.
+2026-09-11T11:08:04.826069+07:00 wbr-pi5 kernel: Reserved memory: created CMA memory pool at 0x0000000002600000, size 320 MiB
+2026-09-11T11:08:04.826080+07:00 wbr-pi5 kernel: OF: reserved mem: initialized node linux,cma, compatible id shared-dma-pool
+2026-09-11T11:08:04.826092+07:00 wbr-pi5 kernel: OF: reserved mem: 0x0000000002600000..0x00000000165fffff (327680 KiB) map reusable linux,cma
+2026-09-11T11:08:04.826103+07:00 wbr-pi5 kernel: OF: reserved mem: 0x0000000000000000..0x000000000007ffff (512 KiB) nomap non-reusable atf@0
+2026-09-11T11:08:04.826117+07:00 wbr-pi5 kernel: OF: reserved mem: 0x000000003fd16780..0x000000003fd167b7 (0 KiB) nomap non-reusable nvram@0
+2026-09-11T11:08:04.826129+07:00 wbr-pi5 kernel: Zone ranges:
+2026-09-11T11:08:04.826140+07:00 wbr-pi5 kernel:   DMA      [mem 0x0000000000000000-0x00000000ffffffff]
+2026-09-11T11:08:04.826151+07:00 wbr-pi5 kernel:   DMA32    empty
+2026-09-11T11:08:04.826163+07:00 wbr-pi5 kernel:   Normal   empty
+2026-09-11T11:08:04.826173+07:00 wbr-pi5 kernel: Movable zone start for each node
+2026-09-11T11:08:04.826184+07:00 wbr-pi5 kernel: Early memory node ranges
+2026-09-11T11:08:04.826195+07:00 wbr-pi5 kernel:   node   0: [mem 0x0000000000000000-0x000000000007ffff]
+2026-09-11T11:08:04.826206+07:00 wbr-pi5 kernel:   node   0: [mem 0x0000000000080000-0x000000003fbfffff]
+2026-09-11T11:08:04.826216+07:00 wbr-pi5 kernel:   node   0: [mem 0x0000000040000000-0x00000000ffffffff]
+2026-09-11T11:08:04.826227+07:00 wbr-pi5 kernel: Initmem setup node 0 [mem 0x0000000000000000-0x00000000ffffffff]
+2026-09-11T11:08:04.826237+07:00 wbr-pi5 kernel: On node 0, zone DMA: 1024 pages in unavailable ranges
+2026-09-11T11:08:04.826251+07:00 wbr-pi5 kernel: psci: probing for conduit method from DT.
+2026-09-11T11:08:04.826261+07:00 wbr-pi5 kernel: psci: PSCIv1.1 detected in firmware.
+2026-09-11T11:08:04.826271+07:00 wbr-pi5 kernel: psci: Using standard PSCI v0.2 function IDs
+2026-09-11T11:08:04.826281+07:00 wbr-pi5 kernel: psci: MIGRATE_INFO_TYPE not supported.
+2026-09-11T11:08:04.826292+07:00 wbr-pi5 kernel: psci: SMC Calling Convention v1.2
+2026-09-11T11:08:04.826302+07:00 wbr-pi5 kernel: percpu: Embedded 52 pages/cpu s88104 r8192 d116696 u212992
+2026-09-11T11:08:04.826312+07:00 wbr-pi5 kernel: pcpu-alloc: s88104 r8192 d116696 u212992 alloc=52*4096
+2026-09-11T11:08:04.826323+07:00 wbr-pi5 kernel: pcpu-alloc: [0] 0 [0] 1 [0] 2 [0] 3 
+2026-09-11T11:08:04.826334+07:00 wbr-pi5 kernel: Detected PIPT I-cache on CPU0
+2026-09-11T11:08:04.826344+07:00 wbr-pi5 kernel: CPU features: detected: Virtualization Host Extensions
+2026-09-11T11:08:04.826354+07:00 wbr-pi5 kernel: CPU features: detected: Spectre-v4
+2026-09-11T11:08:04.826364+07:00 wbr-pi5 kernel: CPU features: detected: Spectre-BHB
+2026-09-11T11:08:04.826375+07:00 wbr-pi5 kernel: CPU features: kernel page table isolation forced ON by KASLR
+2026-09-11T11:08:04.826385+07:00 wbr-pi5 kernel: CPU features: detected: Kernel page table isolation (KPTI)
+2026-09-11T11:08:04.826395+07:00 wbr-pi5 kernel: CPU features: detected: SSBS not fully self-synchronizing
+2026-09-11T11:08:04.826406+07:00 wbr-pi5 kernel: alternatives: applying boot alternatives
+2026-09-11T11:08:04.826418+07:00 wbr-pi5 kernel: Kernel command line: reboot=w coherent_pool=1M 8250.nr_uarts=1 pci=pcie_bus_safe  smsc95xx.macaddr=2C:CF:67:A2:86:D3 vc_mem.mem_base=0x3fc00000 vc_mem.mem_size=0x40000000  console=ttyAMA0,115200 multipath=off dwc_otg.lpm_enable=0 console=tty1 root=LABEL=writable rootfstype=ext4 rootwait fixrtc cfg80211.ieee80211_regdom=VN ds=nocloud;i=rpi-imager-1789098807196
+2026-09-11T11:08:04.826432+07:00 wbr-pi5 kernel: Unknown kernel command line parameters "fixrtc multipath=off ds=nocloud;i=rpi-imager-1789098807196", will be passed to user space.
+2026-09-11T11:08:04.826445+07:00 wbr-pi5 kernel: Dentry cache hash table entries: 524288 (order: 10, 4194304 bytes, linear)
+2026-09-11T11:08:04.826455+07:00 wbr-pi5 kernel: Inode-cache hash table entries: 262144 (order: 9, 2097152 bytes, linear)
+2026-09-11T11:08:04.826468+07:00 wbr-pi5 kernel: Built 1 zonelists, mobility grouping on.  Total pages: 1031168
+2026-09-11T11:08:04.826480+07:00 wbr-pi5 kernel: mem auto-init: stack:off, heap alloc:off, heap free:off
+2026-09-11T11:08:04.826492+07:00 wbr-pi5 kernel: Memory: 3686248K/4190208K available (15296K kernel code, 2730K rwdata, 9756K rodata, 6656K init, 896K bss, 176280K reserved, 327680K cma-reserved)
+2026-09-11T11:08:04.826502+07:00 wbr-pi5 kernel: SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+2026-09-11T11:08:04.826513+07:00 wbr-pi5 kernel: ftrace: allocating 45657 entries in 179 pages
+2026-09-11T11:08:04.826523+07:00 wbr-pi5 kernel: ftrace: allocated 179 pages with 5 groups
+2026-09-11T11:08:04.826533+07:00 wbr-pi5 kernel: Dynamic Preempt: full
+2026-09-11T11:08:04.826544+07:00 wbr-pi5 kernel: rcu: Preemptible hierarchical RCU implementation.
+2026-09-11T11:08:04.826555+07:00 wbr-pi5 kernel: rcu:         RCU restricting CPUs from NR_CPUS=256 to nr_cpu_ids=4.
+2026-09-11T11:08:04.826565+07:00 wbr-pi5 kernel:         Trampoline variant of Tasks RCU enabled.
+2026-09-11T11:08:04.826576+07:00 wbr-pi5 kernel:         Rude variant of Tasks RCU enabled.
+2026-09-11T11:08:04.826586+07:00 wbr-pi5 kernel:         Tracing variant of Tasks RCU enabled.
+2026-09-11T11:08:04.826596+07:00 wbr-pi5 kernel: rcu: RCU calculated value of scheduler-enlistment delay is 100 jiffies.
+2026-09-11T11:08:04.826607+07:00 wbr-pi5 kernel: rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=4
+2026-09-11T11:08:04.826618+07:00 wbr-pi5 kernel: RCU Tasks: Setting shift to 2 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=4.
+2026-09-11T11:08:04.826631+07:00 wbr-pi5 kernel: RCU Tasks Rude: Setting shift to 2 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=4.
+2026-09-11T11:08:04.826642+07:00 wbr-pi5 kernel: RCU Tasks Trace: Setting shift to 2 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=4.
+2026-09-11T11:08:04.826653+07:00 wbr-pi5 kernel: NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+2026-09-11T11:08:04.826663+07:00 wbr-pi5 kernel: Root IRQ handler: gic_handle_irq
+2026-09-11T11:08:04.826673+07:00 wbr-pi5 kernel: GIC: Using split EOI/Deactivate mode
+2026-09-11T11:08:04.826683+07:00 wbr-pi5 kernel: rcu: srcu_init: Setting srcu_struct sizes based on contention.
+2026-09-11T11:08:04.826694+07:00 wbr-pi5 kernel: arch_timer: cp15 timer(s) running at 54.00MHz (phys).
+2026-09-11T11:08:04.826705+07:00 wbr-pi5 kernel: clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0xc743ce346, max_idle_ns: 440795203123 ns
+2026-09-11T11:08:04.826716+07:00 wbr-pi5 kernel: sched_clock: 56 bits at 54MHz, resolution 18ns, wraps every 4398046511102ns
+2026-09-11T11:08:04.826726+07:00 wbr-pi5 kernel: Console: colour dummy device 80x25
+2026-09-11T11:08:04.826737+07:00 wbr-pi5 kernel: printk: legacy console [tty1] enabled
+2026-09-11T11:08:04.826748+07:00 wbr-pi5 kernel: Calibrating delay loop (skipped), value calculated using timer frequency.. 108.00 BogoMIPS (lpj=54000)
+2026-09-11T11:08:04.826759+07:00 wbr-pi5 kernel: pid_max: default: 32768 minimum: 301
+2026-09-11T11:08:04.826770+07:00 wbr-pi5 kernel: LSM: initializing lsm=lockdown,capability,landlock,yama,apparmor,integrity
+2026-09-11T11:08:04.826784+07:00 wbr-pi5 kernel: landlock: Up and running.
+2026-09-11T11:08:04.826795+07:00 wbr-pi5 kernel: Yama: becoming mindful.
+2026-09-11T11:08:04.826806+07:00 wbr-pi5 kernel: AppArmor: AppArmor initialized
+2026-09-11T11:08:04.826817+07:00 wbr-pi5 kernel: Mount-cache hash table entries: 8192 (order: 4, 65536 bytes, linear)
+2026-09-11T11:08:04.826828+07:00 wbr-pi5 kernel: Mountpoint-cache hash table entries: 8192 (order: 4, 65536 bytes, linear)
+2026-09-11T11:08:04.826839+07:00 wbr-pi5 kernel: rcu: Hierarchical SRCU implementation.
+2026-09-11T11:08:04.826850+07:00 wbr-pi5 kernel: rcu:         Max phase no-delay instances is 400.
+2026-09-11T11:08:04.826862+07:00 wbr-pi5 kernel: EFI services will not be available.
+2026-09-11T11:08:04.826873+07:00 wbr-pi5 kernel: smp: Bringing up secondary CPUs ...
+2026-09-11T11:08:04.826884+07:00 wbr-pi5 kernel: Detected PIPT I-cache on CPU1
+2026-09-11T11:08:04.826897+07:00 wbr-pi5 kernel: CPU1: Booted secondary processor 0x0000000100 [0x414fd0b1]
+2026-09-11T11:08:04.826908+07:00 wbr-pi5 kernel: Detected PIPT I-cache on CPU2
+2026-09-11T11:08:04.826921+07:00 wbr-pi5 kernel: CPU2: Booted secondary processor 0x0000000200 [0x414fd0b1]
+2026-09-11T11:08:04.826935+07:00 wbr-pi5 kernel: Detected PIPT I-cache on CPU3
+2026-09-11T11:08:04.826946+07:00 wbr-pi5 kernel: CPU3: Booted secondary processor 0x0000000300 [0x414fd0b1]
+2026-09-11T11:08:04.826957+07:00 wbr-pi5 kernel: smp: Brought up 1 node, 4 CPUs
+2026-09-11T11:08:04.826968+07:00 wbr-pi5 kernel: SMP: Total of 4 processors activated.
+2026-09-11T11:08:04.826979+07:00 wbr-pi5 kernel: CPU: All CPU(s) started at EL2
+2026-09-11T11:08:04.826997+07:00 wbr-pi5 kernel: CPU features: detected: 32-bit EL0 Support
+2026-09-11T11:08:04.827009+07:00 wbr-pi5 kernel: CPU features: detected: Data cache clean to the PoU not required for I/D coherence
+2026-09-11T11:08:04.827020+07:00 wbr-pi5 kernel: CPU features: detected: Common not Private translations
+2026-09-11T11:08:04.827031+07:00 wbr-pi5 kernel: CPU features: detected: CRC32 instructions
+2026-09-11T11:08:04.827042+07:00 wbr-pi5 kernel: CPU features: detected: Data cache clean to Point of Persistence
+2026-09-11T11:08:04.827052+07:00 wbr-pi5 kernel: CPU features: detected: RCpc load-acquire (LDAPR)
+2026-09-11T11:08:04.827063+07:00 wbr-pi5 kernel: CPU features: detected: LSE atomic instructions
+2026-09-11T11:08:04.827077+07:00 wbr-pi5 kernel: CPU features: detected: Privileged Access Never
+2026-09-11T11:08:04.827088+07:00 wbr-pi5 kernel: CPU features: detected: Speculative Store Bypassing Safe (SSBS)
+2026-09-11T11:08:04.827100+07:00 wbr-pi5 kernel: alternatives: applying system-wide alternatives
+2026-09-11T11:08:04.827110+07:00 wbr-pi5 kernel: CPU features: detected: Hardware dirty bit management on CPU0-3
+2026-09-11T11:08:04.827121+07:00 wbr-pi5 kernel: devtmpfs: initialized
+2026-09-11T11:08:04.827134+07:00 wbr-pi5 kernel: Enabled cp15_barrier support
+2026-09-11T11:08:04.827146+07:00 wbr-pi5 kernel: Enabled setend support
+2026-09-11T11:08:04.827158+07:00 wbr-pi5 kernel: clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1911260446275000 ns
+2026-09-11T11:08:04.827169+07:00 wbr-pi5 kernel: futex hash table entries: 1024 (order: 4, 65536 bytes, linear)
+2026-09-11T11:08:04.827180+07:00 wbr-pi5 kernel: pinctrl core: initialized pinctrl subsystem
+2026-09-11T11:08:04.827191+07:00 wbr-pi5 kernel: DMI not present or invalid.
+2026-09-11T11:08:04.827201+07:00 wbr-pi5 kernel: NET: Registered PF_NETLINK/PF_ROUTE protocol family
+2026-09-11T11:08:04.827215+07:00 wbr-pi5 kernel: DMA: preallocated 1024 KiB GFP_KERNEL pool for atomic allocations
+2026-09-11T11:08:04.827226+07:00 wbr-pi5 kernel: DMA: preallocated 1024 KiB GFP_KERNEL|GFP_DMA pool for atomic allocations
+2026-09-11T11:08:04.827237+07:00 wbr-pi5 kernel: DMA: preallocated 1024 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+2026-09-11T11:08:04.827248+07:00 wbr-pi5 kernel: audit: initializing netlink subsys (disabled)
+2026-09-11T11:08:04.827260+07:00 wbr-pi5 kernel: audit: type=2000 audit(0.011:1): state=initialized audit_enabled=0 res=1
+2026-09-11T11:08:04.827271+07:00 wbr-pi5 kernel: thermal_sys: Registered thermal governor 'fair_share'
+2026-09-11T11:08:04.827282+07:00 wbr-pi5 kernel: thermal_sys: Registered thermal governor 'bang_bang'
+2026-09-11T11:08:04.827293+07:00 wbr-pi5 kernel: thermal_sys: Registered thermal governor 'step_wise'
+2026-09-11T11:08:04.827304+07:00 wbr-pi5 kernel: thermal_sys: Registered thermal governor 'user_space'
+2026-09-11T11:08:04.827315+07:00 wbr-pi5 kernel: cpuidle: using governor ladder
+2026-09-11T11:08:04.827331+07:00 wbr-pi5 kernel: cpuidle: using governor menu
+2026-09-11T11:08:04.827343+07:00 wbr-pi5 kernel: hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+2026-09-11T11:08:04.827354+07:00 wbr-pi5 kernel: ASID allocator initialised with 32768 entries
+2026-09-11T11:08:04.827367+07:00 wbr-pi5 kernel: Serial: AMBA PL011 UART driver
+2026-09-11T11:08:04.827631+07:00 wbr-pi5 kernel: bcm2835-mbox 107c013880.mailbox: mailbox enabled
+2026-09-11T11:08:04.827654+07:00 wbr-pi5 kernel: 107d001000.serial: ttyAMA10 at MMIO 0x107d001000 (irq = 15, base_baud = 0) is a PL011 rev2
+2026-09-11T11:08:04.827841+07:00 wbr-pi5 kernel: raspberrypi-firmware soc:firmware: Attached to firmware from 2025-05-08T14:13:17, variant start_cd
+2026-09-11T11:08:04.828017+07:00 wbr-pi5 kernel: raspberrypi-firmware soc:firmware: Firmware hash is 6947117700000000000000000000000000000000
+2026-09-11T11:08:04.828036+07:00 wbr-pi5 kernel: /axi/interrupt-controller@7fff9000: Fixed dependency cycle(s) with /axi/interrupt-controller@7fff9000
+2026-09-11T11:08:04.828048+07:00 wbr-pi5 kernel: Modules: 2G module region forced by RANDOMIZE_MODULE_REGION_FULL
+2026-09-11T11:08:04.828065+07:00 wbr-pi5 kernel: Modules: 0 pages in range for non-PLT usage
+2026-09-11T11:08:04.828076+07:00 wbr-pi5 kernel: Modules: 515392 pages in range for PLT usage
+2026-09-11T11:08:04.828087+07:00 wbr-pi5 kernel: HugeTLB: registered 1.00 GiB page size, pre-allocated 0 pages
+2026-09-11T11:08:04.828099+07:00 wbr-pi5 kernel: HugeTLB: 0 KiB vmemmap can be freed for a 1.00 GiB page
+2026-09-11T11:08:04.828111+07:00 wbr-pi5 kernel: HugeTLB: registered 32.0 MiB page size, pre-allocated 0 pages
+2026-09-11T11:08:04.828124+07:00 wbr-pi5 kernel: HugeTLB: 0 KiB vmemmap can be freed for a 32.0 MiB page
+2026-09-11T11:08:04.828137+07:00 wbr-pi5 kernel: HugeTLB: registered 2.00 MiB page size, pre-allocated 0 pages
+2026-09-11T11:08:04.828149+07:00 wbr-pi5 kernel: HugeTLB: 0 KiB vmemmap can be freed for a 2.00 MiB page
+2026-09-11T11:08:04.828161+07:00 wbr-pi5 kernel: HugeTLB: registered 64.0 KiB page size, pre-allocated 0 pages
+2026-09-11T11:08:04.828172+07:00 wbr-pi5 kernel: HugeTLB: 0 KiB vmemmap can be freed for a 64.0 KiB page
+2026-09-11T11:08:04.828363+07:00 wbr-pi5 kernel: bcm2835-dma 1000010000.dma: DMA legacy API manager, dmachans=0x1
+2026-09-11T11:08:04.828381+07:00 wbr-pi5 kernel: iommu: Default domain type: Translated
+2026-09-11T11:08:04.828392+07:00 wbr-pi5 kernel: iommu: DMA domain TLB invalidation policy: strict mode
+2026-09-11T11:08:04.828403+07:00 wbr-pi5 kernel: SCSI subsystem initialized
+2026-09-11T11:08:04.828414+07:00 wbr-pi5 kernel: usbcore: registered new interface driver usbfs
+2026-09-11T11:08:04.828425+07:00 wbr-pi5 kernel: usbcore: registered new interface driver hub
+2026-09-11T11:08:04.828436+07:00 wbr-pi5 kernel: usbcore: registered new device driver usb
+2026-09-11T11:08:04.828447+07:00 wbr-pi5 kernel: pps_core: LinuxPPS API ver. 1 registered
+2026-09-11T11:08:04.828458+07:00 wbr-pi5 kernel: pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+2026-09-11T11:08:04.828470+07:00 wbr-pi5 kernel: PTP clock support registered
+2026-09-11T11:08:04.828480+07:00 wbr-pi5 kernel: EDAC MC: Ver: 3.0.0
+2026-09-11T11:08:04.828495+07:00 wbr-pi5 kernel: NetLabel: Initializing
+2026-09-11T11:08:04.828507+07:00 wbr-pi5 kernel: NetLabel:  domain hash size = 128
+2026-09-11T11:08:04.828518+07:00 wbr-pi5 kernel: NetLabel:  protocols = UNLABELED CIPSOv4 CALIPSO
+2026-09-11T11:08:04.828530+07:00 wbr-pi5 kernel: NetLabel:  unlabeled traffic allowed by default
+2026-09-11T11:08:04.828542+07:00 wbr-pi5 kernel: clocksource: Switched to clocksource arch_sys_counter
+2026-09-11T11:08:04.828553+07:00 wbr-pi5 kernel: VFS: Disk quotas dquot_6.6.0
+2026-09-11T11:08:04.828565+07:00 wbr-pi5 kernel: VFS: Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+2026-09-11T11:08:04.828576+07:00 wbr-pi5 kernel: AppArmor: AppArmor Filesystem Enabled
+2026-09-11T11:08:04.828587+07:00 wbr-pi5 kernel: NET: Registered PF_INET protocol family
+2026-09-11T11:08:04.828598+07:00 wbr-pi5 kernel: IP idents hash table entries: 65536 (order: 7, 524288 bytes, linear)
+2026-09-11T11:08:04.828609+07:00 wbr-pi5 kernel: tcp_listen_portaddr_hash hash table entries: 2048 (order: 3, 32768 bytes, linear)
+2026-09-11T11:08:04.828621+07:00 wbr-pi5 kernel: Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+2026-09-11T11:08:04.828634+07:00 wbr-pi5 kernel: TCP established hash table entries: 32768 (order: 6, 262144 bytes, linear)
+2026-09-11T11:08:04.828645+07:00 wbr-pi5 kernel: TCP bind hash table entries: 32768 (order: 8, 1048576 bytes, linear)
+2026-09-11T11:08:04.828656+07:00 wbr-pi5 kernel: TCP: Hash tables configured (established 32768 bind 32768)
+2026-09-11T11:08:04.828667+07:00 wbr-pi5 kernel: MPTCP token hash table entries: 4096 (order: 5, 98304 bytes, linear)
+2026-09-11T11:08:04.828678+07:00 wbr-pi5 kernel: UDP hash table entries: 2048 (order: 4, 65536 bytes, linear)
+2026-09-11T11:08:04.828690+07:00 wbr-pi5 kernel: UDP-Lite hash table entries: 2048 (order: 4, 65536 bytes, linear)
+2026-09-11T11:08:04.828700+07:00 wbr-pi5 kernel: NET: Registered PF_UNIX/PF_LOCAL protocol family
+2026-09-11T11:08:04.828712+07:00 wbr-pi5 kernel: NET: Registered PF_XDP protocol family
+2026-09-11T11:08:04.828723+07:00 wbr-pi5 kernel: PCI: CLS 0 bytes, default 64
+2026-09-11T11:08:04.828735+07:00 wbr-pi5 kernel: Trying to unpack rootfs image as initramfs...
+2026-09-11T11:08:04.828749+07:00 wbr-pi5 kernel: kvm [1]: IPA Size Limit: 40 bits
+2026-09-11T11:08:04.828761+07:00 wbr-pi5 kernel: kvm [1]: vgic interrupt IRQ9
+2026-09-11T11:08:04.828776+07:00 wbr-pi5 kernel: kvm [1]: VHE mode initialized successfully
+2026-09-11T11:08:04.828791+07:00 wbr-pi5 kernel: Initialise system trusted keyrings
+2026-09-11T11:08:04.828804+07:00 wbr-pi5 kernel: Key type blacklist registered
+2026-09-11T11:08:04.828815+07:00 wbr-pi5 kernel: workingset: timestamp_bits=46 max_order=20 bucket_order=0
+2026-09-11T11:08:04.828826+07:00 wbr-pi5 kernel: zbud: loaded
+2026-09-11T11:08:04.828838+07:00 wbr-pi5 kernel: squashfs: version 4.0 (2009/01/31) Phillip Lougher
+2026-09-11T11:08:04.828849+07:00 wbr-pi5 kernel: Key type asymmetric registered
+2026-09-11T11:08:04.828860+07:00 wbr-pi5 kernel: Asymmetric key parser 'x509' registered
+2026-09-11T11:08:04.828872+07:00 wbr-pi5 kernel: Block layer SCSI generic (bsg) driver version 0.4 loaded (major 246)
+2026-09-11T11:08:04.828883+07:00 wbr-pi5 kernel: io scheduler mq-deadline registered
+2026-09-11T11:08:04.828895+07:00 wbr-pi5 kernel: irq_brcmstb_l2: registered L2 intc (/soc/interrupt-controller@7c502000, parent irq: 26)
+2026-09-11T11:08:04.828907+07:00 wbr-pi5 kernel: irq_brcmstb_l2: registered L2 intc (/soc/intc@7d503000, parent irq: 27)
+2026-09-11T11:08:04.828922+07:00 wbr-pi5 kernel: irq_brcmstb_l2: registered L2 intc (/soc/intc@7d508380, parent irq: 28)
+2026-09-11T11:08:04.828933+07:00 wbr-pi5 kernel: irq_brcmstb_l2: registered L2 intc (/soc/intc@7d508400, parent irq: 29)
+2026-09-11T11:08:04.828944+07:00 wbr-pi5 kernel: irq_brcmstb_l2: registered L2 intc (/soc/interrupt-controller@7d510600, parent irq: 30)
+2026-09-11T11:08:04.828956+07:00 wbr-pi5 kernel: irq_brcmstb_l2: registered L2 intc (/soc/intc@7d517b00, parent irq: 31)
+2026-09-11T11:08:04.828967+07:00 wbr-pi5 kernel: Serial: 8250/16550 driver, 1 ports, IRQ sharing enabled
+2026-09-11T11:08:04.829159+07:00 wbr-pi5 kernel: iproc-rng200 107d208000.rng: hwrng registered
+2026-09-11T11:08:04.829177+07:00 wbr-pi5 kernel: vc-mem: phys_addr:0x00000000 mem_base=0x3fc00000 mem_size:0x40000000(1024 MiB)
+2026-09-11T11:08:04.829341+07:00 wbr-pi5 kernel: bcm2712-iommu-cache 1000005b00.iommuc: bcm2712_iommu_cache_probe
+2026-09-11T11:08:04.829357+07:00 wbr-pi5 kernel: loop: module loaded
+2026-09-11T11:08:04.829524+07:00 wbr-pi5 kernel: bcm2835-power bcm2835-power: Broadcom BCM2835 power domains driver
+2026-09-11T11:08:04.829544+07:00 wbr-pi5 kernel: usbcore: registered new interface driver lan78xx
+2026-09-11T11:08:04.829556+07:00 wbr-pi5 kernel: usbcore: registered new interface driver smsc95xx
+2026-09-11T11:08:04.829567+07:00 wbr-pi5 kernel: mousedev: PS/2 mouse device common for all mice
+2026-09-11T11:08:04.829578+07:00 wbr-pi5 kernel: i2c_dev: i2c /dev entries driver
+2026-09-11T11:08:04.829733+07:00 wbr-pi5 kernel: bcm2835-wdt bcm2835-wdt: Poweroff handler already present!
+2026-09-11T11:08:04.829884+07:00 wbr-pi5 kernel: bcm2835-wdt bcm2835-wdt: Broadcom BCM2835 watchdog timer
+2026-09-11T11:08:04.829900+07:00 wbr-pi5 kernel: sdhci: Secure Digital Host Controller Interface driver
+2026-09-11T11:08:04.829911+07:00 wbr-pi5 kernel: sdhci: Copyright(c) Pierre Ossman
+2026-09-11T11:08:04.829922+07:00 wbr-pi5 kernel: sdhci-pltfm: SDHCI platform and OF driver helper
+2026-09-11T11:08:04.829933+07:00 wbr-pi5 kernel: ledtrig-cpu: registered to indicate activity on CPUs
+2026-09-11T11:08:04.829947+07:00 wbr-pi5 kernel: SMCCC: SOC_ID: ARCH_SOC_ID not implemented, skipping ....
+2026-09-11T11:08:04.829958+07:00 wbr-pi5 kernel: hid: raw HID events driver (C) Jiri Kosina
+2026-09-11T11:08:04.829968+07:00 wbr-pi5 kernel: hw perfevents: enabled with armv8_cortex_a76 PMU driver, 7 counters available
+2026-09-11T11:08:04.829979+07:00 wbr-pi5 kernel: NET: Registered PF_INET6 protocol family
+2026-09-11T11:08:04.830001+07:00 wbr-pi5 kernel: watchdog: Delayed init of the lockup detector failed: -19
+2026-09-11T11:08:04.830012+07:00 wbr-pi5 kernel: watchdog: Hard watchdog permanently disabled
+2026-09-11T11:08:04.830023+07:00 wbr-pi5 kernel: Freeing initrd memory: 58992K
+2026-09-11T11:08:04.830035+07:00 wbr-pi5 kernel: Segment Routing with IPv6
+2026-09-11T11:08:04.830045+07:00 wbr-pi5 kernel: In-situ OAM (IOAM) with IPv6
+2026-09-11T11:08:04.830056+07:00 wbr-pi5 kernel: NET: Registered PF_PACKET protocol family
+2026-09-11T11:08:04.830068+07:00 wbr-pi5 kernel: Key type dns_resolver registered
+2026-09-11T11:08:04.830080+07:00 wbr-pi5 kernel: registered taskstats version 1
+2026-09-11T11:08:04.830093+07:00 wbr-pi5 kernel: Loading compiled-in X.509 certificates
+2026-09-11T11:08:04.830104+07:00 wbr-pi5 kernel: Loaded X.509 cert 'Build time autogenerated kernel key: e944ab77d00dbcd1ce9cfe4aea74471fadd785bf'
+2026-09-11T11:08:04.830115+07:00 wbr-pi5 kernel: Loaded X.509 cert 'Canonical Ltd. Live Patch Signing 2025 Kmod: d541cef61dc7e793b7eb7e899970a2eef0b5dc8c'
+2026-09-11T11:08:04.830127+07:00 wbr-pi5 kernel: Loaded X.509 cert 'Canonical Ltd. Live Patch Signing: 14df34d1a87cf37625abec039ef2bf521249b969'
+2026-09-11T11:08:04.830138+07:00 wbr-pi5 kernel: Loaded X.509 cert 'Canonical Ltd. Kernel Module Signing 2025 Kmod: 4627603d2357a2a3f81006370894c221175893e9'
+2026-09-11T11:08:04.830149+07:00 wbr-pi5 kernel: Loaded X.509 cert 'Canonical Ltd. Kernel Module Signing: 88f752e560a1e0737e31163a466ad7b70a850c19'
+2026-09-11T11:08:04.830160+07:00 wbr-pi5 kernel: blacklist: Loading compiled-in revocation X.509 certificates
+2026-09-11T11:08:04.830171+07:00 wbr-pi5 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing: 61482aa2830d0ab2ad5af10b7250da9033ddcef0'
+2026-09-11T11:08:04.830182+07:00 wbr-pi5 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2017): 242ade75ac4a15e50d50c84b0d45ff3eae707a03'
+2026-09-11T11:08:04.830193+07:00 wbr-pi5 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (ESM 2018): 365188c1d374d6b07c3c8f240f8ef722433d6a8b'
+2026-09-11T11:08:04.830208+07:00 wbr-pi5 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2019): c0746fd6c5da3ae827864651ad66ae47fe24b3e8'
+2026-09-11T11:08:04.830219+07:00 wbr-pi5 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v1): a8d54bbb3825cfb94fa13c9f8a594a195c107b8d'
+2026-09-11T11:08:04.830230+07:00 wbr-pi5 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v2): 4cf046892d6fd3c9a5b03f98d845f90851dc6a8c'
+2026-09-11T11:08:04.830242+07:00 wbr-pi5 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v3): 100437bb6de6e469b581e61cd66bce3ef4ed53af'
+2026-09-11T11:08:04.830253+07:00 wbr-pi5 kernel: Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (Ubuntu Core 2019): c1d57b8f6b743f23ee41f4f7ee292f06eecadfb9'
+2026-09-11T11:08:04.830265+07:00 wbr-pi5 kernel: Key type .fscrypt registered
+2026-09-11T11:08:04.830277+07:00 wbr-pi5 kernel: Key type fscrypt-provisioning registered
+2026-09-11T11:08:04.830289+07:00 wbr-pi5 kernel: Key type encrypted registered
+2026-09-11T11:08:04.830300+07:00 wbr-pi5 kernel: AppArmor: AppArmor sha256 policy hashing enabled
+2026-09-11T11:08:04.830313+07:00 wbr-pi5 kernel: ima: No TPM chip found, activating TPM-bypass!
+2026-09-11T11:08:04.830324+07:00 wbr-pi5 kernel: ima: Allocated hash algorithm: sha1
+2026-09-11T11:08:04.830337+07:00 wbr-pi5 kernel: ima: No architecture policies found
+2026-09-11T11:08:04.830349+07:00 wbr-pi5 kernel: evm: Initialising EVM extended attributes:
+2026-09-11T11:08:04.830360+07:00 wbr-pi5 kernel: evm: security.selinux
+2026-09-11T11:08:04.830370+07:00 wbr-pi5 kernel: evm: security.SMACK64
+2026-09-11T11:08:04.830381+07:00 wbr-pi5 kernel: evm: security.SMACK64EXEC
+2026-09-11T11:08:04.830391+07:00 wbr-pi5 kernel: evm: security.SMACK64TRANSMUTE
+2026-09-11T11:08:04.830402+07:00 wbr-pi5 kernel: evm: security.SMACK64MMAP
+2026-09-11T11:08:04.830412+07:00 wbr-pi5 kernel: evm: security.apparmor
+2026-09-11T11:08:04.830423+07:00 wbr-pi5 kernel: evm: security.ima
+2026-09-11T11:08:04.830435+07:00 wbr-pi5 kernel: evm: security.capability
+2026-09-11T11:08:04.830445+07:00 wbr-pi5 kernel: evm: HMAC attrs: 0x1
+2026-09-11T11:08:04.830616+07:00 wbr-pi5 kernel: bcm2712-iommu 1000005100.iommu: bcm2712_iommu_init: DEBUG_INFO = 0x20804774
+2026-09-11T11:08:04.830781+07:00 wbr-pi5 kernel: bcm2712-iommu 1000005100.iommu: bcm2712_iommu_probe: Success
+2026-09-11T11:08:04.830952+07:00 wbr-pi5 kernel: bcm2712-iommu 1000005200.iommu: bcm2712_iommu_init: DEBUG_INFO = 0x20804774
+2026-09-11T11:08:04.831147+07:00 wbr-pi5 kernel: bcm2712-iommu 1000005200.iommu: bcm2712_iommu_probe: Success
+2026-09-11T11:08:04.831332+07:00 wbr-pi5 kernel: bcm2712-iommu 1000005280.iommu: bcm2712_iommu_init: DEBUG_INFO = 0x20804774
+2026-09-11T11:08:04.831491+07:00 wbr-pi5 kernel: bcm2712-iommu 1000005280.iommu: bcm2712_iommu_probe: Success
+2026-09-11T11:08:04.831506+07:00 wbr-pi5 kernel: of_cfs_init
+2026-09-11T11:08:04.831517+07:00 wbr-pi5 kernel: of_cfs_init: OK
+2026-09-11T11:08:04.831527+07:00 wbr-pi5 kernel: clk: Disabling unused clocks
+2026-09-11T11:08:04.831538+07:00 wbr-pi5 kernel: Freeing unused kernel memory: 6656K
+2026-09-11T11:08:04.831554+07:00 wbr-pi5 kernel: Checked W+X mappings: passed, no W+X pages found
+2026-09-11T11:08:04.831566+07:00 wbr-pi5 kernel: Run /init as init process
+2026-09-11T11:08:04.831577+07:00 wbr-pi5 kernel:   with arguments:
+2026-09-11T11:08:04.831588+07:00 wbr-pi5 kernel:     /init
+2026-09-11T11:08:04.831599+07:00 wbr-pi5 kernel:     fixrtc
+2026-09-11T11:08:04.831610+07:00 wbr-pi5 kernel:   with environment:
+2026-09-11T11:08:04.831621+07:00 wbr-pi5 kernel:     HOME=/
+2026-09-11T11:08:04.831632+07:00 wbr-pi5 kernel:     TERM=linux
+2026-09-11T11:08:04.831643+07:00 wbr-pi5 kernel:     multipath=off
+2026-09-11T11:08:04.831655+07:00 wbr-pi5 kernel:     ds=nocloud;i=rpi-imager-1789098807196
+2026-09-11T11:08:04.831818+07:00 wbr-pi5 kernel: dwc2 1000480000.usb: supply vusb_d not found, using dummy regulator
+2026-09-11T11:08:04.831983+07:00 wbr-pi5 kernel: dwc2 1000480000.usb: supply vusb_a not found, using dummy regulator
+2026-09-11T11:08:04.832171+07:00 wbr-pi5 kernel: brcmstb-i2c 107d508200.i2c:  @97500hz registered in interrupt mode
+2026-09-11T11:08:04.832334+07:00 wbr-pi5 kernel: gpio-keys pwr_button: error -ENXIO: Unable to get irq number for GPIO 0
+2026-09-11T11:08:04.832350+07:00 wbr-pi5 kernel: 107d50c000.serial: ttyS0 at MMIO 0x107d50c000 (irq = 36, base_baud = 6000000) is a Broadcom BCM7271 UART
+2026-09-11T11:08:04.832536+07:00 wbr-pi5 kernel: serial serial0: tty port ttyS0 registered
+2026-09-11T11:08:04.832712+07:00 wbr-pi5 kernel: brcm-pcie 1000120000.pcie: host bridge /axi/pcie@120000 ranges:
+2026-09-11T11:08:04.832878+07:00 wbr-pi5 kernel: brcm-pcie 1000120000.pcie:   No bus range found for /axi/pcie@120000, using [bus 00-ff]
+2026-09-11T11:08:04.833043+07:00 wbr-pi5 kernel: brcm-pcie 1000120000.pcie:      MEM 0x1f00000000..0x1ffffffffb -> 0x0000000000
+2026-09-11T11:08:04.833199+07:00 wbr-pi5 kernel: brcm-pcie 1000120000.pcie:      MEM 0x1c00000000..0x1effffffff -> 0x0400000000
+2026-09-11T11:08:04.833349+07:00 wbr-pi5 kernel: brcm-pcie 1000120000.pcie:   IB MEM 0x1f00000000..0x1f003fffff -> 0x0000000000
+2026-09-11T11:08:04.833499+07:00 wbr-pi5 kernel: brcm-pcie 1000120000.pcie:   IB MEM 0x0000000000..0x0fffffffff -> 0x1000000000
+2026-09-11T11:08:04.833649+07:00 wbr-pi5 kernel: brcm-pcie 1000120000.pcie: Forcing gen 2
+2026-09-11T11:08:04.833807+07:00 wbr-pi5 kernel: brcmstb-i2c 107d508280.i2c:  @97500hz registered in interrupt mode
+2026-09-11T11:08:04.833974+07:00 wbr-pi5 kernel: brcm-pcie 1000120000.pcie: PCI host bridge to bus 0000:00
+2026-09-11T11:08:04.834156+07:00 wbr-pi5 kernel: pci_bus 0000:00: root bus resource [bus 00-ff]
+2026-09-11T11:08:04.834321+07:00 wbr-pi5 kernel: pci_bus 0000:00: root bus resource [mem 0x1f00000000-0x1ffffffffb] (bus address [0x00000000-0xfffffffb])
+2026-09-11T11:08:04.834468+07:00 wbr-pi5 kernel: pci_bus 0000:00: root bus resource [mem 0x1c00000000-0x1effffffff pref] (bus address [0x400000000-0x6ffffffff])
+2026-09-11T11:08:04.834655+07:00 wbr-pi5 kernel: pci 0000:00:00.0: [14e4:2712] type 01 class 0x060400 PCIe Root Port
+2026-09-11T11:08:04.834824+07:00 wbr-pi5 kernel: pci 0000:00:00.0: PCI bridge to [bus 00]
+2026-09-11T11:08:04.834994+07:00 wbr-pi5 kernel: pci 0000:00:00.0:   bridge window [mem 0x1f80000000-0x1fbfffffff]
+2026-09-11T11:08:04.835163+07:00 wbr-pi5 kernel: pci 0000:00:00.0: PME# supported from D0 D3hot
+2026-09-11T11:08:04.835327+07:00 wbr-pi5 kernel: pci 0000:00:00.0: bridge configuration invalid ([bus 00-00]), reconfiguring
+2026-09-11T11:08:04.835487+07:00 wbr-pi5 kernel: rpi-rtc soc:rpi_rtc: registered as rtc0
+2026-09-11T11:08:04.835639+07:00 wbr-pi5 kernel: rpi-rtc soc:rpi_rtc: setting system clock to 1970-01-01T00:00:14 UTC (14)
+2026-09-11T11:08:04.835791+07:00 wbr-pi5 kernel: brcm-pcie 1000120000.pcie: clkreq-mode set to default
+2026-09-11T11:08:04.835946+07:00 wbr-pi5 kernel: brcm-pcie 1000120000.pcie: link up, 5.0 GT/s PCIe x4 (!SSC)
+2026-09-11T11:08:04.836137+07:00 wbr-pi5 kernel: pci 0000:01:00.0: [1de4:0001] type 00 class 0x020000 PCIe Endpoint
+2026-09-11T11:08:04.836306+07:00 wbr-pi5 kernel: pci 0000:01:00.0: BAR 0 [mem 0xffffc000-0xffffffff]
+2026-09-11T11:08:04.836472+07:00 wbr-pi5 kernel: pci 0000:01:00.0: BAR 1 [mem 0xffc00000-0xffffffff]
+2026-09-11T11:08:04.836636+07:00 wbr-pi5 kernel: pci 0000:01:00.0: BAR 2 [mem 0xffff0000-0xffffffff]
+2026-09-11T11:08:04.836801+07:00 wbr-pi5 kernel: pci 0000:01:00.0: supports D1
+2026-09-11T11:08:04.836966+07:00 wbr-pi5 kernel: pci 0000:01:00.0: PME# supported from D0 D1 D3hot D3cold
+2026-09-11T11:08:04.837132+07:00 wbr-pi5 kernel: pci_bus 0000:01: busn_res: [bus 01-ff] end is updated to 01
+2026-09-11T11:08:04.837299+07:00 wbr-pi5 kernel: pci 0000:00:00.0: bridge window [mem 0x1f00000000-0x1f005fffff]: assigned
+2026-09-11T11:08:04.837471+07:00 wbr-pi5 kernel: pci 0000:01:00.0: BAR 1 [mem 0x1f00000000-0x1f003fffff]: assigned
+2026-09-11T11:08:04.837646+07:00 wbr-pi5 kernel: pci 0000:01:00.0: BAR 2 [mem 0x1f00400000-0x1f0040ffff]: assigned
+2026-09-11T11:08:04.837822+07:00 wbr-pi5 kernel: pci 0000:01:00.0: BAR 0 [mem 0x1f00410000-0x1f00413fff]: assigned
+2026-09-11T11:08:04.838034+07:00 wbr-pi5 kernel: pci 0000:00:00.0: PCI bridge to [bus 01]
+2026-09-11T11:08:04.838221+07:00 wbr-pi5 kernel: pci 0000:00:00.0:   bridge window [mem 0x1f00000000-0x1f005fffff]
+2026-09-11T11:08:04.838397+07:00 wbr-pi5 kernel: pci 0000:00:00.0: Max Payload Size set to  256/ 512 (was  128), Max Read Rq  512
+2026-09-11T11:08:04.838574+07:00 wbr-pi5 kernel: pci 0000:01:00.0: Max Payload Size set to  256/ 256 (was  128), Max Read Rq  512
+2026-09-11T11:08:04.838754+07:00 wbr-pi5 kernel: pcieport 0000:00:00.0: enabling device (0000 -> 0002)
+2026-09-11T11:08:04.838945+07:00 wbr-pi5 kernel: pcieport 0000:00:00.0: PME: Signaling with IRQ 42
+2026-09-11T11:08:04.839145+07:00 wbr-pi5 kernel: pcieport 0000:00:00.0: AER: enabled with IRQ 42
+2026-09-11T11:08:04.839325+07:00 wbr-pi5 kernel: rp1 0000:01:00.0: bar0 len 0x4000, start 0x1f00410000, end 0x1f00413fff, flags, 0x40200
+2026-09-11T11:08:04.839507+07:00 wbr-pi5 kernel: rp1 0000:01:00.0: bar1 len 0x400000, start 0x1f00000000, end 0x1f003fffff, flags, 0x40200
+2026-09-11T11:08:04.839686+07:00 wbr-pi5 kernel: rp1 0000:01:00.0: enabling device (0000 -> 0002)
+2026-09-11T11:08:04.839857+07:00 wbr-pi5 kernel: rp1 0000:01:00.0: chip_id 0x20001927
+2026-09-11T11:08:04.840073+07:00 wbr-pi5 kernel: dw_axi_dmac_platform 1f00188000.dma: DesignWare AXI DMA Controller, 8 channels
+2026-09-11T11:08:04.840304+07:00 wbr-pi5 kernel: pl011-axi 1f00030000.serial: cts_event_workaround enabled
+2026-09-11T11:08:04.840327+07:00 wbr-pi5 kernel: mmc1: CQHCI version 5.10
+2026-09-11T11:08:04.840342+07:00 wbr-pi5 kernel: 1f00030000.serial: ttyAMA0 at MMIO 0x1f00030000 (irq = 129, base_baud = 0) is a PL011 AXI
+2026-09-11T11:08:04.840356+07:00 wbr-pi5 kernel: printk: legacy console [ttyAMA0] enabled
+2026-09-11T11:08:04.840638+07:00 wbr-pi5 kernel: dwc2 1000480000.usb: EPs: 8, dedicated fifos, 4080 entries in SPRAM
+2026-09-11T11:08:04.840912+07:00 wbr-pi5 kernel: sdhci-brcmstb 1000fff000.mmc: Got CD GPIO
+2026-09-11T11:08:04.841365+07:00 wbr-pi5 kernel: dwc2 1000480000.usb: DWC OTG Controller
+2026-09-11T11:08:04.841565+07:00 wbr-pi5 kernel: dwc2 1000480000.usb: new USB bus registered, assigned bus number 1
+2026-09-11T11:08:04.841737+07:00 wbr-pi5 kernel: dwc2 1000480000.usb: irq 41, io mem 0x1000480000
+2026-09-11T11:08:04.842012+07:00 wbr-pi5 kernel: usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.08
+2026-09-11T11:08:04.842244+07:00 wbr-pi5 kernel: usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+2026-09-11T11:08:04.842493+07:00 wbr-pi5 kernel: usb usb1: Product: DWC OTG Controller
+2026-09-11T11:08:04.842718+07:00 wbr-pi5 kernel: usb usb1: Manufacturer: Linux 6.8.0-1064-raspi dwc2_hsotg
+2026-09-11T11:08:04.842923+07:00 wbr-pi5 kernel: usb usb1: SerialNumber: 1000480000.usb
+2026-09-11T11:08:04.843178+07:00 wbr-pi5 kernel: hub 1-0:1.0: USB hub found
+2026-09-11T11:08:04.843386+07:00 wbr-pi5 kernel: hub 1-0:1.0: 1 port detected
+2026-09-11T11:08:04.843404+07:00 wbr-pi5 kernel: mmc0: SDHCI controller on 1000fff000.mmc [1000fff000.mmc] using ADMA 64-bit
+2026-09-11T11:08:04.843415+07:00 wbr-pi5 kernel: mmc0: cannot verify signal voltage switch
+2026-09-11T11:08:04.843427+07:00 wbr-pi5 kernel: mmc1: SDHCI controller on 1001100000.mmc [1001100000.mmc] using ADMA 64-bit
+2026-09-11T11:08:04.843439+07:00 wbr-pi5 kernel: mmc1: cannot verify signal voltage switch
+2026-09-11T11:08:04.843624+07:00 wbr-pi5 kernel: macb 1f00100000.ethernet eth0: Cadence GEM rev 0x00070109 at 0x1f00100000 irq 110 (2c:cf:67:a2:86:d3)
+2026-09-11T11:08:04.843641+07:00 wbr-pi5 kernel: mmc0: new ultra high speed SDR104 SDHC card at address 0001
+2026-09-11T11:08:04.843657+07:00 wbr-pi5 kernel: mmcblk0: mmc0:0001 EITSD 29.1 GiB
+2026-09-11T11:08:04.843823+07:00 wbr-pi5 kernel: xhci-hcd xhci-hcd.0: xHCI Host Controller
+2026-09-11T11:08:04.843838+07:00 wbr-pi5 kernel:  mmcblk0: p1 p2
+2026-09-11T11:08:04.843995+07:00 wbr-pi5 kernel: xhci-hcd xhci-hcd.0: new USB bus registered, assigned bus number 2
+2026-09-11T11:08:04.844010+07:00 wbr-pi5 kernel: mmcblk0: mmc0:0001 EITSD 29.1 GiB
+2026-09-11T11:08:04.844161+07:00 wbr-pi5 kernel: xhci-hcd xhci-hcd.0: hcc params 0x0240fe6d hci version 0x110 quirks 0x0000008000000810
+2026-09-11T11:08:04.844313+07:00 wbr-pi5 kernel: xhci-hcd xhci-hcd.0: irq 135, io mem 0x1f00200000
+2026-09-11T11:08:04.844464+07:00 wbr-pi5 kernel: xhci-hcd xhci-hcd.0: xHCI Host Controller
+2026-09-11T11:08:04.844477+07:00 wbr-pi5 kernel: mmc1: new ultra high speed DDR50 SDIO card at address 0001
+2026-09-11T11:08:04.844625+07:00 wbr-pi5 kernel: xhci-hcd xhci-hcd.0: new USB bus registered, assigned bus number 3
+2026-09-11T11:08:04.844780+07:00 wbr-pi5 kernel: xhci-hcd xhci-hcd.0: Host supports USB 3.0 SuperSpeed
+2026-09-11T11:08:04.845044+07:00 wbr-pi5 kernel: usb usb2: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.08
+2026-09-11T11:08:04.845266+07:00 wbr-pi5 kernel: usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+2026-09-11T11:08:04.845480+07:00 wbr-pi5 kernel: usb usb2: Product: xHCI Host Controller
+2026-09-11T11:08:04.845700+07:00 wbr-pi5 kernel: usb usb2: Manufacturer: Linux 6.8.0-1064-raspi xhci-hcd
+2026-09-11T11:08:04.845923+07:00 wbr-pi5 kernel: usb usb2: SerialNumber: xhci-hcd.0
+2026-09-11T11:08:04.846164+07:00 wbr-pi5 kernel: hub 2-0:1.0: USB hub found
+2026-09-11T11:08:04.846363+07:00 wbr-pi5 kernel: hub 2-0:1.0: 2 ports detected
+2026-09-11T11:08:04.846589+07:00 wbr-pi5 kernel: usb usb3: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 6.08
+2026-09-11T11:08:04.846807+07:00 wbr-pi5 kernel: usb usb3: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+2026-09-11T11:08:04.847026+07:00 wbr-pi5 kernel: usb usb3: Product: xHCI Host Controller
+2026-09-11T11:08:04.847238+07:00 wbr-pi5 kernel: usb usb3: Manufacturer: Linux 6.8.0-1064-raspi xhci-hcd
+2026-09-11T11:08:04.847448+07:00 wbr-pi5 kernel: usb usb3: SerialNumber: xhci-hcd.0
+2026-09-11T11:08:04.847659+07:00 wbr-pi5 kernel: hub 3-0:1.0: USB hub found
+2026-09-11T11:08:04.847858+07:00 wbr-pi5 kernel: hub 3-0:1.0: 1 port detected
+2026-09-11T11:08:04.848027+07:00 wbr-pi5 kernel: xhci-hcd xhci-hcd.1: xHCI Host Controller
+2026-09-11T11:08:04.848182+07:00 wbr-pi5 kernel: xhci-hcd xhci-hcd.1: new USB bus registered, assigned bus number 4
+2026-09-11T11:08:04.848334+07:00 wbr-pi5 kernel: xhci-hcd xhci-hcd.1: hcc params 0x0240fe6d hci version 0x110 quirks 0x0000008000000810
+2026-09-11T11:08:04.848484+07:00 wbr-pi5 kernel: xhci-hcd xhci-hcd.1: irq 140, io mem 0x1f00300000
+2026-09-11T11:08:04.848636+07:00 wbr-pi5 kernel: xhci-hcd xhci-hcd.1: xHCI Host Controller
+2026-09-11T11:08:04.848788+07:00 wbr-pi5 kernel: xhci-hcd xhci-hcd.1: new USB bus registered, assigned bus number 5
+2026-09-11T11:08:04.848942+07:00 wbr-pi5 kernel: xhci-hcd xhci-hcd.1: Host supports USB 3.0 SuperSpeed
+2026-09-11T11:08:04.849245+07:00 wbr-pi5 kernel: usb usb4: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.08
+2026-09-11T11:08:04.849494+07:00 wbr-pi5 kernel: usb usb4: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+2026-09-11T11:08:04.849753+07:00 wbr-pi5 kernel: usb usb4: Product: xHCI Host Controller
+2026-09-11T11:08:04.850009+07:00 wbr-pi5 kernel: usb usb4: Manufacturer: Linux 6.8.0-1064-raspi xhci-hcd
+2026-09-11T11:08:04.850257+07:00 wbr-pi5 kernel: usb usb4: SerialNumber: xhci-hcd.1
+2026-09-11T11:08:04.850522+07:00 wbr-pi5 kernel: hub 4-0:1.0: USB hub found
+2026-09-11T11:08:04.850756+07:00 wbr-pi5 kernel: hub 4-0:1.0: 2 ports detected
+2026-09-11T11:08:04.851026+07:00 wbr-pi5 kernel: usb usb5: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 6.08
+2026-09-11T11:08:04.851256+07:00 wbr-pi5 kernel: usb usb5: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+2026-09-11T11:08:04.851506+07:00 wbr-pi5 kernel: usb usb5: Product: xHCI Host Controller
+2026-09-11T11:08:04.851779+07:00 wbr-pi5 kernel: usb usb5: Manufacturer: Linux 6.8.0-1064-raspi xhci-hcd
+2026-09-11T11:08:04.852022+07:00 wbr-pi5 kernel: usb usb5: SerialNumber: xhci-hcd.1
+2026-09-11T11:08:04.852250+07:00 wbr-pi5 kernel: hub 5-0:1.0: USB hub found
+2026-09-11T11:08:04.852456+07:00 wbr-pi5 kernel: hub 5-0:1.0: 1 port detected
+2026-09-11T11:08:04.852697+07:00 wbr-pi5 kernel: usb 2-1: new high-speed USB device number 2 using xhci-hcd
+2026-09-11T11:08:04.852944+07:00 wbr-pi5 kernel: usb 2-1: New USB device found, idVendor=346d, idProduct=5678, bcdDevice= 2.00
+2026-09-11T11:08:04.853210+07:00 wbr-pi5 kernel: usb 2-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+2026-09-11T11:08:04.853425+07:00 wbr-pi5 kernel: usb 2-1: Product: Disk 2.0
+2026-09-11T11:08:04.853631+07:00 wbr-pi5 kernel: usb 2-1: Manufacturer: USB
+2026-09-11T11:08:04.853846+07:00 wbr-pi5 kernel: usb 2-1: SerialNumber: 6784041157130050443
+2026-09-11T11:08:04.854079+07:00 wbr-pi5 kernel: usb-storage 2-1:1.0: USB Mass Storage device detected
+2026-09-11T11:08:04.854263+07:00 wbr-pi5 kernel: scsi host0: usb-storage 2-1:1.0
+2026-09-11T11:08:04.854280+07:00 wbr-pi5 kernel: usbcore: registered new interface driver usb-storage
+2026-09-11T11:08:04.854291+07:00 wbr-pi5 kernel: usbcore: registered new interface driver uas
+2026-09-11T11:08:04.854483+07:00 wbr-pi5 kernel: scsi 0:0:0:0: Direct-Access     VendorCo ProductCode      2.00 PQ: 0 ANSI: 4
+2026-09-11T11:08:04.854679+07:00 wbr-pi5 kernel: sd 0:0:0:0: Attached scsi generic sg0 type 0
+2026-09-11T11:08:04.854873+07:00 wbr-pi5 kernel: sd 0:0:0:0: [sda] 122880000 512-byte logical blocks: (62.9 GB/58.6 GiB)
+2026-09-11T11:08:04.855078+07:00 wbr-pi5 kernel: sd 0:0:0:0: [sda] Write Protect is off
+2026-09-11T11:08:04.855263+07:00 wbr-pi5 kernel: sd 0:0:0:0: [sda] Mode Sense: 03 00 00 00
+2026-09-11T11:08:04.855444+07:00 wbr-pi5 kernel: sd 0:0:0:0: [sda] No Caching mode page found
+2026-09-11T11:08:04.855622+07:00 wbr-pi5 kernel: sd 0:0:0:0: [sda] Assuming drive cache: write through
+2026-09-11T11:08:04.855635+07:00 wbr-pi5 kernel:  sda: sda1
+2026-09-11T11:08:04.855811+07:00 wbr-pi5 kernel: sd 0:0:0:0: [sda] Attached SCSI removable disk
+2026-09-11T11:08:04.855825+07:00 wbr-pi5 kernel: raid6: neonx8   gen() 11553 MB/s
+2026-09-11T11:08:04.855836+07:00 wbr-pi5 kernel: raid6: neonx4   gen() 11458 MB/s
+2026-09-11T11:08:04.855851+07:00 wbr-pi5 kernel: raid6: neonx2   gen()  9597 MB/s
+2026-09-11T11:08:04.855863+07:00 wbr-pi5 kernel: raid6: neonx1   gen()  7829 MB/s
+2026-09-11T11:08:04.855874+07:00 wbr-pi5 kernel: raid6: int64x8  gen()  5518 MB/s
+2026-09-11T11:08:04.855885+07:00 wbr-pi5 kernel: raid6: int64x4  gen()  5879 MB/s
+2026-09-11T11:08:04.855895+07:00 wbr-pi5 kernel: raid6: int64x2  gen()  4908 MB/s
+2026-09-11T11:08:04.855906+07:00 wbr-pi5 kernel: raid6: int64x1  gen()  4057 MB/s
+2026-09-11T11:08:04.855918+07:00 wbr-pi5 kernel: raid6: using algorithm neonx8 gen() 11553 MB/s
+2026-09-11T11:08:04.855931+07:00 wbr-pi5 kernel: raid6: .... xor() 8379 MB/s, rmw enabled
+2026-09-11T11:08:04.855942+07:00 wbr-pi5 kernel: raid6: using neon recovery algorithm
+2026-09-11T11:08:04.855953+07:00 wbr-pi5 kernel: xor: measuring software checksum speed
+2026-09-11T11:08:04.855964+07:00 wbr-pi5 kernel:    8regs           : 15751 MB/sec
+2026-09-11T11:08:04.855974+07:00 wbr-pi5 kernel:    32regs          : 15379 MB/sec
+2026-09-11T11:08:04.855991+07:00 wbr-pi5 kernel:    arm64_neon      : 11214 MB/sec
+2026-09-11T11:08:04.856003+07:00 wbr-pi5 kernel: xor: using function: 8regs (15751 MB/sec)
+2026-09-11T11:08:04.856013+07:00 wbr-pi5 kernel: async_tx: api initialized (async)
+2026-09-11T11:08:04.856025+07:00 wbr-pi5 kernel: Btrfs loaded, zoned=yes, fsverity=no
+2026-09-11T11:08:04.856037+07:00 wbr-pi5 kernel: EXT4-fs (mmcblk0p2): mounted filesystem c5da9c27-d622-4e80-89db-6af2e32618b4 ro with ordered data mode. Quota mode: none.
+2026-09-11T11:08:04.856050+07:00 wbr-pi5 systemd[1]: Inserted module 'autofs4'
+2026-09-11T11:08:04.856067+07:00 wbr-pi5 systemd[1]: systemd 255.4-1ubuntu8.17 running in system mode (+PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP +LIBFDISK +PCRE2 -PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -BPF_FRAMEWORK -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified)
+2026-09-11T11:08:04.856081+07:00 wbr-pi5 systemd[1]: Detected architecture arm64.
+2026-09-11T11:08:04.856093+07:00 wbr-pi5 systemd[1]: Hostname set to <wbr-pi5>.
+2026-09-11T11:08:04.856275+07:00 wbr-pi5 kernel: pl011-axi 1f00030000.serial: DMA channel TX dma2chan2
+2026-09-11T11:08:04.856438+07:00 wbr-pi5 kernel: pl011-axi 1f00030000.serial: DMA channel RX dma2chan3
+2026-09-11T11:08:04.856452+07:00 wbr-pi5 systemd[1]: Queued start job for default target graphical.target.
+2026-09-11T11:08:04.856465+07:00 wbr-pi5 systemd[1]: Created slice system-modprobe.slice - Slice /system/modprobe.
+2026-09-11T11:08:04.856478+07:00 wbr-pi5 systemd[1]: Created slice system-serial\x2dgetty.slice - Slice /system/serial-getty.
+2026-09-11T11:08:04.856491+07:00 wbr-pi5 systemd[1]: Created slice system-systemd\x2dfsck.slice - Slice /system/systemd-fsck.
+2026-09-11T11:08:04.856505+07:00 wbr-pi5 systemd[1]: Created slice user.slice - User and Session Slice.
+2026-09-11T11:08:04.856517+07:00 wbr-pi5 systemd[1]: Started systemd-ask-password-wall.path - Forward Password Requests to Wall Directory Watch.
+2026-09-11T11:08:04.856532+07:00 wbr-pi5 systemd[1]: Set up automount proc-sys-fs-binfmt_misc.automount - Arbitrary Executable File Formats File System Automount Point.
+2026-09-11T11:08:04.856544+07:00 wbr-pi5 systemd[1]: Expecting device dev-disk-by\x2dlabel-system\x2dboot.device - /dev/disk/by-label/system-boot...
+2026-09-11T11:08:04.856555+07:00 wbr-pi5 systemd[1]: Expecting device dev-ttyAMA0.device - /dev/ttyAMA0...
+2026-09-11T11:08:04.856568+07:00 wbr-pi5 systemd[1]: Expecting device sys-subsystem-net-devices-wlan0.device - /sys/subsystem/net/devices/wlan0...
+2026-09-11T11:08:04.856581+07:00 wbr-pi5 systemd[1]: Reached target integritysetup.target - Local Integrity Protected Volumes.
+2026-09-11T11:08:04.856593+07:00 wbr-pi5 systemd[1]: Reached target slices.target - Slice Units.
+2026-09-11T11:08:04.856605+07:00 wbr-pi5 systemd[1]: Reached target snapd.mounts-pre.target - Mounting snaps.
+2026-09-11T11:08:04.856617+07:00 wbr-pi5 systemd[1]: Reached target swap.target - Swaps.
+2026-09-11T11:08:04.856630+07:00 wbr-pi5 systemd[1]: Reached target veritysetup.target - Local Verity Protected Volumes.
+2026-09-11T11:08:04.856642+07:00 wbr-pi5 systemd[1]: Listening on dm-event.socket - Device-mapper event daemon FIFOs.
+2026-09-11T11:08:04.856654+07:00 wbr-pi5 systemd[1]: Listening on lvm2-lvmpolld.socket - LVM2 poll daemon socket.
+2026-09-11T11:08:04.856666+07:00 wbr-pi5 systemd[1]: multipathd.socket - multipathd control socket was skipped because of an unmet condition check (ConditionKernelCommandLine=!multipath=off).
+2026-09-11T11:08:04.856678+07:00 wbr-pi5 systemd[1]: Listening on syslog.socket - Syslog Socket.
+2026-09-11T11:08:04.856689+07:00 wbr-pi5 systemd[1]: Listening on systemd-fsckd.socket - fsck to fsckd communication Socket.
+2026-09-11T11:08:04.856701+07:00 wbr-pi5 systemd[1]: Listening on systemd-initctl.socket - initctl Compatibility Named Pipe.
+2026-09-11T11:08:04.856713+07:00 wbr-pi5 systemd[1]: Listening on systemd-journald-dev-log.socket - Journal Socket (/dev/log).
+2026-09-11T11:08:04.856724+07:00 wbr-pi5 systemd[1]: Listening on systemd-journald.socket - Journal Socket.
+2026-09-11T11:08:04.856736+07:00 wbr-pi5 systemd[1]: Listening on systemd-networkd.socket - Network Service Netlink Socket.
+2026-09-11T11:08:04.856748+07:00 wbr-pi5 systemd[1]: systemd-pcrextend.socket - TPM2 PCR Extension (Varlink) was skipped because of an unmet condition check (ConditionSecurity=measured-uki).
+2026-09-11T11:08:04.856762+07:00 wbr-pi5 systemd[1]: Listening on systemd-udevd-control.socket - udev Control Socket.
+2026-09-11T11:08:04.856774+07:00 wbr-pi5 systemd[1]: Listening on systemd-udevd-kernel.socket - udev Kernel Socket.
+2026-09-11T11:08:04.856786+07:00 wbr-pi5 systemd[1]: Mounting dev-hugepages.mount - Huge Pages File System...
+2026-09-11T11:08:04.856798+07:00 wbr-pi5 systemd[1]: Mounting dev-mqueue.mount - POSIX Message Queue File System...
+2026-09-11T11:08:04.856809+07:00 wbr-pi5 systemd[1]: Mounting sys-kernel-debug.mount - Kernel Debug File System...
+2026-09-11T11:08:04.856823+07:00 wbr-pi5 systemd[1]: Mounting sys-kernel-tracing.mount - Kernel Trace File System...
+2026-09-11T11:08:04.856835+07:00 wbr-pi5 systemd[1]: Starting systemd-journald.service - Journal Service...
+2026-09-11T11:08:04.856846+07:00 wbr-pi5 systemd[1]: Starting keyboard-setup.service - Set the console keyboard layout...
+2026-09-11T11:08:04.856859+07:00 wbr-pi5 systemd[1]: Starting kmod-static-nodes.service - Create List of Static Device Nodes...
+2026-09-11T11:08:04.856872+07:00 wbr-pi5 systemd[1]: Starting lvm2-monitor.service - Monitoring of LVM2 mirrors, snapshots etc. using dmeventd or progress polling...
+2026-09-11T11:08:04.856918+07:00 wbr-pi5 systemd-journald[336]: Collecting audit messages is disabled.
+2026-09-11T11:08:04.856950+07:00 wbr-pi5 systemd[1]: Starting modprobe@configfs.service - Load Kernel Module configfs...
+2026-09-11T11:08:04.856963+07:00 wbr-pi5 systemd[1]: Starting modprobe@dm_mod.service - Load Kernel Module dm_mod...
+2026-09-11T11:08:04.856977+07:00 wbr-pi5 systemd[1]: Starting modprobe@drm.service - Load Kernel Module drm...
+2026-09-11T11:08:04.869253+07:00 wbr-pi5 systemd[1]: Starting modprobe@efi_pstore.service - Load Kernel Module efi_pstore...
+2026-09-11T11:08:04.880178+07:00 wbr-pi5 systemd[1]: Starting modprobe@fuse.service - Load Kernel Module fuse...
+2026-09-11T11:08:04.908600+07:00 wbr-pi5 systemd[1]: Starting modprobe@loop.service - Load Kernel Module loop...
+2026-09-11T11:08:04.908657+07:00 wbr-pi5 systemd[1]: netplan-ovs-cleanup.service - OpenVSwitch configuration for cleanup was skipped because of an unmet condition check (ConditionFileIsExecutable=/usr/bin/ovs-vsctl).
+2026-09-11T11:08:04.908675+07:00 wbr-pi5 kernel: device-mapper: core: CONFIG_IMA_DISABLE_HTABLE is disabled. Duplicate IMA measurements will not be recorded in the IMA log.
+2026-09-11T11:08:04.920742+07:00 wbr-pi5 systemd[1]: systemd-fsck-root.service - File System Check on Root Device was skipped because of an unmet condition check (ConditionPathExists=!/run/initramfs/fsck-root).
+2026-09-11T11:08:04.936924+07:00 wbr-pi5 kernel: device-mapper: uevent: version 1.0.3
+2026-09-11T11:08:04.950999+07:00 wbr-pi5 kernel: device-mapper: ioctl: 4.48.0-ioctl (2023-03-01) initialised: dm-devel@redhat.com
+2026-09-11T11:08:04.951080+07:00 wbr-pi5 kernel: fuse: init (API version 7.39)
+2026-09-11T11:08:04.955023+07:00 wbr-pi5 systemd[1]: Starting systemd-modules-load.service - Load Kernel Modules...
+2026-09-11T11:08:04.979009+07:00 wbr-pi5 systemd[1]: systemd-pcrmachine.service - TPM2 PCR Machine ID Measurement was skipped because of an unmet condition check (ConditionSecurity=measured-uki).
+2026-09-11T11:08:05.005000+07:00 wbr-pi5 systemd[1]: Starting systemd-remount-fs.service - Remount Root and Kernel File Systems...
+2026-09-11T11:08:05.005082+07:00 wbr-pi5 systemd[1]: systemd-tpm2-setup-early.service - TPM2 SRK Setup (Early) was skipped because of an unmet condition check (ConditionSecurity=measured-uki).
+2026-09-11T11:08:05.016441+07:00 wbr-pi5 systemd[1]: Starting systemd-udev-trigger.service - Coldplug All udev Devices...
+2026-09-11T11:08:05.028006+07:00 wbr-pi5 systemd[1]: Started systemd-journald.service - Journal Service.
+2026-09-11T11:08:05.072035+07:00 wbr-pi5 kernel: EXT4-fs (mmcblk0p2): re-mounted c5da9c27-d622-4e80-89db-6af2e32618b4 r/w.
+2026-09-11T11:08:05.559808+07:00 wbr-pi5 systemd-journald[336]: Received client request to flush runtime journal.
+2026-09-11T11:08:05.559869+07:00 wbr-pi5 systemd-journald[336]: File /var/log/journal/eb53bad0de804436879477d45c6c7cc3/system.journal corrupted or uncleanly shut down, renaming and replacing.
+2026-09-11T11:08:05.559900+07:00 wbr-pi5 kernel: loop0: detected capacity change from 0 to 85200
+2026-09-11T11:08:05.559922+07:00 wbr-pi5 kernel: loop1: detected capacity change from 0 to 89112
+2026-09-11T11:08:06.056497+07:00 wbr-pi5 kernel: rpi-gpiomem 107d508500.gpiomem: window base 0x107d508500 size 0x00000040
+2026-09-11T11:08:06.058061+07:00 wbr-pi5 kernel: rpi-gpiomem 107d508500.gpiomem: initialised 1 regions as /dev/gpiomem1
+2026-09-11T11:08:06.064382+07:00 wbr-pi5 kernel: mc: Linux media interface: v0.10
+2026-09-11T11:08:06.073031+07:00 wbr-pi5 kernel: rpi-gpiomem 107d517c00.gpiomem: window base 0x107d517c00 size 0x00000040
+2026-09-11T11:08:06.077652+07:00 wbr-pi5 kernel: rpi-gpiomem 107d517c00.gpiomem: initialised 1 regions as /dev/gpiomem2
+2026-09-11T11:08:06.078177+07:00 wbr-pi5 kernel: rpi-gpiomem 107d504100.gpiomem: window base 0x107d504100 size 0x00000020
+2026-09-11T11:08:06.088024+07:00 wbr-pi5 kernel: rpi-gpiomem 107d504100.gpiomem: initialised 1 regions as /dev/gpiomem3
+2026-09-11T11:08:06.101019+07:00 wbr-pi5 kernel: rpi-gpiomem 107d510700.gpiomem: window base 0x107d510700 size 0x00000020
+2026-09-11T11:08:06.104467+07:00 wbr-pi5 kernel: rpi-gpiomem 107d510700.gpiomem: initialised 1 regions as /dev/gpiomem4
+2026-09-11T11:08:06.112110+07:00 wbr-pi5 kernel: videodev: Linux video capture interface: v2.00
+2026-09-11T11:08:06.115007+07:00 wbr-pi5 kernel: rpi-gpiomem 1f000d0000.gpiomem: window base 0x1f000d0000 size 0x00030000
+2026-09-11T11:08:06.120869+07:00 wbr-pi5 kernel: rpi-gpiomem 1f000d0000.gpiomem: initialised 1 regions as /dev/gpiomem0
+2026-09-11T11:08:06.192022+07:00 wbr-pi5 kernel: [drm] Initialized v3d 1.0.0 20180419 for 1002000000.v3d on minor 0
+2026-09-11T11:08:06.194011+07:00 wbr-pi5 kernel: cfg80211: Loading compiled-in X.509 certificates for regulatory database
+2026-09-11T11:08:06.195048+07:00 wbr-pi5 kernel: Loaded X.509 cert 'benh@debian.org: 577e021cb980e0e820821ba7b54b4961b8b4fadf'
+2026-09-11T11:08:06.195115+07:00 wbr-pi5 kernel: Loaded X.509 cert 'romain.perier@gmail.com: 3abbc6ec146e09d1b6016ab9d6cf71dd233f0328'
+2026-09-11T11:08:06.195134+07:00 wbr-pi5 kernel: Loaded X.509 cert 'sforshee: 00b28ddf47aef9cea7'
+2026-09-11T11:08:06.195153+07:00 wbr-pi5 kernel: Loaded X.509 cert 'wens: 61c038651aabdcf94bd0ac7ff06c7248db18c600'
+2026-09-11T11:08:06.288008+07:00 wbr-pi5 kernel: brcmfmac: F1 signature read @0x18000000=0x15264345
+2026-09-11T11:08:06.290021+07:00 wbr-pi5 kernel: brcmfmac: brcmf_fw_alloc_request: using brcm/brcmfmac43455-sdio for chip BCM4345/6
+2026-09-11T11:08:06.290119+07:00 wbr-pi5 kernel: usbcore: registered new interface driver brcmfmac
+2026-09-11T11:08:06.296006+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: bcm2712_iommu_of_xlate: MMU 1000005100.iommu
+2026-09-11T11:08:06.296373+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: bcm2712_iommu_probe_device: MMU 1000005100.iommu
+2026-09-11T11:08:06.296581+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: bcm2712_iommu_device_group: MMU 1000005100.iommu
+2026-09-11T11:08:06.296760+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: Adding to iommu group 0
+2026-09-11T11:08:06.296945+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: bcm2712_iommu_attach_dev: MMU 1000005100.iommu
+2026-09-11T11:08:06.297392+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: pispbe_probe: HW version:  0x02252700
+2026-09-11T11:08:06.297619+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: pispbe_probe: BatchStatus: 0x00000000
+2026-09-11T11:08:06.297869+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: pispbe_probe: Status:      0x00000000
+2026-09-11T11:08:06.298088+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: Register nodes for group 0
+2026-09-11T11:08:06.298277+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: input device node registered as /dev/video20
+2026-09-11T11:08:06.298454+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: tdn_input device node registered as /dev/video21
+2026-09-11T11:08:06.298629+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: stitch_input device node registered as /dev/video22
+2026-09-11T11:08:06.298805+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: hog_output device node registered as /dev/video23
+2026-09-11T11:08:06.300327+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: output0 device node registered as /dev/video24
+2026-09-11T11:08:06.300559+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: output1 device node registered as /dev/video25
+2026-09-11T11:08:06.300760+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: tdn_output device node registered as /dev/video26
+2026-09-11T11:08:06.300969+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: stitch_output device node registered as /dev/video27
+2026-09-11T11:08:06.301262+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: config device node registered as /dev/video28
+2026-09-11T11:08:06.301514+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: Register nodes for group 1
+2026-09-11T11:08:06.301689+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: input device node registered as /dev/video29
+2026-09-11T11:08:06.301944+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: tdn_input device node registered as /dev/video30
+2026-09-11T11:08:06.302366+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: stitch_input device node registered as /dev/video31
+2026-09-11T11:08:06.302767+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: hog_output device node registered as /dev/video32
+2026-09-11T11:08:06.303184+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: output0 device node registered as /dev/video33
+2026-09-11T11:08:06.303582+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: output1 device node registered as /dev/video34
+2026-09-11T11:08:06.303976+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: tdn_output device node registered as /dev/video35
+2026-09-11T11:08:06.305308+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: stitch_output device node registered as /dev/video36
+2026-09-11T11:08:06.305516+07:00 wbr-pi5 kernel: pispbe 1000880000.pisp_be: config device node registered as /dev/video37
+2026-09-11T11:08:06.371055+07:00 wbr-pi5 kernel: rpivid_hevc: module is from the staging directory, the quality is unknown, you have been warned.
+2026-09-11T11:08:06.371274+07:00 wbr-pi5 kernel: rpivid_hevc: module verification failed: signature and/or required key missing - tainting kernel
+2026-09-11T11:08:06.376087+07:00 wbr-pi5 kernel: Bluetooth: Core ver 2.22
+2026-09-11T11:08:06.376250+07:00 wbr-pi5 kernel: rpivid 1000800000.codec: bcm2712_iommu_of_xlate: MMU 1000005100.iommu
+2026-09-11T11:08:06.377439+07:00 wbr-pi5 kernel: rpivid 1000800000.codec: bcm2712_iommu_probe_device: MMU 1000005100.iommu
+2026-09-11T11:08:06.378815+07:00 wbr-pi5 kernel: rpivid 1000800000.codec: bcm2712_iommu_device_group: MMU 1000005100.iommu
+2026-09-11T11:08:06.385132+07:00 wbr-pi5 kernel: rpivid 1000800000.codec: Adding to iommu group 0
+2026-09-11T11:08:06.386402+07:00 wbr-pi5 kernel: rpivid 1000800000.codec: bcm2712_iommu_attach_dev: MMU 1000005100.iommu
+2026-09-11T11:08:06.386892+07:00 wbr-pi5 kernel: NET: Registered PF_BLUETOOTH protocol family
+2026-09-11T11:08:06.386921+07:00 wbr-pi5 kernel: Bluetooth: HCI device and connection manager initialized
+2026-09-11T11:08:06.386938+07:00 wbr-pi5 kernel: Bluetooth: HCI socket layer initialized
+2026-09-11T11:08:06.386979+07:00 wbr-pi5 kernel: Bluetooth: L2CAP socket layer initialized
+2026-09-11T11:08:06.387020+07:00 wbr-pi5 kernel: Bluetooth: SCO socket layer initialized
+2026-09-11T11:08:06.387040+07:00 wbr-pi5 kernel: rpivid 1000800000.codec: Device registered as /dev/video19
+2026-09-11T11:08:06.413024+07:00 wbr-pi5 kernel: Bluetooth: HCI UART driver ver 2.3
+2026-09-11T11:08:06.413425+07:00 wbr-pi5 kernel: Bluetooth: HCI UART protocol H4 registered
+2026-09-11T11:08:06.413457+07:00 wbr-pi5 kernel: Bluetooth: HCI UART protocol BCSP registered
+2026-09-11T11:08:06.413475+07:00 wbr-pi5 kernel: Bluetooth: HCI UART protocol LL registered
+2026-09-11T11:08:06.413493+07:00 wbr-pi5 kernel: Bluetooth: HCI UART protocol ATH3K registered
+2026-09-11T11:08:06.413513+07:00 wbr-pi5 kernel: Bluetooth: HCI UART protocol Three-wire (H5) registered
+2026-09-11T11:08:06.413530+07:00 wbr-pi5 kernel: Bluetooth: HCI UART protocol Intel registered
+2026-09-11T11:08:06.413546+07:00 wbr-pi5 kernel: Bluetooth: HCI UART protocol Broadcom registered
+2026-09-11T11:08:06.413561+07:00 wbr-pi5 kernel: Bluetooth: HCI UART protocol QCA registered
+2026-09-11T11:08:06.413686+07:00 wbr-pi5 kernel: Bluetooth: HCI UART protocol AG6XX registered
+2026-09-11T11:08:06.413709+07:00 wbr-pi5 kernel: Bluetooth: HCI UART protocol Marvell registered
+2026-09-11T11:08:06.413722+07:00 wbr-pi5 kernel: hci_uart_bcm serial0-0: supply vbat not found, using dummy regulator
+2026-09-11T11:08:06.414674+07:00 wbr-pi5 kernel: hci_uart_bcm serial0-0: supply vddio not found, using dummy regulator
+2026-09-11T11:08:06.421765+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: bcm2712_iommu_of_xlate: MMU 1000005200.iommu
+2026-09-11T11:08:06.422379+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: bcm2712_iommu_probe_device: MMU 1000005200.iommu
+2026-09-11T11:08:06.422801+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: bcm2712_iommu_device_group: MMU 1000005200.iommu
+2026-09-11T11:08:06.423221+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: Adding to iommu group 1
+2026-09-11T11:08:06.423619+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: bcm2712_iommu_attach_dev: MMU 1000005200.iommu
+2026-09-11T11:08:06.427995+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: bound 107c580000.hvs (ops vc4_hvs_ops [vc4])
+2026-09-11T11:08:06.428999+07:00 wbr-pi5 kernel: Registered IR keymap rc-cec
+2026-09-11T11:08:06.429079+07:00 wbr-pi5 kernel: rc rc0: vc4-hdmi-0 as /devices/platform/soc/107c701400.hdmi/rc/rc0
+2026-09-11T11:08:06.429356+07:00 wbr-pi5 kernel: input: vc4-hdmi-0 as /devices/platform/soc/107c701400.hdmi/rc/rc0/input2
+2026-09-11T11:08:06.432024+07:00 wbr-pi5 kernel: input: vc4-hdmi-0 HDMI Jack as /devices/platform/soc/107c701400.hdmi/sound/card0/input3
+2026-09-11T11:08:06.432081+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: bound 107c701400.hdmi (ops vc4_hdmi_ops [vc4])
+2026-09-11T11:08:06.435089+07:00 wbr-pi5 kernel: Registered IR keymap rc-cec
+2026-09-11T11:08:06.435188+07:00 wbr-pi5 kernel: rc rc1: vc4-hdmi-1 as /devices/platform/soc/107c706400.hdmi/rc/rc1
+2026-09-11T11:08:06.437179+07:00 wbr-pi5 kernel: input: vc4-hdmi-1 as /devices/platform/soc/107c706400.hdmi/rc/rc1/input4
+2026-09-11T11:08:06.441011+07:00 wbr-pi5 kernel: input: vc4-hdmi-1 HDMI Jack as /devices/platform/soc/107c706400.hdmi/sound/card1/input5
+2026-09-11T11:08:06.441103+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: bound 107c706400.hdmi (ops vc4_hdmi_ops [vc4])
+2026-09-11T11:08:06.441357+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: bound 107c500000.mop (ops vc4_txp_ops [vc4])
+2026-09-11T11:08:06.441535+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: bound 107c501000.moplet (ops vc4_txp_ops [vc4])
+2026-09-11T11:08:06.441700+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: bound 107c410000.pixelvalve (ops vc4_crtc_ops [vc4])
+2026-09-11T11:08:06.441867+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: bound 107c411000.pixelvalve (ops vc4_crtc_ops [vc4])
+2026-09-11T11:08:06.444018+07:00 wbr-pi5 kernel: [drm] Initialized vc4 0.0.0 20140616 for axi:gpu on minor 1
+2026-09-11T11:08:06.451177+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: [drm] Cannot find any crtc or sizes
+2026-09-11T11:08:06.458994+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: [drm] Cannot find any crtc or sizes
+2026-09-11T11:08:06.460999+07:00 wbr-pi5 kernel: vc4-drm axi:gpu: [drm] Cannot find any crtc or sizes
+2026-09-11T11:08:06.615008+07:00 wbr-pi5 kernel: audit: type=1400 audit(1789099686.612:2): apparmor="STATUS" operation="profile_load" profile="unconfined" name=4D6F6E676F444220436F6D70617373 pid=555 comm="apparmor_parser"
+2026-09-11T11:08:06.615092+07:00 wbr-pi5 kernel: audit: type=1400 audit(1789099686.612:3): apparmor="STATUS" operation="profile_load" profile="unconfined" name="1password" pid=553 comm="apparmor_parser"
+2026-09-11T11:08:06.615113+07:00 wbr-pi5 kernel: audit: type=1400 audit(1789099686.612:4): apparmor="STATUS" operation="profile_load" profile="unconfined" name="Discord" pid=554 comm="apparmor_parser"
+2026-09-11T11:08:06.615130+07:00 wbr-pi5 kernel: audit: type=1400 audit(1789099686.612:5): apparmor="STATUS" operation="profile_load" profile="unconfined" name="QtWebEngineProcess" pid=556 comm="apparmor_parser"
+2026-09-11T11:08:06.620014+07:00 wbr-pi5 kernel: audit: type=1400 audit(1789099686.617:6): apparmor="STATUS" operation="profile_load" profile="unconfined" name="balena-etcher" pid=557 comm="apparmor_parser"
+2026-09-11T11:08:06.620133+07:00 wbr-pi5 kernel: audit: type=1400 audit(1789099686.617:7): apparmor="STATUS" operation="profile_load" profile="unconfined" name="brave" pid=558 comm="apparmor_parser"
+2026-09-11T11:08:06.621022+07:00 wbr-pi5 kernel: audit: type=1400 audit(1789099686.618:8): apparmor="STATUS" operation="profile_load" profile="unconfined" name="busybox" pid=560 comm="apparmor_parser"
+2026-09-11T11:08:06.621099+07:00 wbr-pi5 kernel: audit: type=1400 audit(1789099686.618:9): apparmor="STATUS" operation="profile_load" profile="unconfined" name="buildah" pid=559 comm="apparmor_parser"
+2026-09-11T11:08:06.625414+07:00 wbr-pi5 kernel: audit: type=1400 audit(1789099686.623:10): apparmor="STATUS" operation="profile_load" profile="unconfined" name="ch-run" pid=563 comm="apparmor_parser"
+2026-09-11T11:08:06.625505+07:00 wbr-pi5 kernel: audit: type=1400 audit(1789099686.623:11): apparmor="STATUS" operation="profile_load" profile="unconfined" name="ch-checkns" pid=562 comm="apparmor_parser"
+2026-09-11T11:08:06.667400+07:00 wbr-pi5 kernel: brcmfmac: brcmf_c_process_txcap_blob: no txcap_blob available (err=-2)
+2026-09-11T11:08:06.667516+07:00 wbr-pi5 kernel: brcmfmac: brcmf_c_preinit_dcmds: Firmware: BCM4345/6 wl0: Apr 15 2021 03:03:20 version 7.45.234 (4ca95bb CY) FWID 01-996384e2
+2026-09-11T11:08:06.685046+07:00 wbr-pi5 kernel: ieee80211 phy0: brcmf_cfg80211_reg_notifier: Firmware rejected country setting
+2026-09-11T11:08:06.774001+07:00 wbr-pi5 kernel: Bluetooth: hci0: BCM: chip id 107
+2026-09-11T11:08:06.774070+07:00 wbr-pi5 kernel: Bluetooth: hci0: BCM: features 0x2f
+2026-09-11T11:08:06.774992+07:00 wbr-pi5 kernel: Bluetooth: hci0: BCM4345C0
+2026-09-11T11:08:06.775036+07:00 wbr-pi5 kernel: Bluetooth: hci0: BCM4345C0 (003.001.025) build 0000
+2026-09-11T11:08:06.783018+07:00 wbr-pi5 kernel: Bluetooth: hci0: BCM4345C0 'brcm/BCM4345C0.raspberrypi,5-model-b.hcd' Patch
+2026-09-12T23:47:34.619927+07:00 wbr-pi5 kernel: brcmfmac: brcmf_cfg80211_set_power_mgmt: power save enabled
+2026-09-12T23:47:35.079916+07:00 wbr-pi5 kernel: Bluetooth: hci0: BCM: features 0x2f
+2026-09-12T23:47:35.081912+07:00 wbr-pi5 kernel: Bluetooth: hci0: BCM43455 37.4MHz Raspberry Pi 3+-0190
+2026-09-12T23:47:35.081941+07:00 wbr-pi5 kernel: Bluetooth: hci0: BCM4345C0 (003.001.025) build 0382
+2026-09-12T23:47:35.081974+07:00 wbr-pi5 kernel: Bluetooth: hci0: BCM: Using default device address (43:45:c0:00:1f:ac)
+2026-09-12T23:47:35.804922+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T23:47:36.670921+07:00 wbr-pi5 kernel: macb 1f00100000.ethernet eth0: PHY [1f00100000.ethernet-ffffffff:01] driver [Broadcom BCM54213PE] (irq=POLL)
+2026-09-12T23:47:36.671286+07:00 wbr-pi5 kernel: macb 1f00100000.ethernet eth0: configuring for phy/rgmii-id link mode
+2026-09-12T23:47:36.674673+07:00 wbr-pi5 kernel: macb 1f00100000.ethernet: gem-ptp-timer ptp clock registered.
+2026-09-12T23:47:38.716569+07:00 wbr-pi5 kernel: NET: Registered PF_QIPCRTR protocol family
+2026-09-12T23:47:38.743932+07:00 wbr-pi5 kernel: macb 1f00100000.ethernet eth0: Link is Up - 100Mbps/Full - flow control off
+2026-09-12T23:47:42.848991+07:00 wbr-pi5 kernel: loop2: detected capacity change from 0 to 8
+2026-09-12T23:47:46.039928+07:00 wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+2026-09-12T23:47:48.092929+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T23:47:50.135937+07:00 wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+2026-09-12T23:48:16.764916+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T23:48:18.808024+07:00 wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+2026-09-12T23:48:19.625912+07:00 wbr-pi5 kernel: usb 5-1: new SuperSpeed USB device number 2 using xhci-hcd
+2026-09-12T23:48:19.643919+07:00 wbr-pi5 kernel: usb 5-1: New USB device found, idVendor=8086, idProduct=0b3a, bcdDevice=51.13
+2026-09-12T23:48:19.644213+07:00 wbr-pi5 kernel: usb 5-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+2026-09-12T23:48:19.644390+07:00 wbr-pi5 kernel: usb 5-1: Product: Intel(R) RealSense(TM) Depth Camera 435i
+2026-09-12T23:48:19.644562+07:00 wbr-pi5 kernel: usb 5-1: Manufacturer: Intel(R) RealSense(TM) Depth Camera 435i
+2026-09-12T23:48:19.644727+07:00 wbr-pi5 kernel: usb 5-1: SerialNumber: 251843061466
+2026-09-12T23:48:19.677932+07:00 wbr-pi5 kernel: uvcvideo 5-1:1.1: Unknown video format 00000050-0000-0010-8000-00aa00389b71
+2026-09-12T23:48:19.678497+07:00 wbr-pi5 kernel: usb 5-1: Found UVC 1.50 device Intel(R) RealSense(TM) Depth Camera 435i (8086:0b3a)
+2026-09-12T23:48:19.698003+07:00 wbr-pi5 kernel: usbcore: registered new interface driver usbhid
+2026-09-12T23:48:19.698113+07:00 wbr-pi5 kernel: usbhid: USB HID core driver
+2026-09-12T23:48:19.698142+07:00 wbr-pi5 kernel: uvcvideo 5-1:1.4: Unknown video format 36315752-1a66-a242-9065-d01814a8ef8a
+2026-09-12T23:48:19.698500+07:00 wbr-pi5 kernel: usb 5-1: Found UVC 1.50 device Intel(R) RealSense(TM) Depth Camera 435i (8086:0b3a)
+2026-09-12T23:48:19.715980+07:00 wbr-pi5 kernel: usbcore: registered new interface driver uvcvideo
+2026-09-12T23:48:19.735120+07:00 wbr-pi5 kernel: hid-generic 0003:8086:0B3A.0001: hiddev0,hidraw0: USB HID v1.10 Device [Intel(R) RealSense(TM) Depth Camera 435i Intel(R) RealSense(TM) Depth Camera 435i] on usb-xhci-hcd.1-1/input5
+2026-09-12T23:48:19.741930+07:00 wbr-pi5 kernel: hid-sensor-hub 0003:8086:0B3A.0001: hiddev0,hidraw0: USB HID v1.10 Device [Intel(R) RealSense(TM) Depth Camera 435i Intel(R) RealSense(TM) Depth Camera 435i] on usb-xhci-hcd.1-1/input5
+2026-09-12T23:48:20.860920+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T23:48:22.903918+07:00 wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+2026-09-12T23:51:53.093006+07:00 wbr-pi5 systemd-journald[336]: /var/log/journal/eb53bad0de804436879477d45c6c7cc3/user-1000.journal: Journal file uses a different sequence number ID, rotating.
+2026-09-12T23:51:53.981969+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T23:51:58.072928+07:00 wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+2026-09-12T23:56:07.932924+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T23:56:09.976940+07:00 wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+2026-09-12T23:56:18.172930+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T23:56:20.216936+07:00 wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+2026-09-12T23:56:30.005924+07:00 wbr-pi5 kernel: brcmfmac: brcmf_cfg80211_set_power_mgmt: power save enabled
+2026-09-12T23:56:30.460934+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T23:56:32.504929+07:00 wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+2026-09-12T23:56:36.889918+07:00 wbr-pi5 kernel: ieee80211 phy0: brcmf_cfg80211_reg_notifier: Firmware rejected country setting
+2026-09-13T08:50:27.284149+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-13T08:50:31.376233+07:00 wbr-pi5 kernel: hwmon hwmon3: Voltage normalised
+2026-09-13T08:56:23.701145+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!

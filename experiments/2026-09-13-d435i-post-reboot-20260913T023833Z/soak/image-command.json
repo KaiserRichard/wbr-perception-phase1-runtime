@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/home/richard/wbr-runtime/wbr-runtime-20260913T021130Z/sample_ir_checked",
+    "--camera-available",
+    "243322073847",
+    "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/soak/image-content"
+  ],
+  "utc_start": "2026-09-13T02:49:13.680539+00:00",
+  "duration_requested_seconds": 12,
+  "utc_end": "2026-09-13T02:49:26.909828+00:00",
+  "returncode": 0
+}

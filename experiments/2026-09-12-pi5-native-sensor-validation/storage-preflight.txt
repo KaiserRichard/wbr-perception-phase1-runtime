@@ -1,0 +1,42 @@
+USB_CAPACITY
+Filesystem     Type    1B-blocks       Used   Available Use% Mounted on
+/dev/sda1      exfat 62910234624 1452670976 61457563648   3% /mnt/wbr-data
+USB_IDENTITY
+NAME   PATH      TRAN  SIZE FSTYPE UUID                                 MOUNTPOINTS   MODEL
+sda    /dev/sda  usb  58.6G                                                           ProductCode
+└─sda1 /dev/sda1      58.6G exfat  1017-F615                            /mnt/wbr-data 
+/mnt/wbr-data/wbr-perception-phase1/2026-09-12/metadata/write-access-check.txt Normal-user write/read check by richard, 2026-09-12. No sensor dataset recorded.
+
+TRIGGER_OPTIONS
+udevadm trigger [OPTIONS] DEVPATH
+
+Request events from the kernel.
+
+  -h --help                         Show this help
+  -V --version                      Show package version
+  -v --verbose                      Print the list of devices while running
+  -n --dry-run                      Do not actually trigger the events
+  -q --quiet                        Suppress error logging in triggering events
+  -t --type=                        Type of events to trigger
+          devices                     sysfs devices (default)
+          subsystems                  sysfs subsystems and drivers
+          all                         sysfs devices, subsystems, and drivers
+  -c --action=ACTION|help           Event action value, default is "change"
+  -s --subsystem-match=SUBSYSTEM    Trigger devices from a matching subsystem
+  -S --subsystem-nomatch=SUBSYSTEM  Exclude devices from a matching subsystem
+  -a --attr-match=FILE[=VALUE]      Trigger devices with a matching attribute
+  -A --attr-nomatch=FILE[=VALUE]    Exclude devices with a matching attribute
+  -p --property-match=KEY=VALUE     Trigger devices with a matching property
+  -g --tag-match=TAG                Trigger devices with a matching tag
+  -y --sysname-match=NAME           Trigger devices with this /sys path
+     --name-match=NAME              Trigger devices with this /dev name
+  -b --parent-match=NAME            Trigger devices with that parent device
+     --initialized-match            Trigger devices that are already initialized
+     --initialized-nomatch          Trigger devices that are not initialized yet
+  -w --settle                       Wait for the triggered events to complete
+     --wait-daemon[=SECONDS]        Wait for udevd daemon to be initialized
+                                    before triggering uevents
+     --uuid                         Print synthetic uevent UUID
+     --prioritized-subsystem=SUBSYSTEM[,SUBSYSTEM…]
+                                    Trigger devices from a matching subsystem first
+CURRENT_SDK_INSTALL

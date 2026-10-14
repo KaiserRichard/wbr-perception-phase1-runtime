@@ -1,0 +1,8 @@
+{
+  "created_utc": "2026-09-13T02:23:30.829951+00:00",
+  "pi_archive": "/home/richard/wbr-handoff/wbr-handoff-20260913T022328Z/wbr-handoff-20260913T022328Z.tar.gz",
+  "bytes": 264164,
+  "sha256": "f94919759e4430b79c2230cf40fe9f4891ad2d317b00daf1340cc846493f9c8b",
+  "pi_hash_verified": true,
+  "scope": "Partial/blocked camera mission, metadata and offline handoff; no physical datasets"
+}

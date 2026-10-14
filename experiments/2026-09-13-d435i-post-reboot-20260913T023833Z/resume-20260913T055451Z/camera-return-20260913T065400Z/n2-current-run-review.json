@@ -1,0 +1,230 @@
+{
+  "stage": "N2_CURRENT_RUN_PHYSICAL_REVIEW",
+  "verdict": "PASS",
+  "recorded_utc": "2026-09-13T06:55:55.400898+00:00",
+  "statement": "N2 physical raw transport PASS based on current-run evidence.",
+  "dataset": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/stationary-600s",
+  "source_result_sha256": "a993721d7c338581637bcbc60c3ad1c9afb768469e184cd59f31de566695b2e5",
+  "checks": {
+    "rate_and_all_timing_and_frame_continuity": true,
+    "duration_at_least_600s": true,
+    "queue_overflow_zero": true,
+    "clean_stop": true,
+    "backup_hashes": true,
+    "images_valid_and_vary": true,
+    "physical_logs": true,
+    "power_and_health": true,
+    "usb5000M": true,
+    "raw_fields_retained": true,
+    "capture_failures_absent": true
+  },
+  "timing": {
+    "streams": {
+      "Accel": {
+        "count": 60506,
+        "callback_span_s": 599.9033972999999,
+        "arrival_rate_hz": 100.85790524327142,
+        "domains": {
+          "Global Time": 60506
+        },
+        "first_sdk_s": 1789279588.3285527,
+        "last_sdk_s": 1789280188.2331605,
+        "first_host_steady_ns": 920569169150,
+        "last_host_steady_ns": 1520472566450,
+        "repeated_timestamps": 0,
+        "backward_timestamps": 0,
+        "max_timestamp_gap_s": 0.009920597076416016,
+        "max_arrival_gap_s": 0.010267584999837709,
+        "nonpositive_arrival_steps": 0,
+        "missing_frame_numbers": 0,
+        "nonpositive_frame_steps": 0,
+        "metadata_keys": [
+          "Backend Timestamp",
+          "Frame Timestamp",
+          "Time Of Arrival"
+        ],
+        "image_count": 0,
+        "automatic_timing_pass": true,
+        "xyz_mean": [
+          0.7696735395702083,
+          -9.575633680738111,
+          1.4792486439439847
+        ],
+        "xyz_min": [
+          0.06864655017852783,
+          -10.473502159118652,
+          0.9708583354949951
+        ],
+        "xyz_max": [
+          1.5298373699188232,
+          -8.698498725891113,
+          2.059396505355835
+        ],
+        "xyz_stddev": [
+          0.019849503663420198,
+          0.01898192730969215,
+          0.018319934851717956
+        ]
+      },
+      "Infrared 1": {
+        "count": 8997,
+        "callback_span_s": 599.790547247,
+        "arrival_rate_hz": 14.998569152666812,
+        "domains": {
+          "Global Time": 8997
+        },
+        "first_sdk_s": 1789279588.3787029,
+        "last_sdk_s": 1789280188.1703148,
+        "first_host_steady_ns": 920627471411,
+        "last_host_steady_ns": 1520418018658,
+        "repeated_timestamps": 0,
+        "backward_timestamps": 0,
+        "max_timestamp_gap_s": 0.06667923927307129,
+        "max_arrival_gap_s": 0.0673412929999131,
+        "nonpositive_arrival_steps": 0,
+        "missing_frame_numbers": 0,
+        "nonpositive_frame_steps": 0,
+        "metadata_keys": [
+          "Actual Exposure",
+          "Actual Fps",
+          "Auto Exposure",
+          "Backend Timestamp",
+          "Exposure Priority",
+          "Exposure Roi Bottom",
+          "Exposure Roi Left",
+          "Exposure Roi Right",
+          "Exposure Roi Top",
+          "Frame Counter",
+          "Frame Emitter Mode",
+          "Frame Laser Power",
+          "Frame Laser Power Mode",
+          "Frame Timestamp",
+          "Gain Level",
+          "Gpio Input Data",
+          "Raw Frame Size",
+          "Sensor Timestamp",
+          "Sequence Id",
+          "Sequence Name",
+          "Sequence Size",
+          "Time Of Arrival"
+        ],
+        "image_count": 60,
+        "automatic_timing_pass": true
+      },
+      "Gyro": {
+        "count": 119964,
+        "callback_span_s": 599.834067558,
+        "arrival_rate_hz": 199.99364238911016,
+        "domains": {
+          "Global Time": 119964
+        },
+        "first_sdk_s": 1789279588.3973908,
+        "last_sdk_s": 1789280188.2323833,
+        "first_host_steady_ns": 920637751107,
+        "last_host_steady_ns": 1520471818665,
+        "repeated_timestamps": 0,
+        "backward_timestamps": 0,
+        "max_timestamp_gap_s": 0.00500178337097168,
+        "max_arrival_gap_s": 0.0064750520000416145,
+        "nonpositive_arrival_steps": 0,
+        "missing_frame_numbers": 0,
+        "nonpositive_frame_steps": 0,
+        "metadata_keys": [
+          "Backend Timestamp",
+          "Frame Timestamp",
+          "Time Of Arrival"
+        ],
+        "image_count": 0,
+        "automatic_timing_pass": true,
+        "xyz_mean": [
+          -0.0033931298316159197,
+          -0.006536910071573851,
+          -0.002275584917974136
+        ],
+        "xyz_min": [
+          -0.11292105168104172,
+          -0.022369883954524994,
+          -0.06871011853218079
+        ],
+        "xyz_max": [
+          0.07936360687017441,
+          0.012782790698111057,
+          0.07670024037361145
+        ],
+        "xyz_stddev": [
+          0.0025898391315825656,
+          0.0026366430057653996,
+          0.002930250595720986
+        ]
+      }
+    },
+    "limitations": [
+      "Matching timestamp domains do not prove physical synchronization.",
+      "Host UTC and steady clocks are sampled successively at callback entry.",
+      "SDK float IMU values are preserved; factory calibration fallback still applies."
+    ],
+    "cross_stream_host_overlap_s": 599.780267551,
+    "automatic_timing_pass": true
+  },
+  "collector": {
+    "frames": 189467,
+    "ir_frames": 8997,
+    "queue_overflow": 0,
+    "queue_high_water": 39,
+    "interrupted": false,
+    "elapsed_seconds": 600.493,
+    "clean_stop": true
+  },
+  "health_samples": 592,
+  "power_flags": [
+    0
+  ],
+  "final_power": "throttled=0x0",
+  "log_analysis": {
+    "journal.log": {
+      "faults": [],
+      "calibration_warnings": [],
+      "automatic_checks_pass": true,
+      "raw_log_review_required": true,
+      "vio_calibration_qualified": false
+    },
+    "collector.log": {
+      "faults": [],
+      "calibration_warnings": [],
+      "automatic_checks_pass": true,
+      "raw_log_review_required": true,
+      "vio_calibration_qualified": false
+    },
+    "data/sdk.log": {
+      "faults": [],
+      "calibration_warnings": [
+        {
+          "line": 58,
+          "text": " 13/09 13:06:28,226 WARNING [281473767563296] (ds-calib-parsers.cpp:36) IMU Calibration is not available, default intrinsic and extrinsic will be used."
+        }
+      ],
+      "automatic_checks_pass": true,
+      "raw_log_review_required": true,
+      "vio_calibration_qualified": false
+    }
+  },
+  "image_content": {
+    "count": 60,
+    "unique_sha256": 60,
+    "invalid": [],
+    "adjacent_mean_absolute_pixel_difference_min": 1.3111197916666666,
+    "adjacent_mean_absolute_pixel_difference_max": 41.09416341145833,
+    "scope": "Saved approximately 10-second-spaced IR samples vary; no claim about unsaved pixels between samples."
+  },
+  "backup": {
+    "pi_files": 70,
+    "mac_files": 70,
+    "same_relative_paths": true,
+    "mismatches": [],
+    "verdict": "PASS"
+  },
+  "limitations": [
+    "Transport validation only; no calibrated VIO, physical synchronization, research-grade extrinsics or qualified external storage is established.",
+    "SDK calibration fallback warnings preserved in raw logs."
+  ]
+}

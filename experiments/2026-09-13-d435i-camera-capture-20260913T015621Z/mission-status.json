@@ -1,0 +1,66 @@
+{
+  "generated_utc": "2026-09-13T02:22:02.124584+00:00",
+  "mission": "PARTIAL_BLOCKED_POWER",
+  "camera_available_authorized": true,
+  "N0": {
+    "verdict": "BLOCKED",
+    "power": "Fresh undervoltage repeatedly observed during current boot; sticky throttled=0x50000",
+    "reboot": "Not performed; sudo interactive authentication pending",
+    "network": "SSH Ethernet 192.168.50.2, Wi-Fi Internet unchanged",
+    "cooling": "Operator confirmed Raspibase PWM fan on four-pin header",
+    "power_detected_max_ma": 3000,
+    "usb_high_current_enabled": false,
+    "pmic_idle_ext5v_sample_range_v": [
+      4.9044,
+      4.95264
+    ],
+    "next_diagnostic": "After clean shutdown, test direct short power cable without inline meter and unused USB2 flash drive"
+  },
+  "N1": {
+    "verdict": "FAIL",
+    "prepared_tool_failure": "N0 thermal/power/memory prerequisite failed",
+    "separate_usb_observation_mbps": 5000,
+    "normal_user_permissions": true,
+    "sdk_identity_matches": true,
+    "physical_cable_supply_cooling_attestation": "Cooling and guided-motion operator confirmed; actual supply label/cable attestation pending"
+  },
+  "N2": {
+    "verdict": "NOT_RUN_BLOCKED_N0_N1",
+    "smoke": "NOT_RUN",
+    "reproduction": "NOT_RUN",
+    "soak_300s": "NOT_RUN",
+    "rates": null,
+    "timestamp_integrity": null,
+    "image_integrity": null,
+    "acceptance_receipt": null
+  },
+  "metadata": {
+    "verdict": "PARTIAL_SNAPSHOT_CAPTURED",
+    "profiles": 269,
+    "profiles_with_intrinsics": 261,
+    "extrinsics": 36,
+    "current_options": 43,
+    "read_errors": 10,
+    "factory_backup": "512-byte active table, not complete EEPROM",
+    "timestamp_domains": "NOT_OBSERVED",
+    "global_time_option": 1
+  },
+  "storage": {
+    "external_nvme": "NOT_ATTACHED",
+    "microSD_recording_qualification": "NOT_RUN_POWER_BLOCKED",
+    "real_datasets_recorded": 0
+  },
+  "N3": {
+    "verdict": "NOT_RUN_BLOCKED_N2",
+    "wrapper_installed": false,
+    "apt_transaction_safe": true,
+    "synthetic_ros_replay": "PASS_TOOLING_ONLY"
+  },
+  "ORB_SLAM3": {
+    "build": "NOT_ATTEMPTED_MISSING_DEPENDENCIES_AND_POWER",
+    "configuration": "REVIEW_CANDIDATE_WITH_UNKNOWN_NOISE",
+    "offline_run": "NOT_RUN_NO_DATASET_OR_QUALIFIED_CALIBRATION"
+  },
+  "next_gate": "Stable supply, authenticated reboot, physical setup attestation, fresh N1 then exact 20/105/300-second N2 sequence",
+  "no_commit_or_push": true
+}

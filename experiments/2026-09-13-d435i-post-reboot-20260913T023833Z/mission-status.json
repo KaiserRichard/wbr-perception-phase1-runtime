@@ -1,0 +1,22 @@
+{
+  "updated_utc": "2026-09-13T02:56:28.733941+00:00",
+  "canonical_head": "593245740fa962ad2325dc531cdb48c21d5f15b2",
+  "physical_camera_authorized": true,
+  "boot_id": "a5a9b519-6883-4f44-b7fb-943c94c8f92c",
+  "N0": "PASS fresh clean post-reboot baseline",
+  "N1": "PASS n1-sourced; initial environment failure preserved",
+  "N2": "CURRENT PASS: current 20/105/300 s and reviewed receipt",
+  "timing": "Real full-precision IR1/gyro/accel all Global Time; no sync accuracy claim",
+  "stationary": "WAITING for operator placement confirmation",
+  "guided": "NOT STARTED; target unavailable, VIO-development only",
+  "storage": "Bounded microSD probe PASS; external device unavailable",
+  "wrapper": "Simulation reviewed; installation needs operator sudo authentication",
+  "N3": "NOT STARTED",
+  "power": "0x0 through native tests, timing probe and storage probe",
+  "runtime_bundles": {
+    "bundle": "/home/richard/wbr-runtime/wbr-runtime-20260913T021130Z",
+    "precision_bundle": "/home/richard/wbr-runtime/wbr-runtime-20260913T024714Z",
+    "ros_bundle": "/home/richard/wbr-runtime/wbr-runtime-20260913T025503Z"
+  },
+  "backup_checkpoint": "backup-checkpoint-01.json"
+}

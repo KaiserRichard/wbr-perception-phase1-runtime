@@ -1,0 +1,21 @@
+{
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/git-state-after.txt": "3228a2917bf23e8d5661b6489dc2ed889eeb8ae0d6fd4d5b10160b7b15c60fb8",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/git-state-before.txt": "3228a2917bf23e8d5661b6489dc2ed889eeb8ae0d6fd4d5b10160b7b15c60fb8",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/health-kernel-after-command.sh": "d150ad2831328e979b326d5ffb359a6c74b08c985fba5790293509bdea13306b",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/health-kernel-after.txt": "6a703e3de06bd26fa6b518130bfd40a1d8c8418a871c3c05ee40dd0320314a1b",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/helper-sudo-check-command.sh": "c30460491d00ebfa1219895b5b2033b5ebb6eb44ee17e6cbbcd1bef84de74341",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/helper-sudo-check.txt": "f8ba9ee8bc7a7e69c7e0ea984c9a0862dc932d64ad6ff6519e79a83d34a9f8c5",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/manifest-before-resume.json": "8348a5daede1b20fbb0a0fcc5f647f8221e7f4e2c642c384319aa7bd3acd9bf7",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/platform-permissions-boot-command.sh": "84bb02eeb51ecca4c28fac66f26a4cf26cab2d9b7fae077dcc8393d9b3411720",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/platform-permissions-boot.txt": "36a5ed900e4b6cc3124b2873c3ecfb3faba3a2c005c863165dea13a30b61bbf1",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/recovered-file-sha256.json": "097fa104c10857280b5820f7dfb6ff7d075f7a43733fde4d7c1c11e59d896575",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/sdk-enumeration-command.sh": "116173f0eaee831c3e26a1ea89f13d6c3b5771a79de5c6d97c8b65a5b0d24cdb",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/sdk-enumeration-full.txt": "1e8b2a9deeeaab92c5290204096380a390845c15a60de2ee45b25d8a634edbcd",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/sensor-access-command.sh": "4214ac2e1f55da831c2caf14837ae9ec0394eeff1f550afdff7ee9949f78b3e7",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/sensor-access.txt": "fb0fe34f0b762e1b23ed6086732d0f10e317441e683bebcada2bbadb3d02379a",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/usb-storage-preflight-command.sh": "95c760c7b9ef485e27c34c2d2ed032e7b718a2e1128918ca7f0b829d83e59fef",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/usb-storage-preflight.txt": "c9321e31e86adea65ca8c6944412d6cc773a3ac67ed86aa22b074569475509d5",
+  "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/verification.json": "cf44fcee46948b3da95e2b33e4e3f9ec28d18e0cf18c72d7e2679314739d3b32",
+  "docs/PI5_NATIVE_SENSOR_VALIDATION_2026-09-12.md": "9616f721c63725db6361ee2897d2f20824df96df443dab2a7e2e07b5ff4bc235",
+  "experiments/2026-09-12-pi5-native-sensor-validation/manifest.json": "68d634ea1b930f03502bd413e78947c58a235fd90720e6560cfaac827d50252d"
+}

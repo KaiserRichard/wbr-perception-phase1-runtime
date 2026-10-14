@@ -1,0 +1,4 @@
+ 13/09 09:49:13,691 WARNING [281473584095264] (context.cpp:41) No valid configuration file found at : /home/richard/.realsense-config.json loading defaults
+IR1 Y8 640x480 @15; fx=388.527435302734; fy=388.527435302734; ppx=319.104309082031; ppy=239.556167602539; distortion=Brown Conrady
+coefficients=0 0 0 0 0 
+Frames checked=179; orderly stop

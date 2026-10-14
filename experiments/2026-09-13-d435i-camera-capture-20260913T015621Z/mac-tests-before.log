@@ -1,0 +1,49 @@
+test_480m_is_blocked_even_with_expected_identity (test_gate_tooling.GateToolingTests.test_480m_is_blocked_even_with_expected_identity) ... ok
+test_ambiguous_enumeration_fails (test_gate_tooling.GateToolingTests.test_ambiguous_enumeration_fails) ... ok
+test_output_is_append_only (test_gate_tooling.GateToolingTests.test_output_is_append_only) ... ok
+test_root_not_allowed (test_gate_tooling.GateToolingTests.test_root_not_allowed) ... ok
+test_saved_enumeration_keeps_identifiers_separate (test_gate_tooling.GateToolingTests.test_saved_enumeration_keeps_identifiers_separate) ... ok
+test_superspeed_hub_path_is_blocked (test_gate_tooling.GateToolingTests.test_superspeed_hub_path_is_blocked) ... ok
+test_superspeed_or_better_direct_path (test_gate_tooling.GateToolingTests.test_superspeed_or_better_direct_path) ... ok
+test_unavailable_camera_never_enters_hardware_path (test_gate_tooling.GateToolingTests.test_unavailable_camera_never_enters_hardware_path) ... ok
+test_absent_camera_guard_fails_before_n1_or_hardware_read (test_n2_tooling.ImageAndGuardTests.test_absent_camera_guard_fails_before_n1_or_hardware_read) ... ok
+test_failed_n1_never_reads_hardware (test_n2_tooling.ImageAndGuardTests.test_failed_n1_never_reads_hardware) ... ok
+test_pgm_does_not_eat_whitespace_pixel_bytes (test_n2_tooling.ImageAndGuardTests.test_pgm_does_not_eat_whitespace_pixel_bytes) ... ok
+test_calibration_warning_preserved_separately (test_n2_tooling.KernelAndHealthTests.test_calibration_warning_preserved_separately) ... ok
+test_health_nonzero_flags_fail (test_n2_tooling.KernelAndHealthTests.test_health_nonzero_flags_fail) ... ok
+test_historical_logs_are_analysis_only (test_n2_tooling.KernelAndHealthTests.test_historical_logs_are_analysis_only) ... ok
+test_usb2_reset_disconnect_and_corruption_are_faults (test_n2_tooling.KernelAndHealthTests.test_usb2_reset_disconnect_and_corruption_are_faults) ... ok
+test_analyzer_cli_failure_is_nonzero_and_additive (test_n2_tooling.SDKAnalysisTests.test_analyzer_cli_failure_is_nonzero_and_additive) ... ok
+test_burst_does_not_pass_full_window (test_n2_tooling.SDKAnalysisTests.test_burst_does_not_pass_full_window) ... ok
+test_full_interval_and_exact_profile (test_n2_tooling.SDKAnalysisTests.test_full_interval_and_exact_profile) ... ok
+test_nonfinite_or_wrong_profile_rejected (test_n2_tooling.SDKAnalysisTests.test_nonfinite_or_wrong_profile_rejected) ... ok
+test_repeat_backward_missing_and_unexpected_stream_fail (test_n2_tooling.SDKAnalysisTests.test_repeat_backward_missing_and_unexpected_stream_fail) ... ok
+test_startup_gap_is_explicit_review_not_loss_exemption (test_n2_tooling.SDKAnalysisTests.test_startup_gap_is_explicit_review_not_loss_exemption) ... ok
+test_synthetic_300_second_soak_uses_whole_interval (test_n2_tooling.SDKAnalysisTests.test_synthetic_300_second_soak_uses_whole_interval) ... ok
+test_camera_info_nan_rejected (test_n3_metrics.MetricsTests.test_camera_info_nan_rejected) ... ok
+test_disconnected_tf_is_not_presence_pass (test_n3_metrics.MetricsTests.test_disconnected_tf_is_not_presence_pass) ... ok
+test_header_digest_catches_changed_order (test_n3_metrics.MetricsTests.test_header_digest_catches_changed_order) ... ok
+test_missing_required_context_rejected (test_n3_metrics.MetricsTests.test_missing_required_context_rejected) ... ok
+test_nanosecond_precision_repeats_and_backward (test_n3_metrics.MetricsTests.test_nanosecond_precision_repeats_and_backward) ... ok
+test_payload_digest_catches_corruption (test_n3_metrics.MetricsTests.test_payload_digest_catches_corruption) ... ok
+test_replay_loss_rejected (test_n3_metrics.MetricsTests.test_replay_loss_rejected) ... ok
+test_static_zero_stamp_is_permitted (test_n3_metrics.MetricsTests.test_static_zero_stamp_is_permitted) ... ok
+test_whole_window_rate_does_not_hide_stall (test_n3_metrics.MetricsTests.test_whole_window_rate_does_not_hide_stall) ... ok
+test_wire_padding_is_preserved_but_not_semantic_corruption (test_n3_metrics.MetricsTests.test_wire_padding_is_preserved_but_not_semantic_corruption) ... ok
+test_wrong_image_dimensions_rejected (test_n3_metrics.MetricsTests.test_wrong_image_dimensions_rejected) ... ok
+test_finalized_bag_complete_replay_and_no_publisher_boundary (test_ros_offline.SyntheticROSTest.test_finalized_bag_complete_replay_and_no_publisher_boundary) ... skipped 'opt-in camera-free ROS integration'
+test_105_seconds_never_substitutes_for_soak (test_takeover_tooling.EvidenceTests.test_105_seconds_never_substitutes_for_soak) ... ok
+test_missing_changed_and_escaping_hashes_rejected (test_takeover_tooling.EvidenceTests.test_missing_changed_and_escaping_hashes_rejected) ... ok
+test_no_camera_flags_block_entry_points (test_takeover_tooling.EvidenceTests.test_no_camera_flags_block_entry_points) ... ok
+test_nonfinite_usb_speed_is_not_superspeed (test_takeover_tooling.EvidenceTests.test_nonfinite_usb_speed_is_not_superspeed) ... ok
+test_parameter_fallback_and_latched_qos_rejected (test_takeover_tooling.EvidenceTests.test_parameter_fallback_and_latched_qos_rejected) ... ok
+test_recorder_never_uses_all_topics (test_takeover_tooling.EvidenceTests.test_recorder_never_uses_all_topics) ... ok
+test_review_is_explicit (test_takeover_tooling.EvidenceTests.test_review_is_explicit) ... ok
+test_full_content_and_frozen_content (test_takeover_tooling.ImageTests.test_full_content_and_frozen_content) ... ok
+test_qualified_identity_and_rejected_mounts (test_takeover_tooling.StorageTests.test_qualified_identity_and_rejected_mounts) ... ok
+test_slow_short_corrupt_nonfinite_benchmark_rejected (test_takeover_tooling.StorageTests.test_slow_short_corrupt_nonfinite_benchmark_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 44 tests in 2.036s
+
+OK (skipped=1)

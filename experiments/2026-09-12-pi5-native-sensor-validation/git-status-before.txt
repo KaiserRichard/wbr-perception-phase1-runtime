@@ -1,0 +1,6 @@
+ D D435I_BASELINE_AUDIT.md
+ ? third_party/ORB_SLAM3
+?? .obsidian/
+?? docs/.obsidian/
+?? docs/D435I_BASELINE_AUDIT.md
+?? experiments/2026-09-12-pi5-native-sensor-validation/

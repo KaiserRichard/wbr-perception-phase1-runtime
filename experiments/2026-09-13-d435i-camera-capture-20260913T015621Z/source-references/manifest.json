@@ -1,0 +1,27 @@
+[
+  {
+    "path": "ds-calib-parsers-v2.58.4.cpp",
+    "url": "https://raw.githubusercontent.com/realsenseai/librealsense/v2.58.4/src/ds/ds-calib-parsers.cpp",
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+  },
+  {
+    "path": "global-timestamp-reader-v2.58.4.cpp",
+    "url": "https://raw.githubusercontent.com/realsenseai/librealsense/v2.58.4/src/global_timestamp_reader.cpp",
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+  },
+  {
+    "path": "camera-imu-calibration.md",
+    "url": "https://raw.githubusercontent.com/wiki/ethz-asl/kalibr/camera-imu-calibration.md",
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+  },
+  {
+    "path": "imu-noise-model.md",
+    "url": "https://raw.githubusercontent.com/wiki/ethz-asl/kalibr/IMU-Noise-Model.md",
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+  },
+  {
+    "path": "librealsense-LICENSE",
+    "url": "https://raw.githubusercontent.com/realsenseai/librealsense/v2.58.4/LICENSE",
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>"
+  }
+]

@@ -1,0 +1,45 @@
+{
+  "images": [
+    {
+      "file": "ir1-frame-150.pgm",
+      "width": 640,
+      "height": 480,
+      "pixel_bytes": 307200,
+      "minimum": 18,
+      "maximum": 255,
+      "mean": 100.71650716145834,
+      "stdev": 70.42604498443056,
+      "sha256": "313eaef3f6c9a6d5ed6aba94479e6745d10a89f59b3eb316bcf316c0ef0d7997"
+    },
+    {
+      "file": "ir1-frame-30.pgm",
+      "width": 640,
+      "height": 480,
+      "pixel_bytes": 307200,
+      "minimum": 18,
+      "maximum": 255,
+      "mean": 100.651494140625,
+      "stdev": 70.42699390218408,
+      "sha256": "b176daf303fbb5b871c370657238c6adbcff3653fafc15160a12e083e3a83f1e"
+    },
+    {
+      "file": "ir1-frame-90.pgm",
+      "width": 640,
+      "height": 480,
+      "pixel_bytes": 307200,
+      "minimum": 18,
+      "maximum": 255,
+      "mean": 100.69098307291667,
+      "stdev": 70.42314671451562,
+      "sha256": "d5c8fc76dc25139ab4377b7c47204338cc0a196692ad85d2fc3f05bc0623c43a"
+    }
+  ],
+  "all_distinct_images": true,
+  "frame_count": 179,
+  "timestamp_domains": [
+    "Global Time"
+  ],
+  "nonpositive_stamp_steps": 0,
+  "max_stamp_gap_ms": 66.68017578125,
+  "visual_review": "PASS: all three grayscale samples show a coherent tabletop scene, fiducial targets and visible projected IR dots; no garbled rows or block corruption. Samples differ; no deliberate scene-motion challenge was performed."
+}

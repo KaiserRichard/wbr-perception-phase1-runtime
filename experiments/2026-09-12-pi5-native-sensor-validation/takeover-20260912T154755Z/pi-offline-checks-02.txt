@@ -1,0 +1,984 @@
+validation_common.py: OK
+n1_precheck.py: OK
+wbr-d435i-iio-permissions.py: OK
+99-wbr-d435i.rules: OK
+sdk_capture.py: OK
+sdk_analysis.py: OK
+sample_ir_checked.cpp: OK
+image_content.py: OK
+health_monitor.py: OK
+kernel_analysis.py: OK
+storage_qualify.py: OK
+n3_metrics.py: OK
+n3_observer.py: OK
+n3_bag.py: OK
+n3_record.py: OK
+phase_gate.py: OK
+n3_baseline.yaml: OK
+n3_topics.json: OK
+n3_qos.yaml: OK
+platform_inspect.py: OK
+bundle_runtime.py: OK
+wrapper_inspect.py: OK
+test_gate_tooling.py: OK
+test_n2_tooling.py: OK
+test_n3_metrics.py: OK
+test_takeover_tooling.py: OK
+test_ros_offline.py: OK
+sdk-enumeration-full.txt: OK
+sustained-sdk.log: OK
+sustained-analysis.json: OK
+PHASE_A_RUNBOOK.md: OK
+N3_PREPARATION.md: OK
+bundle-manifest.json: OK
+test_finalized_bag_complete_replay_and_no_publisher_boundary (test_ros_offline.SyntheticROSTest.test_finalized_bag_complete_replay_and_no_publisher_boundary) ... [INFO] [1789228906.149679179] [rosbag2_storage]: Opened database '/tmp/wbr-SYNTHETIC-ros-5kzynb_2/SYNTHETIC-bag/SYNTHETIC-bag_0.db3' for READ_WRITE.
+[INFO] [1789228906.679772625] [rosbag2_storage]: Opened database '/tmp/wbr-SYNTHETIC-ros-5kzynb_2/SYNTHETIC-bag/SYNTHETIC-bag_0.db3' for READ_ONLY.
+[INFO] [1789228906.773526854] [rosbag2_storage]: Opened database '/tmp/wbr-SYNTHETIC-ros-5kzynb_2/SYNTHETIC-bag/SYNTHETIC-bag_0.db3' for READ_ONLY.
+replay_result.json {
+  "stage": "N3_REPLAY",
+  "end_utc": "2026-09-12T16:02:08.318462+00:00",
+  "live_domain": 181,
+  "scope": "SYNTHETIC_TOOLING_ONLY",
+  "provenance": {
+    "utc": "2026-09-12T16:02:08.320189+00:00",
+    "hostname": "wbr-pi5",
+    "boot_id": "01422f24-5f9f-47ec-8fe6-71a156aa9e22",
+    "kernel": "Linux wbr-pi5 6.8.0-1064-raspi #68-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug 14 10:05:02 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux",
+    "os_release": "PRETTY_NAME=\"Ubuntu 24.04.4 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.4 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo",
+    "user": "uid=1000(richard) gid=1000(richard) groups=1000(richard),4(adm),24(cdrom),27(sudo),30(dip),44(video),101(lxd)",
+    "source_sha256": {
+      "image_content.py": "98236993f618276b2bf20dfe2dd780d56070849481fab2dabbf811017b83d2f8",
+      "test_takeover_tooling.py": "cdf399d45540c4af657f28df50f27e3cbf33873a19413d77fbbcf5538c6d806f",
+      "test_gate_tooling.py": "b5b2454ee86ee4cbc05f4879d7d8f0743471f5bcbd1e3b28e63a4de634ba4d68",
+      "storage_qualify.py": "2068da84d39998508b1bb35a71d30382553f3e5942b4b8ed55139fe686c20f17",
+      "health_monitor.py": "bf213f56cafa9366025eaee4f4e08b72ae36f98ebce1a722d551728f29fb10b2",
+      "wbr-d435i-iio-permissions.py": "747e1941e30ea00dc4035a543e1937d5e531762919e4c11364b21c1c90482f35",
+      "99-wbr-d435i.rules": "dd3c3c069e924891dfb9609fdcd8a8a0193969f64d31b93862ca514f01225c52",
+      "n3_baseline.yaml": "ce77484e672f4bbcdcd1cf89ad831c89ecb8cd5768f4002f6cbc69ef15474f2b",
+      "sdk_analysis.py": "d4220883a146528fc03bfca423a83e0833b4af36502a7383fa7b74071cc2a873",
+      "phase_gate.py": "aba15f94dfd2abefbf718363d22198bc41835c28e094d3a91107fabd0c3d3b3a",
+      "kernel_analysis.py": "aecc8430f4a510a9325cf8cc9fd1fc52915bc4ed499922cd5535f67d7f17a640",
+      "test_ros_offline.py": "30aaacd9b792aa806c2f25cc568c6349fa5b5a41a5913df9fede1fd88399cdd1",
+      "n3_observer.py": "1d17279e60e331f03a461dcebe89534d8aa116c3e8e479523480f5998dbf3c16",
+      "platform_inspect.py": "403cc6102261ff328afa135f11b0801ee7af92cf32da3a228166e82723e5392d",
+      "validation_common.py": "892759f95a905d35faa4b5741edf4a6c6660e18cc8e210316fce606328a99a19",
+      "n3_bag.py": "af4739bb2fbf100b0e351ef60d2a412c49d6026b919e2e107c751f844b0ca60c",
+      "n3_metrics.py": "ff8e653bd40ed34312aa65766c892fdfaa92d0bee9732ae61fe0705494c88118",
+      "n3_qos.yaml": "1800251b37f3690685549c668ed686705dcf22712efdde96cfd58cb6a84fc04b",
+      "bundle_runtime.py": "91d59e6382fb74bc26c023eab426f2340407311d2a65eb82d47519b1c009ca11",
+      "n3_record.py": "f5022ee0d68a86050c796aba1ef7d3319cf258004a75146d2587b5fb3e70ffd9",
+      "n1_precheck.py": "d2d85115cbb3e102dba7395a761eff6b2a5334c81722f0fa976b9548ddd719d2",
+      "wrapper_inspect.py": "8eceb77e2a09f58f6fc1add87ba519935c1a55a37ae8f821e939abd00d1df5d6",
+      "test_n3_metrics.py": "fc345470f1e6c369847cf8e7ab2684f2027f6320b3acbb711a006e61e7f064d8",
+      "sample_ir_checked.cpp": "a70f3132d2184581baed907c182e5b8b36d4267b36de05b90bde24e53cd14a4d",
+      "sdk_capture.py": "e4d0556eaa0874b66c302ca462a51b2d57d8295bf29e9966c0d95de883eab0e3",
+      "test_n2_tooling.py": "a2004fdefa59913952ee8c74da7534e547119d49e4e430c1e9197d8700ffccf9",
+      "n3_topics.json": "5b740d1e43155cd21e8ea784ba261689736d7f3ddd114f669280870a603bf140"
+    },
+    "canonical_bundle": {
+      "scope": "CAMERA_FREE_PREPARATION_NOT_HARDWARE_PASS",
+      "created_utc": "2026-09-12T16:01:44.113728+00:00",
+      "canonical_git_revision": "593245740fa962ad2325dc531cdb48c21d5f15b2",
+      "canonical_branch": "feat/pi5-native-sensor-validation-20260912",
+      "canonical_worktree_status": "D ../../D435I_BASELINE_AUDIT.md\n M ../../docs/RPI5_NATIVE_PERCEPTION_BRINGUP.md\n ? ../../third_party/ORB_SLAM3\n?? ../../.obsidian/\n?? ../../AGENTS.md\n?? ../../docs/.obsidian/\n?? ../../docs/D435I_BASELINE_AUDIT.md\n?? ../../docs/PI5_NATIVE_SENSOR_VALIDATION_2026-09-12.md\n?? ./",
+      "source_sha256": {
+        "validation_common.py": "892759f95a905d35faa4b5741edf4a6c6660e18cc8e210316fce606328a99a19",
+        "n1_precheck.py": "d2d85115cbb3e102dba7395a761eff6b2a5334c81722f0fa976b9548ddd719d2",
+        "wbr-d435i-iio-permissions.py": "747e1941e30ea00dc4035a543e1937d5e531762919e4c11364b21c1c90482f35",
+        "99-wbr-d435i.rules": "dd3c3c069e924891dfb9609fdcd8a8a0193969f64d31b93862ca514f01225c52",
+        "sdk_capture.py": "e4d0556eaa0874b66c302ca462a51b2d57d8295bf29e9966c0d95de883eab0e3",
+        "sdk_analysis.py": "d4220883a146528fc03bfca423a83e0833b4af36502a7383fa7b74071cc2a873",
+        "sample_ir_checked.cpp": "a70f3132d2184581baed907c182e5b8b36d4267b36de05b90bde24e53cd14a4d",
+        "image_content.py": "98236993f618276b2bf20dfe2dd780d56070849481fab2dabbf811017b83d2f8",
+        "health_monitor.py": "bf213f56cafa9366025eaee4f4e08b72ae36f98ebce1a722d551728f29fb10b2",
+        "kernel_analysis.py": "aecc8430f4a510a9325cf8cc9fd1fc52915bc4ed499922cd5535f67d7f17a640",
+        "storage_qualify.py": "2068da84d39998508b1bb35a71d30382553f3e5942b4b8ed55139fe686c20f17",
+        "n3_metrics.py": "ff8e653bd40ed34312aa65766c892fdfaa92d0bee9732ae61fe0705494c88118",
+        "n3_observer.py": "1d17279e60e331f03a461dcebe89534d8aa116c3e8e479523480f5998dbf3c16",
+        "n3_bag.py": "af4739bb2fbf100b0e351ef60d2a412c49d6026b919e2e107c751f844b0ca60c",
+        "n3_record.py": "f5022ee0d68a86050c796aba1ef7d3319cf258004a75146d2587b5fb3e70ffd9",
+        "phase_gate.py": "aba15f94dfd2abefbf718363d22198bc41835c28e094d3a91107fabd0c3d3b3a",
+        "n3_baseline.yaml": "ce77484e672f4bbcdcd1cf89ad831c89ecb8cd5768f4002f6cbc69ef15474f2b",
+        "n3_topics.json": "5b740d1e43155cd21e8ea784ba261689736d7f3ddd114f669280870a603bf140",
+        "n3_qos.yaml": "1800251b37f3690685549c668ed686705dcf22712efdde96cfd58cb6a84fc04b",
+        "platform_inspect.py": "403cc6102261ff328afa135f11b0801ee7af92cf32da3a228166e82723e5392d",
+        "bundle_runtime.py": "91d59e6382fb74bc26c023eab426f2340407311d2a65eb82d47519b1c009ca11",
+        "wrapper_inspect.py": "8eceb77e2a09f58f6fc1add87ba519935c1a55a37ae8f821e939abd00d1df5d6",
+        "test_gate_tooling.py": "b5b2454ee86ee4cbc05f4879d7d8f0743471f5bcbd1e3b28e63a4de634ba4d68",
+        "test_n2_tooling.py": "a2004fdefa59913952ee8c74da7534e547119d49e4e430c1e9197d8700ffccf9",
+        "test_n3_metrics.py": "fc345470f1e6c369847cf8e7ab2684f2027f6320b3acbb711a006e61e7f064d8",
+        "test_takeover_tooling.py": "cdf399d45540c4af657f28df50f27e3cbf33873a19413d77fbbcf5538c6d806f",
+        "test_ros_offline.py": "30aaacd9b792aa806c2f25cc568c6349fa5b5a41a5913df9fede1fd88399cdd1",
+        "sdk-enumeration-full.txt": "17ac8a9b48c7f91b34c32f419657ef9d7c9ad3841ee0a0f2d880a5c31c2cee24",
+        "sustained-sdk.log": "13841de0a1aa54b7ea0528222aca4b53d83f4c5afe4db16fd1ec163c9b2c779b",
+        "sustained-analysis.json": "363d657c570f48fc5367c7f98539ee0081fb1949e55ef2825d8e2bdee9cbf48b",
+        "PHASE_A_RUNBOOK.md": "8aaed70789cb573f081067d613e12d92cb1ab4a4ce6fb1d53e17bca9ec9058dd",
+        "N3_PREPARATION.md": "9f2c72b71d7af7bc98c866314eeea989d79ca99e78a6cae426bc43289e9a9b48"
+      }
+    },
+    "runtime_git": {
+      "argv": [
+        "git",
+        "-C",
+        "/home/richard/wbr-runtime/wbr-runtime-20260912T160144Z",
+        "rev-parse",
+        "HEAD"
+      ],
+      "returncode": 128,
+      "stdout": "",
+      "stderr": "fatal: not a git repository (or any of the parent directories): .git\n"
+    },
+    "package_versions": {
+      "argv": [
+        "dpkg-query",
+        "-W",
+        "ros-jazzy-librealsense2",
+        "ros-jazzy-realsense2-camera",
+        "ros-jazzy-rosbag2*"
+      ],
+      "returncode": 1,
+      "stdout": "ros-jazzy-librealsense2\t2.58.4-1noble.20260831.020056\nros-jazzy-rosbag2\t0.26.11-1noble.20260903.023557\nros-jazzy-rosbag2-compression\t0.26.11-1noble.20260902.230826\nros-jazzy-rosbag2-compression-zstd\t0.26.11-1noble.20260902.231217\nros-jazzy-rosbag2-cpp\t0.26.11-1noble.20260902.225917\nros-jazzy-rosbag2-interfaces\t0.26.11-1noble.20260902.021151\nros-jazzy-rosbag2-py\t0.26.11-1noble.20260902.232852\nros-jazzy-rosbag2-storage\t0.26.11-1noble.20260902.224341\nros-jazzy-rosbag2-storage-default-plugins\t0.26.11-1noble.20260903.023406\nros-jazzy-rosbag2-storage-mcap\t0.26.11-1noble.20260903.022942\nros-jazzy-rosbag2-storage-sqlite3\t0.26.11-1noble.20260903.023000\nros-jazzy-rosbag2-transport\t0.26.11-1noble.20260902.231544\n",
+      "stderr": "dpkg-query: no packages found matching ros-jazzy-realsense2-camera\n"
+    }
+  },
+  "bag_sha256": {
+    "SYNTHETIC-bag_0.db3": "b98864e5c52889d801e55e9fe7235b94a1461de5281824b91fb4e152317701b1",
+    "metadata.yaml": "b6f721af4fb8512d0f9e7cebd37e7ce6fa7b551441485a92d970bdb0fad1db5b"
+  },
+  "topics_sha256": "686ba94a79ebb35cca6ba1e9ea401de6fba4ff33d070835f4f2655ebe2bd4f99",
+  "replay_domain": 182,
+  "failures": [
+    "/camera/camera/infra1/camera_info: replay payload_sha256 differs from stored evidence"
+  ],
+  "verdict": "FAIL",
+  "review_required": "Review complete player.log and observer.log, including reader warnings.",
+  "evidence_sha256": {
+    "commands.json": "2ffb7dae5856f0711951052551ee540dc3c18815f061a7b36b28bebfe805d054",
+    "guard_ready.json": "74b13b90ae4fa3c4b7edde0eae7e7db6020c12c3336ce310c6b755f64050d0e1",
+    "live_domain_after.json": "fc486a339ddcab4bc1dcdbdff71fd1776789c04269d9efffcbd00799b96f9812",
+    "live_domain_before.json": "117ddb7a95592d187bdca437436f6e076a6f8f63ff814a08833e938828fc142a",
+    "live_domain_continuous.json": "464b48c358fa8c5274e83e36d0279dad9206196cda6d1cec7f6c6c9ce75c50a0",
+    "observed.json": "2c22a568dbd04ef3c72e6837ebda852814e91f08e575a5fd39a5c0f767a82441",
+    "observer.log": "a4154e2c20a8c53dfc9935026be98d0c25413d110d6b0423b4655b55c1a151fa",
+    "observer_ready.json": "2b85f9cca3723663abce2683222fbef2550f50097354c36d82e1da3e8a93b031",
+    "observer_stop.json": "bc26f9e9d85e8d72fda1fef66672d8a845b4a4c332a2471a80f951d7bf997eb7",
+    "player.log": "571123fa0c59b10b576afc4c704e516565ce9171d6c1fb255734070592ef95d9",
+    "process_check.json": "c6734e1cd2810c30791c6de630317d7267707f27ff5c223b904ed97fca604fe3",
+    "replay_domain_before.json": "4a2878ccd0331e8f40b97d273c27b99cdad67c857f18d6b052d2a29c0ac0cb0e",
+    "stored.json": "bfcbe199ce9296d843629d8a81c922ccdf8d34d9c2db8ebaa0c6dbbfc3b3668f"
+  }
+}
+
+live_domain_after.json {
+  "mode": "no-publishers",
+  "domain": 181,
+  "start_utc": "2026-09-12T16:02:05.087930+00:00",
+  "end_utc": "2026-09-12T16:02:08.094552+00:00",
+  "graph": {
+    "/camera/camera/infra1/image_rect_raw": [],
+    "/camera/camera/infra1/camera_info": [],
+    "/camera/camera/gyro/sample": [],
+    "/camera/camera/accel/sample": [],
+    "/tf_static": []
+  },
+  "camera_nodes": [],
+  "checks": 6,
+  "completed": false,
+  "forbidden_publishers": [],
+  "failures": [],
+  "verdict": "PASS"
+}
+
+commands.json {
+  "utc": "2026-09-12T16:01:54.378520+00:00",
+  "observer": [
+    "/usr/bin/python3",
+    "/home/richard/wbr-runtime/wbr-runtime-20260912T160144Z/n3_observer.py",
+    "--mode",
+    "replay",
+    "--domain",
+    "182",
+    "--seconds",
+    "46.9975",
+    "--ready-file",
+    "/tmp/wbr-SYNTHETIC-ros-5kzynb_2/replay/observer_ready.json",
+    "--stop-file",
+    "/tmp/wbr-SYNTHETIC-ros-5kzynb_2/replay/observer_stop.json",
+    "--output",
+    "/tmp/wbr-SYNTHETIC-ros-5kzynb_2/replay/observed.json",
+    "--topics-file",
+    "/tmp/wbr-SYNTHETIC-ros-5kzynb_2/synthetic-topics.json"
+  ],
+  "guard": [
+    "/usr/bin/python3",
+    "/home/richard/wbr-runtime/wbr-runtime-20260912T160144Z/n3_observer.py",
+    "--mode",
+    "guard",
+    "--domain",
+    "181",
+    "--seconds",
+    "46.9975",
+    "--ready-file",
+    "/tmp/wbr-SYNTHETIC-ros-5kzynb_2/replay/guard_ready.json",
+    "--stop-file",
+    "/tmp/wbr-SYNTHETIC-ros-5kzynb_2/replay/observer_stop.json",
+    "--output",
+    "/tmp/wbr-SYNTHETIC-ros-5kzynb_2/replay/live_domain_continuous.json",
+    "--topics-file",
+    "/tmp/wbr-SYNTHETIC-ros-5kzynb_2/synthetic-topics.json"
+  ],
+  "player": [
+    "ros2",
+    "bag",
+    "play",
+    "/tmp/wbr-SYNTHETIC-ros-5kzynb_2/SYNTHETIC-bag",
+    "--rate",
+    "1.0",
+    "--delay",
+    "3",
+    "--qos-profile-overrides-path",
+    "/tmp/wbr-SYNTHETIC-ros-5kzynb_2/synthetic-qos.yaml"
+  ],
+  "ROS_DOMAIN_ID": 182,
+  "ROS_LOCALHOST_ONLY": "1"
+}
+
+observer_ready.json {
+  "ready_utc": "2026-09-12T16:01:55.229892+00:00",
+  "domain": 182,
+  "subscriptions_created": 5
+}
+
+live_domain_before.json {
+  "mode": "no-publishers",
+  "domain": 181,
+  "start_utc": "2026-09-12T16:01:47.454873+00:00",
+  "end_utc": "2026-09-12T16:01:50.461614+00:00",
+  "graph": {
+    "/camera/camera/infra1/image_rect_raw": [],
+    "/camera/camera/infra1/camera_info": [],
+    "/camera/camera/gyro/sample": [],
+    "/camera/camera/accel/sample": [],
+    "/tf_static": []
+  },
+  "camera_nodes": [],
+  "checks": 6,
+  "completed": false,
+  "forbidden_publishers": [],
+  "failures": [],
+  "verdict": "PASS"
+}
+
+guard_ready.json {
+  "ready_utc": "2026-09-12T16:01:54.967845+00:00",
+  "domain": 181
+}
+
+observer.log [WARN] [1789228914.711460400] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[WARN] [1789228914.711532251] [rcl]: 'localhost_only' is enabled, 'automatic_discovery_range' and 'static_peers' will be ignored.
+[WARN] [1789228914.711643583] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[WARN] [1789228914.711674508] [rcl]: 'localhost_only' is enabled, 'automatic_discovery_range' and 'static_peers' will be ignored.
+
+observer_stop.json {
+  "stop_utc": "2026-09-12T16:02:04.287122+00:00",
+  "player_exit_code": 0
+}
+
+player.log [WARN] [1789228915.804389750] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[WARN] [1789228915.804453731] [rcl]: 'localhost_only' is enabled, 'automatic_discovery_range' and 'static_peers' will be ignored.
+stdin is not a terminal device. Keyboard handling disabled.[INFO] [1789228915.868122702] [rosbag2_storage]: Opened database '/tmp/wbr-SYNTHETIC-ros-5kzynb_2/SYNTHETIC-bag/SYNTHETIC-bag_0.db3' for READ_ONLY.
+[INFO] [1789228915.868428754] [rosbag2_player]: Set rate to 1
+[INFO] [1789228915.868592363] [rosbag2_player]: Overriding QoS profile for topic /tf_static
+[INFO] [1789228915.900813362] [rosbag2_player]: Overriding QoS profile for topic /camera/camera/accel/sample
+[INFO] [1789228915.912830254] [rosbag2_player]: Overriding QoS profile for topic /camera/camera/gyro/sample
+[INFO] [1789228915.913485468] [rosbag2_player]: Overriding QoS profile for topic /camera/camera/infra1/camera_info
+[INFO] [1789228915.914506326] [rosbag2_player]: Overriding QoS profile for topic /camera/camera/infra1/image_rect_raw
+[INFO] [1789228915.938328557] [rosbag2_player]: Adding keyboard callbacks.
+[INFO] [1789228915.938424204] [rosbag2_player]: Press SPACE for Pause/Resume
+[INFO] [1789228915.938449278] [rosbag2_player]: Press CURSOR_RIGHT for Play Next Message
+[INFO] [1789228915.938467537] [rosbag2_player]: Press CURSOR_UP for Increase Rate 10%
+[INFO] [1789228915.938484666] [rosbag2_player]: Press CURSOR_DOWN for Decrease Rate 10%
+[INFO] [1789228915.942091252] [rosbag2_player]: Playback until timestamp: -1
+[INFO] [1789228915.942294954] [rosbag2_player]: Sleep 3000000000 ns
+
+stored.json {
+  "mode": "stored_bag",
+  "inspected_utc": "2026-09-12T16:01:46.844751+00:00",
+  "bag": "/tmp/wbr-SYNTHETIC-ros-5kzynb_2/SYNTHETIC-bag",
+  "bag_sha256": {
+    "SYNTHETIC-bag_0.db3": "b98864e5c52889d801e55e9fe7235b94a1461de5281824b91fb4e152317701b1",
+    "metadata.yaml": "b6f721af4fb8512d0f9e7cebd37e7ce6fa7b551441485a92d970bdb0fad1db5b"
+  },
+  "metadata": {
+    "version": 9,
+    "storage_identifier": "sqlite3",
+    "duration": {
+      "nanoseconds": 1997500000
+    },
+    "starting_time": {
+      "nanoseconds_since_epoch": 1000000000
+    },
+    "message_count": 661,
+    "topics_with_message_count": [
+      {
+        "topic_metadata": {
+          "name": "/tf_static",
+          "type": "tf2_msgs/msg/TFMessage",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 1
+      },
+      {
+        "topic_metadata": {
+          "name": "/camera/camera/accel/sample",
+          "type": "sensor_msgs/msg/Imu",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 200
+      },
+      {
+        "topic_metadata": {
+          "name": "/camera/camera/gyro/sample",
+          "type": "sensor_msgs/msg/Imu",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 400
+      },
+      {
+        "topic_metadata": {
+          "name": "/camera/camera/infra1/camera_info",
+          "type": "sensor_msgs/msg/CameraInfo",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 30
+      },
+      {
+        "topic_metadata": {
+          "name": "/camera/camera/infra1/image_rect_raw",
+          "type": "sensor_msgs/msg/Image",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 30
+      }
+    ],
+    "compression_format": "",
+    "compression_mode": "",
+    "relative_file_paths": [
+      "SYNTHETIC-bag_0.db3"
+    ],
+    "files": [
+      {
+        "path": "SYNTHETIC-bag_0.db3",
+        "starting_time": {
+          "nanoseconds_since_epoch": 1000000000
+        },
+        "duration": {
+          "nanoseconds": 1997500000
+        },
+        "message_count": 1322
+      }
+    ],
+    "custom_data": null,
+    "ros_distro": "jazzy"
+  },
+  "storage_plugin": "sqlite3",
+  "duration_s": 1.9975,
+  "reader_count": 661,
+  "reader_completed": true,
+  "first_receipt_ns": 1000000000,
+  "last_receipt_ns": 2997500000,
+  "topics": {
+    "/camera/camera/infra1/image_rect_raw": {
+      "type": "sensor_msgs/msg/Image",
+      "role": "image",
+      "count": 30,
+      "window_s": 1.9975,
+      "whole_window_hz": 15.018773466833542,
+      "first_stamp_ns": 1033333333,
+      "last_stamp_ns": 2966666667,
+      "stamp_span_hz": 14.999999994827586,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.066666667,
+      "max_arrival_gap_s": 0.06666666700000023,
+      "start_boundary_gap_s": 0.033333333000000076,
+      "end_boundary_gap_s": 0.030833332999999907,
+      "frame_ids": [
+        "camera_infra1_optical_frame"
+      ],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": {
+        "width": 640,
+        "height": 480,
+        "encoding": "mono8",
+        "step": 640,
+        "is_bigendian": 0
+      },
+      "tf_edges": [],
+      "header_sha256": "95dd635965c1f732c15d57f5432601ff78335165eb30fb064e56c303fd9d4cd1",
+      "payload_sha256": "58f37ae4253aca5e9363633011bddab8296f6e9b0772b9fac4fec8c6b069d899"
+    },
+    "/camera/camera/infra1/camera_info": {
+      "type": "sensor_msgs/msg/CameraInfo",
+      "role": "camera_info",
+      "count": 30,
+      "window_s": 1.9975,
+      "whole_window_hz": 15.018773466833542,
+      "first_stamp_ns": 1033333333,
+      "last_stamp_ns": 2966666667,
+      "stamp_span_hz": 14.999999994827586,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.066666667,
+      "max_arrival_gap_s": 0.06666666700000023,
+      "start_boundary_gap_s": 0.033333333000000076,
+      "end_boundary_gap_s": 0.030833332999999907,
+      "frame_ids": [
+        "camera_infra1_optical_frame"
+      ],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": {
+        "width": 640,
+        "height": 480,
+        "distortion_model": "plumb_bob",
+        "k": [
+          400.0,
+          0.0,
+          320.0,
+          0.0,
+          400.0,
+          240.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "p": [
+          400.0,
+          0.0,
+          320.0,
+          0.0,
+          0.0,
+          400.0,
+          240.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "r": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "d": []
+      },
+      "tf_edges": [],
+      "header_sha256": "95dd635965c1f732c15d57f5432601ff78335165eb30fb064e56c303fd9d4cd1",
+      "payload_sha256": "0c3aa01ebdea5e354560ecf1e073f7808f4ddf78fff3e1f6f8eecb487c77d79c"
+    },
+    "/camera/camera/gyro/sample": {
+      "type": "sensor_msgs/msg/Imu",
+      "role": "gyro",
+      "count": 400,
+      "window_s": 1.9975,
+      "whole_window_hz": 200.25031289111388,
+      "first_stamp_ns": 1002500000,
+      "last_stamp_ns": 2997500000,
+      "stamp_span_hz": 200.0,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.005,
+      "max_arrival_gap_s": 0.0050000000000003375,
+      "start_boundary_gap_s": 0.0024999999999999467,
+      "end_boundary_gap_s": 0.0,
+      "frame_ids": [
+        "camera_gyro_optical_frame"
+      ],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": null,
+      "tf_edges": [],
+      "header_sha256": "6b0c80b5b425aa0668711e361ced0f8cc9ce9f38914852c62325297f1bc8ff18",
+      "payload_sha256": "710db0c639d2b022e84233e3611d2b81af339b061f9cbc7f0abca453635be990"
+    },
+    "/camera/camera/accel/sample": {
+      "type": "sensor_msgs/msg/Imu",
+      "role": "accel",
+      "count": 200,
+      "window_s": 1.9975,
+      "whole_window_hz": 100.12515644555694,
+      "first_stamp_ns": 1005000000,
+      "last_stamp_ns": 2995000000,
+      "stamp_span_hz": 100.0,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.01,
+      "max_arrival_gap_s": 0.010000000000000231,
+      "start_boundary_gap_s": 0.004999999999999893,
+      "end_boundary_gap_s": 0.0024999999999999467,
+      "frame_ids": [
+        "camera_accel_optical_frame"
+      ],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": null,
+      "tf_edges": [],
+      "header_sha256": "4cf766cb608da7bc778fb41c8f2d8f3202ecc1ec322342c2d8631290fce85eb6",
+      "payload_sha256": "7b87b26e047f088db7bded22536685e80d68d78187cfa11c1694f4bfa4d71a4c"
+    },
+    "/tf_static": {
+      "type": "tf2_msgs/msg/TFMessage",
+      "role": "tf_static",
+      "count": 1,
+      "window_s": 1.9975,
+      "whole_window_hz": 0.5006257822277848,
+      "first_stamp_ns": null,
+      "last_stamp_ns": null,
+      "stamp_span_hz": null,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.0,
+      "max_arrival_gap_s": 0.0,
+      "start_boundary_gap_s": 0.0,
+      "end_boundary_gap_s": 1.9975,
+      "frame_ids": [],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": null,
+      "tf_edges": [
+        [
+          "camera_link",
+          "camera_accel_optical_frame"
+        ],
+        [
+          "camera_link",
+          "camera_gyro_optical_frame"
+        ],
+        [
+          "camera_link",
+          "camera_infra1_optical_frame"
+        ]
+      ],
+      "header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "payload_sha256": "e4ad29d6a2e0e447b612225df6195254549b232f33309e7ced4cf57fb0466606"
+    }
+  },
+  "failures": [],
+  "verdict": "PASS"
+}
+
+live_domain_continuous.json {
+  "mode": "guard",
+  "domain": 181,
+  "start_utc": "2026-09-12T16:01:54.967818+00:00",
+  "end_utc": "2026-09-12T16:02:04.296634+00:00",
+  "graph": {
+    "/camera/camera/infra1/image_rect_raw": [],
+    "/camera/camera/infra1/camera_info": [],
+    "/camera/camera/gyro/sample": [],
+    "/camera/camera/accel/sample": [],
+    "/tf_static": []
+  },
+  "camera_nodes": [],
+  "checks": 19,
+  "completed": true,
+  "forbidden_publishers": [],
+  "failures": [],
+  "verdict": "PASS"
+}
+
+replay_domain_before.json {
+  "mode": "no-publishers",
+  "domain": 182,
+  "start_utc": "2026-09-12T16:01:51.160523+00:00",
+  "end_utc": "2026-09-12T16:01:54.167153+00:00",
+  "graph": {
+    "/camera/camera/infra1/image_rect_raw": [],
+    "/camera/camera/infra1/camera_info": [],
+    "/camera/camera/gyro/sample": [],
+    "/camera/camera/accel/sample": [],
+    "/tf_static": []
+  },
+  "camera_nodes": [],
+  "checks": 6,
+  "completed": false,
+  "forbidden_publishers": [],
+  "failures": [],
+  "verdict": "PASS"
+}
+
+process_check.json {
+  "utc": "2026-09-12T16:01:46.874221+00:00",
+  "camera_processes": []
+}
+
+observed.json {
+  "mode": "replay",
+  "domain": 182,
+  "provenance": {
+    "utc": "2026-09-12T16:01:54.676732+00:00",
+    "hostname": "wbr-pi5",
+    "boot_id": "01422f24-5f9f-47ec-8fe6-71a156aa9e22",
+    "kernel": "Linux wbr-pi5 6.8.0-1064-raspi #68-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug 14 10:05:02 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux",
+    "os_release": "PRETTY_NAME=\"Ubuntu 24.04.4 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.4 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo",
+    "user": "uid=1000(richard) gid=1000(richard) groups=1000(richard),4(adm),24(cdrom),27(sudo),30(dip),44(video),101(lxd)",
+    "source_sha256": {
+      "image_content.py": "98236993f618276b2bf20dfe2dd780d56070849481fab2dabbf811017b83d2f8",
+      "test_takeover_tooling.py": "cdf399d45540c4af657f28df50f27e3cbf33873a19413d77fbbcf5538c6d806f",
+      "test_gate_tooling.py": "b5b2454ee86ee4cbc05f4879d7d8f0743471f5bcbd1e3b28e63a4de634ba4d68",
+      "storage_qualify.py": "2068da84d39998508b1bb35a71d30382553f3e5942b4b8ed55139fe686c20f17",
+      "health_monitor.py": "bf213f56cafa9366025eaee4f4e08b72ae36f98ebce1a722d551728f29fb10b2",
+      "wbr-d435i-iio-permissions.py": "747e1941e30ea00dc4035a543e1937d5e531762919e4c11364b21c1c90482f35",
+      "99-wbr-d435i.rules": "dd3c3c069e924891dfb9609fdcd8a8a0193969f64d31b93862ca514f01225c52",
+      "n3_baseline.yaml": "ce77484e672f4bbcdcd1cf89ad831c89ecb8cd5768f4002f6cbc69ef15474f2b",
+      "sdk_analysis.py": "d4220883a146528fc03bfca423a83e0833b4af36502a7383fa7b74071cc2a873",
+      "phase_gate.py": "aba15f94dfd2abefbf718363d22198bc41835c28e094d3a91107fabd0c3d3b3a",
+      "kernel_analysis.py": "aecc8430f4a510a9325cf8cc9fd1fc52915bc4ed499922cd5535f67d7f17a640",
+      "test_ros_offline.py": "30aaacd9b792aa806c2f25cc568c6349fa5b5a41a5913df9fede1fd88399cdd1",
+      "n3_observer.py": "1d17279e60e331f03a461dcebe89534d8aa116c3e8e479523480f5998dbf3c16",
+      "platform_inspect.py": "403cc6102261ff328afa135f11b0801ee7af92cf32da3a228166e82723e5392d",
+      "validation_common.py": "892759f95a905d35faa4b5741edf4a6c6660e18cc8e210316fce606328a99a19",
+      "n3_bag.py": "af4739bb2fbf100b0e351ef60d2a412c49d6026b919e2e107c751f844b0ca60c",
+      "n3_metrics.py": "ff8e653bd40ed34312aa65766c892fdfaa92d0bee9732ae61fe0705494c88118",
+      "n3_qos.yaml": "1800251b37f3690685549c668ed686705dcf22712efdde96cfd58cb6a84fc04b",
+      "bundle_runtime.py": "91d59e6382fb74bc26c023eab426f2340407311d2a65eb82d47519b1c009ca11",
+      "n3_record.py": "f5022ee0d68a86050c796aba1ef7d3319cf258004a75146d2587b5fb3e70ffd9",
+      "n1_precheck.py": "d2d85115cbb3e102dba7395a761eff6b2a5334c81722f0fa976b9548ddd719d2",
+      "wrapper_inspect.py": "8eceb77e2a09f58f6fc1add87ba519935c1a55a37ae8f821e939abd00d1df5d6",
+      "test_n3_metrics.py": "fc345470f1e6c369847cf8e7ab2684f2027f6320b3acbb711a006e61e7f064d8",
+      "sample_ir_checked.cpp": "a70f3132d2184581baed907c182e5b8b36d4267b36de05b90bde24e53cd14a4d",
+      "sdk_capture.py": "e4d0556eaa0874b66c302ca462a51b2d57d8295bf29e9966c0d95de883eab0e3",
+      "test_n2_tooling.py": "a2004fdefa59913952ee8c74da7534e547119d49e4e430c1e9197d8700ffccf9",
+      "n3_topics.json": "5b740d1e43155cd21e8ea784ba261689736d7f3ddd114f669280870a603bf140"
+    },
+    "canonical_bundle": {
+      "scope": "CAMERA_FREE_PREPARATION_NOT_HARDWARE_PASS",
+      "created_utc": "2026-09-12T16:01:44.113728+00:00",
+      "canonical_git_revision": "593245740fa962ad2325dc531cdb48c21d5f15b2",
+      "canonical_branch": "feat/pi5-native-sensor-validation-20260912",
+      "canonical_worktree_status": "D ../../D435I_BASELINE_AUDIT.md\n M ../../docs/RPI5_NATIVE_PERCEPTION_BRINGUP.md\n ? ../../third_party/ORB_SLAM3\n?? ../../.obsidian/\n?? ../../AGENTS.md\n?? ../../docs/.obsidian/\n?? ../../docs/D435I_BASELINE_AUDIT.md\n?? ../../docs/PI5_NATIVE_SENSOR_VALIDATION_2026-09-12.md\n?? ./",
+      "source_sha256": {
+        "validation_common.py": "892759f95a905d35faa4b5741edf4a6c6660e18cc8e210316fce606328a99a19",
+        "n1_precheck.py": "d2d85115cbb3e102dba7395a761eff6b2a5334c81722f0fa976b9548ddd719d2",
+        "wbr-d435i-iio-permissions.py": "747e1941e30ea00dc4035a543e1937d5e531762919e4c11364b21c1c90482f35",
+        "99-wbr-d435i.rules": "dd3c3c069e924891dfb9609fdcd8a8a0193969f64d31b93862ca514f01225c52",
+        "sdk_capture.py": "e4d0556eaa0874b66c302ca462a51b2d57d8295bf29e9966c0d95de883eab0e3",
+        "sdk_analysis.py": "d4220883a146528fc03bfca423a83e0833b4af36502a7383fa7b74071cc2a873",
+        "sample_ir_checked.cpp": "a70f3132d2184581baed907c182e5b8b36d4267b36de05b90bde24e53cd14a4d",
+        "image_content.py": "98236993f618276b2bf20dfe2dd780d56070849481fab2dabbf811017b83d2f8",
+        "health_monitor.py": "bf213f56cafa9366025eaee4f4e08b72ae36f98ebce1a722d551728f29fb10b2",
+        "kernel_analysis.py": "aecc8430f4a510a9325cf8cc9fd1fc52915bc4ed499922cd5535f67d7f17a640",
+        "storage_qualify.py": "2068da84d39998508b1bb35a71d30382553f3e5942b4b8ed55139fe686c20f17",
+        "n3_metrics.py": "ff8e653bd40ed34312aa65766c892fdfaa92d0bee9732ae61fe0705494c88118",
+        "n3_observer.py": "1d17279e60e331f03a461dcebe89534d8aa116c3e8e479523480f5998dbf3c16",
+        "n3_bag.py": "af4739bb2fbf100b0e351ef60d2a412c49d6026b919e2e107c751f844b0ca60c",
+        "n3_record.py": "f5022ee0d68a86050c796aba1ef7d3319cf258004a75146d2587b5fb3e70ffd9",
+        "phase_gate.py": "aba15f94dfd2abefbf718363d22198bc41835c28e094d3a91107fabd0c3d3b3a",
+        "n3_baseline.yaml": "ce77484e672f4bbcdcd1cf89ad831c89ecb8cd5768f4002f6cbc69ef15474f2b",
+        "n3_topics.json": "5b740d1e43155cd21e8ea784ba261689736d7f3ddd114f669280870a603bf140",
+        "n3_qos.yaml": "1800251b37f3690685549c668ed686705dcf22712efdde96cfd58cb6a84fc04b",
+        "platform_inspect.py": "403cc6102261ff328afa135f11b0801ee7af92cf32da3a228166e82723e5392d",
+        "bundle_runtime.py": "91d59e6382fb74bc26c023eab426f2340407311d2a65eb82d47519b1c009ca11",
+        "wrapper_inspect.py": "8eceb77e2a09f58f6fc1add87ba519935c1a55a37ae8f821e939abd00d1df5d6",
+        "test_gate_tooling.py": "b5b2454ee86ee4cbc05f4879d7d8f0743471f5bcbd1e3b28e63a4de634ba4d68",
+        "test_n2_tooling.py": "a2004fdefa59913952ee8c74da7534e547119d49e4e430c1e9197d8700ffccf9",
+        "test_n3_metrics.py": "fc345470f1e6c369847cf8e7ab2684f2027f6320b3acbb711a006e61e7f064d8",
+        "test_takeover_tooling.py": "cdf399d45540c4af657f28df50f27e3cbf33873a19413d77fbbcf5538c6d806f",
+        "test_ros_offline.py": "30aaacd9b792aa806c2f25cc568c6349fa5b5a41a5913df9fede1fd88399cdd1",
+        "sdk-enumeration-full.txt": "17ac8a9b48c7f91b34c32f419657ef9d7c9ad3841ee0a0f2d880a5c31c2cee24",
+        "sustained-sdk.log": "13841de0a1aa54b7ea0528222aca4b53d83f4c5afe4db16fd1ec163c9b2c779b",
+        "sustained-analysis.json": "363d657c570f48fc5367c7f98539ee0081fb1949e55ef2825d8e2bdee9cbf48b",
+        "PHASE_A_RUNBOOK.md": "8aaed70789cb573f081067d613e12d92cb1ab4a4ce6fb1d53e17bca9ec9058dd",
+        "N3_PREPARATION.md": "9f2c72b71d7af7bc98c866314eeea989d79ca99e78a6cae426bc43289e9a9b48"
+      }
+    },
+    "runtime_git": {
+      "argv": [
+        "git",
+        "-C",
+        "/home/richard/wbr-runtime/wbr-runtime-20260912T160144Z",
+        "rev-parse",
+        "HEAD"
+      ],
+      "returncode": 128,
+      "stdout": "",
+      "stderr": "fatal: not a git repository (or any of the parent directories): .git\n"
+    },
+    "package_versions": {
+      "argv": [
+        "dpkg-query",
+        "-W",
+        "ros-jazzy-librealsense2",
+        "ros-jazzy-realsense2-camera",
+        "ros-jazzy-rosbag2*"
+      ],
+      "returncode": 1,
+      "stdout": "ros-jazzy-librealsense2\t2.58.4-1noble.20260831.020056\nros-jazzy-rosbag2\t0.26.11-1noble.20260903.023557\nros-jazzy-rosbag2-compression\t0.26.11-1noble.20260902.230826\nros-jazzy-rosbag2-compression-zstd\t0.26.11-1noble.20260902.231217\nros-jazzy-rosbag2-cpp\t0.26.11-1noble.20260902.225917\nros-jazzy-rosbag2-interfaces\t0.26.11-1noble.20260902.021151\nros-jazzy-rosbag2-py\t0.26.11-1noble.20260902.232852\nros-jazzy-rosbag2-storage\t0.26.11-1noble.20260902.224341\nros-jazzy-rosbag2-storage-default-plugins\t0.26.11-1noble.20260903.023406\nros-jazzy-rosbag2-storage-mcap\t0.26.11-1noble.20260903.022942\nros-jazzy-rosbag2-storage-sqlite3\t0.26.11-1noble.20260903.023000\nros-jazzy-rosbag2-transport\t0.26.11-1noble.20260902.231544\n",
+      "stderr": "dpkg-query: no packages found matching ros-jazzy-realsense2-camera\n"
+    }
+  },
+  "topics_sha256": "686ba94a79ebb35cca6ba1e9ea401de6fba4ff33d070835f4f2655ebe2bd4f99",
+  "start_utc": "2026-09-12T16:01:55.229892+00:00",
+  "end_utc": "2026-09-12T16:02:04.317921+00:00",
+  "window_s": 9.079458451999926,
+  "topics": {
+    "/camera/camera/infra1/image_rect_raw": {
+      "type": "sensor_msgs/msg/Image",
+      "role": "image",
+      "count": 30,
+      "window_s": 9.079458451999926,
+      "whole_window_hz": 3.3041618240338906,
+      "first_stamp_ns": 1033333333,
+      "last_stamp_ns": 2966666667,
+      "stamp_span_hz": 14.999999994827586,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.066666667,
+      "max_arrival_gap_s": 0.066731819999859,
+      "start_boundary_gap_s": 3.8492026670000996,
+      "end_boundary_gap_s": 3.298510769999666,
+      "frame_ids": [
+        "camera_infra1_optical_frame"
+      ],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": {
+        "width": 640,
+        "height": 480,
+        "encoding": "mono8",
+        "step": 640,
+        "is_bigendian": 0
+      },
+      "tf_edges": [],
+      "header_sha256": "95dd635965c1f732c15d57f5432601ff78335165eb30fb064e56c303fd9d4cd1",
+      "payload_sha256": "58f37ae4253aca5e9363633011bddab8296f6e9b0772b9fac4fec8c6b069d899"
+    },
+    "/camera/camera/infra1/camera_info": {
+      "type": "sensor_msgs/msg/CameraInfo",
+      "role": "camera_info",
+      "count": 30,
+      "window_s": 9.079458451999926,
+      "whole_window_hz": 3.3041618240338906,
+      "first_stamp_ns": 1033333333,
+      "last_stamp_ns": 2966666667,
+      "stamp_span_hz": 14.999999994827586,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.066666667,
+      "max_arrival_gap_s": 0.0674419039996792,
+      "start_boundary_gap_s": 3.8499324540002817,
+      "end_boundary_gap_s": 3.2976081329998124,
+      "frame_ids": [
+        "camera_infra1_optical_frame"
+      ],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": {
+        "width": 640,
+        "height": 480,
+        "distortion_model": "plumb_bob",
+        "k": [
+          400.0,
+          0.0,
+          320.0,
+          0.0,
+          400.0,
+          240.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "p": [
+          400.0,
+          0.0,
+          320.0,
+          0.0,
+          0.0,
+          400.0,
+          240.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "r": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "d": []
+      },
+      "tf_edges": [],
+      "header_sha256": "95dd635965c1f732c15d57f5432601ff78335165eb30fb064e56c303fd9d4cd1",
+      "payload_sha256": "120e36460b139711cb4dbbcb65107d92129fd1fff0305086b8de3dcb75b6314b"
+    },
+    "/camera/camera/gyro/sample": {
+      "type": "sensor_msgs/msg/Imu",
+      "role": "gyro",
+      "count": 400,
+      "window_s": 9.079458451999926,
+      "whole_window_hz": 44.05549098711854,
+      "first_stamp_ns": 1002500000,
+      "last_stamp_ns": 2997500000,
+      "stamp_span_hz": 200.0,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.005,
+      "max_arrival_gap_s": 0.00708867299999838,
+      "start_boundary_gap_s": 3.8159946440000567,
+      "end_boundary_gap_s": 3.268625762999818,
+      "frame_ids": [
+        "camera_gyro_optical_frame"
+      ],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": null,
+      "tf_edges": [],
+      "header_sha256": "6b0c80b5b425aa0668711e361ced0f8cc9ce9f38914852c62325297f1bc8ff18",
+      "payload_sha256": "710db0c639d2b022e84233e3611d2b81af339b061f9cbc7f0abca453635be990"
+    },
+    "/camera/camera/accel/sample": {
+      "type": "sensor_msgs/msg/Imu",
+      "role": "accel",
+      "count": 200,
+      "window_s": 9.079458451999926,
+      "whole_window_hz": 22.02774549355927,
+      "first_stamp_ns": 1005000000,
+      "last_stamp_ns": 2995000000,
+      "stamp_span_hz": 100.0,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.01,
+      "max_arrival_gap_s": 0.012471774999994523,
+      "start_boundary_gap_s": 3.818331226000282,
+      "end_boundary_gap_s": 3.2712099539999144,
+      "frame_ids": [
+        "camera_accel_optical_frame"
+      ],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": null,
+      "tf_edges": [],
+      "header_sha256": "4cf766cb608da7bc778fb41c8f2d8f3202ecc1ec322342c2d8631290fce85eb6",
+      "payload_sha256": "7b87b26e047f088db7bded22536685e80d68d78187cfa11c1694f4bfa4d71a4c"
+    },
+    "/tf_static": {
+      "type": "tf2_msgs/msg/TFMessage",
+      "role": "tf_static",
+      "count": 1,
+      "window_s": 9.079458451999926,
+      "whole_window_hz": 0.11013872746779635,
+      "first_stamp_ns": null,
+      "last_stamp_ns": null,
+      "stamp_span_hz": null,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.0,
+      "max_arrival_gap_s": 0.0,
+      "start_boundary_gap_s": 3.8139134650000415,
+      "end_boundary_gap_s": 5.265544986999885,
+      "frame_ids": [],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": null,
+      "tf_edges": [
+        [
+          "camera_link",
+          "camera_accel_optical_frame"
+        ],
+        [
+          "camera_link",
+          "camera_gyro_optical_frame"
+        ],
+        [
+          "camera_link",
+          "camera_infra1_optical_frame"
+        ]
+      ],
+      "header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "payload_sha256": "e4ad29d6a2e0e447b612225df6195254549b232f33309e7ced4cf57fb0466606"
+    }
+  },
+  "graph_before": {
+    "/camera/camera/infra1/image_rect_raw": [],
+    "/camera/camera/infra1/camera_info": [],
+    "/camera/camera/gyro/sample": [],
+    "/camera/camera/accel/sample": [],
+    "/tf_static": []
+  },
+  "graph_after": {
+    "/camera/camera/infra1/image_rect_raw": [],
+    "/camera/camera/infra1/camera_info": [],
+    "/camera/camera/gyro/sample": [],
+    "/camera/camera/accel/sample": [],
+    "/tf_static": []
+  },
+  "completed": true,
+  "failures": [],
+  "verdict": "PASS",
+  "limitations": [
+    "Transport evidence does not qualify IMU/VIO calibration.",
+    "ROS messages do not expose native frame numbers."
+  ]
+}
+FAIL
+
+======================================================================
+FAIL: test_finalized_bag_complete_replay_and_no_publisher_boundary (test_ros_offline.SyntheticROSTest.test_finalized_bag_complete_replay_and_no_publisher_boundary)
+
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/richard/wbr-runtime/wbr-runtime-20260912T160144Z/test_ros_offline.py", line 79, in test_finalized_bag_complete_replay_and_no_publisher_boundary
+    self.assertEqual(result, 0)
+AssertionError: 1 != 0
+
+----------------------------------------------------------------------
+Ran 1 test in 22.544s
+
+FAILED (failures=1)

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "bash",
+    "-lc",
+    "dpkg -l | grep -E \"realsense2-camera|realsense2-camera-msgs|librealsense\""
+  ],
+  "utc": "2026-09-13T06:51:54.785789+00:00",
+  "returncode": 0,
+  "stdout": "ii  ros-jazzy-librealsense2                          2.58.4-1noble.20260831.020056           arm64        Library for controlling and capturing data from the RealSense depth streaming devices.\n",
+  "stderr": ""
+}

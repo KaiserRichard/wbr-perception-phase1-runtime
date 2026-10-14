@@ -1,0 +1,57 @@
+{
+  "stage": "PHYSICAL_FULL_PRECISION",
+  "verdict": "FAIL",
+  "utc_start": "2026-09-13T03:09:26.099809+00:00",
+  "seconds": 600,
+  "image_every": 150,
+  "emitter_off": true,
+  "estimated_max_bytes": 434232000.0,
+  "notes": {
+    "recorded_utc": "2026-09-13T03:09:24.149048+00:00",
+    "purpose": "600-second stationary full-precision IMU for future short-duration noise/bias and Allan preparation",
+    "orientation": "Operator confirms stationary, approximately level, looking forward",
+    "environment": "Indoor textured room; ambient temperature unmeasured; Raspibase fan running; do not touch support",
+    "target": null,
+    "operator_instruction": "Leave camera/support untouched throughout ten-minute capture",
+    "calibration_qualified": false,
+    "limitations": [
+      "Duration may limit long-tau Allan estimates",
+      "Factory IMU calibration unavailable; SDK motion correction remains configured as observed",
+      "Ambient and IMU die temperature unmeasured unless available frame metadata supplies it"
+    ],
+    "emitter": "Temporarily off, restored on clean exit",
+    "canonical_head": "593245740fa962ad2325dc531cdb48c21d5f15b2"
+  },
+  "camera": {
+    "sysfs_path": "/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1",
+    "sysfs_name": "5-1",
+    "speed_mbps": 5000.0,
+    "usb_descriptor_serial": "251843061466",
+    "idVendor": "8086",
+    "idProduct": "0b3a",
+    "busnum": "5",
+    "devnum": "2",
+    "product": "Intel(R) RealSense(TM) Depth Camera 435i",
+    "device_serial": "243322073847",
+    "firmware": "5.17.3.10",
+    "sdk_usb_type_descriptor": "3.2",
+    "asic_serial": "251843061466",
+    "firmware_update_id": "251843061466",
+    "imu_type": "BMI085"
+  },
+  "runtime_bundle": "/home/richard/wbr-runtime/wbr-runtime-20260913T024714Z",
+  "binary_sha256": "b41c794576d9755fc9f0467b98930c402dc258228e935151ab71a9539aa3ae39",
+  "n1_sha256": "0080054ff65bc63a42c3441361b114219daf1eea60246d249277c2ee66849ef0",
+  "n2_sha256": "818b8c0b1a81bfcb4acba80ce2080173dade9471ef6e11aad9476ea1acc7d1ca",
+  "boot_id": "a5a9b519-6883-4f44-b7fb-943c94c8f92c",
+  "failures": [],
+  "storage": "bounded microSD; not external-storage qualification",
+  "argv": [
+    "/home/richard/wbr-runtime/wbr-runtime-20260913T024714Z/precision_capture",
+    "--camera-available",
+    "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/stationary-600s/data",
+    "600",
+    "150",
+    "1"
+  ]
+}

@@ -1,0 +1,13 @@
+test_bad_trajectory_and_ambiguous_inputs (__main__.OfflineTests.test_bad_trajectory_and_ambiguous_inputs) ... ok
+test_complete_synthetic_run (__main__.OfflineTests.test_complete_synthetic_run) ... ok
+test_epoch_nanoseconds_conversion (__main__.OfflineTests.test_epoch_nanoseconds_conversion) ... ok
+test_keyframe_coordinate_reconciliation (__main__.OfflineTests.test_keyframe_coordinate_reconciliation) ... ok
+test_mixed_domains_invalidate_sdk_rate (__main__.OfflineTests.test_mixed_domains_invalidate_sdk_rate) ... ok
+test_rigid_alignment_and_no_scale_correction (__main__.OfflineTests.test_rigid_alignment_and_no_scale_correction) ... ok
+test_single_pose_without_optional_evidence (__main__.OfflineTests.test_single_pose_without_optional_evidence) ... ok
+test_timestamp_association_and_insufficient_overlap (__main__.OfflineTests.test_timestamp_association_and_insufficient_overlap) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.301s
+
+OK

@@ -1,0 +1,60 @@
+%YAML:1.0
+---
+# REVIEW ONLY: UNKNOWN noise strings deliberately prevent a valid numeric config.
+# Device 243322073847; BMI085; firmware 5.17.3.10; SDK 2.58.4.
+# Source: pi/CAMERA_METADATA_SNAPSHOT/structured-v2/metadata.json.
+# SOURCE DEFAULT: Settings.cc File.version 1.0 path and pinhole model spelling.
+File.version: "1.0"
+Camera.type: "PinHole"
+# FACTORY/SDK active projection; factory history not independently audited.
+Camera1.fx: 388.5274353027344
+Camera1.fy: 388.5274353027344
+Camera1.cx: 319.10430908203125
+Camera1.cy: 239.55616760253906
+Camera1.k1: 0.0
+Camera1.k2: 0.0
+Camera1.p1: 0.0
+Camera1.p2: 0.0
+Camera1.k3: 0.0
+# SDK PROVIDED profile. 15 Hz remains a requested rate until current N2 passes.
+Camera.width: 640
+Camera.height: 480
+Camera.fps: 15
+# SOURCE DEFAULT; ignored for Y8 grayscale.
+Camera.RGB: 1
+# SOURCE DEFAULT observed through SDK, not MEASURED extrinsic calibration.
+# Maps IR1 coordinates INTO SDK gyro/body coordinates, p_b = T_b_c1 * p_c.
+IMU.T_b_c1: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [1.0, 0.0, 0.0, -0.005520000122487545,
+         0.0, 1.0, 0.0,  0.005100000184029341,
+         0.0, 0.0, 1.0,  0.011739999987185001,
+         0.0, 0.0, 0.0,  1.0]
+# SOURCE DEFAULT from the pinned upstream D435i example.
+IMU.InsertKFsWhenLost: 0
+# UNKNOWN / MUST MEASURE, continuous-time densities and bias random walks.
+IMU.NoiseGyro: "UNKNOWN_MUST_MEASURE"
+IMU.NoiseAcc: "UNKNOWN_MUST_MEASURE"
+IMU.GyroWalk: "UNKNOWN_MUST_MEASURE"
+IMU.AccWalk: "UNKNOWN_MUST_MEASURE"
+# TEMPORARY ASSUMPTION: offline accel interpolation onto 200 Hz gyro grid.
+# Raw accel remains 100 Hz. Camera-to-IMU offset is UNKNOWN, not zero by default.
+IMU.Frequency: 200.0
+# SOURCE DEFAULTS from Examples/Monocular-Inertial/RealSense_D435i.yaml.
+ORBextractor.nFeatures: 1250
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 8
+ORBextractor.iniThFAST: 20
+ORBextractor.minThFAST: 7
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1.0
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -3.5
+Viewer.ViewpointF: 500.0

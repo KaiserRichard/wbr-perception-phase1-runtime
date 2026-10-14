@@ -1,0 +1,15 @@
+{
+  "utc": "2026-09-13T02:51:03.361453+00:00",
+  "reviewer": "Codex: inspected actual logs, metrics, and all nine saved PGM samples",
+  "notes": "Fresh post-reboot 20/105/300-second runs completed; all requested whole-window rates and internal/trailing gaps pass; timestamps/frame numbers strictly increasing. SDK timer starts before sensor opening; initial offsets 0.140-0.263 s reflect logged setup, while complete-window rates remain strict. All nine images are coherent without garbled rows/blocks; close bright foreground/projected dots and ceiling light limit VIO suitability. IMU vectors finite with plausible gravity/motion norms; no calibrated-accuracy inference. HID report-id 0xffffffff warnings retained; no transport/power faults.",
+  "power_supply": "Operator changed charger after poweroff. Reported operating readings 5.065 V, around 0.8 A or higher and 3-4 W. Model/labeled current capacity unknown; operator says not fully sufficient for Pi. All sampled flags 0x0 through current raw/load intervals; this is bounded empirical transport evidence, not electrical supply qualification.",
+  "cooling": "Operator confirms Raspibase PWM fan remains running. Pi observed temperatures across N2 46.3-53.45 C.",
+  "scene": "Indoor room/table; smoke and reproduction close textured surface, bright band and projected dots; soak coherent wider room/table/ceiling view. No calibration target.",
+  "calibration_provenance": "Real SDK warning retained: IMU Calibration is not available, default intrinsic and extrinsic will be used. No VIO calibration PASS.",
+  "raw_logs_clean": true,
+  "images_coherent": true,
+  "startup_offsets_explained": true,
+  "imu_values_plausible": true,
+  "power_cooling_documented": true,
+  "calibration_warning_preserved": true
+}

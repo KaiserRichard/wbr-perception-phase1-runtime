@@ -1,0 +1,148 @@
+{
+  "streams": {
+    "Accel": {
+      "count": 2010,
+      "callback_span_s": 19.894679647999965,
+      "arrival_rate_hz": 100.9817717875124,
+      "domains": {
+        "Global Time": 2010
+      },
+      "first_sdk_s": 1789267917.8373866,
+      "last_sdk_s": 1789267937.733369,
+      "first_host_steady_ns": 1607860608743,
+      "last_host_steady_ns": 1627755288391,
+      "repeated_timestamps": 0,
+      "backward_timestamps": 0,
+      "max_timestamp_gap_s": 0.00990748405456543,
+      "max_arrival_gap_s": 0.010088996999911615,
+      "nonpositive_arrival_steps": 0,
+      "missing_frame_numbers": 0,
+      "nonpositive_frame_steps": 0,
+      "metadata_keys": [
+        "Backend Timestamp",
+        "Frame Timestamp",
+        "Time Of Arrival"
+      ],
+      "image_count": 0,
+      "automatic_timing_pass": true,
+      "xyz_mean": [
+        1.0684320240471494,
+        -9.246870984129645,
+        2.786571731377597
+      ],
+      "xyz_min": [
+        1.0296982526779175,
+        -9.267284393310547,
+        2.736055374145508
+      ],
+      "xyz_max": [
+        1.1081514358520508,
+        -9.208444595336914,
+        2.8145084381103516
+      ],
+      "xyz_stddev": [
+        0.011582593901494515,
+        0.007803170189875401,
+        0.010208290350097462
+      ]
+    },
+    "Infrared 1": {
+      "count": 298,
+      "callback_span_s": 19.80077865499993,
+      "arrival_rate_hz": 14.99941013304565,
+      "domains": {
+        "Global Time": 298
+      },
+      "first_sdk_s": 1789267917.8865967,
+      "last_sdk_s": 1789267937.6884246,
+      "first_host_steady_ns": 1607917785633,
+      "last_host_steady_ns": 1627718564288,
+      "repeated_timestamps": 0,
+      "backward_timestamps": 0,
+      "max_timestamp_gap_s": 0.06668257713317871,
+      "max_arrival_gap_s": 0.0667691260000538,
+      "nonpositive_arrival_steps": 0,
+      "missing_frame_numbers": 0,
+      "nonpositive_frame_steps": 0,
+      "metadata_keys": [
+        "Actual Exposure",
+        "Actual Fps",
+        "Auto Exposure",
+        "Backend Timestamp",
+        "Exposure Priority",
+        "Exposure Roi Bottom",
+        "Exposure Roi Left",
+        "Exposure Roi Right",
+        "Exposure Roi Top",
+        "Frame Counter",
+        "Frame Emitter Mode",
+        "Frame Laser Power",
+        "Frame Laser Power Mode",
+        "Frame Timestamp",
+        "Gain Level",
+        "Gpio Input Data",
+        "Raw Frame Size",
+        "Sensor Timestamp",
+        "Sequence Id",
+        "Sequence Name",
+        "Sequence Size",
+        "Time Of Arrival"
+      ],
+      "image_count": 10,
+      "automatic_timing_pass": true
+    },
+    "Gyro": {
+      "count": 3968,
+      "callback_span_s": 19.83255245600003,
+      "arrival_rate_hz": 200.0246820877484,
+      "domains": {
+        "Global Time": 3968
+      },
+      "first_sdk_s": 1789267917.9058619,
+      "last_sdk_s": 1789267937.7393398,
+      "first_host_steady_ns": 1607928736414,
+      "last_host_steady_ns": 1627761288870,
+      "repeated_timestamps": 0,
+      "backward_timestamps": 0,
+      "max_timestamp_gap_s": 0.0050008296966552734,
+      "max_arrival_gap_s": 0.005499030000009952,
+      "nonpositive_arrival_steps": 0,
+      "missing_frame_numbers": 0,
+      "nonpositive_frame_steps": 0,
+      "metadata_keys": [
+        "Backend Timestamp",
+        "Frame Timestamp",
+        "Time Of Arrival"
+      ],
+      "image_count": 0,
+      "automatic_timing_pass": true,
+      "xyz_mean": [
+        -0.00346908193098223,
+        -0.005737489092171605,
+        -0.0021101012359923195
+      ],
+      "xyz_min": [
+        -0.012250465340912342,
+        -0.014913838356733322,
+        -0.011718139983713627
+      ],
+      "xyz_max": [
+        0.004260348621755838,
+        0.004792673978954554,
+        0.007456046529114246
+      ],
+      "xyz_stddev": [
+        0.0021236222647365724,
+        0.0025587415515582455,
+        0.002693706639409081
+      ]
+    }
+  },
+  "limitations": [
+    "Matching timestamp domains do not prove physical synchronization.",
+    "Host UTC and steady clocks are sampled successively at callback entry.",
+    "SDK float IMU values are preserved; factory calibration fallback still applies."
+  ],
+  "cross_stream_host_overlap_s": 19.789827874,
+  "automatic_timing_pass": true
+}

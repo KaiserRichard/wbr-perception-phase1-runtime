@@ -1,0 +1,6 @@
+{
+  "created_utc": "20260913T015621Z",
+  "pi_session": "/home/richard/wbr-evidence/2026-09-13-d435i-camera-capture-20260913T015621Z",
+  "runtime_bundle": "/home/richard/wbr-runtime/wbr-runtime-20260912T160912Z",
+  "authorization": "User authorized live physical D435i capture, read-only calibration, safe wrapper installation, bounded qualified recording. No firmware/EEPROM writes; no commit/push."
+}

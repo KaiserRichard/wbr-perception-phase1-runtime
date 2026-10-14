@@ -1,0 +1,35 @@
+{
+  "scope": "CAMERA_FREE_TOOLING_ONLY",
+  "historical_raw_files_unchanged": 99,
+  "changed_preexisting_files": [
+    "experiments/2026-09-12-pi5-native-sensor-validation/storage_qualify.py",
+    "experiments/2026-09-12-pi5-native-sensor-validation/test_n3_metrics.py",
+    "experiments/2026-09-12-pi5-native-sensor-validation/test_n2_tooling.py",
+    "experiments/2026-09-12-pi5-native-sensor-validation/n1_precheck.py",
+    "experiments/2026-09-12-pi5-native-sensor-validation/validation_common.py",
+    "experiments/2026-09-12-pi5-native-sensor-validation/n3_bag.py",
+    "experiments/2026-09-12-pi5-native-sensor-validation/sdk_capture.py",
+    "experiments/2026-09-12-pi5-native-sensor-validation/n3_observer.py",
+    "experiments/2026-09-12-pi5-native-sensor-validation/n3_metrics.py",
+    "experiments/2026-09-12-pi5-native-sensor-validation/N3_PREPARATION.md",
+    "docs/DOCKER_RUNTIME_ARCHITECTURE_REVIEW.md"
+  ],
+  "json_files_parsed": 55,
+  "python_ast_files": 29,
+  "shell_syntax_pass": [
+    "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/usb-storage-preflight-command.sh",
+    "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/sdk-enumeration-command.sh",
+    "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/platform-permissions-boot-command.sh",
+    "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/sensor-access-command.sh",
+    "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/helper-sudo-check-command.sh",
+    "experiments/2026-09-12-pi5-native-sensor-validation/usb-revalidation-20260912T095610Z/health-kernel-after-command.sh",
+    "experiments/2026-09-12-pi5-native-sensor-validation/takeover-20260912T154755Z/package-inspection-command.sh",
+    "experiments/2026-09-12-pi5-native-sensor-validation/takeover-20260912T154755Z/pi-offline-checks-03-command.sh",
+    "experiments/2026-09-12-pi5-native-sensor-validation/takeover-20260912T154755Z/pi-offline-checks-command.sh",
+    "experiments/2026-09-12-pi5-native-sensor-validation/takeover-20260912T154755Z/pi-final-checks-command.sh",
+    "experiments/2026-09-12-pi5-native-sensor-validation/takeover-20260912T154755Z/pi-offline-checks-02-command.sh",
+    "scripts/env.sh"
+  ],
+  "markdown_links_broken": [],
+  "historical_original_csv_and_pgms_present": false
+}

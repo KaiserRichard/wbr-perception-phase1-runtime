@@ -1,0 +1,4 @@
+{"serial":"243322073847","firmware":"5.17.3.10","sdk_api":25804,"seconds":20,"image_every":30}
+{"sensor":"Stereo Module","option":"Global Time Enabled","value":1}
+{"sensor":"Motion Module","option":"Global Time Enabled","value":1}
+{"sensor":"Motion Module","option":"Enable Motion Correction","value":1}

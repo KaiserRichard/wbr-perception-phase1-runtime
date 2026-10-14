@@ -1,0 +1,18 @@
+{
+  "preserved_prior_raw_files": true,
+  "historical_report_body_sha256_unchanged": true,
+  "historical_readme_and_commands_body_unchanged": true,
+  "manifest_original_snapshot_sha256_unchanged": true,
+  "acceptance_criteria_unchanged": true,
+  "modified_preexisting_files": [
+    "experiments/2026-09-12-pi5-native-sensor-validation/COMMANDS.md",
+    "experiments/2026-09-12-pi5-native-sensor-validation/README.md",
+    "experiments/2026-09-12-pi5-native-sensor-validation/manifest.json",
+    "docs/PI5_NATIVE_SENSOR_VALIDATION_2026-09-12.md"
+  ],
+  "new_evidence_bytes_before_verification": 103361,
+  "command_shell_syntax": "6 scripts pass bash -n",
+  "current_report_relative_links": "PASS",
+  "committed": false,
+  "pushed": false
+}

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "pgrep",
+    "-af",
+    "[r]ealsense2_camera_node|[r]un_precision|[p]recision_capture|[s]dk_capture"
+  ],
+  "utc": "2026-09-13T06:52:00.817106+00:00",
+  "returncode": 1,
+  "stdout": "",
+  "stderr": ""
+}

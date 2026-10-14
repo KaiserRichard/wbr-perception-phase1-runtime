@@ -1,0 +1,9 @@
+{
+  "local": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/camera-return-20260913T065400Z",
+  "remote": "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/camera-return-20260913T065400Z",
+  "resume_local": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z",
+  "resume_remote": "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z",
+  "host": "richard@192.168.50.2",
+  "bundle_remote": "/home/richard/wbr-runtime/wbr-runtime-20260913T055800Z",
+  "bundle_local": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/wbr-runtime-20260913T055800Z"
+}

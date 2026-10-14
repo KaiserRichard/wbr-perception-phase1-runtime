@@ -1,0 +1,9 @@
+{
+  "purpose": "Physical timestamp-domain and full-precision collector validation before stationary/guided data",
+  "orientation": "Operator may be repositioning; not stationary-qualified",
+  "target": null,
+  "environment": "Indoor room/table, illumination as observed in N2 samples",
+  "calibration_qualified": false,
+  "emitter": "unchanged from native baseline",
+  "canonical_head": "593245740fa962ad2325dc531cdb48c21d5f15b2"
+}

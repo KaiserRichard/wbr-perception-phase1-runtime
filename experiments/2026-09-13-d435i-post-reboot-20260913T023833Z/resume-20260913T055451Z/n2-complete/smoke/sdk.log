@@ -1,0 +1,41 @@
+Running rs-data-collect: --no-eth -s 243322073847 -c /home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/smoke/profile.csv -t 20 -f /home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/smoke/frames.csv 
+
+ 13/09 12:55:44,903 WARNING [281473745342496] (context.cpp:41) No valid configuration file found at : /home/richard/.realsense-config.json loading defaults
+Request added for INFRARED,640,480,15,Y8,1
+Request added for GYRO,1,1,200,MOTION_XYZ32F,0
+Request added for ACCEL,1,1,100,MOTION_XYZ32F,0
+ 13/09 12:55:45,085 WARNING [281473745342496] (ds-calib-parsers.cpp:36) IMU Calibration is not available, default intrinsic and extrinsic will be used.
+
+Device selected: 
+	RealSense D435I. USB Type: 3.2 
+	S.N: 243322073847
+	FW Ver: 5.17.3.10
+
+User streams requested: 3, actual matches: 3
+
+Data collection started.... 
+
+Collecting data for 1 sec
+Collecting data for 2 sec
+Collecting data for 3 sec
+Collecting data for 4 sec
+Collecting data for 5 sec
+Collecting data for 6 sec
+Collecting data for 7 sec
+Collecting data for 8 sec
+Collecting data for 9 sec
+Collecting data for 10 sec
+Collecting data for 11 sec
+Collecting data for 12 sec
+Collecting data for 13 sec
+Collecting data for 14 sec
+Collecting data for 15 sec
+Collecting data for 16 sec
+Collecting data for 17 sec
+Collecting data for 18 sec
+Collecting data for 19 sec
+Collecting data for 20 sec
+
+Data collection accomplished with [299-3970] frames recorded per stream
+Serializing captured results to /home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/smoke/frames.csv
+Task completed

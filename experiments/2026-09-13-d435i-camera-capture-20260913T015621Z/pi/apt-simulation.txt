@@ -1,0 +1,564 @@
+NOTE: This is only a simulation!
+      apt-get needs root privileges for real execution.
+      Keep also in mind that locking is deactivated,
+      so don't depend on the relevance to the real current situation!
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  gdal-data gdal-plugins libaec0 libarmadillo12 libarpack2t64 libavcodec-dev
+  libavcodec60 libavformat-dev libavformat60 libavutil-dev libavutil58
+  libblosc1 libbluray2 libboost-python1.83.0 libcfitsio10t64 libcharls2
+  libchromaprint1 libcjson1 libcodec2-1.2 libdav1d7 libdc1394-25 libdc1394-dev
+  libdeflate-dev libdeflate0 libdouble-conversion3 libevent-pthreads-2.1-7t64
+  libexif-dev libexif12 libfabric1 libfreexl1 libfyba0t64 libgdal34t64
+  libgdcm-dev libgdcm3.0t64 libgeos-c1t64 libgeos3.12.1t64 libgeotiff5 libgif7
+  libgl2ps1.4 libglew2.2 libgme0 libgphoto2-6t64 libgphoto2-dev
+  libgphoto2-port12t64 libgsm1 libgstreamer-plugins-base1.0-0 libhdf4-0-alt
+  libhdf5-103-1t64 libhdf5-hl-100t64 libhwloc-plugins libhwloc15 libhwy1t64
+  libimath-3-1-29t64 libimath-dev libinput-bin libinput10 libjbig-dev
+  libjpeg-dev libjpeg-turbo8-dev libjpeg8-dev libjxl0.7 libkmlbase1t64
+  libkmldom1t64 libkmlengine1t64 liblept5 liblerc-dev liblzma-dev
+  libmbedcrypto7t64 libmd4c0 libminizip1t64 libmp3lame0 libmpg123-0t64
+  libmtdev1t64 libmunge2 libmysqlclient21 libnetcdf19t64 libnorm1t64 libodbc2
+  libodbcinst2 libogdi4.1 libogg0 libopencv-calib3d-dev
+  libopencv-calib3d406t64 libopencv-contrib-dev libopencv-contrib406t64
+  libopencv-core-dev libopencv-core406t64 libopencv-dev libopencv-dnn-dev
+  libopencv-dnn406t64 libopencv-features2d-dev libopencv-features2d406t64
+  libopencv-flann-dev libopencv-flann406t64 libopencv-highgui-dev
+  libopencv-highgui406t64 libopencv-imgcodecs-dev libopencv-imgcodecs406t64
+  libopencv-imgproc-dev libopencv-imgproc406t64 libopencv-ml-dev
+  libopencv-ml406t64 libopencv-objdetect-dev libopencv-objdetect406t64
+  libopencv-photo-dev libopencv-photo406t64 libopencv-shape-dev
+  libopencv-shape406t64 libopencv-stitching-dev libopencv-stitching406t64
+  libopencv-superres-dev libopencv-superres406t64 libopencv-video-dev
+  libopencv-video406t64 libopencv-videoio-dev libopencv-videoio406t64
+  libopencv-videostab-dev libopencv-videostab406t64 libopencv-viz-dev
+  libopencv-viz406t64 libopenexr-3-1-30 libopenexr-dev libopenmpi3t64
+  libopenmpt0t64 libopus0 liborc-0.4-0t64 libpciaccess0 libpcre2-16-0
+  libpgm-5.3-0t64 libpmix2t64 libpng-dev libpoppler134 libpq5 libproj25
+  libprotobuf32t64 libqhull-r8.0 libqt5core5t64 libqt5dbus5t64 libqt5gui5t64
+  libqt5network5t64 libqt5opengl5t64 libqt5test5t64 libqt5widgets5t64
+  librabbitmq4 librav1e0 libraw1394-11 libraw1394-dev librdmacm1t64 librist4
+  librttopo1 libsharpyuv-dev libshine3 libsnappy1v5 libsocket++1 libsoxr0
+  libspatialite8t64 libspeex1 libsrt1.5-gnutls libssh-gcrypt-4 libsuperlu6
+  libsvtav1enc1d1 libswresample-dev libswresample4 libswscale-dev libswscale7
+  libsz2 libtbb-dev libtbb12 libtbbbind-2-5 libtbbmalloc2 libtesseract5
+  libtheora0 libtiff-dev libtiffxx6 libtk8.6 libtwolame0 libucx0 libudfread0
+  liburiparser1 libva-drm2 libva-x11-2 libva2 libvdpau1 libvorbis0a
+  libvorbisenc2 libvorbisfile3 libvpx9 libvtk9.1t64 libwacom-common libwacom9
+  libwebp-dev libwebpdecoder3 libx264-164 libx265-199 libxcb-icccm4
+  libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-shape0 libxcb-util1
+  libxcb-xinerama0 libxcb-xinput0 libxcb-xkb1 libxerces-c3.2t64 libxft2
+  libxkbcommon-x11-0 libxnvctrl0 libxss1 libxvidcore4 libzmq5 libzvbi-common
+  libzvbi0t64 mysql-common ocl-icd-libopencl1 proj-data python3-opencv
+  ros-jazzy-cv-bridge ros-jazzy-diagnostic-updater ros-jazzy-image-transport
+  unixodbc-common
+Suggested packages:
+  libcuda1 libnvcuvid1 libnvidia-encode1 libbluray-bdj geotiff-bin gdal-bin
+  libgeotiff-epsg glew-utils gphoto2 libvisual-0.4-plugins libhdf4-doc
+  libhdf4-alt-dev hdf4-tools liblzma-doc odbc-postgresql tdsodbc ogdi-bin
+  opencv-doc opus-tools proj-bin qgnomeplatform-qt5 qt5-image-formats-plugins
+  libraw1394-doc speex libtbb-doc tk8.6 mpi-default-bin vtk9-doc vtk9-examples
+  libwacom-bin opencl-icd
+Recommended packages:
+  libaacs0 libexif-doc proj-bin libgphoto2-l10n gstreamer1.0-plugins-base
+  opencv-data libopencv-java libpng-tools poppler-data qttranslations5-l10n
+  libqt5svg5 qt5-gtk-platformtheme qtwayland5 libraw1394-tools va-driver-all
+  | va-driver vdpau-driver-all | vdpau-driver
+The following NEW packages will be installed:
+  gdal-data gdal-plugins libaec0 libarmadillo12 libarpack2t64 libavcodec-dev
+  libavcodec60 libavformat-dev libavformat60 libavutil-dev libavutil58
+  libblosc1 libbluray2 libboost-python1.83.0 libcfitsio10t64 libcharls2
+  libchromaprint1 libcjson1 libcodec2-1.2 libdav1d7 libdc1394-25 libdc1394-dev
+  libdeflate-dev libdouble-conversion3 libevent-pthreads-2.1-7t64 libexif-dev
+  libexif12 libfabric1 libfreexl1 libfyba0t64 libgdal34t64 libgdcm-dev
+  libgdcm3.0t64 libgeos-c1t64 libgeos3.12.1t64 libgeotiff5 libgif7 libgl2ps1.4
+  libglew2.2 libgme0 libgphoto2-6t64 libgphoto2-dev libgphoto2-port12t64
+  libgsm1 libgstreamer-plugins-base1.0-0 libhdf4-0-alt libhdf5-103-1t64
+  libhdf5-hl-100t64 libhwloc-plugins libhwloc15 libhwy1t64 libimath-3-1-29t64
+  libimath-dev libinput-bin libinput10 libjbig-dev libjpeg-dev
+  libjpeg-turbo8-dev libjpeg8-dev libjxl0.7 libkmlbase1t64 libkmldom1t64
+  libkmlengine1t64 liblept5 liblerc-dev liblzma-dev libmbedcrypto7t64 libmd4c0
+  libminizip1t64 libmp3lame0 libmpg123-0t64 libmtdev1t64 libmunge2
+  libmysqlclient21 libnetcdf19t64 libnorm1t64 libodbc2 libodbcinst2 libogdi4.1
+  libogg0 libopencv-calib3d-dev libopencv-calib3d406t64 libopencv-contrib-dev
+  libopencv-contrib406t64 libopencv-core-dev libopencv-core406t64
+  libopencv-dev libopencv-dnn-dev libopencv-dnn406t64 libopencv-features2d-dev
+  libopencv-features2d406t64 libopencv-flann-dev libopencv-flann406t64
+  libopencv-highgui-dev libopencv-highgui406t64 libopencv-imgcodecs-dev
+  libopencv-imgcodecs406t64 libopencv-imgproc-dev libopencv-imgproc406t64
+  libopencv-ml-dev libopencv-ml406t64 libopencv-objdetect-dev
+  libopencv-objdetect406t64 libopencv-photo-dev libopencv-photo406t64
+  libopencv-shape-dev libopencv-shape406t64 libopencv-stitching-dev
+  libopencv-stitching406t64 libopencv-superres-dev libopencv-superres406t64
+  libopencv-video-dev libopencv-video406t64 libopencv-videoio-dev
+  libopencv-videoio406t64 libopencv-videostab-dev libopencv-videostab406t64
+  libopencv-viz-dev libopencv-viz406t64 libopenexr-3-1-30 libopenexr-dev
+  libopenmpi3t64 libopenmpt0t64 libopus0 liborc-0.4-0t64 libpciaccess0
+  libpcre2-16-0 libpgm-5.3-0t64 libpmix2t64 libpng-dev libpoppler134 libpq5
+  libproj25 libprotobuf32t64 libqhull-r8.0 libqt5core5t64 libqt5dbus5t64
+  libqt5gui5t64 libqt5network5t64 libqt5opengl5t64 libqt5test5t64
+  libqt5widgets5t64 librabbitmq4 librav1e0 libraw1394-11 libraw1394-dev
+  librdmacm1t64 librist4 librttopo1 libsharpyuv-dev libshine3 libsnappy1v5
+  libsocket++1 libsoxr0 libspatialite8t64 libspeex1 libsrt1.5-gnutls
+  libssh-gcrypt-4 libsuperlu6 libsvtav1enc1d1 libswresample-dev libswresample4
+  libswscale-dev libswscale7 libsz2 libtbb-dev libtbb12 libtbbbind-2-5
+  libtbbmalloc2 libtesseract5 libtheora0 libtiff-dev libtiffxx6 libtk8.6
+  libtwolame0 libucx0 libudfread0 liburiparser1 libva-drm2 libva-x11-2 libva2
+  libvdpau1 libvorbis0a libvorbisenc2 libvorbisfile3 libvpx9 libvtk9.1t64
+  libwacom-common libwacom9 libwebp-dev libwebpdecoder3 libx264-164
+  libx265-199 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0
+  libxcb-shape0 libxcb-util1 libxcb-xinerama0 libxcb-xinput0 libxcb-xkb1
+  libxerces-c3.2t64 libxft2 libxkbcommon-x11-0 libxnvctrl0 libxss1
+  libxvidcore4 libzmq5 libzvbi-common libzvbi0t64 mysql-common
+  ocl-icd-libopencl1 proj-data python3-opencv ros-jazzy-cv-bridge
+  ros-jazzy-diagnostic-updater ros-jazzy-image-transport
+  ros-jazzy-realsense2-camera ros-jazzy-realsense2-camera-msgs unixodbc-common
+The following packages will be upgraded:
+  libdeflate0
+1 upgraded, 221 newly installed, 0 to remove and 74 not upgraded.
+Inst gdal-data (3.8.4+dfsg-3ubuntu3 Ubuntu:24.04/noble [all])
+Inst gdal-plugins (3.8.4+dfsg-3ubuntu3 Ubuntu:24.04/noble [arm64])
+Inst libaec0 (1.1.2-1build1 Ubuntu:24.04/noble [arm64])
+Inst libarpack2t64 (3.9.1-1.1build2 Ubuntu:24.04/noble [arm64])
+Inst libsuperlu6 (6.0.1+dfsg1-1build1 Ubuntu:24.04/noble [arm64])
+Inst libarmadillo12 (1:12.6.7+dfsg-1build2 Ubuntu:24.04/noble [arm64])
+Inst libva2 (2.20.0-2ubuntu0.2 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libva-drm2 (2.20.0-2ubuntu0.2 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libva-x11-2 (2.20.0-2ubuntu0.2 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libvdpau1 (1.5-2build1 Ubuntu:24.04/noble [arm64])
+Inst ocl-icd-libopencl1 (2.3.2-1build1 Ubuntu:24.04/noble, Ubuntu:24.04/noble-updates [arm64])
+Inst libavutil58 (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Inst libcodec2-1.2 (1.2.0-2build1 Ubuntu:24.04/noble [arm64])
+Inst libdav1d7 (1.4.1-1build1 Ubuntu:24.04/noble [arm64])
+Inst libgsm1 (1.0.22-1build1 Ubuntu:24.04/noble [arm64])
+Inst libhwy1t64 (1.0.7-8.1build1 Ubuntu:24.04/noble [arm64])
+Inst libjxl0.7 (0.7.0-10.2ubuntu6.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libmp3lame0 (3.100-6build1 Ubuntu:24.04/noble [arm64])
+Inst libopus0 (1.4-1build1 Ubuntu:24.04/noble [arm64])
+Inst librav1e0 (0.7.1-2 Ubuntu:24.04/noble [arm64])
+Inst libshine3 (3.1.1-2build1 Ubuntu:24.04/noble [arm64])
+Inst libsnappy1v5 (1.1.10-1build1 Ubuntu:24.04/noble [arm64])
+Inst libspeex1 (1.2.1-2ubuntu2.24.04.1 Ubuntu:24.04/noble-updates [arm64])
+Inst libsvtav1enc1d1 (1.7.0+dfsg-2build1 Ubuntu:24.04/noble [arm64])
+Inst libsoxr0 (0.1.3-4build3 Ubuntu:24.04/noble [arm64])
+Inst libswresample4 (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Inst libogg0 (1.3.5-3build1 Ubuntu:24.04/noble [arm64])
+Inst libtheora0 (1.1.1+dfsg.1-16.1build3 Ubuntu:24.04/noble [arm64])
+Inst libtwolame0 (0.4.0-2build3 Ubuntu:24.04/noble [arm64])
+Inst libvorbis0a (1.3.7-1build3 Ubuntu:24.04/noble [arm64])
+Inst libvorbisenc2 (1.3.7-1build3 Ubuntu:24.04/noble [arm64])
+Inst libvpx9 (1.14.0-1ubuntu2.3 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libx264-164 (2:0.164.3108+git31e19f9-1 Ubuntu:24.04/noble [arm64])
+Inst libx265-199 (3.5-2build1 Ubuntu:24.04/noble [arm64])
+Inst libxvidcore4 (2:1.3.7-1build1 Ubuntu:24.04/noble [arm64])
+Inst libzvbi-common (0.2.42-2 Ubuntu:24.04/noble [all])
+Inst libzvbi0t64 (0.2.42-2 Ubuntu:24.04/noble [arm64])
+Inst libavcodec60 (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Inst libavutil-dev (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Inst libswresample-dev (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Inst libavcodec-dev (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Inst libudfread0 (1.1.2-1build1 Ubuntu:24.04/noble [arm64])
+Inst libbluray2 (1:1.3.4-1build1 Ubuntu:24.04/noble [arm64])
+Inst libchromaprint1 (1.5.1-5 Ubuntu:24.04/noble [arm64])
+Inst libgme0 (0.6.3-7build1 Ubuntu:24.04/noble [arm64])
+Inst libmpg123-0t64 (1.32.5-1ubuntu1.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libvorbisfile3 (1.3.7-1build3 Ubuntu:24.04/noble [arm64])
+Inst libopenmpt0t64 (0.7.3-1.1build3 Ubuntu:24.04/noble [arm64])
+Inst librabbitmq4 (0.11.0-1ubuntu0.2 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libcjson1 (1.7.17-1 Ubuntu:24.04/noble [arm64])
+Inst libmbedcrypto7t64 (2.28.8-1 Ubuntu:24.04/noble [arm64])
+Inst librist4 (0.2.10+dfsg-2 Ubuntu:24.04/noble [arm64])
+Inst libsrt1.5-gnutls (1.5.3-1build2 Ubuntu:24.04/noble [arm64])
+Inst libssh-gcrypt-4 (0.10.6-2ubuntu0.5 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libnorm1t64 (1.5.9+dfsg-3.1build1 Ubuntu:24.04/noble [arm64])
+Inst libpgm-5.3-0t64 (5.3.128~dfsg-2.1build1 Ubuntu:24.04/noble [arm64])
+Inst libzmq5 (4.3.5-1build2 Ubuntu:24.04/noble [arm64])
+Inst libavformat60 (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Inst libavformat-dev (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Inst libblosc1 (1.21.5+ds-1build1 Ubuntu:24.04/noble [arm64])
+Inst libboost-python1.83.0 (1.83.0-2.1ubuntu3.2 Ubuntu:24.04/noble-updates [arm64])
+Inst libcfitsio10t64 (4.3.1-1.1build2 Ubuntu:24.04/noble [arm64])
+Inst libcharls2 (2.4.2-2build2 Ubuntu:24.04/noble [arm64])
+Inst libraw1394-11 (2.1.2-2build3 Ubuntu:24.04/noble [arm64])
+Inst libdc1394-25 (2.2.6-4build1 Ubuntu:24.04/noble [arm64])
+Inst libraw1394-dev (2.1.2-2build3 Ubuntu:24.04/noble [arm64])
+Inst libdc1394-dev (2.2.6-4build1 Ubuntu:24.04/noble [arm64])
+Inst libdeflate0 [1.19-1build1] (1.19-1build1.1 Ubuntu:24.04/noble-updates [arm64])
+Inst libdeflate-dev (1.19-1build1.1 Ubuntu:24.04/noble-updates [arm64])
+Inst libdouble-conversion3 (3.3.0-1build1 Ubuntu:24.04/noble [arm64])
+Inst libevent-pthreads-2.1-7t64 (2.1.12-stable-9ubuntu2.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libexif12 (0.6.24-1ubuntu0.24.04.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libexif-dev (0.6.24-1ubuntu0.24.04.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst librdmacm1t64 (50.0-2ubuntu0.2 Ubuntu:24.04/noble-updates [arm64])
+Inst libfabric1 (1.17.0-3build2 Ubuntu:24.04/noble [arm64])
+Inst libfyba0t64 (4.1.1-11build1 Ubuntu:24.04/noble [arm64])
+Inst libminizip1t64 (1:1.3.dfsg-3.1ubuntu2.2 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libfreexl1 (2.0.0-1build2 Ubuntu:24.04/noble [arm64])
+Inst libgeos3.12.1t64 (3.12.1-3build1 Ubuntu:24.04/noble [arm64])
+Inst libgeos-c1t64 (3.12.1-3build1 Ubuntu:24.04/noble [arm64])
+Inst proj-data (9.4.0-1build2 Ubuntu:24.04/noble [all])
+Inst libproj25 (9.4.0-1build2 Ubuntu:24.04/noble [arm64])
+Inst libgeotiff5 (1.7.1-5build1 Ubuntu:24.04/noble [arm64])
+Inst libgif7 (5.2.2-1ubuntu1.2 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libhdf4-0-alt (4.2.16-4build1 Ubuntu:24.04/noble [arm64])
+Inst libsz2 (1.1.2-1build1 Ubuntu:24.04/noble [arm64])
+Inst libhdf5-103-1t64 (1.10.10+repack-3.1ubuntu4 Ubuntu:24.04/noble [arm64])
+Inst liburiparser1 (0.9.7+dfsg-2build1 Ubuntu:24.04/noble [arm64])
+Inst libkmlbase1t64 (1.3.0-12build1 Ubuntu:24.04/noble [arm64])
+Inst libkmldom1t64 (1.3.0-12build1 Ubuntu:24.04/noble [arm64])
+Inst libkmlengine1t64 (1.3.0-12build1 Ubuntu:24.04/noble [arm64])
+Inst mysql-common (5.8+1.1.0build1 Ubuntu:24.04/noble [all])
+Inst libmysqlclient21 (8.0.46-0ubuntu0.24.04.4 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libhdf5-hl-100t64 (1.10.10+repack-3.1ubuntu4 Ubuntu:24.04/noble [arm64])
+Inst libnetcdf19t64 (1:4.9.2-5ubuntu4 Ubuntu:24.04/noble [arm64])
+Inst libodbc2 (2.3.12-1ubuntu0.24.04.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst unixodbc-common (2.3.12-1ubuntu0.24.04.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [all])
+Inst libodbcinst2 (2.3.12-1ubuntu0.24.04.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libogdi4.1 (4.1.1+ds-3build1 Ubuntu:24.04/noble [arm64])
+Inst libpoppler134 (24.02.0-1ubuntu9.9 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libpq5 (16.15-0ubuntu0.24.04.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libqhull-r8.0 (2020.2-6build1 Ubuntu:24.04/noble [arm64])
+Inst librttopo1 (1.1.0-3build2 Ubuntu:24.04/noble [arm64])
+Inst libspatialite8t64 (5.1.0-3build1 Ubuntu:24.04/noble [arm64])
+Inst libxerces-c3.2t64 (3.2.4+debian-1.2ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst libgdal34t64 (3.8.4+dfsg-3ubuntu3 Ubuntu:24.04/noble [arm64])
+Inst libsocket++1 (1.12.13+git20131030.5d039ba-1build1 Ubuntu:24.04/noble [arm64])
+Inst libgdcm3.0t64 (3.0.22-2.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libgdcm-dev (3.0.22-2.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libgl2ps1.4 (1.4.2+dfsg1-2build1 Ubuntu:24.04/noble [arm64])
+Inst libglew2.2 (2.2.0-4build1 Ubuntu:24.04/noble [arm64])
+Inst libgphoto2-port12t64 (2.5.31-2.1ubuntu1.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libgphoto2-6t64 (2.5.31-2.1ubuntu1.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libgphoto2-dev (2.5.31-2.1ubuntu1.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst liborc-0.4-0t64 (1:0.4.38-1ubuntu0.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libgstreamer-plugins-base1.0-0 (1.24.2-1ubuntu0.4 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libhwloc15 (2.10.0-1build1 Ubuntu:24.04/noble [arm64])
+Inst libimath-3-1-29t64 (3.1.9-3.1ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst libimath-dev (3.1.9-3.1ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst libwacom-common (2.10.0-2 Ubuntu:24.04/noble [all])
+Inst libwacom9 (2.10.0-2 Ubuntu:24.04/noble [arm64])
+Inst libinput-bin (1.25.0-1ubuntu3.6 Ubuntu:24.04/noble-updates [arm64])
+Inst libmtdev1t64 (1.1.6-1.1build1 Ubuntu:24.04/noble [arm64])
+Inst libinput10 (1.25.0-1ubuntu3.6 Ubuntu:24.04/noble-updates [arm64])
+Inst libjpeg-turbo8-dev (2.1.5-2ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst libjpeg8-dev (8c-2ubuntu11 Ubuntu:24.04/noble [arm64])
+Inst libjpeg-dev (8c-2ubuntu11 Ubuntu:24.04/noble [arm64])
+Inst liblept5 (1.82.0-3build4 Ubuntu:24.04/noble [arm64])
+Inst liblerc-dev (4.0.0+ds-4ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst libmd4c0 (0.4.8-1build1 Ubuntu:24.04/noble [arm64])
+Inst libtbbmalloc2 (2021.11.0-2ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst libtbbbind-2-5 (2021.11.0-2ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst libtbb12 (2021.11.0-2ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst libopencv-core406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-flann406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-imgproc406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-features2d406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-calib3d406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libtbb-dev (2021.11.0-2ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst libopencv-core-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-flann-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopenexr-3-1-30 (3.1.5-5.1build3 Ubuntu:24.04/noble [arm64])
+Inst libopencv-imgcodecs406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libpcre2-16-0 (10.42-4ubuntu2.1 Ubuntu:24.04/noble-updates [arm64])
+Inst libqt5core5t64 (5.15.13+dfsg-1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libqt5dbus5t64 (5.15.13+dfsg-1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libqt5network5t64 (5.15.13+dfsg-1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libxcb-icccm4 (0.4.1-1.1build3 Ubuntu:24.04/noble [arm64])
+Inst libxcb-util1 (0.4.0-1build3 Ubuntu:24.04/noble [arm64])
+Inst libxcb-image0 (0.4.0-2build1 Ubuntu:24.04/noble [arm64])
+Inst libxcb-keysyms1 (0.4.0-1build4 Ubuntu:24.04/noble [arm64])
+Inst libxcb-render-util0 (0.3.9-1build4 Ubuntu:24.04/noble [arm64])
+Inst libxcb-shape0 (1.15-1ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst libxcb-xinerama0 (1.15-1ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst libxcb-xinput0 (1.15-1ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst libxcb-xkb1 (1.15-1ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst libxkbcommon-x11-0 (1.6.0-1build1 Ubuntu:24.04/noble [arm64])
+Inst libqt5gui5t64 (5.15.13+dfsg-1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libqt5widgets5t64 (5.15.13+dfsg-1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libqt5opengl5t64 (5.15.13+dfsg-1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libqt5test5t64 (5.15.13+dfsg-1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-highgui406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-imgproc-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-imgcodecs-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libswscale7 (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Inst libopencv-videoio406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-videoio-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopenexr-dev (3.1.5-5.1build3 Ubuntu:24.04/noble [arm64])
+Inst libpng-dev (1.6.43-5ubuntu0.6 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libswscale-dev (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Inst libjbig-dev (2.1-6.1ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst liblzma-dev (5.6.1+really5.4.5-1ubuntu0.3 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libwebpdecoder3 (1.3.2-0.4build3 Ubuntu:24.04/noble [arm64])
+Inst libsharpyuv-dev (1.3.2-0.4build3 Ubuntu:24.04/noble [arm64])
+Inst libwebp-dev (1.3.2-0.4build3 Ubuntu:24.04/noble [arm64])
+Inst libtiffxx6 (4.5.1+git230720-4ubuntu2.5 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libtiff-dev (4.5.1+git230720-4ubuntu2.5 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libopencv-highgui-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-ml406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-ml-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-features2d-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-calib3d-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libprotobuf32t64 (3.21.12-8.2ubuntu0.3 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libopencv-dnn406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-objdetect406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-video406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libtesseract5 (5.3.4-1build5 Ubuntu:24.04/noble [arm64])
+Inst libopencv-contrib406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-dnn-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-objdetect-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-photo406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-photo-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-shape406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-video-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-shape-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-stitching406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-stitching-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-superres406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-superres-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-videostab406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-videostab-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libmunge2 (0.5.15-4ubuntu0.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Inst libpciaccess0 (0.17-3ubuntu0.24.04.2 Ubuntu:24.04/noble-updates [arm64])
+Inst libxnvctrl0 (510.47.03-0ubuntu4.24.04.1 Ubuntu:24.04/noble-updates [arm64])
+Inst libhwloc-plugins (2.10.0-1build1 Ubuntu:24.04/noble [arm64])
+Inst libpmix2t64 (5.0.1-4.1build1 Ubuntu:24.04/noble [arm64])
+Inst libucx0 (1.16.0+ds-5ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopenmpi3t64 (4.1.6-7ubuntu2 Ubuntu:24.04/noble [arm64])
+Inst libxft2 (2.3.6-1build1 Ubuntu:24.04/noble [arm64])
+Inst libxss1 (1:1.2.3-1build3 Ubuntu:24.04/noble [arm64])
+Inst libtk8.6 (8.6.14-1build1 Ubuntu:24.04/noble [arm64])
+Inst libvtk9.1t64 (9.1.0+really9.1.0+dfsg2-7.1build3 Ubuntu:24.04/noble [arm64])
+Inst libopencv-viz406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-viz-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-contrib-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst libopencv-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst python3-opencv (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Inst ros-jazzy-cv-bridge (4.1.0-1noble.20260902.175525 ROS noble:noble [arm64])
+Inst ros-jazzy-diagnostic-updater (4.2.7-1noble.20260902.152037 ROS noble:noble [arm64])
+Inst ros-jazzy-image-transport (5.1.8-1noble.20260902.180007 ROS noble:noble [arm64])
+Inst ros-jazzy-realsense2-camera-msgs (4.58.4-1noble.20260902.134137 ROS noble:noble [arm64])
+Inst ros-jazzy-realsense2-camera (4.58.4-1noble.20260902.181721 ROS noble:noble [arm64])
+Conf gdal-data (3.8.4+dfsg-3ubuntu3 Ubuntu:24.04/noble [all])
+Conf gdal-plugins (3.8.4+dfsg-3ubuntu3 Ubuntu:24.04/noble [arm64])
+Conf libaec0 (1.1.2-1build1 Ubuntu:24.04/noble [arm64])
+Conf libarpack2t64 (3.9.1-1.1build2 Ubuntu:24.04/noble [arm64])
+Conf libsuperlu6 (6.0.1+dfsg1-1build1 Ubuntu:24.04/noble [arm64])
+Conf libarmadillo12 (1:12.6.7+dfsg-1build2 Ubuntu:24.04/noble [arm64])
+Conf libva2 (2.20.0-2ubuntu0.2 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libva-drm2 (2.20.0-2ubuntu0.2 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libva-x11-2 (2.20.0-2ubuntu0.2 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libvdpau1 (1.5-2build1 Ubuntu:24.04/noble [arm64])
+Conf ocl-icd-libopencl1 (2.3.2-1build1 Ubuntu:24.04/noble, Ubuntu:24.04/noble-updates [arm64])
+Conf libavutil58 (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Conf libcodec2-1.2 (1.2.0-2build1 Ubuntu:24.04/noble [arm64])
+Conf libdav1d7 (1.4.1-1build1 Ubuntu:24.04/noble [arm64])
+Conf libgsm1 (1.0.22-1build1 Ubuntu:24.04/noble [arm64])
+Conf libhwy1t64 (1.0.7-8.1build1 Ubuntu:24.04/noble [arm64])
+Conf libjxl0.7 (0.7.0-10.2ubuntu6.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libmp3lame0 (3.100-6build1 Ubuntu:24.04/noble [arm64])
+Conf libopus0 (1.4-1build1 Ubuntu:24.04/noble [arm64])
+Conf librav1e0 (0.7.1-2 Ubuntu:24.04/noble [arm64])
+Conf libshine3 (3.1.1-2build1 Ubuntu:24.04/noble [arm64])
+Conf libsnappy1v5 (1.1.10-1build1 Ubuntu:24.04/noble [arm64])
+Conf libspeex1 (1.2.1-2ubuntu2.24.04.1 Ubuntu:24.04/noble-updates [arm64])
+Conf libsvtav1enc1d1 (1.7.0+dfsg-2build1 Ubuntu:24.04/noble [arm64])
+Conf libsoxr0 (0.1.3-4build3 Ubuntu:24.04/noble [arm64])
+Conf libswresample4 (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Conf libogg0 (1.3.5-3build1 Ubuntu:24.04/noble [arm64])
+Conf libtheora0 (1.1.1+dfsg.1-16.1build3 Ubuntu:24.04/noble [arm64])
+Conf libtwolame0 (0.4.0-2build3 Ubuntu:24.04/noble [arm64])
+Conf libvorbis0a (1.3.7-1build3 Ubuntu:24.04/noble [arm64])
+Conf libvorbisenc2 (1.3.7-1build3 Ubuntu:24.04/noble [arm64])
+Conf libvpx9 (1.14.0-1ubuntu2.3 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libx264-164 (2:0.164.3108+git31e19f9-1 Ubuntu:24.04/noble [arm64])
+Conf libx265-199 (3.5-2build1 Ubuntu:24.04/noble [arm64])
+Conf libxvidcore4 (2:1.3.7-1build1 Ubuntu:24.04/noble [arm64])
+Conf libzvbi-common (0.2.42-2 Ubuntu:24.04/noble [all])
+Conf libzvbi0t64 (0.2.42-2 Ubuntu:24.04/noble [arm64])
+Conf libavcodec60 (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Conf libavutil-dev (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Conf libswresample-dev (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Conf libavcodec-dev (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Conf libudfread0 (1.1.2-1build1 Ubuntu:24.04/noble [arm64])
+Conf libbluray2 (1:1.3.4-1build1 Ubuntu:24.04/noble [arm64])
+Conf libchromaprint1 (1.5.1-5 Ubuntu:24.04/noble [arm64])
+Conf libgme0 (0.6.3-7build1 Ubuntu:24.04/noble [arm64])
+Conf libmpg123-0t64 (1.32.5-1ubuntu1.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libvorbisfile3 (1.3.7-1build3 Ubuntu:24.04/noble [arm64])
+Conf libopenmpt0t64 (0.7.3-1.1build3 Ubuntu:24.04/noble [arm64])
+Conf librabbitmq4 (0.11.0-1ubuntu0.2 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libcjson1 (1.7.17-1 Ubuntu:24.04/noble [arm64])
+Conf libmbedcrypto7t64 (2.28.8-1 Ubuntu:24.04/noble [arm64])
+Conf librist4 (0.2.10+dfsg-2 Ubuntu:24.04/noble [arm64])
+Conf libsrt1.5-gnutls (1.5.3-1build2 Ubuntu:24.04/noble [arm64])
+Conf libssh-gcrypt-4 (0.10.6-2ubuntu0.5 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libnorm1t64 (1.5.9+dfsg-3.1build1 Ubuntu:24.04/noble [arm64])
+Conf libpgm-5.3-0t64 (5.3.128~dfsg-2.1build1 Ubuntu:24.04/noble [arm64])
+Conf libzmq5 (4.3.5-1build2 Ubuntu:24.04/noble [arm64])
+Conf libavformat60 (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Conf libavformat-dev (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Conf libblosc1 (1.21.5+ds-1build1 Ubuntu:24.04/noble [arm64])
+Conf libboost-python1.83.0 (1.83.0-2.1ubuntu3.2 Ubuntu:24.04/noble-updates [arm64])
+Conf libcfitsio10t64 (4.3.1-1.1build2 Ubuntu:24.04/noble [arm64])
+Conf libcharls2 (2.4.2-2build2 Ubuntu:24.04/noble [arm64])
+Conf libraw1394-11 (2.1.2-2build3 Ubuntu:24.04/noble [arm64])
+Conf libdc1394-25 (2.2.6-4build1 Ubuntu:24.04/noble [arm64])
+Conf libraw1394-dev (2.1.2-2build3 Ubuntu:24.04/noble [arm64])
+Conf libdc1394-dev (2.2.6-4build1 Ubuntu:24.04/noble [arm64])
+Conf libdeflate0 (1.19-1build1.1 Ubuntu:24.04/noble-updates [arm64])
+Conf libdeflate-dev (1.19-1build1.1 Ubuntu:24.04/noble-updates [arm64])
+Conf libdouble-conversion3 (3.3.0-1build1 Ubuntu:24.04/noble [arm64])
+Conf libevent-pthreads-2.1-7t64 (2.1.12-stable-9ubuntu2.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libexif12 (0.6.24-1ubuntu0.24.04.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libexif-dev (0.6.24-1ubuntu0.24.04.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf librdmacm1t64 (50.0-2ubuntu0.2 Ubuntu:24.04/noble-updates [arm64])
+Conf libfabric1 (1.17.0-3build2 Ubuntu:24.04/noble [arm64])
+Conf libfyba0t64 (4.1.1-11build1 Ubuntu:24.04/noble [arm64])
+Conf libminizip1t64 (1:1.3.dfsg-3.1ubuntu2.2 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libfreexl1 (2.0.0-1build2 Ubuntu:24.04/noble [arm64])
+Conf libgeos3.12.1t64 (3.12.1-3build1 Ubuntu:24.04/noble [arm64])
+Conf libgeos-c1t64 (3.12.1-3build1 Ubuntu:24.04/noble [arm64])
+Conf proj-data (9.4.0-1build2 Ubuntu:24.04/noble [all])
+Conf libproj25 (9.4.0-1build2 Ubuntu:24.04/noble [arm64])
+Conf libgeotiff5 (1.7.1-5build1 Ubuntu:24.04/noble [arm64])
+Conf libgif7 (5.2.2-1ubuntu1.2 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libhdf4-0-alt (4.2.16-4build1 Ubuntu:24.04/noble [arm64])
+Conf libsz2 (1.1.2-1build1 Ubuntu:24.04/noble [arm64])
+Conf libhdf5-103-1t64 (1.10.10+repack-3.1ubuntu4 Ubuntu:24.04/noble [arm64])
+Conf liburiparser1 (0.9.7+dfsg-2build1 Ubuntu:24.04/noble [arm64])
+Conf libkmlbase1t64 (1.3.0-12build1 Ubuntu:24.04/noble [arm64])
+Conf libkmldom1t64 (1.3.0-12build1 Ubuntu:24.04/noble [arm64])
+Conf libkmlengine1t64 (1.3.0-12build1 Ubuntu:24.04/noble [arm64])
+Conf mysql-common (5.8+1.1.0build1 Ubuntu:24.04/noble [all])
+Conf libmysqlclient21 (8.0.46-0ubuntu0.24.04.4 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libhdf5-hl-100t64 (1.10.10+repack-3.1ubuntu4 Ubuntu:24.04/noble [arm64])
+Conf libnetcdf19t64 (1:4.9.2-5ubuntu4 Ubuntu:24.04/noble [arm64])
+Conf libodbc2 (2.3.12-1ubuntu0.24.04.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf unixodbc-common (2.3.12-1ubuntu0.24.04.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [all])
+Conf libodbcinst2 (2.3.12-1ubuntu0.24.04.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libogdi4.1 (4.1.1+ds-3build1 Ubuntu:24.04/noble [arm64])
+Conf libpoppler134 (24.02.0-1ubuntu9.9 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libpq5 (16.15-0ubuntu0.24.04.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libqhull-r8.0 (2020.2-6build1 Ubuntu:24.04/noble [arm64])
+Conf librttopo1 (1.1.0-3build2 Ubuntu:24.04/noble [arm64])
+Conf libspatialite8t64 (5.1.0-3build1 Ubuntu:24.04/noble [arm64])
+Conf libxerces-c3.2t64 (3.2.4+debian-1.2ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf libgdal34t64 (3.8.4+dfsg-3ubuntu3 Ubuntu:24.04/noble [arm64])
+Conf libsocket++1 (1.12.13+git20131030.5d039ba-1build1 Ubuntu:24.04/noble [arm64])
+Conf libgdcm3.0t64 (3.0.22-2.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libgdcm-dev (3.0.22-2.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libgl2ps1.4 (1.4.2+dfsg1-2build1 Ubuntu:24.04/noble [arm64])
+Conf libglew2.2 (2.2.0-4build1 Ubuntu:24.04/noble [arm64])
+Conf libgphoto2-port12t64 (2.5.31-2.1ubuntu1.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libgphoto2-6t64 (2.5.31-2.1ubuntu1.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libgphoto2-dev (2.5.31-2.1ubuntu1.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf liborc-0.4-0t64 (1:0.4.38-1ubuntu0.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libgstreamer-plugins-base1.0-0 (1.24.2-1ubuntu0.4 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libhwloc15 (2.10.0-1build1 Ubuntu:24.04/noble [arm64])
+Conf libimath-3-1-29t64 (3.1.9-3.1ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf libimath-dev (3.1.9-3.1ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf libwacom-common (2.10.0-2 Ubuntu:24.04/noble [all])
+Conf libwacom9 (2.10.0-2 Ubuntu:24.04/noble [arm64])
+Conf libinput-bin (1.25.0-1ubuntu3.6 Ubuntu:24.04/noble-updates [arm64])
+Conf libmtdev1t64 (1.1.6-1.1build1 Ubuntu:24.04/noble [arm64])
+Conf libinput10 (1.25.0-1ubuntu3.6 Ubuntu:24.04/noble-updates [arm64])
+Conf libjpeg-turbo8-dev (2.1.5-2ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf libjpeg8-dev (8c-2ubuntu11 Ubuntu:24.04/noble [arm64])
+Conf libjpeg-dev (8c-2ubuntu11 Ubuntu:24.04/noble [arm64])
+Conf liblept5 (1.82.0-3build4 Ubuntu:24.04/noble [arm64])
+Conf liblerc-dev (4.0.0+ds-4ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf libmd4c0 (0.4.8-1build1 Ubuntu:24.04/noble [arm64])
+Conf libtbbmalloc2 (2021.11.0-2ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf libtbbbind-2-5 (2021.11.0-2ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf libtbb12 (2021.11.0-2ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf libopencv-core406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-flann406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-imgproc406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-features2d406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-calib3d406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libtbb-dev (2021.11.0-2ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf libopencv-core-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-flann-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopenexr-3-1-30 (3.1.5-5.1build3 Ubuntu:24.04/noble [arm64])
+Conf libopencv-imgcodecs406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libpcre2-16-0 (10.42-4ubuntu2.1 Ubuntu:24.04/noble-updates [arm64])
+Conf libqt5core5t64 (5.15.13+dfsg-1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libqt5dbus5t64 (5.15.13+dfsg-1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libqt5network5t64 (5.15.13+dfsg-1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libxcb-icccm4 (0.4.1-1.1build3 Ubuntu:24.04/noble [arm64])
+Conf libxcb-util1 (0.4.0-1build3 Ubuntu:24.04/noble [arm64])
+Conf libxcb-image0 (0.4.0-2build1 Ubuntu:24.04/noble [arm64])
+Conf libxcb-keysyms1 (0.4.0-1build4 Ubuntu:24.04/noble [arm64])
+Conf libxcb-render-util0 (0.3.9-1build4 Ubuntu:24.04/noble [arm64])
+Conf libxcb-shape0 (1.15-1ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf libxcb-xinerama0 (1.15-1ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf libxcb-xinput0 (1.15-1ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf libxcb-xkb1 (1.15-1ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf libxkbcommon-x11-0 (1.6.0-1build1 Ubuntu:24.04/noble [arm64])
+Conf libqt5gui5t64 (5.15.13+dfsg-1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libqt5widgets5t64 (5.15.13+dfsg-1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libqt5opengl5t64 (5.15.13+dfsg-1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libqt5test5t64 (5.15.13+dfsg-1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-highgui406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-imgproc-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-imgcodecs-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libswscale7 (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Conf libopencv-videoio406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-videoio-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopenexr-dev (3.1.5-5.1build3 Ubuntu:24.04/noble [arm64])
+Conf libpng-dev (1.6.43-5ubuntu0.6 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libswscale-dev (7:6.1.1-3ubuntu5 Ubuntu:24.04/noble [arm64])
+Conf libjbig-dev (2.1-6.1ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf liblzma-dev (5.6.1+really5.4.5-1ubuntu0.3 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libwebpdecoder3 (1.3.2-0.4build3 Ubuntu:24.04/noble [arm64])
+Conf libsharpyuv-dev (1.3.2-0.4build3 Ubuntu:24.04/noble [arm64])
+Conf libwebp-dev (1.3.2-0.4build3 Ubuntu:24.04/noble [arm64])
+Conf libtiffxx6 (4.5.1+git230720-4ubuntu2.5 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libtiff-dev (4.5.1+git230720-4ubuntu2.5 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libopencv-highgui-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-ml406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-ml-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-features2d-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-calib3d-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libprotobuf32t64 (3.21.12-8.2ubuntu0.3 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libopencv-dnn406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-objdetect406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-video406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libtesseract5 (5.3.4-1build5 Ubuntu:24.04/noble [arm64])
+Conf libopencv-contrib406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-dnn-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-objdetect-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-photo406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-photo-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-shape406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-video-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-shape-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-stitching406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-stitching-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-superres406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-superres-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-videostab406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-videostab-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libmunge2 (0.5.15-4ubuntu0.1 Ubuntu:24.04/noble-updates, Ubuntu:24.04/noble-security [arm64])
+Conf libpciaccess0 (0.17-3ubuntu0.24.04.2 Ubuntu:24.04/noble-updates [arm64])
+Conf libxnvctrl0 (510.47.03-0ubuntu4.24.04.1 Ubuntu:24.04/noble-updates [arm64])
+Conf libhwloc-plugins (2.10.0-1build1 Ubuntu:24.04/noble [arm64])
+Conf libpmix2t64 (5.0.1-4.1build1 Ubuntu:24.04/noble [arm64])
+Conf libucx0 (1.16.0+ds-5ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopenmpi3t64 (4.1.6-7ubuntu2 Ubuntu:24.04/noble [arm64])
+Conf libxft2 (2.3.6-1build1 Ubuntu:24.04/noble [arm64])
+Conf libxss1 (1:1.2.3-1build3 Ubuntu:24.04/noble [arm64])
+Conf libtk8.6 (8.6.14-1build1 Ubuntu:24.04/noble [arm64])
+Conf libvtk9.1t64 (9.1.0+really9.1.0+dfsg2-7.1build3 Ubuntu:24.04/noble [arm64])
+Conf libopencv-viz406t64 (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-viz-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-contrib-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf libopencv-dev (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf python3-opencv (4.6.0+dfsg-13.1ubuntu1 Ubuntu:24.04/noble [arm64])
+Conf ros-jazzy-cv-bridge (4.1.0-1noble.20260902.175525 ROS noble:noble [arm64])
+Conf ros-jazzy-diagnostic-updater (4.2.7-1noble.20260902.152037 ROS noble:noble [arm64])
+Conf ros-jazzy-image-transport (5.1.8-1noble.20260902.180007 ROS noble:noble [arm64])
+Conf ros-jazzy-realsense2-camera-msgs (4.58.4-1noble.20260902.134137 ROS noble:noble [arm64])
+Conf ros-jazzy-realsense2-camera (4.58.4-1noble.20260902.181721 ROS noble:noble [arm64])

@@ -1,0 +1,8 @@
+{
+  "name": "guided-60s-20260913T062916Z",
+  "remote": "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/guided-60s-20260913T062916Z",
+  "pid": 6977,
+  "collector_log": "STREAMING_READY 1789280958047586763\n",
+  "observed_utc": "2026-09-13T06:29:18.062627+00:00",
+  "local": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/guided-60s-20260913T062916Z"
+}

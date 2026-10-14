@@ -1,0 +1,29 @@
+{
+  "utc": "2026-09-13T06:00:31.110308+00:00",
+  "checks": [
+    {
+      "receipt": "n1-sourced/result.json",
+      "receipt_sha256": "0080054ff65bc63a42c3441361b114219daf1eea60246d249277c2ee66849ef0",
+      "files": 6,
+      "mismatches": []
+    },
+    {
+      "receipt": "n2-accepted/result.json",
+      "receipt_sha256": "818b8c0b1a81bfcb4acba80ce2080173dade9471ef6e11aad9476ea1acc7d1ca",
+      "files": 62,
+      "mismatches": []
+    },
+    {
+      "receipt": "timing-probe/result.json",
+      "receipt_sha256": "40dd0c9b24388b2bd512bb3a75b0afbe500b4de0772863f183a803a81799a067",
+      "files": 18,
+      "mismatches": []
+    },
+    {
+      "receipt": "stationary-600s/result.json",
+      "receipt_sha256": "f1c5918c4325574f975b89064d75effbb7526be4ee8f768fe96cc139bc397d86",
+      "files": 68,
+      "mismatches": []
+    }
+  ]
+}
