@@ -1,0 +1,17 @@
+{
+  "recorded_utc": "2026-09-13T02:19:13.456964+00:00",
+  "source": "User reports in conversation",
+  "power_meter_observation": "5 V and approximately 0.6\u20130.7 A (>3 W); meter position and transient behavior unknown",
+  "dedicated_pi5_supply_available": false,
+  "cooling": "Raspibase integrated fan powered through Pi 5 four-pin fan header, PWM/tachometer",
+  "fan_specifications_user_quoted": {
+    "input": "5 V DC",
+    "max_airflow_CFM": 2.79,
+    "max_speed_RPM": "8000 +/-15%",
+    "case": "ABS base/frame/lid and PC fan assembly"
+  },
+  "operator_guided_motion_available": true,
+  "actual_supply_model_rating": "PENDING",
+  "direct_cable_attestation": "PENDING",
+  "nvme_available": "PENDING; not observed attached"
+}

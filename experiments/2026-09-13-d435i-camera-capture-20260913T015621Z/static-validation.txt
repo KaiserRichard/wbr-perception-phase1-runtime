@@ -1,0 +1,3 @@
+JSON/YAML parsed: 55
+Local Markdown links resolved: 12
+Shell syntax: 2

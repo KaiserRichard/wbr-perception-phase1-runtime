@@ -1,0 +1,125 @@
+{
+  "utc.txt": {
+    "argv": [
+      "date",
+      "-u",
+      "--iso-8601=seconds"
+    ],
+    "returncode": 0
+  },
+  "uptime.txt": {
+    "argv": [
+      "uptime"
+    ],
+    "returncode": 0
+  },
+  "boot-id.txt": {
+    "argv": [
+      "cat",
+      "/proc/sys/kernel/random/boot_id"
+    ],
+    "returncode": 0
+  },
+  "power.txt": {
+    "argv": [
+      "vcgencmd",
+      "get_throttled"
+    ],
+    "returncode": 0
+  },
+  "temperature.txt": {
+    "argv": [
+      "vcgencmd",
+      "measure_temp"
+    ],
+    "returncode": 0
+  },
+  "thermal-zone0.txt": {
+    "argv": [
+      "cat",
+      "/sys/class/thermal/thermal_zone0/temp"
+    ],
+    "returncode": 0
+  },
+  "ip-addresses.txt": {
+    "argv": [
+      "ip",
+      "-br",
+      "addr"
+    ],
+    "returncode": 0
+  },
+  "routes.txt": {
+    "argv": [
+      "ip",
+      "route"
+    ],
+    "returncode": 0
+  },
+  "lsusb.txt": {
+    "argv": [
+      "lsusb"
+    ],
+    "returncode": 0
+  },
+  "usb-tree.txt": {
+    "argv": [
+      "lsusb",
+      "-t"
+    ],
+    "returncode": 0
+  },
+  "kernel-boot-utc.log": {
+    "argv": [
+      "journalctl",
+      "-k",
+      "-b",
+      "--no-pager",
+      "-o",
+      "short-iso-precise",
+      "--utc"
+    ],
+    "returncode": 0
+  },
+  "kernel-boot-monotonic.log": {
+    "argv": [
+      "journalctl",
+      "-k",
+      "-b",
+      "--no-pager",
+      "-o",
+      "short-monotonic"
+    ],
+    "returncode": 0
+  },
+  "processes.txt": {
+    "argv": [
+      "ps",
+      "-eo",
+      "pid,ppid,user,comm,args"
+    ],
+    "returncode": 0
+  },
+  "memory.txt": {
+    "argv": [
+      "free",
+      "-h"
+    ],
+    "returncode": 0
+  },
+  "filesystems.txt": {
+    "argv": [
+      "df",
+      "-hT"
+    ],
+    "returncode": 0
+  },
+  "storage-devices.txt": {
+    "argv": [
+      "lsblk",
+      "-o",
+      "NAME,MODEL,SERIAL,TRAN,SIZE,FSTYPE,UUID,MOUNTPOINTS"
+    ],
+    "returncode": 0
+  }
+}

@@ -1,0 +1,5 @@
+JSON/JSONL/YAML parsed: 81
+Local Markdown links resolved: 30
+Shell syntax files: 13
+git diff --check: PASS
+Candidate noise quantities remain explicitly UNKNOWN: PASS

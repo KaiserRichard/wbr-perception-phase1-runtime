@@ -1,0 +1,7 @@
+{
+  "local": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z",
+  "remote": "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z",
+  "native_bundle": "/home/richard/wbr-runtime/wbr-runtime-20260913T021130Z",
+  "precision_bundle": "/home/richard/wbr-runtime/wbr-runtime-20260913T024714Z",
+  "ros_bundle": "/home/richard/wbr-runtime/wbr-runtime-20260913T025503Z"
+}

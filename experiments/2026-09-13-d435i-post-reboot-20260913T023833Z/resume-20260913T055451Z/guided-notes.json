@@ -1,0 +1,57 @@
+{
+  "recorded_utc": "2026-09-13T06:13:31.887152+00:00",
+  "purpose": "Bounded real VIO-development motion sequence; no target geometry or calibration qualification",
+  "operator_target_confirmation": "No verified checkerboard or AprilGrid available",
+  "target": null,
+  "calibration_qualified": false,
+  "seconds": 60,
+  "image_every": 1,
+  "profile": "IR1 640x480 Y8 15Hz; gyro XYZ32F 200Hz; accel XYZ32F 100Hz",
+  "intended_phases_seconds": [
+    [
+      0,
+      5,
+      "stationary"
+    ],
+    [
+      5,
+      15,
+      "slow yaw left/right"
+    ],
+    [
+      15,
+      25,
+      "slow pitch up/down"
+    ],
+    [
+      25,
+      35,
+      "slow roll each direction"
+    ],
+    [
+      35,
+      45,
+      "gentle combined rotations"
+    ],
+    [
+      45,
+      55,
+      "small translations through left/right, up/down, forward/back"
+    ],
+    [
+      55,
+      60,
+      "stationary"
+    ]
+  ],
+  "cue_timing": "Intended phases only; actual cue times recorded separately and actual motion evaluated from sensor data",
+  "emitter": "Temporarily off; restored on clean exit",
+  "native_metadata_sha256": "f983cfb39dd98e7cc0c076891ca7ade3acdc16e4b872c30697636aa1e9588168",
+  "storage": "Bounded microSD evidence, approximately 280 MB at exact raw profile; no external-storage qualification",
+  "limitations": [
+    "No verified calibration target or motion ground truth",
+    "SDK fallback IMU intrinsics/extrinsics preserved",
+    "Matching timestamp domains do not establish physical synchronization"
+  ],
+  "canonical_head": "593245740fa962ad2325dc531cdb48c21d5f15b2"
+}

@@ -1,0 +1,9 @@
+/dev/sda1        59G  1.4G   58G   3% /mnt/wbr-usb64
+【RM2025-串联腿步兵机器人机械结构开源】上海交通大学-交龙战队
+[RM2025-串联腿步兵机器人机械结构开源】中国石油大学（华东）-RPS战队
+System Volume Information
+wbr-perception-phase1
+轮腿STP.机械结构_20251204
+轮腿机器人-NBUT bản mini
+write_MBps=1.09
+throttled=0x50000

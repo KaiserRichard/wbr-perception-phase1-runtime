@@ -1,0 +1,326 @@
+2026-09-12T15:36:09+00:00
+2026-09-12T17:45:20+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T17:46:01+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T22:12:17+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T22:12:29+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T22:12:33+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T22:12:38+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T22:24:39+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T22:25:46+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+2026-09-12T22:31:08+07:00 wbr-pi5 kernel: hwmon hwmon3: Undervoltage detected!
+usage: ros2 bag play [-h] [-s {mcap,sqlite3}] [-i uri [storage_id ...]]
+                     [--read-ahead-queue-size READ_AHEAD_QUEUE_SIZE] [-r RATE]
+                     [--topics topic [topic ...]]
+                     [--services service [service ...]] [-e REGEX]
+                     [-x EXCLUDE_REGEX] [--exclude-topics topic [topic ...]]
+                     [--exclude-services service [service ...]]
+                     [--qos-profile-overrides-path QOS_PROFILE_OVERRIDES_PATH]
+                     [-l] [--remap REMAP [REMAP ...]]
+                     [--storage-config-file STORAGE_CONFIG_FILE] [--clock [Hz]
+                     | --clock-topics CLOCK_TOPICS [CLOCK_TOPICS ...] |
+                     --clock-topics-all] [-d DELAY]
+                     [--playback-duration PLAYBACK_DURATION]
+                     [--playback-until-sec PLAYBACK_UNTIL_SEC | --playback-until-nsec PLAYBACK_UNTIL_NSEC]
+                     [--disable-keyboard-controls] [-p]
+                     [--start-offset START_OFFSET]
+                     [--wait-for-all-acked TIMEOUT] [--disable-loan-message]
+                     [--publish-service-requests]
+                     [--service-requests-source {service_introspection,client_introspection}]
+                     [--log-level {debug,info,warn,error,fatal}]
+                     [bag_path]
+
+Play back ROS data from a bag
+
+positional arguments:
+  bag_path              Bag to open. Use --input instead to provide an input
+                        bag with a specific storage ID.
+
+options:
+  -h, --help            show this help message and exit
+  -s {mcap,sqlite3}, --storage {mcap,sqlite3}
+                        Storage implementation of bag. By default attempts to
+                        detect automatically - use this argument to override.
+                        (deprecated: use --input to provide an input bag with
+                        a specific storage ID)
+  -i uri [storage_id ...], --input uri [storage_id ...]
+                        URI (and optional storage ID) of an input bag. May be
+                        provided more than once for multiple input bags.
+                        Storage ID options are: mcap, sqlite3.
+  --read-ahead-queue-size READ_AHEAD_QUEUE_SIZE
+                        size of message queue rosbag tries to hold in memory
+                        to help deterministic playback. Larger size will
+                        result in larger memory needs but might prevent delay
+                        of message playback.
+  -r RATE, --rate RATE  rate at which to play back messages. Valid range >
+                        0.0.
+  --topics topic [topic ...]
+                        Space-delimited list of topics to play.
+  --services service [service ...]
+                        Space-delimited list of services to play.
+  -e REGEX, --regex REGEX
+                        Play only topics and services matches with regular
+                        expression.
+  -x EXCLUDE_REGEX, --exclude-regex EXCLUDE_REGEX
+                        regular expressions to exclude topics and services
+                        from replay.
+  --exclude-topics topic [topic ...]
+                        Space-delimited list of topics not to play.
+  --exclude-services service [service ...]
+                        Space-delimited list of services not to play.
+  --qos-profile-overrides-path QOS_PROFILE_OVERRIDES_PATH
+                        Path to a yaml file defining overrides of the QoS
+                        profile for specific topics.
+  -l, --loop            enables loop playback when playing a bagfile: it
+                        starts back at the beginning on reaching the end and
+                        plays indefinitely.
+  --remap REMAP [REMAP ...], -m REMAP [REMAP ...]
+                        list of topics to be remapped: in the form
+                        "old_topic1:=new_topic1 old_topic2:=new_topic2 etc."
+  --storage-config-file STORAGE_CONFIG_FILE
+                        Path to a yaml file defining storage specific
+                        configurations. See storage plugin documentation for
+                        the format of this file.
+  --clock [Hz]          Publish to /clock at a specific frequency in Hz, to
+                        act as a ROS Time Source. Value must be positive.
+                        Defaults to not publishing.If specified, /clock topic
+                        in the bag file is excluded to publish.
+  --clock-topics CLOCK_TOPICS [CLOCK_TOPICS ...]
+                        List of topics separated by spaces that will trigger a
+                        /clock update when a message is published on them
+  --clock-topics-all    Publishes an update on /clock immediately before each
+                        replayed message
+  -d DELAY, --delay DELAY
+                        Sleep duration before play (loops are not affected),
+                        in seconds.Negative durations invalid.
+  --playback-duration PLAYBACK_DURATION
+                        Playback duration, in seconds. Negative durations mark
+                        an infinite playback. Default is -1. When positive,
+                        the maximum effective time between `playback-until-*`
+                        and this argument will determine when playback stops.
+  --playback-until-sec PLAYBACK_UNTIL_SEC
+                        Playback until timestamp, expressed in seconds since
+                        epoch. Mutually exclusive argument with `--playback-
+                        until-nsec`. Use when floating point to integer
+                        conversion error is not a concern. A negative value
+                        disables this feature. Default is -1.000000. When
+                        positive, the maximum effective time between
+                        `--playback-duration` and this argument will determine
+                        when playback stops.
+  --playback-until-nsec PLAYBACK_UNTIL_NSEC
+                        Playback until timestamp, expressed in nanoseconds
+                        since epoch. Mutually exclusive argument with
+                        `--playback-until-sec`. Use when floating point to
+                        integer conversion error matters for your use case. A
+                        negative value disables this feature. Default is -1.
+                        When positive, the maximum effective time between
+                        `--playback-duration` and this argument will determine
+                        when playback stops.
+  --disable-keyboard-controls
+                        disables keyboard controls for playback
+  -p, --start-paused    Start the playback player in a paused state.
+  --start-offset START_OFFSET
+                        Start the playback player this many seconds into the
+                        bag file.
+  --wait-for-all-acked TIMEOUT
+                        Wait until all published messages are acknowledged by
+                        all subscribers or until the timeout elapses in
+                        millisecond before play is terminated. Especially for
+                        the case of sending message with big size in a short
+                        time. Negative timeout is invalid. 0 means wait
+                        forever until all published messages are acknowledged
+                        by all subscribers. Note that this option is valid
+                        only if the publisher's QOS profile is RELIABLE.
+  --disable-loan-message
+                        Disable to publish as loaned message. By default, if
+                        loaned message can be used, messages are published as
+                        loaned message. It can help to reduce the number of
+                        data copies, so there is a greater benefit for sending
+                        big data.
+  --publish-service-requests
+                        Publish recorded service requests instead of recorded
+                        service events
+  --service-requests-source {service_introspection,client_introspection}
+                        Determine the source of the service requests to be
+                        replayed. This option only makes sense if the "--
+                        publish-service-requests" option is set. By default,
+                        the service requests replaying from recorded service
+                        introspection message.
+  --log-level {debug,info,warn,error,fatal}
+                        Logging level.
+usage: ros2 bag record [-h] [-o OUTPUT] [-s {mcap,sqlite3}]
+                       [--topics Topic [Topic ...]]
+                       [--services ServiceName [ServiceName ...]]
+                       [--topic-types TopicType [TopicType ...]] [-a]
+                       [--all-topics] [--all-services] [-e REGEX]
+                       [--exclude-regex EXCLUDE_REGEX]
+                       [--exclude-topic-types ExcludeTopicTypes [ExcludeTopicTypes ...]]
+                       [--exclude-topics Topic [Topic ...]]
+                       [--exclude-services ServiceName [ServiceName ...]]
+                       [--include-unpublished-topics]
+                       [--include-hidden-topics] [--no-discovery]
+                       [-p POLLING_INTERVAL] [--ignore-leaf-topics]
+                       [--qos-profile-overrides-path QOS_PROFILE_OVERRIDES_PATH]
+                       [-f {}] [-b MAX_BAG_SIZE] [-d MAX_BAG_DURATION]
+                       [--max-cache-size MAX_CACHE_SIZE]
+                       [--disable-keyboard-controls] [--start-paused]
+                       [--use-sim-time] [--node-name NODE_NAME]
+                       [--custom-data [KEY=VALUE ...]] [--snapshot-mode]
+                       [--log-level {debug,info,warn,error,fatal}]
+                       [--storage-config-file STORAGE_CONFIG_FILE]
+                       [--storage-preset-profile {none,fastwrite,zstd_fast,zstd_small}]
+                       [--compression-queue-size COMPRESSION_QUEUE_SIZE]
+                       [--compression-threads COMPRESSION_THREADS]
+                       [--compression-threads-priority COMPRESSION_THREADS_PRIORITY]
+                       [--compression-mode {none,file,message}]
+                       [--compression-format {zstd}]
+                       [[Topic ...] ...]
+
+Record ROS data to a bag
+
+positional arguments:
+  [Topic ...]           Space-delimited list of topics to record. (deprecated)
+
+options:
+  -h, --help            show this help message and exit
+  -o OUTPUT, --output OUTPUT
+                        Destination of the bagfile to create, defaults to a
+                        timestamped folder in the current directory.
+  -s {mcap,sqlite3}, --storage {mcap,sqlite3}
+                        Storage identifier to be used, defaults to 'mcap'.
+  --topics Topic [Topic ...]
+                        Space-delimited list of topics to record.
+  --services ServiceName [ServiceName ...]
+                        Space-delimited list of services to record.
+  --topic-types TopicType [TopicType ...]
+                        Space-delimited list of topic types to record.
+  -a, --all             Record all topics and services (Exclude hidden topic).
+  --all-topics          Record all topics (Exclude hidden topic).
+  --all-services        Record all services via service event topics.
+  -e REGEX, --regex REGEX
+                        Record only topics and services containing provided
+                        regular expression. Note: --all, --all-topics or
+                        --all-services will override --regex.
+  --exclude-regex EXCLUDE_REGEX
+                        Exclude topics and services containing provided
+                        regular expression. Works on top of --all, --all-
+                        topics, --all-services, --topics, --services or
+                        --regex.
+  --exclude-topic-types ExcludeTopicTypes [ExcludeTopicTypes ...]
+                        Space-delimited list of topic types not being
+                        recorded. Works on top of --all, --all-topics,
+                        --topics or --regex.
+  --exclude-topics Topic [Topic ...]
+                        Space-delimited list of topics not being recorded.
+                        Works on top of --all, --all-topics, --topics or
+                        --regex.
+  --exclude-services ServiceName [ServiceName ...]
+                        Space-delimited list of services not being recorded.
+                        Works on top of --all, --all-services, --services or
+                        --regex.
+  --include-unpublished-topics
+                        Discover and record topics which have no publisher.
+                        Subscriptions on such topics will be made with default
+                        QoS unless otherwise specified in a QoS overrides
+                        file.
+  --include-hidden-topics
+                        Discover and record hidden topics as well. These are
+                        topics used internally by ROS 2 implementation.
+  --no-discovery        Disables topic auto discovery during recording: only
+                        topics present at startup will be recorded.
+  -p POLLING_INTERVAL, --polling-interval POLLING_INTERVAL
+                        Time in ms to wait between querying available topics
+                        for recording. It has no effect if --no-discovery is
+                        enabled.
+  --ignore-leaf-topics  Ignore topics without a subscription.
+  --qos-profile-overrides-path QOS_PROFILE_OVERRIDES_PATH
+                        Path to a yaml file defining overrides of the QoS
+                        profile for specific topics.
+  -f {}, --serialization-format {}
+                        The rmw serialization format in which the messages are
+                        saved, defaults to the rmw currently in use.
+  -b MAX_BAG_SIZE, --max-bag-size MAX_BAG_SIZE
+                        Maximum size in bytes before the bagfile will be
+                        split. Default: 0, recording written in single bagfile
+                        and splitting is disabled.
+  -d MAX_BAG_DURATION, --max-bag-duration MAX_BAG_DURATION
+                        Maximum duration in seconds before the bagfile will be
+                        split. Default: 0, recording written in single bagfile
+                        and splitting is disabled. If both splitting by size
+                        and duration are enabled, the bag will split at
+                        whichever threshold is reached first.
+  --max-cache-size MAX_CACHE_SIZE
+                        Maximum size (in bytes) of messages to hold in each
+                        buffer of cache. Default: 104857600. The cache is
+                        handled through double buffering, which means that in
+                        pessimistic case up to twice the parameter value of
+                        memory is needed. A rule of thumb is to cache an order
+                        of magnitude corresponding to about one second of
+                        total recorded data volume. If the value specified is
+                        0, then every message is directly written to disk.
+  --disable-keyboard-controls
+                        disables keyboard controls for recorder
+  --start-paused        Start the recorder in a paused state.
+  --use-sim-time        Use simulation time for message timestamps by
+                        subscribing to the /clock topic. Until first /clock
+                        message is received, no messages will be written to
+                        bag.
+  --node-name NODE_NAME
+                        Specify the recorder node name. Default is
+                        rosbag2_recorder.
+  --custom-data [KEY=VALUE ...]
+                        Space-delimited list of key=value pairs. Store the
+                        custom data in metadata under the
+                        "rosbag2_bagfile_information/custom_data". The
+                        key=value pair can appear more than once. The last
+                        value will override the former ones.
+  --snapshot-mode       Enable snapshot mode. Messages will not be written to
+                        the bagfile until the "/rosbag2_recorder/snapshot"
+                        service is called. e.g.
+                        ros2 service call /rosbag2_recorder/snapshot
+                        rosbag2_interfaces/Snapshot
+  --log-level {debug,info,warn,error,fatal}
+                        Logging level.
+  --storage-config-file STORAGE_CONFIG_FILE
+                        Path to a yaml file defining storage specific
+                        configurations. See mcap plugin documentation for the
+                        format of this file.
+  --storage-preset-profile {none,fastwrite,zstd_fast,zstd_small}
+                        Select a preset configuration for storage plugin
+                        "mcap". Settings in this profile can still be
+                        overridden by other explicit options and --storage-
+                        config-file. Profiles:
+                        none: Default profile, no special settings.
+                        fastwrite: Disables CRC and chunking for faster
+                        writing.
+                        zstd_fast: Use Zstd chunk compression on Fastest
+                        level.
+                        zstd_small: Use Zstd chunk compression on Slowest
+                        level, for smallest file size.
+  --compression-queue-size COMPRESSION_QUEUE_SIZE
+                        Number of files or messages that may be queued for
+                        compression before being dropped. Default is 1.
+  --compression-threads COMPRESSION_THREADS
+                        Number of files or messages that may be compressed in
+                        parallel. Default is 0, which will be interpreted as
+                        the number of CPU cores.
+  --compression-threads-priority COMPRESSION_THREADS_PRIORITY
+                        Compression threads scheduling priority.
+                        For Windows the valid values are:
+                        THREAD_PRIORITY_LOWEST=-2,
+                        THREAD_PRIORITY_BELOW_NORMAL=-1 and
+                        THREAD_PRIORITY_NORMAL=0. Please refer to
+                        https://learn.microsoft.com/en-
+                        us/windows/win32/api/processthreadsapi/nf-
+                        processthreadsapi-setthreadpriority for details.
+                        For POSIX compatible OSes this is the "nice" value.
+                        The nice value range is -20 to +19 where -20 is
+                        highest, 0 default and +19 is lowest. Please refer to
+                        https://man7.org/linux/man-pages/man2/nice.2.html for
+                        details.
+                        Default is 0.
+  --compression-mode {none,file,message}
+                        Choose mode of compression for the storage. Default:
+                        none.
+  --compression-format {zstd}
+                        Choose the compression format/algorithm. Has no effect
+                        if no compression mode is chosen. Default: .

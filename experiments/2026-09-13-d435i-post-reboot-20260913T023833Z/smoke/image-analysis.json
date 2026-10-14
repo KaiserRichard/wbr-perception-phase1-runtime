@@ -1,0 +1,56 @@
+{
+  "source": "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/smoke/image-content",
+  "frame_count": 179,
+  "images": [
+    {
+      "file": "ir1-frame-30.pgm",
+      "width": 640,
+      "height": 480,
+      "format": "Y8/mono8",
+      "pixel_bytes": 307200,
+      "minimum": 21,
+      "maximum": 255,
+      "mean": 96.76542643229166,
+      "stdev": 75.62348667119919,
+      "sha256": "3660b18238944cf24fac24f71d5de506a9300806c47d4706d4ef689d4470b426",
+      "statistically_nontrivial": true
+    },
+    {
+      "file": "ir1-frame-90.pgm",
+      "width": 640,
+      "height": 480,
+      "format": "Y8/mono8",
+      "pixel_bytes": 307200,
+      "minimum": 21,
+      "maximum": 255,
+      "mean": 96.608349609375,
+      "stdev": 75.6551403346796,
+      "sha256": "cc87e6b0281da39ffcf70311dc672ba50dce950a83e100590285531c89000c92",
+      "statistically_nontrivial": true
+    },
+    {
+      "file": "ir1-frame-150.pgm",
+      "width": 640,
+      "height": 480,
+      "format": "Y8/mono8",
+      "pixel_bytes": 307200,
+      "minimum": 21,
+      "maximum": 255,
+      "mean": 96.53955078125,
+      "stdev": 75.64591776518932,
+      "sha256": "90aa92325aeacc4aebe12030e022c35dddcb8b9678bda3f9e4d76ac9f0b88bbc",
+      "statistically_nontrivial": true
+    }
+  ],
+  "timestamp_domains": [
+    "Global Time"
+  ],
+  "max_stamp_gap_seconds": 0.066840087890625,
+  "nonpositive_stamp_steps": 0,
+  "all_distinct_images": true,
+  "automatic_checks_pass": true,
+  "verdict": "REVIEW_REQUIRED",
+  "visual_review_required": "Open all three saved PGMs; verify coherent grayscale scene, no garbled rows/blocks and expected response. Record reviewer, UTC and observations separately.",
+  "scene_motion_tested": false,
+  "N2": "NOT DECIDED: statistical variation alone does not establish responsive non-garbled imagery"
+}

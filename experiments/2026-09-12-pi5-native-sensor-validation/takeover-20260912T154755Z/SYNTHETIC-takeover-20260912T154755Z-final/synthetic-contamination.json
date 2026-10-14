@@ -1,0 +1,35 @@
+{
+  "mode": "no-publishers",
+  "domain": 181,
+  "start_utc": "2026-09-12T16:09:42.529306+00:00",
+  "end_utc": "2026-09-12T16:09:42.630475+00:00",
+  "graph": {
+    "/camera/camera/infra1/image_rect_raw": [],
+    "/camera/camera/infra1/camera_info": [],
+    "/camera/camera/gyro/sample": [],
+    "/camera/camera/accel/sample": [],
+    "/camera/camera/gyro/imu_info": [],
+    "/camera/camera/accel/imu_info": [],
+    "/camera/camera/extrinsics/depth_to_infra1": [],
+    "/camera/camera/extrinsics/depth_to_gyro": [],
+    "/camera/camera/extrinsics/depth_to_accel": [],
+    "/tf_static": [
+      {
+        "node_name": "_NODE_NAME_UNKNOWN_",
+        "node_namespace": "_NODE_NAMESPACE_UNKNOWN_",
+        "type": "tf2_msgs/msg/TFMessage",
+        "qos": "QoSProfile(history=3, depth=0, reliability=1, durability=2, lifespan=Infinite, deadline=Infinite, liveliness=1, liveliness_lease_duration=Infinite, avoid_ros_namespace_conventions=False)",
+        "reliability": "RELIABLE",
+        "durability": "VOLATILE"
+      }
+    ]
+  },
+  "camera_nodes": [],
+  "checks": 1,
+  "completed": false,
+  "forbidden_publishers": [],
+  "failures": [
+    "required-topic publishers remain"
+  ],
+  "verdict": "FAIL"
+}

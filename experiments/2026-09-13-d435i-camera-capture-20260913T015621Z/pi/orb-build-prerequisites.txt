@@ -1,0 +1,14 @@
+/usr/bin/cmake
+cmake version 3.28.3
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+Package opencv4 was not found in the pkg-config search path.
+Perhaps you should add the directory containing `opencv4.pc'
+to the PKG_CONFIG_PATH environment variable
+Package 'opencv4', required by 'virtual:world', not found
+Package 'pangolin', required by 'virtual:world', not found
+dpkg-query: no packages found matching libopencv-dev
+dpkg-query: no packages found matching libboost-serialization-dev
+libeigen3-dev	3.4.0-4build0.1
+libssl-dev:arm64	3.0.13-0ubuntu3.15
+4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4

@@ -1,0 +1,255 @@
+{
+  "recorded_utc": "2026-09-13T06:57:34.060945+00:00",
+  "source": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/native-metadata",
+  "raw_metadata_sha256": "f983cfb39dd98e7cc0c076891ca7ade3acdc16e4b872c30697636aa1e9588168",
+  "selected_native_records": [
+    {
+      "kind": "device_info",
+      "name": "Name",
+      "value": "RealSense D435I"
+    },
+    {
+      "kind": "device_info",
+      "name": "Serial Number",
+      "value": "243322073847"
+    },
+    {
+      "kind": "device_info",
+      "name": "Firmware Version",
+      "value": "5.17.3.10"
+    },
+    {
+      "kind": "device_info",
+      "name": "Physical Port",
+      "value": "/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video0"
+    },
+    {
+      "kind": "device_info",
+      "name": "Debug Op Code",
+      "value": "15"
+    },
+    {
+      "kind": "device_info",
+      "name": "Advanced Mode",
+      "value": "YES"
+    },
+    {
+      "kind": "device_info",
+      "name": "Product Id",
+      "value": "0B3A"
+    },
+    {
+      "kind": "device_info",
+      "name": "Camera Locked",
+      "value": "YES"
+    },
+    {
+      "kind": "device_info",
+      "name": "Usb Type Descriptor",
+      "value": "3.2"
+    },
+    {
+      "kind": "device_info",
+      "name": "Product Line",
+      "value": "D400"
+    },
+    {
+      "kind": "device_info",
+      "name": "Asic Serial Number",
+      "value": "251843061466"
+    },
+    {
+      "kind": "device_info",
+      "name": "Firmware Update Id",
+      "value": "251843061466"
+    },
+    {
+      "kind": "device_info",
+      "name": "Connection Type",
+      "value": "USB"
+    },
+    {
+      "kind": "device_info",
+      "name": "Imu Type",
+      "value": "BMI085"
+    },
+    {
+      "kind": "profile",
+      "sensor": "Stereo Module",
+      "uid": 1,
+      "stream": "Infrared 1",
+      "index": 1,
+      "format": "Y8",
+      "fps": 15,
+      "width": 640,
+      "height": 480,
+      "fx": 388.5274353027344,
+      "fy": 388.5274353027344,
+      "ppx": 319.10430908203125,
+      "ppy": 239.55616760253906,
+      "distortion": "Brown Conrady",
+      "coefficients": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "profile",
+      "sensor": "Motion Module",
+      "uid": 7,
+      "stream": "Accel",
+      "index": 0,
+      "format": "MOTION_XYZ32F",
+      "fps": 100,
+      "data_row_major_3x4": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ]
+      ],
+      "noise_variances": [
+        0,
+        0,
+        0
+      ],
+      "bias_variances": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "profile",
+      "sensor": "Motion Module",
+      "uid": 8,
+      "stream": "Gyro",
+      "index": 0,
+      "format": "MOTION_XYZ32F",
+      "fps": 200,
+      "data_row_major_3x4": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ]
+      ],
+      "noise_variances": [
+        0,
+        0,
+        0
+      ],
+      "bias_variances": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "extrinsics",
+      "from_uid": 1,
+      "to_uid": 7,
+      "from_stream": "Infrared 1",
+      "to_stream": "Accel",
+      "rotation_column_major": [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "translation_m": [
+        -0.005520000122487545,
+        0.005100000184029341,
+        0.011739999987185001
+      ]
+    },
+    {
+      "kind": "extrinsics",
+      "from_uid": 1,
+      "to_uid": 8,
+      "from_stream": "Infrared 1",
+      "to_stream": "Gyro",
+      "rotation_column_major": [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "translation_m": [
+        -0.005520000122487545,
+        0.005100000184029341,
+        0.011739999987185001
+      ]
+    },
+    {
+      "kind": "active_calibration_table",
+      "bytes": 512,
+      "scope": "SDK active table; not a complete EEPROM backup"
+    }
+  ],
+  "pi_mac_metadata_hash_checks": {
+    "native-metadata/metadata.jsonl": true,
+    "native-metadata/active-calibration-table.bin": true,
+    "native-metadata/sdk.log": true,
+    "native-metadata/advanced-settings.json": true
+  },
+  "source_manifest": {
+    "native-metadata/metadata.jsonl": {
+      "sha256": "f983cfb39dd98e7cc0c076891ca7ade3acdc16e4b872c30697636aa1e9588168",
+      "bytes": 92158
+    },
+    "native-metadata/active-calibration-table.bin": {
+      "sha256": "f7c615c36e05442c36665fc8a553b89349ad12d302af3050b76a0ff3f511b47a",
+      "bytes": 512
+    },
+    "native-metadata/sdk.log": {
+      "sha256": "af9f8490ba778840e74d39057b04542624505f39ef998b4f1bacdaea80635ffc",
+      "bytes": 7889
+    },
+    "native-metadata/advanced-settings.json": {
+      "sha256": "ec5a9e739b5823c7d25be294e073d4bd4acac6c2f1af563dc082bbe172411404",
+      "bytes": 3831
+    }
+  },
+  "known_warning": "IMU Calibration is not available, default intrinsic and extrinsic will be used.",
+  "interpretation": "Available motion intrinsics/extrinsics are SDK fallback/default/CAD, not qualified calibration. Full precision SDK timestamps, domains, frame numbers, host clocks and raw IMU values remain unchanged in the independently hash-verified raw datasets. Standard ROS Image/Imu headers do not expose the SDK timestamp domain."
+}

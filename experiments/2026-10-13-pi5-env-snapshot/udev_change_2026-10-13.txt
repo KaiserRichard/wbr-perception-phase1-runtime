@@ -1,0 +1,55 @@
+[Errno 13] Permission denied: '/usr/local/libexec/__pycache__'--- diff rule
+1c1
+< # Only D435i serial 251843061466; native V4L2 + HID/IIO SDK path.
+---
+> # Only D435i serials 251843061466 (Sep 2026 unit) and 327743061057 (active unit since 2026-10-13); native V4L2 + HID/IIO SDK path.
+7a8,12
+> SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="8086", ATTR{idProduct}=="0b3a", ATTR{serial}=="327743061057", GROUP:="video", MODE:="0660"
+> SUBSYSTEM=="video4linux", ATTRS{idVendor}=="8086", ATTRS{idProduct}=="0b3a", ATTRS{serial}=="327743061057", GROUP:="video", MODE:="0660"
+> SUBSYSTEM=="hidraw", ATTRS{idVendor}=="8086", ATTRS{idProduct}=="0b3a", ATTRS{serial}=="327743061057", GROUP:="video", MODE:="0660"
+> SUBSYSTEM=="iio", KERNEL=="iio:device*", ATTRS{idVendor}=="8086", ATTRS{idProduct}=="0b3a", ATTRS{serial}=="327743061057", GROUP:="video", MODE:="0660", RUN+="/usr/local/libexec/wbr-d435i-iio-permissions --apply /sys%p"
+> SUBSYSTEM=="platform", KERNEL=="HID-SENSOR-2000e1.*", DRIVER=="hid_sensor_custom", ATTRS{idVendor}=="8086", ATTRS{idProduct}=="0b3a", ATTRS{serial}=="327743061057", RUN+="/usr/local/libexec/wbr-d435i-iio-permissions --apply /sys%p"
+--- diff helper
+6c6
+< other camera serial is eligible. Source: librealsense v2.58.4 backend-hid.cpp.
+---
+> other camera serial is eligible (allowed: 251843061466, 327743061057). Source: librealsense v2.58.4 backend-hid.cpp.
+22c22
+<             if identity != ['8086', '0b3a', '251843061466']:
+---
+>             if identity[:2] != ['8086', '0b3a'] or identity[2] not in ('251843061466', '327743061057'):
+--- after
+crw-rw---- 1 root video 243,  0 Oct 13 11:25 /dev/hidraw0
+crw-rw---- 1 root video  81,  2 Oct 13 11:25 /dev/video2
+crw-rw---- 1 root video  81,  3 Oct 13 11:25 /dev/video3
+crw-rw---- 1 root video  81, 22 Oct 13 11:25 /dev/video4
+crw-rw---- 1 root video  81, 23 Oct 13 11:25 /dev/video5
+/sys/bus/iio/devices/iio:device0 accel_3d
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.2.auto/iio:device0/buffer/enable
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.2.auto/iio:device0/buffer/length
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.2.auto/iio:device0/in_accel_hysteresis
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.2.auto/iio:device0/in_accel_sampling_frequency
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.2.auto/iio:device0/scan_elements/in_accel_x_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.2.auto/iio:device0/scan_elements/in_accel_y_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.2.auto/iio:device0/scan_elements/in_accel_z_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.2.auto/iio:device0/scan_elements/in_timestamp_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.2.auto/iio:device0/trigger/current_trigger
+-rw-rw---- 1 root video 4096 Oct 13 11:25 /sys/bus/iio/devices/iio:device0/buffer/enable
+-rw-rw---- 1 root video 4096 Oct 13 11:25 /sys/bus/iio/devices/iio:device0/scan_elements/in_accel_x_en
+-rw-rw---- 1 root video 4096 Oct 13 11:25 /sys/bus/iio/devices/iio:device0/scan_elements/in_accel_y_en
+-rw-rw---- 1 root video 4096 Oct 13 11:25 /sys/bus/iio/devices/iio:device0/scan_elements/in_accel_z_en
+/sys/bus/iio/devices/iio:device1 gyro_3d
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.3.auto/iio:device1/buffer/enable
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.3.auto/iio:device1/buffer/length
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.3.auto/iio:device1/in_anglvel_hysteresis
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.3.auto/iio:device1/in_anglvel_sampling_frequency
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.3.auto/iio:device1/scan_elements/in_anglvel_x_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.3.auto/iio:device1/scan_elements/in_anglvel_y_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.3.auto/iio:device1/scan_elements/in_anglvel_z_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.3.auto/iio:device1/scan_elements/in_timestamp_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.3.auto/iio:device1/trigger/current_trigger
+-rw-rw---- 1 root video 4096 Oct 13 11:25 /sys/bus/iio/devices/iio:device1/buffer/enable
+-rw-rw---- 1 root video 4096 Oct 13 11:25 /sys/bus/iio/devices/iio:device1/scan_elements/in_anglvel_x_en
+-rw-rw---- 1 root video 4096 Oct 13 11:25 /sys/bus/iio/devices/iio:device1/scan_elements/in_anglvel_y_en
+-rw-rw---- 1 root video 4096 Oct 13 11:25 /sys/bus/iio/devices/iio:device1/scan_elements/in_anglvel_z_en
+-rw-rw---- 1 root video 4096 Oct 13 11:25 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-2000e1.4.auto/enable_sensor

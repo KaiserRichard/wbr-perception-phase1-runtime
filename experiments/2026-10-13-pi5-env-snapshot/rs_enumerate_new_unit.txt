@@ -1,0 +1,12 @@
+richard
+Device Name                   Serial Number       Firmware Version
+RealSense D435I               317422076650        5.17.3.10
+
+    Serial Number                 : 	317422076650
+    Firmware Version              : 	5.17.3.10
+    Physical Port                 : 	/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video0
+    Usb Type Descriptor           : 	3.2
+    Product Line                  : 	D400
+    Asic Serial Number            : 	327743061057
+    Firmware Update Id            : 	327743061057
+throttled=0x50000

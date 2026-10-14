@@ -1,0 +1,8 @@
+2026-09-12T09:59:39+00:00
+HELPER AT PATH REFERENCED BY INSTALLED UDEV RULE (READ ONLY)
+-rwxr-xr-x 1 root root 2562 Sep 12 16:39 /usr/local/libexec/wbr-d435i-iio-permissions
+747e1941e30ea00dc4035a543e1937d5e531762919e4c11364b21c1c90482f35  /usr/local/libexec/wbr-d435i-iio-permissions
+
+NONINTERACTIVE SUDO AVAILABILITY (NO MUTATION)
+sudo_noninteractive_exit=1
+sudo: a password is required

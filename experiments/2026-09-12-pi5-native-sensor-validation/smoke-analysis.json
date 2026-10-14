@@ -1,0 +1,8 @@
+{
+  "source": "raw/sdk-smoke-01/frames.csv",
+  "capture_valid": false,
+  "rates_available": false,
+  "counts_available": false,
+  "reason": "CSV is zero bytes because SDK shutdown hit a custom-HID permission denial before serialization. This is missing evidence, not zero sensor delivery.",
+  "N2": "BLOCKED until custom-HID permission is corrected and smoke test repeated"
+}

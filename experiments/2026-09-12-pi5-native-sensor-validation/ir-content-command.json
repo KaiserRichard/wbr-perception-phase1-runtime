@@ -1,0 +1,10 @@
+{
+  "started_utc": "2026-09-12T09:36:49.516369+00:00",
+  "finished_utc": "2026-09-12T09:37:04.257780+00:00",
+  "argv": [
+    "/home/richard/wbr-sensor-validation-20260912/sample_ir",
+    "243322073847",
+    "/mnt/wbr-data/wbr-perception-phase1/2026-09-12/raw/ir-content-01"
+  ],
+  "returncode": 0
+}

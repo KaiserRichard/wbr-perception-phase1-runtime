@@ -1,0 +1,8 @@
+{
+  "verified_utc": "2026-09-13T02:14:41.573937+00:00",
+  "files": 58,
+  "all_hashes_match": true,
+  "source": "richard@192.168.50.2:/home/richard/wbr-evidence/2026-09-13-d435i-camera-capture-20260913T015621Z",
+  "destination": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-09-13-d435i-camera-capture-20260913T015621Z/pi",
+  "limitations": "Mac and Pi copies verified; no external/offsite third backup established."
+}

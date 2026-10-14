@@ -1,0 +1,20 @@
+{
+  "recorded_utc": "2026-09-13T06:06:26.649613+00:00",
+  "purpose": "Replacement 600-second stationary full-precision dataset after observed SDK frame-pool exhaustion in prior capture",
+  "operator_confirmation": "User confirmed camera can remain stationary; instructed to leave camera/support untouched for ten minutes",
+  "orientation": "As placed by operator; exact orientation unmeasured",
+  "target": null,
+  "calibration_qualified": false,
+  "source": "physical D435i",
+  "profile": "IR1 640x480 Y8 15Hz; gyro XYZ32F 200Hz; accel XYZ32F 100Hz",
+  "image_every": 150,
+  "emitter": "Temporarily off; restored by collector on clean exit",
+  "limitations": [
+    "No verified calibration target",
+    "SDK reports unavailable IMU calibration and uses default intrinsics/extrinsics",
+    "Ten minutes is limited for long-tau Allan estimates",
+    "MicroSD bounded evidence only"
+  ],
+  "canonical_head": "593245740fa962ad2325dc531cdb48c21d5f15b2",
+  "corrected_bundle": "wbr-runtime-20260913T055800Z"
+}

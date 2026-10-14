@@ -1,0 +1,16 @@
+ D D435I_BASELINE_AUDIT.md
+ ? third_party/ORB_SLAM3
+?? .obsidian/
+?? docs/.obsidian/
+?? docs/D435I_BASELINE_AUDIT.md
+?? docs/PI5_NATIVE_SENSOR_VALIDATION_2026-09-12.md
+?? experiments/2026-09-12-pi5-native-sensor-validation/
+feat/pi5-native-sensor-validation-20260912
+5932457 docs: plan Raspberry Pi 5 native perception bring-up
+144746c exp: document D435i UTM baseline audit
+1b16be7 chore: add Phase-1 runtime structure and environment
+e39c8ff chore: initialize Phase-1 perception runtime workspace
+e3a97c1 first commit
+fa623d9 first commit
+46feaec first commit
+b28d88c first commit

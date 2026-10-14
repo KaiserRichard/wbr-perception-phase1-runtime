@@ -1,0 +1,49 @@
+{
+  "scope": "CAMERA_FREE_FINAL_STATE",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/home/richard/wbr-perception-phase1-runtime",
+        "status",
+        "--short"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/home/richard/wbr-perception-phase1-runtime",
+        "rev-parse",
+        "HEAD"
+      ],
+      "returncode": 0,
+      "stdout": "5a2a7bea415382c2400c9352a20b2010257e6ab4\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "dpkg-query",
+        "-W",
+        "ros-jazzy-realsense2-camera",
+        "ros-jazzy-realsense2-camera-msgs"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "dpkg-query: no packages found matching ros-jazzy-realsense2-camera\ndpkg-query: no packages found matching ros-jazzy-realsense2-camera-msgs\n"
+    },
+    {
+      "argv": [
+        "vcgencmd",
+        "get_throttled"
+      ],
+      "returncode": 0,
+      "stdout": "throttled=0x50000\n",
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "duration_s": 183.84999990463257,
+  "path_length_m": 81.5244373203491,
+  "extent_m": {
+    "x": 5.210739851,
+    "y": 8.652692318,
+    "z": 9.861548603
+  },
+  "bounds_m": {
+    "min_xyz": [
+      -1.365238428,
+      -0.269144535,
+      -0.281255901
+    ],
+    "max_xyz": [
+      3.845501423,
+      8.383547783,
+      9.580292702
+    ]
+  },
+  "num_poses": 3678,
+  "num_keyframes": 126,
+  "pose_rate_hz": 20.00000001037448,
+  "inputs_sha256": {
+    "f_mh01_stereoi.txt": "feb43173ca49a2b15eebfba98e3b06413800878fcfa6361fcff21c0dd5ca5ddb",
+    "kf_mh01_stereoi.txt": "17e964d431aa6aab7b79c7d3d87506c3711c73e812f90bd0f96290d45c447a10"
+  },
+  "notes": [
+    "Offline diagnostics only; pose rate uses exported trajectory time, not wall time.",
+    "Path length sums adjacent exported positions; tracking gaps can inflate it.",
+    "Missing optional evidence is omitted; no hardware PASS is implied."
+  ],
+  "keyframe_coordinates": {
+    "method": "shared-timestamp full-pose rigid transform, keyframes into frame export coordinates",
+    "shared_poses": 126,
+    "max_shared_position_residual_m": 7.088793778156442e-06,
+    "rotation": [
+      [
+        0.06387718763410294,
+        0.3337893328931939,
+        0.9404809334306965
+      ],
+      [
+        0.9970736010347405,
+        -0.06100757391610414,
+        -0.04606853638315791
+      ],
+      [
+        0.04199927403625957,
+        0.9406714395428342,
+        -0.33670952438094104
+      ]
+    ],
+    "translation_m": [
+      -0.15084263776021017,
+      0.07089711685359207,
+      -0.8642505782392315
+    ]
+  },
+  "ate": {
+    "alignment": "SE3 Umeyama (scale fixed at 1)",
+    "association": "nearest timestamp from sparser sequence; no interpolation or offset",
+    "max_time_diff_s": 0.02,
+    "matched_poses": 3639,
+    "rmse_m": 0.04146129415816942,
+    "mean_m": 0.03808980552142204,
+    "median_m": 0.042723277146893675,
+    "max_m": 0.0813941239547179,
+    "rotation_estimate_to_gt": [
+      [
+        -0.3038203217523977,
+        0.32741151237686195,
+        -0.894703813366952
+      ],
+      [
+        0.15726048881002797,
+        0.9434481051444191,
+        0.2918472401079652
+      ],
+      [
+        0.9396607636532988,
+        -0.052032436638131604,
+        -0.3381276013400831
+      ]
+    ],
+    "translation_estimate_to_gt_m": [
+      4.664786097623338,
+      -1.7358744401763047,
+      0.8643089415136211
+    ]
+  },
+  "gt": {
+    "path": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/eval/gt_data.tum",
+    "sha256": "f5df5393dc53c1da14e03c314795ecfe0c8ce95c72f32a08424f2ccdd3b3c121"
+  }
+}

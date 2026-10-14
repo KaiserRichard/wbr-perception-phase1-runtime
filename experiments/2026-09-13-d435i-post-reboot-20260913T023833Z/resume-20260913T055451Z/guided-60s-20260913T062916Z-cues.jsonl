@@ -1,0 +1,6 @@
+{"phase": "yaw", "current_time": "2026-09-13 06:29:30 UTC", "timing_note": "UTC sampled after assistant cue dispatch, at 1-second resolution; not the exact dispatch or operator movement time."}
+{"phase": "pitch", "current_time": "2026-09-13 06:29:46 UTC", "timing_note": "UTC sampled after assistant cue dispatch, at 1-second resolution; not the exact dispatch or operator movement time."}
+{"phase": "roll", "current_time": "2026-09-13 06:29:59 UTC", "timing_note": "UTC sampled after assistant cue dispatch, at 1-second resolution; not the exact dispatch or operator movement time."}
+{"phase": "combined_rotation", "current_time": "2026-09-13 06:30:05 UTC", "timing_note": "UTC sampled after assistant cue dispatch, at 1-second resolution; not the exact dispatch or operator movement time."}
+{"phase": "translation", "current_time": "2026-09-13 06:30:10 UTC", "timing_note": "UTC sampled after assistant cue dispatch, at 1-second resolution; not the exact dispatch or operator movement time."}
+{"phase": "final_still", "current_time": "2026-09-13 06:30:19 UTC", "timing_note": "UTC sampled after assistant cue dispatch, at 1-second resolution; not the exact dispatch or operator movement time."}

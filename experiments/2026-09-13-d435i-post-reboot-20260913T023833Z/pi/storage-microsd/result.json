@@ -1,0 +1,142 @@
+{
+  "stage": "BOUNDED_MICROSD_PROBE",
+  "scope": "Short bounded captures only; no external-storage PASS",
+  "utc_start": "2026-09-13T02:50:04.509228+00:00",
+  "hostname": "wbr-pi5",
+  "boot_id": "a5a9b519-6883-4f44-b7fb-943c94c8f92c",
+  "verdict": "PASS",
+  "failures": [],
+  "batches": [
+    {
+      "index": 0,
+      "bytes": 8388608,
+      "write_fsync_s": 0.45796474400003717,
+      "MB_s": 18.31714801172406,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 1,
+      "bytes": 8388608,
+      "write_fsync_s": 0.4787388419999843,
+      "MB_s": 17.52230498982632,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 2,
+      "bytes": 8388608,
+      "write_fsync_s": 0.4442393780000202,
+      "MB_s": 18.88308064396673,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 3,
+      "bytes": 8388608,
+      "write_fsync_s": 0.4362298890000602,
+      "MB_s": 19.229787347282944,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 4,
+      "bytes": 8388608,
+      "write_fsync_s": 0.479038126000205,
+      "MB_s": 17.511357749417233,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 5,
+      "bytes": 8388608,
+      "write_fsync_s": 0.19458591200009323,
+      "MB_s": 43.110047966864016,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 6,
+      "bytes": 8388608,
+      "write_fsync_s": 0.2662749390001409,
+      "MB_s": 31.503558057318948,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 7,
+      "bytes": 8388608,
+      "write_fsync_s": 0.4856677010000112,
+      "MB_s": 17.272320112553263,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 8,
+      "bytes": 8388608,
+      "write_fsync_s": 0.42236978400001135,
+      "MB_s": 19.86081466471516,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 9,
+      "bytes": 8388608,
+      "write_fsync_s": 0.44417286799989597,
+      "MB_s": 18.88590817753858,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 10,
+      "bytes": 8388608,
+      "write_fsync_s": 0.4972123019999799,
+      "MB_s": 16.871280067403358,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 11,
+      "bytes": 8388608,
+      "write_fsync_s": 0.33293617000003906,
+      "MB_s": 25.19584459687578,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 12,
+      "bytes": 8388608,
+      "write_fsync_s": 0.15927755600000637,
+      "MB_s": 52.66660420128285,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 13,
+      "bytes": 8388608,
+      "write_fsync_s": 0.3145333559998562,
+      "MB_s": 26.67001079530603,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 14,
+      "bytes": 8388608,
+      "write_fsync_s": 0.4790757509999821,
+      "MB_s": 17.509982466218194,
+      "power": "throttled=0x0"
+    },
+    {
+      "index": 15,
+      "bytes": 8388608,
+      "write_fsync_s": 0.44716386499999317,
+      "MB_s": 18.75958380492155,
+      "power": "throttled=0x0"
+    }
+  ],
+  "mount": "{\n   \"filesystems\": [\n      {\n         \"target\": \"/\",\n         \"source\": \"/dev/mmcblk0p2\",\n         \"fstype\": \"ext4\",\n         \"options\": \"rw,relatime\"\n      }\n   ]\n}",
+  "lsblk": "{\n   \"blockdevices\": [\n      {\n         \"name\": \"loop0\",\n         \"model\": null,\n         \"serial\": null,\n         \"tran\": null,\n         \"size\": \"41.6M\",\n         \"fstype\": \"squashfs\",\n         \"uuid\": null,\n         \"mountpoints\": [\n             \"/snap/snapd/25939\"\n         ]\n      },{\n         \"name\": \"loop1\",\n         \"model\": null,\n         \"serial\": null,\n         \"tran\": null,\n         \"size\": \"43.5M\",\n         \"fstype\": \"squashfs\",\n         \"uuid\": null,\n         \"mountpoints\": [\n             \"/snap/snapd/27740\"\n         ]\n      },{\n         \"name\": \"mmcblk0\",\n         \"model\": null,\n         \"serial\": \"0x1070f2b0\",\n         \"tran\": \"mmc\",\n         \"size\": \"29.1G\",\n         \"fstype\": null,\n         \"uuid\": null,\n         \"mountpoints\": [\n             null\n         ],\n         \"children\": [\n            {\n               \"name\": \"mmcblk0p1\",\n               \"model\": null,\n               \"serial\": null,\n               \"tran\": \"mmc\",\n               \"size\": \"512M\",\n               \"fstype\": \"vfat\",\n               \"uuid\": \"F766-26D3\",\n               \"mountpoints\": [\n                   \"/boot/firmware\"\n               ]\n            },{\n               \"name\": \"mmcblk0p2\",\n               \"model\": null,\n               \"serial\": null,\n               \"tran\": \"mmc\",\n               \"size\": \"28.6G\",\n               \"fstype\": \"ext4\",\n               \"uuid\": \"c5da9c27-d622-4e80-89db-6af2e32618b4\",\n               \"mountpoints\": [\n                   \"/\"\n               ]\n            }\n         ]\n      }\n   ]\n}",
+  "device_st_dev": 45826,
+  "free_before": 21011247104,
+  "power_before": "throttled=0x0",
+  "usb_before": "/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=dwc2/1p, 480M\n/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n    |__ Port 001: Dev 002, If 0, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 1, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 2, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 3, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 4, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 5, Class=Human Interface Device, Driver=usbhid, 5000M",
+  "elapsed_s": 6.919554802999983,
+  "bytes": 134217728,
+  "overall_MB_s": 19.396873328007995,
+  "worst_batch_MB_s": 16.871280067403358,
+  "write_sha256": "a5306d05dafcfa152912726602fa5bfb64507482a3574a919d2af355057eb860",
+  "readback_sha256": "a5306d05dafcfa152912726602fa5bfb64507482a3574a919d2af355057eb860",
+  "power_after": "throttled=0x0",
+  "usb_after": "/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=dwc2/1p, 480M\n/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n    |__ Port 001: Dev 002, If 0, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 1, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 2, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 3, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 4, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 5, Class=Human Interface Device, Driver=usbhid, 5000M",
+  "probe_removed": true,
+  "utc_end": "2026-09-13T02:50:11.697678+00:00",
+  "evidence_sha256": {
+    "probe-details.json": "71c95da448155ac89b053a18a4553fab3896da4f1c22826cabe7891776947f28"
+  }
+}

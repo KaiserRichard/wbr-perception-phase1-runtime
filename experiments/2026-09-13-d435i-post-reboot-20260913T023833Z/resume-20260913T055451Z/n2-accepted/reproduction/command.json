@@ -1,0 +1,52 @@
+{
+  "stage": "N2_REPRODUCTION",
+  "verdict": "FAIL",
+  "automatic_checks_pass": false,
+  "utc_start": "2026-09-13T05:56:41.922047+00:00",
+  "duration_requested_seconds": 105,
+  "argv": [
+    "/opt/ros/jazzy/bin/rs-data-collect",
+    "--no-eth",
+    "-s",
+    "243322073847",
+    "-c",
+    "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/reproduction/profile.csv",
+    "-t",
+    "105",
+    "-f",
+    "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/reproduction/frames.csv"
+  ],
+  "shell_command": "/opt/ros/jazzy/bin/rs-data-collect --no-eth -s 243322073847 -c /home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/reproduction/profile.csv -t 105 -f /home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/reproduction/frames.csv",
+  "hostname": "wbr-pi5",
+  "platform": "Linux-6.8.0-1064-raspi-aarch64-with-glibc2.39",
+  "boot_id": "c86c7804-4d39-44e8-90a7-3ae379be6910",
+  "n1_sha256": "92b0b1acb56379ef18f93820ac5f24042dc606008054ae6de239a2e0e7a2fc22",
+  "camera": {
+    "sysfs_path": "/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1",
+    "sysfs_name": "5-1",
+    "speed_mbps": 5000.0,
+    "usb_descriptor_serial": "251843061466",
+    "idVendor": "8086",
+    "idProduct": "0b3a",
+    "busnum": "5",
+    "devnum": "2",
+    "product": "Intel(R) RealSense(TM) Depth Camera 435i",
+    "device_serial": "243322073847",
+    "firmware": "5.17.3.10",
+    "sdk_usb_type_descriptor": "3.2",
+    "asic_serial": "251843061466",
+    "firmware_update_id": "251843061466",
+    "imu_type": "BMI085"
+  },
+  "failures": [],
+  "review_required": [
+    "Read unfiltered kernel and SDK logs",
+    "Review representative IR images"
+  ],
+  "N2": "NOT DECIDED: complete 300-second soak and human evidence review required",
+  "goal": "Measure native raw IR1/gyro/accel delivery and shutdown without ROS",
+  "hypothesis": "Direct SuperSpeed transport and scoped access sustain the exact baseline profile",
+  "input_source": "Physical D435i selected by SDK serial; not synthetic",
+  "monitor_interval_seconds": 1,
+  "raw_image_dataset_recorded": false
+}

@@ -1,0 +1,8 @@
+Linux wbr-pi5 6.8.0-1065-raspi #69-Ubuntu SMP PREEMPT_DYNAMIC Tue Sep  8 18:10:10 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+8e5dae6 C++17: replace bool++ on mnFullBAIdx
+bb35429 c++17 patch
+c9f26a1 pristine 4452a3c copy
+2aa97a5a8b04107b5c4ccf95eb724c9cc7d1e2874a1f9463315ef5520d95f048  /home/richard/orbslam3/ORB_SLAM3/lib/libORB_SLAM3.so
+2c518765b04bfeb6450995b0a1d4b48d1d47315f362c8eb1713ecdc76519efe2  /home/richard/orbslam3/ORB_SLAM3/Examples/Stereo-Inertial/stereo_inertial_euroc
+299add56d7b997d60d67e4257efe79177ef797cd5dc1ad0163c8e00313ed47d3  /home/richard/orbslam3/ORB_SLAM3/Examples/Stereo-Inertial/EuRoC.yaml
+9354db11b423f7169eda7a3048d9594ee14572c6017e1439dee7861261b065fb  /home/richard/orbslam3/ORB_SLAM3/Examples/Stereo-Inertial/EuRoC_TimeStamps/MH01.txt

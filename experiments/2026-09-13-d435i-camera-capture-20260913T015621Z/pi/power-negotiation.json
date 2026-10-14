@@ -1,0 +1,47 @@
+{
+  "utc": "2026-09-13T02:19:13.280921+00:00",
+  "scope": "Read-only device tree power properties; raw bytes preserved, no override",
+  "properties": {
+    "max_current": {
+      "hex": "00000bb8",
+      "u32_big_endian": [
+        3000
+      ]
+    },
+    "name": {
+      "hex": "706f77657200",
+      "u32_big_endian": null
+    },
+    "power_reset": {
+      "hex": "00000000",
+      "u32_big_endian": [
+        0
+      ]
+    },
+    "usb_max_current_enable": {
+      "hex": "00000000",
+      "u32_big_endian": [
+        0
+      ]
+    },
+    "usb_over_current_detected": {
+      "hex": "00000000",
+      "u32_big_endian": [
+        0
+      ]
+    },
+    "usbpd_power_data_objects": {
+      "hex": "0801912c0002d12c0003c0fac0dc213c000000000000000000000000",
+      "u32_big_endian": [
+        134320428,
+        184620,
+        246010,
+        3235651900,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "vcgencmd": "throttled=0x50000"
+}

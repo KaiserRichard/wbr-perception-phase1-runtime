@@ -1,0 +1,145 @@
+CUSTOM_HID_CONTROL
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0002/HID-SENSOR-2000e1.4.auto
+/sys/bus/platform/drivers/hid_sensor_custom
+DEVPATH=/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0002/HID-SENSOR-2000e1.4.auto
+DEVTYPE=mfd_device
+DRIVER=hid_sensor_custom
+MODALIAS=platform:HID-SENSOR-2000e1
+SUBSYSTEM=platform
+USEC_INITIALIZED=331814533
+ID_PATH_WITH_USB_REVISION=platform-xhci-hcd.1-usbv3-0:1:1.5-platform-HID-SENSOR-2000e1.4.auto
+ID_PATH=platform-xhci-hcd.1-usb-0:1:1.5-platform-HID-SENSOR-2000e1.4.auto
+ID_PATH_TAG=platform-xhci-hcd_1-usb-0_1_1_5-platform-HID-SENSOR-2000e1_4_auto
+-rw-r--r-- 1 root root 4096 Sep 12 16:33 /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/enable_sensor
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/uevent
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-3-200304/feature-3-200304-minimum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-3-200304/feature-3-200304-size
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-3-200304/feature-3-200304-unit-expo
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-3-200304/feature-3-200304-name
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-3-200304/feature-3-200304-units
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-3-200304/feature-3-200304-value
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-3-200304/feature-3-200304-maximum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-1-200544/input-1-200544-units
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-1-200544/input-1-200544-value
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-1-200544/input-1-200544-maximum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-1-200544/input-1-200544-minimum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-1-200544/input-1-200544-size
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-1-200544/input-1-200544-name
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-1-200544/input-1-200544-unit-expo
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-3-200546/input-3-200546-size
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-3-200546/input-3-200546-minimum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-3-200546/input-3-200546-units
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-3-200546/input-3-200546-value
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-3-200546/input-3-200546-name
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-3-200546/input-3-200546-unit-expo
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-3-200546/input-3-200546-maximum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-5-200548/input-5-200548-units
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-5-200548/input-5-200548-value
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-5-200548/input-5-200548-unit-expo
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-5-200548/input-5-200548-maximum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-5-200548/input-5-200548-size
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-5-200548/input-5-200548-minimum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-5-200548/input-5-200548-name
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-0-200309/feature-0-200309-unit-expo
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-0-200309/feature-0-200309-size
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-0-200309/feature-0-200309-units
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-0-200309/feature-0-200309-value
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-0-200309/feature-0-200309-maximum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-0-200309/feature-0-200309-name
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-0-200309/feature-0-200309-minimum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-2-200319/feature-2-200319-units
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-2-200319/feature-2-200319-value
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-2-200319/feature-2-200319-maximum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-2-200319/feature-2-200319-minimum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-2-200319/feature-2-200319-unit-expo
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-2-200319/feature-2-200319-size
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-2-200319/feature-2-200319-name
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/enable_sensor
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-4-20030e/feature-4-20030e-maximum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-4-20030e/feature-4-20030e-name
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-4-20030e/feature-4-20030e-minimum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-4-20030e/feature-4-20030e-units
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-4-20030e/feature-4-20030e-value
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-4-20030e/feature-4-20030e-size
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-4-20030e/feature-4-20030e-unit-expo
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-5-201452/feature-5-201452-units
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-5-201452/feature-5-201452-name
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-5-201452/feature-5-201452-value
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-5-201452/feature-5-201452-maximum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-5-201452/feature-5-201452-minimum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-5-201452/feature-5-201452-unit-expo
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-5-201452/feature-5-201452-size
+find: File system loop detected; ‘/sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/driver/HID-SENSOR-2000e1.4.auto’ is part of the same file system loop as ‘/sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto’.
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-2-200545/input-2-200545-name
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-2-200545/input-2-200545-maximum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-2-200545/input-2-200545-units
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-2-200545/input-2-200545-value
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-2-200545/input-2-200545-minimum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-2-200545/input-2-200545-size
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-2-200545/input-2-200545-unit-expo
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-4-200547/input-4-200547-maximum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-4-200547/input-4-200547-size
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-4-200547/input-4-200547-minimum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-4-200547/input-4-200547-unit-expo
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-4-200547/input-4-200547-name
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-4-200547/input-4-200547-units
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-4-200547/input-4-200547-value
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/driver_override
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-0-200201/input-0-200201-size
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-0-200201/input-0-200201-unit-expo
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-0-200201/input-0-200201-name
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-0-200201/input-0-200201-maximum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-0-200201/input-0-200201-minimum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-0-200201/input-0-200201-units
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/input-0-200201/input-0-200201-value
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-1-200201/feature-1-200201-name
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-1-200201/feature-1-200201-maximum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-1-200201/feature-1-200201-minimum
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-1-200201/feature-1-200201-unit-expo
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-1-200201/feature-1-200201-size
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-1-200201/feature-1-200201-units
+644 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/feature-1-200201/feature-1-200201-value
+444 root:root /sys/bus/platform/devices/HID-SENSOR-2000e1.4.auto/modalias
+OWNERS_AFTER_SMOKE
+CSV_STATUS
+0 /mnt/wbr-data/wbr-perception-phase1/2026-09-12/raw/sdk-smoke-01/frames.csv
+SDK_LOG_FULL
+Running rs-data-collect: -s 243322073847 -c /mnt/wbr-data/wbr-perception-phase1/2026-09-12/raw/sdk-smoke-01/profile.csv -t 20 -f /mnt/wbr-data/wbr-perception-phase1/2026-09-12/raw/sdk-smoke-01/frames.csv 
+
+ 12/09 16:32:59,644 WARNING [281473883635744] (context.cpp:41) No valid configuration file found at : /home/richard/.realsense-config.json loading defaults
+Request added for INFRARED,640,480,15,Y8,1
+Request added for GYRO,1,1,200,MOTION_XYZ32F,0
+Request added for ACCEL,1,1,100,MOTION_XYZ32F,0
+ 12/09 16:32:59,807 WARNING [281473883635744] (ds-calib-parsers.cpp:36) IMU Calibration is not available, default intrinsic and extrinsic will be used.
+
+Device selected: 
+	RealSense D435I. USB Type: 3.2 
+	S.N: 243322073847
+	FW Ver: 5.17.3.10
+
+User streams requested: 3, actual matches: 3
+
+Data collection started.... 
+
+Collecting data for 1 sec
+Collecting data for 2 sec
+Collecting data for 3 sec
+Collecting data for 4 sec
+Collecting data for 5 sec
+Collecting data for 6 sec
+Collecting data for 7 sec
+Collecting data for 8 sec
+Collecting data for 9 sec
+Collecting data for 10 sec
+Collecting data for 11 sec
+Collecting data for 12 sec
+Collecting data for 13 sec
+Collecting data for 14 sec
+Collecting data for 15 sec
+Collecting data for 16 sec
+Collecting data for 17 sec
+Collecting data for 18 sec
+Collecting data for 19 sec
+Collecting data for 20 sec
+ 12/09 16:33:19,817 ERROR [281473883635744] (librealsense-exception.h:53) Failed to enable_sensor /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0002/HID-SENSOR-2000e1.4.auto/enable_sensor Last Error: Permission denied
+ 12/09 16:33:19,818 ERROR [281473883635744] (rs.cpp:288) [rs2_stop( sensor:0xaaaae86613e0 ) Backend] Failed to enable_sensor /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0002/HID-SENSOR-2000e1.4.auto/enable_sensor Last Error: Permission denied

@@ -1,0 +1,54 @@
+{
+  "evidence": "MEASURED real input association; estimates SYNTHETIC",
+  "engine": "fake",
+  "input": "/Users/quockaiser/Desktop/Research/wbr-data/2026-10-14-d435i-ramtest15s/euroc",
+  "domain": "global_time",
+  "camera_counts": {
+    "cam0": {
+      "exported": 447,
+      "selected": 445,
+      "excluded_by_times": 2
+    },
+    "cam1": {
+      "exported": 447,
+      "selected": 445,
+      "excluded_by_times": 2
+    }
+  },
+  "raw_counts": {
+    "accel": 1507,
+    "gyro": 2971
+  },
+  "adapter_counts": {
+    "accel": 1507,
+    "gyro": 2971,
+    "left": 445,
+    "right": 445,
+    "pairs": 445,
+    "combined": 2967,
+    "domain": 0,
+    "order": 0,
+    "nonfinite": 0,
+    "gap": 0,
+    "overflow": 0,
+    "image": 0,
+    "unmatched": 0,
+    "prefix_gyro": 0,
+    "prefix_pairs": 0,
+    "missing_coverage": 0,
+    "tail_accel": 4,
+    "tail_gyro": 4,
+    "engine_rejected": 0
+  },
+  "snapshots": 445,
+  "decoded_y8_sha256": "dab429a0596e5907a462f0a1665d8bfcf0cf9f43198dd977b140499ec2bcbd5f",
+  "input_sha256": {
+    "manifest.json": "5231f434d78842ff86bb61b6f491fb9c71d21de883e621aabef6691ac8ac2a21",
+    "times_ns.txt": "3a4a0ec3e8f3964e004a0df10cc16c4d33cf72e796f2b393bf355707832938b9",
+    "stamps.csv": "819b8eadfbe788220606059eca9aca9882d94b46ae8edd6fe91f44dc2a9d242b",
+    "mav0/imu0/raw_accel.csv": "00338b015c1e0c501e1f677dc318db937f5f72c6f6867f39280cbe3eb7450424",
+    "mav0/imu0/raw_gyro.csv": "0b2d92ce595d4750a2ae5ac65d0876e4ca517576de970ec897ab6ddf6369db10",
+    "mav0/cam0/data.csv": "3e2e0ea0203375dc7115c72d53ad586ee19be5d867a274647d6ec44c4c11a130",
+    "mav0/cam1/data.csv": "3e2e0ea0203375dc7115c72d53ad586ee19be5d867a274647d6ec44c4c11a130"
+  }
+}

@@ -1,0 +1,16 @@
+# Session facts addendum — 2026-10-14 (read with 2026-10-13-SESSION_FACTS_FOR_SLIDES.md)
+
+Labels: MEASURED / INFERRED / UNKNOWN. Nothing here is a gate PASS. Evidence lives on the Pi under `~/wbr-evidence/2026-10-14-*` unless noted.
+
+1. **8 GB Pi works with the same card** (MEASURED): Raspberry Pi 5 Rev 1.1, 7.8 GiB RAM; the 32 GB card boots unchanged (same software, IP 192.168.50.2 on Ethernet, Wi-Fi profiles incl. "M625 Mechatronic Lab"). Under-voltage already within 3 min of boot on the same 5 V/3 A supply → power is not fixed by the board change.
+2. **Camera streams fine for 19 s** (MEASURED, 20 s still take): IR1/IR2 30 Hz, gyro, accel delivered; one ~0.7 s gap in the final second at shutdown.
+3. **First 100 s hand-moved take unusable** (MEASURED): gaps of 0.3–2.9 s every ~5 s after 22 s. Cause (INFERRED, strong): the microSD could not sustain the write rate (1.66 GB in 100 s = 16.6 MB/s vs 18.4 MB/s needed) → recorder blocked → frames dropped. No under-voltage or USB errors in the kernel log during the take.
+4. **Fix: record into RAM, copy afterwards** (MEASURED, 15 s test): recording into `/dev/shm` (3.9 GB on the 8 GB Pi) gave IR 29.99 Hz, max gap 33 ms, 0 dropped frames; gyro 200.2 Hz; accel 101 Hz; copy to card afterwards with checksum OK. Script: `experiments/2026-10-13-n4b-d435i-prep/smoke_ram.sh`. 100 s ≈ 1.7 GB fits in RAM.
+5. **Offline ORB-SLAM3 smoke test crashed (SIGSEGV)** on the first frame (MEASURED, gdb): `main → System::GetTimeFromIMUInit → LocalMapping::GetCurrKFTime`. Cause: upstream ORB-SLAM3 never initializes `LocalMapping::mpCurrentKeyFrame`, so the null check reads garbage before the first keyframe (the EuRoC example never calls this function, so N4A was unaffected). Patch 4: `KeyFrame* mpCurrentKeyFrame = nullptr;` in `include/LocalMapping.h` (committed in the Pi build copy). **The rebuild was interrupted by a power loss (3 of ~27 library objects redone) — must be resumed** (`cmake --build build -j4` in `~/orbslam3/ORB_SLAM3`, preferably on the 8 GB Pi).
+6. **64 GB USB stick unusable for recording** (MEASURED): USB 2.0 "USB Disk 2.0", exFAT UUID 1017-F615 (same stick as September), 1.09 MB/s with fsync today (0.94 MB/s in Sep). Data on it untouched.
+7. **Connectivity** (MEASURED): the 8 GB Pi's Ethernet port is loose; plan is Wi-Fi "M625 Mechatronic Lab". With the card in the 4 GB Pi, Wi-Fi joined (192.168.0.129) and SSH over Wi-Fi worked (Mac alias `ssh wbr-pi5-wifi`, host key alias 192.168.50.2). After moving the card to the 8 GB Pi it did not appear on Wi-Fi within ~7 min (cause UNKNOWN: not booted / boot loop / Wi-Fi stuck). Another Pi in the lab (192.168.0.127) has a different host key — not ours.
+8. **Codex demo helpers** (`experiments/2026-10-14-d435i-demo/`): `plot_run.py` (trajectory plot + stats + ATE; matches evo exactly, 0.041461 m on EuRoC run1), `DEMO_SLIDE.md`, `DEBUG_GUIDE.md`.
+
+## Tomorrow's shortest path (unchanged plan, updated)
+Card in 8 GB Pi, camera directly on blue USB3 port, Pi and cables fixed in place →
+(1) resume ORB-SLAM3 rebuild (patch 4) → (2) 100 s hand-moved take **into RAM** → (3) offline ORB-SLAM3 on the take (`--bag … --no-viewer`) → plot → (4) live run while moving the camera → (5) one summary slide. Everything is a diagnostic demo (OPEN) until the 5 A supply and calibration exist.

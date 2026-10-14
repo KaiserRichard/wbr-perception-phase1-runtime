@@ -1,0 +1,219 @@
+{
+  "started_utc": "2026-09-12T09:40:02.196645+00:00",
+  "argv": [
+    "/opt/ros/jazzy/bin/rs-data-collect",
+    "-s",
+    "243322073847",
+    "-c",
+    "/mnt/wbr-data/wbr-perception-phase1/2026-09-12/raw/sdk-smoke-02/profile.csv",
+    "-t",
+    "20",
+    "-f",
+    "/mnt/wbr-data/wbr-perception-phase1/2026-09-12/raw/sdk-smoke-02/frames.csv"
+  ],
+  "duration_requested_seconds": 20,
+  "user": "uid=1000(richard) gid=1000(richard) groups=1000(richard),4(adm),24(cdrom),27(sudo),30(dip),44(video),101(lxd)",
+  "device_serial": "243322073847",
+  "asic_usb_serial": "251843061466",
+  "usb_before": "/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=dwc2/1p, 480M\n/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n    |__ Port 001: Dev 002, If 0, Class=Mass Storage, Driver=usb-storage, 480M\n/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n    |__ Port 001: Dev 003, If 0, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 1, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 2, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 3, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 4, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 5, Class=Human Interface Device, Driver=usbhid, 5000M",
+  "lsusb_before": "Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 002: ID 346d:5678 USB Disk 2.0\nBus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 004 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 005 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 005 Device 003: ID 8086:0b3a Intel Corp. Intel(R) RealSense(TM) Depth Camera 435i",
+  "failures": [],
+  "resource_samples": [
+    {
+      "elapsed_seconds": 1.0021522330000607,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3459  100 12388       0",
+      "cpu_system_busy_percent": null,
+      "memory_available_kib": 7735880,
+      "storage_free_bytes": 61452189696
+    },
+    {
+      "elapsed_seconds": 2.0198017110001274,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3459  5.8 19528       1",
+      "cpu_system_busy_percent": 2.2222222222222254,
+      "memory_available_kib": 7731380,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 3.0411078810000163,
+      "temperature_c": 61.15,
+      "throttled": "throttled=0x0",
+      "process": "3459  3.9 19608       2",
+      "cpu_system_busy_percent": 0.9803921568627416,
+      "memory_available_kib": 7732068,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 4.061031621999973,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3459  2.9 19716       3",
+      "cpu_system_busy_percent": 3.125,
+      "memory_available_kib": 7733072,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 5.0833755740000015,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3459  2.6 19748       4",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7733092,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 6.102734211000097,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3459  2.3 19784       5",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7734616,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 7.1222530269999424,
+      "temperature_c": 58.95,
+      "throttled": "throttled=0x0",
+      "process": "3459  2.2 19896       6",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7735688,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 8.141783984000085,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3459  2.0 19924       7",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7735156,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 9.162512414000048,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3459  1.9 19952       8",
+      "cpu_system_busy_percent": 0.7371007371007376,
+      "memory_available_kib": 7735132,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 10.181737209999937,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3459  1.8 20000       9",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7735116,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 11.201308184000027,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3459  1.7 20028      10",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7735088,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 12.221919372000002,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3459  1.7 20092      11",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7735064,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 13.241374146999988,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3459  1.7 20120      12",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7735040,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 14.260991729000125,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3459  1.7 20152      13",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7735016,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 15.280266212000015,
+      "temperature_c": 59.5,
+      "throttled": "throttled=0x0",
+      "process": "3459  1.6 20184      14",
+      "cpu_system_busy_percent": 1.7241379310344862,
+      "memory_available_kib": 7734992,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 16.30100222300007,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3459  1.6 20212      15",
+      "cpu_system_busy_percent": 1.225490196078427,
+      "memory_available_kib": 7734968,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 17.319295526000133,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3459  1.6 20244      16",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7734936,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 18.341118668000036,
+      "temperature_c": 59.5,
+      "throttled": "throttled=0x0",
+      "process": "3459  1.6 20268      17",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7734912,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 19.35948712200002,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3459  1.5 20328      18",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7734876,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 20.381913767000015,
+      "temperature_c": 58.95,
+      "throttled": "throttled=0x0",
+      "process": "3459  1.5 20360      19",
+      "cpu_system_busy_percent": 0.49261083743842304,
+      "memory_available_kib": 7735492,
+      "storage_free_bytes": 61452058624
+    },
+    {
+      "elapsed_seconds": 21.400775501,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3459  1.5 18296      20",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7737016,
+      "storage_free_bytes": 61452058624
+    }
+  ],
+  "sdk_returncode": 0,
+  "finished_utc": "2026-09-12T09:40:25.645767+00:00",
+  "elapsed_seconds": 23.42850239900008,
+  "usb_after": "/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=dwc2/1p, 480M\n/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n    |__ Port 001: Dev 002, If 0, Class=Mass Storage, Driver=usb-storage, 480M\n/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n    |__ Port 001: Dev 003, If 0, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 1, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 2, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 3, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 4, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 5, Class=Human Interface Device, Driver=usbhid, 5000M",
+  "lsusb_after": "Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 002: ID 346d:5678 USB Disk 2.0\nBus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 004 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 005 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 005 Device 003: ID 8086:0b3a Intel Corp. Intel(R) RealSense(TM) Depth Camera 435i",
+  "capture_completed_without_detected_fault": true,
+  "N2": "NOT DECIDED: analyze all three streams, image samples and kernel/health evidence"
+}

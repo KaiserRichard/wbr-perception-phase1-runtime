@@ -1,0 +1,966 @@
+{
+  "started_utc": "2026-09-12T09:41:52.179645+00:00",
+  "argv": [
+    "/opt/ros/jazzy/bin/rs-data-collect",
+    "-s",
+    "243322073847",
+    "-c",
+    "/mnt/wbr-data/wbr-perception-phase1/2026-09-12/raw/sdk-sustained-01/profile.csv",
+    "-t",
+    "105",
+    "-f",
+    "/mnt/wbr-data/wbr-perception-phase1/2026-09-12/raw/sdk-sustained-01/frames.csv"
+  ],
+  "duration_requested_seconds": 105,
+  "user": "uid=1000(richard) gid=1000(richard) groups=1000(richard),4(adm),24(cdrom),27(sudo),30(dip),44(video),101(lxd)",
+  "device_serial": "243322073847",
+  "asic_usb_serial": "251843061466",
+  "usb_before": "/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=dwc2/1p, 480M\n/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n    |__ Port 001: Dev 002, If 0, Class=Mass Storage, Driver=usb-storage, 480M\n/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n    |__ Port 001: Dev 003, If 0, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 1, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 2, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 3, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 4, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 5, Class=Human Interface Device, Driver=usbhid, 5000M",
+  "lsusb_before": "Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 002: ID 346d:5678 USB Disk 2.0\nBus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 004 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 005 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 005 Device 003: ID 8086:0b3a Intel Corp. Intel(R) RealSense(TM) Depth Camera 435i",
+  "failures": [],
+  "resource_samples": [
+    {
+      "elapsed_seconds": 1.0020812150000893,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  0.0 12732       0",
+      "cpu_system_busy_percent": null,
+      "memory_available_kib": 7725144,
+      "storage_free_bytes": 61450878976
+    },
+    {
+      "elapsed_seconds": 2.0207474880000973,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  5.3 19528       1",
+      "cpu_system_busy_percent": 2.2167487684729092,
+      "memory_available_kib": 7724904,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 3.1440430920001745,
+      "temperature_c": 61.15,
+      "throttled": "throttled=0x0",
+      "process": "3761  3.2 19608       2",
+      "cpu_system_busy_percent": 0.8968609865470878,
+      "memory_available_kib": 7724964,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 4.1589039030000094,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  2.8 19720       3",
+      "cpu_system_busy_percent": 0.7444168734491274,
+      "memory_available_kib": 7726028,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 5.177016793000121,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  2.3 19752       4",
+      "cpu_system_busy_percent": 0.7407407407407418,
+      "memory_available_kib": 7727008,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 6.19545327700007,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  2.3 19784       5",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7729516,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 7.2150242640000215,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  2.0 19900       6",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7731132,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 8.233757511000022,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.9 19928       7",
+      "cpu_system_busy_percent": 0.9828009828009798,
+      "memory_available_kib": 7732596,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 9.253105259999984,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.9 19956       8",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7734044,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 10.272627232000104,
+      "temperature_c": 58.95,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.8 20004       9",
+      "cpu_system_busy_percent": 0.4950495049504955,
+      "memory_available_kib": 7735308,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 11.291827150000017,
+      "temperature_c": 58.95,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.8 20028      10",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7736392,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 12.310639364000053,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.8 20096      11",
+      "cpu_system_busy_percent": 2.898550724637683,
+      "memory_available_kib": 7737124,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 13.332967510000117,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.7 20124      12",
+      "cpu_system_busy_percent": 1.4598540145985384,
+      "memory_available_kib": 7737172,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 14.354158692000055,
+      "temperature_c": 59.5,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.7 20160      13",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7737172,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 15.37577354200016,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.8 20184      14",
+      "cpu_system_busy_percent": 0.49261083743842304,
+      "memory_available_kib": 7737172,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 16.394831889999978,
+      "temperature_c": 59.5,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.7 20212      15",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7737172,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 17.41396081300013,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.7 20244      16",
+      "cpu_system_busy_percent": 1.225490196078427,
+      "memory_available_kib": 7737180,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 18.43253967999999,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.7 20300      17",
+      "cpu_system_busy_percent": 1.9512195121951237,
+      "memory_available_kib": 7737180,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 19.453314587000023,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.7 20336      18",
+      "cpu_system_busy_percent": 0.9803921568627416,
+      "memory_available_kib": 7737180,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 20.47169669599998,
+      "temperature_c": 59.5,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.6 20360      19",
+      "cpu_system_busy_percent": 1.4851485148514865,
+      "memory_available_kib": 7737180,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 21.492696327000203,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.6 20396      20",
+      "cpu_system_busy_percent": 0.7371007371007376,
+      "memory_available_kib": 7737180,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 22.613528615000178,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.6 20424      21",
+      "cpu_system_busy_percent": 0.44943820224718767,
+      "memory_available_kib": 7736928,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 23.632032652000134,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.6 20456      22",
+      "cpu_system_busy_percent": 0.7407407407407418,
+      "memory_available_kib": 7737004,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 24.65025287399999,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.6 20484      23",
+      "cpu_system_busy_percent": 0.9828009828009798,
+      "memory_available_kib": 7737012,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 25.66905841100015,
+      "temperature_c": 59.5,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.6 20516      24",
+      "cpu_system_busy_percent": 0.7407407407407418,
+      "memory_available_kib": 7737012,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 26.687399078,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.6 20544      25",
+      "cpu_system_busy_percent": 0.24752475247524774,
+      "memory_available_kib": 7737012,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 27.705849578000198,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.6 20572      26",
+      "cpu_system_busy_percent": 0.7407407407407418,
+      "memory_available_kib": 7737012,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 28.72430135500008,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.6 20608      27",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7737012,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 29.745619915000134,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.6 20636      28",
+      "cpu_system_busy_percent": 0.7371007371007376,
+      "memory_available_kib": 7737012,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 30.76689710300002,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.6 20668      29",
+      "cpu_system_busy_percent": 0.9828009828009798,
+      "memory_available_kib": 7737012,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 31.78778981000005,
+      "temperature_c": 59.5,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 20696      30",
+      "cpu_system_busy_percent": 0.24691358024691024,
+      "memory_available_kib": 7737012,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 32.80952473900015,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.6 20732      31",
+      "cpu_system_busy_percent": 7.654320987654318,
+      "memory_available_kib": 7733108,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 33.93003738200014,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.6 20756      32",
+      "cpu_system_busy_percent": 0.6726457399103158,
+      "memory_available_kib": 7733700,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 34.94867240000008,
+      "temperature_c": 59.5,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 20784      33",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7733700,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 35.969214661000024,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 20868      34",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7735796,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 36.98738649200004,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 20900      36",
+      "cpu_system_busy_percent": 1.2285012285012331,
+      "memory_available_kib": 7736480,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 38.002896743000065,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 20932      37",
+      "cpu_system_busy_percent": 0.995024875621886,
+      "memory_available_kib": 7736480,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 39.023564780000015,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 20956      38",
+      "cpu_system_busy_percent": 0.49261083743842304,
+      "memory_available_kib": 7736500,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 40.04371053700015,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 20988      39",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7736512,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 41.06274404999999,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21020      40",
+      "cpu_system_busy_percent": 0.9828009828009798,
+      "memory_available_kib": 7736524,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 42.08267306400012,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21052      41",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7736532,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 43.10109122300014,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21080      42",
+      "cpu_system_busy_percent": 0.24752475247524774,
+      "memory_available_kib": 7735272,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 44.11954286100013,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21108      43",
+      "cpu_system_busy_percent": 0.7407407407407418,
+      "memory_available_kib": 7735272,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 45.13770433100012,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21140      44",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7735280,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 46.15658506099999,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21172      45",
+      "cpu_system_busy_percent": 0.4950495049504955,
+      "memory_available_kib": 7735280,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 47.17719344000011,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21200      46",
+      "cpu_system_busy_percent": 1.2224938875305624,
+      "memory_available_kib": 7735280,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 48.1960871660001,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21232      47",
+      "cpu_system_busy_percent": 0.4950495049504955,
+      "memory_available_kib": 7735280,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 49.2160680410002,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21260      48",
+      "cpu_system_busy_percent": 0.49140049140049546,
+      "memory_available_kib": 7735280,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 50.23472737400016,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21292      49",
+      "cpu_system_busy_percent": 0.4950495049504955,
+      "memory_available_kib": 7735280,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 51.25347789200009,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21324      50",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7735280,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 52.27237409300005,
+      "temperature_c": 61.15,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21348      51",
+      "cpu_system_busy_percent": 0.9828009828009798,
+      "memory_available_kib": 7735280,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 53.29111786500016,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21380      52",
+      "cpu_system_busy_percent": 0.9852216748768461,
+      "memory_available_kib": 7735028,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 54.31080684200015,
+      "temperature_c": 59.5,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21412      53",
+      "cpu_system_busy_percent": 1.2376237623762387,
+      "memory_available_kib": 7735028,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 55.330454001000135,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21444      54",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7735028,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 56.35138895800014,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21476      55",
+      "cpu_system_busy_percent": 0.7371007371007376,
+      "memory_available_kib": 7735028,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 57.37288069100009,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21504      56",
+      "cpu_system_busy_percent": 0.7371007371007376,
+      "memory_available_kib": 7735028,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 58.39292332700006,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21532      57",
+      "cpu_system_busy_percent": 0.9828009828009798,
+      "memory_available_kib": 7735028,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 59.41258747799998,
+      "temperature_c": 59.5,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21564      58",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7735028,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 60.43237814500003,
+      "temperature_c": 59.5,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21596      59",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7735028,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 61.45544894700015,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21620      60",
+      "cpu_system_busy_percent": 0.49261083743842304,
+      "memory_available_kib": 7735028,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 62.474924553000164,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21656      61",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7735028,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 63.49549786400007,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21684      62",
+      "cpu_system_busy_percent": 0.7371007371007376,
+      "memory_available_kib": 7734776,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 64.5155673920001,
+      "temperature_c": 61.15,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21712      63",
+      "cpu_system_busy_percent": 0.9828009828009798,
+      "memory_available_kib": 7734776,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 65.53433847100018,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21748      64",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7734776,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 66.55396747500004,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21772      65",
+      "cpu_system_busy_percent": 0.4950495049504955,
+      "memory_available_kib": 7734776,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 67.57230967800001,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21804      66",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7734776,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 68.59403006900015,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21832      67",
+      "cpu_system_busy_percent": 0.49261083743842304,
+      "memory_available_kib": 7734776,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 69.61382586200011,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21964      68",
+      "cpu_system_busy_percent": 0.9828009828009798,
+      "memory_available_kib": 7734776,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 70.63390165200008,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 21992      69",
+      "cpu_system_busy_percent": 1.7241379310344862,
+      "memory_available_kib": 7734776,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 71.65331741800014,
+      "temperature_c": 59.5,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22020      70",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7734776,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 72.67546854000011,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22052      71",
+      "cpu_system_busy_percent": 0.49261083743842304,
+      "memory_available_kib": 7734776,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 73.69488020800009,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22084      72",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7734776,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 74.71450267,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22116      73",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7734524,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 75.73345223800015,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22140      74",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7734524,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 76.7529789900002,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22172      75",
+      "cpu_system_busy_percent": 0.9828009828009798,
+      "memory_available_kib": 7734524,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 77.77286820100016,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22204      76",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7734524,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 78.79245283500018,
+      "temperature_c": 61.15,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22232      77",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7734524,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 79.81200270600016,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22268      78",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7734524,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 80.83174424000003,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22292      79",
+      "cpu_system_busy_percent": 1.225490196078427,
+      "memory_available_kib": 7734524,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 81.85288503400011,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22324      80",
+      "cpu_system_busy_percent": 1.2345679012345734,
+      "memory_available_kib": 7734300,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 82.87132809500008,
+      "temperature_c": 62.25,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22356      81",
+      "cpu_system_busy_percent": 14.10891089108911,
+      "memory_available_kib": 7699784,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 83.88779957400016,
+      "temperature_c": 61.7,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22384      82",
+      "cpu_system_busy_percent": 4.207920792079212,
+      "memory_available_kib": 7695664,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 84.90431780800009,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22416      83",
+      "cpu_system_busy_percent": 0.4950495049504955,
+      "memory_available_kib": 7699248,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 85.92511038200018,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22444      84",
+      "cpu_system_busy_percent": 0.7371007371007376,
+      "memory_available_kib": 7699248,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 86.94688386200005,
+      "temperature_c": 61.15,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22476      85",
+      "cpu_system_busy_percent": 1.7241379310344862,
+      "memory_available_kib": 7704132,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 87.96806392899998,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22508      86",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7708480,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 88.98689820900017,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22536      88",
+      "cpu_system_busy_percent": 0.4938271604938316,
+      "memory_available_kib": 7712296,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 90.00607080000009,
+      "temperature_c": 61.15,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.4 22564      89",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7715880,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 91.02761968900018,
+      "temperature_c": 59.5,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.4 22596      90",
+      "cpu_system_busy_percent": 0.24691358024691024,
+      "memory_available_kib": 7717504,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 92.0496547050002,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.4 22628      91",
+      "cpu_system_busy_percent": 1.2224938875305624,
+      "memory_available_kib": 7720388,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 93.07156886400003,
+      "temperature_c": 61.15,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.4 22656      92",
+      "cpu_system_busy_percent": 0.7371007371007376,
+      "memory_available_kib": 7722508,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 94.0913604960001,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.4 22684      93",
+      "cpu_system_busy_percent": 0.24752475247524774,
+      "memory_available_kib": 7724152,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 95.11011708299998,
+      "temperature_c": 59.5,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.4 22716      94",
+      "cpu_system_busy_percent": 0.4950495049504955,
+      "memory_available_kib": 7725128,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 96.12966657600009,
+      "temperature_c": 61.7,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.4 22748      95",
+      "cpu_system_busy_percent": 0.9828009828009798,
+      "memory_available_kib": 7726616,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 97.14946069400003,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.4 22780      96",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7725824,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 98.17155107300005,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22808      97",
+      "cpu_system_busy_percent": 0.9803921568627416,
+      "memory_available_kib": 7726576,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 99.19389644800003,
+      "temperature_c": 61.15,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.4 22840      98",
+      "cpu_system_busy_percent": 0.9852216748768461,
+      "memory_available_kib": 7726176,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 100.21434235000015,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.4 22868      99",
+      "cpu_system_busy_percent": 6.683168316831678,
+      "memory_available_kib": 7730644,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 101.23390098599998,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22896     100",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7730708,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 102.25372630400011,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22932     101",
+      "cpu_system_busy_percent": 0.24752475247524774,
+      "memory_available_kib": 7731844,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 103.27371293200008,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22960     102",
+      "cpu_system_busy_percent": 2.2058823529411797,
+      "memory_available_kib": 7731268,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 104.29342327600011,
+      "temperature_c": 60.6,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 22988     103",
+      "cpu_system_busy_percent": 0.7389162561576401,
+      "memory_available_kib": 7730984,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 105.31397395099998,
+      "temperature_c": 60.05,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.5 23020     104",
+      "cpu_system_busy_percent": 0.4950495049504955,
+      "memory_available_kib": 7731840,
+      "storage_free_bytes": 61450747904
+    },
+    {
+      "elapsed_seconds": 106.334087898,
+      "temperature_c": 61.15,
+      "throttled": "throttled=0x0",
+      "process": "3761  1.4 20956     105",
+      "cpu_system_busy_percent": 0.49261083743842304,
+      "memory_available_kib": 7733736,
+      "storage_free_bytes": 61450747904
+    }
+  ],
+  "sdk_returncode": 0,
+  "finished_utc": "2026-09-12T09:43:40.658777+00:00",
+  "elapsed_seconds": 108.459250784,
+  "usb_after": "/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=dwc2/1p, 480M\n/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n    |__ Port 001: Dev 002, If 0, Class=Mass Storage, Driver=usb-storage, 480M\n/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n    |__ Port 001: Dev 003, If 0, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 1, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 2, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 3, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 4, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 5, Class=Human Interface Device, Driver=usbhid, 5000M",
+  "lsusb_after": "Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 002: ID 346d:5678 USB Disk 2.0\nBus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 004 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 005 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 005 Device 003: ID 8086:0b3a Intel Corp. Intel(R) RealSense(TM) Depth Camera 435i",
+  "capture_completed_without_detected_fault": true,
+  "N2": "NOT DECIDED: analyze all three streams, image samples and kernel/health evidence"
+}

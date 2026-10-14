@@ -1,0 +1,143 @@
+    PID    PPID USER     COMMAND         COMMAND
+      1       0 root     systemd         /sbin/init fixrtc
+      2       0 root     kthreadd        [kthreadd]
+      3       2 root     pool_workqueue_ [pool_workqueue_release]
+      4       2 root     kworker/R-rcu_g [kworker/R-rcu_g]
+      5       2 root     kworker/R-rcu_p [kworker/R-rcu_p]
+      6       2 root     kworker/R-slub_ [kworker/R-slub_]
+      7       2 root     kworker/R-netns [kworker/R-netns]
+      8       2 root     kworker/0:0-eve [kworker/0:0-events]
+     12       2 root     kworker/R-mm_pe [kworker/R-mm_pe]
+     13       2 root     rcu_tasks_kthre [rcu_tasks_kthread]
+     14       2 root     rcu_tasks_rude_ [rcu_tasks_rude_kthread]
+     15       2 root     rcu_tasks_trace [rcu_tasks_trace_kthread]
+     16       2 root     ksoftirqd/0     [ksoftirqd/0]
+     17       2 root     rcu_preempt     [rcu_preempt]
+     18       2 root     migration/0     [migration/0]
+     19       2 root     cpuhp/0         [cpuhp/0]
+     20       2 root     cpuhp/1         [cpuhp/1]
+     21       2 root     migration/1     [migration/1]
+     22       2 root     ksoftirqd/1     [ksoftirqd/1]
+     23       2 root     kworker/1:0-eve [kworker/1:0-events]
+     25       2 root     cpuhp/2         [cpuhp/2]
+     26       2 root     migration/2     [migration/2]
+     27       2 root     ksoftirqd/2     [ksoftirqd/2]
+     28       2 root     kworker/2:0+eve [kworker/2:0+events]
+     30       2 root     cpuhp/3         [cpuhp/3]
+     31       2 root     migration/3     [migration/3]
+     32       2 root     ksoftirqd/3     [ksoftirqd/3]
+     33       2 root     kworker/3:0-eve [kworker/3:0-events]
+     35       2 root     kdevtmpfs       [kdevtmpfs]
+     36       2 root     kworker/R-inet_ [kworker/R-inet_]
+     37       2 root     kauditd         [kauditd]
+     40       2 root     khungtaskd      [khungtaskd]
+     41       2 root     kworker/u8:1-ev [kworker/u8:1-events_unbound]
+     42       2 root     oom_reaper      [oom_reaper]
+     43       2 root     kworker/R-write [kworker/R-write]
+     44       2 root     kcompactd0      [kcompactd0]
+     45       2 root     khugepaged      [khugepaged]
+     46       2 root     kworker/R-kinte [kworker/R-kinte]
+     47       2 root     kworker/R-kbloc [kworker/R-kbloc]
+     48       2 root     kworker/R-blkcg [kworker/R-blkcg]
+     49       2 root     kworker/u8:2-ev [kworker/u8:2-events_unbound]
+     50       2 root     kworker/u8:3-ev [kworker/u8:3-events_power_efficient]
+     51       2 root     kworker/R-tpm_d [kworker/R-tpm_d]
+     52       2 root     kworker/R-edac- [kworker/R-edac-]
+     53       2 root     kworker/R-devfr [kworker/R-devfr]
+     54       2 root     watchdogd       [watchdogd]
+     56       2 root     kworker/R-quota [kworker/R-quota]
+     57       2 root     kworker/1:1H-kb [kworker/1:1H-kblockd]
+     58       2 root     kswapd0         [kswapd0]
+     59       2 root     kworker/R-kthro [kworker/R-kthro]
+     61       2 root     kworker/1:3-eve [kworker/1:3-events]
+     64       2 root     hwrng           [hwrng]
+     65       2 root     kworker/R-mld   [kworker/R-mld]
+     66       2 root     kworker/R-ipv6_ [kworker/R-ipv6_]
+     73       2 root     kworker/R-kstrp [kworker/R-kstrp]
+     75       2 root     kworker/u9:0-br [kworker/u9:0-brcmf_wq/mmc1:0001:1]
+    103       2 root     kworker/0:1H-mm [kworker/0:1H-mmc_complete]
+    107       2 root     kworker/2:1H-kb [kworker/2:1H-kblockd]
+    133       2 root     kworker/3:1H-kb [kworker/3:1H-kblockd]
+    153       2 root     irq/40-aerdrv   [irq/40-aerdrv]
+    154       2 root     kworker/3:3-eve [kworker/3:3-events]
+    155       2 root     spi10           [spi10]
+    157       2 root     kworker/R-sdhci [kworker/R-sdhci]
+    158       2 root     irq/166-mmc0    [irq/166-mmc0]
+    161       2 root     spi0            [spi0]
+    162       2 root     kworker/R-sdhci [kworker/R-sdhci]
+    163       2 root     irq/167-mmc1    [irq/167-mmc1]
+    164       2 root     kworker/R-mmc_c [kworker/R-mmc_c]
+    167       2 root     kworker/1:2H    [kworker/1:2H]
+    173       2 root     kworker/2:3-eve [kworker/2:3-events]
+    189       2 root     kworker/R-md    [kworker/R-md]
+    190       2 root     kworker/R-md_bi [kworker/R-md_bi]
+    195       2 root     kworker/R-raid5 [kworker/R-raid5]
+    248       2 root     jbd2/mmcblk0p2- [jbd2/mmcblk0p2-8]
+    249       2 root     kworker/R-ext4- [kworker/R-ext4-]
+    279       2 root     kworker/0:2H-mm [kworker/0:2H-mmc_complete]
+    283       2 root     kworker/3:2H    [kworker/3:2H]
+    285       2 root     kworker/2:2H-kb [kworker/2:2H-kblockd]
+    328       1 root     systemd-journal /usr/lib/systemd/systemd-journald
+    350       2 root     kworker/R-kmpat [kworker/R-kmpat]
+    351       2 root     kworker/R-kmpat [kworker/R-kmpat]
+    389       1 root     systemd-udevd   /usr/lib/systemd/systemd-udevd
+    397       2 root     psimon          [psimon]
+    457       2 root     kworker/R-cfg80 [kworker/R-cfg80]
+    474       2 root     kworker/R-brcmf [kworker/R-brcmf]
+    475       2 root     irq/175-1000800 [irq/175-1000800000.codec]
+    476       2 root     brcmf_wdog/mmc1 [brcmf_wdog/mmc1:0001:1]
+    493       2 root     irq/179-vc4 hdm [irq/179-vc4 hdmi hpd connected]
+    494       2 root     irq/180-vc4 hdm [irq/180-vc4 hdmi hpd disconnected]
+    495       2 root     cec-vc4-hdmi-0  [cec-vc4-hdmi-0]
+    496       2 root     irq/181-vc4 hdm [irq/181-vc4 hdmi cec rx]
+    497       2 root     irq/182-vc4 hdm [irq/182-vc4 hdmi cec tx]
+    498       2 root     irq/183-vc4 hdm [irq/183-vc4 hdmi hpd connected]
+    499       2 root     irq/184-vc4 hdm [irq/184-vc4 hdmi hpd disconnected]
+    500       2 root     cec-vc4-hdmi-1  [cec-vc4-hdmi-1]
+    501       2 root     irq/185-vc4 hdm [irq/185-vc4 hdmi cec rx]
+    502       2 root     irq/186-vc4 hdm [irq/186-vc4 hdmi cec tx]
+    503       2 root     card1-crtc0     [card1-crtc0]
+    504       2 root     card1-crtc1     [card1-crtc1]
+    505       2 root     card1-crtc2     [card1-crtc2]
+    506       2 root     card1-crtc3     [card1-crtc3]
+    511       2 root     kworker/u9:2-hc [kworker/u9:2-hci0]
+    512       2 root     kworker/0:4-eve [kworker/0:4-events]
+    534       1 root     wpa_supplicant  /sbin/wpa_supplicant -c /run/netplan/wpa-wlan0.conf -iwlan0 -Dnl80211,wext
+    550       1 systemd+ systemd-resolve /usr/lib/systemd/systemd-resolved
+    551       1 systemd+ systemd-timesyn /usr/lib/systemd/systemd-timesyncd
+    706       1 systemd+ systemd-network /usr/lib/systemd/systemd-networkd
+    719       1 avahi    avahi-daemon    avahi-daemon: running [wbr-pi5.local]
+    720       1 message+ dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    723       1 root     lttng-sessiond  /usr/bin/lttng-sessiond
+    724       1 polkitd  polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    728       1 root     snapd           /snap/snapd/current/usr/lib/snapd/snapd
+    732       1 root     systemd-logind  /usr/lib/systemd/systemd-logind
+    733       1 root     udisksd         /usr/libexec/udisks2/udisksd
+    734     719 avahi    avahi-daemon    avahi-daemon: chroot helper
+    743       1 syslog   rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+    762       1 root     NetworkManager  /usr/sbin/NetworkManager --no-daemon
+    772       1 root     wpa_supplicant  /usr/sbin/wpa_supplicant -u -s -O DIR=/run/wpa_supplicant GROUP=netdev
+    781     723 root     lttng-runas     /usr/bin/lttng-sessiond
+    810       1 root     ModemManager    /usr/sbin/ModemManager
+    946       1 root     unattended-upgr /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+    970       1 root     cron            /usr/sbin/cron -f -P
+    997       1 root     agetty          /sbin/agetty -o -p -- \u --keep-baud 115200,57600,38400,9600 - vt220
+    999       1 root     sshd            sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+   1004       1 root     agetty          /sbin/agetty -o -p -- \u --noclear - linux
+   1244       2 root     kworker/u8:0-ev [kworker/u8:0-events_power_efficient]
+   1248       2 root     kworker/0:1-cgr [kworker/0:1-cgroup_free]
+   1252       2 root     kworker/3:0H    [kworker/3:0H]
+   1255       2 root     kworker/2:1-eve [kworker/2:1-events]
+   1299       2 root     kworker/3:1-eve [kworker/3:1-events]
+   1345       2 root     kworker/0:2     [kworker/0:2]
+   1347       2 root     kworker/2:2     [kworker/2:2]
+   1352       2 root     kworker/1:1-cgr [kworker/1:1-cgroup_free]
+   1356       2 root     kworker/0:0H    [kworker/0:0H]
+   1357       2 root     kworker/1:0H    [kworker/1:0H]
+   1358     999 root     sshd            sshd: richard [priv]
+   1361       2 root     psimon          [psimon]
+   1363       1 richard  systemd         /usr/lib/systemd/systemd --user
+   1364    1363 richard  (sd-pam)        (sd-pam)
+   1429    1358 richard  sshd            sshd: richard@notty
+   1430    1429 richard  python3         python3 -
+   1444    1430 richard  ps              ps -eo pid,ppid,user,comm,args

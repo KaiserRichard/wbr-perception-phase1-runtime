@@ -1,0 +1,115 @@
+
+USAGE: 
+
+   rs-data-collect  [--] [--version] [-h] [--debug] [--eth] [--eth-only]
+                    [--no-eth] [--domain-id <0-232>] [-t <seconds>] [-m <>]
+                    [-f <path>] [-c <path>] [-s <serial_number>]
+
+
+Where: 
+
+   --,  --ignore_rest
+     Ignores the rest of the labeled arguments following this flag.
+
+   --version
+     Displays version information and exits.
+
+   -h,  --help
+     Displays usage information and exits.
+
+   --debug
+     Turn on librealsense debug logs
+
+   --eth
+     Detect DDS devices, even if disabled in the configuration.
+
+     NOTE - ignored when not built with DDS support
+
+   --eth-only
+     Use ONLY DDS devices; do not look for USB/MIPI devices.
+
+     NOTE - ignored when not built with DDS support
+
+   --no-eth
+     Do not detect DDS devices, even if enabled in the configuration.
+
+     NOTE - no-op when not built with DDS support
+
+   --domain-id <0-232>
+     Domain ID to use with DDS devices.
+
+     NOTE - ignored when not built with DDS support
+
+   -t <seconds>,  --Timeout <seconds>
+     Max amount of time to receive frames (in seconds)
+
+   -m <>,  --MaxFrames_Number <>
+     Maximum number of frames-per-stream to receive
+
+   -f <path>,  --FullFilePath <path>
+     the file where the data will be saved to
+
+   -c <path>,  --ConfigurationFile <path>
+     Specify file path with the requested configuration
+
+   -s <serial_number>,  --SerialNumber <serial_number>
+     the device Serial Number
+
+
+   librealsense rs-data-collect tool
+
+
+LINKAGE
+	linux-vdso.so.1 (0x0000ffffb0ccd000)
+	librealsense2-gl.so.2.58 => /opt/ros/jazzy/lib/aarch64-linux-gnu/librealsense2-gl.so.2.58 (0x0000ffffb0a90000)
+	librealsense2.so.2.58 => /opt/ros/jazzy/lib/aarch64-linux-gnu/librealsense2.so.2.58 (0x0000ffffaffc0000)
+	libstdc++.so.6 => /lib/aarch64-linux-gnu/libstdc++.so.6 (0x0000ffffafd30000)
+	libgcc_s.so.1 => /lib/aarch64-linux-gnu/libgcc_s.so.1 (0x0000ffffafcf0000)
+	libc.so.6 => /lib/aarch64-linux-gnu/libc.so.6 (0x0000ffffafb30000)
+	/lib/ld-linux-aarch64.so.1 (0x0000ffffb0c90000)
+	libglfw.so.3 => /lib/aarch64-linux-gnu/libglfw.so.3 (0x0000ffffafaa0000)
+	libm.so.6 => /lib/aarch64-linux-gnu/libm.so.6 (0x0000ffffaf9f0000)
+	libudev.so.1 => /lib/aarch64-linux-gnu/libudev.so.1 (0x0000ffffaf990000)
+	libusb-1.0.so.0 => /lib/aarch64-linux-gnu/libusb-1.0.so.0 (0x0000ffffaf950000)
+	libX11.so.6 => /lib/aarch64-linux-gnu/libX11.so.6 (0x0000ffffaf7f0000)
+	libcap.so.2 => /lib/aarch64-linux-gnu/libcap.so.2 (0x0000ffffaf7c0000)
+	libxcb.so.1 => /lib/aarch64-linux-gnu/libxcb.so.1 (0x0000ffffaf770000)
+	libXau.so.6 => /lib/aarch64-linux-gnu/libXau.so.6 (0x0000ffffaf740000)
+	libXdmcp.so.6 => /lib/aarch64-linux-gnu/libXdmcp.so.6 (0x0000ffffaf710000)
+	libbsd.so.0 => /lib/aarch64-linux-gnu/libbsd.so.0 (0x0000ffffaf6d0000)
+	libmd.so.0 => /lib/aarch64-linux-gnu/libmd.so.0 (0x0000ffffaf6a0000)
+
+NORMAL_USER_ACCESS
+uid=1000(richard) gid=1000(richard) groups=1000(richard),4(adm),24(cdrom),27(sudo),30(dip),44(video),101(lxd)
+crw-rw---- 1 root video 243,  0 Sep 12 16:18 /dev/hidraw0
+crw-rw---- 1 root video 510,  0 Sep 12 16:18 /dev/iio:device0
+crw-rw---- 1 root video 510,  1 Sep 12 16:18 /dev/iio:device1
+crw-rw---- 1 root video  81,  0 Sep 12 16:18 /dev/video0
+crw-rw---- 1 root video  81,  1 Sep 12 16:18 /dev/video1
+crw-rw---- 1 root video  81,  2 Sep 12 16:18 /dev/video2
+crw-rw---- 1 root video  81,  3 Sep 12 16:18 /dev/video3
+crw-rw---- 1 root video  81, 22 Sep 12 16:18 /dev/video4
+crw-rw---- 1 root video  81, 23 Sep 12 16:18 /dev/video5
+accel_3d
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device0/buffer/enable
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device0/buffer/length
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device0/in_accel_hysteresis
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device0/in_accel_sampling_frequency
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device0/scan_elements/in_accel_x_en
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device0/scan_elements/in_accel_y_en
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device0/scan_elements/in_accel_z_en
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device0/scan_elements/in_timestamp_en
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device0/trigger/current_trigger
+gyro_3d
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device1/buffer/enable
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device1/buffer/length
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device1/in_anglvel_hysteresis
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device1/in_anglvel_sampling_frequency
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device1/scan_elements/in_anglvel_x_en
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device1/scan_elements/in_anglvel_y_en
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device1/scan_elements/in_anglvel_z_en
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device1/scan_elements/in_timestamp_en
+-rw-rw---- 1 root video 4096 Sep 12 16:18 /sys/bus/iio/devices/iio:device1/trigger/current_trigger
+ros-jazzy-librealsense2 2.58.4-1noble.20260831.020056
+
+DEVICE_OWNERS

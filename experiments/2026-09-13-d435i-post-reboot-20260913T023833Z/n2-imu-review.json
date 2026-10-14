@@ -1,0 +1,44 @@
+{
+  "smoke": {
+    "Gyro": {
+      "norm_min": 0.001,
+      "norm_max": 0.06997856814768362,
+      "norm_mean": 0.007090042571065852,
+      "finite": true
+    },
+    "Accel": {
+      "norm_min": 9.703339682810245,
+      "norm_max": 9.868017075380441,
+      "norm_mean": 9.781608362847985,
+      "finite": true
+    }
+  },
+  "reproduction": {
+    "Gyro": {
+      "norm_min": 0.001,
+      "norm_max": 0.07203471385380801,
+      "norm_mean": 0.007512741472719211,
+      "finite": true
+    },
+    "Accel": {
+      "norm_min": 9.2751127755947,
+      "norm_max": 10.203656648476564,
+      "norm_mean": 9.782563999996261,
+      "finite": true
+    }
+  },
+  "soak": {
+    "Gyro": {
+      "norm_min": 0.0,
+      "norm_max": 17.19881103448724,
+      "norm_mean": 0.03716230673503073,
+      "finite": true
+    },
+    "Accel": {
+      "norm_min": 6.937711294079627,
+      "norm_max": 17.29997008667934,
+      "norm_mean": 9.715013274343752,
+      "finite": true
+    }
+  }
+}
