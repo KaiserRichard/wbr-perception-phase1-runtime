@@ -1,0 +1,66 @@
+--- our reference-only result
++++ concurrent B source preserved
+@@ -2,7 +2,7 @@
+ % Build: latexmk -xelatex main.tex   (see README.md)
+ % Content source: docs/SLIDES_OVERVIEW.md, docs/SYSTEM_GUIDE.md, docs/research/.
+ % Number policy: every number is a DESIGN value, a CALCULATED value, a HOST-TEST
+-% result, or a PUBLISHED figure from another setup. Nothing here is a Pi/STM32 measurement.
++% result, PUBLISHED figure, or explicitly sourced Pi MEASUREMENT; no STM32 measurement.
+ \documentclass[aspectratio=169,12pt,t]{beamer}
+ 
+ % Speaker notes: uncomment ONE line to see them.
+@@ -100,11 +100,11 @@
+ \setbeamersize{text margin left=6mm,text margin right=6mm}
+ \setlength{\tabcolsep}{4pt}
+ \renewcommand{\arraystretch}{1.02}
+-\title{WBR Perception Implementation}
+-\subtitle{A gate-by-gate engineering guide}
++\title{WBR Perception — Progress Report}
++\subtitle{Process, results and next steps}
+ \author{}
+ \institute{}
+-\date{10 October 2026}
++\date{13 October 2026}
+ 
+ 
+ \newcounter{slidefigure}
+@@ -165,13 +165,35 @@
+ #1\end{tikzpicture}\end{center}}
+ \addtobeamertemplate{block begin}{\setlength{\parskip}{0pt}}{}
+ \begin{document}\raggedright
+-\begin{frame}{1 / Where we are: a working baseline, open camera gates}
++\begin{frame}[c]\relax
++{\centering\huge\bfseries\color{navy}WBR Perception — Progress Report\par}
++{\centering\Large\color{teal}Process, results and next steps\par}
++\medskip{\color{teal}\hrule height .6pt}\vfill
++\begin{columns}[c,onlytextwidth]
++\begin{column}{.50\textwidth}
++\large Intel RealSense D435i\par\medskip
++Raspberry Pi 5 / ROS 2 Jazzy\par\medskip
++ORB-SLAM3 stereo-inertial\par\medskip
++STM32H7 controller boundary\par
++\end{column}
++\begin{column}{.45\textwidth}
++\centering\includegraphics[width=\linewidth,height=.40\textheight,keepaspectratio]{images/P04.png}\par\smallskip
++{\small\color{muted}D435i hardware illustration\par}
++\end{column}
++\end{columns}\vfill
++{\centering\color{muted}Owner's operating guide\quad 13 October 2026\par}
++\end{frame}
++
++\begin{frame}{Where we are}
+ \evidence{MEASURED / OPEN}
+ 
+-{\Large\bfseries\color{navy}WBR perception: process and next actions\par}
+-\medskip 13 October 2026 \quad Owner's operating guide
+ \pair{Today}{A native ARM64 build produced three usable EuRoC trajectories. D435i recorder and estimator binaries are built; neither has run on this camera.}{Next}{Repair power, preserve/migrate the OS card, qualify data storage, then re-establish N1 $\to$ N2 $\to$ N3 on the new unit.}
+-\medskip Reading route: today's work (pp. 5--18), two programs (19--27), runbook (28--38), tools/sources (39--41), agent tickets (42--43).
++\medskip\textbf{Reading route}\par\smallskip
++\begin{tabular}{@{}L{80mm}L{30mm}L{48mm}L{22mm}@{}}
++Where we are & pp. 2--5 & Today's work & 6--19\\[4pt]
++Two programs & 20--28 & Runbook & 29--39\\[4pt]
++Tools and sources & 40--42 & Agent tickets & 43--44
++\end{tabular}\par\par
+ \takeaway{All gates remain OPEN. Every command in the runbook is a future instruction.}
+ 
+ \src{[F] sections A--F}{42, 89}

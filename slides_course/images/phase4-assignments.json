@@ -1,0 +1,110 @@
+[
+  {
+    "id": "P01",
+    "original": "incoming/edf13406-7fba-4ffd-9e3e-6ebb8c19094e.png",
+    "copy": "P01.png",
+    "sha256": "b27381f4589045aa6aa37aacca40d3285865e3952d4e7f8f07c5f575cc2b6650",
+    "subject": "Four-object platform portrait: cooled green Pi, camera bar, controller, robot",
+    "defects": "Robot is a low wheeled chassis, not a clear two-leg wheel-biped silhouette. Controller PCB is black rather than green/neutral. Tiny invented PCB markings; camera apertures are illustrative.",
+    "visual_review": "REVIEWED_WITH_RECORDED_LIMITS"
+  },
+  {
+    "id": "P02",
+    "original": "incoming/2452fdcd-c033-47a4-9ef9-928f8ade3f95.png",
+    "copy": "P02.png",
+    "sha256": "644188de654b969a2a1b892077d27949ff03ac7558f5075d38edef1c7b31229e",
+    "subject": "Robot and camera viewing cone facing textured indoor route and obstacle",
+    "defects": "Robot is a low wheeled chassis; two articulated legs with foot wheels are not clearly shown. More shaded/detailed than the flat editorial style.",
+    "visual_review": "REVIEWED_WITH_RECORDED_LIMITS"
+  },
+  {
+    "id": "P03",
+    "original": "incoming/Camera motion through a textured room.png",
+    "copy": "P03.png",
+    "sha256": "756a8dbbdeee5d013d1746a0aa793c2c136226bd63ea5fd09a37983009804148",
+    "subject": "Handheld camera moving through textured room with two ghost positions",
+    "defects": "No material subject/label defect seen; camera housing/apertures remain simplified, not an exact hardware reference.",
+    "visual_review": "REVIEWED_WITH_RECORDED_LIMITS"
+  },
+  {
+    "id": "P04",
+    "original": "incoming/D435i Stereo Camera Bar.png",
+    "copy": "P04.png",
+    "sha256": "b6c9c6358f5ec4fce95a9ef5b26dde73495f31cd507b54d822ef51680c42a922",
+    "subject": "Isolated silver/dark stereo camera bar, USB-C cable and D435i label",
+    "defects": "No material subject/label defect seen; stylized apertures/housing must not be used as an exact optical drawing.",
+    "visual_review": "REVIEWED_WITH_RECORDED_LIMITS"
+  },
+  {
+    "id": "P05",
+    "original": "incoming/c62baa7d-fb69-43ea-acc4-4dab9816996b.png",
+    "copy": "P05.png",
+    "sha256": "09f468cb08d28902d2315c8ddc83706d2b03e90b6caaadfb4bf471cd1e2544b3",
+    "subject": "Cooled green Pi, power block, connected cable, airflow cues",
+    "defects": "Tiny invented PCB/header markings violate no miniature text. Cooler is an axial fan depiction rather than a faithful active-cooler blower; connector geometry is stylized and cable strain relief is only implicit.",
+    "visual_review": "REVIEWED_WITH_RECORDED_LIMITS"
+  },
+  {
+    "id": "P06",
+    "original": "incoming/1db58995-07c9-4359-8d2e-8afd68218dbb.png",
+    "copy": "P06.png",
+    "sha256": "fe1939c89c3be6e0abbd02a9c61af102fab5eecf720808ea25591b1d142412d2",
+    "subject": "Dominant closed data enclosure, microSD and archival folder; Data/OS labels",
+    "defects": "No material subject/label defect seen; enclosure does not establish NVMe type or storage qualification.",
+    "visual_review": "REVIEWED_WITH_RECORDED_LIMITS"
+  },
+  {
+    "id": "P07",
+    "original": "incoming/3c1dd354-9c0c-4667-a906-7c8634c5838c.png",
+    "copy": "P07.png",
+    "sha256": "7e4e529413fc4b1b37cf0477ca2f46e4d5d4209d6a3953d7d75894ba6c83c9e7",
+    "subject": "Separate Camera IMU and Body IMU context bubbles over robot",
+    "defects": "Robot lacks clearly recognizable biped legs. Controller PCB is black, with tiny invented markings. Body sensor enclosure/mount is an invented concept, not a verified installation.",
+    "visual_review": "REVIEWED_WITH_RECORDED_LIMITS"
+  },
+  {
+    "id": "P08",
+    "original": "incoming/6b5a1c01-4425-495d-8010-32ae1fa189f5.png",
+    "copy": "P08.png",
+    "sha256": "e6c6667e6d475fe091d10602caf1cca5dc1f736d9210dd12949326c1c60ee8a5",
+    "subject": "Rigid grid target, oblique handheld camera, slack cable and unnumbered ruler",
+    "defects": "Tag-like patterns are generated decoration, not verified AprilTags or a usable calibration target. No decoded IDs or fake measurement values seen.",
+    "visual_review": "REVIEWED_WITH_RECORDED_LIMITS"
+  },
+  {
+    "id": "P09",
+    "original": "incoming/a507f7f0-51c5-4119-8693-0b6b0f430002.png",
+    "copy": "P09.png",
+    "sha256": "6f287edf0616126a0296b32196a8e47fb95b2280b2286ac3486b35435b180d36",
+    "subject": "Cooled green Pi, camera, direct USB-A/USB-C cable and empty preflight boxes",
+    "defects": "Tiny invented PCB markings; cooler uses simplified axial-fan geometry. No separate power cable shown, so power/data distinction is incomplete. All checklist boxes are empty.",
+    "visual_review": "REVIEWED_WITH_RECORDED_LIMITS"
+  },
+  {
+    "id": "P10",
+    "original": "incoming/17b29a56-d860-43eb-93a9-2095f8602535.png",
+    "copy": "P10.png",
+    "sha256": "e2a76a9e3346294a9929443f6cf4429ea7b1453359f09f5578fe12a7f524267e",
+    "subject": "Laptop with two grayscale room views, locked folders and magnifier",
+    "defects": "Left/right views appear near-identical; stereo disparity is not clearly demonstrated. No fake code, result graph or measurement seen.",
+    "visual_review": "REVIEWED_WITH_RECORDED_LIMITS"
+  },
+  {
+    "id": "P11",
+    "original": "incoming/5d710874-112c-45d9-9819-2051828a6013.png",
+    "copy": "P11.png",
+    "sha256": "163cd3bad92fca2482ef5aaab09946ee924b874a9d802ece5a9110b723a77772",
+    "subject": "Bounded packet with Task, Evidence and Stop condition cards and folder",
+    "defects": "No material subject/label defect seen; cards remain blank and unapproved.",
+    "visual_review": "REVIEWED_WITH_RECORDED_LIMITS"
+  },
+  {
+    "id": "P12",
+    "original": "incoming/f850a605-09f0-4759-8136-8d9e69ea7f2d.png",
+    "copy": "P12.png",
+    "sha256": "8e5a169704eda109b81b9865daa642ff93b99c92750dc548ab9e42ea6fc2f63b",
+    "subject": "Conditional route with closed checkpoint barriers and distant robot",
+    "defects": "Destination robot is a low wheeled chassis, not a clear wheel-biped silhouette. No completed gate or fabricated progress value seen.",
+    "visual_review": "REVIEWED_WITH_RECORDED_LIMITS"
+  }
+]

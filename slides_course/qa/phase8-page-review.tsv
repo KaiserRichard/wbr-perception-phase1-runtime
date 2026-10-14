@@ -1,0 +1,79 @@
+page	title	resolution	verdict	sha256	inspection
+1	WBR Perception Implementation	1280x719	PASS	fe56e677f5a42240c9807da4a1388f068f3c9ef8c036a6096fadaaadab7d0d90	inspected individually at full size; final PNG byte-identical after polish
+2	1. Navigation and balance	1280x719	PASS	cf11b34377836b7679bde34e18fb2fe0a94abf3b0c34c383ccbb7218b4e3d9aa	inspected individually at full size; final PNG byte-identical after polish
+3	2. Controller ownership	1280x719	PASS	cc5be2b3ecc1ed4abc727f583f72f32f1c1a4d0b658994b8ed7d826b97948c97	inspected individually at full size; final PNG byte-identical after polish
+4	3. Pose usability	1280x719	PASS	5b70f551a36842bf3fcda95a66bc34268afcef53dbef87019948d8e66edd0dcb	inspected individually at full size; final PNG byte-identical after polish
+5	4. Session hardware	1280x719	PASS	3cb7f7f475757609ba06f09e302bdf1022ec1757241556bf173511cf9582f57e	inspected individually at full size; final PNG byte-identical after polish
+6	5. D435i sensor inputs	1280x719	PASS	d16508fab0999ad4568f545a71c2c58f540fbbdc675ab5fe20f9767eb26c1ae7	final polish inspected individually at full size
+7	6. Independent inertial sensors	1280x719	PASS	e80eadaa13db65947bbf8f12c7d7970b1c8bd3aec7a3db4a25fd8ee34f7a1208	inspected individually at full size; final PNG byte-identical after polish
+8	7. Sensor-to-trajectory paths	1280x719	PASS	b23d7f6f28612c8acede1b4235702e779100d2337da0f64becf513b5bc3d6647	inspected individually at full size; final PNG byte-identical after polish
+9	8. ROS 2 communication	1280x719	PASS	b9cf082240654b4aa69a77ca6e34220fc5df826601b6ba8788e84f74c2655ba8	inspected individually at full size; final PNG byte-identical after polish
+10	9. Pose origin and axes	1280x719	PASS	8b5752d261a3639a319cbf8803dbba16100f6385876ef4342252fc6992e868fc	final polish inspected individually at full size
+11	10. Stereo geometry	1280x719	PASS	16afbaed2b1e57e4b9688a12f48a160564e1d4664cc302b262c010c0a8014ae2	inspected individually at full size; final PNG byte-identical after polish
+12	11. Features constrain motion	1280x719	PASS	1e6095192e6c38714eb276cc4c0f8afd1a4db6eb5622b4835a63e6198fd0c5e3	inspected individually at full size; final PNG byte-identical after polish
+13	12. Visual and inertial estimation	1280x719	PASS	618aa02456dc4756d178d2f70c157cff838dbab3df6a0816fb2014b88c9c0a6c	inspected individually at full size; final PNG byte-identical after polish
+14	13. Motion between images	1280x719	PASS	f522d3d3c1d76b2a826518951cafada216b22abcf16ee7d849e75f3d0171c3f6	inspected individually at full size; final PNG byte-identical after polish
+15	14. Tracking	1280x719	PASS	830e72b27ea252158197826f40bd4bb41868d818e92169277f0239a5836fafbe	final polish inspected individually at full size
+16	15. Keyframes and Atlas	1280x719	PASS	4c83da6ba2f4ffd87d018d20e27c98f545aa877552e298ce641319e9a43bae44	inspected individually at full size; final PNG byte-identical after polish
+17	16. Algorithm work sharing	1280x719	PASS	ba3cc67319b90cfaeebbe291aeddfb0a2666743290f3f7ede1b67980b0ff6e11	inspected individually at full size; final PNG byte-identical after polish
+18	17. Drift and revisits	1280x719	PASS	9f843e52cdb6b476657bd6b5b8f0ad7f33a5c637946661ec6395e81a3b901360	inspected individually at full size; final PNG byte-identical after polish
+19	18. Inertial initialization motion	1280x719	PASS	42bf1a868bbc45fac81ffa79acce3a4f12a3de1986cdd09ea9b81261605136ca	inspected individually at full size; final PNG byte-identical after polish
+20	19. Infrared projector	1280x719	PASS	43383bbf1d7c22036549b44457089894ac2c1710f205cd5c81fa22b3e5658ead	inspected individually at full size; final PNG byte-identical after polish
+21	20. Calibration questions	1280x719	PASS	96c52563636e758547714902b6dbeb7f669bd60fbacaab235830069e43831c0a	inspected individually at full size; final PNG byte-identical after polish
+22	21. Stereo rectification	1280x719	PASS	c4230c44672810707f574a428fc8d4f2122c5fb53a8ddf965d0db531f37aa5d5	inspected individually at full size; final PNG byte-identical after polish
+23	22. Three different capture motions	1280x719	PASS	ea21aa5438c1bcecced23e43c175d81cf0810361040f1a49159af984dbe1f6ba	inspected individually at full size; final PNG byte-identical after polish
+24	23. Timestamp clock domains	1280x719	PASS	88df45df117f3aabaf19e10799810d36957c8482090f929d5b81db060b2955f1	inspected individually at full size; final PNG byte-identical after polish
+25	24. Queues and backpressure	1280x719	PASS	cdcdbb1bc2b5f6bab903e0164f3de042f9bc8f20d26b87b6fbcf162af10dcbee	inspected individually at full size; final PNG byte-identical after polish
+26	25. Recording gaps on the card	1280x719	PASS	7920eed416ee530d856a61d099ce9d12177cda87de65ec9eaab5b3985fc157f1	inspected individually at full size; final PNG byte-identical after polish
+27	26. Record in RAM, copy later	1280x719	PASS	f7d32e6c4653b1406c3e31c6430ff2e5e5694b7a84a66da6a75912814c3829b3	inspected individually at full size; final PNG byte-identical after polish
+28	27. Camera-independent baseline	1280x719	PASS	f04e15a6ef6544768f3ad02a65f9aecafe76cf51d932cd136b61aa9db7e13a28	final polish inspected individually at full size
+29	28. Baseline trajectory error	1280x719	PASS	578cf38e5427f907eb6c53705aaff538bf4de47fe4a2d3765ae71291060ac32f	inspected individually at full size; final PNG byte-identical after polish
+30	29. Baseline success and camera crash	1280x719	PASS	fe202961ff4f817378f1e0d8f256ec2c86ea1379049d451f4318a0403b56f5ab	inspected individually at full size; final PNG byte-identical after polish
+31	30. Repeatable offline diagnosis	1280x719	PASS	91dc3a948ee5b0376b8078582769cf975c57f693c6b24b47c53229c6efb72816	inspected individually at full size; final PNG byte-identical after polish
+32	31. Live freshness	1280x719	PASS	f17b999560f633b573318de747fb6503dda9b558df242f9155aaeee7fb0162ac	inspected individually at full size; final PNG byte-identical after polish
+33	32. Bottom-up diagnosis	1280x719	PASS	d19be5c902ad671c01ee26cffdc589388e432a1a0afd844815b28485be976682	inspected individually at full size; final PNG byte-identical after polish
+34	33. Health supervision	1280x719	PASS	5d71a8b7f90016cbbe014487ba06eaa330091db88bf725f3fa8842f71439dd94	inspected individually at full size; final PNG byte-identical after polish
+35	34. Different evidence branches	1280x719	PASS	8ad95128eebceb6e0e438ac21b7a7feb239bdd7639958ac0425177774e0bf194	inspected individually at full size; final PNG byte-identical after polish
+36	35. Established work and open gaps	1280x719	PASS	18c97feef3b678cea90ae23d14ff0b05a6c0c06ce978fed7c3a50f9689bdf92e	inspected individually at full size; final PNG byte-identical after polish
+37	36. Next diagnostic sequence	1280x719	PASS	8279068f93ce12c6dd3ca6d1013c70a9f746199fd152f2ab73db40567b01cf78	inspected individually at full size; final PNG byte-identical after polish
+38	37. Current system claim	1280x719	PASS	b3e9a1ec875f2b1c6bd4ff213eddbeecbcf1fec15314cfc57c1432194427683d	inspected individually at full size; final PNG byte-identical after polish
+39	References	1280x719	PASS	78c98deaa2e23d9416ec464d03fbe0536caebd4f932f6fdf15578ec2933eee34	inspected individually at full size; final PNG byte-identical after polish
+40	Backup: 4.2 N0: acceptance and diagnosis	1280x719	PASS	00c304b431a8b4368ef34b3dd266d7dbadea543e22e0a9b9aeda201dec37e272	final polish inspected individually at full size
+41	Backup: 4.3 N1: acceptance and diagnosis	1280x719	PASS	354477c78566a41ccaceaa27595c25ab18decbdf01f80efd86c51861c6e673c1	inspected individually at full size; final PNG byte-identical after polish
+42	Backup: 4.5 N2: delivery criteria	1280x719	PASS	8099b37d106cd896f07c658fbf071fdd31de3a78b0570da950aa3148bd995a72	inspected individually at full size; final PNG byte-identical after polish
+43	Backup: 4.5 N2: content, health and acceptance	1280x719	PASS	1f56b732e25867c544cdab5400decfe7ff2ed865c75d3022d8cab97a8fce1128	inspected individually at full size; final PNG byte-identical after polish
+44	Backup: 4.7 N3: PASS/FAIL matrix	1280x719	PASS	b2cb51a286c9d8db8a43f887e0589bca953a01fa4856465b9de7a7f375b54904	final polish inspected individually at full size
+45	Backup: 4.7 Storage prerequisite: no mount fallback	1280x719	PASS	b515c7966c7d3a32170d89cbb135ae60afdd838eb11317df54f0c4b45aaf6917	inspected individually at full size; final PNG byte-identical after polish
+46	Backup: 4.7 Content checks beyond delivery rates	1280x719	PASS	bceebf10221263cc51c3c414455f85b5b6afa0fa872255669f6c43241eb0c710	inspected individually at full size; final PNG byte-identical after polish
+47	Backup: 4.8 Stereo extension	1280x719	PASS	9f39a3ab29815d955684a060f7e8b4074bbc7b6bb8af7046766ef82cd36f7cf2	inspected individually at full size; final PNG byte-identical after polish
+48	Backup: 4.9 N4A: estimator acceptance contract	1280x719	PASS	d48a5adbb0901b91228a4b9b9f8c3eb3a79f36c1a0dfa2920f9422fd6cf65c8b	inspected individually at full size; final PNG byte-identical after polish
+49	Backup: 4.10 N4B: input and run criteria	1280x719	PASS	a49ac33674afc5f176ff0139c9750a34062d1e20f2023589a0371e07c0d1765a	inspected individually at full size; final PNG byte-identical after polish
+50	Backup: 4.10 N4B: immutable adapter provenance	1280x719	PASS	bd32dd03c58280ac8a61ed73955c769b8ad706537ca5933141cdb275641ef11f	inspected individually at full size; final PNG byte-identical after polish
+51	Backup: 4.11 N4C: live PASS/FAIL criteria	1280x719	PASS	c4701b96cd8ca936a3d4d465fe88bdab203b52d06560cde822cf36408b56bba6	inspected individually at full size; final PNG byte-identical after polish
+52	Backup: 4.12 N5: measurement criteria	1280x719	PASS	4376cdf01b1c00279d9f3a81a83e484c04b5b6b7a44b5183bb040c818613d3be	inspected individually at full size; final PNG byte-identical after polish
+53	Backup: 2.6 QoS compatibility	1280x719	PASS	3d0d5454b3612d145db7c80e92cf4b602689b7ff0c4b13983a42475e7ab3a038	inspected individually at full size; final PNG byte-identical after polish
+54	Backup: 3.4 Topic and type contract	1280x719	PASS	e98f97a97dd9019c94e09e8a0db82fa5c00c5687fd05bf4d79dbbe34640cd246	inspected individually at full size; final PNG byte-identical after polish
+55	Backup: 3.11 Robot transform ownership	1280x719	PASS	39c287fd2b14350a12d21ceb07975214c380e4899adea5401339493889938009	inspected individually at full size; final PNG byte-identical after polish
+56	Backup: 3.12 Camera transform ownership	1280x719	PASS	0a8fcc4de671878a25a0af04640901756ef8e65fb01807b8e995d6c08d7d5430	inspected individually at full size; final PNG byte-identical after polish
+57	Backup: 3.16 Where timestamps are stamped	1280x719	PASS	358c914fcf2b334260b35f41edb24c13ebbd45d4f672bb8fad5f008da7e2b65d	inspected individually at full size; final PNG byte-identical after polish
+58	Backup: 3.17 Global time	1280x719	PASS	05af6fb001dda72f8e4a08a94c28bb6d6ee2de86455bfa9cefbf6185dba8cb9e	inspected individually at full size; final PNG byte-identical after polish
+59	Backup: 3.18 Worked latency decomposition	1280x719	PASS	e07c10b2f3efb220a613035fbd07c324d8e5acc12b139c1eada4241a66239c87	inspected individually at full size; final PNG byte-identical after polish
+60	Backup: 3.22 IMU noise	1280x719	PASS	cd4e1261dceaf73f6671ed8b135e56e75a2ebd532537fd3429ab08fc91ecfd75	inspected individually at full size; final PNG byte-identical after polish
+61	Backup: 3.28 Settings audit before tuning	1280x719	PASS	f7ea1e30401001e04a8b37fbe82e3c72dcaea1156e6dceda55cfc65e60ee4dcc	inspected individually at full size; final PNG byte-identical after polish
+62	Backup: 3.28 Numeric IMU settings contract	1280x719	PASS	39cebdbc1913bb851a9efff5929a10c7c1dc0dccf2e8eef0064ba6df885386c1	inspected individually at full size; final PNG byte-identical after polish
+63	Backup: 3.29 Input association	1280x719	PASS	39177bd922a173872c36557e496dcc98f36b4fa6acce9ca891ad0523b6decca2	inspected individually at full size; final PNG byte-identical after polish
+64	Backup: 5.2 ATE computation outline	1280x719	PASS	74f0c383f6bacfa7ea7b72f84b2ef56e1a313c0782e5850348570fec6a1f9a6e	inspected individually at full size; final PNG byte-identical after polish
+65	Backup: 5.3 RPE and pair policy	1280x719	PASS	26824a35705853c1a526ae041e454448c770bfacd355a7d51d0bc76da0ed00c7	inspected individually at full size; final PNG byte-identical after polish
+66	Backup: 5.6 Latency and loss	1280x719	PASS	7cd898256a155003a00f586c604a2cf1b839e610f19a51e6a17469a4f58511df	inspected individually at full size; final PNG byte-identical after polish
+67	Backup: 5.7 Resource measurements	1280x719	PASS	c2863c696d7193f23ac5f615aa7c33feb09caaa33f27e6f44cea5b99e9d12e11	inspected individually at full size; final PNG byte-identical after polish
+68	Backup: 5.9 Timing results	1280x719	PASS	ca9894edd3393ce9f2d558b224cce42a588caed159b2eab9e9d57949548c476b	inspected individually at full size; final PNG byte-identical after polish
+69	Backup: 5.10 Resource results	1280x719	PASS	06f0be9994020d1364d24841fe9b33d7fb6943f84de3141f28c22a97d57615d1	inspected individually at full size; final PNG byte-identical after polish
+70	Backup: 3.32 Planned Pi-to-STM32 boundary	1280x719	PASS	d148dc68967ccbe080ff657d79d48c4297cfc558336f00bb8ed8942e820b6564	final polish inspected individually at full size
+71	Backup: 4.13 N6: planned acceptance table	1280x719	PASS	5297f358714800ed4029b1b9c1e53906198e027c80e64b7c58f07af7bc57dc84	final polish inspected individually at full size
+72	Backup: 4.14 N7: planned acceptance table	1280x719	PASS	bb40c453ef7150c3e3775b6e8200c84c9d6ee5837a7d3f5b47b32f8c99aea2a8	final polish inspected individually at full size
+73	Backup: 1.3 Objectives and research questions	1280x719	PASS	d9661b1d9bb46657a7f866199173ce1ab9f700374770af4ae81ad6fed6daa4bb	inspected individually at full size; final PNG byte-identical after polish
+74	Backup: 3.1 Machine ownership	1280x719	PASS	41599dbb3327b899cb8ed955bc98a9a69b53d7209bbc7bb04cccd8f8cd190542	inspected individually at full size; final PNG byte-identical after polish
+75	Backup: 6.1 Runtime and USB	1280x719	PASS	091e724b4c8902408e586f750d19fadfa685839e993bc63e1425da4b49aea95f	inspected individually at full size; final PNG byte-identical after polish
+76	Backup: 6.2 Inputs and clocks	1280x719	PASS	21013381f3a2e0e51939a597d079cd91c5df61bb4158236bad8a6fe52dcd7cc4	inspected individually at full size; final PNG byte-identical after polish
+77	Backup: 6.3 Algorithm and calibration	1280x719	PASS	e53169a17c27c0c1ab61892f320b536e6e24776816d733c0f7d68a3b9cca7a9c	inspected individually at full size; final PNG byte-identical after polish
+78	Backup: 7.1 Historical evidence	1280x719	PASS	18489043fd14fd0671262b8ff482811892c885b99422acc98ce7ba904b17c57d	inspected individually at full size; final PNG byte-identical after polish

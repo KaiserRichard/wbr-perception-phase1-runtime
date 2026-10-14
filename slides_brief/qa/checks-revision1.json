@@ -1,0 +1,39 @@
+{
+  "revision": 1,
+  "scope": "Local document validation only; no hardware/runtime tests",
+  "slide_count": 11,
+  "max_bullets": 4,
+  "tex_errors_or_box_warnings": [],
+  "visible_forbidden_content": [],
+  "source_notes_per_slide": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "rendered_pages": 11,
+  "visual_review": "Every final page inspected individually at 1280-pixel width; no clipping or footer collision.",
+  "sha256": {
+    "main.tex": "42f828eead45b5364315dca5fd3622f3aded092e197ac45b87b93eb2120ce24f",
+    "main.pdf": "0c4851b37a64454f93af84b23073f64025ee20cf9c40ee6b9b39e2768c46f934",
+    "preview/page-01.png": "10a68ecee8b2bf73500d4f67117608ebbc629a3ee184e17b32af77b71210b903",
+    "preview/page-02.png": "27ceb2e19e16e0d2239856fa996df1a20fd5a9f349dac25c52eca6dfabefdb77",
+    "preview/page-03.png": "d055345cb599865cef7c785fc059dc18aac49b349629d1c6ef44107280062b11",
+    "preview/page-04.png": "ccdd221ae7f08b6a81ecdf9df4308208295fc88d66498f39f9ccdc4ca21ff502",
+    "preview/page-05.png": "79a7aa9f7289e7986a0390db834953450e5c91bf251288a9591e2c6c053f7442",
+    "preview/page-06.png": "51728dc5243121774e249e9cdac40f2d3bb65e955625a9e1a9c36ffa9d94e1bb",
+    "preview/page-07.png": "dcd9022bc0f2cad96c1b3710edbf2234e65e824b42cf5227b8588dd31f0e644e",
+    "preview/page-08.png": "d7c6e821ffe3e9293c9e3991cb5b277d2286c34c7c1387b521630c035b31ef22",
+    "preview/page-09.png": "de232395472f459fafec84a491d534fa03f60341a2848156389f6284526db770",
+    "preview/page-10.png": "5c3df60646a2e9eafd88e91613ba806b51a9f3a7803961aeb8ffb87510aa065c",
+    "preview/page-11.png": "a44b30274a93fcaad1065d6a495b03cf266a8457e3d88b6895b20bccd7ccd983"
+  },
+  "permitted_image_unchanged": true
+}

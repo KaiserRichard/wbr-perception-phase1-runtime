@@ -1,0 +1,45 @@
+01 How WBR perception works
+02 We will follow one measurement from sensor to score
+03 The robot needs both its own motion and nearby geometry
+04 Balance must survive a delayed perception computer
+05 You can now explain why perception and control are separate
+06 The D435i combines two views with a motion sensor
+07 Stereo depth comes from a corner shifting between views
+08 IMU readings are useful signals with noise and bias
+09 The projector is off so features belong to the room
+10 You can now explain what each sensor contributes
+11 A coordinate frame says what a position is relative to
+12 A timestamp names the measurement time, not its arrival
+13 Different clocks need a measured relationship
+14 You can now explain where and when a sample belongs
+15 Features let the computer recognize the same corner
+16 Tracking estimates the pose that explains the image
+17 Keyframes and map points preserve useful geometry
+18 The IMU predicts motion between camera images
+19 Three threads share the work and recognize old places
+20 Tracking fails when observations stop constraining motion
+21 You can now explain how images and IMU produce a pose
+22 Calibration tells software what the sensor geometry means
+23 Calibration must also describe time and uncertainty
+24 You can now explain why calibration comes before trust
+25 USB delivery and recording must keep up with the camera
+26 ROS 2 messages make sensor data available to other tasks
+27 Recording once lets us replay the same problem
+28 You can now trace our moment through the software
+29 Ground truth gives an independent answer to compare against
+30 Alignment removes an arbitrary origin without hiding scale
+31 ATE measures the global position mismatch
+32 RPE asks how much a short motion segment is wrong
+33 Three EuRoC runs support the build, not our camera
+34 You can now explain what an accuracy score proves
+35 The first gates establish a trustworthy sensor path
+36 The estimation gates separate algorithm, camera and timing load
+37 The final gates connect timing evidence to safe use
+38 Debug from the physical layer upward
+39 You can now explain why the gates have this order
+40 Today short camera tests work, but power still limits progress
+41 You can now choose and explain the next useful task
+42 These terms summarize the ideas you have learned
+43 Each tool answers a different engineering question
+44 Use these commands to rebuild the deck or score saved paths
+45 The sources separate project evidence from general methods

@@ -1,0 +1,14 @@
+pdf_page	asset	title	inspection	verdict
+1	P01	Platform portrait	original 1280 x 719; full image, aspect ratio, labels, caption, text and footer clearance	PASS_LAYOUT; asset defects in MAPPING.md
+4	P02	Robot context	original 1280 x 719; full image, aspect ratio, labels, caption, text and footer clearance	PASS_LAYOUT; asset defects in MAPPING.md
+10	P03	Visual-inertial estimation	original 1280 x 719; full image, aspect ratio, labels, caption, text and footer clearance	PASS_LAYOUT; asset defects in MAPPING.md
+12	P04	D435i streams	original 1280 x 719; full image, aspect ratio, labels, caption, text and footer clearance	PASS_LAYOUT; asset defects in MAPPING.md
+19	P05	Physical platform	original 1280 x 719; full image, aspect ratio, labels, caption, text and footer clearance	PASS_LAYOUT; asset defects in MAPPING.md
+25	P06	Storage qualification	original 1280 x 719; full image, aspect ratio, labels, caption, text and footer clearance	PASS_LAYOUT; asset defects in MAPPING.md
+30	P07	Independent IMUs	original 1280 x 719; full image, aspect ratio, labels, caption, text and footer clearance	PASS_LAYOUT; asset defects in MAPPING.md
+38	P08	Calibration capture	original 1280 x 719; full image, aspect ratio, labels, caption, text and footer clearance	PASS_LAYOUT; asset defects in MAPPING.md
+55	P09	N0: physical inventory record	original 1280 x 719; full image, aspect ratio, labels, caption, text and footer clearance	PASS_LAYOUT; asset defects in MAPPING.md
+74	P10	N4B: immutable adapter provenance	original 1280 x 719; full image, aspect ratio, labels, caption, text and footer clearance	PASS_LAYOUT; asset defects in MAPPING.md
+86	P11	Bounded AI tickets	original 1280 x 719; full image, aspect ratio, labels, caption, text and footer clearance	PASS_LAYOUT; asset defects in MAPPING.md
+107	P12	Conditional roadmap	original 1280 x 719; full image, aspect ratio, labels, caption, text and footer clearance	PASS_LAYOUT; asset defects in MAPPING.md
+20	D20	Sensor-to-pose execution path	original 1280 x 719; attached labels and clear inter-row recorder arrow	PASS_LAYOUT

@@ -1,0 +1,152 @@
+% Deck E: historical status only; all provenance is in speaker notes.
+\input{preamble.tex}
+\newcommand{\src}[1]{\note{Source: \detokenize{#1}}}
+\title{WBR perception — status report, 14 October 2026}
+\date{14 October 2026}
+\begin{document}
+\raggedright
+
+\begin{frame}[c]\relax
+{\huge\bfseries\color{navy}WBR perception — status report,\par 14 October 2026\par}
+\medskip{\color{teal}\hrule height .6pt}\bigskip
+\begin{columns}[c,onlytextwidth]
+\begin{column}{.60\textwidth}
+\Large The benchmark works; the camera demo needs a rebuild.\par\bigskip
+\normalsize The artificial intelligence (AI) team reports to you as the project owner.\par\medskip
+\muted{WBR means wheel-biped robot.}
+\end{column}
+\begin{column}{.35\textwidth}
+\slideimg[.36\textheight]{\linewidth}{P04}{D435i camera}
+\par\small\muted{The illustration makes no validation claim.}
+\end{column}
+\end{columns}
+\src{experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md; slides_report/main.tex}
+\note{Target duration: five minutes for eleven slides. All hardware observations are historical source facts, not newly executed tests. P04 is reused from slides_course/images/P04.png.}
+\end{frame}
+
+\begin{frame}{The baseline works, but the camera demo is blocked.}
+\Large
+\textbf{The baseline works:} benchmark accuracy matches the paper's range, and a short recording into memory has no dropped frames.\par\bigskip
+\textbf{The demo is blocked:} the replay rebuild is unfinished, power is unstable, and calibration is incomplete.\par\bigskip
+\textbf{Next,} we resume the rebuild, record a full take into memory, and review replay before a live run.
+\src{experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md; experiments/2026-10-13-n4a-euroc-mh01/REPORT.md}
+\end{frame}
+
+\begin{frame}{The native build and the 8 GB Pi are now in place.}
+\Large
+\deckitems{
+\item We built ORB-SLAM3 natively on the Raspberry Pi; three compatibility patches enabled the build, and a fourth fixes the replay crash.
+\item We set up a new D435i camera unit.
+\item The 8-gigabyte (GB) Pi now boots with the same 32 GB card.}
+\vfill\normalsize\muted{SLAM means simultaneous localization and mapping.}
+\src{experiments/2026-10-13-SESSION_FACTS_FOR_SLIDES.md sections A-C; experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md items 1,5}
+\note{The initial successful native build had three small compatibility patches. Patch four was subsequently applied to the isolated Pi build copy, but its rebuild was interrupted. This slide does not imply the four-patch library has finished building. ORB-SLAM3 is the algorithm's product name.}
+\end{frame}
+
+\begin{frame}{Three EuRoC runs match the published accuracy range.}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.43\textwidth}
+{\Huge\bfseries\color{teal}3.7–4.2 cm\par}\medskip
+\large Our absolute trajectory error (ATE) was close to the paper's \textbf{3.6 cm}.\par\bigskip
+\normalsize Relative pose error (RPE) was about \textbf{1.3 cm over one second}.
+\end{column}
+\begin{column}{.52\textwidth}
+\deckitems{
+\item The public EuRoC machine-hall dataset provides a known reference path.
+\item The native build reproduces similar accuracy on this sequence.
+\item This does not prove D435i calibration or real-time speed.
+\item The 8 GB benchmark rerun is still pending.}
+\end{column}
+\end{columns}
+\src{experiments/2026-10-13-n4a-euroc-mh01/REPORT.md; slides_course/qa/n4a-traj-eval-summary.md; experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md}
+\note{ATE root-mean-square values with rigid rotation/translation alignment and no scale: 0.041461, 0.036844, 0.041604 m. Paper comparison is approximately 0.036 m, Table II, MH01; paper reports a median of ten runs, not our three-run statistic. Translational RPE at a one-second interval: 0.013295, 0.013559, 0.014021 m; mean 0.013625 m. The brief requests about 1.3 cm; individual values span roughly 1.3-1.4 cm. Benchmark was on the 4 GB Pi under under-voltage, so timing is invalid. No 8 GB rerun results appear in the permitted sources.}
+\end{frame}
+
+\begin{frame}{The new camera delivers stereo images and motion data.}
+\Large
+\deckitems{
+\item In the 20-second still take, both infrared (IR) cameras delivered images at 30 hertz (Hz).
+\item The gyroscope and accelerometer delivered inertial measurement unit (IMU) data.
+\item Streaming was correct for about 19 seconds; a 0.7-second gap appeared at shutdown.}
+\vfill\takeaway{This verifies short stream delivery; it does not qualify a long recording.}
+\src{experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md item 2}
+\note{Do not describe this as a gap-free 20-second test. The addendum explicitly reports a final-second shutdown gap. This is diagnostic evidence, not an input-gate pass or calibration result.}
+\end{frame}
+
+\begin{frame}{The first long take had gaps consistent with slow card writes.}
+\deckitems{
+\item The 100-second hand-moved take was unusable: gaps lasted 0.3–2.9 seconds, recurring about every five seconds after 22 seconds.
+\item The card wrote only 16.6 megabytes per second (MB/s), below the camera's 18.4 MB/s requirement.}
+\bigskip\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+\draw[rule,line width=5pt] (0,0)--(16,0);
+\draw[teal,line width=5pt] (0,0)--(3.5,0);
+\foreach \x in {4.0,5.6,7.2,8.8,10.4,12.0,13.6,15.2}{\draw[fault,line width=5pt] (\x,0)--(\x+.45,0);}
+\foreach \x/\t in {0/0 s,3.5/22 s,16/100 s}{\draw[navy] (\x,-.12)--(\x,.12);\node[below,font=\normalsize] at (\x,-.18){\t};}
+\node[above,font=\normalsize,text=fault] at (9.8,.35){Gaps recur about every five seconds.};
+\end{tikzpicture}
+\par\medskip\raggedright\small\muted{The timeline is schematic; gap widths are not to scale.}
+\vfill\takeaway{Slow storage is the strongly inferred cause, not a directly proven diagnosis.}
+\src{experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md item 3}
+\note{Measured file volume: 1.66 GB in 100 s. Strong causal inference: recorder blocks on the card and loses input. No under-voltage or USB errors were recorded in the kernel log during this take. Red marks indicate recurring gaps only; this is not a reconstruction of raw timestamps.}
+\end{frame}
+
+\begin{frame}{Recording into memory removed drops in the short test.}
+\Large
+\deckitems{
+\item We recorded into random-access memory (RAM), then copied the data to the card afterwards.
+\item The 15-second test had zero dropped frames, IR at 30 Hz, and a maximum gap of 33 milliseconds.
+\item A 100-second take of about 1.7 GB fits in memory on the 8 GB Pi.}
+\vfill\takeaway{The short test worked; a complete 100-second memory take is not yet measured.}
+\src{experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md item 4; experiments/2026-10-14-lab-prep/LAB_RUNBOOK_2026-10-15.md}
+\note{Measured IR rate 29.99 Hz, gyro 200.2 Hz, accelerometer 101 Hz. Available memory-backed recording area 3.9 GB; capacity is sufficient for the approximate 1.7 GB take, not proof that the long test succeeded. Post-test copy passed checksum verification. Card staging remains unqualified dataset storage.}
+\end{frame}
+
+\begin{frame}{The replay crash is patched, but its rebuild is unfinished.}
+\Large
+\deckitems{
+\item Offline ORB-SLAM3 crashed on the first camera frame.
+\item Debugging found an upstream uninitialized pointer; patch four initializes it safely.
+\item A power loss interrupted the rebuild, so we must resume it before retesting replay.}
+\vfill\takeaway{The code fix is applied; successful camera replay is not yet measured.}
+\src{experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md item 5}
+\note{Crash stack: main to System::GetTimeFromIMUInit to LocalMapping::GetCurrKFTime. Upstream LocalMapping::mpCurrentKeyFrame was never initialized before its null check. Patch sets it to nullptr. Three of approximately 27 library objects rebuilt before power loss. EuRoC example does not call this function, so the previous benchmark was unaffected.}
+\end{frame}
+
+\begin{frame}{Power and connectivity need your help before a reliable session.}
+\normalsize
+\begin{tabular}{@{}L{43mm}L{101mm}L{39mm}@{}}\toprule
+\textbf{Blocker} & \textbf{Needs} & \textbf{Owner}\\\midrule
+Power & Under-voltage persists; use the ordered 5-ampere (A) supply. & You provide it.\\[9pt]
+Storage & Use and qualify the ordered 128 GB card. & You + AI team.\\[9pt]
+USB stick & The 64 GB Universal Serial Bus (USB) stick manages about 1 MB/s. & AI team avoids it.\\[9pt]
+Connectivity & Secure loose Ethernet; Wi-Fi is still unseen on the 8 GB Pi. & You + AI team.\\[9pt]
+Calibration & Complete camera–IMU calibration; current settings are nominal. & You + AI team.\\\bottomrule
+\end{tabular}
+\src{experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md items 1,6,7; experiments/2026-10-13-SESSION_FACTS_FOR_SLIDES.md sections A,E,F; experiments/2026-10-14-lab-prep/LAB_RUNBOOK_2026-10-15.md}
+\note{Owner column proposes the division of next actions for this supervisor report; the evidence does not assign named owners. User supplies hardware and bench availability, AI team prepares/reviews tooling and evidence. Supply ordered: 5.1 V/5 A. Stick measured 1.09 MB/s today. Wi-Fi succeeded on 4 GB Pi, not observed on 8 GB within about seven minutes; cause unknown. Calibration warnings remain: IMU Calibration is not available; factory geometry nominal, noise assumed, time offset unknown. The new card must be qualified, not assumed fast from its capacity.}
+\end{frame}
+
+\begin{frame}{We will review replay before attempting the live demo.}
+\large
+\deckitems{
+\item First, resume the patched rebuild and verify that it finishes.
+\item Then record 100 seconds into RAM and review the input continuity.
+\item Next, run offline ORB-SLAM3 and review the trajectory plot.
+\item Only after that review, try a live run and produce one summary slide.}
+\vfill\takeaway{Until stable 5 A power and calibration exist, the demo cannot prove reliable live operation; room accuracy also needs a reference path.}
+\src{experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md Tomorrow's shortest path; experiments/2026-10-14-lab-prep/LAB_RUNBOOK_2026-10-15.md}
+\note{Future plan only. Owner must explicitly say CAMERA AVAILABLE before any camera or ORB execution. Fresh N1, N2, N3 prerequisites remain required: USB at least 5000M, exact IR1 Y8 640x480/15 plus gyro/200 and accel/100 raw profile, staged 20/105/300 seconds with mandatory 300-second soak and unchanged timing/health thresholds, then N3 review. The 100-second stereo/30 demo does not replace the raw soak. Offline input/replay review must precede live. No ground truth exists for the room take, so a plausible plot cannot establish accuracy even after calibration. All acquisition and computation stay local to the Pi.}
+\end{frame}
+
+\begin{frame}{We need your power and lab-access decisions for the next session.}
+\Large
+\deckitems{
+\item Please confirm when the ordered 5 A supply and 128 GB card will be available.
+\item Please choose lab Wi-Fi or secured Ethernet for the 8 GB Pi session.
+\item Please confirm the 15 October lab slot and camera availability.}
+\vfill\normalsize We can prepare the tooling now; the rebuild and physical tests need the next working lab session.
+\src{experiments/2026-10-13-SESSION_FACTS_FOR_SLIDES.md section A; experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md items 1,7 and Tomorrow's shortest path; experiments/2026-10-14-lab-prep/LAB_RUNBOOK_2026-10-15.md}
+\note{These are requests, not claims of delivery or a confirmed booking. Wi-Fi/Ethernet choice follows the reported loose Ethernet and unverified 8 GB Wi-Fi. Lab date comes from the 15 October runbook. A camera-availability decision in this deck is not execution authorization; the owner's explicit CAMERA AVAILABLE statement is required at the bench.}
+\end{frame}
+\end{document}

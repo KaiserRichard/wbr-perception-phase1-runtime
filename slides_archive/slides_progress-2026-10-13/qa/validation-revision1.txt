@@ -1,0 +1,15 @@
+OK: 44 frames (cover + 43 content frames)
+OK: 44 extracted PDF pages
+OK: 44 rendered previews at native 1280x719
+OK: cover title, subtitle, date and platform
+OK: page 2 normal Where we are frame
+OK: reading route shifted by one
+OK: mandatory 300 s soak and exact rate/gap bands retained
+OK: SE3 measured RMSE values retained
+OK: camera authorization and OPEN gates retained
+OK: clean final XeLaTeX log
+OK: current reference PDF has 91 pages
+OK: all 43 reference citations use existing PDF pages
+OK: generator reproduces reviewed TeX exactly
+OK: generator reproduces page index exactly
+Document checks only; no hardware gate verdict.

@@ -1,0 +1,8 @@
+OK: 43 explicit content frames
+OK: mandatory 300 s soak
+OK: exact N2 rate bands
+OK: measured RMSE values preserved
+OK: 43 rendered previews
+OK: 43 extracted PDF pages
+OK: clean final LaTeX build
+Document checks only; no hardware gate verdict.

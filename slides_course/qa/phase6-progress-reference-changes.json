@@ -1,0 +1,217 @@
+[
+  {
+    "source": "\\src{[F] sections A--F}{",
+    "old": "52, 107",
+    "new": "42, 89"
+  },
+  {
+    "source": "\\src{[F] sections A, D; AGENTS.md}{",
+    "old": "17--20, 50",
+    "new": "12--15, 41"
+  },
+  {
+    "source": "\\src{[F] sections D--E; Phase A runbook}{",
+    "old": "52, 69--78",
+    "new": "42, 58--67"
+  },
+  {
+    "source": "\\src{[F] sections A--B; ADDENDUM\\_CAMERA\\_SWAP.md}{",
+    "old": "19, 56--57",
+    "new": "14, 46--47"
+  },
+  {
+    "source": "\\src{[F] sections A; N4A power\\_window.log}{",
+    "old": "53--55, 95",
+    "new": "43--45, 79"
+  },
+  {
+    "source": "\\src{[G] active-unit Phase A runbook; [F] sections A}{",
+    "old": "54, 61",
+    "new": "44, 51"
+  },
+  {
+    "source": "\\src{[A] REPORT.md; power\\_window.log}{",
+    "old": "94--95, 97--98",
+    "new": "78--79, 81--82"
+  },
+  {
+    "source": "\\src{[F] sections C; orbslam3-pi-build/build\\_orbslam3.sh}{",
+    "old": "26, 70--71",
+    "new": "12, 59--60"
+  },
+  {
+    "source": "\\src{[F] sections C; orbslam3-pi-build/build\\_orbslam3.sh}{",
+    "old": "26, 70",
+    "new": "12, 59"
+  },
+  {
+    "source": "\\src{[F] sections C; orbslam3-pi-build/build\\_orbslam3.sh}{",
+    "old": "26, 70--71",
+    "new": "12, 59--60"
+  },
+  {
+    "source": "\\src{[F] sections C; [A] REPORT.md}{",
+    "old": "54, 95",
+    "new": "44, 79"
+  },
+  {
+    "source": "\\src{[A] REPORT.md; ETH EuRoC dataset; upstream EuRoC.yaml}{",
+    "old": "15, 70",
+    "new": "59"
+  },
+  {
+    "source": "\\src{[A] REPORT.md; Campos et al., accepted paper, EuRoC discussion}{",
+    "old": "15, 89, 92",
+    "new": "59, 75, 77"
+  },
+  {
+    "source": "\\src{[A] REPORT.md; Campos et al., accepted paper, Sec. VII}{",
+    "old": "89--90",
+    "new": "75"
+  },
+  {
+    "source": "\\src{[A] REPORT.md evaluation protocol}{",
+    "old": "89--90",
+    "new": "75"
+  },
+  {
+    "source": "\\src{[A] REPORT.md; eval/ape\\_summary.txt}{",
+    "old": "91--92",
+    "new": "76--77"
+  },
+  {
+    "source": "\\src{[A] REPORT.md; \\href{https://arxiv.org/pdf/2007.11898}{Campos et al., accepted paper, Table II}}{",
+    "old": "71, 88, 96",
+    "new": "60, 66, 80"
+  },
+  {
+    "source": "\\src{[A] REPORT.md; [F] sections A, D}{",
+    "old": "71, 93, 95",
+    "new": "60, 67, 79"
+  },
+  {
+    "source": "\\src{[F] sections E; [B] README.md}{",
+    "old": "20, 72--76",
+    "new": "15, 61--65"
+  },
+  {
+    "source": "\\src{[B] d435i\\_rs.h; n4b\\_plan.md}{",
+    "old": "12, 58--61, 69",
+    "new": "9, 48--51, 58"
+  },
+  {
+    "source": "\\src{[B] n4b\\_plan.md; d435i\\_rs.h}{",
+    "old": "12, 37--38, 68",
+    "new": "9, 29--30, 57"
+  },
+  {
+    "source": "\\src{[B] d435i\\_record.cpp; n4b\\_plan.md}{",
+    "old": "32--34, 74",
+    "new": "24--26, 63"
+  },
+  {
+    "source": "\\src{[B] n4b\\_plan.md; [F] sections F}{",
+    "old": "24--25, 67",
+    "new": "18, 56"
+  },
+  {
+    "source": "\\src{[B] stereo\\_inertial\\_d435i\\_file.patch}{",
+    "old": "72--76",
+    "new": "61--65"
+  },
+  {
+    "source": "\\src{[B] d435i\\_input.h; verification.md}{",
+    "old": "44, 47",
+    "new": "35, 38"
+  },
+  {
+    "source": "\\src{[B] n4b\\_plan.md; patch}{",
+    "old": "22--23, 41--43, 74",
+    "new": "17, 32--34, 63"
+  },
+  {
+    "source": "\\src{[B] calibration\\_notes.md; candidate YAML; [F] sections E}{",
+    "old": "31, 36--40, 45--46",
+    "new": "23, 28--31, 36--37, 85"
+  },
+  {
+    "source": "\\src{[G] active-unit Phase A runbook; [B] n4b\\_plan.md}{",
+    "old": "52--78, 83",
+    "new": "42--67, 72"
+  },
+  {
+    "source": "\\src{[G] active-unit Phase A runbook; [F] sections A}{",
+    "old": "53--55",
+    "new": "43--45"
+  },
+  {
+    "source": "\\src{[F] sections F; [G] active-unit Phase A runbook storage section}{",
+    "old": "25, 55, 67",
+    "new": "18, 45, 56"
+  },
+  {
+    "source": "\\src{[G] active-unit Phase A runbook; [F] sections B, E}{",
+    "old": "56--57",
+    "new": "46--47"
+  },
+  {
+    "source": "\\src{[G] active-unit Phase A runbook N2 sections}{",
+    "old": "58--63",
+    "new": "48--52, 72"
+  },
+  {
+    "source": "\\src{[G] active-unit Phase A runbook N3 sections}{",
+    "old": "64--69",
+    "new": "53--58"
+  },
+  {
+    "source": "\\src{[B] n4b\\_plan.md; d435i\\_record.cpp}{",
+    "old": "38, 44, 69, 73",
+    "new": "30, 35, 58, 62"
+  },
+  {
+    "source": "\\src{[B] n4b\\_plan.md; patch}{",
+    "old": "73--74, 89--93",
+    "new": "62--63, 67, 75--77"
+  },
+  {
+    "source": "\\src{[B] calibration\\_notes.md; \\href{https://github.com/ethz-asl/kalibr/wiki/camera-imu-calibration}{Kalibr primary documentation}}{",
+    "old": "36--40, 73",
+    "new": "28--31, 62, 85"
+  },
+  {
+    "source": "\\src{[B] calibration\\_notes.md; Kalibr IMU noise guidance}{",
+    "old": "39--40, 46",
+    "new": "31, 37, 85"
+  },
+  {
+    "source": "\\src{[B] n4b\\_plan.md; course N4C/N5 tables}{",
+    "old": "75--78, 94--98",
+    "new": "64--67, 78--82"
+  },
+  {
+    "source": "\\src{[F] sections A--E; [G] active-unit Phase A runbook}{",
+    "old": "12--14, 25, 56--69",
+    "new": "9--11, 18, 46--58, 72"
+  },
+  {
+    "source": "\\src{[F] sections C--E; [B] calibration\\_notes.md}{",
+    "old": "26, 40--47, 89--95",
+    "new": "12, 32--38, 67, 75--79, 85"
+  },
+  {
+    "source": "\\src{Full source paths and hashes: this deck README.md / qa/provenance.json}{",
+    "old": "26, 83",
+    "new": "12, 72"
+  },
+  {
+    "source": "\\src{AGENTS.md; Phase A runbook}{",
+    "old": "83--86",
+    "new": "72--74"
+  },
+  {
+    "source": "\\src{[F] sections A--F; [G] active-unit Phase A runbook; AGENTS.md}{",
+    "old": "83--88, 107",
+    "new": "66, 72--74, 89"
+  }
+]

@@ -1,0 +1,106 @@
+PAGE 1
+WBR perception — status report,
+14 October 2026
+The benchmark works; the camera demo
+needs a rebuild.
+The artificial intelligence (AI) team reports to you as the
+project owner.
+WBR means wheel-biped robot. The illustration makes no validation
+claim.
+1/11
+PAGE 2
+The baseline works, but the camera demo is blocked.
+The baseline works: benchmark accuracy matches the paper’s range,
+and a short recording into memory has no dropped frames.
+The demo is blocked: the replay rebuild is unfinished, power is
+unstable, and calibration is incomplete.
+Next, we resume the rebuild, record a full take into memory, and
+review replay before a live run.
+2/11
+PAGE 3
+The native build and the 8 GB Pi are now in place.
+We built ORB-SLAM3 natively on the Raspberry Pi; three compatibility patches enabled the build,
+and a fourth fixes the replay crash.
+We set up a new D435i camera unit.
+The 8-gigabyte (GB) Pi now boots with the same 32 GB card.
+SLAM means simultaneous localization and mapping.
+3/11
+PAGE 4
+Three EuRoC runs match the published accuracy range.
+3.7–4.2 cm
+Our absolute trajectory error (ATE)
+was close to the paper’s 3.6 cm.
+Relative pose error (RPE) was about 1.3 cm
+over one second.
+The public EuRoC machine-hall dataset provides a
+known reference path.
+The native build reproduces similar accuracy on
+this sequence.
+This does not prove D435i calibration or real-time
+speed.
+The 8 GB benchmark rerun is still pending.
+4/11
+PAGE 5
+The new camera delivers stereo images and motion data.
+In the 20-second still take, both infrared (IR) cameras delivered images at 30 hertz (Hz).
+The gyroscope and accelerometer delivered inertial measurement unit (IMU) data.
+Streaming was correct for about 19 seconds; a 0.7-second gap appeared at shutdown.
+This verifies short stream delivery; it does not qualify a long recording.
+5/11
+PAGE 6
+The first long take had gaps consistent with slow card writes.
+The 100-second hand-moved take was unusable: gaps lasted 0.3–2.9 seconds, recurring about
+every five seconds after 22 seconds.
+The card wrote only 16.6 megabytes per second (MB/s), below the camera’s 18.4 MB/s requirement.
+Gaps recur about every five seconds.
+0 s 22 s 100 s
+The timeline is schematic; gap widths are not to scale.
+Slow storage is the strongly inferred cause, not a directly proven diagnosis.
+6/11
+PAGE 7
+Recording into memory removed drops in the short test.
+We recorded into random-access memory (RAM), then copied the data to the card afterwards.
+The 15-second test had zero dropped frames, IR at 30 Hz, and a maximum gap of 33 milliseconds.
+A 100-second take of about 1.7 GB fits in memory on the 8 GB Pi.
+The short test worked; a complete 100-second memory take is not yet measured.
+7/11
+PAGE 8
+The replay crash is patched, but its rebuild is unfinished.
+Offline ORB-SLAM3 crashed on the first camera frame.
+Debugging found an upstream uninitialized pointer; patch four initializes it safely.
+A power loss interrupted the rebuild, so we must resume it before retesting replay.
+The code fix is applied; successful camera replay is not yet measured.
+8/11
+PAGE 9
+Power and connectivity need your help before a reliable session.
+Blocker Needs Owner
+Power Storage USB stick Connectivity Calibration Under-voltage persists; use the ordered 5-ampere
+(A) supply.
+Use and qualify the ordered 128 GB card. The 64 GB Universal Serial Bus (USB) stick manages
+about 1 MB/s.
+Secure loose Ethernet; Wi-Fi is still unseen on the 8
+GB Pi.
+Complete camera–IMU calibration; current settings
+are nominal.
+You provide it.
+You + AI team.
+AI team avoids it.
+You + AI team.
+You + AI team.
+9/11
+PAGE 10
+We will review replay before attempting the live demo.
+First, resume the patched rebuild and verify that it finishes.
+Then record 100 seconds into RAM and review the input continuity.
+Next, run offline ORB-SLAM3 and review the trajectory plot.
+Only after that review, try a live run and produce one summary slide.
+Until stable 5 A power and calibration exist, the demo cannot prove reliable live operation; room
+accuracy also needs a reference path.
+10/11
+PAGE 11
+We need your power and lab-access decisions for the next session.
+Please confirm when the ordered 5 A supply and 128 GB card will be available.
+Please choose lab Wi-Fi or secured Ethernet for the 8 GB Pi session.
+Please confirm the 15 October lab slot and camera availability.
+We can prepare the tooling now; the rebuild and physical tests need the next working lab session.
+11/11

@@ -1,0 +1,79 @@
+{
+  "phase": "PHASE 8 FINAL",
+  "pages": 78,
+  "main_pages": 38,
+  "reference_page": 39,
+  "backup_pages": 39,
+  "figures": 53,
+  "hardware_qualification": "OPEN; document QA only",
+  "files": {
+    "main.tex": {
+      "sha256": "2ce06cd36d4229b9fe8be3e7a1161889a8378ac331725052e62e09782ef654e8",
+      "bytes": 158320
+    },
+    "main.pdf": {
+      "sha256": "ff53d3389be78d449adaa2a1f1a60ea0c023f200870bf2216782cfc4b6d9a91e",
+      "bytes": 2923804
+    },
+    "phase8_audit.py": {
+      "sha256": "753ac8e3e75e5b138e0d037d9bb665d969079587fc72dc79c1a8158db1ee126a",
+      "bytes": 45609
+    },
+    "build_deck.py": {
+      "sha256": "789521a6282d53dac1711e12bdaec5c48c39ad75fa3ed8d2ba72ddd904a6076f",
+      "bytes": 68009
+    },
+    "README.md": {
+      "sha256": "a546a6385664df5b302760c20dee37b5f53679a547197122904dfcb846287b4e",
+      "bytes": 4830
+    },
+    "REVIEW_LOG.md": {
+      "sha256": "e755eb66035c7858f07b8b54d82fab42bedf139f7e223dfce618d315b3c035a1",
+      "bytes": 34591
+    },
+    "qa/main-v4-91p.tex": {
+      "sha256": "f96ac47afb5362c51b5219d6a6b4a329b854657f8182bbada669722fab454089",
+      "bytes": 132917
+    },
+    "qa/main-v4-91p.pdf": {
+      "sha256": "3dc55ad2a5236500bfb5797529d0e71ea290ba63cd67b21544579a8a0a1c21b6",
+      "bytes": 16680772
+    },
+    "qa/phase8-check-final.txt": {
+      "sha256": "2da943f4d66bd7865c6c892d96b27f19974a7663ce82eaab6d6f5c57bb81234f",
+      "bytes": 491
+    },
+    "qa/phase8-page-review.tsv": {
+      "sha256": "4b882b6c336c8c4137d0856068c659004d1a13425390577f85f16cf7cb208328",
+      "bytes": 14544
+    },
+    "qa/PHASE8_PAGE_LIST.md": {
+      "sha256": "48f922706ee5beea4508bc74e1718e62fc759f90e0b4fb9b812743dfcb2be1bf",
+      "bytes": 4352
+    },
+    "qa/PHASE8_DISPOSITION.md": {
+      "sha256": "5ba60307b98b2f327ff5400338ede6ef0f75eecfa8a98f49805daaf3d96180d3",
+      "bytes": 3060
+    },
+    "qa/PHASE8_SOURCES.md": {
+      "sha256": "ec4d5e26b620c9b942716d2b5f5e5dd036db0b726db324164bbc2a87ce41c5c5",
+      "bytes": 2280
+    },
+    "qa/phase8-page-map.json": {
+      "sha256": "71ee94fd9bf49b568ec5fe594df0bb475d91bf03269122e51785c42b2623b5f7",
+      "bytes": 994
+    },
+    "qa/phase8-build-final.txt": {
+      "sha256": "9ce6d3c9537060c8d59d960fadb845f6df69f8b10fcbaf82ca99fe8b8d592444",
+      "bytes": 17569
+    },
+    "qa/phase8-render-final.txt": {
+      "sha256": "b03c70ff0d641a363f1a021413a098dce02e4c68b75f3a47aa10044f42ee1784",
+      "bytes": 3
+    },
+    "qa/phase8-pdf-text.txt": {
+      "sha256": "ef05a1efb4145a883b269267ee9bfbf6dcbeaec917122ef6c6cb07701756b7f2",
+      "bytes": 43132
+    }
+  }
+}

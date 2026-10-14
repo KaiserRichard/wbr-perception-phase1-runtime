@@ -1,0 +1,336 @@
+PAGE 1
+WBR Perception
+Progress report · 13 October 2026
+Known baseline before
+camera adaptation
+Pi 5 · D435i · ORB-SLAM3
+Accuracy evidence is encouraging.
+Physical qualification remains OPEN.
+Sensor illustration; no validation claim.
+1/20
+
+PAGE 2
+Goal: useful navigation without coupling balance to Linux
+PLANNED
+A wheel-biped robot needs scene-relative motion for navigation.
+Pi 5 estimates motion from stereo images and inertial data.
+STM32H7 owns balance, hard-real-time control and motor safety.
+Perception failure must remove optional navigation input safely.
+Qualify perception while preserving the controller ownership boundary.
+Source: AGENTS.md; docs/ARCHITECTURE.md
+2/20
+
+PAGE 3
+Ownership: the Pi provides an optional reference
+PLANNED / OPEN integration
+Raspberry Pi 5
+Stereo + IMU acquisition
+Pose / map / health
+Optional
+reference
+STM32H7
+Body estimation + balance
+Watchdog + motor limits
+Pi stall / stale estimate Reject input; keep control local
+Receiver health semantics and physical fault tests are still future gates.
+Source: AGENTS.md; docs/ARCHITECTURE.md
+3/20
+
+PAGE 4
+Data path: freeze input before judging the estimator
+MEASURED build / PLANNED acquisition and integration
+D435i
+USB 3 librealsense Recorder + replay
+ROS 2 qualification
+Evaluation
+evo
+Trajectory
+ORB-SLAM3
+Health + optional reference
+Later: STM32H7
+The built D435i adapter uses the SDK directly; N3 ROS 2 remains a required gate.
+Source: Session facts §E; N4B prep/n4b_plan.md
+4/20
+
+PAGE 5
+Method: each gate needs artifacts and acceptance
+PLANNED / OPEN
+N0 platform N1 access N2 raw N3 ROS 2
+Stereo + calibration
+N4A EuRoC
+No camera
+N4B D435i
+Offline
+N4C D435i
+Live
+Qualified N4 trials → N5 metrics → N6 health → N7 boundary
+Build success, plausible trajectories and historical receipts do not imply gate PASS.
+5/20
+
+PAGE 6
+Gate status: the active unit needs fresh physical evidence
+OPEN · as of 13 October 2026
+Gate Current status Evidence path
+N0 platform OPEN: loaded power unstable experiments/2026-10-13-pi5-env-snapshot/
+N1 access OPEN: new unit; prior clock
+experiments/2026-10-13-pi5-env-snapshot/
+stop
+ADDENDUM_CAMERA_SWAP.md
+N2 raw OPEN: new-unit soak missing experiments/2026-10-13-n4b-d435i-prep/
+n4b_plan.md
+docs/NEXT_GATE.md
+N3 ROS 2 OPEN: record/replay
+unqualified
+Old-unit N1/N2 and calibration receipts do not transfer to the new D435i.
+6/20
+
+PAGE 7
+Gate status: measured accuracy; adaptation still OPEN
+OPEN / PLANNED · as of 13 October 2026
+Gate Current status Evidence path
+N4A EuRoC OPEN: three runs; timing
+experiments/2026-10-13-n4a-euroc-mh01/
+invalid
+REPORT.md
+N4B offline OPEN: built; camera data
+experiments/2026-10-13-n4b-d435i-prep/
+absent
+n4b_plan.md
+N4C live OPEN: built; never camera-run experiments/2026-10-13-n4b-d435i-prep/
+n4b_plan.md
+docs/ORB_SLAM3_OFFLINE_PREPARATION.md
+N5 metrics PLANNED: full campaign
+pending
+N6 health PLANNED: semantics/fixtures docs/ARCHITECTURE.md
+N7 boundary PLANNED: bench review/tests AGENTS.md
+7/20
+
+PAGE 8
+Since the previous report: a runnable native baseline
+MEASURED
+Changed Consequence
+New D435i unit Temporary Pi 5 Native ORB-SLAM3 SDK 317422076650; USB descriptor 327743061057.
+Renew physical input and calibration evidence.
+4 GB RAM; 32 GB microSD; 5 V / 3 A supply.
+Target 8 GB platform has not been measured here.
+Upstream 4452a3c; three compatibility patches.
+Isolated Pi copy; EuRoC example and settings unchanged.
+The algorithm path now runs; the hardware change restarts camera qualification.
+Source: Session facts §A–C; N4A/provenance.txt
+8/20
+
+PAGE 9
+N4A setup: repeat a dataset with a known answer
+MEASURED setup / SOURCE-SUPPORTED dataset
+EuRoC MH01
+Public machine-hall drone sequence.
+Stereo 20 Hz + IMU 200 Hz.
+184 s; 3,682 stereo frames.
+Ground-truth body position.
+Pinned dataset + upstream YAML
+Unmodified EuRoC example
+Three headless runs on Pi 5
+Body trajectory vs ground truth
+evo · SE(3) alignment
+Known input separates native-build behavior from D435i acquisition problems.
+Source: N4A/REPORT.md; N4A/provenance.txt
+9/20
+
+PAGE 10
+N4A result: 0.037–0.042 m translation ATE
+MEASURED runs / SOURCE-SUPPORTED paper comparison
+Trial RMSE (m)
+ATE RMSE (m); lower is better
+Run 1 0.0415
+Run 2 0.0368
+Run 3 0.0416
+Mean 0.040
+Paper MH01 0.036
+0.05
+0.04
+0.03
+0.02
+0.01
+0
+0.0415
+0.0368
+Run 1
+Paper: 0.036 m
+Run 2
+Paper: median of 10 runs.
+Our three-run median: 0.0415 m.
+All three runs: IMU initialized, one map, no resets; N4A remains OPEN.
+Source: N4A/eval/ape_summary.txt; Campos et al., 2021, Table II
+0.0416
+Run 3
+10/20
+
+PAGE 11
+N4A supports the native build, with a narrow scope
+INFERRED from MEASURED runs / OPEN
+Supported on MH01
+Still unproven
+ARM64 build produces repeat trajectories.
+Compatibility patches retain similar accuracy.
+Initialization and map continuity are observed.
+New D435i pixels and motion delivery.
+Camera–IMU timing and calibration.
+Real-time speed or robot navigation.
+Retain the known-data baseline while qualifying each camera-specific input.
+Source: N4A/REPORT.md; Session facts §D
+11/20
+
+PAGE 12
+D435i pipeline: built and linked; never camera-run
+MEASURED build, session-reported / OPEN execution
+d435i_record
+Stereo + raw motion
+SDK recording
++ timestamp CSV
+--bag
+Patched stereo-inertial
+D435i example
+No --bag: later live mode
+--no-viewer: headless
+IR1 + IR2: 640×480 Y8 / 30 Hz; gyro 200 Hz; accel 100 Hz.
+Emitter OFF. Accel interpolated onto gyro times; invalid time steps rejected.
+Factory geometry is nominal; IMU noise is ASSUMED; calibration remains OPEN.
+Source: Session facts §E; N4B prep source/configuration
+12/20
+
+PAGE 13
+Blockers: power first, then trustworthy input
+MEASURED / CALCULATED / ASSUMED / OPEN
+Risk Evidence and consequence
+Power / timing Storage Calibration 4 GB RAM 87/178 samples (49%) showed live under-voltage/throttling.
+282–301 s wall for 184 s data; performance timing invalid.
+Historical worst write probe 17 MB/s vs 18.4 MB/s stereo payload.
+The 32 GB card has no demonstrated recording margin.
+Nominal camera–IMU geometry; copied IMU noise assumptions.
+SDK warning: “IMU Calibration is not available”.
+Build needed 4 GB temporary swap; free RAM fell to about 130 MB.
+Target 8 GB behavior remains unmeasured.
+Source: Session facts §A,C–F; N4A/REPORT.md and power_window.log
+13/20
+
+PAGE 14
+Next steps: restore prerequisites in order
+PLANNED / OPEN exit criteria
+Action Exit evidence
+1 Stabilize platform / storage 2 Renew new-unit N1 3 Complete N2 → N3 Fresh N0: synced UTC, flags 0x0; qualified recording storage.
+Repeat known-data timing under healthy loaded power.
+SDK identity + own USB branch ≥5000M + normal-user access.
+Fresh receipt after storage/topology changes.
+N2: 20 → 105 → mandatory 300 s; unchanged thresholds.
+N3: stream/rate/time/QoS evidence, finalized bag, isolated
+replay.
+Physical work starts only after explicit CAMERA AVAILABLE authorization.
+Source: Phase A runbook; N4B prep/n4b_plan.md
+14/20
+
+PAGE 15
+Then: immutable offline trials before live timing
+PLANNED / OPEN exit criteria
+Action Exit evidence
+4 Review stereo + calibration 5 N4B offline D435i 6 N4C live → N5 Attest paired IR1/IR2 at 30 Hz, IMU coverage and storage load.
+Qualify geometry, noise and time offset; preserve raw
+warnings.
+Hash the take/settings; reconcile pixels, stamps and counts.
+Repeat initialization, finite trajectory and map-continuity
+checks.
+Renew stereo input; measure age, queue growth, losses and
+health.
+Review performance bounds; accuracy requires valid
+reference.
+Nominal-config development runs can inform diagnosis; they cannot qualify VIO.
+Source: N4B prep/n4b_plan.md; docs/ORB_SLAM3_OFFLINE_PREPARATION.md
+15/20
+
+PAGE 16
+Summary: keep the baseline; qualify the camera next
+MEASURED progress / OPEN qualification / PLANNED next work
+Three EuRoC runs: 0.037–0.042 m ATE.
+Native Pi build is usable on the known-data sequence.
+D435i recorder and adapter are built, but never camera-run.
+Resolve power/storage, then renew N1 → N2 → N3.
+Offline stereo/calibration qualification precedes live performance.
+No gate PASS is claimed. STM32H7 retains balance and motor safety.
+Further detail: course reference deck and learning deck.
+16/20
+
+PAGE 17
+Backup: ATE uses one rigid alignment, without scale
+1
+n
+i=1
+∥R∗pi + t∗
+− qi∥2
+n
+MEASURED evaluation method
+Absolute trajectory error: matched body-position differences after alignment.
+(R∗
+, t∗) = arg min R∈SO(3), t
+n
+i=1
+∥Rpi + t− qi∥2
+, ATERMSE =
+pi: estimate; qi: ground truth; n: matched positions.
+Body poses
+ns → s
+Associate to GT
+Tolerance 0.02 s
+evo_ape tum gt.tum est.tum -a --t_max_diff 0.02
+Align SE(3)
+Position RMSE
+Stereo-inertial has metric scale; Sim(3) would answer a different question.
+Source: N4A/REPORT.md; N4A/eval/ape_summary.txt
+17/20
+
+PAGE 18
+Backup: three compatibility patches in an isolated copy
+MEASURED build / INFERRED narrow behavioral consistency
+Patch Reason / limit
+C++17; remove
+-march=native
+Sophus tests OFF mnFullBAIdx++
+→ = true
+Pangolin 0.9.1 / Ubuntu 24.04 toolchain compatibility.
+Compile configuration changed; retain source and binary hashes.
+GCC 13 aarch64 array-bounds warning fails their -Werror.
+ORB-SLAM3 uses Sophus headers; disabled tests are not
+validated.
+C++17 forbids incrementing bool.
+Preserves the prior C++11 bool-increment effect.
+MH01 accuracy is evidence for this build; it does not validate every code path.
+Source: Session facts §C; Pi build/build_orbslam3.sh; N4A/provenance.txt
+18/20
+
+PAGE 19
+Backup: live power faults in 87 of 178 samples
+MEASURED samples / CALCULATED 48.9%
+87 samples
+0x50005
+91 samples
+0x50000
+Live faults + history 5-second sampling during the EuRoC runs.
+Maximum observed temperature: about 63◦C.
+Pi UTC labels were about 80 minutes behind; NTP corrected later.
+Historical flags remain
+Historical-only flags are not a clean N0 result; timing must be repeated.
+Source: N4A/power_window.log; N4A/REPORT.md clock note
+19/20
+
+PAGE 20
+Backup: stereo payload already consumes the old write margin
+CALCULATED payload / MEASURED historical probe / PLANNED capacity
+640 × 480 × 1 × 2 × 30 = 18,432,000 B/s ≈ 18.4 MB/s
+Quantity Implication
+60–90 s stereo payload Old write probe: 17–19 MB/s 32 GB card: 13 GB free 128 GB: planned 95 GB data About 1.11–1.66 GB per take, before recording overhead.
+Worst case below payload; nominal result has little margin.
+Capacity alone does not prove sustained recording
+throughput.
+Roughly 55–90 takes in session estimate; not qualified storage.
+Qualify storage under load and copy takes to the Mac after each session.
+Source: Session facts §F; N4B prep storage budget
+20/20
+

@@ -1,0 +1,7 @@
+ChatGPT Image Oct 10, 2026, 09_02_01 AM.png -> P02.png [dry run]
+ChatGPT Image Oct 10, 2026, 03_12_45 PM.png -> P03.png [dry run]
+ChatGPT Image Oct 10, 2026, 09_02_01 AM.png -> P02.png
+ChatGPT Image Oct 10, 2026, 03_12_45 PM.png -> P03.png
+ChatGPT Image unparseable.png -> P04.png
+ChatGPT Image Oct 11, 2026, 01_01_01 PM.png -> P05.png
+OFFLINE TOOLING CHECK: 109 pages; 46 unique, referenced figures; clean TeX log; synthetic assignment ordering/idempotence/no-overwrite/mtime tests passed.

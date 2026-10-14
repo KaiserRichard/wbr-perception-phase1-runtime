@@ -1,0 +1,16 @@
+--- authored
++++ generated
+@@ -389,11 +389,12 @@
+ \textbf{Run} & \textbf{RPE trans. RMSE (m)} & \textbf{RPE rot. RMSE (deg)}\\\midrule
+ 1 & 0.013295 & 0.076464\\[5pt]
+ 2 & 0.013559 & 0.076776\\[5pt]
+-3 & 0.014021 & 0.074883\\\bottomrule\end{tabular}\par
++3 & 0.014021 & 0.074883\\\bottomrule\end{tabular}\par\par
+ \medskip SE(3); shared EuRoC clock assumed, offset 0 s; association tolerance 0.02 s (3,639 matched pose pairs per run).
+ \medskip One endpoint per eligible start: first later reference pose $\geq1$ s later; no interpolation. These are \texttt{traj\_eval.py} results; its pair policy differs from evo's RPE filters.
+ \takeaway{About 1.3 cm RPE over 1 s describes local drift; ATE scores the aligned global path.}
+ \note{Evidence: slides\_course/qa/n4a-traj-eval-summary.md; tools/trajectory\_eval/README.md. CALCULATED using traj\_eval.py from claude/project-thread-upkfjv, commit d3f9540, PR 2; tool not yet merged. Tool validation passed per its README, not rerun by this deck task. Flags: --t-max-diff 0.02 --t-offset 0 --align-both --rotation-ate --rpe-delta 1 --rpe-unit s. Shared EuRoC clock assumed; offset zero; active body-to-world poses in imu\_body, metres. 3,639 timestamp-associated pose pairs per run. For each eligible start, choose the first later reference timestamp at least 1 s later; no interpolation. SE(3) rigid alignment cancels in RPE. The tool's SE(3) ATE reproduces saved evo scores; its RPE pair policy differs from evo filters. Sim(3) additionally fits scale and is diagnostic, not the stereo-inertial paper comparator. Does not establish frames, extrinsics, synchronization, sensor readiness or gate PASS. No new camera, Pi or ORB execution.}
++
+ \src{C: qa/n4a-traj-eval-summary.md; d3f9540 / PR 2, unmerged}{76, 80}
+ \end{frame}
+ 

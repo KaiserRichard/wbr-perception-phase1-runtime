@@ -1,0 +1,7 @@
+Phase 8: 78 pages (38 main + 1 references + 39 backup).
+PASS: offline document QA only
+78 frames: 38 main, references, 39 backups; all 91 audit IDs accounted for.
+13 threshold/clock tables unchanged; evidence columns retained in notes.
+53 unique consecutive figures, all referenced; 78 consistent page footers.
+No visible paths/source footers, stale main RPE/paper comparison, or build diagnostics.
+Preserved incoming source SHA-256; exact generator reproduction. No hardware qualification.

@@ -1,0 +1,34 @@
+{
+  "pages": 11,
+  "visible_words_per_page": [
+    40,
+    63,
+    60,
+    70,
+    60,
+    79,
+    70,
+    56,
+    86,
+    75,
+    67
+  ],
+  "max_bullets": 4,
+  "visible_sources_or_evidence_labels": false,
+  "tex_overflow_warnings": false,
+  "reused_P04_identical": true,
+  "final_pdf_sha256": "20a611dcd3176c8138a4ba3e4c2be8fcd37514248a9392b5c1835bf438d9f96c",
+  "preview_sha256": {
+    "page-01.png": "e07d4334329c1499ad3c5ba747ffaae526b98c248beb36c2fa57b7a9ff2714fb",
+    "page-02.png": "2f2bc19efbc1bf12c093dbf9a70935568fd1e5053397719dccc240cec05a3794",
+    "page-03.png": "2e91fa0d45170c0eb15779695cb463a0f10038366d958f760cf161ec35aa9d07",
+    "page-04.png": "3cac6b0b99d976ee8f2d3e479f81f79d252a753cdc924c753541f5fe5d2852d6",
+    "page-05.png": "dd0514f70a496b056063668cd9ce8b9dbaf6a8759ae3b27d20fa0c46356aae8c",
+    "page-06.png": "65c70cfdea077614d3b0e1a5793acc9ee0387b8d734826db89f9acdd94eabccc",
+    "page-07.png": "45ac74f82572ca0e1a62dadc9de9183810e7e73a48b0246d4be3bcc0109863c8",
+    "page-08.png": "d1b76bdf6fde8bbcefae1609f8abc5d174ebd04862688234cf9c8590d48d6121",
+    "page-09.png": "cd01e0e1f604f4f306091f0f9dc4d58273ed8bfa606046b3a438537d0f78fa53",
+    "page-10.png": "879c617dbdf24a2471dc7d0712bf8d64879caa2930fc6abad23dbed8f4201073",
+    "page-11.png": "6dbbe1e70cb15d88e11b8acd754ff3c0a83ba240207cf9b71b9d8fca0db4e7ab"
+  }
+}

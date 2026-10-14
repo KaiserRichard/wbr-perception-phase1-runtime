@@ -1,0 +1,75 @@
+{
+  "scope": "Offline Phase-7 document update only; not sensor or gate qualification",
+  "page_counts": {
+    "C": 91,
+    "B": 44
+  },
+  "changed_pages": {
+    "C": [
+      59,
+      60,
+      76,
+      80
+    ],
+    "B": [
+      17,
+      19,
+      41
+    ]
+  },
+  "unchanged_render_count": 128,
+  "files": {
+    "slides_course/main.tex": "f96ac47afb5362c51b5219d6a6b4a329b854657f8182bbada669722fab454089",
+    "slides_course/main.pdf": "3dc55ad2a5236500bfb5797529d0e71ea290ba63cd67b21544579a8a0a1c21b6",
+    "slides_progress/main.tex": "397ab1f08d492d54b78f4183b2c62a7713e9a5d9f3705e10daca929d832cd7aa",
+    "slides_progress/main.pdf": "b5e5ada90606e935aa26fa69b72ae6de67e042b93143b6897854c4f8edc61ae8",
+    "slides_course/qa/n4a-traj-eval-summary.md": "ed4e7147a8a5d6d4a4cac88d15b841389191cd0a8bfe52a68bbadd44b6c25559",
+    "slides_course/phase7_rpe.py": "1a5c0fa3c7f6294ac07507c0ccad245e7fdbb61ca5f64b8b209e722694f17392",
+    "slides_course/build_deck.py": "856870eb6956808380cd72a4dcfa64e44dbc02a3c038220e3f147cf6a5c2947f",
+    "slides_progress/build_deck.py": "481053912c3a5e3866c58efb4caf1dcca8e10bec8372e0a59f223457899555b2"
+  },
+  "reviewed_pages": [
+    {
+      "deck": "course",
+      "page": 59,
+      "title": "4.9 N4A: camera-independent EuRoC baseline",
+      "sha256": "3fbd41ac3dc2608a21b80c06e351a51b9abc33428507492fd711d6fd646f0deb"
+    },
+    {
+      "deck": "course",
+      "page": 60,
+      "title": "4.9 N4A: estimator acceptance contract",
+      "sha256": "2ea9c50680cc5f6fdfc66f4ce96a91f9823a2a91bf9765540f8b67c0b69ae07b"
+    },
+    {
+      "deck": "course",
+      "page": 76,
+      "title": "5.3 RPE and pair policy",
+      "sha256": "6137c3fb1b62cda998cb2f3bb11f83a9754ba1010175d78f8a08b59dfe5a0e8a"
+    },
+    {
+      "deck": "course",
+      "page": 80,
+      "title": "5.8 Accuracy results",
+      "sha256": "e2abfe591f1eb6401ca87e84dc3d2b81ff36a365c4dbe5f2f41db4fa2f71d70e"
+    },
+    {
+      "deck": "progress",
+      "page": 17,
+      "title": "2 / evo: reproduce the score and distinguish RPE",
+      "sha256": "0601f1aed474038fc51846eae515cc46b9099a30d54cec96e162789651db8f6f"
+    },
+    {
+      "deck": "progress",
+      "page": 19,
+      "title": "2 / Variation and gate status: what N4A establishes",
+      "sha256": "11bcc71eb9ce50c546526a53d55b132d7c7192457c1dc3e58523598eac86fbcd"
+    },
+    {
+      "deck": "progress",
+      "page": 41,
+      "title": "5 / Tool map: estimation, scoring and calibration",
+      "sha256": "7984bd196e4e289543c35408ae43e0bdec890a72590b989ad692df4eb4e70752"
+    }
+  ]
+}

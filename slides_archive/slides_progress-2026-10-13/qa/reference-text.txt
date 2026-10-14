@@ -1,0 +1,1709 @@
+PAGE 1
+WBR Perception Implementation
+A gate-by-gate engineering guide
+Intel RealSense D435i
+Raspberry Pi 5 / ROS 2 Jazzy
+ORB-SLAM3 stereo-inertial
+STM32H7 controller boundary
+Figure 1 identifies the conceptual platform.
+Figure 1: Platform objects; no validation claim.
+Engineering and evidence snapshot 10 October 2026
+1/109
+
+PAGE 2
+Contents
+1 Introduction
+2 Background
+3 System design
+4 Implementation by gate
+5 Evaluation method
+6 Engineering decisions
+7 Current status and roadmap
+8 Conclusion
+2/109
+
+PAGE 3
+1. Introduction
+3/109
+
+PAGE 4
+1.1 Robot context
+KNOWN ownership / PLANNED integration
+Wheel-biped robot (WBR) navigation needs
+useful scene-relative motion. (Figure 2)
+STM32H7 keeps body estimation and balance
+locally.
+Perception adds optional navigation
+information above that controller.
+Figure 2: Navigation context; conceptual.
+Qualify perception without making balance depend on Linux.
+4/109
+
+PAGE 5
+1.2 Engineering problem
+PLANNED
+A pose may be plausible yet stale or expressed in the wrong frame. (Figure 3)
+Timing and calibration errors can survive a successful launch.
+Linux stalls must remove optional autonomy inputs safely.
+Stale source Plausible pose Unsafe reference
+Figure 3: Engineering problem; schematic.
+A valid number is not necessarily a usable estimate.
+5/109
+
+PAGE 6
+1.3 Objectives
+PLANNED
+Qualify physical input before estimation.
+Reproduce estimation on immutable recorded inputs.
+Measure accuracy, continuity, latency and resource limits.
+Review a health boundary before controller integration.
+Engineering decision
+Acceptance connects each objective to artifacts, failure cases and owner review.
+Each objective needs its own evidence and acceptance review.
+6/109
+
+PAGE 7
+1.4 Research questions
+PLANNED
+Can the Pi sustain the exact input without unexplained gaps?
+Can stereo-inertial estimation initialize and track repeatedly?
+Can a receiver reject stale, invalid or reset estimates?
+Which resource or timing limit fails first?
+Engineering decision
+The answer must include failed runs, unknown counters and the limits of each claim.
+Fix hypotheses and budgets before collecting comparison runs.
+7/109
+
+PAGE 8
+2. Background
+8/109
+
+PAGE 9
+2.1 Stereo geometry
+KNOWN method
+Infrared (IR) stereo matches one scene point in two views. [1] (Figure 4)
+Rectified horizontal disparity d gives depth Z= fb/d.
+Intrinsics, baseline b and correspondence determine geometric validity.
+Scene point
+Z= fb/d
+Baseline b
+Left camera Right camera
+Figure 4: Stereo geometry; schematic.
+Stereo depth requires calibrated geometry and valid image pairing.
+9/109
+
+PAGE 10
+2.2 Visual-inertial estimation
+KNOWN method / PLANNED run
+Visual-inertial odometry (VIO) combines image
+constraints and motion. [1] (Figure 5)
+An inertial measurement unit (IMU) measures
+rotation and acceleration.
+Images constrain drift; inertial propagation
+bridges image intervals.
+Figure 5: Visual and inertial motion cues; conceptual.
+The camera IMU supports perception, not STM32 balance.
+10/109
+
+PAGE 11
+2.3 Odometry and mapping
+KNOWN method / PLANNED output
+Simultaneous localization and mapping (SLAM) reuses mapped places. [1] (Figure 6)
+Loop correction may move the globally consistent map pose.
+Continuous local odometry is a separate output contract.
+Local motion Continuous odom
+Revisited place Map correction
+Figure 6: Odometry and mapping; schematic.
+A jumping map pose cannot simply be relabeled odom.
+11/109
+
+PAGE 12
+2.4 D435i streams
+HISTORICAL / MEASURED metadata
+Stereo-inertial input needs left/right IR images
+plus raw motion. [9] (Figure 7)
+Historical unit metadata reports BMI085, not
+older BMI055 descriptions.
+Calibration defaults and requested profiles do
+not prove usable VIO.
+Figure 7: D435i camera package; conceptual.
+Identify the actual unit and preserve its calibration warning.
+12/109
+
+PAGE 13
+2.5 ROS communication
+KNOWN method / PLANNED pipeline
+Robot Operating System 2 (ROS 2) connects topic publishers and subscribers. [3] (Figure 8)
+Data Distribution Service (DDS) supplies transport and delivery policies.
+Receipt does not prove source freshness or correct frame semantics.
+Publisher DDS policy Subscriber
+Figure 8: ROS communication; schematic.
+Inspect the graph, policy and data together.
+13/109
+
+PAGE 14
+2.6 QoS compatibility
+KNOWN ROS semantics
+Quality of Service (QoS) is an offered/requested contract. [3]
+A reliable reader cannot match a best-effort-only writer.
+Sensor observers use best-effort, volatile subscriptions.
+Static transforms use reliable, transient-local delivery.
+Writer Reader Compatible
+Best effort Reliable No
+Reliable Best effort Yes
+Volatile Transient local No
+Topic names alone cannot prove a compatible connection.
+14/109
+
+PAGE 15
+2.7 EuRoC baseline
+KNOWN published dataset / PLANNED baseline
+EuRoC micro aerial vehicle data contain stereo images and IMU. [2]
+Published reference trajectories support algorithm evaluation.
+Freeze sequence, calibration and reference association policy.
+A dataset baseline does not qualify Pi camera transport.
+Engineering decision
+Compare build/configuration and estimator behavior before involving live capture.
+Use known inputs to isolate build and estimator problems.
+15/109
+
+PAGE 16
+3. System design
+16/109
+
+PAGE 17
+3.1 Machine ownership
+KNOWN ownership
+Mac checkout is canonical; preserve its dirty work. (Figure 9)
+The Pi acquires and records locally.
+Secure Shell (SSH) carries control and small evidence.
+Use a separate checksummed runtime bundle for each revision.
+Mac: source Pi: local runs Evidence review
+Figure 9: Machine ownership; schematic.
+Deployment copies tools; it does not reset either checkout.
+17/109
+
+PAGE 18
+3.2 Control boundary
+KNOWN ownership / PLANNED validation
+Pi: perception, mapping, evaluation and optional autonomy. (Figure 10)
+STM32: Linear Quadratic Regulator (LQR) and Virtual Model Control (VMC).
+Its Finite State Machine (FSM), watchdog and motor limits remain local.
+Raspberry Pi / Linux
+Camera VIO / mapping
+Optional autonomy
+Health
+STM32H7
+Body IMU / balance
+Watchdog / motor limits
+Actuation
+Figure 10: Control boundary; schematic.
+Loss of Pi perception must not remove controller ownership.
+18/109
+
+PAGE 19
+3.3 Physical platform
+PLANNED
+Target: Raspberry Pi 5 with 8 GB memory and
+Ubuntu. [9] (Figure 11)
+Non-Volatile Memory Express (NVMe) storage
+holds large datasets.
+Document actual supply, cooling, memory
+and storage anew.
+Figure 11: Supply and cooling preparation;
+conceptual.
+The target bill of materials is not platform qualification.
+19/109
+
+PAGE 20
+3.4 Sensor-to-pose execution path
+PLANNED / no gate PASS
+Universal Serial Bus 3 (USB3) feeds the Software Development Kit (SDK).
+D435i
+USB3 ≥5000M
+Kernel / SDK wrapper
+SDK capture threads
+frame queue → publisher
+ROS topics / DDS
+reader queues
+observer / recorder
+separate processes
+Finalized local bag
+lossless derived inputs
+PLANNED stereo adapter
+ORB process
+TrackStereo caller
+mapping / loop workers
+Figure 12: The offline branch isolates estimator behavior from live queues.
+IR1/info 15, gyro 200, accel 100 Hz; readers: best effort / volatile.
+In Figure 12, N3 is IR1-only; the stereo estimator branch requires a reviewed IR2 extension.
+20/109
+
+PAGE 21
+3.4 Topic and type contract
+PLANNED / no gate PASS
+Topic below /camera/camera Message / cadence Reader policy
+infra1/image_rect_raw sensor_msgs/msg/Image; 15 Hz Best effort / volatile
+infra1/camera_info sensor_msgs/msg/CameraInfo;
+15 Hz
+gyro/sample; accel/sample sensor_msgs/msg/Imu; 200 / 100
+Hz
+Best effort / volatile
+Best effort / volatile
+/tf_static (absolute topic) tf2_msgs/msg/TFMessage; static Reliable / transient
+local
+Rates are requested baseline values; verify offers, depth and actual delivery.
+21/109
+
+PAGE 22
+3.5 Threads and backpressure
+PLANNED / no gate PASS
+Acquisition / ROS
+Estimator / Atlas
+SDK callbacks deliver sensor frames. Wrapper
+work and DDS buffering precede the observer
+and recorder. Each queue can add age or
+discard input.
+TrackStereo runs in its caller. Local mapping
+consumes keyframes; loop closing handles place
+recognition and map changes. Atlas is shared
+map state [1].
+Record queue capacity, depth, arrival/dequeue time and discard policy at each owned boundary;
+unavailable counters stay UNKNOWN.
+A recorder count mismatch and a tracking stall can originate in different queues.
+22/109
+
+PAGE 23
+3.6 Queues and backpressure
+PLANNED
+A First-In First-Out (FIFO) queue sends its oldest item first. (Figure 13)
+Bound each SDK, DDS, executor, recorder and estimator buffer.
+Record arrival/dequeue times, depth and discard policy.
+An unavailable drop counter is UNKNOWN, never zero.
+Producer Newest Older Oldest Consumer
+Newest at input; oldest dequeued at output
+Figure 13: Queues and backpressure; schematic.
+A deep queue can preserve delivery while destroying freshness.
+23/109
+
+PAGE 24
+3.7 Payload budget
+KNOWN profile / CALCULATED payload
+Y8 stores one eight-bit grayscale byte per pixel; no compression assumed.
+IR1 payload: 640 × 480 × 1 × 15 = 4.608 MB/s.
+Stereo image payload doubles to 9.216 MB/s before overhead.
+Metadata, motion, serialization and filesystem traffic add load.
+Engineering decision
+Qualify sustained recording under real load; theoretical USB speed is not available throughput.
+Payload arithmetic is a lower bound, not throughput evidence.
+24/109
+
+PAGE 25
+3.8 Storage qualification
+PLANNED
+Pin mount source, partition and Universally
+Unique Identifier (UUID). (Figure 14)
+Measure overall and worst-batch writes, then
+hashed readback.
+micro Secure Digital (microSD): operating
+system and small logs.
+Figure 14: Separate bulk-data storage; conceptual.
+Qualify the actual data device before any bag recording.
+25/109
+
+PAGE 26
+3.9 Software provenance
+PLANNED
+Record operating system, kernel, packages and compiler identity.
+Hash dirty sources, runtime binaries and configuration.
+Record backend, wrapper, middleware and launch parameters.
+Keep failed runs and original raw logs immutable.
+Identity Retain
+Source Revision + dirty-file hashes
+Runtime Binary + library/package versions
+Experiment Settings + data + command hashes
+A commit identifier alone cannot identify a dirty runtime.
+26/109
+
+PAGE 27
+3.10 Frame definitions
+KNOWN conventions / PLANNED mounts
+The transform (TF) system relates parent and child frames. [4] (Figure 15)
+Body convention: x forward, y left, z up.
+Optical convention: z forward, x right, y down.
+A pose declares origin, axes, units, reference, child and stamp.
+z up
+Body
+z forward
+Optical
+x forward
+y left
+y down
+Figure 15: Frame definitions; schematic.
+Frame names do not define geometry by themselves.
+x right
+27/109
+
+PAGE 28
+3.11 Robot transform ownership
+PLANNED / no gate PASS
+global correction / dynamic local odometry / dynamic
+map odom base_link
+robot mount / static
+robot mount / static
+body imu_body camera
+Figure 16: Dynamic edges need separate planned estimator and continuity owners.
+Robot description owns static mounts, including base_link → body. The planned bridge owns
+dynamic edges; implementation is UNKNOWN. Optional world → map needs an explicit
+external-reference owner [4].
+In Figure 16, one parent and one publisher per child; never relabel a jumping map pose as odom.
+28/109
+
+PAGE 29
+3.12 Camera transform ownership
+PLANNED / no gate PASS
+camera
+camera_optical imu_camera left camera right camera
+left optical right optical
+Figure 17: Wrapper-owned sensor geometry is static; frame names here are conceptual.
+Wrapper /camera/camera publishes sensor edges on /tf_static when tf_publish_rate=0. Inspect actual
+parents and frame IDs; do not add this conceptual tree as a second publisher.
+In Figure 17, the robot description owns the camera mount; the wrapper owns internal sensor
+geometry.
+29/109
+
+PAGE 30
+3.13 Independent IMUs
+KNOWN separation / PLANNED fusion review
+Camera IMU: D435i motion for VIO. (Figure 18)
+Body IMU: local STM32 balance.
+Mounts, noise and clocks remain separate.
+Fusion needs timing and geometry evidence.
+Figure 18: Separate IMU mounting contexts;
+conceptual.
+Two IMUs are not interchangeable measurements.
+30/109
+
+PAGE 31
+3.14 Transform direction
+KNOWN source convention / PLANNED tests
+Camera-to-estimator-IMU transform: pb = Tb
+_
+c1pc. (Figure 19)
+Its inverse maps IMU coordinates back into the camera.
+SDK rotation arrays and OpenCV matrix storage orders differ.
+Test basis vectors, inversion and composition.
+Camera point pc Tb
+_
+c1 IMU point pb
+Figure 19: Transform direction; schematic.
+Transform direction must follow code and numeric tests.
+31/109
+
+PAGE 32
+3.15 Timestamp fields and domains
+PLANNED / no gate PASS
+SDK / wrapper mapping not an identity
+Device domain
+tdev: frame stamp
+capture event
+UNKNOWN
+ROS header domain
+thdr: wrapper stamp
+bag preserves this field
+Host steady domain
+tdrv, tpub, trx
+instrumented events
+Processing start ts, end te, output to: same host steady clock.
+Bag storage tbag, Coordinated Universal Time
+(UTC) logs and /clock: separate semantics.
+Figure 20: Header epoch, receipt and output are different events even if units match.
+Capture tc is a physical event; exposure convention and device relation are UNKNOWN. Preserve raw
+stamps and mapping version before defining source age.
+In Figure 20, global-time enablement is configuration evidence, not measured synchronization.
+32/109
+
+PAGE 33
+3.16 Where timestamps are stamped
+PLANNED / no gate PASS
+Field / event Stamp owner Interpretation
+tdev / sensor frame thdr / message header trx, ts, te, to tbag / storage record Device + SDK metadata ROS wrapper Observer / adapter
+instrumentation
+rosbag2 / storage backend Hardware-relative or mapped domain;
+inspect each frame
+Producer epoch; not publish time
+Local steady-clock receipt, start, end,
+emission
+Recorder time; never substitute for source
+header
+A trajectory stamp is the estimated pose epoch, not when its file was written.
+33/109
+
+PAGE 34
+3.17 Global time
+PLANNED
+Global-time option readback is a configuration observation. [5]
+The SDK maps device time toward host time.
+Enabled global time does not measure camera–IMU offset.
+Arrival minus mapped stamp is not pure USB latency.
+Observation What it establishes
+Option enabled Requested timestamp behavior
+Frame domain Per-frame clock classification
+Mapped timestamp Camera–IMU offset Relationship with mapping uncertainty
+Separate physical alignment measurement
+Record domains and uncertainty before reporting source age.
+34/109
+
+PAGE 35
+3.18 Worked latency decomposition
+PLANNED / no gate PASS
+trx ts te to
+queue Q compute C emit E
+Figure 21: All three components use the same host steady clock.
+Lrx→o = (ts− trx) + (te− ts) + (to− te) = Q + C + E.
+Capture age requires tc = g(tdev) in this domain. If mapping error is bounded by u, true age lies in
+[to− tc− u, to− tc + u].
+In Figure 21, fast compute does not imply fresh output when queue wait dominates.
+35/109
+
+PAGE 36
+3.19 Calibration register
+HISTORICAL defaults / UNKNOWN calibration
+Stereo intrinsics/extrinsics belong to the selected image profiles.
+Camera–IMU extrinsics and time offset need independent validation.
+Noise densities and bias walks remain UNKNOWN for this unit.
+SDK computer-aided design (CAD) fallback is not a unit measurement.
+Quantity Current classification
+Image projection HISTORICAL SDK-provided profile
+IMU geometry HISTORICAL CAD fallback
+IMU noise / offset UNKNOWN; must measure
+Stereo readiness PLANNED separate qualification
+Separate transport acceptance from calibration readiness.
+36/109
+
+PAGE 37
+3.20 Stereo calibration
+PLANNED
+Match model, resolution, distortion and rectification path. [6] (Figure 22)
+Use left/right calibration for the actual paired streams.
+Inspect epipolar vertical residuals and temporal pairing.
+Reject mismatched profiles before feature tuning.
+Left rectified Right rectified
+Correspondences share the epipolar row after correct rectification.
+Figure 22: Stereo calibration; schematic.
+Wrong geometry can mimic an algorithm failure.
+37/109
+
+PAGE 38
+3.21 Calibration capture
+PLANNED
+Measure the fixed target and configuration. [6]
+(Figure 23)
+Excite every axis without blur or saturation.
+Check detections and shared time coverage.
+Capture stationary full-precision noise data.
+Figure 23: Target-based calibration preparation;
+conceptual.
+A textured-room trajectory is not automatically calibration data.
+38/109
+
+PAGE 39
+3.22 IMU noise
+PLANNED
+Allan deviation compares noise across averaging time τ. [7] (Figure 24)
+Short-time slope helps estimate white-noise density.
+Longer records are needed to constrain bias instability or walk.
+Vendor comma-separated values (CSV) round motion; use full precision.
+Allan deviation
+PLANNED stationary analysis; no measured curve
+Averaging time τ
+Figure 24: IMU noise; schematic.
+Choose stationary duration from the averaging times you need.
+39/109
+
+PAGE 40
+3.23 Calibration tools
+PLANNED
+Kalibr is a candidate for camera–IMU geometry and time offset. [6]
+imu_utils is a candidate for stationary noise analysis.
+Bag import, camera model and dependency compatibility need tests.
+Select tools using residuals, holdout data and reproducibility.
+Candidate Role / remaining constraint
+Kalibr Spatial/time estimation; import/model/build
+imu_utils Noise analysis; precision/duration/build
+Holdout checks Residuals, repeatability and provenance
+A tool name is not a calibration plan or accepted result.
+40/109
+
+PAGE 41
+3.24 Algorithm threads
+KNOWN algorithm / PLANNED operation
+Oriented FAST and Rotated BRIEF (ORB) features link image views. [1] (Figure 25)
+FAST: Features from Accelerated Segment Test; BRIEF: Binary Robust Independent Elementary
+Features.
+Tracking runs on caller; mapping and loop workers optimize.
+Atlas owns multiple maps and merging state.
+Stereo + IMU Tracking caller Current pose
+Keyframe queue Local mapping Loop closing / Atlas
+Figure 25: Algorithm threads; schematic.
+Thread activity is not equivalent to valid tracking.
+41/109
+
+PAGE 42
+3.25 Tracking
+PLANNED
+Pair calibrated stereo images at a defined image epoch. [1] (Figure 26)
+Attach all required IMU samples over each image interval.
+Extract features, match stereo and predict/optimize pose.
+Inspect tracking state, relocalization and reset before tuning.
+Pair + interval Features / matches Pose optimization State + output
+Figure 26: Tracking; schematic.
+Every processed image needs accounted motion coverage.
+42/109
+
+PAGE 43
+3.26 Mapping and Atlas
+PLANNED
+Keyframes retain selected poses and visual constraints. [1] (Figure 27)
+Local mapping optimizes nearby structure and inertial state.
+Atlas can create multiple maps and later merge them.
+Loop correction can change the reference transform.
+Keyframes Local optimization Atlas maps Loop / merge
+Figure 27: Mapping and Atlas; schematic.
+Invalidate or re-establish downstream state after map changes.
+43/109
+
+PAGE 44
+3.27 Inertial initialization
+PLANNED
+Stereo provides metric geometry when calibration is valid. [1] (Figure 28)
+Inertial initialization estimates gravity, velocity and biases.
+Sufficient excitation and correct timing remain necessary.
+Record every attempted initialization and reset.
+Visual tracking Inertial excitation Gravity / bias
+estimate Initialized state
+Figure 28: Inertial initialization; schematic.
+Stereo scale does not remove inertial initialization requirements.
+44/109
+
+PAGE 45
+3.28 Settings audit before tuning
+PLANNED / no gate PASS
+Pinned parser group Meaning / check Failure implication
+Camera1 / Camera2;
+Stereo
+IMU.T_b_c1 IMU.Frequency; four
+noise fields
+ORBextractor fields Projection, distortion, b or T_c1_c2; selected
+rectification path
+Camera → estimator IMU; numeric
+basis-vector / inverse test
+Continuous-time densities / walks; discretize
+once
+Feature count, pyramid, FAST thresholds Wrong disparity
+geometry; scale /
+epipolar error
+Axis/sign error; gravity
+or bias inconsistency
+False confidence;
+unstable initialization
+Tune only after input,
+timing and calibration
+The historical mono candidate with unresolved noise is not stereo-ready.
+45/109
+
+PAGE 46
+3.28 Numeric IMU settings contract
+PLANNED / no gate PASS
+YAML (YAML Ain’t Markup Language) settings must follow the selected pinned parser. All four
+unit-specific noise quantities remain UNKNOWN.
+Key family Interpretation
+IMU.NoiseGyro / NoiseAcc IMU.GyroWalk / AccWalk IMU.Frequency / T_b_c1 Continuous-time gyro / accel noise densities; code
+multiplies by √f
+Bias random-walk quantities; code divides by √f
+Input-grid frequency f / camera-to-IMU transform; not raw
+accel rate
+Camera.width/height/fps and Camera1/Camera2 keys must match actual inputs. Example EuRoC
+values describe that dataset; they are not D435i calibration.
+Do not discretize densities twice or replace unresolved noise with example values.
+46/109
+
+PAGE 47
+3.29 Input association
+PLANNED
+PLANNED: interpolate accel only between valid bracketing samples. (Figure 29)
+Use gyro epochs for a reviewed combined input grid.
+Reject gaps, duplicate/backward time and extrapolation.
+Retain originals and every interpolation/rejection decision.
+a(t) = (1− α)a0 + αa1, α=
+t1−t0
+a0 a(t) a1
+t−t0
+t0 Gyro epoch t t1
+Reject without valid brackets; never extrapolate.
+Figure 29: Input association; schematic.
+A 200 Hz input grid does not make raw accel 200 Hz.
+47/109
+
+PAGE 48
+3.30 Planned health envelope
+PLANNED / no gate PASS
+Field family Receiver purpose Current design state
+Version, session, sequence Source epoch, domain, age
+bound
+Frames, reset/map ID, state Pose / velocity / uncertainty Reject unknown format, duplicates and
+old boot
+Distinguish new heartbeat from new
+estimate
+Reject wrong reference, map jump or
+initialization
+Use only valid finite supported
+quantities
+PLANNED; no wire
+message
+Clock relationship
+UNKNOWN
+PLANNED semantics
+Covariance availability
+UNKNOWN
+Publication rate, link transport and stale threshold remain UNKNOWN.
+48/109
+
+PAGE 49
+3.31 Health supervision
+PLANNED
+ABSENT and INITIALIZING are not fresh estimates. (Figure 30)
+FRESH requires valid fields, frame/session and bounded source age.
+STALE or INVALID removes optional perception input.
+Reset requires explicit frame/session re-establishment.
+Start Eligible Too old
+ABSENT INITIALIZING FRESH STALE
+Bad/reset
+Re-establish
+INVALID
+Reset review
+Figure 30: Health supervision; schematic.
+A live heartbeat can still accompany stale perception.
+49/109
+
+PAGE 50
+3.32 Planned Pi-to-STM32 boundary
+PLANNED / no gate PASS
+rate rh UNKNOWN
+Pi health envelope
+session / sequence
+pose epoch
+/ age bound
+frames / reset / validity
+STM32 receiver
+schema / finite checks
+age ≤ Amax
+session / frame checks
+Optional autonomy
+fresh: eligible input
+stale / absent / invalid:
+withdraw per-
+ception input
+STM32 body IMU → local balance / LQR / VMC / FSM → motor limits
+continues under local authority; physical fallback behavior needs safety review
+Figure 31: The health path provides optional information; local control keeps authority.
+Amax, transport and rh require approval. Receiver age must include source age and link residence with
+a defined clock relation; receipt-only timeout is insufficient.
+In Figure 31, these are planned semantics; no message, firmware or stability test is implemented.
+50/109
+
+PAGE 51
+4. Implementation by gate
+51/109
+
+PAGE 52
+4.1 Gate dependencies and status
+PLANNED / no gate PASS
+N0
+OPEN
+N1
+OPEN
+N2
+OPEN
+N3
+OPEN
+stereo + calibration
+N4A EuRoC
+PLANNED
+N4B offline stereo
+PLANNED
+N4C live stereo
+PLANNED
+Qualified N4 trials → N5 metrics → N6 health → N7 boundary
+Figure 32: N4A is independent of camera gates; N4B requires N3 plus stereo/calibration.
+N4C also renews physical input gates. N5–N7 are PLANNED. No Pi gate has passed; all execution still
+requires its explicit authorization.
+In Figure 32, an independent EuRoC build test cannot promote the D435i transport gates.
+52/109
+
+PAGE 53
+4.2 N0: platform preflight
+PLANNED / no gate PASS
+Purpose / entry
+Evidence produced
+Fresh camera-free restart. Establish actual Pi
+hardware, 64-bit Arm architecture (ARM64),
+operating system (OS), supply, cooling and time.
+JavaScript Object Notation (JSON) inventory,
+OS/kernel/package versions, power/cooling
+notes, UTC synchronization and source/binary
+hashes. Preserve historical sticky flags.
+Future commands / tools
+python3 platform_inspect.py > NEW-inventory.json
+uname -a; timedatectl status
+vcgencmd get_throttled; vcgencmd measure_temp
+Inventory is read-only; resolve unstable supply before any build or capture.
+53/109
+
+PAGE 54
+4.2 N0: acceptance and diagnosis
+PLANNED / no gate PASS
+PASS requirement Measurement / clock Evidence
+ARM64; Ubuntu 24.04; Jazzy UTC synchronized; flags 0x0 Temperature < 75◦C; available
+memory ≥ 512 MiB
+OS/package inventory; observation
+UTC
+Time service + raw power flags;
+current boot
+Temperature + MemAvailable;
+sampled host time
+NEW-inventory.json
+Inventory +
+time/power log
+Inventory + health
+samples
+FAIL: sticky undervoltage points to supply/cable; heat points to cooling; clock unsynchronized blocks
+cross-log correlation. Idle PASS does not prove loaded health.
+These platform prerequisites are carried into N1 and checked again under load.
+54/109
+
+PAGE 55
+4.2 N0: physical inventory record
+PLANNED / no gate PASS
+Target versus observation
+Target: Pi 5, 8 GB, Ubuntu, active cooling and
+qualified bulk storage. Record actual memory,
+board, supply label, cable and cooler; do not
+overwrite historical inventory.
+Figure 33: Inspect the actual assembly before
+assigning platform readiness.
+In Figure 33, a diagram of the target is not evidence of the assembled platform.
+55/109
+
+PAGE 56
+4.3 N1: own-branch USB and access
+PLANNED / no gate PASS
+Entry / purpose
+N0 eligible, CAMERA AVAILABLE, documented direct SuperSpeed cable. Verify the camera branch
+before SDK streaming.
+Future commands / tools
+python3 n1_precheck.py --camera-available \
+--direct-cable-confirmed --output "$WBR_RUN/n1"
+Produces sealed result.json, USB topology / sysfs identity, normal-user access checks, SDK
+enumeration and kernel context. Preserve SDK serial, application-specific integrated circuit (ASIC)
+serial, firmware-update ID and USB descriptor serial as separate fields.
+At 480M stop before SDK enumeration or N2; a 5000M root hub is insufficient.
+56/109
+
+PAGE 57
+4.3 N1: acceptance and diagnosis
+PLANNED / no gate PASS
+PASS requirement Measurement / clock Evidence
+Own direct branch ≥5000M Video; Human Interface Device
+(HID); Industrial Input/Output
+(IIO)
+Identity; eligible sealed receipt lsusb -t + camera sysfs speed;
+before/after UTC
+Access + owner inspection; no broad
+permissions
+Host/boot match; age ≤2 h, no reboot n1 USB / sysfs
+snapshots
+n1 access checks
+n1/result.json + raw
+logs
+FAIL: 480M → cable/port/hubs; video works but motion denied → HID/IIO controls; serial mismatch →
+identity/descriptor audit, not firmware update.
+Re-run N1 after storage qualification or a topology change.
+57/109
+
+PAGE 58
+4.4 N2: staged native acquisition
+PLANNED / no gate PASS
+Entry: eligible sealed N1. Exact IR1 640×480 Y8/15, gyro/200, accel/100; no combined IMU or
+fallback.
+Future commands / tools
+python3 phase_gate.py n2 --camera-available --seconds 20 \
+--n1-result "$WBR_RUN/n1/result.json" \
+--output "$WBR_RUN/smoke"
+Repeat with 105 s and previous smoke receipt, then 300 s and previous reproduction receipt. Each
+stage saves CSV, SDK log, kernel journal, one-Hz health, topology, shutdown and three separately
+sampled Portable Graymap (PGM) images.
+The mandatory 300 s raw soak is separate from the 12 s image-content sampler.
+58/109
+
+PAGE 59
+4.4 N2: reproduction and mandatory soak
+PLANNED / no gate PASS
+Future commands / tools
+python3 phase_gate.py n2 --camera-available --seconds 105 \
+--n1-result "$WBR_RUN/n1/result.json" \
+--previous "$WBR_RUN/smoke/capture-result.json" \
+--output "$WBR_RUN/reproduction"
+python3 phase_gate.py n2 --camera-available --seconds 300 \
+--n1-result "$WBR_RUN/n1/result.json" \
+--previous "$WBR_RUN/reproduction/capture-result.json" \
+--output "$WBR_RUN/soak"
+Inspect each zero-exit stage before starting the next; no automatic final acceptance.
+59/109
+
+PAGE 60
+4.5 N2: delivery criteria
+PLANNED / no gate PASS
+PASS threshold Measurement / clock Evidence
+IR 14.25–15.75 Hz; gap ≤0.20 s Gyro 190–210 Hz; gap ≤0.05 s Accel 95–105 Hz; gap ≤0.05 s Positive stamps/frame steps; no
+missing IR frames
+N/requested duration; interior rate; SDK
+stamp and arrival gaps
+Whole-request / interior windows;
+per-stream stamps + arrivals
+Same method; do not compare device
+and host epochs
+Adjacent differences in each stream;
+internal/trailing gaps strict
+frames.csv; analysis
+JSON
+Motion CSV; analysis
+JSON
+Motion CSV; analysis
+JSON
+CSV + startup-offset
+review
+Burst-only delivery can pass first/last rate while failing whole-request rate.
+60/109
+
+PAGE 61
+4.5 N2: content, health and acceptance
+PLANNED / no gate PASS
+PASS requirement Measurement / clock Evidence
+20 / 105 / 300 s stages
+complete
+Coherent Y8; finite plausible
+motion
+Clean USB/kernel; stable
+platform
+Actual human review; warning
+retained
+Requested duration + clean finalized
+shutdown; host interval
+Dimensions, byte count, stats /
+hashes; sample epochs
+Continuous journal + one-Hz health;
+UTC/host times
+Explain startup offsets; retain
+calibration fallback verbatim
+Three
+capture-result.json files
+PGMs; content review
+SDK/kernel/health logs
+review.json; accepted
+result
+FAIL: torn images → USB/raw; motion-only failure → HID; late shutdown → controls.
+61/109
+
+PAGE 62
+4.5 N2: seal reviewed evidence
+PLANNED / no gate PASS
+Future commands / tools
+python3 phase_gate.py accept-n2 --camera-available \
+--n1-result "$WBR_RUN/n1/result.json" \
+--smoke "$WBR_RUN/smoke/capture-result.json" \
+--reproduction "$WBR_RUN/reproduction/capture-result.json" \
+--soak "$WBR_RUN/soak/capture-result.json" \
+--review "$WBR_RUN/review.json" --output "$WBR_RUN/n2-accepted"
+Review.json must reflect actual log/image inspection and calibration provenance. Never prefill
+acceptance booleans. Sealed evidence is recomputed, not merely trusted.
+N2 transport acceptance still leaves final VIO calibration blocked.
+62/109
+
+PAGE 63
+4.5 Worked window-rate and boundary check
+KNOWN method / SYMBOLIC example
+Let a requested window have duration T, N received frames, and first/last arrivals a1, aN relative to its
+start.
+Whole-window rate N/T measures coverage; (N− 1)/(aN− a1) measures only the surviving span. Both
+are needed. Boundary silence is B= max(a1, T− aN); inspect adjacent arrival and source-stamp gaps
+separately.
+Burst delivery can have a nominal interior rate and long boundary silence.
+63/109
+
+PAGE 64
+4.6 N3: one wrapper, bounded record
+PLANNED / no gate PASS
+Entry: reviewed N2, qualified storage, fresh N1 after storage probe, reviewed installed wrapper. Tools
+run inside the checksummed Pi bundle.
+Future commands / tools
+python3 wrapper_inspect.py --output NEW-wrapper.json
+python3 n3_record.py --camera-available \
+--n1-result N1/result.json --n2-result N2/result.json \
+--storage-result STORAGE/result.json \
+--bag /mnt/wbr-nvme/NEW_BAG --seconds 20 --output NEW-record
+The runner uses n3_baseline.yaml and ten explicit topics. A full 60 s live window precedes recording;
+observer metrics continue during recorder load.
+Parameter readback and observed graph must match; candidate version is not installation evidence.
+64/109
+
+PAGE 65
+4.7 N3: stop camera and replay
+PLANNED / no gate PASS
+Future commands / tools
+python3 n3_bag.py replay /mnt/wbr-nvme/NEW_BAG \
+--record-result NEW-record/result.json \
+--live-domain 42 --replay-domain 43 \
+--output-dir NEW-replay
+Artifacts
+Isolation
+Finalized bag metadata, topic counts, hashes,
+live metrics, parameter readback,
+observer/player logs and complete decoded
+replay comparisons.
+Camera stopped; localhost-only domains.
+Observer ready/stop handshakes cover
+complete playback and queue drain. Guard live
+domain throughout.
+Playable metadata alone does not establish complete, faithful replay.
+65/109
+
+PAGE 66
+4.7 N3: PASS/FAIL matrix
+PLANNED / no gate PASS
+PASS requirement Measurement / clock Evidence
+60 s live + load delivery Frames, profile, ten topics /
+types
+Clean finalized bag / exact
+replay
+No contamination / process fault IR/gyro/accel N2 bands; ROS header and
+host steady gaps incl. boundaries
+Readback + image/info agreement +
+static TF; header stamps
+Stored vs complete observed counts,
+order, header and decoded field hashes
+Live-domain guard + player/observer
+shutdown; host event time
+Live / record
+observer JSON
+Parameters; graph;
+context
+metadata.yaml;
+replay result
+Full camera/player
+logs
+FAIL: topic silence → driver/graph/QoS; missing context → durability; under-load gaps → storage.
+66/109
+
+PAGE 67
+4.7 Storage prerequisite: no mount fallback
+PLANNED / no gate PASS
+Required threshold Measurement / clock Evidence
+Actual external device / UUID ≥1 GiB and ≥60 s; both rates
+≥9.216 MB/s
+Matching SHA-256 readback;
+cleanup
+findmnt, lsblk, bridge + physical identity;
+inspection UTC
+Overall and worst 64 MiB fsync batch;
+host interval
+Digest / cleanup result; 10 GiB headroom
+retained
+storage identity
+receipt
+storage/result.json
+Storage raw log +
+receipt
+The 8 GiB default may finish before 60 s on a fast device: incomplete duration, not low throughput. A
+larger write budget needs review; the IR1 margin does not qualify stereo bags.
+FAIL: directory resolves to microSD → mount; slow batches → storage before ROS tuning.
+67/109
+
+PAGE 68
+4.7 Content checks beyond delivery rates
+PLANNED / no gate PASS
+Runbook proposal Measurement / clock Evidence / limit
+Stationary mean gyro norm
+≤0.10 rad/s
+Stationary mean accel norm
+9.0–10.5 m/s2
+Zero incomplete/corrupt
+notifications
+Finite raw gyro vectors over declared
+stationary window; header epochs
+Finite raw accel; units/frame and
+stationary interval documented
+Unfiltered SDK/kernel startup-to-stop
+log; UTC/run interval
+Raw samples + axis
+review
+Raw samples +
+operator notes
+Raw logs, not
+counters alone
+These are native bring-up engineering criteria, not manufacturer specifications. Audit the prepared
+validator separately: matching rates do not prove all manual content criteria.
+CameraInfo/TF and plausible stationary vectors do not prove calibrated camera–IMU timing.
+68/109
+
+PAGE 69
+4.8 Stereo extension
+PLANNED
+IR1-only N2/N3 remain preserved transport baselines. (Figure 34)
+Stereo adds reviewed IR2 profile, paired pixels and context.
+Requalify bandwidth, recording load, storage and calibration.
+Updated nodes, messages or derived formats need approval.
+IR1 after acceptance Preserved N2 / N3
+Reviewed IR2
+extension
+Stereo data
++ calibration N4B inputs
+Figure 34: Stereo extension; schematic.
+The stereo goal does not authorize quietly changing N2.
+69/109
+
+PAGE 70
+4.9 N4A: camera-independent EuRoC baseline
+PLANNED / no gate PASS
+Entry: N0 only in the camera gate graph; separately authorized ORB run, pinned isolated build,
+dataset/settings hashes. No N1–N3 dependency.
+Future commands / tools
+cmake --build "$WBR_ORB_WORK/build" \
+--target stereo_inertial_euroc --parallel 2
+./Examples/Stereo-Inertial/stereo_inertial_euroc \
+Vocabulary/ORBvoc.txt SETTINGS.yaml SEQUENCE TIMES.txt RUN_ID
+Build dependencies in the documented stages first. Freeze stereo settings and dataset reference
+coverage. Retain compile/run logs, initialization events, f_RUN_ID.txt and kf_RUN_ID.txt.
+The repo mono build example must be adapted explicitly to the pinned stereo target.
+70/109
+
+PAGE 71
+4.9 N4A: estimator acceptance contract
+PLANNED / no gate PASS
+Required / open threshold Measurement / clock Proposed evidence
+Finite ordered trajectories;
+coverage
+Repeat initialization / tracking Accuracy / continuity budgets
+UNKNOWN
+Export epochs in dataset time;
+coordinate/format audit
+All attempts incl. failure; first eligible
+dataset epoch + host events
+Reference association, rigid alignment,
+ATE/RPE; dataset epochs
+Trajectory files +
+audit
+Run/state timelines
+evo outputs +
+budget review
+FAIL: load/link error → build; empty images → reader paths; no inertial initialization →
+settings/time/motion. No accepted numeric budget means no performance PASS.
+A EuRoC result validates the algorithm path; it says nothing about this camera transport.
+71/109
+
+PAGE 72
+4.10 N4B: offline D435i stereo
+PLANNED / no gate PASS
+Entry / purpose
+Artifacts
+N3 plus reviewed IR2 stereo extension and
+accepted calibration. N4A informs diagnosis but
+is not a camera-input dependency.
+Immutable bag, lossless derived left/right
+images and raw motion, manifest,
+association/rejection metrics, settings and repeat
+trajectories.
+Future commands / tools
+ros2 bag info /path/to/FINALIZED_STEREO_BAG
+./Examples/Stereo-Inertial/stereo_inertial_euroc \
+Vocabulary/ORBvoc.txt QUALIFIED.yaml DERIVED TIMES.txt RUN_ID
+Stereo conversion is PLANNED; no converter command exists. Review adapter format/API before
+implementation, then test exact time and lossless count reconciliation.
+The historical IR1-only mono candidate cannot supply the required stereo inputs.
+72/109
+
+PAGE 73
+4.10 N4B: input and run criteria
+PLANNED / no gate PASS
+Required / open threshold Measurement / clock Proposed evidence
+Lossless stereo + valid pairing Calibrated geometry, noise and
+offset
+Repeatable finite tracking;
+budgets UNKNOWN
+Counts/pixels, epipolar residuals,
+left/right stamp difference; source
+domain
+Holdout residuals; camera/IMU units and
+common time relation
+All trials, epochs, initialization/loss; no
+GT means accuracy UNKNOWN
+Association / image
+audit
+Calibration report +
+hashes
+Run logs +
+trajectories
+FAIL: vertical mismatch → rectification; missing brackets → motion coverage; bias instability →
+clocks/calibration before feature tuning. Residual limits are not yet approved.
+Default/CAD values and zero placeholder noise do not qualify final VIO.
+73/109
+
+PAGE 74
+4.10 N4B: immutable adapter provenance
+PLANNED / no gate PASS
+Derived input contract
+Preserve raw bags. Manifest links input,
+converter, settings and calibration hashes;
+record domains, offset sign, interpolation
+brackets and every rejected sample.
+Figure 35: Frozen inputs make estimator comparisons
+attributable.
+In Figure 35, test lossless pixels, exact nanoseconds, no extrapolation and count reconciliation.
+74/109
+
+PAGE 75
+4.11 N4C: live stereo scheduling
+PLANNED / no gate PASS
+Entry / purpose
+Tools / artifacts
+Accepted offline stereo, renewed N1–N3 with
+stereo load and unchanged calibration/settings.
+Isolate the additional live scheduling cost.
+Planned bounded live driver invokes
+TrackStereo; no approved launch command
+exists. Capture input/output/state events, pairing
+decisions, queue depth and shutdown logs.
+Future commands / tools
+ros2 topic info --verbose DISCOVERED_IR2_TOPIC
+ros2 param dump /camera/camera
+vcgencmd get_throttled
+These diagnosis commands do not implement the live stereo bridge. Select ROS versus non-ROS
+input path through matched-data evidence and architecture review.
+Offline success cannot bound live source age or queue growth.
+75/109
+
+PAGE 76
+4.11 N4C: live PASS/FAIL criteria
+PLANNED / no gate PASS
+Required / open threshold Measurement / clock Proposed evidence
+Valid paired input + IMU
+coverage
+Initialization / continuity budgets
+UNKNOWN
+Latency / queue bounds
+UNKNOWN
+Source epochs; renewed stereo
+transport metrics
+Attempt count; loss/reset state; source
+epochs + host event times
+Queue, compute, receipt/output on
+host steady; mapped capture with
+uncertainty
+Input / pairing
+timeline
+State timeline /
+trajectories
+Latency / queue /
+health log
+FAIL: offline works, live lags → wrapper/DDS/executor/queue; thermal stalls → N0 under load; loss in
+both → input/calibration first. Missing counters stay UNKNOWN.
+Approve bounds before a live performance verdict; do not tune around unmeasured age.
+76/109
+
+PAGE 77
+4.12 N5: reproducible measurement
+PLANNED / no gate PASS
+Entry: qualified N4 trials, frozen hypotheses, trial count, reference and clock relations. Retain failures
+as part of the experiment denominator.
+Future commands / tools
+evo_ape tum REFERENCE.tum ESTIMATE.tum --align
+evo_rpe tum REFERENCE.tum ESTIMATE.tum --help
+Outputs
+Tools still planned
+Original exports, conversion audit, evo
+version/argv/results, latency samples with
+eligibility, initialization/loss events and resource
+time series.
+Event instrumentation and queue counters need
+reviewed implementation. No first-party N5
+acceptance validator exists. Approve metric
+bounds before the campaign.
+A metric file is a measurement artifact, not automatic performance acceptance.
+77/109
+
+PAGE 78
+4.12 N5: measurement criteria
+PLANNED / no gate PASS
+Required / open threshold Measurement / clock Proposed evidence
+ATE/RPE only with valid
+reference
+P50/P95/P99 +
+initialization/loss
+Resources, losses, queue depth Associated source epochs; rigid
+alignment; overlap and exclusions
+Named interval, estimator and sample
+count; host steady / source epochs
+One-Hz health + event join;
+sequence/count reconciliation; unknown
+counters marked
+evo raw output /
+audit
+Raw events + trial
+summary
+Health / counter
+time series
+All numeric performance budgets are UNKNOWN. FAIL: cross-domain subtraction → clocks;
+suspicious low ATE → alignment/association; averages hide stalls → raw timeline.
+Missing ground truth blocks accuracy claims; it does not force synthetic zero errors.
+78/109
+
+PAGE 79
+4.13 N6: health semantics with fixtures
+PLANNED / no gate PASS
+Entry / purpose
+Tools / evidence
+Reviewed message semantics after N5; rate,
+transport, age rule and clock relation approved.
+Use synthetic fixtures before hardware
+integration.
+PLANNED receiver harness; no runnable project
+validator exists. Deliver event fixtures,
+expected/actual transitions, rejection reasons
+and revision hashes.
+Fixture Expected planned response
+Old epoch + fresh heartbeat New boot / reset / map ID NaN, wrong frame, duplicate sequence STALE; heartbeat does not refresh pose
+Re-establish session and frame
+INVALID / reject; optional input withdrawn
+Synthetic health tests qualify semantics only; they do not prove robot fallback.
+79/109
+
+PAGE 80
+4.13 N6: planned acceptance table
+PLANNED / no gate PASS
+PASS contract / open threshold Measurement / clock Proposed evidence
+Reject every declared invalid
+fixture
+Age bound ≤ Amax; value
+UNKNOWN
+Reset re-establishment explicit Compare expected/actual state +
+reason; synthetic event time
+Source-age bound + receiver elapsed
+time; defined Pi/STM32 relation
+Session/frame sequence; no silent
+recovery
+Fixture verdicts
+Clock / wrap / delay
+fixtures
+Transition trace +
+review
+FAIL: old pose accepted → source-age semantics; wrap breaks timeout → receiver clock; old session
+accepted → reset protocol. Rate and timeout remain unselected.
+Implement only after API/message review; do not infer acceptance from a heartbeat.
+80/109
+
+PAGE 81
+4.14 N7: staged controller boundary
+PLANNED / no gate PASS
+Entry / purpose
+Tools / artifacts
+N6 semantics accepted plus separate safety
+authorization. STM32 body IMU, control loops,
+watchdog and motor limits remain local.
+PLANNED bench receiver / controlled fault
+injection; no approved motor-test command
+exists. Preserve STM32 and Pi traces, test setup,
+fallback policy and safety review.
+Stage Evidence needed before progression
+Receiver bench, no actuation Approved controlled integration Separately approved physical test Link loss, stale/reset/invalid rejection
+Local balance timing and watchdog independence
+Safe setup; controller-owned fallback observations
+Pi loss must not remove local balance authority; actual stability is unmeasured.
+81/109
+
+PAGE 82
+4.14 N7: planned acceptance table
+PLANNED / no gate PASS
+Required / open threshold Measurement / clock Proposed evidence
+No perception authority over
+safety
+Local control retained on Pi loss Fallback inside approved safety
+budget
+Ownership / code review + controlled
+fault trace
+STM32 loop/watchdog/motor state;
+MCU clock
+Fault onset to local action; MCU
+domain; numeric bound UNKNOWN
+Boundary review
+Controller trace +
+setup
+Fault timeline +
+sign-off
+FAIL: balance depends on ROS heartbeat → ownership; stale reference retained → fallback semantics;
+link reset bypasses validation → session handling.
+No approved setup and bound means no physical integration PASS.
+82/109
+
+PAGE 83
+4.15 Reproduction and evidence
+PLANNED
+Build a new checksummed bundle from canonical Mac utilities. (Figure 36)
+Deploy into a new Pi runtime directory; verify hashes there.
+Store exact commands, settings, logs and real review receipts.
+Retain historical evidence and every failed run unchanged.
+Raw + identities Derived analysis Actual review Sealed acceptance
+Figure 36: Reproduction and evidence; schematic.
+A reviewable evidence packet is the deliverable of each gate.
+83/109
+
+PAGE 84
+4.16 Bottom-up diagnosis
+KNOWN debugging order / PLANNED runs
+Inspect hardware, power and the camera’s own USB branch first. (Figure 37)
+Then raw streams, clocks, driver, ROS graph and QoS.
+Then calibration, ORB input/state, trajectory and evaluation.
+Fix the earliest failed layer; preserve downstream symptoms.
+Hardware / USB Raw / clocks Driver / ROS / QoS
+Calibration ORB / trajectory Evaluation
+Figure 37: Bottom-up diagnosis; schematic.
+Do not tune SLAM to hide a transport failure.
+84/109
+
+PAGE 85
+4.17 Failure isolation
+PLANNED
+480M: inspect cable, direct branch and power before software.
+Silent topic: inspect publisher, parameter readback and QoS.
+Initialization failure: inspect coverage, frames, offset and noise.
+Calibration fallback: preserve warning; do not copy constants.
+Symptom First discriminating evidence
+480M / disconnect Topic silence Loss / failed initialization Own branch + power/kernel logs
+Graph + readback + QoS
+Pairing + motion coverage + calibration
+Similar symptoms can require different evidence.
+85/109
+
+PAGE 86
+4.18 Bounded AI tickets
+PLANNED
+Artificial intelligence (AI): one bounded
+question. (Figure 38)
+Limit files, hosts, actions and fixtures.
+Require commands, evidence and STOP
+conditions.
+Owner accepts gates and safety decisions.
+Figure 38: Bounded engineering task packet;
+conceptual.
+Delegate analysis, not unbounded authority.
+86/109
+
+PAGE 87
+5. Evaluation method
+87/109
+
+PAGE 88
+5.1 Experimental design
+PLANNED
+Freeze input, binary, calibration and all settings.
+Predeclare hypotheses, budgets, trial count and exclusions.
+PLANNED backlog minimum: three fixed-data offline repeats.
+Retain every failure and compare like-for-like conditions.
+Campaign Controlled question
+EuRoC D435i offline/live Health fixtures Build / known-data estimator baseline
+Input quality versus live scheduling
+Freshness and reset rejection
+One successful run is not evidence of repeatability.
+88/109
+
+PAGE 89
+5.2 ATE computation outline
+PLANNED / no gate PASS
+Absolute Trajectory Error (ATE) compares associated poses after a declared alignment. Pi is the
+estimate and Qi the reference; root mean square error (RMSE) summarizes translation [8].
+Ei = Q−1
+i SPi, ei = ∥ trans(Ei)∥, RMSE=
+1
+N i e2
+i
+Figure 39: Rigid alignment S removes reference-origin choice, not a stereo scale error.
+Associate epochs within a predeclared tolerance; retain unmatched samples. Convert both
+trajectories to the same pose direction and units before fitting S. Report valid overlap and failure trials.
+In Figure 39, without independent reference data, D435i absolute accuracy stays UNKNOWN.
+89/109
+
+PAGE 90
+5.2 Symbolic ATE worked example
+KNOWN method / SYMBOLIC example
+Associated pair Aligned translation residual Squared contribution
+Qa, SPa (u, 0, 0) u2
+Qb, SPb (0, v, 0) v2
+Qc, SPc (0, 0, w) w2
+RMSE= (u2 + v2 + w2)/3. This is a symbolic teaching example, not measured data. Unmatched
+epochs are excluded from this sum but reported separately.
+A low error over short surviving overlap does not imply successful full-sequence tracking.
+90/109
+
+PAGE 91
+5.3 RPE and pair policy
+PLANNED / no gate PASS
+Relative Pose Error (RPE) compares estimated motion with reference motion over a declared interval
+[8].
+Eij = (Q−1
+i Qj)−1(P−1
+i Pj)
+Translation and rotation are separate metrics.
+Figure 40: Relative deltas expose local drift rather than global alignment choice.
+Pair policy Question answered
+Fixed time separation Fixed distance separation Consecutive vs all eligible pairs How wrong is motion over that duration?
+How does error grow per traveled distance?
+Different weighting; report choice and pair count
+In Figure 40, never compare RPE numbers with different delta units or pairing policies.
+91/109
+
+PAGE 92
+5.4 Trajectory conversion and evo
+PLANNED / no gate PASS
+Future commands / tools
+evo_ape tum REFERENCE.tum ESTIMATE.tum --align
+evo_rpe tum REFERENCE.tum ESTIMATE.tum \
+--pose_relation angle_deg --delta 1 --delta_unit m
+The 1 m delta is a command example, not a project acceptance threshold [8]. Check installed –help,
+version, association tolerance, valid coverage and reference quality.
+Conversion before comparison
+Technical University of Munich (TUM) format uses seconds, xyz and quaternion qx qy qz qw. Preserve
+EuRoC originals; audit quaternion order, units, pose direction and frame. Metric stereo defaults to
+rigid alignment; scale fitting is a separate diagnostic.
+Store exact argv and raw output; conversion errors can dominate the metric.
+92/109
+
+PAGE 93
+5.5 Initialization and continuity
+PLANNED
+Success rate uses all declared initialization attempts as denominator.
+Measure initialization time from a defined first eligible input.
+Track loss duration, resets and relocalization events.
+Check trajectory coverage, not only exported sample count.
+Event record Required interpretation
+First eligible input Initialization-time origin
+Tracking state / reset Continuity and loss intervals
+Pose epoch / output time Coverage versus freshness
+Report failed attempts alongside successful trajectories.
+93/109
+
+PAGE 94
+5.6 Latency and loss
+PLANNED
+P50/P95/P99 are the 50th/95th/99th latency percentiles.
+Name receipt-to-start, processing and receipt-to-output separately.
+Reconcile sequence gaps, received counts and recorded counts.
+Unavailable queue/drop counters remain UNKNOWN.
+Metric Required evidence
+Latency percentiles Named interval / clock / count
+Loss Sequence and count reconciliation
+Queue depth / drops Measured counter or UNKNOWN
+Percentiles need event definitions and eligible sample counts.
+94/109
+
+PAGE 95
+5.7 Resource measurements
+PLANNED
+Log Central Processing Unit (CPU) load and clock frequency. (Figure 41)
+Track temperature, memory and Resident Set Size (RSS).
+Record throttling, queue depth and free data space.
+Align samples with initialization, loss and optimization events.
+Timed health
+samples Estimator events Same-clock join Trial summaries
+Figure 41: Resource measurements; schematic.
+Resource averages cannot explain tail stalls alone.
+95/109
+
+PAGE 96
+5.8 Accuracy results
+UNKNOWN results / PLANNED evaluation
+EuRoC accuracy can use its documented reference coverage.
+D435i accuracy requires a suitable independent reference.
+Show association, alignment and trial coverage with each result.
+Figure 42 reserves axes without fabricated samples.
+ATE translation (m) RPE translation (m)
+To be filled after N4/N5 runs
+Figure 42: Accuracy results; no measured data.
+Accuracy results are unmeasured.
+96/109
+
+PAGE 97
+5.9 Timing results
+UNKNOWN results / PLANNED evaluation
+Choose one named same-clock latency interval per distribution.
+Pair percentile plots with counts, queues and loss evidence.
+Source-age plots require qualified clock mapping.
+Figure 43 reserves axes without fabricated samples.
+Latency (ms) Queue (messages) Loss (frames)
+To be filled after N4/N5 runs
+Figure 43: Timing results; no measured data.
+Timing and loss results are unmeasured.
+97/109
+
+PAGE 98
+5.10 Resource results
+UNKNOWN results / PLANNED evaluation
+Report CPU/frequency, temperature, memory and throttling.
+Retain time-series context and all trial identities.
+Inspect resource changes around estimator events.
+Figure 44 reserves axes without fabricated samples.
+CPU load (%) Frequency (Hz) Temperature (◦C)
+Memory (MiB) Throttle flags
+To be filled after N4/N5 runs
+Figure 44: Resource results; no measured data.
+Resource results are unmeasured.
+98/109
+
+PAGE 99
+6. Engineering decisions
+99/109
+
+PAGE 100
+6.1 Runtime and USB
+PLANNED
+Default: native Pi baseline and direct known-good USB3 cable.
+Docker adds package, device and user/group boundaries.
+A hub/storage topology can change shared power and bandwidth.
+Revisit only after equivalent physical gates and clear deployment benefit.
+Default Evidence that changes it
+Native Pi Equivalent gates + packaging benefit
+Direct USB3 Alternative topology sustains
+speed/power/load
+Packaging cannot compensate for a 480M camera branch.
+100/109
+
+PAGE 101
+6.2 Inputs and clocks
+PLANNED
+Keep exact IR1 640×480/15 qualification unchanged.
+Stereo starts with matching profiles as a reviewed extension.
+Emitter-off is a separate natural-feature tracking experiment.
+Preserve global-time readback and original timestamp domains.
+Default Evidence that changes it
+Exact baseline profiles Preserved emitter state Logged global-time state Paired quality / tail-load comparison
+Separate controlled natural-feature trial
+Measured domains/drift/offset evidence
+Change one input variable with paired quality and load evidence.
+101/109
+
+PAGE 102
+6.3 Algorithm and calibration
+PLANNED
+Validate upstream EuRoC and offline inputs before live wrapper.
+Candidate: Kalibr spatial/time calibration plus measured IMU noise.
+Choose tools from import/build/model compatibility and residuals.
+Defer wheel odometry until timing, frames and slip evidence exist.
+Default Evidence that changes it
+Upstream then offline Measured calibration/noise Defer wheel fusion Matched-data wrapper equivalence
+Tool compatibility + holdout residuals
+Synchronized geometry + slip evidence
+Add complexity only to solve a measured failure mode.
+102/109
+
+PAGE 103
+6.4 Interface decisions
+PLANNED
+Candidate rate follows useful output cadence and receiver capacity.
+Transport choice needs error, bandwidth and timing measurements.
+Stale thresholds require measured age and safety-policy review.
+Uncertainty fields are optional only when justified.
+Open choice Evidence needed before design
+Rate / transport Age threshold Useful cadence, load and link errors
+Clock relation and receiver safety policy
+Uncertainty Estimator-supported interpretation
+Approve the interface before writing messages or firmware.
+103/109
+
+PAGE 104
+7. Current status and roadmap
+104/109
+
+PAGE 105
+7.1 Historical evidence
+HISTORICAL / MEASURED saved observations
+8 September: x86 virtual machine (VM)/Docker USB2 NO-GO. (Figure 45)
+12/13 September: Pi saw 5000M, then USB regressed to 480M.
+A historical 105-second capture did not complete N2.
+Archived optimistic PASS wording cannot promote current gates.
+8 Sep: VM
+NO-GO 12 Sep: capture 13 Sep: power
+/ USB faults Figure 45: Historical evidence; schematic.
+Fresh N0 restart
+History explains risks; restart acceptance from fresh N0.
+105/109
+
+PAGE 106
+7.2 Current evidence gaps
+UNKNOWN current qualification
+Owner-confirmed: no Pi gate has passed.
+Current USB, platform and storage qualification are absent.
+Stereo pixels, calibrated motion and repeated estimation are unqualified.
+Health semantics and physical controller integration remain planned.
+Layer Current owner-confirmed status
+Pi gates N0–N3 No PASS; restart fresh
+Stereo/calibration N4 Unqualified / UNKNOWN
+N5–N7 PLANNED; no measured results
+Current status is OPEN, not a recovered historical PASS.
+106/109
+
+PAGE 107
+7.3 Conditional roadmap
+PLANNED
+Start with fresh camera-free N0 evidence.
+(Figure 46)
+After CAMERA AVAILABLE: N1 → N2 → N3.
+N4A needs N0; stereo/calibration enables
+N4B/C and N5.
+Review N6; separately authorize N7.
+Figure 46: Conditional evidence journey; conceptual.
+Advance on evidence, not dates or a successful launch.
+107/109
+
+PAGE 108
+8. Conclusion
+KNOWN ownership / PLANNED qualification
+Trusted perception needs qualified input, clocks and calibration.
+Repeated estimation and explicit metrics support engineering decisions.
+Independent controller ownership limits perception failure propagation.
+Status: no Pi gate passed; next action is fresh N0 evidence.
+Engineering decision
+The owner gains a bounded sequence for directing agents and interpreting evidence.
+The guide supplies a reproducible path, not measured robot readiness.
+108/109
+
+PAGE 109
+References
+[1] Campos, Elvira, Gómez Rodríguez, Montiel, Tardós.
+ORB-SLAM3. arXiv:2007.11898v2, 2021. Primary source.
+[2] Burri et al. The EuRoC micro aerial vehicle datasets.
+International Journal of Robotics Research, 2016. Primary
+source.
+[3] ROS 2 Jazzy: Quality of Service documentation. Primary
+source.
+[4] ROS REP-103 / REP-105: units, coordinates and frames.
+Primary source.
+[5] RealSense librealsense v2.58.4: timestamp reader and
+calibration parser. Primary source.
+[6] ETH Zürich ASL: Kalibr camera–IMU calibration. Primary
+source.
+[7] gaowenliang: imu_utils maintainer documentation.
+Primary source.
+[8] Michael Grupp: evo trajectory metrics. Primary source.
+[9] Raspberry Pi 5 / Active Cooler and RealSense D435i
+vendor records. Primary source. D435i record.
+Methods are published; project results remain unmeasured.
+109/109
+

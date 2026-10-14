@@ -1,0 +1,41 @@
+ D D435I_BASELINE_AUDIT.md
+ M docs/DOCKER_RUNTIME_ARCHITECTURE_REVIEW.md
+ M docs/RPI5_NATIVE_PERCEPTION_BRINGUP.md
+ ? third_party/ORB_SLAM3
+?? .obsidian/
+?? AGENTS.md
+?? CLAUDE.md
+?? docs/.obsidian/
+?? docs/ARCHITECTURE.md
+?? docs/D435I_BASELINE_AUDIT.md
+?? docs/D435I_VIO_CALIBRATION_READINESS.md
+?? docs/DECISIONS.md
+?? docs/EVIDENCE_INDEX.md
+?? docs/NEXT_GATE.md
+?? docs/NEXT_TWO_WEEKS_PERCEPTION_PLAN.md
+?? docs/ORB_SLAM3_OFFLINE_PREPARATION.md
+?? docs/PERCEPTION_TOOLING_ARCHITECTURE.md
+?? docs/PI5_NATIVE_SENSOR_VALIDATION_2026-09-12.md
+?? docs/PROJECT_STATE.md
+?? experiments/2026-09-12-pi5-native-sensor-validation/
+?? experiments/2026-09-13-d435i-camera-capture-20260913T015621Z/
+?? experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/
+?? experiments/2026-10-13-SESSION_FACTS_FOR_SLIDES.md
+?? experiments/2026-10-13-n4a-euroc-mh01/
+?? experiments/2026-10-13-n4b-d435i-prep/
+?? experiments/2026-10-13-orbslam3-pi-build/
+?? experiments/2026-10-13-pi5-env-snapshot/
+?? experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md
+?? experiments/2026-10-14-d435i-demo/
+?? experiments/2026-10-14-deck-audit/
+?? experiments/2026-10-14-lab-prep/
+?? experiments/2026-10-14-usb64-inspect/
+?? slides_brief/
+?? slides_course/
+?? slides_learn/
+?? slides_primer/
+?? slides_progress/
+?? slides_report/
+?? slides_roadmap/
+?? tools/
+claude/project-thread-rhsrup

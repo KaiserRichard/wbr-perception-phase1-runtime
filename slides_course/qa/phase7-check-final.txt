@@ -1,0 +1,3 @@
+Wrote Phase-3 main.tex; inherited OS preamble and original illustration slots.
+Wrote 44 frames; reference preamble copied verbatim.
+PASS: C 91 / B 44 pages; exact metric values, provenance and intended source scope; gate tables / figure IDs unchanged; generator reproduction exact; all unchanged page renders byte-identical; clean logs.

@@ -1,0 +1,158 @@
+% WBR advisor progress report -- evidence snapshot 2026-10-14.
+% Build: latexmk -xelatex main.tex   (see README.md)
+% Content sources and number provenance: SOURCES.md.
+% Historical Pi measurements are labeled MEASURED; calculations, assumptions,
+% published comparisons, plans and OPEN qualification remain distinct.
+\documentclass[aspectratio=169,12pt,t]{beamer}
+
+% Speaker notes: uncomment ONE line to see them.
+% \setbeameroption{show notes on second screen=right}  % dual-screen (pdfpc)
+% \setbeameroption{show only notes}                     % notes handout
+
+\usetheme[progressbar=none, sectionpage=none]{moloch}
+% A 208 x 117 mm canvas retains 16:9 and the actual 12pt class fonts.
+% Long owner-approved sentences fit without frame scaling or reduced fonts.
+\geometry{paperwidth=208mm,paperheight=117mm}
+
+% ---------- fonts ----------
+\usepackage{fontspec}
+\setsansfont{Avenir Next}[BoldFont={Avenir Next Demi Bold}]
+\setmonofont{Menlo}[Scale=1.0]
+\newcommand{\captiontype}{\small}
+
+% ---------- palette ----------
+\definecolor{navy}{HTML}{1F3A5F}
+\definecolor{teal}{HTML}{2A9D8F}
+\definecolor{fault}{HTML}{E76F51}
+\definecolor{paper}{HTML}{FAFAF7}
+\definecolor{ink}{HTML}{22262B}
+\definecolor{muted}{HTML}{6B7280}
+\definecolor{rule}{HTML}{D6D9DE}
+
+\setbeamercolor{normal text}{fg=ink, bg=paper}
+\setbeamercolor{frametitle}{fg=paper, bg=navy}
+\setbeamercolor{progress bar}{fg=teal, bg=rule}
+\setbeamercolor{alerted text}{fg=fault}
+\setbeamercolor{example text}{fg=teal}
+\setbeamercolor{structure}{fg=navy}
+\setbeamercolor{title separator}{fg=teal}
+\setbeamercolor{footline}{fg=muted}
+% Beamer otherwise inherits the fault/alert color for in-slide citations.
+\setbeamercolor{bibliography entry author}{fg=navy}
+\setbeamercolor{bibliography entry title}{fg=ink}
+\setbeamercolor{bibliography entry location}{fg=muted}
+\setbeamercolor{bibliography entry note}{fg=muted}
+\setbeamercolor{block title}{fg=paper, bg=navy}
+\setbeamercolor{block body}{bg=navy!6}
+\setbeamerfont{frametitle}{size=\large, series=\bfseries}
+\setbeamertemplate{frametitle}{\nointerlineskip\begin{beamercolorbox}[wd=\paperwidth,sep=2mm,leftskip=4mm]{frametitle}\usebeamerfont{frametitle}\insertframetitle\strut\end{beamercolorbox}}
+\setbeamertemplate{itemize items}{\color{teal}\rule[0.25ex]{0.45em}{0.45em}}
+\setbeamertemplate{bibliography item}[text]
+\setbeamertemplate{page number in head/foot}[totalframenumber]
+\hypersetup{colorlinks=true, linkcolor=navy, urlcolor=navy, citecolor=navy}
+% Keep the appendix bookmark free of Beamer translation commands.
+\pdfstringdefDisableCommands{\def\translate#1{#1}}
+
+\setbeamertemplate{itemize subitem}{\color{muted}--}
+
+% ---------- packages ----------
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, automata, calc, shapes.geometric, fit, backgrounds, decorations.pathreplacing}
+\usepackage{booktabs}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\sisetup{detect-all}
+
+% ---------- helpers ----------
+\newcommand{\muted}[1]{{\color{muted}#1}}
+
+% \slideimg[<max height>]{<width>}{<V-id>}{<caption for placeholder>}
+% Shows images/<V-id>.jpg or .png if present, otherwise a labelled gray box of the same size.
+\newcommand{\slideimg}[4][0.64\textheight]{%
+  \IfFileExists{images/#3.jpg}{%
+    \includegraphics[width=#2, height=#1, keepaspectratio]{images/#3.jpg}%
+  }{\IfFileExists{images/#3.png}{%
+    \includegraphics[width=#2, height=#1, keepaspectratio]{images/#3.png}%
+  }{%
+    \begin{tikzpicture}
+      \node[draw=rule, fill=black!6, rounded corners=2pt, minimum width=\dimexpr#2-1pt\relax, outer sep=0pt,
+            minimum height=#1, align=center, text width=\dimexpr#2-8mm\relax, font=\small, text=muted]
+        {\textbf{#3}\\[2pt]#4\\[2pt]\small Illustration pending};
+    \end{tikzpicture}%
+  }}%
+}
+
+\tikzset{
+  box/.style={draw=navy, fill=white, rounded corners=2pt, align=center, font=\small,
+              minimum height=7mm, inner sep=3pt},
+  flow/.style={-{Stealth[length=2mm]}, thick, color=navy},
+  faultflow/.style={-{Stealth[length=2mm]}, thick, color=fault},
+  lbl/.style={font=\small, color=ink, fill=paper, inner sep=1pt},
+}
+
+% Only the page number appears in the footer.
+\setbeamerfont{footline}{size=\small}
+\setbeamertemplate{footline}{\hbox{\begin{beamercolorbox}[wd=\paperwidth,ht=4mm,dp=1mm,rightskip=6mm]{footline}\hfill\insertframenumber/\inserttotalframenumber\end{beamercolorbox}}}
+\AtBeginSection{\begin{frame}[c]\centering{\Huge\bfseries\color{navy}\thesection. \insertsectionhead\par}\end{frame}}
+\setbeamertemplate{navigation symbols}{}
+\setbeamersize{text margin left=6mm,text margin right=6mm}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.02}
+\title{WBR Perception: Progress Report}
+\subtitle{Known baseline; first camera diagnostics}
+\author{}
+\institute{}
+\date{14 October 2026}
+
+
+\newcounter{slidefigure}
+\newcommand{\figcap}[1]{\par\smallskip{\centering\captiontype\color{muted}\refstepcounter{slidefigure}Figure \theslidefigure: #1\par}}
+\newcommand{\figagain}[1]{\par\smallskip{\centering\captiontype\color{muted}Figure~\ref{fig:#1}: \csuse{caption#1}\par}}
+\setbeamerfont{bibliography entry author}{size=\normalsize}
+\setbeamerfont{bibliography entry title}{size=\normalsize}
+\setbeamerfont{bibliography entry location}{size=\normalsize}
+\setbeamerfont{bibliography entry note}{size=\normalsize}
+\setlength{\emergencystretch}{2em}
+\setbeamerfont{normal text}{size=\normalsize}
+\setbeamerfont{itemize/enumerate body}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
+\linespread{1.12}
+\AtBeginDocument{\setlength{\leftmargini}{1.1em}\setlength{\leftmarginii}{1.2em}\setlength{\labelsep}{.35em}}
+\newcommand{\namedcap}[2]{\figcap{#2}}
+% Apply spacing after Beamer has created each list (including nested lists).
+\usepackage{etoolbox}
+\makeatletter
+\apptocmd{\itemize}{\ifnum\@itemdepth=1\setlength{\itemsep}{.55em}\else\setlength{\itemsep}{.25em}\fi\setlength{\parsep}{0pt}\setlength{\parskip}{0pt}\setlength{\topsep}{0pt}}{}{}
+\makeatother
+\newsavebox{\figurebox}
+\newcommand{\fig}[3][.48\textheight]{%
+  \ifcsdef{diagram#2}{\sbox{\figurebox}{\csuse{diagram#2}}}{%
+    \sbox{\figurebox}{\includegraphics[width=\linewidth,height=#1,keepaspectratio]{images/#2.jpg}}}%
+  \par\centering\begin{minipage}{\wd\figurebox}\centering
+  \usebox{\figurebox}%
+  \ifcsdef{assetcaption#2}{\csuse{assetcaption#2}}{%
+    \csgdef{assetcaption#2}{\repeatassetcap{#2}}%
+    \csgdef{assettext#2}{#3}\figcap{#3}%
+    \csxdef{assetnumber#2}{\theslidefigure}}\end{minipage}\par}
+\newcommand{\repeatassetcap}[1]{\par\smallskip{\centering\captiontype\color{muted}%
+  \begingroup\renewcommand{\label}[1]{}Figure \csuse{assetnumber#1}: \csuse{assettext#1}\par\endgroup}}
+\makeatletter
+\newcommand{\takeaway}[1]{\global\beamer@framebottomskip=0pt\par\medskip\begin{beamercolorbox}[wd=\linewidth,sep=0pt]{block body}%
+  \begin{tabular}{@{}!{\color{teal}\vrule width 3pt}p{\dimexpr\linewidth-22pt\relax}@{}}\normalsize\strut #1\strut\end{tabular}%
+  \end{beamercolorbox}\par}
+\makeatother
+
+
+% Course additions retain the approved palette, canvas, type and figure system.
+\newcommand{\evidence}[1]{{\small\bfseries\color{teal!70!black}#1}\par\medskip}
+\newcommand{\coursefigure}[3]{\begin{minipage}{\linewidth}\centering#2\figcap{\label{fig:#1}#3}\end{minipage}}
+
+
+
+\newcommand{\deckitems}[1]{\begin{itemize}#1\end{itemize}}
+\newcommand{\deckflow}[1]{\begin{tikzpicture}[node distance=9mm]
+\foreach \txt [count=\i] in {#1}{\node[box,font=\normalsize,text width=33mm,minimum height=14mm] (n\i) at ({mod(\i-1,4)*4.7},{-floor((\i-1)/4)*2.4}) {\txt};}
+\end{tikzpicture}}
+

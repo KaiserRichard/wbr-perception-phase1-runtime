@@ -1,0 +1,1 @@
+OFFLINE DOCUMENT CHECK: 91 frames, 46 unique/referenced consecutive figures, 109 audit rows; all 11 gate acceptance tables byte-identical; exact N2 thresholds retained; clean TeX log.

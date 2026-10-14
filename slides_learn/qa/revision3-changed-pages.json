@@ -1,0 +1,235 @@
+{
+  "new_pages": [
+    42,
+    43
+  ],
+  "references_page": 47,
+  "unchanged_content": [
+    {
+      "before": 1,
+      "after": 1,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 2,
+      "after": 2,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 3,
+      "after": 3,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 4,
+      "after": 4,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 5,
+      "after": 5,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 6,
+      "after": 6,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 7,
+      "after": 7,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 8,
+      "after": 8,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 9,
+      "after": 9,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 10,
+      "after": 10,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 11,
+      "after": 11,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 12,
+      "after": 12,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 13,
+      "after": 13,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 14,
+      "after": 14,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 15,
+      "after": 15,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 16,
+      "after": 16,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 17,
+      "after": 17,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 18,
+      "after": 18,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 19,
+      "after": 19,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 20,
+      "after": 20,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 21,
+      "after": 21,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 22,
+      "after": 22,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 23,
+      "after": 23,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 24,
+      "after": 24,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 25,
+      "after": 25,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 26,
+      "after": 26,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 27,
+      "after": 27,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 28,
+      "after": 28,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 29,
+      "after": 29,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 30,
+      "after": 30,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 31,
+      "after": 31,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 32,
+      "after": 32,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 33,
+      "after": 33,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 34,
+      "after": 34,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 35,
+      "after": 35,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 36,
+      "after": 36,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 37,
+      "after": 37,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 38,
+      "after": 38,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 39,
+      "after": 39,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 40,
+      "after": 40,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 41,
+      "after": 41,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 42,
+      "after": 44,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 43,
+      "after": 45,
+      "content_pixels_identical": true
+    },
+    {
+      "before": 44,
+      "after": 46,
+      "content_pixels_identical": true
+    }
+  ],
+  "excluded_footer_rectangle": [
+    1100,
+    680,
+    1280,
+    719
+  ]
+}

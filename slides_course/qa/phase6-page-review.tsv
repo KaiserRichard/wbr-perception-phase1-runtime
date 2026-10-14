@@ -1,0 +1,92 @@
+page	title	inspection	verdict	sha256
+1	WBR Perception Implementation	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	61a3c43d7a27d16b67293689c71f975088bf460fb18bdf4f7c1c691e06014b2c
+2	Contents	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	23b9e7f215cbd724557cc75483c32b487231e53917b4499fa9ad79af7632e010
+3	1.1 Robot context	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	c7aa39371b04712c2c0cd0b8c97add15aecdab6ece9e37afde7f9a62ce74e341
+4	1.2 Engineering problem	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	cc0c17f3eae92aa88e1f1bc2dfcb1e6019e2bcc12f1f0cc30e3b52d8cb12c951
+5	1.3 Objectives and research questions	final full-size reinspection	PASS_LAYOUT_ONLY	aa74db1458c42f54ae667da22a12afe4cd4751d6945241665449f2e6e5166427
+6	2.1 Stereo geometry	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	23b270c90bd5a3b2cc545c2a62ae44b5c3fd78254b4729c19e740719886aa87d
+7	2.2 Visual-inertial estimation	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	65eb7e5c24dbfa02ea2ce1d4ced112e62f034035f32c5850ce3024059e86f231
+8	2.3 Odometry and mapping	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	877ea56c483a3bd711826a54c8578282520d6c72a2f399452aa2de95ff08fdd4
+9	2.4 D435i streams	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	fb0174ed759596801cb330b0b4444f2cf2337426530cbb5fef2f59ae35f9f441
+10	2.5 ROS communication	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	505fb8c45661f7d076343af1c05af742a9867c5ebf6367e8d009993218917da8
+11	2.6 QoS compatibility	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	d13401d76cbbf9509fcc329a061f629dc4a5ce6bd2eeb855ca4cbef848b55efc
+12	3.1 Machine ownership	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	8910650f21b613316eb0597f8e6acd3949e8f080e682b52f5700dea90b30bbaa
+13	3.2 Control boundary	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	666c3281365809427e0dc8f7245e46b31517ab70b5fe9ab841c04c0253ebb955
+14	3.3 Physical platform	final full-size reinspection	PASS_LAYOUT_ONLY	6e256053e6898e3728fbb37dc221bd1a336800095e4c457aff71cf71fc7ff2c2
+15	3.4 Sensor-to-pose execution path	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	a634f939069b6a3fa8d80c2396ebc5f3a4d77fc4212496d7b45f5afee5c059c3
+16	3.4 Topic and type contract	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	cc966346153f8f75a3bc535f0545e7273b1c0883293cde0871eaa186ceab5eb6
+17	3.6 Queues and backpressure	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	8f5d14e5c0a9bbb92cd6f4fd60bfef0e3cc716eb574e2e57e95a066f761994f2
+18	3.8 Storage qualification	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	d2902cfcb5dbe5434667daccab80bbe149442a318bf39e6ffa191bf16f1bad5f
+19	3.10 Frame definitions	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	d9d7589d20cf00665fb6ffa98748be504627092df7235462c322cd0b68f1d3b0
+20	3.11 Robot transform ownership	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	74351d490a600959f3f7fe45afe5db693149c6ef42232d95145d478b86b682ec
+21	3.12 Camera transform ownership	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	4c8f7937777aad3ea900ed219cc007ce6d0b657f6dca8755d3502fe759e8262a
+22	3.13 Independent IMUs	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	cfd5da2f37461111a8a645981153579f56c950b4536a45e8aa4039f2a9a4bc5c
+23	3.14 Transform direction	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	46c76f5c268a6cb46e80869b2b195af2eb080523108701d1be7376d1079eefa7
+24	3.15 Timestamp fields and domains	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	d152c393dc3c95f01c047af48ad9d1435cd58f60d10604c22fcf7efecca6a5ac
+25	3.16 Where timestamps are stamped	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	4a44c253ee63f5046543d8d9236e7243dade4f281c8a223f7c9b068e37ae5dcf
+26	3.17 Global time	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	a74fba91ccc11545b09ffb9628ab5ef4f4272c4487ee9a800f43fe5694c55319
+27	3.18 Worked latency decomposition	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	68b909d20cba8581b1bca5115a4f79c97ade13b78ffd4c107894c6bc899b1f05
+28	3.19 Calibration register	final full-size reinspection	PASS_LAYOUT_ONLY	645315bb01fbf585e736ff0b337ac576306be763f3a09456d3f3b1adceff1949
+29	3.20 Stereo calibration	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	e2ed60920fe80b3a511f85e80b075efdd045878c8d63c26eaee0faa54fbd7a0d
+30	3.21 Calibration capture	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	44d4c6da657a30668b4aa8858e0ca75871eee8ac28260d5f4b9aef142f1da77c
+31	3.22 IMU noise	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	268b84f07cbd673628803cfaf813231991ffced412e6f40e1137144d2b9b9e6e
+32	3.24 Algorithm threads	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	e640d44e7835dff1d5369718e7a48c3f2f54652281062bc999ec6c98c4622db8
+33	3.25 Tracking	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	c66fb0e136f82b67a8e82ab4340107dff33d0f37450711cb7d0337874195daa4
+34	3.26 Mapping and Atlas	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	3e72c91b0af61baacc641c7bec6822ec3f25b85e0c0f795df445d1dfc35cdc65
+35	3.27 Inertial initialization	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	bd3aef20bda2d4eae88217aed121dc71d6709f784d777a29113293280b392d24
+36	3.28 Settings audit before tuning	final full-size reinspection	PASS_LAYOUT_ONLY	dc9dfa75bd4161bb8d09c40014503e36d7400f66281633fc011c3b02406676f7
+37	3.28 Numeric IMU settings contract	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	c81de373143b35390a592aa3f48aa10af185414a550c083f268cd0aed0683528
+38	3.29 Input association	final full-size reinspection	PASS_LAYOUT_ONLY	731fc8a525d8a301898a5414d9cd33814f6cd9749dd16fefe77cd4185895bc0a
+39	3.30 Planned health envelope	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	f0a4cfd39f02b2b0a5d7fbd2b76b6d9497e9b227097d97acf7e766d92045d061
+40	3.31 Health supervision	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	5dccce814a86ea8b8712f789213d8cd2299f38815c9181777cf636ec681c7635
+41	3.32 Planned Pi-to-STM32 boundary	final full-size reinspection	PASS_LAYOUT_ONLY	cfb1f4b5ce81de7dc508d9bab5671f654637c6aa3a01b069842f5ee0cb855443
+42	4.1 Gate dependencies and status	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	336708677bf766f7a904c853f17e3b67b6adc0e177f7f317c42485a30fd2769b
+43	4.2 N0: platform preflight	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	a1a113bb89a18c2e6a4306ec42675334afc1aa29c9e45eb0449f44fac5ba6c12
+44	4.2 N0: acceptance and diagnosis	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	c81b62bcc2f574fddbe47579ffeacb450563808bc388718bfbbd1503e079cbf6
+45	4.2 N0: physical inventory record	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	4e4bcf0b23ba35e2cf3bb7567a1dc201f15e6c8be29e758d44c055de417c96ef
+46	4.3 N1: own-branch USB and access	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	741d76622671096abbe979dd2beeef24d47db8abd1ece38edc19fbea0f246ca9
+47	4.3 N1: acceptance and diagnosis	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	1dc1bb114f698e92547a7de5b64654224856fdf27128ad00eb82fbdee587f03d
+48	4.4 N2: staged native acquisition	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	294f89adf0d6fbab4a35da2f14c3b473b3dde599d82029c2fe7d019e6ba98aef
+49	4.4 N2: reproduction and mandatory soak	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	1391ebcf0bc4938a73c2a38cf927dff4b59616e51aa21eef34771a2bfad1c516
+50	4.5 N2: delivery criteria	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	00cbdec1e3731a1786cd291db25f85a98e8a6b84d0df7b3422d560e0d61f12dc
+51	4.5 N2: content, health and acceptance	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	8b1bd0cbfcbff0a60ef2249ff14df0e1687e47331cddbfcdd0c7dbab89d84d26
+52	4.5 Worked window-rate and boundary check	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	178516ac304d6e5cca1482e23077a14634b544664641dcffea78424afc670274
+53	4.6 N3: one wrapper, bounded record	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	f9a511ccd6f7f186a582731a42e637d02a50c082102ad4940cf4ba4dcd149394
+54	4.7 N3: stop camera and replay	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	adf0e53df4f8b46c5c62e4c4cc2fa38607943859d8f0a0e907c2480b926364ed
+55	4.7 N3: PASS/FAIL matrix	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	7909f756894bad7cbfa020cba55d80a151a0f170ec8332e36c94964015fd4943
+56	4.7 Storage prerequisite: no mount fallback	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	93cadd3c3ac6cdccfb710fbbc2eeb9f28469a2ebee65d354fcf48f43d3aadb83
+57	4.7 Content checks beyond delivery rates	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	aa0aaca7ad155c1248fc80790adbebb6dc84ab59d903f3465036822b5e7fd5a3
+58	4.8 Stereo extension	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	8f2342413bca4b00ab0f636548d5f105cfcbbe9fd6ff69c84fd5827e2fc2e50d
+59	4.9 N4A: camera-independent EuRoC baseline	final full-size reinspection	PASS_LAYOUT_ONLY	ceee763e68d297e7f27c34df7662cbe7e3ca2e1eebfb89b11ad5245f583f30f8
+60	4.9 N4A: estimator acceptance contract	final full-size reinspection	PASS_LAYOUT_ONLY	a12b37cdac5a988aab81d205e6de3359413927868f6acad1e87c3abba72637e9
+61	4.10 N4B: offline D435i stereo	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	a7035a98feeaa61b996964529dfde4354dfbaeca32b701aa03986ad55046b777
+62	4.10 N4B: input and run criteria	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	7a6353ff3191c22cd24f6c62c26696da6a054464538df90d42a59c0ff1502a1f
+63	4.10 N4B: immutable adapter provenance	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	83db6fe9122a77fa62058e25a2435e574d3d330a5b66327823d5a5bca425cf55
+64	4.11 N4C: live stereo scheduling	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	f2754c3e96808e610ebda4426672138c6fc646ccb4df4037ca7a4a2e9603ac4f
+65	4.11 N4C: live PASS/FAIL criteria	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	b486bd2314a2a3d87eac6c1272146d3e8ad68fa8f0c794dfd97dfb18bbfac0d7
+66	4.12 N5: reproducible measurement	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	1c5607e787f198e5b378e5160c7f37aadaed19018762f97612e55a88a66c1028
+67	4.12 N5: measurement criteria	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	6c5e5bdbdcf48e8f85df62a25844a13194e25e24675af389ad817b3e3df401c5
+68	4.13 N6: health semantics with fixtures	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	3e6a608eff9250fcf0e82e17f860ef244be1215c312944f76ffde2e00f81198c
+69	4.13 N6: planned acceptance table	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	6ca0a0ae2bcd551908e3cafd9620301d03179939a0d632f8d176bd207a91844c
+70	4.14 N7: staged controller boundary	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	492e99b92d524bec96702ff001ce31ffa09425b2dc125d01c607add185bcd046
+71	4.14 N7: planned acceptance table	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	871738dfec61e87889b8e4f5df5c05c2791bacef106e97b3bfc6e93fcba11eb1
+72	4.15 Reproduction and evidence	final full-size reinspection	PASS_LAYOUT_ONLY	6c5a629aafbddea0fb7ae64d17c2e42f00147f334a3363defbfb5e3d45527a21
+73	4.16 Bottom-up diagnosis	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	9d87d4b51a07915f063a3142c57a05e0acd5905de25213f6203cdb23adbf96bd
+74	4.18 Bounded AI tickets	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	fabc641642e031ae9d89aaa4b877141828ed9b538a16eaced79320b91b2787aa
+75	5.2 ATE computation outline	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	321d4c4e632112f6ac57cc8a725df2051314bd2213d4171c8bc090c279433fe6
+76	5.3 RPE and pair policy	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	a292130c20108dd1f83e46207208ae6cc323144e447e67009f52d80130dea78a
+77	5.4 Trajectory conversion and evo	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	2988baaa2295b2283d9661cd78fa3a31c115324c770fe7bc5ee64d4a5b5a19fe
+78	5.6 Latency and loss	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	781c1247e328eb992732aa6215c9379a51731decad3c2f96ba41227f717b41cb
+79	5.7 Resource measurements	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	de5fcf163f5490ca77c54af80dfa3e172e563ba988cc101741c141ef18b5897c
+80	5.8 Accuracy results	final full-size reinspection	PASS_LAYOUT_ONLY	d04e292370f63623799af32a3560acd253bc5e86a765959f2f76432924d2dc95
+81	5.9 Timing results	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	2da8318b2de528494f9799b3af9c68432bcccdc39ef83fc2e1f03c3553944433
+82	5.10 Resource results	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	ac6358b10bbbd8356098841a34ee5f51fb87718a3e1aa0ae17222187c3188a21
+83	6.1 Runtime and USB	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	81593d2fd8f2b482f42bff6dc618dae78b1b39de2a03fa37ccbb67aee7434cf4
+84	6.2 Inputs and clocks	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	5ec147e4d3994564ff4d5c001c0a546ea4bc0c1c994020896360e4464f7470db
+85	6.3 Algorithm and calibration	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	2645bcd884d564b77e83ad37a9bfe98bb8e16701379b9ae69342e72878842387
+86	7.1 Historical evidence	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	0df393d8f783808c690a8d67f23128d4bb1c7b1436e19782eafbb3ac460e74e3
+87	7.2 Current evidence gaps	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	cd73218216a3f7a9fc27e5a0c681bba3694acfaf7bd41abeef8db84ca787bc22
+88	7.3 Changes since 2026-10-10	final full-size reinspection	PASS_LAYOUT_ONLY	463e115b5a5a3a7d8369b64d63240970d287c1cc9e27416a01503735ac8e84ad
+89	7.4 Conditional roadmap	final full-size reinspection	PASS_LAYOUT_ONLY	2bebf9b6e5dbc3a7e1c8da45967b063d9050fe835d237f489d42d08e184b40ac
+90	8. Conclusion	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	887d57f43d65fad0286758c2f3cd844fa089ebf572780f7f90dffabee8c15902
+91	References	round2 full-size; final PNG byte-identical	PASS_LAYOUT_ONLY	2d82f10893cb995142eec3bbcf58d0d4c1d415f49cca8089e5efb1b7ad484c43

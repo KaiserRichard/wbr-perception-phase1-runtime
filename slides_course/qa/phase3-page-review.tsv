@@ -1,0 +1,110 @@
+page	title	visual_verdict	note
+1	WBR Perception Implementation	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Named illustration placeholder P01 retained intentionally.
+2	Contents	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+3	Section: Introduction	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+4	1.1 Robot context	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Named illustration placeholder P02 retained intentionally.
+5	1.2 Engineering problem	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+6	1.3 Objectives	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+7	1.4 Research questions	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+8	Section: Background	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+9	2.1 Stereo geometry	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+10	2.2 Visual-inertial estimation	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Named illustration placeholder P03 retained intentionally.
+11	2.3 Odometry and mapping	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+12	2.4 D435i streams	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Named illustration placeholder P04 retained intentionally.
+13	2.5 ROS communication	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+14	2.6 QoS compatibility	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+15	2.7 EuRoC baseline	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+16	Section: System design	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+17	3.1 Machine ownership	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+18	3.2 Control boundary	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+19	3.3 Physical platform	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Named illustration placeholder P05 retained intentionally.
+20	3.4 Sensor-to-pose execution path	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Revised diagram geometry/dependencies rechecked.
+21	3.4 Topic and type contract	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+22	3.5 Threads and backpressure	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+23	3.6 Queues and backpressure	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+24	3.7 Payload budget	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+25	3.8 Storage qualification	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Named illustration placeholder P06 retained intentionally.
+26	3.9 Software provenance	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+27	3.10 Frame definitions	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+28	3.11 Robot transform ownership	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+29	3.12 Camera transform ownership	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+30	3.13 Independent IMUs	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Named illustration placeholder P07 retained intentionally.
+31	3.14 Transform direction	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+32	3.15 Timestamp fields and domains	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Revised diagram geometry/dependencies rechecked.
+33	3.16 Where timestamps are stamped	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+34	3.17 Global time	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+35	3.18 Worked latency decomposition	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+36	3.19 Calibration register	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+37	3.20 Stereo calibration	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+38	3.21 Calibration capture	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Named illustration placeholder P08 retained intentionally.
+39	3.22 IMU noise	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+40	3.23 Calibration tools	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+41	3.24 Algorithm threads	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+42	3.25 Tracking	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+43	3.26 Mapping and Atlas	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+44	3.27 Inertial initialization	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+45	3.28 Settings audit before tuning	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Corrected escaped arrow rechecked.
+46	3.28 Numeric IMU settings contract	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+47	3.29 Input association	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+48	3.30 Planned health envelope	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+49	3.31 Health supervision	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+50	3.32 Planned Pi-to-STM32 boundary	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Revised diagram geometry/dependencies rechecked.
+51	Section: Implementation by gate	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+52	4.1 Gate dependencies and status	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Revised diagram geometry/dependencies rechecked.
+53	4.2 N0: platform preflight	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+54	4.2 N0: acceptance and diagnosis	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+55	4.2 N0: physical inventory record	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Named illustration placeholder P09 retained intentionally.
+56	4.3 N1: own-branch USB and access	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+57	4.3 N1: acceptance and diagnosis	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+58	4.4 N2: staged native acquisition	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+59	4.4 N2: reproduction and mandatory soak	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+60	4.5 N2: delivery criteria	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+61	4.5 N2: content, health and acceptance	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Corrected escaped arrow rechecked.
+62	4.5 N2: seal reviewed evidence	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+63	4.5 Worked window-rate and boundary check	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+64	4.6 N3: one wrapper, bounded record	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+65	4.7 N3: stop camera and replay	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+66	4.7 N3: PASS/FAIL matrix	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Corrected escaped arrow rechecked.
+67	4.7 Storage prerequisite: no mount fallback	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Corrected escaped arrow rechecked.
+68	4.7 Content checks beyond delivery rates	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+69	4.8 Stereo extension	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+70	4.9 N4A: camera-independent EuRoC baseline	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+71	4.9 N4A: estimator acceptance contract	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+72	4.10 N4B: offline D435i stereo	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+73	4.10 N4B: input and run criteria	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+74	4.10 N4B: immutable adapter provenance	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Named illustration placeholder P10 retained intentionally.
+75	4.11 N4C: live stereo scheduling	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+76	4.11 N4C: live PASS/FAIL criteria	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+77	4.12 N5: reproducible measurement	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+78	4.12 N5: measurement criteria	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+79	4.13 N6: health semantics with fixtures	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+80	4.13 N6: planned acceptance table	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+81	4.14 N7: staged controller boundary	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+82	4.14 N7: planned acceptance table	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+83	4.15 Reproduction and evidence	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+84	4.16 Bottom-up diagnosis	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+85	4.17 Failure isolation	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+86	4.18 Bounded AI tickets	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Named illustration placeholder P11 retained intentionally.
+87	Section: Evaluation method	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+88	5.1 Experimental design	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+89	5.2 ATE computation outline	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+90	5.2 Symbolic ATE worked example	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+91	5.3 RPE and pair policy	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+92	5.4 Trajectory conversion and evo	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+93	5.5 Initialization and continuity	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+94	5.6 Latency and loss	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+95	5.7 Resource measurements	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+96	5.8 Accuracy results	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Empty result axes; no measured samples.
+97	5.9 Timing results	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Empty result axes; no measured samples.
+98	5.10 Resource results	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Empty result axes; no measured samples.
+99	Section: Engineering decisions	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+100	6.1 Runtime and USB	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+101	6.2 Inputs and clocks	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+102	6.3 Algorithm and calibration	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+103	6.4 Interface decisions	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+104	Section: Current status and roadmap	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+105	7.1 Historical evidence	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+106	7.2 Current evidence gaps	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+107	7.3 Conditional roadmap	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked. Named illustration placeholder P12 retained intentionally.
+108	8. Conclusion	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.
+109	References	PASS_LAYOUT	Full-size individual page inspection; labels, spacing, captions and footer checked.

@@ -1,0 +1,20 @@
+# Phase 4 visual image assignment
+
+All twelve incoming PNGs were opened individually at original resolution and matched by visual content against `image-prompts/BATCH.md`; timestamps and UUID order were not used. One distinct best match per slot, no duplicates or unmatched subjects. Originals are preserved; P01–P12 are byte-identical copies, with hashes in `phase4-assignments.json`. No cropping, recoloring, image editing, or regeneration was performed. All illustrations remain conceptual, not hardware or experiment evidence. Defects are retained as required by the Phase-4 brief.
+
+| P-id | Original filename (under incoming/) | Subject seen | Defects / limits |
+|---|---|---|---|
+| P01 | `edf13406-7fba-4ffd-9e3e-6ebb8c19094e.png` | Four-object platform portrait: cooled green Pi, camera bar, controller, robot | Robot is a low wheeled chassis, not a clear two-leg wheel-biped silhouette. Controller PCB is black rather than green/neutral. Tiny invented PCB markings; camera apertures are illustrative. |
+| P02 | `2452fdcd-c033-47a4-9ef9-928f8ade3f95.png` | Robot and camera viewing cone facing textured indoor route and obstacle | Robot is a low wheeled chassis; two articulated legs with foot wheels are not clearly shown. More shaded/detailed than the flat editorial style. |
+| P03 | `Camera motion through a textured room.png` | Handheld camera moving through textured room with two ghost positions | No material subject/label defect seen; camera housing/apertures remain simplified, not an exact hardware reference. |
+| P04 | `D435i Stereo Camera Bar.png` | Isolated silver/dark stereo camera bar, USB-C cable and D435i label | No material subject/label defect seen; stylized apertures/housing must not be used as an exact optical drawing. |
+| P05 | `c62baa7d-fb69-43ea-acc4-4dab9816996b.png` | Cooled green Pi, power block, connected cable, airflow cues | Tiny invented PCB/header markings violate no miniature text. Cooler is an axial fan depiction rather than a faithful active-cooler blower; connector geometry is stylized and cable strain relief is only implicit. |
+| P06 | `1db58995-07c9-4359-8d2e-8afd68218dbb.png` | Dominant closed data enclosure, microSD and archival folder; Data/OS labels | No material subject/label defect seen; enclosure does not establish NVMe type or storage qualification. |
+| P07 | `3c1dd354-9c0c-4667-a906-7c8634c5838c.png` | Separate Camera IMU and Body IMU context bubbles over robot | Robot lacks clearly recognizable biped legs. Controller PCB is black, with tiny invented markings. Body sensor enclosure/mount is an invented concept, not a verified installation. |
+| P08 | `6b5a1c01-4425-495d-8010-32ae1fa189f5.png` | Rigid grid target, oblique handheld camera, slack cable and unnumbered ruler | Tag-like patterns are generated decoration, not verified AprilTags or a usable calibration target. No decoded IDs or fake measurement values seen. |
+| P09 | `a507f7f0-51c5-4119-8693-0b6b0f430002.png` | Cooled green Pi, camera, direct USB-A/USB-C cable and empty preflight boxes | Tiny invented PCB markings; cooler uses simplified axial-fan geometry. No separate power cable shown, so power/data distinction is incomplete. All checklist boxes are empty. |
+| P10 | `17b29a56-d860-43eb-93a9-2095f8602535.png` | Laptop with two grayscale room views, locked folders and magnifier | Left/right views appear near-identical; stereo disparity is not clearly demonstrated. No fake code, result graph or measurement seen. |
+| P11 | `5d710874-112c-45d9-9819-2051828a6013.png` | Bounded packet with Task, Evidence and Stop condition cards and folder | No material subject/label defect seen; cards remain blank and unapproved. |
+| P12 | `f850a605-09f0-4759-8136-8d9e69ea7f2d.png` | Conditional route with closed checkpoint barriers and distant robot | Destination robot is a low wheeled chassis, not a clear wheel-biped silhouette. No completed gate or fabricated progress value seen. |
+
+The current 109-page deck uses P01/1, P02/4, P03/10, P04/12, P05/19, P06/25, P07/30, P08/38, P09/55, P10/74, P11/86 and P12/107. These actual PDF pages supersede the original Phase-1 outline page numbers.

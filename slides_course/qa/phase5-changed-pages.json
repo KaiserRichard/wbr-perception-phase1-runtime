@@ -1,0 +1,126 @@
+[
+  [
+    1,
+    "Cover"
+  ],
+  [
+    2,
+    "Contents"
+  ],
+  [
+    15,
+    "2.7 EuRoC baseline"
+  ],
+  [
+    19,
+    "3.3 Physical platform"
+  ],
+  [
+    20,
+    "3.4 Sensor-to-pose execution path"
+  ],
+  [
+    52,
+    "4.1 Gate dependencies and status"
+  ],
+  [
+    70,
+    "4.9 N4A: camera-independent EuRoC baseline"
+  ],
+  [
+    71,
+    "4.9 N4A: estimator acceptance contract"
+  ],
+  [
+    72,
+    "4.10 N4B: offline D435i stereo"
+  ],
+  [
+    75,
+    "4.11 N4C: live stereo scheduling"
+  ],
+  [
+    96,
+    "5.8 Accuracy results"
+  ],
+  [
+    97,
+    "5.9 Timing results"
+  ],
+  [
+    98,
+    "5.10 Resource results"
+  ],
+  [
+    104,
+    "2026-10-13 progress"
+  ],
+  [
+    105,
+    "7.1 What changed today"
+  ],
+  [
+    106,
+    "7.2 New camera identity"
+  ],
+  [
+    107,
+    "7.3 Native build and compatibility patches"
+  ],
+  [
+    108,
+    "7.4 EuRoC MH01 and ground truth"
+  ],
+  [
+    109,
+    "7.5 From recorded flight to an error number"
+  ],
+  [
+    110,
+    "7.6 Why ATE needs alignment"
+  ],
+  [
+    111,
+    "7.7 Three repeats and the paper comparison"
+  ],
+  [
+    112,
+    "7.8 What N4A proves and leaves open"
+  ],
+  [
+    113,
+    "7.9 Recorder: freeze the new camera inputs"
+  ],
+  [
+    114,
+    "7.10 One estimator: offline first, then live"
+  ],
+  [
+    115,
+    "7.11 Settings: readback is not calibration"
+  ],
+  [
+    116,
+    "7.12 Next physical take, power and storage"
+  ],
+  [
+    118,
+    "8.1 Historical evidence"
+  ],
+  [
+    119,
+    "8.2 Current evidence gaps"
+  ],
+  [
+    120,
+    "8.3 Conditional roadmap"
+  ],
+  [
+    121,
+    "9. Conclusion"
+  ],
+  [
+    122,
+    "References"
+  ]
+]

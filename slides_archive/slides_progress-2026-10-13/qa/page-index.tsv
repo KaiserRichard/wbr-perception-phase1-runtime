@@ -1,0 +1,44 @@
+1	WBR Perception — Progress Report
+2	Where we are
+3	1 / Whole system: today is on the perception side
+4	1 / Gate ladder: evidence does not transfer sideways
+5	1 / What changed: treat this as a new unit
+6	2 / Platform and power: what actually ran
+7	2 / Decode 0x50005: live flags versus history
+8	2 / Why timing is unusable, while accuracy is informative
+9	2 / Native build: what the build proved
+10	2 / Build patch 1: language standard and CPU flags
+11	2 / Build patches 2 and 3: two concrete failures
+12	2 / Swap: a build aid, not performance evidence
+13	2 / EuRoC MH01: known input before camera adaptation
+14	2 / Ground truth: an independently measured answer
+15	2 / ATE: remove the arbitrary origin, keep scale
+16	2 / ATE alignment: schematic before and after
+17	2 / evo: reproduce the score and distinguish RPE
+18	2 / Three runs: score range, not a single best screenshot
+19	2 / Variation and gate status: what N4A establishes
+20	3 / Two programs: record once, run the estimator later
+21	3 / Recorder profile: stereo development adds bandwidth
+22	3 / Emitter OFF: features must belong to the scene
+23	3 / Recorder outputs: timestamps are evidence, not truth
+24	3 / Storage arithmetic: 18.4 MB/s is only the floor
+25	3 / Patched estimator: one executable, two modes
+26	3 / IMU patch: interpolate within valid brackets
+27	3 / End-to-end path: offline before live
+28	3 / Configuration register: readback versus calibration
+29	4 / Runbook entry: prepare a bounded session
+30	4 / Step 1: repair power and establish N0 eligibility
+31	4 / Step 2: migrate the OS card, qualify data separately
+32	4 / Step 3: fresh N1 on the new D435i
+33	4 / Step 4: N2 strict raw transport and mandatory soak
+34	4 / Step 5: N3 ROS record and isolated replay
+35	4 / Step 6: first guided stereo take, 60--90 seconds
+36	4 / Step 7: offline N4B run, then evaluate honestly
+37	4 / Step 8: calibrate camera--IMU geometry and time
+38	4 / Step 9: measure IMU noise with Allan deviation
+39	4 / Step 10: live N4C, then profile N5
+40	5 / Tool map: platform, transport and recording
+41	5 / Tool map: estimation, scoring and calibration
+42	5 / Source key: how to verify each claim
+43	6 / Direct agents with one uncertainty per ticket
+44	6 / Owner checkpoint: how to keep direction
