@@ -60,7 +60,7 @@ def imu(stamp, frame, vector, gyro, endian='<'):
     return w.blob()
 
 
-def make(path, variant=None, endian='<'):
+def make(path, variant=None, endian='<', camera_stamps=None):
     con = sqlite3.connect(path)
     con.executescript('''
         CREATE TABLE topics(id INTEGER PRIMARY KEY,name TEXT NOT NULL,type TEXT NOT NULL,
@@ -80,6 +80,8 @@ def make(path, variant=None, endian='<'):
         con.execute('INSERT INTO topics VALUES(?,?,?,?,?)', (2*i+1, prefix+'/data', kind, 'cdr', ''))
         con.execute('INSERT INTO topics VALUES(?,?,?,?,?)', (2*i+2, prefix+'/metadata', 'std_msgs/msg/String', 'cdr', ''))
         count = 31 if family == 'image' else (201 if name == 'gyro' else 99)
+        if family == 'image' and camera_stamps is not None:
+            count = len(camera_stamps)
         period = 33_333_333 if family == 'image' else (5_000_000 if name == 'gyro' else 10_000_000)
         # Accel 10..990 ms, gyro 0..1000 ms: two excluded samples at each end.
         for j in range(count):
@@ -88,6 +90,16 @@ def make(path, variant=None, endian='<'):
             if variant == 'accel_gap' and name == 'accel' and j == 20:
                 continue
             sdk = 1_234_567_891 + j*period + (10_000_000 if name == 'accel' else 0)
+            if family == 'image' and camera_stamps is not None:
+                sdk = camera_stamps[j]
+            if variant == 'small_skew' and name == 'ir2' and j == 15:
+                sdk += 500_000
+            if variant == 'camera_backward' and name == 'ir1' and j == 10:
+                sdk -= 2*period
+            if variant == 'frame_mismatch' and name == 'ir2' and j == 15:
+                frame_number = 1000
+            else:
+                frame_number = j+1
             if variant == 'backward' and name == 'gyro' and j == 50:
                 sdk -= 8_000_000
             if variant == 'duplicate' and name == 'ir1' and j == 10:
@@ -109,7 +121,7 @@ def make(path, variant=None, endian='<'):
             if variant == 'encapsulation' and name == 'gyro' and j == 0:
                 payload = b'\0\7\0\0' + payload[4:]
             con.execute('INSERT INTO messages(topic_id,timestamp,data) VALUES(?,?,?)', (2*i+1, bag, payload))
-            text = (f'Frame number={j+1};timestamp_domain={domain};'
+            text = (f'Frame number={frame_number};timestamp_domain={domain};'
                     f'system_time=1700000000000.000000;timestamp={Decimal(sdk)/1_000_000:.6f};'
                     'Sensor Timestamp=123;')
             if variant != 'missing_metadata' or name != 'ir1' or j != 0:

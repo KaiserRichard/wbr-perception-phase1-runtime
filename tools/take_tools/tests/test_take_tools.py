@@ -62,6 +62,13 @@ class TakeTests(unittest.TestCase):
         self.assertEqual(m['imu_derivative']['counts'], dict(input_gyro=201, input_accel=99,
                          emitted=197, dropped_prefix=2, dropped_tail=2,
                          dropped_invalid_bracket=0, dropped_clock_or_order=0))
+        self.assertEqual((out/'times_ns.txt').read_text().splitlines(),
+                         [str(s['sdk_ns']) for s in expected['ir1'][1:-1]])
+        self.assertEqual(m['times_file']['counts'], dict(input_ir1=31, emitted=29,
+                         dropped_head=1, dropped_tail=1, dropped_unpaired_or_mismatched=0,
+                         dropped_clock_or_order=0, dropped_no_combined_imu=0))
+        self.assertEqual(m['times_file']['stamp_domain'], 'hardware_clock')
+        self.assertEqual(json.loads((out/'manifest.json').read_text())['times_file'], m['times_file'])
         for i, name in enumerate(('ir1', 'ir2')):
             rows = list(csv.reader(io.StringIO((out/f'mav0/cam{i}/data.csv').read_text())))[1:]
             self.assertEqual([int(r[0]) for r in rows], [s['sdk_ns'] for s in expected[name]])
@@ -85,6 +92,111 @@ class TakeTests(unittest.TestCase):
         self.assertEqual(set(m['output_hashes']), {str(p.relative_to(out)) for p in out.rglob('*') if p.is_file() and p.name != 'manifest.json'})
         for name, digest in m['output_hashes'].items():
             self.assertEqual(t.sha256(out/name), digest)
+
+    def test_times_strict_combined_imu_endpoints_and_png_names(self):
+        first, last = 1_244_567_891, 2_224_567_891
+        stamps = [first-1, first, first+1, (first+last)//2, last-1, last, last+1]
+        make(self.file, camera_stamps=stamps)
+        out = self.root/'endpoints'
+        code, raw, err = self.cli('export-euroc', self.file, out)
+        self.assertEqual(code, 0, err)
+        info = json.loads(raw)['times_file']
+        self.assertEqual((info['first_imu_ns'], info['last_imu_ns']), (first, last))
+        self.assertEqual(info['counts']['dropped_head'], 2)
+        self.assertEqual(info['counts']['dropped_tail'], 2)
+        self.assertIn('preceding IMU', info['exclusion_reasons']['dropped_head'])
+        self.assertIn('following IMU', info['exclusion_reasons']['dropped_tail'])
+        lines = (out/'times_ns.txt').read_text().splitlines()
+        self.assertEqual(lines, list(map(str, stamps[2:5])))
+        for cam in (0, 1):
+            entries = list(csv.reader(io.StringIO((out/f'mav0/cam{cam}/data.csv').read_text())))[1:]
+            self.assertEqual([int(r[0]) for r in entries], stamps)
+            for line in lines:
+                self.assertTrue((out/f'mav0/cam{cam}/data/{line}.png').is_file())
+        # Mirror the upstream IMU cursor, including its unguarded look-ahead.
+        imu_stamps = [int(row[0]) for row in list(csv.reader(
+            io.StringIO((out/'mav0/imu0/data.csv').read_text())))[1:]]
+        cursor = 0
+        while imu_stamps[cursor] <= int(lines[0]):
+            cursor += 1
+        cursor -= 1
+        self.assertGreaterEqual(cursor, 0)
+        for line in lines[1:]:
+            while imu_stamps[cursor] <= int(line):
+                cursor += 1
+            self.assertLess(cursor, len(imu_stamps))
+
+    def test_times_empty_when_all_cameras_outside_combined_interval(self):
+        first, last = 1_244_567_891, 2_224_567_891
+        for stamps, head, tail in (([first-1, first], 2, 0),
+                                   ([last, last+1], 0, 2),
+                                   ([first, last], 1, 1)):
+            with self.subTest(stamps=stamps):
+                self.file.unlink(missing_ok=True)
+                make(self.file, camera_stamps=stamps)
+                out = self.root/f'outside-{head}-{tail}'
+                m = t.export_euroc(self.file, out)
+                self.assertEqual((out/'times_ns.txt').read_bytes(), b'')
+                self.assertEqual(m['status'], 'EXPORTED')
+                self.assertEqual(m['times_file']['counts']['emitted'], 0)
+                self.assertEqual(m['times_file']['counts']['dropped_head'], head)
+                self.assertEqual(m['times_file']['counts']['dropped_tail'], tail)
+
+    def test_times_no_combined_imu_or_single_sample(self):
+        for keep_one in (False, True):
+            with self.subTest(keep_one=keep_one):
+                self.file.unlink(missing_ok=True)
+                self.fixture()
+                with sqlite3.connect(self.file) as con:
+                    if keep_one:
+                        con.execute('DELETE FROM messages WHERE topic_id IN (5,6) AND timestamp != ?',
+                                    (100_015_000_000,))
+                    else:
+                        con.execute('DELETE FROM messages WHERE topic_id IN (5,6)')
+                out = self.root/str(keep_one)
+                m = t.export_euroc(self.file, out, allow_diagnostic=True)
+                info = m['times_file']
+                self.assertEqual((out/'times_ns.txt').read_bytes(), b'')
+                self.assertEqual(info['counts']['emitted'], 0)
+                if keep_one:
+                    self.assertEqual(info['first_imu_ns'], info['last_imu_ns'])
+                    self.assertEqual(info['counts']['dropped_head'], 1)
+                    self.assertEqual(info['counts']['dropped_tail'], 30)
+                else:
+                    self.assertIsNone(info['first_imu_ns'])
+                    self.assertIsNone(info['last_imu_ns'])
+                    self.assertEqual(info['counts']['dropped_no_combined_imu'], 31)
+
+    def test_times_require_true_pairs_and_identical_original_stamps(self):
+        for variant in ('small_skew', 'skew', 'missing_frame', 'frame_mismatch'):
+            with self.subTest(variant=variant):
+                self.file.unlink(missing_ok=True)
+                expected = self.fixture(variant)
+                out = self.root/variant
+                m = t.export_euroc(self.file, out, allow_diagnostic=True)
+                excluded = 10 if variant == 'missing_frame' else 15
+                lines = (out/'times_ns.txt').read_text().splitlines()
+                self.assertEqual(lines, [str(s['sdk_ns']) for i, s in enumerate(expected['ir1'])
+                                         if 0 < i < 30 and i != excluded])
+                self.assertEqual(m['times_file']['counts']['dropped_unpaired_or_mismatched'], 1)
+                self.assertEqual(m['times_file']['counts']['emitted'], 28)
+                self.assertEqual(m['status'], 'EXPORTED' if variant == 'small_skew' else 'DIAGNOSTIC')
+                for line in lines:
+                    for cam in (0, 1):
+                        self.assertTrue((out/f'mav0/cam{cam}/data/{line}.png').is_file())
+
+    def test_times_suppressed_for_bad_clock_or_order(self):
+        for variant in ('backward', 'domain_change', 'cross_domain', 'unknown_domain',
+                        'missing_metadata', 'duplicate', 'camera_backward'):
+            with self.subTest(variant=variant):
+                self.file.unlink(missing_ok=True)
+                self.fixture(variant)
+                out = self.root/variant
+                m = t.export_euroc(self.file, out, allow_diagnostic=True)
+                self.assertEqual((out/'times_ns.txt').read_bytes(), b'')
+                self.assertEqual(m['times_file']['counts']['emitted'], 0)
+                key = 'dropped_clock_or_order' if variant in ('duplicate', 'camera_backward') else 'dropped_no_combined_imu'
+                self.assertEqual(m['times_file']['counts'][key], 31)
 
     def test_inspection_and_cli_outputs(self):
         self.fixture()

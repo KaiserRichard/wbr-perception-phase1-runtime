@@ -1,4 +1,4 @@
-# take_tools — B1 (C0 + C1)
+# take_tools — B1 (C0 + C1), B4 replay times
 
 Inspect, audit and export the four D435i recorder streams with Python 3.11 and
 stdlib only. Tool version: **0.1.0**. All implementation files are in this directory.
@@ -122,6 +122,7 @@ OUT/manifest.json
 OUT/audit.json
 OUT/audit.md
 OUT/stamps.csv
+OUT/times_ns.txt
 OUT/mav0/cam0/data.csv
 OUT/mav0/cam0/data/<SDK_integer_ns>.png
 OUT/mav0/cam1/data.csv
@@ -148,15 +149,75 @@ changed main file. PNG uses only `struct`/`zlib` with filter zero and CRCs.
 EuRoC-style folders do not establish that an estimator can consume this data
 with valid calibration; no `sensor.yaml` values are fabricated.
 
+## ORB-SLAM3 stereo-inertial replay (B4)
+
+**SOURCE-SUPPORTED:** inspected upstream commit
+`4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4` (`4452a3c`), file
+`Examples/Stereo-Inertial/stereo_inertial_euroc.cc`:
+
+- [Lines 85–96](https://github.com/UZ-SLAMLab/ORB_SLAM3/blob/4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4/Examples/Stereo-Inertial/stereo_inertial_euroc.cc#L85-L96)
+  take a sequence root and a separate times file, loading `mav0` cameras and IMU.
+- [Lines 243–264](https://github.com/UZ-SLAMLab/ORB_SLAM3/blob/4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4/Examples/Stereo-Inertial/stereo_inertial_euroc.cc#L243-L264)
+  append each times-file line verbatim to both camera paths plus `.png`, and
+  convert its numeric nanoseconds to seconds. Headers or CSV rows are unsuitable.
+- [Lines 109–113](https://github.com/UZ-SLAMLab/ORB_SLAM3/blob/4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4/Examples/Stereo-Inertial/stereo_inertial_euroc.cc#L109-L113)
+  advance the IMU cursor while its stamp is <= the first image, then decrement
+  it. An image earlier than the first IMU leaves cursor -1.
+- [Lines 169–176](https://github.com/UZ-SLAMLab/ORB_SLAM3/blob/4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4/Examples/Stereo-Inertial/stereo_inertial_euroc.cc#L169-L176)
+  advance without an upper-bound check; an image at/after the final IMU can
+  exhaust the vector.
+
+**INFERRED export policy:** `times_ns.txt` contains one original integer-ns
+stamp per line, with no header, sorted by the already-validated IR1 input order.
+Only unique metadata frame-number pairs with identical left/right SDK stamps
+and `first_combined_imu_ns < image_ns < last_combined_imu_ns` are included.
+Bounds come from emitted `mav0/imu0/data.csv`, not the raw gyro/accel ranges.
+Equality at either bound is excluded. A <=1 ms stereo skew can still pass the
+existing audit, but any nonzero skew excludes that pair from the times file
+because its PNG names differ. Original camera PNGs/CSVs, raw streams, audit
+policy and combined IMU derivative are preserved.
+
+`manifest.json` adds `times_file`: path, method, SDK domain label, first/last
+combined-IMU stamps, counts and exclusion reasons. Counts partition the IR1
+input records into emitted, dropped head, dropped tail, unpaired/mismatched,
+clock/order failure, or no combined IMU. The times file is included in output
+hashes. An absent combined IMU or failed camera clock/order check yields an
+empty list, including in diagnostic mode; a single IMU stamp also has no
+strict interior. Export status/exit behavior is unchanged. An empty list
+cannot be replayed; inspect the manifest before running the example.
+
+Run the already-built upstream executable with settings appropriate to the
+recorded camera/IMU geometry, noise and image size:
+
+```sh
+ORB_DIR=/absolute/path/to/ORB_SLAM3
+TAKE_DIR=/absolute/path/to/NEW_OUTPUT_DIRECTORY
+SETTINGS_FILE=/absolute/path/to/recording_settings.yaml
+"$ORB_DIR/Examples/Stereo-Inertial/stereo_inertial_euroc" \
+  "$ORB_DIR/Vocabulary/ORBvoc.txt" "$SETTINGS_FILE" \
+  "$TAKE_DIR" "$TAKE_DIR/times_ns.txt"
+```
+
+**UNKNOWN / NOT verified for B4:** actual ORB execution on exported data and
+real-recording replay coverage. Synthetic tests establish file selection and
+the cursor bounds, not calibrated VIO or replay accuracy. The earlier real-file
+check below predates this times-file addition.
+
 ## Verification and limits
 
-**Verified with synthetic tests only:** 14 stdlib unittest cases pass. The
+**Verified with synthetic tests only:** 19 stdlib unittest cases pass. The
 independent fixture serializer creates the cited SQLite schema, 31 pairs of
 8x6 images (including row padding), 201 gyro and 99 accel records spanning
 about one second, standard CDR and writer metadata. Full round-trip compares
 PNG pixels, integer camera/IMU stamps, raw vectors, interpolated values,
 manifest counts and every output hash. The valid fixture emits 197 combined
 IMU records, dropping two prefix and two tail gyro records.
+Its B4 times file emits 29 stereo stamps and excludes one image at each end.
+B4 tests cover exact IMU endpoints and one-ns interior stamps, matching PNG
+names, the upstream cursor traversal, all images outside coverage, zero/one
+combined IMU sample, nonzero stereo skew, missing/mismatched frame-number pairs,
+and suppressed lists on invalid clocks/order. Existing round-trip checks also
+verify the new file's hash.
 
 Variants cover missing frame/metadata, backward and duplicate stamps, domain
 change, mixed/unknown domains, odd IR2 skew, unknown encoding, truncation,

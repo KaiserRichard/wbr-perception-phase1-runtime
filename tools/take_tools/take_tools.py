@@ -406,6 +406,53 @@ def combined_imu(streams, report):
     return rows, counts
 
 
+def orb_times(streams, report, imu_rows):
+    """Select original, identically named stereo PNGs within combined IMU bounds."""
+    counts = dict(input_ir1=len(streams['ir1']), emitted=0, dropped_head=0, dropped_tail=0,
+                  dropped_unpaired_or_mismatched=0, dropped_clock_or_order=0,
+                  dropped_no_combined_imu=0)
+    info = {'path': 'times_ns.txt',
+            'method': 'unique frame-number pairs with identical SDK stamps; first_imu_ns < stamp < last_imu_ns',
+            'stamp_domain': report['domains_seen'][0] if report['single_known_domain'] else None,
+            'first_imu_ns': imu_rows[0][0] if imu_rows else None,
+            'last_imu_ns': imu_rows[-1][0] if imu_rows else None,
+            'counts': counts,
+            'exclusion_reasons': {
+                'dropped_head': 'stamp <= first combined-IMU stamp; ORB requires preceding IMU',
+                'dropped_tail': 'stamp >= last combined-IMU stamp; ORB requires following IMU',
+                'dropped_unpaired_or_mismatched': 'missing/ambiguous frame-number pair or different PNG stamp names',
+                'dropped_clock_or_order': 'camera SDK clock, metadata or ordering check failed',
+                'dropped_no_combined_imu': 'no combined-IMU interval available'}}
+    if not imu_rows:
+        counts['dropped_no_combined_imu'] = counts['input_ir1']
+        return [], info
+    valid = report['single_known_domain'] and all(
+        not report['streams'][s]['backward'] and not report['streams'][s]['duplicates']
+        and not report['streams'][s]['domain_changes'] and not report['streams'][s]['missing_metadata']
+        for s in ('ir1', 'ir2'))
+    if not valid:
+        counts['dropped_clock_or_order'] = counts['input_ir1']
+        return [], info
+    lm, rm = defaultdict(list), defaultdict(list)
+    for s in streams['ir1']:
+        lm[s['frame_number']].append(s)
+    for s in streams['ir2']:
+        rm[s['frame_number']].append(s)
+    stamps = []
+    for s in streams['ir1']:
+        number, stamp = s['frame_number'], s['sdk_ns']
+        if number is None or len(lm[number]) != 1 or len(rm[number]) != 1 or rm[number][0]['sdk_ns'] != stamp:
+            counts['dropped_unpaired_or_mismatched'] += 1
+        elif stamp <= info['first_imu_ns']:
+            counts['dropped_head'] += 1
+        elif stamp >= info['last_imu_ns']:
+            counts['dropped_tail'] += 1
+        else:
+            stamps.append(stamp)
+    counts['emitted'] = len(stamps)
+    return stamps, info
+
+
 def export_euroc(path, out, allow_diagnostic=False):
     path, out = Path(path), Path(out)
     if out.exists():
@@ -418,6 +465,7 @@ def export_euroc(path, out, allow_diagnostic=False):
     if report['rejections'] and not allow_diagnostic:
         raise ValueError('export refused: ' + '; '.join(report['rejections']) + '; use --allow-diagnostic for marked artifacts')
     rows, imu_counts = combined_imu(streams, report)
+    times, times_info = orb_times(streams, report, rows)
     if sha256(path) != input_hash:
         raise ValueError('input changed while reading')
     out.mkdir(parents=True)
@@ -451,6 +499,7 @@ def export_euroc(path, out, allow_diagnostic=False):
               for name, samples in streams.items() for s in samples))
     csv_file(out / 'mav0/imu0/data.csv', ['#timestamp [ns]', 'w_x [rad s^-1]', 'w_y [rad s^-1]',
              'w_z [rad s^-1]', 'a_x [m s^-2]', 'a_y [m s^-2]', 'a_z [m s^-2]'], rows)
+    (out / 'times_ns.txt').write_text(''.join(f'{stamp}\n' for stamp in times), encoding='utf-8')
     (out / 'audit.json').write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
     (out / 'audit.md').write_text(markdown(report))
     manifest = {'tool': {'name': 'take_tools', 'version': VERSION, 'source_sha256': sha256(__file__)},
@@ -463,6 +512,7 @@ def export_euroc(path, out, allow_diagnostic=False):
                 'stream_counts': {n: len(streams[n]) for n in STREAMS},
                 'imu_derivative': {'method': 'accel linear interpolation onto gyro SDK stamps; no extrapolation',
                                    'max_bracket_ns': 15_000_000, 'counts': imu_counts},
+                'times_file': times_info,
                 'rejections': report['rejections'], 'ignored_nonframe_topics': ignored,
                 'output_hashes': {str(p.relative_to(out)): sha256(p) for p in sorted(out.rglob('*')) if p.is_file()},
                 'hash_scope': 'all output files except manifest.json (self hash excluded)'}
