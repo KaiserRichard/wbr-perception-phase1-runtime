@@ -1,0 +1,90 @@
+[
+  {
+    "page" : 1,
+    "text" : "The Pi build works on known data; robot readiness is open.\nWBR means wheel-biped robot. SLAM means simultaneous localization and mapping.\nD435i input\n15-second\nmemory take\nORB-SLAM3 replay\nRebuild unfinished\nRobot deployment\nStill to qualify\nThree public-dataset runs had 3.7–4.2 cm trajectory error; under-voltage prevents a speed verdict.\nThe 8-gigabyte (GB) Pi boots. Power, sustained storage and this camera’s calibration remain\nunresolved.\nSTM32H7 retains balance and motor safety throughout the roadmap.\n1\/22"
+  },
+  {
+    "page" : 2,
+    "text" : "Qualify inputs, prove live usefulness, then join the robot.\nP0 Prepare\nToday, camera-free\nP1 Fresh gates\nPower and input\nP2 Capture\nGeometry and noise\nP3 Replay\nCalibrated repeats\nP8 Optional\nNavigation later\nP7 Deploy\nSupervised motion\nP6 Mount\nSupported faults\nP4 Live\nAge and resources\nP5: review and test health in parallel\nTarget 4–6 calendar weeks to advisory robot localization, conditional on access and all exits.\nNavigation adds a separate project.\n2\/22"
+  },
+  {
+    "page" : 3,
+    "text" : "P0: prepare tools and bookings before using the camera.\nQuestion How Tools Hardware Done when Time \/ you Can the next lab slot produce useful evidence?\nAudit receipts; test a tiny synthetic import; prepare the target, stationary recorder\nand interface proposal.\nExisting Python fixtures, hash bundles, Kalibr import pilot and source inspection.\nMac now; confirm lab workstation, target, cooler, data storage and controller board.\nTooling preserves pixels, counts and timestamps; command cards, approvals and lab\ndependencies are ready.\n2–5 engineer-days. You confirm deliveries, loan duration, overnight permission and\ncontroller owner.\nNo camera or SLAM execution until you explicitly say CAMERA AVAILABLE.\n3\/22"
+  },
+  {
+    "page" : 4,
+    "text" : "P1: fresh sensor and ROS gates establish trustworthy input.\nQuestion How Tools Hardware Done when Time \/ you Do power, transport, recording and replay hold together?\nPlatform review, then N1 → N2 → N3; stop and diagnose the first unmet condition.\nGuarded native tools; librealsense; Robot Operating System 2 (ROS 2) Jazzy and bag\nreplay.\n8 GB Pi, suitable supply\/cooling, current camera, direct Universal Serial Bus (USB) 3\ncable and qualified storage.\nCamera branch ≥5000M; exact raw stages and complete isolated ROS replay pass\nactual review.\n0.5–3 engineer-days; request a 3–4 h bench slot. You secure power, access and the\ncurrent unit.\nN2 keeps its 20, 105 and mandatory 300-second stages; a short demo cannot replace them.\n4\/22"
+  },
+  {
+    "page" : 5,
+    "text" : "P2: capture geometry, timing and noise on the same unit.\nQuestion How Tools Hardware Done when Time \/ you Can this camera’s calibration be identified and checked?\nAudit the first target take, then three all-axis motion takes and held-out room motion;\nrecord stationary inertial data separately.\nReviewed recorder\/converter, tag detector and per-stream count\/time audit.\nMeasured A0 AprilGrid, rigid backing\/stand, usable infrared light, Pi power\/cooling\nand qualified data medium.\nTarget and motion coverage are usable; original data and warnings have two verified\ncopies; noise fits have sufficient support.\n1–2 engineer-days plus 15–24 h stationary recording. You book 3–4 h target work and\novernight access.\nThe current 120-second stereo recorder needs a separate reviewed tool for overnight inertial data.\n5\/22"
+  },
+  {
+    "page" : 6,
+    "text" : "P3: replay with trusted calibration separates the faults.\nQuestion How Tools Hardware Done when Time \/ you Do fixed trusted inputs give repeatable tracking?\nFinish the interrupted rebuild; check linkage; rerun the public reference, solve\ncamera–inertial calibration and repeat held-out replay.\nExisting ORB-SLAM3, Kalibr, Allan noise analysis and trajectory evaluation.\nPowered Pi for rebuild\/replay; Mac or tested lab workstation for calibration.\nParameters and transforms are traceable; initialization, tracking and reset histories\nsatisfy reviewed bounds across retained repeats.\n2–4 engineer-days; tool incompatibility can add 2–5 days. You review calibration and\narrange recapture if needed.\nA plausible room path cannot establish accuracy without an appropriate reference.\n6\/22"
+  },
+  {
+    "page" : 7,
+    "text" : "P4: live estimates must remain fresh under sustained load.\nQuestion How Tools Hardware Done when Time \/ you Does useful output arrive before it becomes stale?\nUse the same binary\/settings; three short live repeats, then sustained load with loops,\nmap growth and recovery.\nNative headless estimator; source-age, queue, input-loss, central processing unit\n(CPU), memory and power observers.\nFinal Pi\/camera\/cables\/cooling\/storage; textured marked room route.\nNo unexplained loss or growing backlog; age tails and resources meet agreed\nbounds, with honest loss\/reset state.\n1–3 engineer-days; book 2–3 h after replay review. You agree limits with the\ncontroller owner before acceptance.\nA fresh heartbeat does not make an old camera estimate fresh.\n7\/22"
+  },
+  {
+    "page" : 8,
+    "text" : "P5: review health semantics and prove rejection offline.\nQuestion How Tools Hardware Done when Time \/ you Can STM32 reject believable but unusable estimates?\nReview session, sequence, frame, source age and validity; exercise stale, corrupt,\nreset and frozen-pose fixtures.\nFuture modular health adapter, bounded receiver\/parser, clock mapper and\nsynthetic fault harness.\nDevelopment host and confirmed controller board\/pinout; reuse a proven link, else\npropose dedicated 3.3 V serial.\nEvery fixture yields the expected rejection or fallback; invalid input never renews\nmotion authority.\n2–4 engineer-days, parallel with calibration\/live work. You approve the interface and\nname its controller implementer.\nHealth-only comes first; the new message and firmware remain proposals until reviewed.\n8\/22"
+  },
+  {
+    "page" : 9,
+    "text" : "P6: supported robot tests expose power and control coupling.\nQuestion How Tools Hardware Done when Time \/ you Does mounted perception disturb local control?\nQualify the battery rail and rigid torso mount; refresh relevant input checks; begin\nwith motors-disabled health and injected faults.\nApproved sender\/receiver, supply and controller-loop traces, age\/counter logs.\nActual robot, body sensor, reviewed power\/link\/mount, cooling, debugger, rated\nstand and independent stop.\nNo unexpected actuation\/reset or loop-limit breach; each fault withdraws optional\ninput within approved bounds.\n1–3 engineer-days; book 3–4 h with the controller owner. You approve electrical,\nmount and supported-test plans.\nA stand proves bench behavior; free balance still needs its own test.\n9\/22"
+  },
+  {
+    "page" : 10,
+    "text" : "P7: repeat slow supervised motion, then freeze the deployment.\nQuestion How Tools Hardware Done when Time \/ you Can the robot repeat the result and handle Pi loss?\nIndependent controller baseline; tethered balance first, then bounded manual room\ndriving with advisory localization; test faults and reproduce handoff.\nSame reviewed stack, controller traces, route checks, frozen runtime bundle and\noperator runbook.\nApproved restraint\/clear room, local stop, controller owner, operator\/spotter and\nfinal hardware.\nRetained repeats meet tracking, age, loop and fallback bounds; another operator\nreproduces startup, stop and rollback.\n1–4 engineer-days; reserve 2–3 h motion plus a repeat slot. You approve motion\nlimits and review every trial.\nThe first deployment is advisory localization during supervised slow indoor motion.\n10\/22"
+  },
+  {
+    "page" : 11,
+    "text" : "P8: navigation needs continuous odometry and obstacle coverage.\nQuestion How Tools Hardware Done when Time \/ you Can it reach goals with clearance and local controller veto?\nValidate wheel\/body telemetry and clocks; qualify continuous odometry, depth\/map\ninput and command limits; repeat staged goal\/fault tests.\nReviewed ROS adapter, justified local filter, Nav2 and optional Real-Time\nAppearance-Based Mapping (RTAB-Map).\nDeployed robot, qualified obstacle coverage, surveyed room, local stop and\ncontroller owner.\nRepeated goals meet agreed position\/heading\/clearance bounds; every\nstale\/reset\/loss event cancels navigation safely.\nAdditional 2–4+ weeks, low confidence. You approve this scope, graph, fusion and\ncommand interface separately.\nORB’s sparse landmarks alone do not provide an obstacle map.\n11\/22"
+  },
+  {
+    "page" : 12,
+    "text" : "Book hardware together; a missing prerequisite changes the slot.\nRequest Hardware and people to confirm Slot \/ ready when\nFresh gates, now Target capture, now Noise, now Live, after replay Pi, supply, cooler, camera\/cable, storage, console;\noperator + engineer\nSame unit; measured A0 grid, stand, light, metrology,\nbackup space\nStationary camera\/Pi, reliable power\/storage; overnight\npermission\nFinal cooling\/cables\/storage; textured route + operator 3–4 h; power\/tools ready\nRobot bench, week 4 Motion\/repeat,\nweeks 5–6\nRobot\/controller owner, rail\/mount\/link, debugger, rated\nstand\/stop\nSame robot; restraint, cleared floor, operator\/spotter +\ncontroller owner\n3–4 h; gates\/import\nready\n15–24 h + warm-up;\nrecorder ready\n2–3 h; calibration\nreviewed\n3–4 h; interface\/faults\nready\n2–3 h + repeat slot;\nmotion approved\nAsk now for a calibration workstation fallback. Every booking is conditional; lab stock and supply\narrival are unconfirmed.\n12\/22"
+  },
+  {
+    "page" : 13,
+    "text" : "Reuse the native path and add software only for a real consumer.\nPhase Software Purpose\nPrepare \/ gates Capture \/ replay Live \/ health Robot\ndeployment\nOptional\nnavigation\nPython fixtures; native software development\nkit (SDK); Jazzy driver and rosbag2\nReviewed recorder\/converter; Kalibr, Allan\ntools, native ORB-SLAM3, evo\nNative ORB; reviewed age\/resource observer\nand modular health adapter\nApproved controller receiver, fault harness,\nrunbook and release bundle\nThin Jazzy adapter; justified local filter;\noccupancy backend and Nav2\nTrusted input and complete\nrecord\/replay\nCalibration and repeatable estimation\nUseful output with bounded freshness\nReject bad input; repeat startup\/stop\nContinuous local motion plus obstacle\nplanning\nNative SLAM first; N3 ROS qualification still remains mandatory.\n13\/22"
+  },
+  {
+    "page" : 14,
+    "text" : "STM32 validates optional input and keeps local balance authority.\nSession, source\nage, frame, validity\nPi\nCamera IMU → SLAM\nSTM32H7\nBody IMU → balance\nAccepted sequence, fault and controller status\nStale, absent, invalid or reset input: revoke optional navigation.\nSTM32 performs approved bounded stopping.\nLocal balance and motor protections remain active.\nIMU means inertial measurement unit. Physical link, age limits and fallback timing need controller review.\n14\/22"
+  },
+  {
+    "page" : 15,
+    "text" : "Keep one default estimator and switch only on matched evidence.\nBoth reviews favor ORB next. The independent review challenges that choice when the deliverable changes. Its\nscores are planning judgments, not Pi benchmarks.\nCandidate \/100 Why choose it \/ what is missing\nORB stereo-inertial RTAB-Map own odometry OpenVINS local VIO Wheel\/body + depth 68 68 61 56 Existing build\/input path; calibrated live behavior still open.\nMapping-first alternative; complete Pi load still unmeasured.\nFreshness challenger; Pi\/Jazzy build and global mapping need\nwork.\nEarlier rolling demo if existing controller exports are proven.\nKeep ORB for localization now. Prefer RTAB for a mapping-first goal if measured workload passes;\ncompare OpenVINS on identical data if ORB misses reviewed bounds.\nVIO means visual-inertial odometry. Changing the objective can change the best first demo.\n15\/22"
+  },
+  {
+    "page" : 16,
+    "text" : "Global corrections must not jump the local motion state.\nRobot body\nReviewed mount\nGlobal map\nMay correct\nLocal odometry\nMust stay continuous\nSLAM alignment Local estimator\nCamera pose must be transformed into a clearly named robot frame at the correct source epoch.\nLoop closure and reset change global alignment; they cannot become a balance-state jump.\nBefore fusion, validate wheel contact\/slip, body-sensor clocks and measurement lineage.\n16\/22"
+  },
+  {
+    "page" : 17,
+    "text" : "Stop at the failing layer before changing algorithms or scope.\nEarly warning Next action\nPower faults or storage gaps Qualify the supply\/data medium under the real load; repeat relevant\nPoor target\/import\/noise support Age grows or tracking repeatedly\nfails\nFresh heartbeat, frozen estimate Blur, flex, interference or loop\ndisturbance\nNo independent room reference gates.\nInspect the pilot, repair tools or recapture while the unit is available.\nCorrect calibration\/timing; profile one variable; compare one\nalternative on matched data.\nReceiver rejects old source epochs and revokes optional input.\nReturn to supported tests; review mount, wiring and controller\nlimits.\nReport continuity\/checkpoint proxies with uncertainty; accuracy\nstays open.\n17\/22"
+  },
+  {
+    "page" : 18,
+    "text" : "Decide the boundaries before consuming the robot slot.\nStorage: retain the approved calibration-card exception; borrow qualified external storage when\ngate tooling needs it.\nSoftware: native estimator plus reviewed health adapter first; add ROS SLAM integration for a real\nconsumer.\nLink: reuse a proven controller link; otherwise review dedicated 3.3 V serial before implementation.\nAcceptance: agree source age, loop limits, stopping and motion envelope from measured\nevidence.\nScope: advisory deployment first; approve navigation, message\/graph changes and motion\nseparately.\n18\/22"
+  },
+  {
+    "page" : 19,
+    "text" : "This week, secure the inputs and finish camera-free preparation.\n14–20 October 2026\nYou: confirm supply\/card arrival, camera loan, cooler\/storage\/console and the controller\nboard\/person.\nYou: request the fresh-gate slot, target slot and overnight access; provisionally hold the robot week.\nEngineer: prepare reader\/recorder fixtures, measured target and reviewable health\/clock proposal.\nAt the bench: explicit camera authorization and stable power precede fresh N1, N2 and N3.\nWeek’s exit: reviewed entry evidence or a precise blocker, plus tools ready for calibration capture.\n19\/22"
+  },
+  {
+    "page" : 20,
+    "text" : "Next week, capture once, inspect early and protect the raw data.\nWeek of 21 October 2026\nYou: bring the same unit and measured A0 target; confirm lighting, metrology, backup space and\novernight permission.\nEngineer: audit the first target take before repeating; retain three calibration takes and held-out\nroom motion.\nTogether: start the tested stationary recorder, verify normal stop and make two checksum-verified\ncopies.\nIn parallel: analyze calibration and prepare reviewed receiver fixtures, mount and battery rail.\nIf fresh gates or tools are incomplete, carry that work forward; preserve the overnight and soak\nrequirements.\n20\/22"
+  },
+  {
+    "page" : 21,
+    "text" : "Use each later week to answer one deployment question.\nTarget week Question and exit\n28 Oct–3 Nov 4–10 Nov 11–17 Nov 18–24 Nov Does calibrated replay carry into fresh live output? Accept age\/resource\nevidence and receiver fixtures.\nDoes the mounted stack preserve controller authority? Retain supported-robot\npower, loop and fault traces.\nDoes slow supervised motion repeat and survive Pi loss? Review retained trials\nand reproducible handoff.\nWhich failing layer needs repair\/recapture? Hold a repeat slot and freeze only\nevidenced behavior.\nParts, tools, controller readiness and bookings can shift these targets. Navigation begins after a\nseparate scope decision.\n21\/22"
+  },
+  {
+    "page" : 22,
+    "text" : "The recommendations trace to project facts and primary sources.\nProject evidence: 13–14 October session facts, current lab runbook, known-dataset report,\narchitecture decisions and calibration plan.\nORB-SLAM3 and OpenVINS: estimator capabilities and licences; OpenVINS Jazzy proposal.\nKalibr calibration, transform\/time conventions and stationary noise guidance.\nRaspberry Pi hardware guidance: supply, peripheral power and cooling.\nROS frame conventions, Nav2 odometry requirements and RTAB-Map ROS 2 backend.\nDurations and switch policies are planning judgments. Hardware stock, acceptance bounds and\ndeployed performance need confirmation.\n22\/22"
+  }
+]

@@ -1,0 +1,235 @@
+% Documentation proposal, snapshot 14 October 2026; no new hardware validation.
+\input{preamble.tex}
+\title{The road from a D435i prototype to the WBR robot}
+\date{14 October 2026}
+\newcommand{\src}[1]{\note{Sources: \detokenize{#1}}}
+\newcommand{\phase}[6]{\begin{tabular}{@{}L{24mm}L{163mm}@{}}
+\textbf{Question} & #1\\[7pt]
+\textbf{How} & #2\\[7pt]
+\textbf{Tools} & #3\\[7pt]
+\textbf{Hardware} & #4\\[7pt]
+\textbf{Done when} & #5\\[7pt]
+\textbf{Time / owner} & #6
+\end{tabular}}
+\begin{document}
+\raggedright
+
+\begin{frame}{Known-data accuracy is promising; robot readiness remains open.}
+\small WBR means wheel-biped robot. SLAM means simultaneous localization and mapping.
+\par\bigskip
+\centering
+\begin{tikzpicture}[stage/.style={box,text width=43mm,minimum height=20mm,font=\normalsize}]
+\node[stage] (a) at (0,0) {D435i input\\\small 15-second RAM take};
+\node[stage,draw=fault] (b) at (6,0) {ORB-SLAM3 replay\\\small Patch-4 rebuild pending};
+\node[stage,draw=fault] (c) at (12,0) {WBR integration\\\small Gates still open};
+\draw[flow] (a)--(b);\draw[flow] (b)--(c);
+\end{tikzpicture}
+\par\bigskip\raggedright
+\deckitems{\item Three EuRoC MH01 runs measured 3.7--4.2 cm ATE; under-voltage invalidates their speed result.
+\item The 8 GB Pi boots, but supply, large-data storage and D435i calibration are unresolved.
+\item STM32H7 retains body estimation, balance, motor and jump safety.}
+\vfill\takeaway{First deployment: advisory localization during supervised slow motion.}
+\src{experiments/2026-10-13-SESSION_FACTS_FOR_SLIDES.md; experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md; experiments/2026-10-13-n4a-euroc-mh01/REPORT.md; docs/ARCHITECTURE.md}
+\note{Historical observations only; no gate PASS. EuRoC ATE RMSE 0.0368--0.0416 m was on the former 4 GB board under under-voltage. Patch 4 was applied in an isolated copy; its rebuild and post-fix replay remain unverified. A 15 s memory-backed stereo take reported no drops. ATE means absolute trajectory error. Diagram is conceptual.}
+\end{frame}
+
+\begin{frame}{Follow the existing N gates to a supervised robot trial.}
+\centering
+\begin{tikzpicture}[stage/.style={box,text width=38mm,minimum height=17mm,font=\normalsize}]
+\node[stage] (a) at (0,0) {Prepare\\\small Camera-free};
+\node[stage] (b) at (5,0) {N0--N3\\\small Trust the input};
+\node[stage] (c) at (10,0) {N4A / N4B\\\small Baseline, replay};
+\node[stage] (d) at (15,0) {N4C / N5\\\small Live, resources};
+\draw[flow](a)--(b);\draw[flow](b)--(c);\draw[flow](c)--(d);
+\node[stage] (e) at (15,-2.4) {N6\\\small Health receiver};
+\node[stage,fill=teal!10] (f) at (10,-2.4) {N7\\\small Mount, then motion};
+\node[stage,dashed] (g) at (5,-2.4) {After N7\\\small Navigation optional};
+\draw[flow](d)--(e);\draw[flow](e)--(f);\draw[flow,dashed](f)--(g);
+\end{tikzpicture}
+\par\medskip\raggedright\normalsize N6 design fixtures may start after controller review; accept N6 after N5. Calendar timing waits on parts, tools, people and lab slots.
+\src{slides_course/main.tex; experiments/2026-09-12-pi5-native-sensor-validation/PHASE_A_RUNBOOK.md; slides_roadmap/ROADMAP.md}
+\note{N6 fixture preparation may run in parallel after interface review; N6 acceptance follows N5. N7 begins with supported tests, then separately authorized physical motion. Diagram groups existing gates only. First deployment is advisory localization, not autonomous navigation.}
+\end{frame}
+
+\begin{frame}{Clear known blockers before requesting capture slots.}
+\small\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}L{31mm}L{78mm}L{73mm}@{}}\toprule
+\textbf{Dependency} & \textbf{Current evidence} & \textbf{Owner's next action}\\\midrule
+Power / access & 5 V/3 A still under-voltages; 5.1 V/5 A supply arrival unknown. Wi-Fi on 8 GB Pi unverified; Ethernet loose. & Confirm supply, cooling and local console or verified network fallback.\\
+N3 / storage & ROS wrapper 4.58.4 is a candidate, not installed. USB stick: 1.09 MB/s. 128 GB card exception is calibration-only. & Review N3 package transaction; identify separately qualified bag storage.\\
+Kalibr input & Kalibr expects ROS 1 bags; RealSense .db3 is ROS 2. Exporter/import route is untested. & Prove lossless image + full-precision IMU CSV to ROS 1 bag on a fixture; confirm workstation.\\
+Robot / target & Controller owner/board, measured A0 target, overnight permission and recorder are unconfirmed. & Name the controller engineer; print/measure target; test recorder stop/recovery.\\\bottomrule
+\end{tabular}
+\par\medskip\normalsize Request B1, target and overnight slots only after their entry checks are ready.
+\vfill\takeaway{At the bench, wait for the owner's explicit CAMERA AVAILABLE authorization.}
+\src{experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md; experiments/2026-09-12-pi5-native-sensor-validation/N3_PREPARATION.md; docs/D435I_CALIBRATION_PLAN.md}
+\note{The 8 GB Pi booted the existing 32 GB card, but under-voltage persists. Current SDK package is 2.58.4. Candidate RealSense ROS 4.58.4/messages were inspected, not installed. A 64 GB USB 2 stick measured 1.09 MB/s. User's microSD exception covers calibration/VIO only; large N3 bags need separately qualified storage. The current D435i SDK serial is 317422076650; ASIC and separately observed USB descriptor are 327743061057. Firmware-update ID remains independently unverified. Do not reuse the old SDK serial from the N3 preparation note. Kalibr's primary tools require ROS 1 bag data; .db3 is rosbag2. The chosen PNG/CSV conversion is a future reviewed utility.}
+\end{frame}
+
+\begin{frame}{N0--N3: fresh gates establish trustworthy input.}
+\phase{Do power, transport, recording and replay hold together?}
+{Record N0. Run N1 $\to$ N2 $\to$ N3 in order and stop at the first unmet condition.}
+{Guarded Phase A tools; reviewed Jazzy wrapper/runtime; topic, QoS and bag observers.}
+{8 GB Pi, stable 5.1 V/5 A supply, cooling, current D435i, direct USB 3 cable and qualified N3 storage.}
+{N1 USB $\geq$5000M; exact N2 profile and stages; N3 complete isolated replay pass actual review.}
+{0.5--3 engineer-days; request 3--4 h. A slot may diagnose without finishing N3.}
+\vfill\takeaway{N2 keeps its 20, 105 and mandatory 300-second stages.}
+\src{experiments/2026-09-12-pi5-native-sensor-validation/PHASE_A_RUNBOOK.md; experiments/2026-10-14-lab-prep/LAB_RUNBOOK_2026-10-15.md}
+\note{N2 exact profile: IR1 Y8 640x480/15, gyro/200, accel/100. Rate bands: 14.25--15.75, 190--210 and 95--105 Hz; image gaps <=0.20 s, motion gaps <=0.05 s; timestamps/frame steps positive and no image frames missing. Retain all startup, boundary, content, kernel, power, health and normal-stop checks. N3 contains required image/CameraInfo/raw gyro/raw accel/IMUInfo/extrinsics/TF topics, QoS context and complete decoded replay comparison. Diagnostic latched power never promotes PASS or enters N3. No camera-dependent action before explicit owner authorization.}
+\end{frame}
+
+\begin{frame}{N4A/N4B: capture calibration and held-out camera data.}
+\phase{Can this unit's geometry, clocks and noise support VIO?}
+{Use a measured AprilGrid for S/C1--C3; keep six-pose I diagnostics and V1--V3 room runs separate. Inspect the first take before repeating.}
+{Reviewed stereo recorder; future reviewed stationary recorder and lossless image/IMU exporter.}
+{Same camera/Pi, rigid-backed measured A0 target, stand, light, calipers, qualified calibration storage and overnight access.}
+{Three usable calibration takes, all-axis excitation, ordered common timing coverage, warnings/raw preserved and two verified copies.}
+{1--2 engineer-days; 3--4 h target slot plus separate 30 min warm-up and 15--24 h stationary record.}
+\vfill\takeaway{Stationary noise data needs a separate recorder and booking.}
+\src{docs/D435I_CALIBRATION_PLAN.md; slides_roadmap/research/R3_plan.md; https://github.com/ethz-asl/kalibr/wiki/camera-imu-calibration; https://github.com/ethz-asl/kalibr/wiki/IMU-Noise-Model}
+\note{After N0--N3, separately attest IR1+IR2 Y8 640x480/30, gyro/200, accel/100, emitter OFF. S=120 s; C1--C3=120 s each; six-pose I diagnostics; V1--V3=90 s. Target: measured 6x6 AprilGrid, 80 mm tags, spacing ratio 0.25; 580 mm pattern, >=740 mm with one-tag border, A0. Warm camera 30 min. The existing four-stream recorder is limited to 120 s. Kalibr recommends stationary 15--24 h; this is not a mandatory gate duration. Fixed target, low blur and all-axis excitation are required. Never run stationary and moving-target captures together.}
+\end{frame}
+
+\begin{frame}{N4A/N4B: establish a stable baseline and repeat offline replay.}
+\phase{Do trusted inputs give repeatable estimator output?}
+{Resume patch-4 build in its isolated copy; rerun EuRoC MH01 on stable power; validate factory stereo, estimate camera--IMU parameters, replay three takes and held-out data.}
+{Native ORB, reviewed PNG/CSV-to-ROS 1 Kalibr bag route, Allan analysis and trajectory evaluation.}
+{Target 8 GB Pi; confirmed x86 ROS 1/Kalibr workstation; immutable D435i takes and known-data reference.}
+{Build/linkage, transform and time fixtures pass; configuration provenance, initialization, tracking and reset histories reviewed.}
+{2--4 engineer-days; add 2--5 days if import/tool compatibility fails.}
+\vfill\takeaway{The ROS 1 calibration conversion is a pre-capture dependency, not a tested tool.}
+\src{experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md; docs/D435I_CALIBRATION_PLAN.md; https://github.com/ethz-asl/kalibr/wiki/bag-format; https://github.com/ethz-asl/kalibr/wiki/yaml-formats}
+\note{Previous EuRoC MH01 accuracy is known-input evidence only; rerun on the target Pi after stable power before timing claims. Existing patch-4 rebuild was interrupted. Kalibr expects ROS 1 bags; chosen proposal is lossless PNG and full-precision timestamped IMU CSV followed by Kalibr bagcreater, after synthetic/known-sample verification. RealSense .db3 is ROS 2 rosbag2 and must not be assumed readable. Kalibr T_cam_imu is IMU-to-camera; invert for the ORB camera-to-IMU input. Apply t_imu=t_cam+shift once before association, preserve raw stamps. Calibration thresholds are proposed and need review. Keep all failed runs and the original calibration warning.}
+\end{frame}
+
+\begin{frame}{N4C/N5: live output must stay useful under sustained load.}
+\phase{Does a current estimate arrive within approved limits?}
+{Hold binary/settings fixed; run three short repeats then a proposed 30-minute load including map growth, loops and recovery.}
+{Headless ORB; source-age, queue, drop, reset, CPU/RAM, temperature, storage and power observers.}
+{Final Pi/camera/cooling/data path; textured marked route; operator and reviewer.}
+{No unexplained input loss or growing backlog; repeatable state; source-age/resource tails meet controller-approved limits.}
+{1--3 engineer-days; book 2--3 h after N4B review.}
+\vfill\takeaway{A fresh heartbeat cannot make an old camera estimate fresh.}
+\src{slides_roadmap/research/R1_algorithms.md section 5; slides_roadmap/research/R2_integration.md; slides_course/main.tex N4C/N5}
+\note{Measure capture-to-pose only with validated clock mapping and uncertainty. Otherwise age is unknown. Report P50/P95/P99 for age, waiting, tracking and publish separately; count input/output/drop/reset events. Candidate age, CPU and thermal values in earlier research are screening scenarios only, not safety limits. The controller owner ratifies acceptance limits before N6 or motor tests. A 33.3 ms period for 30 Hz is arithmetic, not a Pi speed guarantee. Offline replay is not live throughput.}
+\end{frame}
+
+\begin{frame}{Keep ORB as the default; switch only on matched evidence.}
+\deckitems{
+\item Use native ORB stereo-inertial for advisory localization after trusted-input, calibration and live/resource gates.
+\item If corrected N4B inputs still fail repeated reviewed criteria, compare OpenVINS on the same retained data.
+\item If the goal changes to occupancy mapping, test RTAB-Map under measured Pi load before selecting it.
+\item If validated wheel/body exports already exist, consider that smaller demo as a separate objective.}
+\par\medskip\small Existing build/input work makes ORB the lowest-rework route; it is not a Pi performance ranking.
+\vfill\takeaway{Run one estimator path first; keep the first camera sessions diagnostic.}
+\src{slides_roadmap/research/R1_algorithms.md; slides_roadmap/research/R1b_algorithms_independent.md; https://github.com/UZ-SLAMLab/ORB_SLAM3; https://github.com/rpng/open_vins/pull/500; https://github.com/introlab/rtabmap_ros/tree/ros2}
+\note{Independent algorithm scores are judgment-based, not measured Pi/WBR results, so they are omitted. OpenVINS Jazzy pull request 500 remains open at this snapshot; budget port/build work. RTAB-Map is a mapping-first alternative, not the selected first estimator. Wheel/body plus depth changes the deliverable and does not qualify VIO.}
+\end{frame}
+
+\begin{frame}{N6: STM32 rejects stale input and keeps local authority.}
+\centering
+\begin{tikzpicture}[font=\normalsize]
+\node[box,text width=49mm,minimum height=20mm] (p) at (0,0) {Pi\\Camera IMU $\to$ ORB\\Proposed age / frame / state};
+\node[box,text width=51mm,minimum height=20mm] (r) at (7,0) {STM32H7 receiver\\Validate / reject / report};
+\node[box,text width=48mm,minimum height=20mm] (o) at (14,0) {Optional advisory\\No balance authority};
+\draw[flow] (p.east)--(r.west);
+\draw[flow] (r.east)--(o.west);
+\node[box,draw=fault,text width=147mm,minimum height=19mm] (s) at (7,-3) {Body IMU $\to$ local balance / actuator safety remains on STM32H7\\Stale, absent, invalid or reset estimate revokes optional input};
+\draw[faultflow] (r.south)--(s.north);
+\end{tikzpicture}
+\par\medskip\small Proposed interface only. Link, age rules, timeout, frames and fallback need controller review.
+\vfill\takeaway{Synthetic rejection tests do not prove physical balance.}
+\src{docs/ARCHITECTURE.md; docs/DECISIONS.md; slides_roadmap/research/R2_integration.md sections 1,2}
+\note{N6 acceptance follows N5. Design/fixtures may be prepared earlier only after the controller owner reviews the proposal. No API, message, transport or firmware is implemented or accepted here. Validate finite values, CRC/length/version, sequence/session/time wraps, clock mapping uncertainty, wrong frames, stale/frozen source, reset/map jump and Pi/link loss. Fresh heartbeat cannot refresh old source time. Invalid input cannot renew a lease. Controller retains balance and motor/jump safety. Do not invent fixed rates/timeouts.}
+\end{frame}
+
+\begin{frame}{N7 supported tests: measure power, mounting and fault response.}
+\phase{Does mounted perception leave local control intact?}
+{Qualify Pi rail under approved load; review torso mount/view/body transform; test health with motors disabled, then approved supported faults.}
+{Reviewed N6 receiver; power/temperature/loop/source-age traces; controlled fault injection.}
+{WBR and controller owner; battery/DC--DC/fuse/link, mount/cooling, debugger, rated stand/restraint and independent stop.}
+{No unexpected actuation/reset or loop-limit breach; faults withdraw optional input inside approved limits.}
+{1--3 engineer-days; 3--4 h with controller owner after N6 review.}
+\vfill\takeaway{A stand supports a test; it does not prove free balance.}
+\src{slides_roadmap/research/R2_integration.md sections 3,5; slides_roadmap/research/R3_plan.md; https://www.raspberrypi.com/documentation/computers/raspberry-pi.html}
+\note{Review battery and DC-DC under worst approved motor load, USB power, heat, EMI/grounding and independent controller supply. Record rigid torso transform, cable strain relief, view through allowed pitch/leg travel and payload/center-of-mass change. Refresh USB/profile/calibration checks after topology changes. Static stereo-inertial may remain uninitialized. Do not start a motor test without separately reviewed safety sequence and controller owner.}
+\end{frame}
+
+\begin{frame}{N7 motion: deploy advisory localization under supervision.}
+\phase{Can the robot repeat a slow trial and handle Pi loss?}
+{Establish controller baseline; tethered balance with zero references; bounded manual flat-room motion with advisory pose; test loss and reproduce rollback.}
+{Same reviewed stack; operator runbook; checksummed Mac-origin runtime bundle; Pi and MCU traces.}
+{Approved tether/cleared route, local stop, controller owner, operator/spotter and repeated slot.}
+{Retained trials meet preapproved limits; Pi/link/tracking loss is handled; another operator reproduces startup, stop and rollback.}
+{1--4 engineer-days; 2--3 h motion plus a separate repeat/repair slot.}
+\vfill\takeaway{No autonomous navigation, jumping or automatic resume in this release.}
+\src{slides_roadmap/research/R2_integration.md section 5; slides_roadmap/research/R3_plan.md; AGENTS.md}
+\note{Physical motion requires separate approval. Predeclare speed/turn/acceleration, stopping, clearance, repeat count and pass/fail bounds. Controller selects balance-preserving bounded stop policy; never blindly remove torque on Pi loss. Keep reset recovery operator-controlled. Without synchronized reference, report return/checkpoint as proxy, not room ATE. State tether loading. No jump/fall survivability claim.}
+\end{frame}
+
+\begin{frame}{Navigation is a separate scope after N7.}
+\centering
+\begin{tikzpicture}[font=\normalsize]
+\node[box,text width=41mm,minimum height=20mm] (m) at (0,0) {Global map\\Can correct};
+\node[box,text width=48mm,minimum height=20mm] (o) at (6,0) {Local odometry\\Must be continuous};
+\node[box,text width=42mm,minimum height=20mm] (b) at (12,0) {Robot body\\Reviewed frames};
+\draw[flow](m)--node[below=11mm,lbl]{Map alignment}(o);
+\draw[flow](o)--node[below=11mm,lbl]{Local estimator}(b);
+\end{tikzpicture}
+\par\medskip
+\deckitems{\item Validate acquisition-stamped wheel/body/contact telemetry, geometry, clocks and slip before fusion.
+\item Qualify obstacle coverage and occupancy mapping; sparse ORB landmarks are not an obstacle map.
+\item Nav2 needs reviewed continuous odometry, frames, stop bounds and controller veto.}
+\par\medskip\small D435i depth is a candidate obstacle sensor, not a qualified input.
+\src{https://github.com/ros-infrastructure/rep/blob/master/rep-0105.rst; https://docs.nav2.org/jazzy/configuration_and_development/first_time_robot_setup_guide/odom/setup_robot_localization/; https://github.com/introlab/rtabmap_ros/tree/ros2}
+\note{Optional post-N7 objective. Diagram is conceptual, not an approved TF graph. Global map correction must not jump the local motion state. Keep camera/body IMUs separate and avoid double-counting camera IMU or correlated wheel measurements.}
+\end{frame}
+
+\begin{frame}{Effort is not calendar time.}
+\small\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}L{45mm}L{57mm}L{79mm}@{}}\toprule
+\textbf{Work} & \textbf{Hands-on estimate} & \textbf{Elapsed time / slot}\\\midrule
+Camera-free preparation & 2--5 engineer-days & Tool route and named people first\\
+N0--N3 & 0.5--3 engineer-days & 3--4 h; may diagnose only\\
+N4A/N4B & 3--6 engineer-days & 3--4 h target slot; separate 30 min warm-up + 15--24 h stationary data\\
+N4C/N5 & 1--3 engineer-days & 2--3 h after replay review\\
+N6 design/fixtures & 2--4 engineer-days & May overlap after controller review; accept after N5\\
+N7 supported + motion & 2--7 engineer-days & 3--4 h supported; 2--3 h motion plus repeat slot\\\bottomrule
+\end{tabular}
+\par\medskip\normalsize Base estimate: 11--28 engineer-days; add 2--5 days if tool/import fails. Low confidence; no date yet.
+\vfill\takeaway{Confirm supply, storage, converter, people and bookings before setting a delivery week.}
+\src{slides_roadmap/ROADMAP.md duration synthesis; slides_roadmap/research/R3_plan.md}
+\note{Effort ranges are engineering estimates, not commitments. N4A/N4B sums 1--2 days capture plus 2--4 replay; 2--5 days of tool contingency is separate. N6 overlap needs separate staff to reduce elapsed critical path; it does not reduce one engineer's total effort. Stationary capture adds overnight elapsed time. Parts/lab/controller queues unknown. Mandatory N2 stages cannot be shortened.}
+\end{frame}
+
+\begin{frame}{Stop at the failing layer; then choose the next action.}
+\small\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}L{65mm}L{119mm}@{}}\toprule
+\textbf{If this fails} & \textbf{Do this next}\\\midrule
+Power, USB, storage or receipt & Stop N progression; qualify the same power/topology/data path before changing algorithms.\\
+N3 wrapper, QoS, recording or replay & Keep N3 open; review install/receipt dependencies and rebook.\\
+Target, bag import, timestamps or noise & Inspect first take and conversion fixture; repair tool/data route or recapture. Preserve warnings.\\
+Repeated calibrated tracking loss or growing age & Profile one variable, time-box diagnosis, then compare one estimator on identical data.\\
+Frozen pose, reset, wrong frame or no room reference & Reject stale input; report recovery/checkpoint proxies and keep absolute accuracy open.\\\bottomrule
+\end{tabular}
+\par\medskip\normalsize Owner's order: confirm supply/storage and camera window; name controller owner; review N3 install and Kalibr workstation; prove conversion and target; request B1/B2/B2A only when ready.
+\vfill\takeaway{At every session, review the evidence before requesting the next gate.}
+\src{slides_roadmap/ROADMAP.md stop conditions and owner actions; experiments/2026-10-14-lab-prep/LAB_RUNBOOK_2026-10-15.md}
+\note{No lab contact or booking was made by this documentation task. The owner authorizes camera execution explicitly. Failed trials and raw logs remain immutable.}
+\end{frame}
+
+\begin{frame}{The route traces to project evidence and primary sources.}
+\small\deckitems{
+\item \textbf{Project state:} 13--14 October facts, N3 preparation, current lab runbook, calibration plan and N4A report.
+\item \href{https://github.com/ethz-asl/kalibr/wiki/bag-format}{\textbf{Kalibr bag format}} and \href{https://github.com/ethz-asl/kalibr/wiki/ROS2-Calibration-Using-Kalibr}{ROS 1/ROS 2 conversion}; \href{https://github.com/ethz-asl/kalibr/wiki/IMU-Noise-Model}{noise guidance}.
+\item \href{https://github.com/realsenseai/librealsense/blob/master/doc/record-and-playback.md}{\textbf{RealSense .db3 recording}} uses ROS 2 rosbag2 format.
+\item \href{https://www.raspberrypi.com/documentation/computers/raspberry-pi.html}{\textbf{Raspberry Pi power guidance}} and \href{https://www.raspberrypi.com/products/27w-power-supply/}{official supply specification}.
+\item \href{https://github.com/gjcliff/ORB_SLAM3_ROS2}{\textbf{Current cited ORB ROS wrapper}} and \href{https://github.com/rpng/open_vins/pull/500}{OpenVINS Jazzy proposal}.
+\item \href{https://github.com/ros-infrastructure/rep/blob/master/rep-0105.rst}{\textbf{REP-105}}, \href{https://docs.nav2.org/jazzy/configuration_and_development/first_time_robot_setup_guide/odom/setup_robot_localization/}{Nav2 Jazzy odometry} and \href{https://github.com/introlab/rtabmap_ros/tree/ros2}{RTAB-Map ROS 2}.
+}
+\par\medskip\normalsize Durations, thresholds beyond N1--N3 and switch rules are planning proposals. Hardware, calibration, source age and deployed performance remain unverified.
+\src{slides_roadmap/REVIEW.md; slides_roadmap/ROADMAP.md; slides_roadmap/research/R1_algorithms.md; slides_roadmap/research/R1b_algorithms_independent.md; slides_roadmap/research/R2_integration.md; slides_roadmap/research/R3_plan.md}
+\note{External claims linked to primary upstream documentation. OpenVINS PR was open at the 14 October 2026 snapshot. Mutable repositories must be pinned before implementation. No hardware/process tests or gate acceptance occurred.}
+\end{frame}
+\end{document}
+

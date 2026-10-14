@@ -1,0 +1,62 @@
+[
+  {
+    "page" : 1,
+    "text" : "Known-data accuracy is promising; robot readiness remains open.\nWBR means wheel-biped robot. SLAM means simultaneous localization and mapping.\nD435i input\n15-second RAM take\nORB-SLAM3 replay\nPatch-4 re-\nbuild pending\nWBR integration\nGates still open\nThree EuRoC MH01 runs measured 3.7–4.2 cm ATE; under-voltage invalidates their speed result.\nThe 8 GB Pi boots, but supply, large-data storage and D435i calibration are unresolved.\nSTM32H7 retains body estimation, balance, motor and jump safety.\nFirst deployment: advisory localization during supervised slow motion.\n1\/15"
+  },
+  {
+    "page" : 2,
+    "text" : "Follow the existing N gates to a supervised robot trial.\nPrepare\nCamera-free\nN0–N3\nTrust the input\nN4A \/ N4B\nBaseline, replay\nN4C \/ N5\nLive, resources\nAfter N7\nNavigation optional\nN7\nMount, then motion\nN6\nHealth receiver\nN6 design fixtures may start after controller review; accept N6 after N5. Calendar timing waits on parts,\ntools, people and lab slots.\n2\/15"
+  },
+  {
+    "page" : 3,
+    "text" : "Clear known blockers before requesting capture slots.\nDependency Current evidence Owner’s next action\nPower \/ access N3 \/ storage Kalibr input 5 V\/3 A still under-voltages; 5.1 V\/5 A supply\narrival unknown. Wi-Fi on 8 GB Pi unverified;\nEthernet loose.\nROS wrapper 4.58.4 is a candidate, not\ninstalled. USB stick: 1.09 MB\/s. 128 GB card\nexception is calibration-only.\nKalibr expects ROS 1 bags; RealSense .db3\nis ROS 2. Exporter\/import route is untested.\nConfirm supply, cooling and local\nconsole or verified network fallback.\nReview N3 package transaction; identify\nseparately qualified bag storage.\nRobot \/ target Controller owner\/board, measured A0\ntarget, overnight permission and recorder\nare unconfirmed.\nProve lossless image + full-precision IMU\nCSV to ROS 1 bag on a fixture; confirm\nworkstation.\nName the controller engineer;\nprint\/measure target; test recorder\nstop\/recovery.\nRequest B1, target and overnight slots only after their entry checks are ready.\nAt the bench, wait for the owner’s explicit CAMERA AVAILABLE authorization.\n3\/15"
+  },
+  {
+    "page" : 4,
+    "text" : "N0–N3: fresh gates establish trustworthy input.\nQuestion How Tools Hardware Done when Time \/\nowner\nDo power, transport, recording and replay hold together?\nRecord N0. Run N1 → N2 → N3 in order and stop at the first unmet condition.\nGuarded Phase A tools; reviewed Jazzy wrapper\/runtime; topic, QoS and bag\nobservers.\n8 GB Pi, stable 5.1 V\/5 A supply, cooling, current D435i, direct USB 3 cable and\nqualified N3 storage.\nN1 USB ≥5000M; exact N2 profile and stages; N3 complete isolated replay pass\nactual review.\n0.5–3 engineer-days; request 3–4 h. A slot may diagnose without finishing N3.\nN2 keeps its 20, 105 and mandatory 300-second stages.\n4\/15"
+  },
+  {
+    "page" : 5,
+    "text" : "N4A\/N4B: capture calibration and held-out camera data.\nQuestion How Tools Hardware Done when Time \/\nowner\nCan this unit’s geometry, clocks and noise support VIO?\nUse a measured AprilGrid for S\/C1–C3; keep six-pose I diagnostics and V1–V3 room\nruns separate. Inspect the first take before repeating.\nReviewed stereo recorder; future reviewed stationary recorder and lossless\nimage\/IMU exporter.\nSame camera\/Pi, rigid-backed measured A0 target, stand, light, calipers, qualified\ncalibration storage and overnight access.\nThree usable calibration takes, all-axis excitation, ordered common timing coverage,\nwarnings\/raw preserved and two verified copies.\n1–2 engineer-days; 3–4 h target slot plus separate 30 min warm-up and 15–24 h\nstationary record.\nStationary noise data needs a separate recorder and booking.\n5\/15"
+  },
+  {
+    "page" : 6,
+    "text" : "N4A\/N4B: establish a stable baseline and repeat offline replay.\nQuestion How Tools Hardware Done when Time \/\nowner\nDo trusted inputs give repeatable estimator output?\nResume patch-4 build in its isolated copy; rerun EuRoC MH01 on stable power;\nvalidate factory stereo, estimate camera–IMU parameters, replay three takes and\nheld-out data.\nNative ORB, reviewed PNG\/CSV-to-ROS 1 Kalibr bag route, Allan analysis and\ntrajectory evaluation.\nTarget 8 GB Pi; confirmed x86 ROS 1\/Kalibr workstation; immutable D435i takes and\nknown-data reference.\nBuild\/linkage, transform and time fixtures pass; configuration provenance,\ninitialization, tracking and reset histories reviewed.\n2–4 engineer-days; add 2–5 days if import\/tool compatibility fails.\nThe ROS 1 calibration conversion is a pre-capture dependency, not a tested tool.\n6\/15"
+  },
+  {
+    "page" : 7,
+    "text" : "N4C\/N5: live output must stay useful under sustained load.\nQuestion How Tools Hardware Done when Time \/\nowner\nDoes a current estimate arrive within approved limits?\nHold binary\/settings fixed; run three short repeats then a proposed 30-minute load\nincluding map growth, loops and recovery.\nHeadless ORB; source-age, queue, drop, reset, CPU\/RAM, temperature, storage and\npower observers.\nFinal Pi\/camera\/cooling\/data path; textured marked route; operator and reviewer.\nNo unexplained input loss or growing backlog; repeatable state;\nsource-age\/resource tails meet controller-approved limits.\n1–3 engineer-days; book 2–3 h after N4B review.\nA fresh heartbeat cannot make an old camera estimate fresh.\n7\/15"
+  },
+  {
+    "page" : 8,
+    "text" : "Keep ORB as the default; switch only on matched evidence.\nUse native ORB stereo-inertial for advisory localization after trusted-input, calibration and\nlive\/resource gates.\nIf corrected N4B inputs still fail repeated reviewed criteria, compare OpenVINS on the same\nretained data.\nIf the goal changes to occupancy mapping, test RTAB-Map under measured Pi load before selecting\nit.\nIf validated wheel\/body exports already exist, consider that smaller demo as a separate objective.\nExisting build\/input work makes ORB the lowest-rework route; it is not a Pi performance ranking.\nRun one estimator path first; keep the first camera sessions diagnostic.\n8\/15"
+  },
+  {
+    "page" : 9,
+    "text" : "N6: STM32 rejects stale input and keeps local authority.\nPi\nCamera IMU → ORB\nProposed age\n\/ frame \/ state\nSTM32H7 receiver\nValidate \/ reject \/ report\nOptional advisory\nNo balance authority\nBody IMU → local balance \/ actuator safety remains on STM32H7\nStale, absent, invalid or reset estimate revokes optional input\nProposed interface only. Link, age rules, timeout, frames and fallback need controller review.\nSynthetic rejection tests do not prove physical balance.\n9\/15"
+  },
+  {
+    "page" : 10,
+    "text" : "N7 supported tests: measure power, mounting and fault response.\nQuestion How Tools Hardware Done when Time \/\nowner\nDoes mounted perception leave local control intact?\nQualify Pi rail under approved load; review torso mount\/view\/body transform; test\nhealth with motors disabled, then approved supported faults.\nReviewed N6 receiver; power\/temperature\/loop\/source-age traces; controlled fault\ninjection.\nWBR and controller owner; battery\/DC–DC\/fuse\/link, mount\/cooling, debugger,\nrated stand\/restraint and independent stop.\nNo unexpected actuation\/reset or loop-limit breach; faults withdraw optional input\ninside approved limits.\n1–3 engineer-days; 3–4 h with controller owner after N6 review.\nA stand supports a test; it does not prove free balance.\n10\/15"
+  },
+  {
+    "page" : 11,
+    "text" : "N7 motion: deploy advisory localization under supervision.\nQuestion How Tools Hardware Done when Time \/\nowner\nCan the robot repeat a slow trial and handle Pi loss?\nEstablish controller baseline; tethered balance with zero references; bounded\nmanual flat-room motion with advisory pose; test loss and reproduce rollback.\nSame reviewed stack; operator runbook; checksummed Mac-origin runtime bundle;\nPi and MCU traces.\nApproved tether\/cleared route, local stop, controller owner, operator\/spotter and\nrepeated slot.\nRetained trials meet preapproved limits; Pi\/link\/tracking loss is handled; another\noperator reproduces startup, stop and rollback.\n1–4 engineer-days; 2–3 h motion plus a separate repeat\/repair slot.\nNo autonomous navigation, jumping or automatic resume in this release.\n11\/15"
+  },
+  {
+    "page" : 12,
+    "text" : "Navigation is a separate scope after N7.\nGlobal map\nCan correct\nLocal odometry\nMust be continuous\nRobot body\nReviewed frames\nMap alignment Local estimator\nValidate acquisition-stamped wheel\/body\/contact telemetry, geometry, clocks and slip before\nfusion.\nmap.\nQualify obstacle coverage and occupancy mapping; sparse ORB landmarks are not an obstacle\nNav2 needs reviewed continuous odometry, frames, stop bounds and controller veto.\nD435i depth is a candidate obstacle sensor, not a qualified input.\n12\/15"
+  },
+  {
+    "page" : 13,
+    "text" : "Effort is not calendar time.\nWork Hands-on estimate Elapsed time \/ slot\nCamera-free preparation 2–5 engineer-days Tool route and named people first\nN0–N3 0.5–3 engineer-days 3–4 h; may diagnose only\nN4A\/N4B 3–6 engineer-days 3–4 h target slot; separate 30 min warm-up +\n15–24 h stationary data\nN4C\/N5 1–3 engineer-days 2–3 h after replay review\nN6 design\/fixtures 2–4 engineer-days May overlap after controller review; accept\nafter N5\nN7 supported + motion 2–7 engineer-days 3–4 h supported; 2–3 h motion plus repeat\nslot\nBase estimate: 11–28 engineer-days; add 2–5 days if tool\/import fails. Low confidence; no date yet.\nConfirm supply, storage, converter, people and bookings before setting a delivery week.\n13\/15"
+  },
+  {
+    "page" : 14,
+    "text" : "Stop at the failing layer; then choose the next action.\nIf this fails Do this next\nPower, USB, storage or receipt Stop N progression; qualify the same power\/topology\/data path\nbefore changing algorithms.\nKeep N3 open; review install\/receipt dependencies and rebook.\nN3 wrapper, QoS, recording or\nreplay\nTarget, bag import, timestamps or\nnoise\nRepeated calibrated tracking loss or\ngrowing age\nFrozen pose, reset, wrong frame or\nno room reference\nInspect first take and conversion fixture; repair tool\/data route or\nrecapture. Preserve warnings.\nProfile one variable, time-box diagnosis, then compare one\nestimator on identical data.\nReject stale input; report recovery\/checkpoint proxies and keep\nabsolute accuracy open.\nOwner’s order: confirm supply\/storage and camera window; name controller owner; review N3 install\nand Kalibr workstation; prove conversion and target; request B1\/B2\/B2A only when ready.\nAt every session, review the evidence before requesting the next gate.\n14\/15"
+  },
+  {
+    "page" : 15,
+    "text" : "The route traces to project evidence and primary sources.\nProject state: 13–14 October facts, N3 preparation, current lab runbook, calibration plan and N4A\nreport.\nKalibr bag format and ROS 1\/ROS 2 conversion; noise guidance.\nRealSense .db3 recording uses ROS 2 rosbag2 format.\nRaspberry Pi power guidance and official supply specification.\nCurrent cited ORB ROS wrapper and OpenVINS Jazzy proposal.\nREP-105, Nav2 Jazzy odometry and RTAB-Map ROS 2.\nDurations, thresholds beyond N1–N3 and switch rules are planning proposals. Hardware, calibration,\nsource age and deployed performance remain unverified.\n15\/15"
+  }
+]
