@@ -187,10 +187,10 @@ SOURCE-SUPPORTED [L1,L6]: librealsense ≥2.56 recorder writes rosbag2 `.db3`; K
 
 INFERRED alternative: `rosbags-convert` may bridge ROS2→ROS1 if it understands this SDK bag's schema; compatibility is UNKNOWN and it does not automatically create the required combined IMU message. Default PNG/CSV route avoids assuming SDK `.db3` contains ordinary ROS2 sensor topics. Tool installation needs later approval; no converter is installed/run now. Confirm bagcreater's installed directory/CSV conventions using its help and create a tiny synthetic round-trip before real conversion.
 
-SOURCE-SUPPORTED reviewer fact: Kalibr provides ROS1 Noetic Dockerfiles. ASSUMED runtime: Docker on Mac; Apple Silicon arm64 build feasibility is INFERRED, successful build/runtime UNKNOWN until tried. Do not install Kalibr on Pi. Fallback if the arm64 image fails to build or run: the x86 Lab workstation (main-branch NATIVE_PI5 §1 'Lab', native x86 reference platform), using Kalibr's stock amd64 Noetic Docker image. The take data and the calibration inputs stay identical, and the report records which machine produced it. Pin image/source/tool versions and record architecture/digest. Future Mac invocation after approved setup/conversion (paths illustrative, installed help must confirm):
+SOURCE-SUPPORTED reviewer fact: Kalibr provides ROS1 Noetic Dockerfiles. MEASURED 2026-10-14: the Mac is Intel x86_64, and Kalibr's stock Noetic Dockerfile built there as `kalibr:noetic-1f60227` (with `catkin build -j4`); scripts in `calibration/lab/`. The arm64 concern does not apply. Do not install Kalibr on Pi. Fallback if the arm64 image fails to build or run: the x86 Lab workstation (main-branch NATIVE_PI5 §1 'Lab', native x86 reference platform), using Kalibr's stock amd64 Noetic Docker image. The take data and the calibration inputs stay identical, and the report records which machine produced it. Pin image/source/tool versions and record architecture/digest. Future Mac invocation after approved setup/conversion (paths illustrative, installed help must confirm):
 
 ```bash
-kalibr_calibrate_imu_camera --bag C1.bag --cam factory-camchain.yaml --imu imu-A.yaml --target measured-aprilgrid.yaml
+kalibr_calibrate_imu_camera --bag C1.bag --cams factory-camchain.yaml --imu imu-A.yaml --target measured-aprilgrid.yaml
 # Repeat independently for C2/C3; no --no-time-calibration.
 kalibr_calibrate_cameras --bag S.bag --topics /cam0/image_raw /cam1/image_raw --models pinhole-radtan pinhole-radtan --target measured-aprilgrid.yaml
 ```
