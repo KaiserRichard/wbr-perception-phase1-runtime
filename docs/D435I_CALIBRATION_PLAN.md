@@ -161,7 +161,7 @@ SOURCE-SUPPORTED repository rule: microSD is OS/tools/small logs; large bags req
 
 ### Target, light and exposure
 
-ASSUMED target: Kalibr Aprilgrid, 6 columns × 6 rows, tagSize=0.080 m, tagSpacing=0.25 (gap/tag ratio, gap=0.020 m), correct Kalibr-supported tag family/IDs from its generator. CALCULATED printed grid width/height=6×0.08+5×0.02=0.58 m excluding margins. At f=386.9533 px, a frontoparallel tag projects f×0.08/Z=61.91/30.96/20.64 px at Z=0.5/1/1.5 m. Grid projects 448.9/224.4/149.6 px; 0.5 m leaves little vertical margin, so avoid aggressive tilt there. Enlarge physical margins and favor 0.7–1.2 m during mixed motion.
+ASSUMED target (revised 2026-10-14 to fit printable paper): Kalibr Aprilgrid t36h11, 6 columns × 4 rows, tagSpacing=0.3, tagSize 0.045 m on A3 landscape (preferred) or 0.030 m on A4 landscape (fallback). Print-ready PDFs, Kalibr YAMLs, generator and print/measure/mount instructions: [calibration/aprilgrid/](../calibration/aprilgrid/README.md). CALCULATED at f=386.95 px: a 45 mm tag spans 44/29/22 px at 0.4/0.6/0.8 m (work at 0.4–0.8 m); a 30 mm tag spans 39/23 px at 0.3/0.5 m. The earlier 6×6/80 mm grid (0.58 m wide) does not fit on A3 and is dropped. The YAML tagSize is nominal until replaced by the measured value.
 
 ASSUMED print protocol: laser printer, matte paper, no “fit to page”, rigid flat board (tile large pages if needed without warping). Measure several tag black-edge dimensions and inter-tag gaps with calipers in both axes; use measured values in target YAML `target_type: aprilgrid`, `tagCols: 6`, `tagRows: 6`, `tagSize`, `tagSpacing`. Goal ASSUMED ≤0.5% dimension disagreement and ≤1 mm board bow; report measured uncertainty rather than nominal print size. Generate PDF later on Mac, not in this ticket.
 
