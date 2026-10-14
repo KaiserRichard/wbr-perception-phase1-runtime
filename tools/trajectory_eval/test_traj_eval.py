@@ -184,6 +184,14 @@ class SyntheticTests(unittest.TestCase):
         self.assertEqual(b.stats["iteration_side"], "reference")
         np.testing.assert_array_equal(b.ref_indices, [0])
 
+    def test_synthetic_association_equal_length_iterates_estimate_like_evo(self):
+        # evo sync.associate_trajectories iterates the estimate unless it is strictly longer.
+        est = synthetic_trajectory(np.zeros((3, 3)), [0, 1_000_000_000, 2_000_000_000])
+        ref = synthetic_trajectory(np.zeros((3, 3)), [900_000_000, 1_100_000_000, 1_900_000_000])
+        a = te.associate(est, ref, "0.95")
+        self.assertEqual(a.stats["iteration_side"], "estimate")
+        self.assertEqual(list(zip(a.est_indices.tolist(), a.ref_indices.tolist())), [(0, 0), (1, 0), (2, 2)])
+
     def test_synthetic_association_inclusive_exact_boundary(self):
         est = synthetic_trajectory(np.zeros((2, 3)), [10_000_000, 110_000_001])
         ref = synthetic_trajectory(np.zeros((3, 3)), [0, 100_000_000, 300_000_000])

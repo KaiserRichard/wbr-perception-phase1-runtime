@@ -7,7 +7,7 @@ network, or establish a gate PASS. Version: `1.0.0`.
 
 ## Dependencies and execution
 
-Python 3.11 and NumPy are required. Matplotlib is optional and imported only when
+Python 3.11 or newer (tested on 3.11 and 3.13) and NumPy are required. Matplotlib is optional and imported only when
 writing plots. The validated environment has Python 3.11.0rc2, NumPy 1.26.4, and
 Matplotlib 3.10.9. No build or package installation is needed.
 
@@ -64,7 +64,7 @@ It is a user-declared relationship, never estimated. `--t-max-diff` defaults to
 `0.01` seconds; the MH01 comparison below uses `0.02`.
 
 Pair selection follows `evo.sync.associate_trajectories(reference, estimate)`:
-iterate the shorter trajectory (reference on equal lengths), find the nearest
+iterate the shorter trajectory (estimate on equal lengths, as evo does), find the nearest
 timestamp in the other trajectory, keep it if `abs(dt) <= tolerance`. An exact
 tie selects the earliest timestamp. Samples can be reused; there is no one-to-one
 enforcement, interpolation, or resampling. This implementation uses exact integer
@@ -172,8 +172,9 @@ and metrics for all runs are validated before output writing begins.
 
 Read-only evidence: `experiments/2026-10-13-n4a-euroc-mh01/`, including its
 `REPORT.md`, raw trajectories, CSV/TUM reference and `eval/ape_summary.txt`.
-No user scratch path was supplied with this ticket; the commands use the existing
-ignored `_scratch/` convention inside the only authorized write directory.
+These evidence files are not committed to the repository, so this validation
+runs only on a checkout that has them; elsewhere the REAL-DATA test is skipped.
+The commands write to the ignored `_scratch/` directory.
 Do not write outputs into `experiments/`.
 
 From the repository root, run these exact commands with a new output directory:
@@ -253,8 +254,9 @@ by `main`; direct API evaluations do not pretend to have CLI arguments.
 
 ## Test plan, limits and next steps
 
-Validation completed with 29 tests: 28 SYNTHETIC tests and one REAL-DATA test,
-all passed, zero failures/skips. Synthetic tests cover exact transforms, scale,
+The suite has 30 tests: 29 SYNTHETIC tests and one REAL-DATA test. With the N4A
+evidence present all 30 pass; in a clean checkout 29 pass and the REAL-DATA test
+is skipped, so MH01 agreement cannot be reproduced from the repository alone. Synthetic tests cover exact transforms, scale,
 reflection/degeneracy, parsing/order/units, timestamps, association boundaries,
 offset/reuse, analytic drift, independent homogeneous-matrix RPE checks, rigid
 invariance, output provenance, CLI requirements, batch aggregation and missing
@@ -276,7 +278,8 @@ can hide global gauge differences; reported assumptions remain essential.
 
 Next use: supply explicit clock/frame declarations for another offline dataset,
 keep outputs in a dedicated scratch location, and archive reviewed results with
-their input hashes and tool version when an experiment is authorized. These
-implementation files are intentionally uncommitted. Rollback removes only the
-new tool/test/README and their scratch outputs; the existing `.gitignore` and
-historical evidence are unchanged.
+their input hashes and tool version when an experiment is authorized.
+
+Location: this tool lives in `tools/trajectory_eval/`, not the `scripts/evaluation/`
+and `results/` layout in `docs/NATIVE_PI5_BASELINE_ARCHITECTURE.md` section 3.
+Move it if that layout is adopted.

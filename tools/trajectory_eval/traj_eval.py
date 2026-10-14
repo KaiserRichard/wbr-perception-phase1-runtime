@@ -207,7 +207,7 @@ class Association:
 
 def associate(est: Trajectory, ref: Trajectory, t_max_diff: str | float = "0.01",
               t_offset: str | float = "0") -> Association:
-    """Nearest neighbour on the shorter side; equal lengths iterate reference.
+    """Nearest neighbour on the shorter side; equal lengths iterate the estimate.
 
     This is evo sync.associate_trajectories(ref, est) pair-selection semantics,
     using integer nanoseconds. Ties pick the earliest other stamp, reuse allowed.
@@ -220,7 +220,8 @@ def associate(est: Trajectory, ref: Trajectory, t_max_diff: str | float = "0.01"
     if shifted[0] < INT64.min or shifted[-1] > INT64.max:
         raise ValueError("offset estimate timestamps exceed int64 range")
     refs = [int(t) for t in ref.t_ns]
-    est_shorter = len(shifted) < len(refs)
+    # evo iterates the estimate unless the estimate is strictly longer.
+    est_shorter = len(shifted) <= len(refs)
     short, long = (shifted, refs) if est_shorter else (refs, shifted)
     ei, ri, differences = [], [], []
     for i, stamp in enumerate(short):
@@ -243,7 +244,7 @@ def associate(est: Trajectory, ref: Trajectory, t_max_diff: str | float = "0.01"
         "mean_abs_dt_s": sum(differences) / len(differences) / NS_PER_SECOND if differences else None,
         "max_abs_dt_ns": max(differences) if differences else None,
         "iteration_side": "estimate" if est_shorter else "reference",
-        "semantics": "shorter-side nearest neighbour, inclusive tolerance, earliest tie, reuse allowed; equal lengths iterate reference",
+        "semantics": "shorter-side nearest neighbour, inclusive tolerance, earliest tie, reuse allowed; equal lengths iterate estimate",
         "t_offset_ns": offset, "t_max_diff_ns": tolerance,
     }
     return Association(np.array(ei, dtype=np.int64), np.array(ri, dtype=np.int64),
