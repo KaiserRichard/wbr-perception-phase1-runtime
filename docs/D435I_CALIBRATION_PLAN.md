@@ -18,11 +18,34 @@ reads `Camera1.k1–k4`), 342 (`Stereo.T_c1_c2`), 493 (inverse before `stereoRec
 rectification); `Tracking.cc` 613–614 / 1411–1419 (noise ×√f, walk ÷√f).
 Not verified by anyone yet: Intel's statement that Y8 IR is ASIC-rectified, BMI085 gyro noise density, Kalibr arm64 Docker.
 
+## Gate naming and deviations from the main-branch baseline
+
+Gate names: this plan uses the project-instruction scheme (N4A/N4B/N4C). The main branch's
+[NATIVE_PI5_BASELINE_ARCHITECTURE.md](NATIVE_PI5_BASELINE_ARCHITECTURE.md) §4 numbers the same steps differently:
+
+| This plan | Main-branch §4 | Meaning |
+|---|---|---|
+| N4A | N4 (official EuRoC) + N5 (Pi ORB build, EuRoC smoke run) | Known-dataset baseline, here run on the Pi |
+| N4B | N6 (saved D435i bag → estimator) | Offline run on recorded D435i data |
+| N4C | N7 (live VIO) | Live D435i run |
+
+Explicit deviation (ASSUMED decision, needs owner acceptance at PR review): the main-branch baseline is
+**monocular-inertial** (`imu-monocular`, NATIVE_PI5 §4 N4/N6) through realsense-ros, and
+[RPI5_NATIVE_PERCEPTION_BRINGUP.md](RPI5_NATIVE_PERCEPTION_BRINGUP.md) §11 defers IR2 and higher FPS, to be added later
+one variable at a time. This plan changes three variables together: stereo (adds IR2), 30 Hz instead of the N2 15 Hz
+profile, and recording through native librealsense (`d435i_record`) instead of realsense-ros/rosbag.
+Reason: the 2026-10-13 N4B preparation already targets the upstream `stereo_inertial_realsense_D435i` path, and
+stereo gives metric scale from the baseline, so IMU initialization does not have to recover scale alone (INFERRED).
+Native recording keeps camera timestamps without the ROS layer while N3 is still OPEN. Consequences: N2's 15 Hz
+qualification does not cover the 30 Hz stereo profile, so that profile needs its own attestation (already required
+below). And if N4B fails, the three changes cannot be told apart. Mitigation (ASSUMED): if N4B fails, first rerun the
+same recordings monocular-inertial with IR1 only (no new recording needed), and only then suspect stereo or calibration.
+
 ## Evidence labels and quantity register
 
 SOURCE-SUPPORTED means local source code or reviewer-provided literature facts; the drafting agent had no network, so external citations rest on the reviewer verification above. MEASURED means archived SDK/readback or session observations, not independently established physical calibration. CALCULATED means arithmetic from stated inputs. INFERRED means interpretation. ASSUMED means a proposed operating choice or acceptance threshold. UNKNOWN means evidence is absent. Future results must retain these distinctions. All numeric acceptance thresholds proposed here are ASSUMED, not SOURCE-SUPPORTED; existing gate requirements remain unchanged.
 
-Current values come from [candidate YAML](../experiments/2026-10-13-n4b-d435i-prep/D435i_317422076650_stereo_inertial.yaml) and [calibration notes](../experiments/2026-10-13-n4b-d435i-prep/calibration_notes.md), backed by [new-unit factory readback](../experiments/2026-10-13-pi5-env-snapshot/rs_calibration_new_unit.txt). References [L1–L8] and [R1–R10] below identify provenance.
+Current values come from [candidate YAML](../experiments/2026-10-13-n4b-d435i-prep/D435i_317422076650_stereo_inertial.yaml) and [calibration notes](../experiments/2026-10-13-n4b-d435i-prep/calibration_notes.md), backed by [new-unit factory readback](../experiments/2026-10-13-pi5-env-snapshot/rs_calibration_new_unit.txt). References [L1–L8] and [R1–R10] below identify provenance. **Local evidence, not yet committed:** at the time of this PR, every L-link except the `third_party/ORB_SLAM3` sources (submodule pinned at 4452a3c) points to a file that exists only in the owner's working tree or on an unmerged branch (`docs/PROJECT_STATE.md` and `docs/NEXT_GATE.md` are on `claude/project-thread-d33owb`). Those links will not resolve on GitHub until the owner decides to commit that evidence.
 
 | Quantity | Current value + label | Method and recommendation | Data | Quality check | ORB YAML key + conversion | Mac/Pi |
 |---|---|---|---|---|---|---|
@@ -86,6 +109,8 @@ ASSUMED quality: at least three same-setting C takes, max−min shifts ≤1 ms a
 
 ASSUMED operating policy: preserve the present global-time setting, read it before/after on each module, and use the same setting for calibration, N4B and N4C. New-unit setting is UNKNOWN until read; old-unit value 1 is not transferable [L8]. A shift is meaningful only under its measured setting, exposure/profile and timestamp convention; toggling global time requires separate takes/re-estimation. Inspect per-stream dt for bursts, reversals, startup changes and gaps, and retain SDK milliseconds plus seconds conversion. Equal domains are necessary, not proof of timing calibration.
 
+**Rule for calibration and N4 takes:** every IR and motion frame must report `RS2_TIMESTAMP_DOMAIN_GLOBAL_TIME` or `RS2_TIMESTAMP_DOMAIN_HARDWARE_CLOCK`, and the frame-timestamp metadata it depends on must be reported as supported. A take where any stream reports `RS2_TIMESTAMP_DOMAIN_SYSTEM_TIME` is rejected for calibration. That domain is host arrival time, which librealsense falls back to when hardware metadata is unavailable (INFERRED from SDK behavior; confirm on this unit). The existing equal-domain check would accept a take where both streams fell back to SYSTEM_TIME, so it is not enough on its own. Follow-up ticket 1 adds the domain whitelist next to the existing mixed-domain check.
+
 ## 5. IMU noise densities and bias random walks
 
 ASSUMED current values: gyro density 1e−3 rad/s/√Hz, accel density 1e−2 m/s²/√Hz, gyro walk 1e−6 rad/s²/√Hz, accel walk 1e−4 m/s³/√Hz. SOURCE-SUPPORTED upstream example origin [L3]; no unit-specific Allan evidence exists. MEASURED SDK zero variance arrays are placeholders, not noiselessness.
@@ -126,13 +151,13 @@ SOURCE-SUPPORTED [L5]: no IMU bias/scale/misalignment YAML keys in Settings. Onl
 
 SOURCE-SUPPORTED [L1,L2]: PROJECT_STATE remains a historical draft; NEXT_GATE identifies N3 OPEN/VERIFY CURRENT STATE, not completed qualification. Session facts [L1] establish a temporary Pi 5 **4 GB**, 32 GB microSD and 5 V/3 A supply, distinct from target hardware. Old SDK serial 243322073847 receipts do not transfer.
 
-ASSUMED execution sequence, after explicit `CAMERA AVAILABLE`: new 5.1 V/5 A supply and 128 GB card setup → qualified separate data storage → fresh N1 → N2 → N3 audit/qualification → attested N4 30 Hz profile → calibration takes → N4B ablations → reviewed N4C. SOURCE-SUPPORTED [L2,L3]: N1 must attest SDK 317422076650 separately from ASIC, firmware-update ID and USB descriptor serial (each observed as 327743061057), USB **≥5000M**, permissions, topology, clock, stable power/cooling. N2 remains IR1 Y8 640×480/**15**, gyro/**200**, accel/**100**, 20 s→105 s→mandatory **300 s** soak: IR 14.25–15.75 Hz, gyro 190–210, accel 95–105, image gaps ≤0.20 s, motion gaps ≤0.05 s, positive timestamps/frame steps and no missing image frame numbers. Do not weaken health/fault requirements.
+ASSUMED execution sequence, after explicit `CAMERA AVAILABLE`: new 5.1 V/5 A supply and 128 GB card setup → sustained-write qualification of the 128 GB card as data storage (user decision, below) → fresh N1 → N2 → N3 audit/qualification → attested N4 30 Hz profile → calibration takes → N4B ablations → reviewed N4C. SOURCE-SUPPORTED [L2,L3]: N1 must attest SDK 317422076650 separately from ASIC, firmware-update ID and USB descriptor serial (each observed as 327743061057), USB **≥5000M**, permissions, topology, clock, stable power/cooling. N2 remains IR1 Y8 640×480/**15**, gyro/**200**, accel/**100**, 20 s→105 s→mandatory **300 s** soak: IR 14.25–15.75 Hz, gyro 190–210, accel 95–105, image gaps ≤0.20 s, motion gaps ≤0.05 s, positive timestamps/frame steps and no missing image frame numbers. Do not weaken health/fault requirements.
 
 ASSUMED gate dependency: S/C/I/A are native-librealsense calibration recordings, requiring fresh N1 and N2 plus their own requested-profile/storage attestation; they do not inherently require a ROS publisher. However, this session's default sequence resolves the active N3 gate before these takes. Any ROS-derived recording/conversion evidence relies additionally on N3 topic/QoS/timestamp/record-replay qualification. N4B/N4C do not bypass N3; N4C follows reviewed N4B. Offline/synthetic checks qualify utilities only.
 
 MEASURED [L1]: under-voltage at 87/178 samples (49%) during earlier SLAM runs. INFERRED recommendation: **do not start even the low-power IMU-only Allan run before the 5 A supply arrives**; the existing power evidence makes timestamp trust questionable. A new supply is not itself proof of stable power: record `vcgencmd get_throttled` before/after and periodically, preserve latched/live bits and abort/use a fresh take on new power faults; do not conceal them by resetting evidence.
 
-SOURCE-SUPPORTED repository rule: microSD is OS/tools/small logs; large bags require separately qualified storage. **USER DECISION 2026-10-13:** the separate 64 GB USB drive is no longer available, so calibration and VIO takes are recorded on the 128 GB microSD (KIOXIA EXCERIA G3, V30/A2) as an explicit exception to that rule. Conditions (ASSUMED): a dedicated data directory (e.g. `/data/wbr-takes/`), never mixed with OS or build paths; a sustained-write qualification of this card on the Pi before the first take, using a file larger than the largest planned take and at least the take duration, with a margin of ≥1.5×18.4=27.6 MB/s (if it fails, full-rate recording is BLOCKED; IMU-only A/I takes are unaffected); free space ≥2× the planned take plus an OS reserve checked before every take; copy each session's takes to the Mac and verify checksums before deleting from the card. INFERRED risk: OS writes and recording compete on one card, so dropped frames during a take must be checked in the audit, not assumed absent.
+SOURCE-SUPPORTED repository rule: microSD is OS/tools/small logs; large bags require separately qualified storage. **USER DECISION 2026-10-13:** the separate 64 GB USB drive is no longer available, so calibration and VIO takes are recorded on the 128 GB microSD (KIOXIA EXCERIA G3, V30/A2) as an explicit exception to that rule. (2026-10-14: the 64 GB stick was found again, but it is a 480 Mbps USB 2.0 device that measured 0.94 MB/s on 2026-09-12 and 1.09 MB/s on 2026-10-14, far below the 18.4 MB/s stream, so it is not a data volume.) Conditions (ASSUMED): a dedicated data directory (e.g. `/data/wbr-takes/`), never mixed with OS or build paths; a sustained-write qualification of this card on the Pi before the first take, using a file larger than the largest planned take and at least the take duration, with a margin of ≥1.5×18.4=27.6 MB/s (if it fails, full-rate recording is BLOCKED; IMU-only A/I takes are unaffected); free space ≥2× the planned take plus an OS reserve checked before every take; copy each session's takes to the Mac and verify checksums before deleting from the card. INFERRED risk: OS writes and recording compete on one card, so dropped frames during a take must be checked in the audit, not assumed absent.
 
 ### Target, light and exposure
 
@@ -162,7 +187,7 @@ SOURCE-SUPPORTED [L1,L6]: librealsense ≥2.56 recorder writes rosbag2 `.db3`; K
 
 INFERRED alternative: `rosbags-convert` may bridge ROS2→ROS1 if it understands this SDK bag's schema; compatibility is UNKNOWN and it does not automatically create the required combined IMU message. Default PNG/CSV route avoids assuming SDK `.db3` contains ordinary ROS2 sensor topics. Tool installation needs later approval; no converter is installed/run now. Confirm bagcreater's installed directory/CSV conventions using its help and create a tiny synthetic round-trip before real conversion.
 
-SOURCE-SUPPORTED reviewer fact: Kalibr provides ROS1 Noetic Dockerfiles. ASSUMED runtime: Docker on Mac; Apple Silicon arm64 build feasibility is INFERRED, successful build/runtime UNKNOWN until tried. Do not install Kalibr on Pi. Pin image/source/tool versions and record architecture/digest. Future Mac invocation after approved setup/conversion (paths illustrative, installed help must confirm):
+SOURCE-SUPPORTED reviewer fact: Kalibr provides ROS1 Noetic Dockerfiles. ASSUMED runtime: Docker on Mac; Apple Silicon arm64 build feasibility is INFERRED, successful build/runtime UNKNOWN until tried. Do not install Kalibr on Pi. Fallback if the arm64 image fails to build or run: the x86 Lab workstation (main-branch NATIVE_PI5 §1 'Lab', native x86 reference platform), using Kalibr's stock amd64 Noetic Docker image. The take data and the calibration inputs stay identical, and the report records which machine produced it. Pin image/source/tool versions and record architecture/digest. Future Mac invocation after approved setup/conversion (paths illustrative, installed help must confirm):
 
 ```bash
 kalibr_calibrate_imu_camera --bag C1.bag --cam factory-camchain.yaml --imu imu-A.yaml --target measured-aprilgrid.yaml
@@ -197,7 +222,7 @@ ASSUMED transport/build policy: later deploy checksummed copies of Mac utilities
 
 ## Follow-up tickets for Codex (bounded; no code in this ticket)
 
-1. **Time-offset hook:** isolated example/common input helper only; `--cam-imu-shift-ms` finite numeric option, default zero; shared live/offline application before coverage/association; raw audits unchanged. Synthetic tests: positive/negative shifts with known events, seconds/ms sign, both cameras, zero equivalence, prefix/EOF coverage, no double application, domain rejection. Document future build/manual replay commands and setting provenance; no core ORB API or invented YAML key. Review CLI change before implementation as required by repository rules.
+1. **Time-offset hook and domain whitelist:** isolated example/common input helper only; reject SYSTEM_TIME frames (GLOBAL_TIME/HARDWARE_CLOCK only) for calibration/N4 takes; `--cam-imu-shift-ms` finite numeric option, default zero; shared live/offline application before coverage/association; raw audits unchanged. Synthetic tests: positive/negative shifts with known events, seconds/ms sign, both cameras, zero equivalence, prefix/EOF coverage, no double application, domain rejection. Document future build/manual replay commands and setting provenance; no core ORB API or invented YAML key. Review CLI change before implementation as required by repository rules.
 2. **Calibration exporter/converter:** SDK file-only decode to lossless PNG, full-precision raw XYZ CSV and gyro-grid combined CSV using existing interpolation; immutable manifest/count/hash/domain checks. Validate synthetic interpolation, boundary/gap rejection, nanosecond ROS1 headers and PNG pixels, then real `.db3` round-trip later. Pin verified bagcreater conventions and exact commands; approved installations only. Dataset/schema changes require separate review.
 3. **IMU-only recorder and capture metadata:** separate modular utility for hours-long 200/100 Hz recording, bounded queues/disk monitoring, signal-safe normal finalization, full precision, temperature-support query and health logging; no camera image streams or NVRAM writes. Small shared metadata improvement records gain/exposure/global time/motion correction; explicit temporary manual exposure option only after interface review. Synthetic tests cover precision, rate/duration validation, faults, disk exhaustion and stop; later short physical pilot measures overhead before Allan.
 4. **Mac preparation:** content-only templates from values above, measured-dimension Aprilgrid PDF/YAML, approved pinned Kalibr Docker trial and architecture log; verify parser-compatible matrices and direction basis tests. No target dimensions substituted from nominal print when measurements differ. Record unsupported options instead of inventing flags.
@@ -208,8 +233,8 @@ ASSUMED transport/build policy: later deploy checksummed copies of Mac utilities
 - UNKNOWN actual global-time setting/domains/exposure/gain and motion-correction behavior for the new unit; do not import old-unit settings.
 - UNKNOWN IMU temperature access, BMI085 gyro datasheet density, intrinsic history and per-axis scale/misalignment.
 - UNKNOWN raw timestamp exposure convention, offset repeatability, physical gyro/accel alignment and interpolation-induced correlation effects.
-- UNKNOWN Kalibr arm64 Docker viability, installed version's fixed-extrinsic/intrinsic-model interfaces, SDK Mac decoding and bagcreater conversion compatibility.
-- UNKNOWN new supply/card arrival, stable power, separate data-volume qualification, exact recording overhead and unresolved N3 condition. Hardware availability is not gate evidence.
+- UNKNOWN Kalibr arm64 Docker viability (fallback: x86 Lab workstation), installed version's fixed-extrinsic/intrinsic-model interfaces, SDK Mac decoding and bagcreater conversion compatibility.
+- UNKNOWN new supply/card arrival, stable power, 128 GB card sustained-write qualification, exact recording overhead and unresolved N3 condition. Hardware availability is not gate evidence.
 - UNKNOWN measured target size/flatness/NIR contrast, precise optical-center tape reference and local gravity. Current intrinsics/baseline have readback provenance, not independent metrology.
 - SOURCE-SUPPORTED [L8] old-unit method notes apply; old-unit serial, numeric calibration, power/timing receipts and fallback logs do not transfer. No reviewer-design challenge is needed beyond the SOURCE-SUPPORTED parser caveat and storage-policy reconciliation already recorded above.
 
