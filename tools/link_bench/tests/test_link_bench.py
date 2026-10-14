@@ -44,6 +44,33 @@ class Decoder(unittest.TestCase):
             bad[i] ^= 0x80 if bad[i] ^ 0x80 else 0x40
             self.assertIsNone(lb.decode(bytes(bad)), i)
 
+    def test_gpio_marker_ioctl_layout(self):
+        """No GPIO chip here: fake the ioctls and check the uAPI v2 request bytes
+        (offsets from linux/gpio.h on this host)."""
+        calls = []
+        def ioctl(fd, req, buf):
+            calls.append((req, bytes(buf)))
+            if req == lb.GpioMarker.GET_CHIPINFO:
+                buf[32:43] = b'pinctrl-rp1'
+            elif req == lb.GpioMarker.GET_LINE:
+                lb.struct.pack_into('<i', buf, 588, 99)
+            return 0
+        saved = (lb.glob.glob, lb.os.open, lb.os.close, lb.fcntl.ioctl)
+        lb.glob.glob, lb.os.open, lb.os.close, lb.fcntl.ioctl = (
+            lambda p: ['/dev/gpiochip0'], lambda *a: 7, lambda fd: None, ioctl)
+        try:
+            m = lb.GpioMarker(17)
+            m.toggle()
+        finally:
+            lb.glob.glob, lb.os.open, lb.os.close, lb.fcntl.ioctl = saved
+        self.assertEqual(m.fd, 99)
+        req = calls[1][1]
+        self.assertEqual(len(req), 592)
+        self.assertEqual(lb.struct.unpack_from('<I', req, 0)[0], 17)
+        self.assertEqual(lb.struct.unpack_from('<Q', req, 288)[0], 8)
+        self.assertEqual(lb.struct.unpack_from('<I', req, 560)[0], 1)
+        self.assertEqual([c[1] for c in calls[2:]], [lb.struct.pack('<QQ', 0, 1), lb.struct.pack('<QQ', 1, 1)])
+
     def test_percentile_nearest_rank(self):
         v = list(range(1, 101))
         self.assertEqual((lb.percentile(v, 50), lb.percentile(v, 95), lb.percentile(v, 99)), (50, 95, 99))
