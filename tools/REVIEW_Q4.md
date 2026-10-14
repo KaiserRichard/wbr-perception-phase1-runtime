@@ -10,12 +10,18 @@ Read COMMON_QUEUE.md, PROPOSAL.md, J1_components.md, J2_architecture.md and tool
 READMEs. Q4 allows implementation/test edits only in take_tools, calib_tools,
 link_proto, frames and clockmap; additional tools received read-only review.
 Three confirmed numeric bugs were fixed with new failing-then-passing regressions.
-Five findings remain OPEN outside that edit scope. No style refactoring.
+Q6 subsequently authorized fixes for all five remaining findings under tools/.
+All five are now FIXED with failing-then-passing regressions, including shared
+ROS-free/ORB-free boundary logic. ROS/ORB integration remains UNBUILT/UNKNOWN.
+No hardware gate is promoted.
 Severity below is an INFERRED engineering assessment, not a hardware gate result.
 
 ## Findings, ranked by severity
 
-### High — OPEN: Python ROS gate accepts NaN clock evidence
+The original reproduction paragraphs describe Q4 behavior before fixes. Q6 fix
+paragraphs describe the current implementation and its measured limits.
+
+### High — FIXED: Python ROS gate accepts NaN clock evidence
 
 **MEASURED:** `ros2_bridge/mapping.py:118` checks clock revision, age and
 uncertainty using comparisons without enforcing integer types. Each of
@@ -35,12 +41,18 @@ for field in ('age_upper_ns', 'uncertainty_ns', 'revision'):
 # All three: pose_published
 ```
 
-Missing tests: noninteger/bool/NaN/infinite clock fields, configuration budgets,
-and snapshot counters. Require explicit integer/range validation before state
-mutation and gate decisions. The observed bypass is in the ROS-free Python core;
-actual ROS execution remains UNKNOWN. No edit authorized in this directory.
+**MEASURED, Q6 fix:** `ros2_bridge/mapping.py` now validates exact Python int
+values (excluding bool), nonnegative native uint64 counters/generation/revision,
+uint32 reason bits, int64 source/age/uncertainty/budgets and the ROS stamp range
+before mutating watermarks or boundaries. Invalid configuration withholds poses.
+`test_numeric_inputs_are_typed_and_bounded_before_mutation` failed with 87
+subtest failures before the fix, then passed. It covers each clock numeric
+field, snapshot counters and configuration with bool, noninteger, NaN, infinity,
+negative and oversized values, then verifies valid input can still publish.
+`test_native_integer_range_edges` additionally verifies signed overflow rejection
+and accepted native maxima. Actual ROS execution remains UNKNOWN.
 
-### High — OPEN: ROS skeleton does not implement its pause/forward-seek rules
+### High — FIXED: ROS skeleton does not implement its pause/forward-seek rules
 
 **MEASURED source review:** `ros2_bridge/src/bridge_node.cpp:55` latches only
 backward time changes and changes to use_sim_time. With a nonzero paused ROS
@@ -51,12 +63,34 @@ not invalidate the generation, evidence or gate.
 
 DESIGN.md requires pause to stop poses and forward seek to require fresh
 generation/rebind. [ROS time design, source lines 61–103](https://github.com/ros2/design/blob/gh-pages/articles/130_ros_time.md#L61-L103)
-supports explicit pause and jump handling. This is a source-confirmed missing
-policy, not a claimed ROS runtime failure. The executable has no connected
-producer and is UNBUILT. Missing tests: paused nonzero clock with fresh ingress,
-forward seek, clock-source replacement, and resume/rebind. No edit authorized.
+supports explicit pause and jump handling.
 
-### Medium — OPEN: harness treats a missing declared extra artifact as success
+**MEASURED, Q6 fix:** extracted the old polling behavior into shared ROS-free
+`src/clock_policy.hpp`; `clock_policy_checks` in `tests/core_probe.cpp` failed
+on a nonzero pause before the fix. The node now uses that policy: equal replay
+time suppresses poses even with fresh ingress; Gate still consumes paused
+snapshots/reset events, so resume needs a later fresh estimate. Backward jumps,
+mode changes, excessive forward increments and explicit discontinuity events
+latch restart/rebind. A fault clears pending snapshots and clock evidence.
+Tests pass for zero/nonzero pause, resume, forward jump, small notified seek,
+equal-time source replacement, mode change, backward jump, unconfigured policy
+and restart with fresh estimate/evidence in a new generation (old evidence fails).
+
+**SOURCE-SUPPORTED, Q6 source review:** the UNBUILT node registers a retained
+jump handler using [Jazzy rclcpp clock.hpp, lines 212–238](https://github.com/ros2/rclcpp/blob/jazzy/rclcpp/include/rclcpp/clock.hpp#L212-L238)
+and [rcl time.h, lines 100–111](https://github.com/ros2/rcl/blob/jazzy/rcl/include/rcl/time.h#L100-L111).
+This latches notified jumps even between polls after clock startup. The new
+`max_forward_step_ns` parameter defaults to -1 (replay poses withheld until
+configured); no physical budget is invented. It bounds an ordinary replay
+increment, so slow polls/fast playback can conservatively fault. The trusted
+replay owner must call `notify_clock_discontinuity()` **before every seek or
+publisher replacement**, including small/equal-time changes which clock samples
+cannot distinguish from ordinary progression. That integration seam, the ROS
+callback, mailbox clearing and actual publication remain UNBUILT/UNKNOWN; no
+producer/supervisor is connected. This Q6 policy supersedes DESIGN.md's earlier
+backward-only implementation note; it is not complete autonomous seek detection.
+
+### Medium — FIXED: harness treats a missing declared extra artifact as success
 
 **MEASURED:** `run_harness/harness.py:395` records missing extra trajectories in
 receipt.errors, but neither changes status nor sets analysis_failed. With the
@@ -76,10 +110,14 @@ finally:
     t.doCleanups()
 ```
 
-Missing test: missing or escaping declared extra trajectory must cause batch
-failure while preserving receipts and the original process result. No edit authorized.
+**MEASURED, Q6 fix:** the artifact-collection error path now sets
+`receipt.analysis_failed` for missing or escaping declared artifacts, retaining
+process exit/status, trajectory validity, errors, partial hashes and receipts.
+`test_missing_or_escaping_extra_artifact_fails_batch` failed in both missing
+and escaping-symlink cases before the fix. Both now pass: the successful engine
+remains exit_code=0/status=OK, analysis_failures=1, and the CLI returns 1.
 
-### Medium — OPEN: harness can finish a trial with descendants still running
+### Medium — FIXED: harness can finish a trial with descendants still running
 
 **MEASURED:** `run_harness/harness.py:290` waits for the process leader only.
 Process-group cleanup runs only when that wait times out. A leader spawning a
@@ -90,8 +128,18 @@ logs/artifacts after hashes are recorded. A child need not escape its process gr
 
 [Python 3.11 subprocess documentation, extracted lines 290–299 and 400–405](https://docs.python.org/3.11/library/subprocess.html#subprocess.Popen.wait)
 defines a new session and waiting for the child process, not all descendants.
-Missing test: leader exit with live descendants, verifying group cleanup or
-explicit rejection before artifact collection/next repeat. No edit authorized.
+**MEASURED, Q6 fix:** `launch()` now kills the trial's POSIX process group
+in a finally block after every leader wait, including successful exit, before
+logs close or artifact collection/another repeat starts. Timeout still records
+timed_out and the reaped leader return code. A vanished process group is harmless.
+`test_leader_exit_cleans_descendants_before_return` failed before the fix: a
+child wrote its delayed marker after launch returned. It now passes: the marker
+remains absent beyond the child's intended write time, with the original
+exit_code=0/timed_out=False retained. Existing timeout-with-child fixtures pass.
+**UNKNOWN / limitation:** this owns descendants that remain in the launched
+process group; deliberately detached sessions/other process groups are outside
+this POSIX cleanup contract. Kernel I/O completion and zombie reaping are not
+measured by the delayed-writer test.
 
 ### Medium — FIXED: finite calibration doubles overflow/underflow ORB fields
 
@@ -108,7 +156,7 @@ creating any output. Regression:
 passed after. The guard checks storage representation, not physical plausibility
 or all downstream ORB arithmetic. OpenVINS outputs retain their separate path.
 
-### Medium — OPEN: optional ORB IMU boundary narrows doubles without a guard
+### Medium — FIXED: optional ORB IMU boundary narrows doubles without a guard
 
 **SOURCE-SUPPORTED:** [ImuTypes.h, lines 45–58](https://github.com/UZ-SLAMLab/ORB_SLAM3/blob/4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4/include/ImuTypes.h#L45-L58)
 accepts float motion components and double seconds. Adapter append accepts any
@@ -118,7 +166,23 @@ upstream but exceeds float range. Out-of-range narrowing is not a qualified
 finite engine measurement. Missing test: oversized finite motion at the actual
 ORB boundary, with an explicit rejection/FAULT policy. Source path inspected;
 the optional binding was not compiled or executed, so runtime behavior is UNKNOWN.
-No edit authorized in this directory.
+**MEASURED, Q6 fix:** `vio_adapter/orb_engine.cpp` now calls shared
+ORB-free `orb_imu.hpp::orb_motion()` immediately before constructing each
+`IMU::Point`. The helper rejects nonfinite/out-of-float-range values before
+casting, and nonzero-to-zero underflow after casting. It throws range_error;
+the existing Adapter exception path emits invalid FAULT/ENGINE_FAULT and counts
+engine rejection, without calling TrackStereo for that batch. Double seconds
+remain unchanged. Ordinary float rounding is allowed; this is storage
+representability, not physical plausibility qualification.
+
+The new C++ fixture group in `tests/test_adapter.cpp` failed its rejection
+assertion with the extracted unchecked narrowing, then passed with the guard.
+It exercises both signs of overflow/underflow plus NaN/infinity in all six
+components; zero, normal, float-max and subnormal edges; and a boundary-checking
+fake Engine proving the Adapter FAULT path and no accepted batch. The optional
+ORB binding itself remains UNBUILT/UNKNOWN; the exact helper it calls is compiled
+and executed without ORB. The adapter now has 12 C++ fixture groups.
+
 
 ### Low — FIXED: trajectory velocity overflow was marked valid
 
@@ -224,31 +288,56 @@ matrix-to-xyzw conversion, exact ns text, observed epoch splitting and failed
 trial denominators are covered. Absence of covariance, mounted body pose, odom
 and TF in the bridge is intentional. ROS PoseStamped defines a header and pose
 [Jazzy message source lines 1–4](https://github.com/ros2/common_interfaces/blob/jazzy/geometry_msgs/msg/PoseStamped.msg#L1-L4).
-Finite covariance metadata is not a covariance qualification. Additional OPEN
-issues above do not invalidate the existing synthetic convention tests.
+Finite covariance metadata is not a covariance qualification. The Q6 fixes above preserve the existing synthetic convention tests.
 
 ## Validation commands and results
 
 **MEASURED:** Python 3.11.0rc2; Apple clang 17.0.0; macOS x86_64.
 Each command below was run from repository root with
-`PYTHONDONTWRITEBYTECODE=1`. All exited 0, both before new regressions and after
-fixes. Logs for this session: /tmp/q4-baseline-{0..8}.log and
-/tmp/q4-final-{0..8}.log, ordered as the table.
+`PYTHONDONTWRITEBYTECODE=1`. Q4 baseline/final counts are retained as history;
+all nine Q6 final commands exited 0. Q6 logs: `/tmp/q6-final-{0..8}.log`, ordered
+as the table. Q6 did not rerun the old baseline; targeted new regressions were
+run before each fix. Logs: `/tmp/q6-red-{numeric,artifact,descendants,clock,orb}.log`
+(C++ build logs also use the `q6-red-*-build.log` names).
 
-| Exact command | Baseline | Final |
-|---|---:|---:|
-| python3 -m unittest discover -s tools/take_tools/tests -v | 19 | 20 |
-| python3 -m unittest discover -s tools/calib_tools/tests -v | 15 | 16 |
-| python3 -m unittest discover -s tools/frames/tests -v | 10 | 11 |
-| python3 -m unittest discover -s tools/clockmap/tests -v | 37 | 37 |
-| make -C tools/link_proto test | C assertions + 4 Python | same |
-| make -C tools/vio_adapter test | 11 C++ fixture groups + 4 Python | same |
-| make -C tools/runtime_observer test | C++ recorder checks + 20 Python | same |
-| python3 -m unittest discover -s tools/run_harness/tests -v | 17 | 17 |
-| make -C tools/ros2_bridge test | C++ core + 18 Python, parity enabled | same |
+| Exact command | Q4 baseline | Q4 final | Q6 final |
+|---|---:|---:|---:|
+| python3 -m unittest discover -s tools/take_tools/tests -v | 19 | 20 | 20 |
+| python3 -m unittest discover -s tools/calib_tools/tests -v | 15 | 16 | 16 |
+| python3 -m unittest discover -s tools/frames/tests -v | 10 | 11 | 11 |
+| python3 -m unittest discover -s tools/clockmap/tests -v | 37 | 37 | 37 |
+| make -C tools/link_proto test | C assertions + 4 Python | same | same |
+| make -C tools/vio_adapter test | 11 C++ fixture groups + 4 Python | same | 12 C++ fixture groups + 4 Python |
+| make -C tools/runtime_observer test | C++ recorder checks + 20 Python | same | same |
+| python3 -m unittest discover -s tools/run_harness/tests -v | 17 | 17 | 19 |
+| make -C tools/ros2_bridge test | C++ core + 18 Python, parity enabled | same | C++ core + clock policy + 20 Python, parity enabled |
 
-Final Python total: **147 passed**, zero failures/skips. C/C++ targets passed.
-The three targeted new tests failed before fixes and passed afterward:
+Q6 final Python total: **151 passed**, zero failures/skips. C/C++ targets passed.
+Q4 final Python total was 147. All five Q6 targeted regressions failed before
+their fixes and passed afterward; the additional integer range-edge test passes.
+Q6 edited only under tools/ and created no REPORT file.
+
+Exact Q6 regression commands (each with `PYTHONDONTWRITEBYTECODE=1`):
+
+```sh
+python3 -m unittest discover -s tools/ros2_bridge/tests -k numeric -v
+python3 -m unittest discover -s tools/run_harness/tests -k extra_artifact -v
+python3 -m unittest discover -s tools/run_harness/tests -k leader_exit -v
+make -C tools/ros2_bridge build/core_probe
+tools/ros2_bridge/build/core_probe < /dev/null
+make -C tools/vio_adapter build/test_adapter
+tools/vio_adapter/build/test_adapter
+```
+
+Before fixes: numeric regression failed (87 subtests); extra-artifact regression
+failed (2 subtests); descendant regression failed (1 assertion). Both C++
+executables built, then aborted on the new pause/narrowing assertion (exit 134).
+After fixes: all pass, including the two C++ assertion executables as part of
+the final make targets. The C++ red runs used extracted old boundary logic;
+the node/binding now call the same fixed helpers tested by those executables.
+
+
+The three Q4 targeted tests failed before their Q4 fixes and passed afterward:
 
 ```sh
 python3 -m unittest discover -s tools/calib_tools/tests -k native_float -v
@@ -256,7 +345,7 @@ python3 -m unittest discover -s tools/frames/tests -k velocity_overflow -v
 python3 -m unittest discover -s tools/take_tools/tests -k extreme_accel -v
 ```
 
-**MEASURED, read-only real-data checks:** called take_tools.audit on
+**MEASURED, Q4 read-only real-data checks (not rerun in Q6):** called take_tools.audit on
 `/Users/quockaiser/Desktop/Research/wbr-data/2026-10-14-d435i-ramtest15s/take/stereo_imu.db3`:
 structural PASS, global_time only, IR1=447, IR2=447, gyro=2971, accel=1507,
 447 accepted stereo pairs. Called clockmap.analyze_timestamps on adjacent
@@ -266,9 +355,13 @@ each. No raw data copied/exported into this repo; no engine execution implied.
 **UNKNOWN / NOT verified:** ORB/OpenVINS native calibration loading, optional
 ORB binding compilation, actual ROS package compilation/runtime, camera/Pi/MCU,
 mount calibration, continuous odom, true clock/source-age bounds, hardware
-overhead, controller behavior or any gate. Missing integration tests and OPEN
-findings remain explicit; passing suites do not resolve them.
+overhead, controller behavior or any gate. Missing integration tests remain explicit; passing ROS-free/ORB-free suites
+does not establish actual ROS/ORB build/runtime or hardware behavior.
 
-Process deviation: a read-only `git status --short` was invoked during initial
+Q4 process deviation: a read-only `git status --short` was invoked during initial
 inventory before COMMON_QUEUE.md's no-git rule was read. No further git commands,
 git mutations, installs, SSH, camera or Raspberry Pi access were performed.
+
+Q6 process: no git commands, installs, SSH, camera/Pi/MCU access or real-data
+mutation. Q4's read-only real-data results above are retained history and were
+not rerun in Q6. No new report was written; Q6 evidence is recorded here only.

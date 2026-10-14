@@ -20,6 +20,15 @@ class ClockEvidence:
     uncertainty_ns: int
 
 
+def integer(value, maximum):
+    return type(value) is int and 0 <= value <= maximum
+
+
+INT64_MAX = 2**63 - 1
+UINT64_MAX = 2**64 - 1
+ROS_MAX = 2147483647999999999
+
+
 def pose_fields(transform, ros_ns):
     """T_world_camera -> PoseStamped fields, without inversion or axis guessing."""
     if type(ros_ns) is not int or not 0 <= ros_ns <= 2147483647 * 10**9 + 999999999:
@@ -84,8 +93,24 @@ class Gate:
             return None, reason
         if self.blocked:
             return reject("regression_latched")
-        if not self.session or not self.domain or self.target not in ("ros_live", "ros_replay") or self.max_age <= 0 or self.max_uncertainty < 0:
+        if (not self.session or not self.domain or self.target not in ("ros_live", "ros_replay")
+                or not integer(self.generation, UINT64_MAX)
+                or not integer(self.max_age, INT64_MAX) or self.max_age == 0
+                or not integer(self.max_uncertainty, INT64_MAX)):
             return reject("unconfigured")
+        # Validate before watermarks/boundaries: malformed numbers are not events.
+        if any(not integer(s[key], UINT64_MAX) for key in
+               ('sequence', 'reset_counter', 'epoch_id')) or (
+                s['map_id'] is not None and not integer(s['map_id'], UINT64_MAX)) or not integer(s['reasons'], 2**32 - 1):
+            return reject("invalid_snapshot")
+        if s['source_ns'] is not None and not integer(s['source_ns'], INT64_MAX):
+            return reject("bad_source")
+        if evidence is not None and any(
+                not integer(getattr(evidence, key), maximum) for key, maximum in (
+                    ('source_ns', INT64_MAX), ('generation', UINT64_MAX),
+                    ('revision', UINT64_MAX), ('ros_ns', ROS_MAX),
+                    ('age_upper_ns', INT64_MAX), ('uncertainty_ns', INT64_MAX))):
+            return reject("clock_unavailable")
         if s["source_ns"] is not None and (s["source_ns"] < 0 or s["domain"] != self.domain):
             return reject("bad_source")
         boundary = (s["reset_counter"], s["epoch_id"], s["map_id"])

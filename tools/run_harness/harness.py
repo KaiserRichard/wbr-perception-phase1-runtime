@@ -288,7 +288,7 @@ def log_counts(text):
 
 
 def launch(command, directory, timeout_s, prefix=''):
-    """POSIX process-group timeout includes descendants; logs stream to disk."""
+    """POSIX trials own their process group, including after leader exit."""
     start = stamp()
     code, timed_out, error = None, False, None
     env = dict(os.environ)
@@ -303,8 +303,15 @@ def launch(command, directory, timeout_s, prefix=''):
                 code = process.wait(timeout=timeout_s)
             except subprocess.TimeoutExpired:
                 timed_out = True
-                os.killpg(process.pid, signal.SIGKILL)
-                code = process.wait()
+            finally:
+                # A successful leader can leave writers alive. Kill its group
+                # before closing logs or reading/hashing any trial artifacts.
+                try:
+                    os.killpg(process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+                if code is None:
+                    code = process.wait()
         except OSError as exc:
             error = str(exc)
     end = stamp()
@@ -400,6 +407,7 @@ def run(spec_path, output):
                 receipt['artifacts'][name] = {'sha256': sha256(artifact), 'bytes': artifact.stat().st_size}
             except (OSError, ValueError) as exc:
                 receipt['errors'].append(str(exc))
+                receipt['analysis_failed'] = True
         receipt['trajectory_valid'] = False
         try:
             samples, epochs = poses(directory, spec)

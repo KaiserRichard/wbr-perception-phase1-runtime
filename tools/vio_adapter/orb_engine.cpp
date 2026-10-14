@@ -1,5 +1,6 @@
 // Built ONLY when WBR_WITH_ORBSLAM3 is enabled. Pinned API citations: SOURCES.md.
 #include "orb_engine.h"
+#include "orb_imu.hpp"
 #ifndef WBR_WITH_ORBSLAM3
 #error "orb_engine.cpp requires WBR_WITH_ORBSLAM3"
 #endif
@@ -23,8 +24,10 @@ EngineResult OrbEngine::track(const Stereo& p,const std::vector<Combined>& batch
     if (!origin_) origin_=std::min(p.left.stamp.ns,batch.front().stamp.ns);
     auto seconds=[&](int64_t ns) { return double(ns-*origin_)*1e-9; };
     std::vector<ORB_SLAM3::IMU::Point> imu;
-    for (const auto& m:batch) imu.emplace_back(m.accel.x,m.accel.y,m.accel.z,
-        m.gyro.x,m.gyro.y,m.gyro.z,seconds(m.stamp.ns));
+    for (const auto& m:batch) {
+        const auto v=orb_motion(m); // range_error -> Adapter ENGINE_FAULT, no TrackStereo.
+        imu.emplace_back(v[0],v[1],v[2],v[3],v[4],v[5],seconds(m.stamp.ns));
+    }
     cv::Mat left(p.left.height,p.left.width,CV_8UC1,const_cast<uint8_t*>(p.left.y8.data()));
     cv::Mat right(p.right.height,p.right.width,CV_8UC1,const_cast<uint8_t*>(p.right.y8.data()));
     // System.h 107-110 / System.cc 316-325: returned Tcw maps world into camera.

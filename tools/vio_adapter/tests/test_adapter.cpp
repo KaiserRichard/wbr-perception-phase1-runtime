@@ -1,5 +1,6 @@
 #include "adapter.h"
 #include "fake_engine.h"
+#include "orb_imu.hpp"
 #include <cassert>
 #include <cmath>
 #include <iostream>
@@ -29,6 +30,41 @@ static void covered(Adapter& a,int64_t start) {
     pair(a,start+5000000);
 }
 int main() {
+    { // Exactly the helper called immediately before ORB IMU::Point construction.
+        for (int component=0; component<6; ++component) {
+            for (double value : {1e40, -1e40, 1e-50, -1e-50,
+                    std::numeric_limits<double>::infinity(),
+                    std::numeric_limits<double>::quiet_NaN()}) {
+                Combined sample{stamp(0),{0,0,0},{0,0,0}};
+                double* fields[]={&sample.accel.x,&sample.accel.y,&sample.accel.z,
+                                  &sample.gyro.x,&sample.gyro.y,&sample.gyro.z};
+                *fields[component]=value;
+                bool rejected=false;
+                try { (void)orb_motion(sample); }
+                catch(const std::range_error&) { rejected=true; }
+                assert(rejected);
+            }
+        }
+        const double largest=std::numeric_limits<float>::max();
+        const double smallest=std::numeric_limits<float>::denorm_min();
+        auto values=orb_motion({stamp(0),{largest,-largest,smallest},{-smallest,0,1.25}});
+        assert(values[0]==largest && values[1]==-largest && values[2]==smallest);
+        assert(values[3]==-smallest && values[4]==0 && values[5]==1.25f);
+        class BoundaryEngine : public Probe {
+            EngineResult track(const Stereo& p,const std::vector<Combined>& batch) override {
+                for(const auto& sample:batch) (void)orb_motion(sample);
+                return Probe::track(p,batch);
+            }
+        } e;
+        Adapter a(e,"device");
+        a.feed_accel(m(0)); a.feed_accel(m(10000000));
+        a.feed_gyro(m(3000000,1e40)); a.feed_gyro(m(7000000,1e40));
+        pair(a,5000000);
+        assert(a.snapshot().state==State::FAULT && !a.snapshot().valid);
+        assert(a.snapshot().reasons==ENGINE_FAULT && a.counters().engine_rejected==1);
+        assert(e.batches.empty());
+    }
+
     { // Original d435i_input test intent: prefix, interpolation, endpoint once, no extrapolation.
         Probe e; Adapter a(e,"device"); a.feed_gyro(m(999000000));
         a.feed_accel(m(1000000000,0)); a.feed_accel(m(1010000000,10));
@@ -127,5 +163,5 @@ int main() {
         a.finish(); a.finish();
         bool threw=false; try { a.feed_gyro(m(20000000)); } catch(const std::logic_error&) { threw=true; } assert(threw);
     }
-    std::cout<<"MEASURED: 11 synthetic adapter fixture groups passed; ORB/hardware UNKNOWN\n";
+    std::cout<<"MEASURED: 12 synthetic adapter fixture groups passed; ORB/hardware UNKNOWN\n";
 }

@@ -20,11 +20,11 @@ OBJECTS := $(SOURCES:%.cpp=$(BUILD)/%.o)
 all: $(BUILD)/libvio_adapter.a $(BUILD)/replay_fake
 $(BUILD):
 	mkdir -p $@
-$(BUILD)/%.o: %.cpp adapter.h orb_engine.h | $(BUILD)
+$(BUILD)/%.o: %.cpp adapter.h orb_engine.h orb_imu.hpp | $(BUILD)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 $(BUILD)/libvio_adapter.a: $(OBJECTS)
 	ar rcs $@ $^
-$(BUILD)/test_adapter: tests/test_adapter.cpp fake_engine.h $(BUILD)/libvio_adapter.a
+$(BUILD)/test_adapter: tests/test_adapter.cpp fake_engine.h orb_imu.hpp $(BUILD)/libvio_adapter.a
 	$(CXX) $(CXXFLAGS) -I. $< $(BUILD)/libvio_adapter.a $(LDLIBS) -o $@
 $(BUILD)/replay_fake: replay_fake.cpp fake_engine.h $(BUILD)/libvio_adapter.a
 	$(CXX) $(CXXFLAGS) -I. $< $(BUILD)/libvio_adapter.a $(LDLIBS) -o $@

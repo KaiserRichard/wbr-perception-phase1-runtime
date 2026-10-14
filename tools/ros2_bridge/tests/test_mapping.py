@@ -196,6 +196,42 @@ class MappingTests(unittest.TestCase):
         for changes in ({"session": ""}, {"max_age_ns": -1}, {"max_uncertainty_ns": -1}):
             self.assertEqual(gate(**changes).advance(s, clock(s))[1], "unconfigured")
 
+    def test_numeric_inputs_are_typed_and_bounded_before_mutation(self):
+        bad = (True, False, 1.0, float('nan'), float('inf'), -1, 2**64)
+        s = snapshot()
+        for field in ('source_ns', 'generation', 'revision', 'ros_ns',
+                      'age_upper_ns', 'uncertainty_ns'):
+            for value in bad:
+                with self.subTest(evidence=field, value=value):
+                    g = gate()
+                    self.assertIsNone(g.advance(s, clock(s, **{field: value}))[0])
+                    self.assertEqual(g.advance(s, clock(s))[1], 'pose_published')
+        for field in ('source_ns', 'sequence', 'reset_counter', 'epoch_id', 'map_id', 'reasons'):
+            for value in bad:
+                with self.subTest(snapshot=field, value=value):
+                    g = gate()
+                    invalid = {**s, field: value}
+                    self.assertIsNone(g.advance(invalid, clock(s))[0])
+                    self.assertEqual(g.advance(s, clock(s))[1], 'pose_published')
+        for field in ('generation', 'max_age_ns', 'max_uncertainty_ns'):
+            for value in bad:
+                with self.subTest(config=field, value=value):
+                    self.assertIsNone(gate(**{field: value}).advance(s, clock(s))[0])
+
+    def test_native_integer_range_edges(self):
+        s = snapshot()
+        for field in ('source_ns', 'ros_ns', 'age_upper_ns', 'uncertainty_ns'):
+            with self.subTest(field=field):
+                self.assertIsNone(gate().advance(s, clock(s, **{field: 2**63}))[0])
+        for field in ('max_age_ns', 'max_uncertainty_ns'):
+            self.assertEqual(gate(**{field: 2**63}).advance(s, clock(s))[1], 'unconfigured')
+        g = gate(generation=2**64-1, max_age_ns=2**63-1, max_uncertainty_ns=2**63-1)
+        s.update(source_ns=2**63-1, sequence=2**64-1, reset_counter=2**64-1,
+                 epoch_id=2**64-1, map_id=2**64-1)
+        self.assertEqual(g.advance(s, clock(s, generation=2**64-1, revision=2**64-1,
+            age_upper_ns=2**63-1, uncertainty_ns=2**63-1,
+            ros_ns=mapping.ROS_MAX))[1], 'pose_published')
+
     def test_replay_requires_distinct_binding(self):
         s = snapshot()
         g = gate(target_domain="ros_replay", generation=7)

@@ -66,6 +66,38 @@ class HarnessTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'must be new'):
             harness.run(self.spec_path, self.output)
 
+    def test_missing_or_escaping_extra_artifact_fails_batch(self):
+        for escape in (False, True):
+            with self.subTest(escape=escape):
+                self.output = self.base / ('escape-extra' if escape else 'missing-extra')
+                self.spec['extra_trajectories'] = ['extra.txt']
+                if escape:
+                    with self.fake.open('a') as stream:
+                        stream.write("\nfrom pathlib import Path\nPath('extra.txt').symlink_to(" +
+                                     repr(str(self.dataset / 'manifest')) + ")\n")
+                self.spec_path.write_text(yaml.safe_dump(self.spec))
+                self.assertEqual(harness.main([str(self.spec_path), '--out', str(self.output)]), 1)
+                receipt = json.loads((self.output / 'repeat_001/receipt.json').read_text())
+                summary = json.loads((self.output / 'summary.json').read_text())
+                self.assertEqual(receipt['engine']['exit_code'], 0)
+                self.assertEqual(receipt['status'], 'OK')
+                self.assertTrue(receipt['trajectory_valid'])
+                self.assertEqual(summary['analysis_failures'], 1)
+                expected = 'artifact escapes' if escape else 'missing artifact'
+                self.assertTrue(any(expected in error for error in receipt['errors']))
+
+    def test_leader_exit_cleans_descendants_before_return(self):
+        import time
+        marker = self.base / 'child_finished'
+        child = "import time; from pathlib import Path; time.sleep(.4); Path(" + repr(str(marker)) + ").write_text('late')"
+        leader = "import subprocess, sys; subprocess.Popen([sys.executable, '-c', " + repr(child) + "])"
+        result = harness.launch([sys.executable, '-c', leader], self.base, 5)
+        # Cleanup on the failing pre-fix run too: the finite child exits on its own.
+        time.sleep(.6)
+        self.assertFalse(marker.exists(), 'descendant mutated artifacts after launch returned')
+        self.assertEqual(result['exit_code'], 0)
+        self.assertFalse(result['timed_out'])
+
     def test_mixed_failures_stay_in_denominator_and_partial_retained(self):
         self.spec.update(repeats=6, args=['mixed', '{repeat}'], timeout_s=3)
         summary, _ = self.run_harness()

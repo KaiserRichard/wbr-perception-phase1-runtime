@@ -1,6 +1,8 @@
 // UNBUILT ROS 2 Jazzy skeleton. main() intentionally has no snapshot producer.
 // API citations and missing integration work: ../DESIGN.md.
 #include "mapping.hpp"
+#include "clock_policy.hpp"
+#include <atomic>
 #include <chrono>
 #include <limits>
 #include <memory>
@@ -22,6 +24,18 @@ class SnapshotBridge : public rclcpp::Node {
     const auto max_uncertainty=declare_parameter<int64_t>("max_uncertainty_ns", -1);
     if (generation<0) throw std::invalid_argument("negative clock generation");
     gate_=std::make_unique<wbr::bridge::Gate>(session_,domain,target,generation,max_age,max_uncertainty);
+    const auto max_step=declare_parameter<int64_t>("max_forward_step_ns", -1);
+    clock_policy_=std::make_unique<wbr::bridge::ClockPolicy>(sim_time_,max_step);
+    // Jazzy rclcpp/clock.hpp L212-238; rcl/time.h L100-111.
+    // The callback also catches jumps that reverse again between wall polls.
+    rcl_jump_threshold_t threshold{};
+    threshold.on_clock_change=true;
+    threshold.min_backward.nanoseconds=-1;
+    threshold.min_forward.nanoseconds=max_step>0?max_step:0;
+    jump_handler_=get_clock()->create_jump_callback(nullptr,
+        [this](const rcl_time_jump_t &) noexcept {
+          if (clock_started_.load()) clock_discontinuity_.store(true);
+        },threshold);
     pose_=create_publisher<geometry_msgs::msg::PoseStamped>(
         "slam/pose",rclcpp::QoS(rclcpp::KeepLast(1)).reliable().durability_volatile());
     updater_.setHardwareID("unbound_adapter:"+session_);
@@ -48,15 +62,21 @@ class SnapshotBridge : public rclcpp::Node {
     received_=std::chrono::steady_clock::now();
     pending_unread_=true;
   }
+  // The trusted replay owner MUST call this before every seek (including
+  // sub-threshold forward seeks) or /clock publisher replacement. ROS clock
+  // callbacks cannot identify replacement by another publisher at equal time.
+  void notify_clock_discontinuity() noexcept {clock_discontinuity_.store(true);}
  private:
   void tick() {
     const auto ros_now=now().nanoseconds();
-    if (get_parameter("use_sim_time").as_bool()!=sim_time_) clock_fault_=true;
-    if (last_ros_ && ros_now<*last_ros_) clock_fault_=true;
-    last_ros_=ros_now;
-    if (clock_fault_) {reason_="clock_jump_restart_required"; level_=2; return;}
-    if (sim_time_ && ros_now==0) {
-      reason_="waiting_for_clock"; level_=3; return;
+    const auto clock_reason=clock_policy_->observe(ros_now,
+        get_parameter("use_sim_time").as_bool(),clock_discontinuity_.load());
+    if (ros_now>0) clock_started_.store(true);
+    if (clock_reason=="clock_jump_restart_required") {
+      std::lock_guard<std::mutex> lock(mutex_);
+      pending_.reset(); evidence_.reset(); last_evidence_.reset();
+      pending_unread_=false;
+      reason_=clock_reason; level_=2; return; // New generation + restart/rebind required.
     }
     std::optional<wbr::vio::EstimateSnapshot> s;
     std::optional<wbr::bridge::ClockEvidence> e;
@@ -73,11 +93,17 @@ class SnapshotBridge : public rclcpp::Node {
         else e->age_upper_ns+=elapsed; // Same steady domain, never ROS-minus-device.
       }
     }
-    if (!s) {reason_="no_snapshot_ingress"; level_=3; return;}
+    if (!s) {reason_=clock_reason.empty()?"no_snapshot_ingress":clock_reason; level_=3; return;}
     latest_=*s;
     if (e && (e->ros_ns<0 || e->ros_ns>ros_now)) e.reset();
     const auto decision=gate_->advance(*s,e);
     last_evidence_=e;
+    // Consume paused ingress through Gate, so resume cannot publish cached poses
+    // or hide reset/regression events. Only a later fresh estimate may publish.
+    if (!clock_reason.empty()) {reason_=clock_reason; level_=3; return;}
+    if (clock_discontinuity_.load()) {
+      reason_="clock_jump_restart_required"; level_=2; return;
+    }
     if (decision.reason!="duplicate") reason_=decision.reason;
     if (decision.pose) {
       const auto &p=*decision.pose;
@@ -125,8 +151,9 @@ class SnapshotBridge : public rclcpp::Node {
   std::unique_ptr<wbr::bridge::Gate> gate_;
   std::string session_,reason_="no_snapshot_ingress";
   int level_=3;
-  bool clock_fault_=false;
-  std::optional<int64_t> last_ros_;
+  std::unique_ptr<wbr::bridge::ClockPolicy> clock_policy_;
+  std::atomic<bool> clock_discontinuity_{false},clock_started_{false};
+  rclcpp::JumpHandler::SharedPtr jump_handler_;
   std::optional<int64_t> last_diag_ros_;
   diagnostic_updater::Updater updater_;
   rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr pose_;
