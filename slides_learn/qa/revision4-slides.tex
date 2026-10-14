@@ -1,0 +1,30 @@
+\begin{frame}{The projector is off so features belong to the room}
+
+\para{A \textbf{feature} is a recognizable image detail, such as a corner. The infrared projector adds dots that can help the depth system match points on a plain surface.}
+\diagram{\node[word] (a)at(0,0){Projected dots};\node[word] (b)at(6,0){Real table corner};\node[word] (c)at(12,0){Stable scene structure};\draw[faultflow,dashed](a)--++(0,-1.5)node[below,align=center]{Pattern can move\\with the projector};\draw[flow](b)--(c);}
+\para{For visual motion estimation, we want persistent details attached to the room. Projected dots can change on surfaces as the camera moves and create misleading matches.}
+\lesson{Turning off the projector trades artificial texture for more trustworthy natural texture.}
+
+\note{Sources: \detokenize{experiments/2026-10-13-SESSION_FACTS_FOR_SLIDES.md; slides_progress/main.tex}. }
+\end{frame}
+
+\begin{frame}{The projector gives a plain wall texture for stereo depth}
+
+\para{The D435i has a left infrared (IR) camera, a right IR camera and an IR projector. The cameras capture images; the projector produces no image. It shines an invisible dot pattern onto surfaces.}
+\diagram{
+  \node at (3,2.05) {White wall with projector OFF};
+  \node at (12,2.05) {White wall with projector ON};
+  \draw[navy,thick,fill=white] (0,0) rectangle (6,1.65);
+  \draw[navy,thick,fill=white] (9,0) rectangle (15,1.65);
+  \foreach \x/\y in {.4/.4,1.1/1.2,1.7/.65,2.5/1.35,3/.35,3.6/.95,4.2/1.4,4.7/.55,5.5/1.1,2.1/.2,5.7/.25,3.3/1.5}{
+    \fill[teal] (9+\x,\y) circle (.055);
+  }
+  \node[font=\small] at (3,-.45) {No distinctive detail to match.};
+  \node[font=\small] at (12,-.45) {Both IR cameras see added detail.};
+}
+{\small\muted{Illustrative IR views: the dots are invisible to our eyes.}\par}\medskip
+\para{A plain wall can make left--right matching fail. Dots can make matching possible within the same stereo pair. For rectified images, disparity $d$ is the horizontal pixel shift of a matched point.}
+\para{Depth is $Z=f\,b/d$: $f$ is focal length in pixels; $b$ is the distance between cameras (about 5 cm in our unit's nominal config); $d$ is disparity in pixels. $Z$ uses the same length unit as $b$.}
+\lesson{Dots help identify a match; camera geometry turns its pixel shift into depth.}
+\note{Sources: \detokenize{slides_learn/BRIEF.md Revision 4; experiments/2026-10-13-SESSION_FACTS_FOR_SLIDES.md section F; slides_course/main.tex}. Unit config baseline 0.0499 m is nominal factory geometry, not newly measured calibration. General active-stereo facts verified against RealSense, Projectors for D400 Series Depth Cameras, sections 1 and 3: https://dev.realsenseai.com/docs/projectors/ (accessed 14 October 2026). Schematic dots, not captured data or the actual projector pattern. Rectification was introduced on page 7. Stereo matches simultaneous views and does not require a pattern to remain fixed in the world across time.}
+\end{frame}

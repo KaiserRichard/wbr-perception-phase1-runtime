@@ -124,6 +124,7 @@
 \para{Imagine the robot turning past a table. The camera takes a left and right image of the same corner. Its motion sensor takes samples between images.}
 \diagram{\foreach \x/\name/\txt in {0/a/Sensors,4.7/b/Time and space,9.4/c/Motion estimate,14.1/d/Fair test}{\node[word] (\name) at (\x,0){\txt};}\draw[flow](a)--(b);\draw[flow](b)--(c);\draw[flow](c)--(d);}
 \para{First we learn what the signals mean. Then we learn how software combines them, how to judge the answer, and why the project tests each layer in order.}
+{\small\muted{Reading map: sensors, pages 6--12; projector detail, 9--11; gate learning checklist, 44--45; appendix, 46--49.}\par}
 \lesson{The same table corner will return throughout the deck.}
 
 \note{Sources: \detokenize{slides_course/main.tex}. }
@@ -198,6 +199,87 @@
 \lesson{Turning off the projector trades artificial texture for more trustworthy natural texture.}
 
 \note{Sources: \detokenize{experiments/2026-10-13-SESSION_FACTS_FOR_SLIDES.md; slides_progress/main.tex}. }
+\end{frame}
+
+\begin{frame}{The projector gives a plain wall texture for stereo depth}
+
+\para{The D435i has a left infrared (IR) camera, a right IR camera and an IR projector. The cameras capture images; the projector produces no image. It shines an invisible dot pattern onto surfaces.}
+\diagram{
+  \node at (3,2.05) {White wall with projector OFF};
+  \node at (12,2.05) {White wall with projector ON};
+  \draw[navy,thick,fill=white] (0,0) rectangle (6,1.65);
+  \draw[navy,thick,fill=white] (9,0) rectangle (15,1.65);
+  \foreach \x/\y in {.4/.4,1.1/1.2,1.7/.65,2.5/1.35,3/.35,3.6/.95,4.2/1.4,4.7/.55,5.5/1.1,2.1/.2,5.7/.25,3.3/1.5}{
+    \fill[teal] (9+\x,\y) circle (.055);
+  }
+  \node[font=\small] at (3,-.45) {No distinctive detail to match.};
+  \node[font=\small] at (12,-.45) {Both IR cameras see added detail.};
+}
+{\small\muted{Illustrative IR views: the dots are invisible to our eyes.}\par}\medskip
+\para{A plain wall can make left--right matching fail. Dots can make matching possible within the same stereo pair. For rectified images, disparity $d$ is the horizontal pixel shift of a matched point.}
+\para{Depth is $Z=f\,b/d$: $f$ is focal length in pixels; $b$ is the distance between cameras (about 5 cm in our unit's nominal config); $d$ is disparity in pixels. $Z$ uses the same length unit as $b$.}
+\lesson{Dots help identify a match; camera geometry turns its pixel shift into depth.}
+\note{Sources: \detokenize{slides_learn/BRIEF.md Revision 4; experiments/2026-10-13-SESSION_FACTS_FOR_SLIDES.md section F; slides_course/main.tex}. Unit config baseline 0.0499 m is nominal factory geometry, not newly measured calibration. General active-stereo facts verified against RealSense, Projectors for D400 Series Depth Cameras, sections 1 and 3: https://dev.realsenseai.com/docs/projectors/ (accessed 14 October 2026). Schematic dots, not captured data or the actual projector pattern. Rectification was introduced on page 7. Stereo matches simultaneous views and does not require a pattern to remain fixed in the world across time.}
+\end{frame}
+
+\begin{frame}{A projected dot can slide while a real corner stays fixed}
+
+ORB-SLAM3 estimates motion from fixed room features. A sliding dot can give wrong motion. Here the camera moves right above a flat table without turning.\par
+{\centering
+\begin{tikzpicture}[font=\small,y=.85cm]
+\foreach \offset/\title in {0/Physical table corner,9.5/Projected IR dot}{
+  \begin{scope}[xshift=\offset cm]
+  \node[font=\normalsize\bfseries] at (4,3.55) {\title};
+  \draw[navy,thick] (.3,2.3)--(7.7,2.3);
+
+  \node[box,minimum height=5mm,font=\small] (c1) at (2,.65) {D435i $t_1$};
+  \node[box,minimum height=5mm,font=\small] (c2) at (5.6,.65) {D435i $t_2$};
+  \draw[flow] (c1.east)--(c2.west);
+  \node[anchor=south,font=\small,inner sep=0pt] at (3.8,.91) {Moves right};
+  \draw[navy] (.7,-.6) rectangle (3.3,-.05);
+  \draw[navy] (4.3,-.6) rectangle (6.9,-.05);
+  \node at (2,-.95) {Image at $t_1$};
+  \node at (5.6,-.95) {Image at $t_2$};
+  \end{scope}
+}
+\node[anchor=west,text=muted] at (.3,2.75) {Table in the room};
+% Fixed corner: the later viewing ray leans left; its pixel shifts left.
+\fill[teal] (3.1,2.3) circle (.075);
+\node[anchor=west,inner sep=1pt] at (4.65,2.75) {Same world point};
+\draw[flow,teal] (2,.94)--(3.1,2.3);
+\draw[flow,teal,dashed] (5.6,.94)--(3.1,2.3);
+\draw[navy,thick] (2.55,-.5)--(2.55,-.2)--(2.95,-.2);
+\draw[navy,thick] (4.7,-.5)--(4.7,-.2)--(5.1,-.2);
+\node[text=teal!70!black] at (4,-1.65) {Corner pixel shifts left.};
+% The same projector ray moves with the rigid camera/projector assembly.
+\fill[fault] (11.5,2.3) circle (.075);
+\fill[fault] (15.1,2.3) circle (.075);
+\draw[faultflow] (11.5,2.3)--node[above,fill=paper]{World spot slides right}(15.1,2.3);
+\draw[flow,fault] (11.5,.94)--(11.5,2.3);
+\draw[flow,fault,dashed] (15.1,.94)--(15.1,2.3);
+\fill[fault] (11.5,-.33) circle (.065);
+\fill[fault] (15.1,-.33) circle (.065);
+\node[text=fault] at (13.5,-1.65) {Dot pixel stays here in this example.};
+\end{tikzpicture}
+\par}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.60\textwidth}
+\small
+\begin{tabular}{@{}L{.59\linewidth}L{.37\linewidth}@{}}
+\toprule
+Stereo depth on textureless surfaces & Often helpful.\\
+ORB-SLAM3 tracking across time & Potentially misleading.\\
+Our first natural-feature SLAM tests & OFF.\\\bottomrule
+\end{tabular}
+\end{column}
+\begin{column}{.37\textwidth}
+\small
+The attached projector pattern follows the camera; its lit spots slide in the room. OFF is experimental: later compare ON and OFF for tracking quality and depth.\par
+\end{column}
+\end{columns}
+\smallskip
+\lesson{If the D435i moves right, does the table corner move in the room, or only in the image?}
+\note{Sources: \detokenize{slides_learn/BRIEF.md Revision 4; experiments/2026-10-13-SESSION_FACTS_FOR_SLIDES.md; slides_progress/main.tex; slides_course/main.tex}. ORB-SLAM3 static-scene feature geometry: Campos et al. 2021, already linked on references page. Diagram is a geometric teaching example, not measured failure evidence: camera translates parallel to a flat table surface without rotating; one fixed projector ray intersects successive world points, while its image position remains constant for unchanged depth and rigid camera-projector geometry. General surfaces and rotations can change dot image positions too; camera-fixed emission directions do not mean every dot pixel is constant. Solid rays show t1, dashed rays t2. The corner does not move in the room; only its image position changes. Distinguish correspondence within one stereo pair from feature identity across time. OFF is this project's initial experimental choice, not a universal SLAM rule, and no ON/OFF comparison was run.}
 \end{frame}
 
 \begin{frame}{You can now explain what each sensor contributes}
@@ -649,6 +731,7 @@ swift -module-cache-path qa/swift-cache \textbackslash{}\par
 \textbf{Inertial estimation.} Forster et al. (2017), \href{https://arxiv.org/abs/1512.02363}{On-Manifold Preintegration for Real-Time Visual-Inertial Odometry}.\par\medskip
 \textbf{Trajectory evaluation.} Sturm et al. (2012), \href{https://cvg.cit.tum.de/data/datasets/rgbd-dataset}{RGB-D SLAM benchmark}: ATE and RPE. Zhang and Scaramuzza (2018), \href{https://rpg.ifi.uzh.ch/docs/IROS18_Zhang.pdf}{quantitative trajectory evaluation tutorial}. Maintainer's \href{https://github.com/MichaelGrupp/evo/wiki/Metrics}{evo metric guide}.\par\medskip
 \textbf{Frames and safe use.} Barfoot, \href{https://asrl.utias.utoronto.ca/~tdb/bib/barfoot_ser24.pdf}{State Estimation for Robotics}, second edition: 3D pose transforms, called SE(3). ST \href{https://www.st.com/content/st_com/en/support/learning/stm32-online-training/stm32h7-online-training.html}{STM32H7 watchdog training}.\par\medskip
+\textbf{Projector.} RealSense, \href{https://dev.realsenseai.com/docs/projectors/}{Projectors for D400 Series}: texture for stereo depth.\par\smallskip
 \textbf{Images.} Reused course illustrations are conceptual; new diagrams are schematic. Worked numbers are illustrative.\par
 \end{column}
 \end{columns}}

@@ -273,3 +273,167 @@ pose latency; transform theory and watchdog documentation are not a project
 health protocol or safety approval. This work validates teaching artifacts only.
 
 REVISION 3 FINAL
+
+
+## Revision 4 — infrared projector explanation
+
+Scope: owner-requested Revision 4 only. Read the builder rules, repository
+instructions, Git status/branch/recent history, existing deck and review records
+before edits. All writes stayed inside slides_learn/. No Git mutation, commit,
+push, Pi access, camera process, sensor capture, firmware/calibration change or
+ORB-SLAM3 runtime occurred. The brief explicitly forbids branch changes, so the
+existing branch was retained. Initial and final Git status entries are identical.
+Input source, PDF, all 47 previews, README, review log, source checker and manifests
+are archived in qa/revision4-before/ with a checked SHA-256 manifest; previous
+revision archives and historical evidence were not changed.
+
+Added exactly two frames immediately after the original page 9, which is unchanged:
+
+- Page 10 explains the two IR cameras and projector, that only the cameras capture
+  images, and that invisible projected dots add texture to a plain wall. A TikZ
+  OFF/ON illustration leads into disparity and Z = f b / d, with all units defined.
+  The approximately 5 cm baseline is the saved nominal unit configuration's
+  0.0499 m, not newly measured or validated calibration.
+- Page 11 uses side-by-side TikZ diagrams with earlier and later camera positions,
+  movement arrows, world positions and separate image observations. The real
+  corner stays fixed while its pixel shifts left. The attached projector's spot
+  slides right across the table; its pixel remains fixed in this illustrative
+  translation over a flat surface without rotation. This constant-pixel outcome
+  is not asserted for arbitrary surfaces or rotations. The three-row summary
+  distinguishes depth use, temporal ORB-SLAM3 tracking and our initial OFF tests.
+  OFF is explicitly experimental, with a later tracking/depth ON/OFF comparison
+  proposed, not performed. The requested question closes the slide; its answer
+  is that the corner stays fixed in the room and moves only in the image.
+
+Updated the page 2 reading map and added the RealSense projector primary-source
+link to the existing references page, now page 49. Gate learning tables shift to
+44–45 and appendix to 46–49. Existing source notes have no obsolete shifted numeric
+page references; the new note's page 7 geometry reference still points to page 7.
+No earlier revision content was redone. Existing checks and page/artifact manifests
+were updated for 49 pages; revision4-specific checks are reproducible below.
+
+Provenance: owner brief; October 13 session facts section F for nominal baseline;
+existing course/progress explanation and Campos et al. (2021) for static scene
+feature geometry. Verified active-stereo background against RealSense,
+[Projectors for D400 Series Depth Cameras](https://dev.realsenseai.com/docs/projectors/),
+sections 1 and 3, accessed 14 October 2026. That primary source explains texture
+for simultaneous left/right correspondence and does not claim our experimental
+OFF choice is universally required. The across-time failure mechanism is the
+geometric inference shown in the diagram, not a newly measured failure.
+Detailed assumptions and source locations are in speaker notes. No image was
+generated; illustrations use TikZ and existing assets are unchanged.
+
+Reader/layout review: opened and read pages 2, 8–12 and 49 at the rendered
+1280 x 719 size; re-opened page 11 after fixing its label collisions. Page 10
+moves from illumination to matching to depth, so a reader can distinguish a
+projector from an imager. Page 11 separates world and image positions and makes
+the within-pair/across-time distinction explainable aloud. Natural-feature and
+feature concepts follow the existing page 9 definition. Titles, diagram labels,
+three summary rows, experimental qualification and check question remain readable
+and clear of the footer. Initial page 11 vertical overflow and label overlap were
+fixed by shortening prose, adjusting diagram positions and removing an unnecessary
+table header; body fonts and deck theme were retained. A small references overflow
+was fixed with spacing. An initial edit attempt used the wrong relative working
+directory and failed before changing source; its subsequent build was a no-op.
+Final build/render were sequential and succeeded. No initial failure is reported
+as PASS. This is an author-simulated reader review, not an independent student test.
+
+Reproduction commands, from the repository root:
+
+```sh
+cd slides_learn
+latexmk -xelatex -interaction=nonstopmode main.tex
+swift -module-cache-path qa/swift-cache \
+  ~/Desktop/OS/OS-project/heterogeneous-edge-ai-os/slides/render.swift \
+  main.pdf preview
+python3 qa/check_source.py
+python3 qa/verify_revision4.py
+swift -module-cache-path qa/swift-cache qa/inspect_revision4.swift
+```
+
+Final verification: 49 PDF pages, 49 previews, 49 source notes, nine recaps and
+16 distinct clickable reference URLs, including the new projector link. No TeX
+warnings, errors, overfull or underfull boxes. All 45 prior source frames outside
+the reading map and references are identical to input; their rendered content
+pixels are identical when excluding only the footer rectangle
+(1100,680)–(1280,719). Archived input files remain hash-identical. Reused assets
+remain byte-identical to course assets. Pixel comparison establishes revision
+scope, not comprehension or automatic overlap detection. No runtime/gate claim
+is established by this teaching-artifact validation.
+
+Logs: qa/revision4-build-final.log, qa/revision4-render-final.log,
+qa/revision4-source-check-final.log, qa/revision4-verification.log and
+qa/revision4-pdf-inspection.log. Scope mapping is in
+qa/revision4-changed-pages.json; qa/revision4-slides.tex records the final inserted
+frames as a reference snippet (main.tex remains the build input).
+
+The inherited manifest included unavailable historical source paths. Their old
+hashes are retained separately as historical_sha256_unavailable_paths; current
+available artifact hashes were verified. No missing source file was recreated.
+
+REVISION 4 FINAL
+
+
+## Revision 5 — page 11 corner versus dot diagram
+
+Scope: only Revision 5 of BRIEF.md. All edits are inside slides_learn/;
+Git index, branch and commits were not changed under the builder rules.
+Before editing, inspected Git status, current branch, recent history, the brief,
+page 11 source and its existing preview. Preserved input source, PDF, review log,
+artifact manifest and all 49 previews in qa/revision5-before/ with SHA-256 hashes
+in qa/revision5-before-hashes.json. Earlier revision evidence is unchanged.
+
+Gave the diagram more vertical room by increasing its vertical coordinate scale
+from 0.75 cm to 0.85 cm. Placed both “Moves right” labels explicitly above the
+motion arrows, clear of camera boxes and viewing rays. Moved “Same world point”
+above the table line, away from the dashed ray; shortened the adjacent table label
+to “Table in the room” to keep the labels separate. Moved both colored image
+captions farther below their image labels. Put the three-row summary and the
+experimental-choice note beside each other below the diagram. Shortened the
+summary's “ORB-SLAM3 feature tracking across time” to “ORB-SLAM3 tracking across
+time”; the introduction still identifies fixed room features. The teaching
+content, geometric assumptions, OFF qualification, later ON/OFF comparison and
+verbatim check question are preserved. Theme, fonts, all source notes, page count,
+reading map and references are unchanged; no new page was needed.
+
+Reproduction commands from the repository root:
+
+```sh
+cd slides_learn
+latexmk -xelatex -interaction=nonstopmode main.tex
+swift -module-cache-path qa/swift-cache   ~/Desktop/OS/OS-project/heterogeneous-edge-ai-os/slides/render.swift   main.pdf preview
+python3 qa/check_source.py
+python3 qa/verify_revision5.py
+swift -module-cache-path qa/swift-cache qa/inspect_revision4.swift
+```
+
+Final build, render, source checks, scope verification and PDF inspection exited 0.
+The PDF has 49 pages and 16 distinct reference links; all 49 previews exist at
+1280 x 719. Final main.log contains no errors, warnings, overfull or underfull
+boxes. Only frame 11 differs from archived source; only page 11 differs among
+rendered PNGs (all other pages are byte-identical). Archived inputs remain
+hash-identical, all 49 source notes are unchanged, reused image assets remain
+byte-identical and Git status/current branch match the initial snapshot.
+
+Manual reader/layout review: opened pages 10, 11 and 12 at full rendered size.
+Page 10 still teaches within-pair matching and depth; page 11 clearly separates
+fixed-world corners from sliding lit spots, world positions from image positions,
+and explanatory captions from boxes. Both motion labels have clear space above
+their arrows. The summary, qualification and check question remain readable,
+with space above the footer. Page 12 still provides the sensor recap. This is an
+author-simulated reader review, not an independent student comprehension test.
+Pixel comparison verifies revision scope, not automatic overlap detection.
+The diagrams remain illustrative; no hardware, capture or runtime validation ran.
+
+Initial layout passes produced vertical overflow and were corrected before final
+validation. One render was started while an intermediate build was still running
+and failed; rerendered successfully after build completion. The first scope
+checker counted a preamble frame macro; corrected it to inspect document frames.
+Those failed attempts are not reported as successful checks.
+
+Final logs: qa/revision5-build-final.log, qa/revision5-render-final.log,
+qa/revision5-source-check-final.log, qa/revision5-verification.log and
+qa/revision5-pdf-inspection.log. Provenance: owner Revision 5 request and the
+existing Revision 4 teaching example and speaker notes; no new factual claims.
+
+REVISION 5 FINAL

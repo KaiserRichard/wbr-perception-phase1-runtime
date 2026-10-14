@@ -1,6 +1,6 @@
 # How WBR perception works
 
-`main.pdf` is the 47-page teaching deck. `preview/page-01.png` through `page-47.png` are its rendered pages. Start with the PDF; the appendix contains the glossary, tool list and reproduction commands.
+`main.pdf` is the 49-page teaching deck. `preview/page-01.png` through `page-49.png` are its rendered pages. Start with the PDF; the appendix contains the glossary, tool list and reproduction commands.
 
 The deck builds from embedded-system concepts through stereo, IMU measurements, frames and time, SLAM, calibration, software recording, evaluation and the gate ladder. Nine recaps invite the reader to explain each part aloud. A table corner provides the running example. Illustrative calculations are distinguished from the saved EuRoC results.
 
@@ -58,3 +58,31 @@ Build from main.tex using the normal commands above. The historical helpers
 qa/build_source.py and qa/apply_reader_fixes.py would overwrite Revision 3.
 qa/apply_revision3.py reconstructs only this revision from the preserved
 Revision 2 source; do not run it after making later edits to main.tex.
+
+Revision 4 adds projector teaching slides on pages 10–11 immediately after the
+unchanged page 9. Page 10 contrasts illustrative IR views of a white wall with
+projector OFF and ON, then connects matching to stereo depth. Page 11 compares a
+fixed table corner with a projected spot during camera translation, gives the
+three-use summary table, qualifies OFF as an experimental choice, and ends with
+the requested check question. The diagram assumes a flat table and no rotation;
+constant dot image position is specific to that example. The nominal 0.0499 m
+baseline comes from the saved unit configuration, not a new calibration.
+
+The reading map is updated on page 2. The gate learning checklist is now pages
+44–45, the appendix is pages 46–49, and references are on page 49 with a new
+RealSense projector primary-source link. The other 45 prior source frames and
+rendered content regions are unchanged apart from page numbers. Revision 3 input
+artifacts remain preserved in qa/revision4-before/. Historical reproduction
+helpers restore older decks; build the current main.tex directly.
+
+Additional deck-only verification commands (after build and render):
+
+```sh
+python3 qa/verify_revision4.py
+swift -module-cache-path qa/swift-cache qa/inspect_revision4.swift
+```
+
+New logs and scope checks use the revision4 prefix. REVIEW_LOG.md ends with
+REVISION 4 FINAL. For manual review, read pages 9–12, explain why matching one
+stereo pair differs from tracking across time, and answer the page 11 question.
+No projector setting was changed and no camera or SLAM runtime was invoked.

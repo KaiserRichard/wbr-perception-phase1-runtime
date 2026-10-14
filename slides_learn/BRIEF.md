@@ -112,3 +112,37 @@ State Estimation for Robotics, for SE(3)) | Self-check (one question the owner s
 answer before starting the gate). Keep it readable: short phrases, no paths or commands. Also
 add these sources to the references page. Rebuild, render, inspect the new page(s) and the
 references page, log "REVISION 3 FINAL".
+
+## REVISION 4: the infrared projector, around page 9 (owner request)
+The owner did not understand page 9 ("why the IR projector is turned off") and needed an outside
+explanation. Add 1–2 new slides right after the current page 9 (do not crowd page 9 itself):
+1. What the projector does: the D435i has a left IR camera, a right IR camera and an IR projector.
+   The projector produces no image; it shines an invisible dot pattern onto surfaces so the two IR
+   cameras see texture even on a plain white wall. Small illustration: white wall seen with
+   projector OFF (featureless) vs ON (illustrative dots). You may reuse `slides_course/images/P04.png`.
+2. Why dots help depth: stereo disparity d, depth Z = f·b/d (f focal length in pixels, b baseline
+   ≈ 5 cm on our unit per the config, d disparity in pixels); on a plain wall matching fails, dots
+   make matching possible.
+3. The key diagram (TikZ, side by side, two camera positions t1 and t2 with arrows): LEFT panel
+   "Physical table corner": the corner is fixed in the room; as the D435i moves right, the corner's
+   pixel position changes in the image but the corner itself does not move. RIGHT panel "Projected IR
+   dot": the projector is rigidly attached to the camera, so the dot pattern is fixed relative to the
+   camera, not to the world; when the camera moves, the lit spot slides across the table surface.
+   Label world positions and image positions clearly.
+4. Why that matters: ORB-SLAM3 assumes matched features are static points in the world; tracking a
+   dot that moves with the camera gives wrong motion. Summary table: Stereo depth on textureless
+   surfaces → projector often helpful; ORB-SLAM3 feature tracking → potentially misleading; our first
+   natural-feature SLAM tests → OFF. Note: this is an experimental choice, not a universal rule; we can
+   later compare ON vs OFF by tracking quality and depth. End with the check question: "If the D435i
+   moves right, does the table corner move in the room, or only in the image?"
+Keep the deck's teaching style and look. Update any page references and the reading map for the
+shift. Rebuild, render, inspect the new slides and their neighbours at full size, fix visual or
+technical issues, log "REVISION 4 FINAL".
+
+## REVISION 5: polish page 11 (corner vs dot diagram)
+Page 11 is too crowded: the "Moves right" labels sit on top of the camera boxes and arrow, "Same
+world point" collides with the dashed sight line, and the green/orange captions crowd the image
+boxes. Give the diagram more vertical room (move the summary table and the note to a cleaner
+layout, or split the table onto page 12 if needed), place "Moves right" above the arrow with clear
+space, and keep every label clear of lines. Keep the content and the check question. Rebuild,
+render, inspect pages 10–12 at full size, log "REVISION 5 FINAL".
