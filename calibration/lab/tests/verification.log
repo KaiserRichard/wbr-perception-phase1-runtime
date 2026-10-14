@@ -1,0 +1,33 @@
+OPEN: SYNTHETIC/OFFLINE TOOLING VERIFICATION ONLY; no physical qualification.
+UTC: 2026-10-14T13:11:02.345860+00:00
+Python: 3.11.0rc2
+Command: python3 -m unittest discover -s calibration/lab/tests -v
+
+test_existing_directory_preserved (test_lab.Layout.test_existing_directory_preserved) ... ok
+test_invalid_header_units_empty_nonfinite_and_stamps (test_lab.Layout.test_invalid_header_units_empty_nonfinite_and_stamps) ... ok
+test_layout_units_order_precision_links (test_lab.Layout.test_layout_units_order_precision_links) ... ok
+test_real_bash_receipt_default_and_diagnostic_modes (test_lab.Layout.test_real_bash_receipt_default_and_diagnostic_modes) ... ok
+test_receipt_quotes_commands_and_hashes_input (test_lab.Layout.test_receipt_quotes_commands_and_hashes_input) ... ok
+test_shell_entrypoints_reject_missing_arguments_without_external_work (test_lab.Layout.test_shell_entrypoints_reject_missing_arguments_without_external_work) ... ok
+test_synthetic_chain_through_pr3_converter (test_lab.Layout.test_synthetic_chain_through_pr3_converter) ... ok
+test_clean_is_diagnostic_and_faults_never_usable (test_lab.RecorderDiagnostics.test_clean_is_diagnostic_and_faults_never_usable) ... ok
+test_gaps_steps_frames_and_domains (test_lab.RecorderDiagnostics.test_gaps_steps_frames_and_domains) ... ok
+test_ram_formula_and_bounds (test_lab.RecorderDiagnostics.test_ram_formula_and_bounds) ... ok
+test_cli_synthetic_fixture (test_lab.Summaries.test_cli_synthetic_fixture) ... ok
+test_duplicate_or_negative_pixel_statistics_rejected (test_lab.Summaries.test_duplicate_or_negative_pixel_statistics_rejected) ... ok
+test_duplicate_yaml_rejected (test_lab.Summaries.test_duplicate_yaml_rejected) ... ok
+test_factory_inverse_translation_sign (test_lab.Summaries.test_factory_inverse_translation_sign) ... ok
+test_invalid_transforms_and_chain (test_lab.Summaries.test_invalid_transforms_and_chain) ... ok
+test_missing_no_corners_and_malformed_are_unknown (test_lab.Summaries.test_missing_no_corners_and_malformed_are_unknown) ... ok
+test_nonidentity_inverse_origins_basis_and_composition (test_lab.Summaries.test_nonidentity_inverse_origins_basis_and_composition) ... ok
+test_raw_pixel_statistics_ignore_normalized (test_lab.Summaries.test_raw_pixel_statistics_ignore_normalized) ... ok
+test_stereo_components_and_baseline (test_lab.Summaries.test_stereo_components_and_baseline) ... ok
+test_time_sign_and_integer_precision (test_lab.Summaries.test_time_sign_and_integer_precision) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.832s
+
+OK
+
+NumPy/PyYAML imports verified. bash -n verified for all 5 shell scripts.
+Docker, network, SSH, Git, installs and hardware capture were not executed.
