@@ -150,8 +150,12 @@ def convert(samples, T_base_sensor, *, world="slam_world"):
             dt_ns = sample.stamp_ns - previous[1].stamp_ns
             if dt_ns <= 0:
                 raise ValueError("timestamps must strictly increase within each segment")
-            velocity = ((pose.matrix[:3, 3] - previous[2].matrix[:3, 3])
-                        / (dt_ns / 1_000_000_000)).tolist()
+            with np.errstate(over="ignore", invalid="ignore"):
+                velocity = ((pose.matrix[:3, 3] - previous[2].matrix[:3, 3])
+                            / (dt_ns / 1_000_000_000))
+            if not np.isfinite(velocity).all():
+                raise ValueError("diagnostic velocity exceeds finite numeric range")
+            velocity = velocity.tolist()
         result.append({"stamp_ns": sample.stamp_ns, "clock_domain": sample.clock_domain,
                        "map_id": sample.map_id, "reset_counter": sample.reset_counter,
                        "segment_id": segment, "reference_frame": world,

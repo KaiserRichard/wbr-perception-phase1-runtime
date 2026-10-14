@@ -261,6 +261,21 @@ def orb_yaml(calibration: dict, fps: int) -> bytes:
     fields.update({"Camera.width": width, "Camera.height": height, "Camera.fps": fps})
     fields.update(TUNING)
     fields.update(calibration["noise"])
+    # Settings.cc reads real fields and Sophus transforms as native float32.
+    # Finite Python doubles can overflow there, or silently erase a nonzero value.
+    def check_float32(value, name):
+        with np.errstate(over="ignore", under="ignore"):
+            native = np.asarray(value, dtype=np.float32)
+        original = np.asarray(value)
+        if not np.isfinite(native).all() or np.any((original != 0) & (native == 0)):
+            raise ValueError(f"{name}: value overflows or underflows native float32")
+
+    for key, value in fields.items():
+        if isinstance(value, float):
+            check_float32(value, key)
+    for key, matrix in (("Stereo.T_c1_c2", inverse(calibration["stereo"])),
+                        ("IMU.T_b_c1", inverse(calibration["cameras"][0]["pose"]))):
+        check_float32(matrix, key)
     text = ["%YAML:1.0", "# Synthetic convention tests only; see provenance sidecar.",
             "# Feed raw pinhole/radtan images; ORB rectifies internally.",
             "# Timeshift must be applied at association; see provenance sidecar."]

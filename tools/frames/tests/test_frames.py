@@ -19,6 +19,15 @@ def pose(parent, child, t=(0, 0, 0), q=(0, 0, 0, 1)):
 
 
 class FramesTests(unittest.TestCase):
+    def test_velocity_overflow_is_rejected_before_valid_output(self):
+        mount = pose("base_link", "camera_optical")
+        for positions in ((-1e308, 1e308), (0, 1e308)):
+            samples = [Sample(i, "device", "m", 0,
+                              pose("slam_world", "camera_optical", (x, 0, 0)))
+                       for i, x in enumerate(positions)]
+            with self.subTest(positions=positions), np.errstate(over="ignore"), self.assertRaisesRegex(ValueError, "velocity.*finite"):
+                convert(samples, mount)
+
     def test_nonidentity_inverse_and_frame_names(self):
         a = pose("a", "b", (1, 2, 3), (0, 0, np.sqrt(.5), np.sqrt(.5)))
         inv = a.inverse()

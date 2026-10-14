@@ -54,6 +54,20 @@ def read_orb(path):
 
 
 class CalibrationTests(unittest.TestCase):
+    def test_orb_rejects_values_that_overflow_or_underflow_native_float(self):
+        for field, value in (("gyroscope_noise_density", 1e40),
+                             ("gyroscope_noise_density", 1e-50)):
+            with self.subTest(value=value):
+                imu = {**self.imu, field: value}
+                with self.assertRaisesRegex(ValueError, "float32"):
+                    self.run_conversion(target="orb", imu=imu)
+                self.assertFalse((self.work / "out").exists())
+        cam = copy.deepcopy(self.cam)
+        cam["cam0"]["intrinsics"][0] = 1e40
+        with self.assertRaisesRegex(ValueError, "float32"):
+            self.run_conversion(target="orb", cam=cam)
+        self.assertFalse((self.work / "out").exists())
+
     def setUp(self):
         self.cam = yaml.safe_load((FIXTURES / "camchain-imucam.yaml").read_text())
         self.imu = yaml.safe_load((FIXTURES / "imu.yaml").read_text())

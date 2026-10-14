@@ -39,6 +39,18 @@ def read_png(path):
 
 
 class TakeTests(unittest.TestCase):
+    def test_finite_extreme_accel_interpolation_preserves_endpoints(self):
+        streams = {"gyro": [{"sdk_ns": ns, "gyro": [0., 0., 0.]}
+                            for ns in (0, 5_000_000, 10_000_000)],
+                   "accel": [{"sdk_ns": 0, "accel": [-1e308, 0., 0.]},
+                             {"sdk_ns": 10_000_000, "accel": [1e308, 0., 0.]}]}
+        report = {"single_known_domain": True, "streams": {
+            name: dict(backward=0, duplicates=0, domain_changes=0, missing_metadata=0)
+            for name in ("gyro", "accel")}}
+        rows, counts = t.combined_imu(streams, report)
+        self.assertEqual([r[4] for r in rows], [-1e308, 0., 1e308])
+        self.assertEqual(counts["emitted"], 3)
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)

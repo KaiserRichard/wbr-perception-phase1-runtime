@@ -400,7 +400,8 @@ def combined_imu(streams, report):
             counts['dropped_invalid_bracket'] += 1
             continue
         alpha = (stamp-a['sdk_ns']) / dt
-        values = [x+(y-x)*alpha for x, y in zip(a['accel'], b['accel'])]
+        # Convex weights preserve finite endpoints without overflowing y-x.
+        values = [(1-alpha)*x+alpha*y for x, y in zip(a['accel'], b['accel'])]
         rows.append([stamp, *g['gyro'], *values])
     counts['emitted'] = len(rows)
     return rows, counts
