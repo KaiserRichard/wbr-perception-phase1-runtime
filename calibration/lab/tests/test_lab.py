@@ -197,7 +197,7 @@ class Layout(unittest.TestCase):
         self.assertIn('Diagnostic override: True', content)
 
     def test_synthetic_chain_through_pr3_converter(self):
-        converter = Path('/Users/quockaiser/Desktop/Research/wbr-sw-foundation/tools/calib_tools/calib_convert.py')
+        converter = LAB.parents[1] / 'tools/calib_tools/calib_convert.py'
         result = subprocess.run([sys.executable, str(converter), '--camchain',
                                  str(FIXTURES / 'synthetic-camchain-imucam.yaml'), '--imu',
                                  str(LAB / 'config/imu_d435i_provisional.yaml'), '--output-dir',
