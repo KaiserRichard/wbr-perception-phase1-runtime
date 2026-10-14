@@ -9,7 +9,7 @@ Detail lives in the repo: `docs/D435I_CALIBRATION_PLAN.md`, `calibration/lab/REA
 | Item | State | Evidence |
 |---|---|---|
 | Kalibr | Docker image `kalibr:noetic-1f60227` built on the Mac (Intel x86, stock Noetic Dockerfile, `catkin build -j4`) | `~/Desktop/Research/kalibr-env/logs/docker_build.log` |
-| Kalibr smoke test | SMOKE_RESULT | `~/Desktop/Research/kalibr-env/smoke/` |
+| Kalibr smoke test | **Works (MEASURED).** Camera–IMU calibration on the public TUM-VI `dataset-calib-imu4_512_16` bag, using the reference intrinsics from ORB-SLAM3's `TUM-VI.yaml`: reprojection 0.09 px, timeshift 0.03 ms, and camera→IMU transform within **1.0 mm / 0.02°** of the ORB-SLAM3 reference. Kalibr's own stereo calibration found the AprilGrid in 427/427 images; on these 195° fisheye lenses its final optimization diverged, which is a lens-model issue not expected for the D435i's rectified pinhole IR | `~/Desktop/Research/kalibr-env/smoke/` |
 | Take → Kalibr bag | Worked on the real 15 s D435i RAM take from 2026-10-14: 447 stereo pairs at 29.99 Hz, IMU 200.16 Hz (combined), all four streams `global_time`, 0 gaps (MEASURED) | `~/Desktop/Research/kalibr-env/realtake/ramtest15s-bag/` |
 | Target | A3 6×4 AprilGrid, 45 mm tags (A4 30 mm fallback), printed tonight | `calibration/aprilgrid/README.md` |
 | Scripts | Pi: `calibration/lab/pi/record_calib_take.sh`. Mac: `take_to_kalibr_bag.sh`, `run_kalibr_camimu.sh`, `run_kalibr_stereo_check.sh`. 20 synthetic tests pass | `calibration/lab/tests/verification.log` |
@@ -75,6 +75,8 @@ bash calibration/lab/mac/run_kalibr_stereo_check.sh DERIVED/S1-bag/take.bag MEAS
 ASSUMED provisional noise file (fine for a first look; repeat later with the Allan values). Cam-IMU takes a few minutes per take.
 
 ## Reading a Kalibr report
+
+Two real example reports from the smoke test are in the project files: `kalibr_example_GOOD_tumvi_report.pdf` (correct intrinsics) and `kalibr_example_BAD_wrong_intrinsics_report.pdf`. The bad one used intrinsics from an unfinished camera calibration: the extrinsic still came out within ~2 mm, but the reprojection error was **8.6 px instead of 0.09 px**. That's the lesson: a plausible transform doesn't prove a good calibration, so always check the reprojection error first.
 
 Good (ASSUMED review thresholds from the plan, not gate criteria):
 - reprojection error RMS ≤ 0.5 px with errors spread evenly (no pattern toward the image edges);
