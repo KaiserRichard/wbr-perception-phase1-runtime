@@ -18,7 +18,7 @@ INFERRED: the components are needed eventually, but that order is not justified 
 - The Pi->STM32 contract should be *designed* early (semantics, rejection rules, test vectors) but the
   wire sender comes after estimate semantics exist (J2 §4, §7).
 
-## 2. Correction found by the research
+## 2. Correction found by the research (updated: the Pi writes SQLite/CDR with librealsense 2.58.4, and take_tools reads it; see tools/take_tools/README.md)
 
 SOURCE-SUPPORTED (J1 C1): "librealsense writes rosbag2 since 2.56" is not defensible. v2.56.5
 `ros_writer.cpp` writes ROS 1 bags; the newer `ros2_writer.cpp` writes SQLite/CDR. Which one the Pi build
