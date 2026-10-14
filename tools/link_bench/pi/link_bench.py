@@ -24,6 +24,8 @@ file or at ../../link_proto/py/.
 """
 import argparse
 import csv
+import fcntl
+import glob
 import json
 import math
 import os
@@ -118,6 +120,53 @@ def stats_us(values_ns):
             'mean': sum(v) / len(v)}
 
 
+class GpioMarker:
+    """Toggle one GPIO line per sent packet through the Linux GPIO character
+    device (uAPI v2, stdlib ioctl only), for a logic-analyzer timing channel.
+    Pi 5 header GPIOs live on the RP1 chip, labelled 'pinctrl-rp1'; the line
+    offset equals the BCM GPIO number. Struct sizes/ioctl numbers checked
+    against linux/gpio.h (request 592 B, values 16 B, chipinfo 68 B)."""
+    GET_CHIPINFO = 0x8044B401
+    GET_LINE = 0xC250B407
+    SET_VALUES = 0xC010B40F
+    FLAG_OUTPUT = 1 << 3
+
+    def __init__(self, line, chip_label='pinctrl-rp1'):
+        self.fd = None
+        for path in sorted(glob.glob('/dev/gpiochip*')):
+            try:
+                cfd = os.open(path, os.O_RDWR)
+            except OSError:
+                continue
+            try:
+                info = bytearray(68)
+                fcntl.ioctl(cfd, self.GET_CHIPINFO, info)
+                if info[32:64].split(b'\0')[0].decode() != chip_label:
+                    continue
+                req = bytearray(592)
+                struct.pack_into('<I', req, 0, line)              # offsets[0]
+                req[256:256 + 14] = b'wbr-link-bench'             # consumer
+                struct.pack_into('<Q', req, 288, self.FLAG_OUTPUT)  # config.flags
+                struct.pack_into('<I', req, 560, 1)                # num_lines
+                fcntl.ioctl(cfd, self.GET_LINE, req)
+                self.fd = struct.unpack_from('<i', req, 588)[0]
+                self.path = path
+                break
+            finally:
+                os.close(cfd)
+        if self.fd is None:
+            raise OSError('no GPIO chip labelled %r (or no permission; try sudo)' % chip_label)
+        self.level = 0
+        self.set(0)
+
+    def set(self, level):
+        fcntl.ioctl(self.fd, self.SET_VALUES, struct.pack('<QQ', level & 1, 1))
+        self.level = level & 1
+
+    def toggle(self):
+        self.set(self.level ^ 1)
+
+
 class Link:
     def __init__(self, port, baud):
         speed = getattr(termios, 'B%d' % baud, None)
@@ -142,9 +191,12 @@ class Link:
         self.rx_frames = 0
         self.rx_wire_errors = 0
         self.mcu_boot_ids = []
+        self.marker = None
 
-    def send(self, data):
+    def send(self, data, mark=True):
         t = now_ns()
+        if mark and self.marker is not None:
+            self.marker.toggle()  # edge follows t by the ioctl cost; see analyzer notes
         view = memoryview(data)
         while view:
             try:
@@ -392,6 +444,8 @@ def main():
     ap.add_argument('--fault-trials', type=int, default=10)
     ap.add_argument('--timeout-repeats', type=int, default=5)
     ap.add_argument('--phases', default='preflight,rtt,faults,timeout')
+    ap.add_argument('--marker-gpio', type=int, default=None,
+                    help='BCM GPIO toggled at every health send (logic analyzer), e.g. 17 = header pin 11')
     ap.add_argument('--loopback', action='store_true',
                     help='no MCU: Pi TX jumpered to Pi RX; runs rtt only')
     args = ap.parse_args()
@@ -399,6 +453,8 @@ def main():
     os.makedirs(args.out, exist_ok=True)
     phases = ['rtt'] if args.loopback else [p.strip() for p in args.phases.split(',') if p.strip()]
     link = Link(args.port, args.baud)
+    if args.marker_gpio is not None:
+        link.marker = GpioMarker(args.marker_gpio)
     bench = Bench(link, args.rate, args.loopback)
     floor_ms = (HEALTH_WIRE + (HEALTH_WIRE if args.loopback else STATUS_WIRE)) * 10 * 1000.0 / args.baud
     summary = {
@@ -409,6 +465,7 @@ def main():
         'clock': 'all Pi times CLOCK_MONOTONIC (time.monotonic_ns); MCU durations from MCU stamps only',
         'started_monotonic_ns': now_ns(), 'started_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
         'serialization_floor_ms': round(floor_ms, 3),
+        'marker_gpio': args.marker_gpio,
     }
     print('link_bench: %s on %s @ %d baud -> %s' % (summary['mode'], args.port, args.baud, args.out))
     if 'preflight' in phases:

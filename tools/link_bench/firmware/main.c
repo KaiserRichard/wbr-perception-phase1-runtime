@@ -5,6 +5,8 @@
  * Ports (both 460800 8N1, both run the same bench logic independently):
  *   USART1 PA9 TX / PA10 RX  -> Pi GPIO15 RXD / GPIO14 TXD (primary path)
  *   USART2 PA2 TX / PA3 RX   -> ST-Link virtual COM port over USB (fallback path)
+ * Timing marker: PA8 (Arduino D7) toggles once per USART1 packet that decodes
+ *   (COBS + CRC + layout OK), for a logic analyzer. USART2 packets do not toggle it.
  * LD2 (PA5): on while USART1 or USART2 holds an accepted link, off in NO_LINK.
  * Clock: 84 MHz from the ST-Link 8 MHz MCO (HSE bypass), HSI 16 MHz fallback.
  * Time base: TIM2 32-bit free-running at 1 MHz, extended to 64 bit. */
@@ -61,6 +63,8 @@ static void periph_init(void) {
  gpio_af7(2); gpio_af7(3); gpio_af7(9); gpio_af7(10);
  GPIOA_PUPDR = (GPIOA_PUPDR & ~((3u << 6) | (3u << 20))) | (1u << 6) | (1u << 20); /* RX pull-ups: an unwired RX idles high */
  GPIOA_MODER = (GPIOA_MODER & ~(3u << 10)) | (1u << 10); /* PA5 LD2 output */
+ GPIOA_MODER = (GPIOA_MODER & ~(3u << 16)) | (1u << 16); /* PA8 timing marker output */
+ GPIOA_OSPEEDR |= 3u << 16;
  TIM2_PSC = 84u - 1u; TIM2_ARR = 0xFFFFFFFFu; TIM2_EGR = 1u; TIM2_CR1 = 1u; /* 84 MHz timer clock -> 1 MHz */
  USART_BRR(USART1_BASE) = (84000000u + BAUD / 2) / BAUD; /* 182 -> 461538 baud, +0.16 % */
  USART_BRR(USART2_BASE) = (42000000u + BAUD / 2) / BAUD; /* 91 -> 461538 baud, +0.16 % */
@@ -118,6 +122,9 @@ static void uart_tx(void *ctx, const uint8_t *data, size_t n) {
  irq_off(); USART_CR1(u->base) |= USART_CR1_TXEIE; irq_on();
 }
 
+/* Single-cycle-ish edge on PA8; only the main loop writes GPIOA_ODR bit 8. */
+static void mark(void *ctx) { (void)ctx; GPIOA_ODR ^= 1u << 8; }
+
 static void service(uart *u, uint64_t now) {
  uint8_t chunk[64]; size_t n = 0;
  while (u->rx_tail != u->rx_head && n < sizeof(chunk)) {
@@ -136,6 +143,7 @@ int main(void) {
  id = boot_id();
  bench_init(&u1.bench, id, uart_tx, &u1);
  bench_init(&u2.bench, id, uart_tx, &u2);
+ u1.bench.mark = mark;
  for (;;) {
   uint64_t now = micros();
   service(&u1, now);

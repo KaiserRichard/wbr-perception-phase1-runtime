@@ -41,6 +41,8 @@ Bare-metal C99, register level, no HAL/CMSIS download: needs only
 * USART1 PA9 TX / PA10 RX (Arduino D8 / D2) at 460800 8N1: Pi GPIO path.
 * USART2 PA2/PA3 at 460800 8N1: ST-Link virtual COM port over the Nucleo USB (fallback path).
   Both ports run the same logic independently.
+* PA8 (Arduino D7, also morpho CN10 pin 23) toggles once per USART1 packet that passes
+  COBS/CRC/layout decoding, before the receiver policy runs: the MCU timing marker.
 * LD2 (green user LED, PA5) is on while either port holds a link, off in `NO_LINK`.
 * 84 MHz from the ST-Link 8 MHz MCO (HSE bypass), HSI fallback; baud error +0.16 %.
 * TIM2 free-running at 1 MHz is the MCU monotonic clock. The silence/staleness rule
@@ -88,6 +90,51 @@ the `dialout` group or `sudo`.
 
 Writes `summary.json`, `rtt.csv`, `faults.csv`, `timeout.csv`.
 
+## Hardware timing with a logic analyzer (optional)
+
+The Pi-clock RTT includes Python and kernel time on both ends. A logic analyzer puts
+every stage on one clock. `--marker-gpio 17` makes the Pi toggle BCM GPIO17
+(header pin 11) right after it takes its send timestamp, through the GPIO character
+device (stdlib ioctl; needs read/write on `/dev/gpiochip*`, else `sudo`). The firmware
+toggles PA8 on every decoded USART1 packet.
+
+| Analyzer | Probe point | Signal |
+|---|---|---|
+| D0 | Nucleo morpho CN10 pin 33 (PA10) | Pi TX → MCU RX |
+| D1 | Nucleo morpho CN10 pin 21 (PA9) | MCU TX → Pi RX |
+| D2 | Pi header pin 11 (GPIO17) | Pi send marker |
+| D3 | Nucleo morpho CN10 pin 23 (PA8) | MCU decode marker |
+| GND | Nucleo CN10 pin 20, or Pi pin 9 | common ground (Pi and Nucleo grounds are already joined) |
+
+The morpho headers are male pins, so the analyzer leads clip there while the Pi
+jumpers stay on the Arduino D2/D8 sockets. Settings for a Saleae-compatible 8-channel
+analyzer: 3.3 V logic (threshold about 1.5 V), **12 MHz** sample rate (≈26 samples per
+2.17 µs bit, 83 ns resolution), 4 channels, 15 s capture. The capture covers an
+RTT-only run, because the fault phase sends packets that never decode:
+
+```sh
+python3 link_bench.py --port /dev/ttyAMA0 --out OUT --phases rtt --duration 10 --marker-gpio 17
+```
+
+Export: in PulseView, *File → Export → Value Change Dump*. With sigrok-cli, use
+`sigrok-cli -d fx2lafw --config samplerate=12m --channels D0,D1,D2,D3 --time 15s -O vcd -o cap.vcd`.
+In Logic 2, export the digital data as CSV (channels named D0–D3, or pass
+`--pi-tx/--mcu-tx/--pi-mark/--mcu-mark`). Then run on the Mac:
+
+```sh
+python3 tools/link_bench/pi/la_analyze.py cap.vcd --summary OUT/summary.json --out OUT/la.json
+```
+
+It pairs each Pi marker with the next Pi TX burst, MCU marker and MCU reply burst,
+and reports P50/P95/P99 for `pi_tx_sw` (Pi send to the first start bit),
+`pi_tx_wire`, `mcu_decode` (end of the delimiter to decode), `mcu_reply`,
+`reply_wire` and `onwire_rtt`. Pi-clock RTT percentiles minus on-wire RTT percentiles
+give an INFERRED Pi receive-path cost: kernel UART RX, wake-up, Python decode, plus
+the marker ioctl. That is a comparison of distributions, never a per-packet
+subtraction across the two clocks. Expect `pi_tx_wire` ≈ 2210 µs and `reply_wire`
+≈ 1430 µs (CALCULATED at 461538 baud). If they differ, the baud rate or the burst
+detection is off, and the other stages should not be trusted.
+
 ## Expected numbers (CALCULATED / INFERRED, not measured on hardware)
 
 * Serialization floor of one round trip: (102 + 66) bytes × 10 bits / 460800 baud ≈ 3.65 ms.
@@ -105,6 +152,9 @@ Writes `summary.json`, `rtt.csv`, `faults.csv`, `timeout.csv`.
 
 * Python decoder reads the frozen C `McuStatus` vector from `../link_proto/tests/vectors.txt`;
   every single-byte corruption of a bench health packet is rejected.
+* `la_analyze.py` recovers known delays from synthetic VCD and Logic 2 CSV captures
+  (within 1.5 bit times), and counts unmatched packets instead of mis-pairing them.
+  The GPIO marker's ioctl request layout matches `linux/gpio.h` (faked ioctls; no GPIO chip here).
 * Host simulator (`host/sim.c`, the firmware's `bench.c` behind a pseudo-terminal, real clock):
   all four phases, zero loss, 3/3 of each fault kind rejected with the expected reason,
   100 ms gap held, 300 ms gap tripped with MCU silence in [150, 200) ms.
@@ -114,4 +164,4 @@ Writes `summary.json`, `rtt.csv`, `faults.csv`, `timeout.csv`.
   clock tree, so its timing is ignored.
 
 UNKNOWN until the bench run: real UART timing and error rate, the Pi's UART0
-state, Pi-side scheduling tail, F446 clock start-up (HSE MCO vs HSI fallback) on this board.
+state, Pi-side scheduling tail, the GPIO marker on real RP1 hardware, F446 clock start-up (HSE MCO vs HSI fallback) on this board.

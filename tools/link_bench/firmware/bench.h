@@ -17,6 +17,9 @@
 #define BENCH_STATUS_PERIOD_US 50000u /* 20 Hz heartbeat status, SPEC rate */
 
 typedef void (*bench_tx_fn)(void *ctx, const uint8_t *data, size_t n);
+/* Optional hardware-timing hook: called once per packet that passed COBS/CRC/layout
+ * decoding, before the receiver policy runs (firmware toggles a marker pin). */
+typedef void (*bench_mark_fn)(void *ctx);
 
 typedef struct {
  lp_stream stream;
@@ -30,6 +33,7 @@ typedef struct {
  uint32_t accepted, rejected, status_sent, tx_dropped;
  bench_tx_fn tx;
  void *tx_ctx;
+ bench_mark_fn mark; /* may be NULL; set after bench_init */
 } bench_port;
 
 void bench_init(bench_port *p, uint64_t boot_id, bench_tx_fn tx, void *tx_ctx);

@@ -27,6 +27,7 @@ static int withdrawn(lp_state s) { return s == LP_NO_LINK || s == LP_STALE || s 
 
 static void on_packet(void *ctx, const lp_message *m) {
  bench_port *p = ctx;
+ if (p->mark) p->mark(p->tx_ctx);
  if (lp_receiver_accept(&p->rx, (uint32_t)p->now_us, m)) p->accepted++;
  else { p->rejected++; p->action_us = p->now_us; }
  send_status(p);
