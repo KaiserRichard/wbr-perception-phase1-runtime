@@ -1,0 +1,22 @@
+{
+  "utc": "2026-09-13T06:54:38.184867+00:00",
+  "argv": [
+    "ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=8",
+    "richard@192.168.50.2",
+    "sudo -n apt-get install -y --no-install-recommends ros-jazzy-realsense2-camera ros-jazzy-realsense2-camera-msgs"
+  ],
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "sudo: a password is required\n",
+  "simulation": {
+    "new_packages": 221,
+    "upgrade": "libdeflate0 1.19-1build1 -> 1.19-1build1.1",
+    "removals": 0,
+    "download_bytes": 137372870,
+    "installed_size_delta_bytes": 565048320
+  }
+}

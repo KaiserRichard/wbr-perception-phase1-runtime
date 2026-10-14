@@ -1,0 +1,15 @@
+ D D435I_BASELINE_AUDIT.md
+ M docs/DOCKER_RUNTIME_ARCHITECTURE_REVIEW.md
+ M docs/RPI5_NATIVE_PERCEPTION_BRINGUP.md
+ ? third_party/ORB_SLAM3
+?? .obsidian/
+?? AGENTS.md
+?? docs/.obsidian/
+?? docs/D435I_BASELINE_AUDIT.md
+?? docs/D435I_VIO_CALIBRATION_READINESS.md
+?? docs/NEXT_TWO_WEEKS_PERCEPTION_PLAN.md
+?? docs/ORB_SLAM3_OFFLINE_PREPARATION.md
+?? docs/PERCEPTION_TOOLING_ARCHITECTURE.md
+?? docs/PI5_NATIVE_SENSOR_VALIDATION_2026-09-12.md
+?? experiments/2026-09-12-pi5-native-sensor-validation/
+?? experiments/2026-09-13-d435i-camera-capture-20260913T015621Z/

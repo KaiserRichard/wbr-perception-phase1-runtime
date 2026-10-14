@@ -1,0 +1,67 @@
+ 13/09 13:18:03,044 WARNING [281473096556576] (context.cpp:41) No valid configuration file found at : /home/richard/.realsense-config.json loading defaults
+ 13/09 13:18:03,048 INFO [281473096556576] (backend-v4l2.cpp:926) Enumerating UVC video0 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video0 dev_name=/dev/video0
+ 13/09 13:18:03,125 INFO [281473096556576] (backend-v4l2.cpp:926) Enumerating UVC video1 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video1 dev_name=/dev/video1
+ 13/09 13:18:03,126 INFO [281473096556576] (backend-v4l2.cpp:926) Enumerating UVC video2 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video2 dev_name=/dev/video2
+ 13/09 13:18:03,126 INFO [281473096556576] (backend-v4l2.cpp:926) Enumerating UVC video3 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video3 dev_name=/dev/video3
+ 13/09 13:18:03,126 INFO [281473096556576] (backend-v4l2.cpp:926) Enumerating UVC video4 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.3/video4linux/video4 dev_name=/dev/video4
+ 13/09 13:18:03,126 INFO [281473096556576] (backend-v4l2.cpp:926) Enumerating UVC video5 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.3/video4linux/video5 dev_name=/dev/video5
+ 13/09 13:18:03,127 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,127 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,127 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,127 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,127 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,127 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,127 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,127 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,127 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,127 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,127 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,128 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,128 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,128 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,128 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,128 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,128 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,128 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,128 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,138 INFO [281473096556576] (context-libusb.cpp:25) Found 7 USB devices
+ 13/09 13:18:03,142 INFO [281473096556576] (backend-v4l2.cpp:926) Enumerating UVC video0 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video0 dev_name=/dev/video0
+ 13/09 13:18:03,142 INFO [281473096556576] (backend-v4l2.cpp:926) Enumerating UVC video1 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video1 dev_name=/dev/video1
+ 13/09 13:18:03,142 INFO [281473096556576] (backend-v4l2.cpp:926) Enumerating UVC video2 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video2 dev_name=/dev/video2
+ 13/09 13:18:03,142 INFO [281473096556576] (backend-v4l2.cpp:926) Enumerating UVC video3 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video3 dev_name=/dev/video3
+ 13/09 13:18:03,143 INFO [281473096556576] (backend-v4l2.cpp:926) Enumerating UVC video4 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.3/video4linux/video4 dev_name=/dev/video4
+ 13/09 13:18:03,143 INFO [281473096556576] (backend-v4l2.cpp:926) Enumerating UVC video5 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.3/video4linux/video5 dev_name=/dev/video5
+ 13/09 13:18:03,143 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,143 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,143 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,143 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,143 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,143 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,143 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,143 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,143 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,143 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,144 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,144 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,144 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,144 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,144 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,144 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,144 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,144 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,144 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,151 INFO [281473096556576] (context-libusb.cpp:25) Found 7 USB devices
+ 13/09 13:18:03,151 INFO [281473096556576] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 13:18:03,177 INFO [281473096556576] (backend-v4l2.cpp:2339) Video node was successfully configured to GREY format, fd 12
+ 13/09 13:18:03,177 INFO [281473096556576] (backend-v4l2.cpp:2341) Trying to configure fourcc GREY
+ 13/09 13:18:03,177 INFO [281473096556576] (backend-v4l2.cpp:2579) Metadata node was successfully configured to D4XX format, fd 15
+ 13/09 13:18:03,207 WARNING [281473096556576] (ds-calib-parsers.cpp:36) IMU Calibration is not available, default intrinsic and extrinsic will be used.
+ 13/09 13:18:03,207 INFO [281473096556576] (ds-calib-parsers.cpp:208) IMU extrinsic table not found; using CAD values
+ 13/09 13:18:03,207 INFO [281473096556576] (ds-calib-parsers.cpp:234) Depth Module V2 IMU Accelno valid intrinsic available, use default values.
+ 13/09 13:18:03,207 INFO [281473096556576] (ds-calib-parsers.cpp:246) Depth Module V2 IMU Gyrointrinsic not valid, use default values.
+ 13/09 13:18:03,207 INFO [281473096556576] (ds-calib-parsers.cpp:234) Depth Module V2 IMU Accelno valid intrinsic available, use default values.
+ 13/09 13:18:03,207 INFO [281473096556576] (ds-calib-parsers.cpp:246) Depth Module V2 IMU Gyrointrinsic not valid, use default values.
+ 13/09 13:18:03,434 INFO [281472997878048] (uvc-sensor.cpp:237) Frame counter reset
+ 13/09 13:19:03,214 INFO [281472879421728] (backend-hid.cpp:572) iio_hid_sensor: Stream finished
+ 13/09 13:19:03,214 INFO [281472887875872] (backend-hid.cpp:572) iio_hid_sensor: Stream finished
+ 13/09 13:19:03,215 INFO [281472997878048] (backend-v4l2.cpp:1500) V4L stream is closed

@@ -1,0 +1,4 @@
+# Stream,width,height,fps,format,index. Raw streams only; no recording preset.
+INFRARED,640,480,15,Y8,1
+GYRO,1,1,200,MOTION_XYZ32F,0
+ACCEL,1,1,100,MOTION_XYZ32F,0

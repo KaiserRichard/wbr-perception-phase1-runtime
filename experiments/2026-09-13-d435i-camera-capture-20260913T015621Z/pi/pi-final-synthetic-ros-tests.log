@@ -1,0 +1,11 @@
+test_finalized_bag_complete_replay_and_no_publisher_boundary (test_ros_offline.SyntheticROSTest.test_finalized_bag_complete_replay_and_no_publisher_boundary) ... [INFO] [1789265602.590483875] [rosbag2_storage]: Opened database '/tmp/wbr-SYNTHETIC-ros-u8945thx/SYNTHETIC-bag/SYNTHETIC-bag_0.db3' for READ_WRITE.
+[INFO] [1789265603.156958000] [rosbag2_storage]: Opened database '/tmp/wbr-SYNTHETIC-ros-u8945thx/SYNTHETIC-bag/SYNTHETIC-bag_0.db3' for READ_ONLY.
+[INFO] [1789265603.331155512] [rosbag2_storage]: Opened database '/tmp/wbr-SYNTHETIC-ros-u8945thx/SYNTHETIC-bag/SYNTHETIC-bag_0.db3' for READ_ONLY.
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 24.671s
+
+OK
+SYNTHETIC CameraInfo wire byte differences: []
+SYNTHETIC complete replay counts: {'/camera/camera/infra1/image_rect_raw': 30, '/camera/camera/infra1/camera_info': 30, '/camera/camera/gyro/sample': 400, '/camera/camera/accel/sample': 200, '/camera/camera/gyro/imu_info': 1, '/camera/camera/accel/imu_info': 1, '/camera/camera/extrinsics/depth_to_infra1': 1, '/camera/camera/extrinsics/depth_to_gyro': 1, '/camera/camera/extrinsics/depth_to_accel': 1, '/tf_static': 1}

@@ -1,0 +1,327 @@
+{
+  "scope": "PHASE_A_CAMERA_FREE_INVENTORY",
+  "camera_state": "NOT_ASSESSED",
+  "utc": "2026-09-13T01:56:23.334844+00:00",
+  "ssh_connection": "192.168.50.1 57092 192.168.50.2 22",
+  "ros_jazzy_setup_present": true,
+  "commands": {
+    "utc": {
+      "argv": [
+        "date",
+        "-u",
+        "--iso-8601=seconds"
+      ],
+      "returncode": 0,
+      "stdout": "2026-09-13T01:56:23+00:00\n",
+      "stderr": ""
+    },
+    "hostname": {
+      "argv": [
+        "hostname"
+      ],
+      "returncode": 0,
+      "stdout": "wbr-pi5\n",
+      "stderr": ""
+    },
+    "identity": {
+      "argv": [
+        "id"
+      ],
+      "returncode": 0,
+      "stdout": "uid=1000(richard) gid=1000(richard) groups=1000(richard),4(adm),24(cdrom),27(sudo),30(dip),44(video),101(lxd)\n",
+      "stderr": ""
+    },
+    "os": {
+      "argv": [
+        "cat",
+        "/etc/os-release"
+      ],
+      "returncode": 0,
+      "stdout": "PRETTY_NAME=\"Ubuntu 24.04.4 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.4 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo\n",
+      "stderr": ""
+    },
+    "model": {
+      "argv": [
+        "cat",
+        "/proc/device-tree/model"
+      ],
+      "returncode": 0,
+      "stdout": "Raspberry Pi 5 Model B Rev 1.0\u0000",
+      "stderr": ""
+    },
+    "kernel": {
+      "argv": [
+        "uname",
+        "-a"
+      ],
+      "returncode": 0,
+      "stdout": "Linux wbr-pi5 6.8.0-1064-raspi #68-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug 14 10:05:02 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux\n",
+      "stderr": ""
+    },
+    "architecture": {
+      "argv": [
+        "dpkg",
+        "--print-architecture"
+      ],
+      "returncode": 0,
+      "stdout": "arm64\n",
+      "stderr": ""
+    },
+    "links": {
+      "argv": [
+        "ip",
+        "-brief",
+        "link"
+      ],
+      "returncode": 0,
+      "stdout": "lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> \neth0             UP             2c:cf:67:a2:86:d3 <BROADCAST,MULTICAST,UP,LOWER_UP> \nwlan0            UP             2c:cf:67:a2:86:d4 <BROADCAST,MULTICAST,UP,LOWER_UP> \n",
+      "stderr": ""
+    },
+    "addresses": {
+      "argv": [
+        "ip",
+        "-brief",
+        "address"
+      ],
+      "returncode": 0,
+      "stdout": "lo               UNKNOWN        127.0.0.1/8 ::1/128 \neth0             UP             192.168.50.2/24 fe80::2ecf:67ff:fea2:86d3/64 \nwlan0            UP             15.15.14.219/22 metric 600 fe80::2ecf:67ff:fea2:86d4/64 \n",
+      "stderr": ""
+    },
+    "routes": {
+      "argv": [
+        "ip",
+        "route"
+      ],
+      "returncode": 0,
+      "stdout": "default via 15.15.15.1 dev wlan0 proto dhcp src 15.15.14.219 metric 600 \n15.15.12.0/22 dev wlan0 proto kernel scope link src 15.15.14.219 metric 600 \n15.15.15.1 dev wlan0 proto dhcp scope link src 15.15.14.219 metric 600 \n192.168.50.0/24 dev eth0 proto kernel scope link src 192.168.50.2 \n",
+      "stderr": ""
+    },
+    "routes_ipv6": {
+      "argv": [
+        "ip",
+        "-6",
+        "route"
+      ],
+      "returncode": 0,
+      "stdout": "fe80::/64 dev eth0 proto kernel metric 256 pref medium\nfe80::/64 dev wlan0 proto kernel metric 256 pref medium\n",
+      "stderr": ""
+    },
+    "time": {
+      "argv": [
+        "timedatectl",
+        "show",
+        "-p",
+        "NTPSynchronized",
+        "-p",
+        "Timezone"
+      ],
+      "returncode": 0,
+      "stdout": "Timezone=Asia/Ho_Chi_Minh\nNTPSynchronized=yes\n",
+      "stderr": ""
+    },
+    "memory": {
+      "argv": [
+        "free",
+        "-b"
+      ],
+      "returncode": 0,
+      "stdout": "               total        used        free      shared  buff/cache   available\nMem:      4177485824   325730304  3325325312     3629056   614445056  3851755520\nSwap:              0           0           0\n",
+      "stderr": ""
+    },
+    "root_free": {
+      "argv": [
+        "df",
+        "-B1",
+        "/"
+      ],
+      "returncode": 0,
+      "stdout": "Filesystem       1B-blocks       Used   Available Use% Mounted on\n/dev/mmcblk0p2 30162661376 7841980416 21039661056  28% /\n",
+      "stderr": ""
+    },
+    "thermal": {
+      "argv": [
+        "cat",
+        "/sys/class/thermal/thermal_zone0/temp"
+      ],
+      "returncode": 0,
+      "stdout": "55100\n",
+      "stderr": ""
+    },
+    "vcgencmd_temperature": {
+      "argv": [
+        "vcgencmd",
+        "measure_temp"
+      ],
+      "returncode": 0,
+      "stdout": "temp=55.4'C\n",
+      "stderr": ""
+    },
+    "throttling": {
+      "argv": [
+        "vcgencmd",
+        "get_throttled"
+      ],
+      "returncode": 0,
+      "stdout": "throttled=0x50000\n",
+      "stderr": ""
+    },
+    "ssh_service": {
+      "argv": [
+        "systemctl",
+        "is-active",
+        "ssh"
+      ],
+      "returncode": 0,
+      "stdout": "active\n",
+      "stderr": ""
+    },
+    "packages": {
+      "argv": [
+        "dpkg-query",
+        "-W",
+        "-f=${binary:Package}\t${Version}\t${db:Status-Status}\n",
+        "ros-jazzy-librealsense2",
+        "ros-jazzy-realsense2-camera",
+        "ros-jazzy-realsense2-description",
+        "ros-jazzy-rosbag2",
+        "ros-jazzy-rosbag2-storage-mcap",
+        "ros-jazzy-rosbag2-storage-sqlite3",
+        "ros-jazzy-ros2bag",
+        "ros-jazzy-rclpy"
+      ],
+      "returncode": 1,
+      "stdout": "ros-jazzy-librealsense2\t2.58.4-1noble.20260831.020056\tinstalled\nros-jazzy-rclpy\t7.1.12-1noble.20260902.143245\tinstalled\nros-jazzy-ros2bag\t0.26.11-1noble.20260903.023509\tinstalled\nros-jazzy-rosbag2\t0.26.11-1noble.20260903.023557\tinstalled\nros-jazzy-rosbag2-storage-mcap\t0.26.11-1noble.20260903.022942\tinstalled\nros-jazzy-rosbag2-storage-sqlite3\t0.26.11-1noble.20260903.023000\tinstalled\n",
+      "stderr": "dpkg-query: no packages found matching ros-jazzy-realsense2-camera\ndpkg-query: no packages found matching ros-jazzy-realsense2-description\n"
+    },
+    "candidates": {
+      "argv": [
+        "apt-cache",
+        "policy",
+        "ros-jazzy-librealsense2",
+        "ros-jazzy-realsense2-camera",
+        "ros-jazzy-realsense2-description",
+        "ros-jazzy-rosbag2",
+        "ros-jazzy-rosbag2-storage-mcap",
+        "ros-jazzy-rosbag2-storage-sqlite3",
+        "ros-jazzy-ros2bag",
+        "ros-jazzy-rclpy"
+      ],
+      "returncode": 0,
+      "stdout": "ros-jazzy-librealsense2:\n  Installed: 2.58.4-1noble.20260831.020056\n  Candidate: 2.58.4-1noble.20260831.020056\n  Version table:\n *** 2.58.4-1noble.20260831.020056 500\n        500 http://packages.ros.org/ros2/ubuntu noble/main arm64 Packages\n        100 /var/lib/dpkg/status\nros-jazzy-realsense2-camera:\n  Installed: (none)\n  Candidate: 4.58.4-1noble.20260902.181721\n  Version table:\n     4.58.4-1noble.20260902.181721 500\n        500 http://packages.ros.org/ros2/ubuntu noble/main arm64 Packages\nros-jazzy-realsense2-description:\n  Installed: (none)\n  Candidate: 4.58.4-1noble.20260902.192512\n  Version table:\n     4.58.4-1noble.20260902.192512 500\n        500 http://packages.ros.org/ros2/ubuntu noble/main arm64 Packages\nros-jazzy-rosbag2:\n  Installed: 0.26.11-1noble.20260903.023557\n  Candidate: 0.26.11-1noble.20260903.023557\n  Version table:\n *** 0.26.11-1noble.20260903.023557 500\n        500 http://packages.ros.org/ros2/ubuntu noble/main arm64 Packages\n        100 /var/lib/dpkg/status\nros-jazzy-rosbag2-storage-mcap:\n  Installed: 0.26.11-1noble.20260903.022942\n  Candidate: 0.26.11-1noble.20260903.022942\n  Version table:\n *** 0.26.11-1noble.20260903.022942 500\n        500 http://packages.ros.org/ros2/ubuntu noble/main arm64 Packages\n        100 /var/lib/dpkg/status\nros-jazzy-rosbag2-storage-sqlite3:\n  Installed: 0.26.11-1noble.20260903.023000\n  Candidate: 0.26.11-1noble.20260903.023000\n  Version table:\n *** 0.26.11-1noble.20260903.023000 500\n        500 http://packages.ros.org/ros2/ubuntu noble/main arm64 Packages\n        100 /var/lib/dpkg/status\nros-jazzy-ros2bag:\n  Installed: 0.26.11-1noble.20260903.023509\n  Candidate: 0.26.11-1noble.20260903.023509\n  Version table:\n *** 0.26.11-1noble.20260903.023509 500\n        500 http://packages.ros.org/ros2/ubuntu noble/main arm64 Packages\n        100 /var/lib/dpkg/status\nros-jazzy-rclpy:\n  Installed: 7.1.12-1noble.20260902.143245\n  Candidate: 7.1.12-1noble.20260902.143245\n  Version table:\n *** 7.1.12-1noble.20260902.143245 500\n        500 http://packages.ros.org/ros2/ubuntu noble/main arm64 Packages\n        100 /var/lib/dpkg/status\n",
+      "stderr": ""
+    },
+    "block_devices": {
+      "argv": [
+        "lsblk",
+        "-J",
+        "-o",
+        "NAME,TYPE,SIZE,MODEL,SERIAL,TRAN,FSTYPE,UUID,MOUNTPOINTS"
+      ],
+      "returncode": 0,
+      "stdout": "{\n   \"blockdevices\": [\n      {\n         \"name\": \"loop0\",\n         \"type\": \"loop\",\n         \"size\": \"41.6M\",\n         \"model\": null,\n         \"serial\": null,\n         \"tran\": null,\n         \"fstype\": \"squashfs\",\n         \"uuid\": null,\n         \"mountpoints\": [\n             \"/snap/snapd/25939\"\n         ]\n      },{\n         \"name\": \"loop1\",\n         \"type\": \"loop\",\n         \"size\": \"43.5M\",\n         \"model\": null,\n         \"serial\": null,\n         \"tran\": null,\n         \"fstype\": \"squashfs\",\n         \"uuid\": null,\n         \"mountpoints\": [\n             \"/snap/snapd/27740\"\n         ]\n      },{\n         \"name\": \"sda\",\n         \"type\": \"disk\",\n         \"size\": \"58.6G\",\n         \"model\": \"ProductCode\",\n         \"serial\": \"6784041157130050443\",\n         \"tran\": \"usb\",\n         \"fstype\": null,\n         \"uuid\": null,\n         \"mountpoints\": [\n             null\n         ],\n         \"children\": [\n            {\n               \"name\": \"sda1\",\n               \"type\": \"part\",\n               \"size\": \"58.6G\",\n               \"model\": null,\n               \"serial\": null,\n               \"tran\": null,\n               \"fstype\": \"exfat\",\n               \"uuid\": \"1017-F615\",\n               \"mountpoints\": [\n                   null\n               ]\n            }\n         ]\n      },{\n         \"name\": \"mmcblk0\",\n         \"type\": \"disk\",\n         \"size\": \"29.1G\",\n         \"model\": null,\n         \"serial\": \"0x1070f2b0\",\n         \"tran\": \"mmc\",\n         \"fstype\": null,\n         \"uuid\": null,\n         \"mountpoints\": [\n             null\n         ],\n         \"children\": [\n            {\n               \"name\": \"mmcblk0p1\",\n               \"type\": \"part\",\n               \"size\": \"512M\",\n               \"model\": null,\n               \"serial\": null,\n               \"tran\": \"mmc\",\n               \"fstype\": \"vfat\",\n               \"uuid\": \"F766-26D3\",\n               \"mountpoints\": [\n                   \"/boot/firmware\"\n               ]\n            },{\n               \"name\": \"mmcblk0p2\",\n               \"type\": \"part\",\n               \"size\": \"28.6G\",\n               \"model\": null,\n               \"serial\": null,\n               \"tran\": \"mmc\",\n               \"fstype\": \"ext4\",\n               \"uuid\": \"c5da9c27-d622-4e80-89db-6af2e32618b4\",\n               \"mountpoints\": [\n                   \"/\"\n               ]\n            }\n         ]\n      }\n   ]\n}\n",
+      "stderr": ""
+    },
+    "old_mount_resolution": {
+      "argv": [
+        "findmnt",
+        "-J",
+        "-T",
+        "/mnt/wbr-data"
+      ],
+      "returncode": 0,
+      "stdout": "{\n   \"filesystems\": [\n      {\n         \"target\": \"/\",\n         \"source\": \"/dev/mmcblk0p2\",\n         \"fstype\": \"ext4\",\n         \"options\": \"rw,relatime\"\n      }\n   ]\n}\n",
+      "stderr": ""
+    },
+    "journal_read_access": {
+      "argv": [
+        "journalctl",
+        "-k",
+        "-b",
+        "-n",
+        "0",
+        "--no-pager"
+      ],
+      "returncode": 0,
+      "stdout": "-- No entries --\n",
+      "stderr": ""
+    },
+    "git_status": {
+      "argv": [
+        "git",
+        "-C",
+        "/home/richard/wbr-perception-phase1-runtime",
+        "status",
+        "--short"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "git_branch": {
+      "argv": [
+        "git",
+        "-C",
+        "/home/richard/wbr-perception-phase1-runtime",
+        "branch",
+        "--show-current"
+      ],
+      "returncode": 0,
+      "stdout": "main\n",
+      "stderr": ""
+    },
+    "git_head": {
+      "argv": [
+        "git",
+        "-C",
+        "/home/richard/wbr-perception-phase1-runtime",
+        "rev-parse",
+        "HEAD"
+      ],
+      "returncode": 0,
+      "stdout": "5a2a7bea415382c2400c9352a20b2010257e6ab4\n",
+      "stderr": ""
+    },
+    "git_recent": {
+      "argv": [
+        "git",
+        "-C",
+        "/home/richard/wbr-perception-phase1-runtime",
+        "log",
+        "--oneline",
+        "-5"
+      ],
+      "returncode": 0,
+      "stdout": "5a2a7be docs: define native Pi 5 perception baseline\n5932457 docs: plan Raspberry Pi 5 native perception bring-up\n144746c exp: document D435i UTM baseline audit\n1b16be7 chore: add Phase-1 runtime structure and environment\ne39c8ff chore: initialize Phase-1 perception runtime workspace\n",
+      "stderr": ""
+    },
+    "git_submodules": {
+      "argv": [
+        "git",
+        "-C",
+        "/home/richard/wbr-perception-phase1-runtime",
+        "submodule",
+        "status"
+      ],
+      "returncode": 0,
+      "stdout": " 4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4 third_party/ORB_SLAM3 (v1.0-release-2-g4452a3c)\n efd7acd9ea31bfdbcd843a4c90eeaa85f7e80dd8 third_party/ORB_SLAM3_ROS2 (heads/main)\n 9a11121700cb4780e273e34141f6402fe184321d third_party/realsense-ros (4.58.4)\n",
+      "stderr": ""
+    },
+    "git_head_patch": {
+      "argv": [
+        "git",
+        "-C",
+        "/home/richard/wbr-perception-phase1-runtime",
+        "show",
+        "--format=fuller",
+        "HEAD"
+      ],
+      "returncode": 0,
+      "stdout": "commit 5a2a7bea415382c2400c9352a20b2010257e6ab4\nAuthor:     KaiserRichard <kaiserquoc@gmail.com>\nAuthorDate: Wed Sep 9 20:58:17 2026 +0700\nCommit:     KaiserRichard <kaiserquoc@gmail.com>\nCommitDate: Wed Sep 9 20:58:17 2026 +0700\n\n    docs: define native Pi 5 perception baseline\n\ndiff --git a/docs/NATIVE_PI5_BASELINE_ARCHITECTURE.md b/docs/NATIVE_PI5_BASELINE_ARCHITECTURE.md\nnew file mode 100644\nindex 0000000..49efdf5\n--- /dev/null\n+++ b/docs/NATIVE_PI5_BASELINE_ARCHITECTURE.md\n@@ -0,0 +1,215 @@\n+# 1. Architecture decision\n+\n+**Reference baseline: Pi 5 + Ubuntu 24.04 ARM64 + ROS2 Jazzy + native RealSense + native SLAM.**\n+Docker is **deferred until native success**. This is the management baseline,\n+not a claim that Pi compatibility or performance has already passed.\n+\n+```text\n+D435i \u2192 Pi 5 native Linux \u2192 native librealsense / realsense-ros \u2192 ROS2\n+      \u2192 recorded-data validation \u2192 native ORB-SLAM3 / ROS wrapper later\n+```\n+\n+- **Pi:** physical sensor and eventual native VIO reference system.\n+- **Lab:** x86 native reference / heavy benchmark.\n+- **UTM:** offline development only; no physical sensor acceptance evidence.\n+\n+This document governs repository direction; the existing\n+[Pi bring-up plan](RPI5_NATIVE_PERCEPTION_BRINGUP.md) supplies supporting detail.\n+All gates below remain unpassed on Pi. This change creates only this document.\n+\n+# 2. Why the current upstream stack is not our baseline\n+\n+`ORB_SLAM3_ROS2` is a **useful predecessor/reference implementation**.\n+Verified differences from our intended baseline are:\n+\n+| Mismatch | Verified evidence and consequence |\n+|---|---|\n+| Existing images are amd64 | The saved [image inventory](RPI5_NATIVE_PERCEPTION_BRINGUP.md#4-arm64-compatibility-audit) lists seven local `linux/amd64` images. These artifacts are not native ARM64 images; this does not classify every possible build of the recipes. |\n+| Compose requests NVIDIA | [Wrapper Compose](../third_party/ORB_SLAM3_ROS2/docker-compose.yaml) reserves an NVIDIA GPU in `base`, inherited by `orb_slam3`; that reservation is inappropriate for the Pi baseline. |\n+| RealSense runtime/source mismatch | Saved [runtime log](../experiments/2026-09-08-d435i-baseline/A_LOG.txt) reports realsense-ros **4.58.1**, built/running with SDK **2.58.1**; our [source checkout](../third_party/realsense-ros/realsense2_camera/package.xml) is **4.58.4**. The source pin does not identify the tested binary; this is not an SDK build/runtime version mismatch. |\n+| Embedded versus official ORB | [Wrapper submodules](../third_party/ORB_SLAM3_ROS2/.gitmodules) select `gjcliff/ORB_SLAM3`, while the [parent](../.gitmodules) separately selects `UZ-SLAMLab/ORB_SLAM3`. The wrapper calls fork APIs `GetFrameDrawerImage()` and `GetMapPCL()` absent from the official checkout's `System.h`. |\n+| Docker build prerequisite | [Wrapper CMake](../third_party/ORB_SLAM3_ROS2/CMakeLists.txt) requires the embedded `ORB_SLAM3/build` package export and generated libraries. Its [Dockerfile](../third_party/ORB_SLAM3_ROS2/Dockerfile) comments out the ORB build; Compose runs `colcon build` without first establishing that prerequisite. A clean checkout needs an explicit ORB dependency build. |\n+| Image topic mismatch | [Camera Compose](../third_party/ORB_SLAM3_ROS2/ros2_realsense_d435i_camera_calibration/docker-compose.yaml) remaps IR1 to `/camera/image_raw`; the [wrapper](../third_party/ORB_SLAM3_ROS2/src/imu_mono_realsense.cpp) subscribes to `camera/infra1/image_rect_raw`. The current mapping launch supplies no matching remap. |\n+| Mode mismatch | [Mapping launch](../third_party/ORB_SLAM3_ROS2/launch/mapping.launch.py) defaults to `monocular`, overriding the node's `imu-monocular` default. Intended VIO requires explicit `imu-monocular`. |\n+\n+Evidence is current checkout inspection plus saved experiment/audit records;\n+no Docker or hardware commands were run for this document.\n+\n+# 3. New repository ownership model\n+\n+Extend existing parent directories; add only missing responsibilities as needed.\n+\n+| Parent path | Ownership and contents |\n+|---|---|\n+| `scripts/pi/` | Our platform checks and, later, controlled native build entry points; record ARM64 dependencies, resource limits and build provenance. |\n+| `scripts/sensor/` | Our native sensor launch, raw-stream checks and bag record/replay entry points; explicit topic/QoS contracts. |\n+| `scripts/evaluation/` | Our official EuRoC runners, trajectory evaluation and comparable summaries; separate wrapper-integration results. |\n+| `config/realsense/` | Our explicit raw IR1/gyro/accel profile, topic names and runtime version manifest; no assumed combined IMU. |\n+| `config/orbslam3/` | Our estimator mode, calibration provenance and later wrapper launch/remaps; keep official benchmark and D435i integration configurations distinct. |\n+| `experiments/` | Existing dated evidence runs; add manifests, commands, logs and gate decisions without rewriting historical runs. |\n+| `results/` | New derived metrics, trajectories and reports keyed to experiment IDs; distinguish `official/` and `wrapper/` results. |\n+| `docker/` | Existing parent tools Dockerfile remains available; future parent deployment recipes only after re-entry criteria. |\n+| `third_party/` | Upstream-owned source, preserved at recorded gitlinks, including nested wrapper/calibration dependencies. No edits, deletion or replacement. |\n+| `data/bags/`, `data/datasets/` | Reuse existing ignored storage for bags and benchmark datasets; track checksums and metadata in experiments. |\n+| `scripts/env.sh`, `docs/`, `README.md` | Reuse parent environment and documentation entry points; align their guidance with this decision later. |\n+\n+We own orchestration, configuration, validation and evidence; upstream owns its\n+source implementation. Future native build/install artifacts stay in ignored\n+parent workspace paths, outside upstream source. The wrapper's fixed build and\n+output paths require review before integration; any needed adaptation belongs\n+in a separately reviewed parent-owned package, not an edit under `third_party/`.\n+\n+# 4. Native pipeline stages\n+\n+PASS requires saved evidence, not topic existence or successful launch alone.\n+Each experiment must declare duration and numeric acceptance limits before it\n+runs (rates/gaps, error, latency and resource limits as applicable). Missing\n+criteria or evidence means STOP. No Pi gate is credited from a UTM run.\n+N4 can proceed independently of Pi/D435i readiness on SSH or Lab; N5 needs N0 and N4, N6 needs N3 and\n+N5 plus reviewed integration, and N7 needs all preceding evidence.\n+\n+### N0 \u2014 Pi platform\n+\n+- **Question:** Is the intended native platform ready?\n+- **Input:** Physical Pi, Ubuntu 24.04 image, power/cooling, network and storage.\n+- **Output:** Platform manifest and SSH/architecture checks.\n+- **PASS:** Pi 5, Ubuntu 24.04, `aarch64`/`arm64`, repeatable SSH, adequate resources and no power/thermal faults during the declared check.\n+- **STOP:** Wrong platform, unreliable access, insufficient storage, power or thermal faults.\n+\n+### N1 \u2014 USB\n+\n+- **Question:** Does the D435i have a stable direct USB3 connection?\n+- **Input:** N0, native sensor prerequisites, D435i and known USB3 cable/port.\n+- **Output:** Device identity, topology/speed, permissions and kernel log.\n+- **PASS:** Correct device at SuperSpeed (5000M or higher), stable enumeration and intended non-root access.\n+- **STOP:** 480M fallback, resets/disconnects or device permission failures.\n+\n+### N2 \u2014 raw D435i IR1 + gyro + accel\n+\n+- **Question:** Can native ROS2 deliver all three raw streams reliably?\n+- **Input:** N1, recorded SDK/ROS driver versions and explicit raw-stream profile.\n+- **Output:** Per-stream counts/rates/gaps/timestamps, camera information, parameters and logs.\n+- **PASS:** IR1, separate gyro and separate accel meet declared full-window limits; timestamps advance, image encoding and motion values are valid, and no sustained stalls or USB resets occur.\n+- **STOP:** Missing/stalled stream, timing/value failure or access error; combined `/imu` alone cannot pass.\n+- **Calibration warning:** Must be recorded and investigated, and blocks later VIO qualification until resolved. A warning alone does not fail raw transport: N2 may still PASS if USB/image/gyro/accel continuity and data validity meet the criteria above.\n+\n+### N3 \u2014 rosbag record/replay\n+\n+- **Question:** Can the accepted sensor evidence be captured and replayed intact?\n+- **Input:** N2 profile; explicit IR1, gyro, accel, camera-info and relevant calibration/TF topic list.\n+- **Output:** Checksummed bag, recording metadata and replay validation report.\n+- **PASS:** Required topics, counts and original message timestamps survive capture/replay within declared loss limits; QoS and playback clock policy are recorded and verified.\n+- **STOP:** Missing metadata/streams, storage loss, timestamp changes or incompatible replay QoS/clock behavior.\n+\n+### N4 \u2014 official ORB-SLAM3 EuRoC\n+\n+- **Question:** Does the official estimator establish a native benchmark reference?\n+- **Input:** Native build of pinned official ORB on SSH or Lab, fixed EuRoC sequence/configuration and ground truth; use monocular-inertial for the intended VIO comparison.\n+- **Execution:** Functional EuRoC validation may run on SSH or Lab; Lab is preferred for native x86 reference/performance benchmarking. EuRoC remains independent of Pi/D435i readiness.\n+- **Output:** Build manifest, trajectory, tracking coverage, timing and ground-truth error report.\n+- **PASS:** Sequence completes with inertial initialization and repeatable coverage/error within declared limits; alignment and evaluation settings are saved.\n+- **STOP:** Build/run failure, failed initialization, inadequate trajectory coverage or evaluation outside limits; wrapper/fork results cannot substitute.\n+\n+### N5 \u2014 Pi ORB build\n+\n+- **Question:** Can the same official baseline build and execute natively on Pi?\n+- **Input:** N0 and N4 pins/dataset; explicit dependency plan and bounded build parallelism.\n+- **Output:** ARM64 build manifest and EuRoC smoke-run trajectory/resource comparison.\n+- **PASS:** Native compile/link and dataset execution succeed within declared correctness and resource limits; runtime performance is recorded separately.\n+- **STOP:** Unresolved dependency/ABI failure, OOM, thermal faults or invalid trajectory; compilation alone is insufficient.\n+\n+### N6 \u2014 saved D435i bag \u2192 ROS wrapper\n+\n+- **Question:** Does reviewed native wrapper integration process validated saved data?\n+- **Input:** N3 bag, N5, explicitly identified wrapper/estimator revisions, device/profile calibration and `imu-monocular` configuration.\n+- **Output:** Repeatable offline trajectory, initialization/tracking evidence, timing and frame-contract checks.\n+- **PASS:** Topic/QoS/clock contracts match; raw-to-combined IMU synchronization and camera\u2013IMU calibration are verified; initialization, tracking and pose semantics meet declared limits.\n+- **STOP:** Fork/API incompatibility, unverified IMU interpolation/time alignment, sample calibration used without validation, wrong mode/topics or invalid/stale poses.\n+\n+### N7 \u2014 live VIO\n+\n+- **Question:** Does the validated offline integration sustain live Pi operation?\n+- **Input:** N6 integration/configuration and the N2 native sensor profile.\n+- **Output:** Live trajectory, tracking/latency/resource report and reproducible evidence capture.\n+- **PASS:** Initialization and tracking remain valid over the declared motion/duration; latency, drops and resources stay within limits without growing backlog.\n+- **STOP:** Repeated tracking loss, timing/calibration failure, unbounded backlog, sensor stalls, USB or power/thermal faults.\n+\n+# 5. Component provenance\n+\n+Sources/revisions below identify checked-out code, not proven native binaries.\n+\n+| Component | Upstream source | Our role | Build/runtime plan |\n+|---|---|---|---|\n+| Official ORB_SLAM3 | `UZ-SLAMLab/ORB_SLAM3`, `4452a3c4ab75` | Estimator benchmark and evaluation harness | Native SSH or Lab EuRoC N4 (Lab preferred for native x86 reference/performance benchmarking), then native Pi N5; preserve official identity. |\n+| ORB_SLAM3_ROS2 | `gjcliff/ORB_SLAM3_ROS2`, `efd7acd9ea31` | Review ROS integration and own future launch/config adaptation | Preserve reference; review native dependency/API/output paths before N6. |\n+| Embedded ORB fork | `gjcliff/ORB_SLAM3`, `0f29ad5f5632`, nested under wrapper | Identify modified estimator/API dependency | Preserve; any native integration using it is labeled modified-wrapper integration, never official benchmark. |\n+| realsense-ros | `realsenseai/realsense-ros`, `9a11121700cb` / 4.58.4 | Own sensor contract and source-to-runtime traceability | Select native package or source installation with recorded matching provenance; separately pin librealsense SDK/backend, which is not a parent submodule. |\n+| Our configs/scripts | Parent repository | Own orchestration, measurements and acceptance criteria | Native-first; record parent SHA, configuration hashes, package versions and actual executable/library provenance per run. |\n+\n+Official ORB is not a drop-in replacement for the embedded fork: the wrapper\n+uses additional APIs and its own CMake package export. N4/N5 evaluate the\n+official estimator; N6/N7 evaluate the explicitly selected integration stack.\n+\n+# 6. What we can reuse\n+\n+Labels describe candidate reuse; **no code or assets are copied now**.\n+\n+| Concept/asset inspected | Classification | Scope |\n+|---|---|---|\n+| Mapping launch structure: arguments and conditional visualization/replay | **REUSE AFTER REVIEW** | Keep parameterized orchestration ideas; review paths, clocks, explicit mode, headless defaults and sensor/SLAM separation. |\n+| D435i monocular and monocular-inertial YAML examples | **REFERENCE ONLY** | Useful settings schema; intrinsics, extrinsics, rates and noise values are not calibration truth for our camera/profile. |\n+| ROS subscriptions in `src/imu_mono_realsense.cpp` | **REUSE AFTER REVIEW** | Sensor QoS, MONO8 conversion and timestamped IMU conversion are candidates; review queue bounds, image/IMU time boundaries, concurrency and remaps. |\n+| Pose publication in the same source | **REUSE AFTER REVIEW** | `Tcw.inverse()`, `orb_odom` and TF illustrate integration; verify tracking validity, acquisition timestamps, optical/body frames and camera-to-body transform before reuse. |\n+| Dockerfiles, Compose and entrypoint ideas | **REFERENCE ONLY** | Retain ROS base/dependency environment, service separation and workspace mounts as later design inputs; review ARM64 builds, permissions, DDS and persistence. |\n+\n+These assets are in the [preserved wrapper](../third_party/ORB_SLAM3_ROS2/).\n+No inspected wrapper runtime asset is classified **REUSE DIRECTLY** for the\n+native baseline; existing parent data/experiment directory conventions can be\n+reused directly without importing upstream behavior.\n+\n+# 7. What NOT to migrate\n+\n+- NVIDIA reservations or existing amd64 image artifacts into the Pi runtime.\n+- Hard-coded UID/GID 1000/1001, VM device groups, device numbers or container paths.\n+- Example D435i calibration, static TF or noise values as measured device truth.\n+- Current IR1 topic mismatch or the launch recorder's unrelated color-topic list.\n+- Implicit monocular mode for a VIO experiment.\n+- Unverified combined IMU behavior: `unite_imu_method:=2` alone does not prove interpolation; preserve separate raw streams ([saved IMU findings](../experiments/2026-09-08-d435i-baseline/IMU_NOTES.md)).\n+- Mandatory GUI, point-cloud/video/map export or full Nav2/PCL features without a gate requirement.\n+- Upstream source rewrites or VM build/install artifacts to make the native baseline appear ready.\n+\n+# 8. Immediate next implementation when Pi arrives\n+\n+1. Boot/SSH/ARM64 verification.\n+2. ROS installation.\n+3. Native RealSense installation.\n+4. D435i USB3 validation.\n+5. Raw IR1 + gyro + accel sensor gate.\n+\n+# 9. Docker re-entry criterion\n+\n+Reconsider Docker after **native sensor PASS (N2/N3) + native official ORB\n+baseline PASS (N4/N5) + a specific isolation/reproducibility benefit** is identified.\n+The native reference remains authoritative; moving a wrapper deployment also\n+requires its native N6/N7 evidence. Compare equivalent inputs, versions and\n+metrics before accepting any container variant.\n+\n+| Later option | Reason to consider / evidence needed |\n+|---|---|\n+| A. Fully native | Retains the validated path; evaluate whether version manifests and scripted setup already provide sufficient reproducibility. |\n+| B. Native RealSense + containerized ORB | Isolates estimator dependencies while preserving native device access; measure DDS/QoS, clock, data-transfer and latency behavior. |\n+| C. Fully containerized | Packages driver and estimator userspace; validate ARM64 images, host-kernel/USB dependency, permissions and all sensor/runtime gates again. |\n+\n+No final deployment option is selected now. Existing upstream Docker assets\n+and `docker/Dockerfile.jazzy-tools` remain available as references.\n+\n+# 10. Repository changes proposed\n+\n+Only this document is added now. Minimal subsequent parent changes:\n+\n+1. Update `README.md` with the native-first architecture, machine roles and a link here; cross-link existing bring-up/review documents without rewriting historical evidence.\n+2. Review `scripts/env.sh` for explicit native ROS setup, domain/RMW choices and an optional, justified FastDDS transport override.\n+3. Add `scripts/pi/check_platform.sh`, `scripts/sensor/check_usb.sh`, `scripts/sensor/run_native.sh`, `scripts/sensor/check_raw.py` and `config/realsense/d435i_raw.yaml` for N0\u2013N2; resolve device-supported profiles on Pi.\n+4. Add `experiments/README.md` with the gate/provenance manifest convention; retain all existing experiments. Add `results/README.md` and extend `.gitignore` only for generated build/runtime artifacts, keeping small reports trackable.\n+5. After N2, add `scripts/sensor/record.sh` and `scripts/sensor/replay.sh` for N3. At N4/N5, add `scripts/evaluation/run_euroc.sh`, `scripts/pi/build_orbslam3.sh` and `config/orbslam3/README.md` documenting benchmark/integration separation.\n+6. At N6, add reviewed parent wrapper launch/configuration under `config/orbslam3/`; propose a minimal parent ROS package only if API/path adaptation requires code. Keep `third_party/` and existing Docker projects unchanged; add no new Docker deployment yet.\n",
+      "stderr": ""
+    }
+  },
+  "permission_file_sha256": {
+    "/etc/udev/rules.d/99-wbr-d435i.rules": "dd3c3c069e924891dfb9609fdcd8a8a0193969f64d31b93862ca514f01225c52",
+    "/usr/local/libexec/wbr-d435i-iio-permissions": "747e1941e30ea00dc4035a543e1937d5e531762919e4c11364b21c1c90482f35"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "utc": "2026-09-12T16:09:28.090263+00:00",
+  "observer": [
+    "/usr/bin/python3",
+    "/home/richard/wbr-runtime/wbr-runtime-20260912T160912Z/n3_observer.py",
+    "--mode",
+    "replay",
+    "--domain",
+    "182",
+    "--seconds",
+    "46.9975",
+    "--ready-file",
+    "/tmp/wbr-SYNTHETIC-ros-0mb284cc/replay/observer_ready.json",
+    "--stop-file",
+    "/tmp/wbr-SYNTHETIC-ros-0mb284cc/replay/observer_stop.json",
+    "--output",
+    "/tmp/wbr-SYNTHETIC-ros-0mb284cc/replay/observed.json",
+    "--topics-file",
+    "/tmp/wbr-SYNTHETIC-ros-0mb284cc/synthetic-topics.json"
+  ],
+  "guard": [
+    "/usr/bin/python3",
+    "/home/richard/wbr-runtime/wbr-runtime-20260912T160912Z/n3_observer.py",
+    "--mode",
+    "guard",
+    "--domain",
+    "181",
+    "--seconds",
+    "46.9975",
+    "--ready-file",
+    "/tmp/wbr-SYNTHETIC-ros-0mb284cc/replay/guard_ready.json",
+    "--stop-file",
+    "/tmp/wbr-SYNTHETIC-ros-0mb284cc/replay/observer_stop.json",
+    "--output",
+    "/tmp/wbr-SYNTHETIC-ros-0mb284cc/replay/live_domain_continuous.json",
+    "--topics-file",
+    "/tmp/wbr-SYNTHETIC-ros-0mb284cc/synthetic-topics.json"
+  ],
+  "player": [
+    "ros2",
+    "bag",
+    "play",
+    "/tmp/wbr-SYNTHETIC-ros-0mb284cc/SYNTHETIC-bag",
+    "--rate",
+    "1.0",
+    "--delay",
+    "3",
+    "--qos-profile-overrides-path",
+    "/tmp/wbr-SYNTHETIC-ros-0mb284cc/synthetic-qos.yaml"
+  ],
+  "ROS_DOMAIN_ID": 182,
+  "ROS_LOCALHOST_ONLY": "1"
+}

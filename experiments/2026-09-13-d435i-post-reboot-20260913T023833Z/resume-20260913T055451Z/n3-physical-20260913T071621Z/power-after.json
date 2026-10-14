@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "vcgencmd",
+    "get_throttled"
+  ],
+  "returncode": 0,
+  "stdout": "throttled=0x0\n",
+  "stderr": "",
+  "utc": "2026-09-13T07:19:46.245389+00:00"
+}

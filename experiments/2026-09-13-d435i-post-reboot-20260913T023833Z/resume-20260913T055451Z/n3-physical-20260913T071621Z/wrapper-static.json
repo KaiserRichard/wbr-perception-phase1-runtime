@@ -1,0 +1,15 @@
+{
+  "scope": "STATIC_FILES_ONLY_NOT_HARDWARE_PASS",
+  "utc": "2026-09-13T07:16:22.205370+00:00",
+  "version": "4.58.4",
+  "package_root": "/opt/ros/jazzy/share/realsense2_camera",
+  "parameter_names_missing": [],
+  "source_sha256": {
+    "/opt/ros/jazzy/share/realsense2_camera/package.xml": "a15e85855f0be2ce295776b8a243c3a9ccac1df15cba8faf5d88fdb219e02fee",
+    "/opt/ros/jazzy/share/realsense2_camera/launch/rs_launch.py": "c4ff6f711dbee969a95f7ca91eba5dd501ecc99797091bd97d143068ca9e925d",
+    "/home/richard/wbr-runtime/wbr-runtime-20260913T055800Z/n3_baseline.yaml": "ce77484e672f4bbcdcd1cf89ad831c89ecb8cd5768f4002f6cbc69ef15474f2b"
+  },
+  "automatic_checks_pass": true,
+  "limitations": "Installed node parameter readback and opened profiles still required after N2.",
+  "packages": "ros-jazzy-librealsense2\t2.58.4-1noble.20260831.020056\nros-jazzy-realsense2-camera\t4.58.4-1noble.20260902.181721\nros-jazzy-realsense2-camera-msgs\t4.58.4-1noble.20260902.134137\n"
+}

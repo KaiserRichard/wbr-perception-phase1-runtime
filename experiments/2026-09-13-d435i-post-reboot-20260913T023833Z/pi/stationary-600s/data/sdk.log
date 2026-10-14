@@ -1,0 +1,261 @@
+ 13/09 10:09:26,427 WARNING [281473200549920] (context.cpp:41) No valid configuration file found at : /home/richard/.realsense-config.json loading defaults
+ 13/09 10:09:26,431 INFO [281473200549920] (backend-v4l2.cpp:926) Enumerating UVC video0 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video0 dev_name=/dev/video0
+ 13/09 10:09:26,508 INFO [281473200549920] (backend-v4l2.cpp:926) Enumerating UVC video1 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video1 dev_name=/dev/video1
+ 13/09 10:09:26,508 INFO [281473200549920] (backend-v4l2.cpp:926) Enumerating UVC video2 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video2 dev_name=/dev/video2
+ 13/09 10:09:26,508 INFO [281473200549920] (backend-v4l2.cpp:926) Enumerating UVC video3 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video3 dev_name=/dev/video3
+ 13/09 10:09:26,509 INFO [281473200549920] (backend-v4l2.cpp:926) Enumerating UVC video4 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.3/video4linux/video4 dev_name=/dev/video4
+ 13/09 10:09:26,509 INFO [281473200549920] (backend-v4l2.cpp:926) Enumerating UVC video5 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.3/video4linux/video5 dev_name=/dev/video5
+ 13/09 10:09:26,509 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,509 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,509 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,509 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,509 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,510 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,510 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,510 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,510 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,510 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,510 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,510 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,510 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,510 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,510 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,510 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,510 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,510 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,510 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,520 INFO [281473200549920] (context-libusb.cpp:25) Found 6 USB devices
+ 13/09 10:09:26,524 INFO [281473200549920] (backend-v4l2.cpp:926) Enumerating UVC video0 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video0 dev_name=/dev/video0
+ 13/09 10:09:26,524 INFO [281473200549920] (backend-v4l2.cpp:926) Enumerating UVC video1 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video1 dev_name=/dev/video1
+ 13/09 10:09:26,524 INFO [281473200549920] (backend-v4l2.cpp:926) Enumerating UVC video2 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video2 dev_name=/dev/video2
+ 13/09 10:09:26,525 INFO [281473200549920] (backend-v4l2.cpp:926) Enumerating UVC video3 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video3 dev_name=/dev/video3
+ 13/09 10:09:26,525 INFO [281473200549920] (backend-v4l2.cpp:926) Enumerating UVC video4 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.3/video4linux/video4 dev_name=/dev/video4
+ 13/09 10:09:26,525 INFO [281473200549920] (backend-v4l2.cpp:926) Enumerating UVC video5 v4l_path=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.3/video4linux/video5 dev_name=/dev/video5
+ 13/09 10:09:26,525 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,525 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,525 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,525 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,525 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,525 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,525 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,525 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,525 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,525 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,525 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,526 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,526 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,526 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,526 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,526 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,526 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,526 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,526 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,532 INFO [281473200549920] (context-libusb.cpp:25) Found 6 USB devices
+ 13/09 10:09:26,532 INFO [281473200549920] (backend-v4l2.cpp:758) Cannot access /sys/class/d4xx-class
+ 13/09 10:09:26,560 INFO [281473200549920] (backend-v4l2.cpp:2339) Video node was successfully configured to GREY format, fd 12
+ 13/09 10:09:26,560 INFO [281473200549920] (backend-v4l2.cpp:2341) Trying to configure fourcc GREY
+ 13/09 10:09:26,560 INFO [281473200549920] (backend-v4l2.cpp:2579) Metadata node was successfully configured to D4XX format, fd 15
+ 13/09 10:09:26,589 WARNING [281473200549920] (ds-calib-parsers.cpp:36) IMU Calibration is not available, default intrinsic and extrinsic will be used.
+ 13/09 10:09:26,589 INFO [281473200549920] (ds-calib-parsers.cpp:208) IMU extrinsic table not found; using CAD values
+ 13/09 10:09:26,589 INFO [281473200549920] (ds-calib-parsers.cpp:234) Depth Module V2 IMU Accelno valid intrinsic available, use default values.
+ 13/09 10:09:26,589 INFO [281473200549920] (ds-calib-parsers.cpp:246) Depth Module V2 IMU Gyrointrinsic not valid, use default values.
+ 13/09 10:09:26,589 INFO [281473200549920] (ds-calib-parsers.cpp:234) Depth Module V2 IMU Accelno valid intrinsic available, use default values.
+ 13/09 10:09:26,589 INFO [281473200549920] (ds-calib-parsers.cpp:246) Depth Module V2 IMU Gyrointrinsic not valid, use default values.
+ 13/09 10:09:26,816 INFO [281473101261088] (uvc-sensor.cpp:237) Frame counter reset
+ 13/09 10:14:40,297 ERROR [281473050536224] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd0ff0, new_stream:[ A MOTION_XYZ32F 0 @ 100 ], original:0xffff94fbf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:14:40,297 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:14:40,373 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:14:40,373 ERROR [281473050536224] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:14:40,373 INFO [281473058990368] (sensor.cpp:51) Frame Callback Gyro #62699 overdue. (FPS: 200, max duration: 4.97512 ms)
+ 13/09 10:14:40,373 INFO [281473050536224] (sensor.cpp:51) Frame Callback Accel #31677 overdue. (FPS: 100, max duration: 9.90099 ms)
+ 13/09 10:14:40,374 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:14:40,374 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,407 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,407 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,412 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,412 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,417 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,417 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,422 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,422 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,427 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,427 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,432 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,432 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,437 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,437 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,442 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,442 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,447 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,447 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,452 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,452 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,457 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,457 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,462 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,462 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,467 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,467 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,472 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,472 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,477 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,477 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,482 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,482 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,487 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,487 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,490 ERROR [281473050536224] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd0ff0, new_stream:[ A MOTION_XYZ32F 0 @ 100 ], original:0xffff94fbf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,490 ERROR [281473050536224] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,492 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,492 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,497 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,497 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,500 ERROR [281473050536224] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd0ff0, new_stream:[ A MOTION_XYZ32F 0 @ 100 ], original:0xffff94fbf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,500 ERROR [281473050536224] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,502 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,502 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,507 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,507 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,510 ERROR [281473050536224] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd0ff0, new_stream:[ A MOTION_XYZ32F 0 @ 100 ], original:0xffff94fbf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,510 ERROR [281473050536224] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,512 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,512 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,517 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,517 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,519 ERROR [281473050536224] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd0ff0, new_stream:[ A MOTION_XYZ32F 0 @ 100 ], original:0xffff94fbf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,519 ERROR [281473050536224] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,522 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,522 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,527 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,527 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,529 ERROR [281473050536224] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd0ff0, new_stream:[ A MOTION_XYZ32F 0 @ 100 ], original:0xffff94fbf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,529 ERROR [281473050536224] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,532 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,532 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,537 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,537 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,539 ERROR [281473050536224] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd0ff0, new_stream:[ A MOTION_XYZ32F 0 @ 100 ], original:0xffff94fbf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,539 ERROR [281473050536224] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,542 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,542 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,547 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,547 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,549 ERROR [281473050536224] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd0ff0, new_stream:[ A MOTION_XYZ32F 0 @ 100 ], original:0xffff94fbf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,549 ERROR [281473050536224] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:15:11,552 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:15:11,552 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,729 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,729 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,734 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,734 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,739 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,739 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,744 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,744 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,749 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,749 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,754 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,754 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,759 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,759 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,764 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,764 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,769 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,769 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,774 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,774 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,779 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,779 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,784 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,784 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,789 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,789 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,794 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,794 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,799 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,799 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,804 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,804 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,806 ERROR [281473050536224] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd0ff0, new_stream:[ A MOTION_XYZ32F 0 @ 100 ], original:0xffff94fbf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,806 ERROR [281473050536224] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,809 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,809 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,814 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,814 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:08,816 ERROR [281473050536224] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd0ff0, new_stream:[ A MOTION_XYZ32F 0 @ 100 ], original:0xffff94fbf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:08,816 ERROR [281473050536224] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:39,978 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:39,978 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:39,983 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:39,983 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:39,988 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:39,988 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:39,993 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:39,993 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:39,998 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:39,998 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:40,003 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:40,003 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:40,008 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:40,008 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:40,013 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:40,013 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:40,018 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:40,018 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:40,023 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:40,023 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:40,028 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:40,028 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:40,033 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:40,033 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:40,038 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:40,038 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:40,043 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:40,043 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:40,048 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:40,048 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:40,053 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:40,053 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:40,055 ERROR [281473050536224] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd0ff0, new_stream:[ A MOTION_XYZ32F 0 @ 100 ], original:0xffff94fbf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:40,055 ERROR [281473050536224] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:16:40,058 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:16:40,058 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,217 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,217 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,222 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,222 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,227 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,227 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,232 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,232 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,237 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,237 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,242 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,242 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,247 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,247 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,252 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,252 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,257 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,257 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,262 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,262 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,267 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,267 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,272 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,272 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,277 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,277 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,282 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,282 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,287 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,287 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,292 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,292 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,297 ERROR [281473058990368] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd2d80, new_stream:[ G MOTION_XYZ32F 0 @ 200 ], original:0xffff8cacf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,297 ERROR [281473058990368] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:17:11,297 ERROR [281473050536224] (rs.cpp:288) [rs2_allocate_synthetic_motion_frame( source:0xaaaad4bd0ff0, new_stream:[ A MOTION_XYZ32F 0 @ 100 ], original:0xffff94fbf048, frame_type:9 ) Wrong Api Call Sequence] Out of frame resources!
+ 13/09 10:17:11,297 ERROR [281473050536224] (synthetic-stream.cpp:59) Exception was thrown during callback: Out of frame resources!
+ 13/09 10:19:26,595 INFO [281473058990368] (backend-hid.cpp:572) iio_hid_sensor: Stream finished
+ 13/09 10:19:26,596 INFO [281473050536224] (backend-hid.cpp:572) iio_hid_sensor: Stream finished
+ 13/09 10:19:26,596 INFO [281473101261088] (backend-v4l2.cpp:1500) V4L stream is closed

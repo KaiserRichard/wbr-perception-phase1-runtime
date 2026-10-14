@@ -1,0 +1,50 @@
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.5.auto/iio:device0/buffer/enable
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.5.auto/iio:device0/buffer/length
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.5.auto/iio:device0/in_anglvel_hysteresis
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.5.auto/iio:device0/in_anglvel_sampling_frequency
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.5.auto/iio:device0/scan_elements/in_anglvel_x_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.5.auto/iio:device0/scan_elements/in_anglvel_y_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.5.auto/iio:device0/scan_elements/in_anglvel_z_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.5.auto/iio:device0/scan_elements/in_timestamp_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.5.auto/iio:device0/trigger/current_trigger
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.4.auto/iio:device1/buffer/enable
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.4.auto/iio:device1/buffer/length
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.4.auto/iio:device1/in_accel_hysteresis
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.4.auto/iio:device1/in_accel_sampling_frequency
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.4.auto/iio:device1/scan_elements/in_accel_x_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.4.auto/iio:device1/scan_elements/in_accel_y_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.4.auto/iio:device1/scan_elements/in_accel_z_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.4.auto/iio:device1/scan_elements/in_timestamp_en
+preview: root:video 0660 /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.4.auto/iio:device1/trigger/current_trigger
+
+1 udev rules files have been checked.
+  Success: 1
+  Fail:    0
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/media3
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video0
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video1
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video2
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.0/video4linux/video3
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.1
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.2
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.3
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.3/media4
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.3/video4linux/video4
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.3/video4linux/video5
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.4
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200001.3.auto
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.4.auto
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.4.auto/iio:device1
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.4.auto/trigger1
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.5.auto
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.5.auto/iio:device0
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.5.auto/trigger0
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/HID-SENSOR-2000e1.6.auto
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0001/hidraw/hidraw0
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/usbmisc/hiddev0
+168ff6564961b820c134e8e903cffa8abd877e1cea3f8b267cef22eaaf381a30  /home/richard/wbr-sensor-validation-20260912/wbr-d435i-iio-permissions.py
+6db46e997806f9a1a79fd65604ee60b68097f38d436ad5b671d2b79b1b01f97e  /home/richard/wbr-sensor-validation-20260912/99-wbr-d435i.rules

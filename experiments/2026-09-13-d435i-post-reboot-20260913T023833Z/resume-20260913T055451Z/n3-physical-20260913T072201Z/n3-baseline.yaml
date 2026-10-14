@@ -1,0 +1,27 @@
+# Native ROS parameter file, for ros2 run --ros-args --params-file.
+# Do not pass this nested ROS YAML as rs_launch.py's flat config_file.
+# Prepared against checked-in wrapper 4.58.4; installed-version readback is required.
+/camera/camera:
+  ros__parameters:
+    serial_no: "243322073847"
+    camera_name: camera
+    enable_color: false
+    enable_depth: false
+    enable_infra: false
+    enable_infra1: true
+    enable_infra2: false
+    depth_module.infra_profile: "640,480,15"
+    depth_module.infra1_format: Y8
+    enable_gyro: true
+    enable_accel: true
+    gyro_fps: 200
+    accel_fps: 100
+    unite_imu_method: 0
+    enable_sync: false
+    pointcloud__neon_.enable: false
+    align_depth.enable: false
+    enable_rgbd: false
+    publish_tf: true
+    tf_publish_rate: 0.0
+    initial_reset: false
+    wait_for_device_timeout: 10.0

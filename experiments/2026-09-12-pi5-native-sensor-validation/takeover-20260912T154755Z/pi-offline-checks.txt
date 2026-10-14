@@ -1,0 +1,170 @@
+test_480m_is_blocked_even_with_expected_identity (test_gate_tooling.GateToolingTests.test_480m_is_blocked_even_with_expected_identity) ... ok
+test_ambiguous_enumeration_fails (test_gate_tooling.GateToolingTests.test_ambiguous_enumeration_fails) ... ok
+test_output_is_append_only (test_gate_tooling.GateToolingTests.test_output_is_append_only) ... ok
+test_root_not_allowed (test_gate_tooling.GateToolingTests.test_root_not_allowed) ... ok
+test_saved_enumeration_keeps_identifiers_separate (test_gate_tooling.GateToolingTests.test_saved_enumeration_keeps_identifiers_separate) ... ok
+test_superspeed_hub_path_is_blocked (test_gate_tooling.GateToolingTests.test_superspeed_hub_path_is_blocked) ... ok
+test_superspeed_or_better_direct_path (test_gate_tooling.GateToolingTests.test_superspeed_or_better_direct_path) ... ok
+test_unavailable_camera_never_enters_hardware_path (test_gate_tooling.GateToolingTests.test_unavailable_camera_never_enters_hardware_path) ... ok
+test_absent_camera_guard_fails_before_n1_or_hardware_read (test_n2_tooling.ImageAndGuardTests.test_absent_camera_guard_fails_before_n1_or_hardware_read) ... ok
+test_failed_n1_never_reads_hardware (test_n2_tooling.ImageAndGuardTests.test_failed_n1_never_reads_hardware) ... ok
+test_pgm_does_not_eat_whitespace_pixel_bytes (test_n2_tooling.ImageAndGuardTests.test_pgm_does_not_eat_whitespace_pixel_bytes) ... ok
+test_calibration_warning_preserved_separately (test_n2_tooling.KernelAndHealthTests.test_calibration_warning_preserved_separately) ... ok
+test_health_nonzero_flags_fail (test_n2_tooling.KernelAndHealthTests.test_health_nonzero_flags_fail) ... ok
+test_historical_logs_are_analysis_only (test_n2_tooling.KernelAndHealthTests.test_historical_logs_are_analysis_only) ... ok
+test_usb2_reset_disconnect_and_corruption_are_faults (test_n2_tooling.KernelAndHealthTests.test_usb2_reset_disconnect_and_corruption_are_faults) ... ok
+test_analyzer_cli_failure_is_nonzero_and_additive (test_n2_tooling.SDKAnalysisTests.test_analyzer_cli_failure_is_nonzero_and_additive) ... ok
+test_burst_does_not_pass_full_window (test_n2_tooling.SDKAnalysisTests.test_burst_does_not_pass_full_window) ... ok
+test_full_interval_and_exact_profile (test_n2_tooling.SDKAnalysisTests.test_full_interval_and_exact_profile) ... ok
+test_nonfinite_or_wrong_profile_rejected (test_n2_tooling.SDKAnalysisTests.test_nonfinite_or_wrong_profile_rejected) ... ok
+test_repeat_backward_missing_and_unexpected_stream_fail (test_n2_tooling.SDKAnalysisTests.test_repeat_backward_missing_and_unexpected_stream_fail) ... ok
+test_startup_gap_is_explicit_review_not_loss_exemption (test_n2_tooling.SDKAnalysisTests.test_startup_gap_is_explicit_review_not_loss_exemption) ... ok
+test_camera_info_nan_rejected (test_n3_metrics.MetricsTests.test_camera_info_nan_rejected) ... ok
+test_disconnected_tf_is_not_presence_pass (test_n3_metrics.MetricsTests.test_disconnected_tf_is_not_presence_pass) ... ok
+test_header_digest_catches_changed_order (test_n3_metrics.MetricsTests.test_header_digest_catches_changed_order) ... ok
+test_missing_required_context_rejected (test_n3_metrics.MetricsTests.test_missing_required_context_rejected) ... ok
+test_nanosecond_precision_repeats_and_backward (test_n3_metrics.MetricsTests.test_nanosecond_precision_repeats_and_backward) ... ok
+test_payload_digest_catches_corruption (test_n3_metrics.MetricsTests.test_payload_digest_catches_corruption) ... ok
+test_replay_loss_rejected (test_n3_metrics.MetricsTests.test_replay_loss_rejected) ... ok
+test_static_zero_stamp_is_permitted (test_n3_metrics.MetricsTests.test_static_zero_stamp_is_permitted) ... ok
+test_whole_window_rate_does_not_hide_stall (test_n3_metrics.MetricsTests.test_whole_window_rate_does_not_hide_stall) ... ok
+test_wrong_image_dimensions_rejected (test_n3_metrics.MetricsTests.test_wrong_image_dimensions_rejected) ... ok
+test_finalized_bag_complete_replay_and_no_publisher_boundary (test_ros_offline.SyntheticROSTest.test_finalized_bag_complete_replay_and_no_publisher_boundary) ... skipped 'opt-in camera-free ROS integration'
+test_105_seconds_never_substitutes_for_soak (test_takeover_tooling.EvidenceTests.test_105_seconds_never_substitutes_for_soak) ... ok
+test_missing_changed_and_escaping_hashes_rejected (test_takeover_tooling.EvidenceTests.test_missing_changed_and_escaping_hashes_rejected) ... ok
+test_no_camera_flags_block_entry_points (test_takeover_tooling.EvidenceTests.test_no_camera_flags_block_entry_points) ... ok
+test_nonfinite_usb_speed_is_not_superspeed (test_takeover_tooling.EvidenceTests.test_nonfinite_usb_speed_is_not_superspeed) ... ok
+test_parameter_fallback_and_latched_qos_rejected (test_takeover_tooling.EvidenceTests.test_parameter_fallback_and_latched_qos_rejected) ... ok
+test_recorder_never_uses_all_topics (test_takeover_tooling.EvidenceTests.test_recorder_never_uses_all_topics) ... ok
+test_review_is_explicit (test_takeover_tooling.EvidenceTests.test_review_is_explicit) ... ok
+test_full_content_and_frozen_content (test_takeover_tooling.ImageTests.test_full_content_and_frozen_content) ... ok
+test_qualified_identity_and_rejected_mounts (test_takeover_tooling.StorageTests.test_qualified_identity_and_rejected_mounts) ... ok
+test_slow_short_corrupt_nonfinite_benchmark_rejected (test_takeover_tooling.StorageTests.test_slow_short_corrupt_nonfinite_benchmark_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 1.409s
+
+OK (skipped=1)
+In file included from /opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp:8,
+                 from /opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:8,
+                 from /opt/ros/jazzy/include/librealsense2/hpp/rs_record_playback.hpp:8,
+                 from /opt/ros/jazzy/include/librealsense2/hpp/rs_context.hpp:8,
+                 from /opt/ros/jazzy/include/librealsense2/rs.hpp:9,
+                 from sample_ir_checked.cpp:3:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp:559:9: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+  559 |         const int get_data_size() const
+      |         ^~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp: In lambda function:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp:1297:60: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const size_t’ {aka ‘const long unsigned int’} [-Wsign-compare]
+ 1297 |                           frm.get_profile().stream_index() == index )
+      |                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp: In lambda function:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp:1306:64: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const size_t’ {aka ‘const long unsigned int’} [-Wsign-compare]
+ 1306 |                               frm.get_profile().stream_index() == index &&
+      |                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp: In lambda function:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp:1337:64: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const size_t’ {aka ‘const long unsigned int’} [-Wsign-compare]
+ 1337 |                               frm.get_profile().stream_index() == index )
+      |                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp: In lambda function:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp:1360:58: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const size_t’ {aka ‘const long unsigned int’} [-Wsign-compare]
+ 1360 |                         frm.get_profile().stream_index() == index) f = frm;
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp: In lambda function:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp:1382:58: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const size_t’ {aka ‘const long unsigned int’} [-Wsign-compare]
+ 1382 |                         frm.get_profile().stream_index() == index) f = frm;
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp: In lambda function:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp:1404:58: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const size_t’ {aka ‘const long unsigned int’} [-Wsign-compare]
+ 1404 |                         frm.get_profile().stream_index() == index) f = frm;
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+In file included from /opt/ros/jazzy/include/librealsense2/hpp/rs_processing.hpp:8,
+                 from /opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp:9:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp: In constructor ‘rs2::option_value::option_value(rs2_option, invalid_t)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp:30:85: warning: missing initializer for member ‘rs2_option_value::<anonymous>’ [-Wmissing-field-initializers]
+   30 |             : _value( new rs2_option_value{ option_id, false, RS2_OPTION_TYPE_COUNT } ) {}
+      |                                                                                     ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp: In constructor ‘rs2::option_value::option_value(rs2_option, int64_t)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp:33:86: warning: missing initializer for member ‘rs2_option_value::<anonymous>’ [-Wmissing-field-initializers]
+   33 |             : _value( new rs2_option_value{ option_id, true, RS2_OPTION_TYPE_INTEGER } )
+      |                                                                                      ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp: In constructor ‘rs2::option_value::option_value(rs2_option, float)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp:38:84: warning: missing initializer for member ‘rs2_option_value::<anonymous>’ [-Wmissing-field-initializers]
+   38 |             : _value( new rs2_option_value{ option_id, true, RS2_OPTION_TYPE_FLOAT } )
+      |                                                                                    ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp: In constructor ‘rs2::option_value::option_value(rs2_option, const char*)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp:43:85: warning: missing initializer for member ‘rs2_option_value::<anonymous>’ [-Wmissing-field-initializers]
+   43 |             : _value( new rs2_option_value{ option_id, true, RS2_OPTION_TYPE_STRING } )
+      |                                                                                     ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp: In constructor ‘rs2::option_value::option_value(rs2_option, bool)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp:48:86: warning: missing initializer for member ‘rs2_option_value::<anonymous>’ [-Wmissing-field-initializers]
+   48 |             : _value( new rs2_option_value{ option_id, true, RS2_OPTION_TYPE_BOOLEAN } )
+      |                                                                                      ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_processing.hpp: In constructor ‘rs2::embedded_filter::embedded_filter(std::shared_ptr<rs2_embedded_filter>)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_processing.hpp:1344:46: warning: ‘rs2::embedded_filter::_embedded_filter’ will be initialized after [-Wreorder]
+ 1344 |         std::shared_ptr<rs2_embedded_filter> _embedded_filter;
+      |                                              ^~~~~~~~~~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_processing.hpp:1307:49: warning:   base ‘rs2::options’ [-Wreorder]
+ 1307 |             , options((rs2_options*)filter.get())
+      |                                                 ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_processing.hpp:1305:9: warning:   when initialized here [-Wreorder]
+ 1305 |         embedded_filter(std::shared_ptr<rs2_embedded_filter> filter)
+      |         ^~~~~~~~~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp: In constructor ‘rs2::depth_stereo_sensor::depth_stereo_sensor(rs2::sensor)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp:522:54: warning: implicitly-declared ‘rs2::sensor::sensor(const rs2::sensor&)’ is deprecated [-Wdeprecated-copy]
+  522 |         depth_stereo_sensor(sensor s): depth_sensor(s)
+      |                                                      ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp:342:17: note: because ‘rs2::sensor’ has user-provided ‘rs2::sensor& rs2::sensor::operator=(const rs2::sensor&)’
+  342 |         sensor& operator=(const sensor& other)
+      |                 ^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp:493:29: note:   initializing argument 1 of ‘rs2::depth_sensor::depth_sensor(rs2::sensor)’
+  493 |         depth_sensor(sensor s)
+      |                      ~~~~~~~^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp: In constructor ‘rs2::auto_calibrated_device::auto_calibrated_device(rs2::device)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:416:34: warning: implicitly-declared ‘rs2::device::device(const rs2::device&)’ is deprecated [-Wdeprecated-copy]
+  416 |             : calibrated_device(d)
+      |                                  ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:165:17: note: because ‘rs2::device’ has user-provided ‘rs2::device& rs2::device::operator=(const rs2::device&)’
+  165 |         device& operator=(const device& dev)
+      |                 ^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:387:34: note:   initializing argument 1 of ‘rs2::calibrated_device::calibrated_device(rs2::device)’
+  387 |         calibrated_device(device d)
+      |                           ~~~~~~~^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp: In member function ‘rs2::device rs2::device_list::front() const’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:1131:48: warning: moving a temporary object prevents copy elision [-Wpessimizing-move]
+ 1131 |         device front() const { return std::move((*this)[0]); }
+      |                                       ~~~~~~~~~^~~~~~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:1131:48: note: remove ‘std::move’ call
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:1131:48: warning: implicitly-declared ‘rs2::device::device(const rs2::device&)’ is deprecated [-Wdeprecated-copy]
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:165:17: note: because ‘rs2::device’ has user-provided ‘rs2::device& rs2::device::operator=(const rs2::device&)’
+  165 |         device& operator=(const device& dev)
+      |                 ^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp: In member function ‘rs2::device rs2::device_list::back() const’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:1134:29: warning: moving a temporary object prevents copy elision [-Wpessimizing-move]
+ 1134 |             return std::move((*this)[size() - 1]);
+      |                    ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:1134:29: note: remove ‘std::move’ call
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:1134:29: warning: implicitly-declared ‘rs2::device::device(const rs2::device&)’ is deprecated [-Wdeprecated-copy]
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:165:17: note: because ‘rs2::device’ has user-provided ‘rs2::device& rs2::device::operator=(const rs2::device&)’
+  165 |         device& operator=(const device& dev)
+      |                 ^~~~~~~~
+1529e9985ecc5d8579890fcc5fb86ae164294f66b7adfc1aa29029c35c8f7a81  sample_ir_checked
+test_finalized_bag_complete_replay_and_no_publisher_boundary (test_ros_offline.SyntheticROSTest.test_finalized_bag_complete_replay_and_no_publisher_boundary) ... [INFO] [1789228811.728907923] [rosbag2_storage]: Opened database '/tmp/wbr-SYNTHETIC-ros-_3dt72k2/SYNTHETIC-bag/SYNTHETIC-bag_0.db3' for READ_WRITE.
+ERROR
+
+======================================================================
+ERROR: test_finalized_bag_complete_replay_and_no_publisher_boundary (test_ros_offline.SyntheticROSTest.test_finalized_bag_complete_replay_and_no_publisher_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/richard/wbr-runtime/wbr-runtime-20260912T160003Z/test_ros_offline.py", line 39, in test_finalized_bag_complete_replay_and_no_publisher_boundary
+    writer.create_topic(rosbag2_py.TopicMetadata(name=spec['name'], type=spec['type'], serialization_format='cdr'))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: __init__(): incompatible constructor arguments. The following argument types are supported:
+    1. rosbag2_py._storage.TopicMetadata(id: int, name: str, type: str, serialization_format: str, offered_qos_profiles: List[rosbag2_py._storage.QoS] = [], type_description_hash: str = '')
+
+Invoked with: kwargs: name='/camera/camera/infra1/image_rect_raw', type='sensor_msgs/msg/Image', serialization_format='cdr'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.394s
+
+FAILED (errors=1)

@@ -1,0 +1,11 @@
+{
+  "local": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-09-13-d435i-post-reboot-20260913T023833Z",
+  "remote": "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z",
+  "bundle": "/home/richard/wbr-runtime/wbr-runtime-20260913T021130Z",
+  "created_utc": "20260913T023833Z",
+  "canonical_head": "593245740fa962ad2325dc531cdb48c21d5f15b2",
+  "precision_bundle": "/home/richard/wbr-runtime/wbr-runtime-20260913T024714Z",
+  "precision_archive": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/wbr-runtime-20260913T024714Z.tar.gz",
+  "ros_bundle": "/home/richard/wbr-runtime/wbr-runtime-20260913T025503Z",
+  "ros_archive": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/wbr-runtime-20260913T025503Z.tar.gz"
+}

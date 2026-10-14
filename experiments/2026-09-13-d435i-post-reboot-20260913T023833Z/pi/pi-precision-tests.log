@@ -1,0 +1,10 @@
+test_absent_stream_rejected (test_precision.PrecisionAnalysisTests.test_absent_stream_rejected) ... ok
+test_arrival_gap_rejected (test_precision.PrecisionAnalysisTests.test_arrival_gap_rejected) ... ok
+test_missing_ir_rejected (test_precision.PrecisionAnalysisTests.test_missing_ir_rejected) ... ok
+test_precision_and_domains (test_precision.PrecisionAnalysisTests.test_precision_and_domains) ... ok
+test_repeated_timestamp_rejected (test_precision.PrecisionAnalysisTests.test_repeated_timestamp_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.062s
+
+OK

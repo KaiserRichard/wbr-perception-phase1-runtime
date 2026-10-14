@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "python3",
+    "/home/richard/wbr-runtime/wbr-runtime-20260913T055800Z/run_precision.py",
+    "--camera-available",
+    "--output",
+    "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/guided-60s-20260913T062916Z",
+    "--n1-result",
+    "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/n1/result.json",
+    "--n2-result",
+    "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/n2-accepted/result.json",
+    "--notes",
+    "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/guided-60s-20260913T062916Z-notes.json",
+    "--seconds",
+    "60",
+    "--image-every",
+    "1",
+    "--emitter-off"
+  ],
+  "utc": "2026-09-13T06:29:17.460997+00:00"
+}

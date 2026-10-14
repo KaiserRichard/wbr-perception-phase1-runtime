@@ -1,0 +1,76 @@
+DIAGNOSTIC SNAPSHOT UTC
+2026-09-12T09:57:49+00:00
+
+PI HEALTH (IDLE, NO STREAM)
+               total        used        free      shared  buff/cache   available
+Mem:           7.8Gi       352Mi       7.3Gi       3.5Mi       300Mi       7.4Gi
+Swap:             0B          0B          0B
+temp=47.7'C
+throttled=0x0
+Filesystem     Type   Size  Used Avail Use% Mounted on
+tmpfs          tmpfs  794M  3.5M  791M   1% /run
+/dev/mmcblk0p2 ext4    29G  7.3G   20G  27% /
+tmpfs          tmpfs  3.9G  4.0K  3.9G   1% /dev/shm
+tmpfs          tmpfs  5.0M     0  5.0M   0% /run/lock
+/dev/mmcblk0p1 vfat   505M  187M  318M  38% /boot/firmware
+tmpfs          tmpfs  794M   16K  794M   1% /run/user/1000
+cpu_interval_seconds=2.000451
+cpu_system_busy_percent=0.125000
+loadavg=0.30 0.13 0.05 1/204 1441
+
+CURRENT STORAGE ACCESS (NO WRITES)
+findmnt_exact_mount_exit=1
+drwxr-xr-x 2 root root 4096 Sep 12 15:50 /mnt/wbr-data
+directory_writable=no
+
+EXPECTED USB DEVICE ATTRIBUTES
+NAME          SIZE FSTYPE UUID                                 MOUNTPOINTS
+sda    62914560000                                             
+└─sda1 62913478656 exfat  1017-F615                            
+
+KERNEL DURING CURRENT DIAGNOSTICS
+2026-09-12T16:56:12.372613+07:00 wbr-pi5 systemd-journald[342]: File /var/log/journal/eb53bad0de804436879477d45c6c7cc3/user-1000.journal corrupted or uncleanly shut down, renaming and replacing.
+
+RECENT USB KERNEL HISTORY (SEPARATE FROM DIAGNOSTIC INTERVAL)
+-- No entries --
+
+USB AFTER DIAGNOSTICS
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 002: ID 346d:5678 USB Disk 2.0
+Bus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 004 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 004 Device 002: ID 214b:7260 Huasheng Electronics USB2.0 HUB
+Bus 004 Device 003: ID 214b:7260 Huasheng Electronics USB2.0 HUB
+Bus 004 Device 004: ID 8086:0b3a Intel Corp. Intel(R) RealSense(TM) Depth Camera 435i
+Bus 004 Device 005: ID 001f:0b21 Generic AB13X USB Audio
+Bus 005 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=dwc2/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M
+    |__ Port 001: Dev 002, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M
+    |__ Port 001: Dev 002, If 0, Class=Hub, Driver=hub/4p, 480M
+        |__ Port 001: Dev 003, If 0, Class=Hub, Driver=hub/4p, 480M
+            |__ Port 002: Dev 004, If 0, Class=Video, Driver=uvcvideo, 480M
+            |__ Port 002: Dev 004, If 1, Class=Video, Driver=uvcvideo, 480M
+            |__ Port 002: Dev 004, If 2, Class=Video, Driver=uvcvideo, 480M
+            |__ Port 002: Dev 004, If 3, Class=Video, Driver=uvcvideo, 480M
+            |__ Port 002: Dev 004, If 4, Class=Video, Driver=uvcvideo, 480M
+            |__ Port 002: Dev 004, If 5, Class=Human Interface Device, Driver=usbhid, 480M
+            |__ Port 003: Dev 005, If 0, Class=Audio, Driver=snd-usb-audio, 12M
+            |__ Port 003: Dev 005, If 1, Class=Audio, Driver=snd-usb-audio, 12M
+            |__ Port 003: Dev 005, If 2, Class=Audio, Driver=snd-usb-audio, 12M
+            |__ Port 003: Dev 005, If 3, Class=Human Interface Device, Driver=usbhid, 12M
+/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M
+SYSFS_PATH=/sys/bus/usb/devices/4-1.1.2
+busnum=4
+devnum=4
+devpath=1.1.2
+idVendor=8086
+idProduct=0b3a
+product=Intel(R) RealSense(TM) Depth Camera 435i
+serial=ABSENT
+speed=480
+bcdDevice=5113
+2026-09-12T09:57:52+00:00

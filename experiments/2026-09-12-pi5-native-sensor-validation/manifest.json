@@ -1,0 +1,338 @@
+{
+  "experiment_id": "2026-09-12-pi5-native-sensor-validation",
+  "updated_utc": "2026-09-12T10:01:13.901890+00:00",
+  "goal": "Validate native Pi 5 D435i IR1, raw gyro and raw accelerometer before ROS 2 record/replay.",
+  "hypothesis": "Native USB3 and correctly scoped non-root access support stable raw sensor delivery; unproven until measured.",
+  "control_host": "Mac; SSH richard@wbr-pi5.local; no Codex installation on Pi",
+  "canonical_repository_head": "593245740fa962ad2325dc531cdb48c21d5f15b2",
+  "canonical_branch": "feat/pi5-native-sensor-validation-20260912",
+  "pi_checkout_head": "5a2a7bea415382c2400c9352a20b2010257e6ab4",
+  "worktree": "Uncommitted session files; pre-existing audit relocation, Obsidian files and submodule .DS_Store files preserved.",
+  "hardware": {
+    "target": "Raspberry Pi 5 Model B Rev 1.0",
+    "memory_gib": 7.8,
+    "os": "Ubuntu 24.04.4 LTS",
+    "kernel": "6.8.0-1064-raspi",
+    "architecture": "aarch64 / arm64",
+    "camera": "D435i",
+    "firmware": "5.17.3.10",
+    "usb_vid_pid": "8086:0b3a",
+    "usb_sysfs": "4-1.1.2",
+    "negotiated_mbps": 480,
+    "psu": null,
+    "cable": "USB-C ↔ USB-C, user-reported; current path includes two USB 2.0 hubs",
+    "cooling": null,
+    "scene": null,
+    "initial_temperature_c": [
+      54.55,
+      52.1
+    ],
+    "initial_throttled": "0x0",
+    "device_serial": "243322073847",
+    "asic_serial": "251843061466",
+    "usb_descriptor_serial": null,
+    "firmware_update_id": "251843061466",
+    "usb_type_descriptor": "2.1",
+    "imu_type": "BMI085",
+    "previous_audit_device_serial": "243322073847",
+    "identifier_correction": "Earlier different-camera inference was incorrect: SDK device serial and ASIC/USB descriptor serial are distinct fields. Current SDK device serial matches the September 8 audit.",
+    "usb_bus": 4,
+    "usb_device": 4,
+    "usb_port_path": "1.1.2",
+    "usb_bcdDevice": "5113",
+    "usb_descriptor_serial_state": "ABSENT in current sysfs; USB iSerial=0. ASIC and firmware-update identifiers remain separately available through SDK.",
+    "initial_health_scope": "Historical before cable change; current idle measurements are in results.current_revalidation."
+  },
+  "storage": {
+    "device": "/dev/sda1",
+    "filesystem": "exfat",
+    "uuid": "1017-F615",
+    "mount": "/mnt/wbr-data",
+    "total_bytes": 62910234624,
+    "free_bytes_at_preflight": 61457563648,
+    "root": "/mnt/wbr-data/wbr-perception-phase1/2026-09-12",
+    "directories": [
+      "raw",
+      "rosbags",
+      "logs",
+      "metadata"
+    ],
+    "normal_user_write_check": "CURRENT NOT TESTED: USB unmounted; underlying directory not writable by richard",
+    "throughput": "HISTORICAL before cable change: 64 MiB plus fsync 0.944 MB/s. Below IR1 uncompressed payload 4.608 MB/s; N3 storage not ready.",
+    "rosbags_recorded": false,
+    "mount_state": "UNMOUNTED: /mnt/wbr-data resolves to /dev/mmcblk0p2 (ext4 microSD), not /dev/sda1",
+    "current_free_bytes": null,
+    "current_writable": null,
+    "historical_capacity_scope": "total_bytes and free_bytes_at_preflight are historical mounted-filesystem measurements, not current free space."
+  },
+  "software": {
+    "ros": "jazzy",
+    "sdk_initially_installed": false,
+    "sdk_requested_version": "2.58.4-1noble.20260831.020056",
+    "sdk_deb_sha256": "247890a83d7e9424cb3b476e22f0ec495c292453ea7338544397bf03d6006660",
+    "sdk_installation": "INSTALLED: 2.58.4-1noble.20260831.020056; normal-user enumeration verified",
+    "ros_camera_installation": "DEFERRED",
+    "description_installation": "DEFERRED",
+    "backend": "Native V4L2/HID-IIO established in historical streaming; current normal-user enumeration succeeds but HID/IIO access fails.",
+    "permissions": "CURRENT REGRESSION: video0–5 open read/write; hidraw0 and iio:device0/1 EACCES. IIO/custom-HID controls unwritable. Installed serial-specific rule cannot match absent current USB serial. No permission changes made."
+  },
+  "gates": {
+    "N0": "Platform reachable; storage currently unmounted; physical PSU/cooling provenance incomplete",
+    "N1": "REGRESSED / BLOCKED: current camera path negotiates 480 Mb/s behind two USB 2.0 hubs; prior A↔C 5000 Mb/s result is historical only",
+    "N2": "BLOCKED BY N1; current HID/IIO access also fails; no current streaming attempted",
+    "N3": "NOT STARTED",
+    "ORB_SLAM3": "NOT STARTED"
+  },
+  "criteria": {
+    "profile": {
+      "ir1": "640x480 Y8 15 FPS",
+      "gyro_hz": 200,
+      "accel_hz": 100
+    },
+    "windows_seconds": [
+      30,
+      30,
+      30
+    ],
+    "soak_seconds": 300,
+    "whole_window_rate_ranges_hz": {
+      "ir1": [
+        14.25,
+        15.75
+      ],
+      "gyro": [
+        190,
+        210
+      ],
+      "accel": [
+        95,
+        105
+      ]
+    },
+    "max_gap_seconds_including_boundaries": {
+      "ir1": 0.2,
+      "gyro": 0.05,
+      "accel": 0.05
+    },
+    "timestamps": "strictly increasing per stream; record domain",
+    "content": "finite plausible IMU; responsive non-garbled IR pixels",
+    "kernel": "zero camera USB resets, disconnects or re-enumeration during streaming; continuous journal follow",
+    "errors": "zero corruption notifications; orderly shutdown",
+    "gate_scope": "User 2026-09-12 live-session criteria: N2 is camera-side raw SDK validation; ROS wrapper/topics/record/replay are N3 preparation only."
+  },
+  "results": {
+    "sdk_smoke_01": {
+      "status": "FAILED_SHUTDOWN",
+      "requested_seconds": 20,
+      "matched_profiles": 3,
+      "csv_finalized": false,
+      "counts": null,
+      "rates": null,
+      "cause": "Permission denied on HID-SENSOR-2000e1.4.auto/enable_sensor during rs2_stop; runner interrupted child after detecting error.",
+      "kernel": "Two startup No report with id 0xffffffff found warnings; no USB reset/disconnect/re-enumeration.",
+      "usb_mbps_before_after": [
+        5000,
+        5000
+      ]
+    },
+    "ir_content": {
+      "images": [
+        {
+          "file": "ir1-frame-150.pgm",
+          "width": 640,
+          "height": 480,
+          "pixel_bytes": 307200,
+          "minimum": 18,
+          "maximum": 255,
+          "mean": 100.71650716145834,
+          "stdev": 70.42604498443056,
+          "sha256": "313eaef3f6c9a6d5ed6aba94479e6745d10a89f59b3eb316bcf316c0ef0d7997"
+        },
+        {
+          "file": "ir1-frame-30.pgm",
+          "width": 640,
+          "height": 480,
+          "pixel_bytes": 307200,
+          "minimum": 18,
+          "maximum": 255,
+          "mean": 100.651494140625,
+          "stdev": 70.42699390218408,
+          "sha256": "b176daf303fbb5b871c370657238c6adbcff3653fafc15160a12e083e3a83f1e"
+        },
+        {
+          "file": "ir1-frame-90.pgm",
+          "width": 640,
+          "height": 480,
+          "pixel_bytes": 307200,
+          "minimum": 18,
+          "maximum": 255,
+          "mean": 100.69098307291667,
+          "stdev": 70.42314671451562,
+          "sha256": "d5c8fc76dc25139ab4377b7c47204338cc0a196692ad85d2fc3f05bc0623c43a"
+        }
+      ],
+      "all_distinct_images": true,
+      "frame_count": 179,
+      "timestamp_domains": [
+        "Global Time"
+      ],
+      "nonpositive_stamp_steps": 0,
+      "max_stamp_gap_ms": 66.68017578125,
+      "visual_review": "PASS: all three grayscale samples show a coherent tabletop scene, fiducial targets and visible projected IR dots; no garbled rows or block corruption. Samples differ; no deliberate scene-motion challenge was performed."
+    },
+    "storage_write_probe": {
+      "utc": "2026-09-12T09:38:01.428759+00:00",
+      "bytes": 67108864,
+      "method": "64 x 1 MiB writes plus fsync; buffered filesystem write, not direct I/O; readback may use cache",
+      "write_and_fsync_seconds": 71.062006226,
+      "decimal_MB_per_second": 0.9443705232100015,
+      "readback_checksum_matches": true,
+      "probe_file_removed": true,
+      "free_bytes_after": 61452976128
+    },
+    "recovered_pre_cable_change": {
+      "scope": "Historical evidence only; cannot validate current C↔C cable/path.",
+      "smoke_02": "20-second capture completed, exit 0; 10-second interior timing window PASS.",
+      "sustained_requested_seconds": 105,
+      "started_utc": "2026-09-12T09:41:52.179645+00:00",
+      "finished_utc": "2026-09-12T09:43:40.658777+00:00",
+      "sustained_sdk_returncode": 0,
+      "all_received_samples": {
+        "Infrared": {
+          "count": 1573,
+          "first_arrival_seconds": 0.19582,
+          "last_arrival_seconds": 105.003659,
+          "first_stamp_seconds": 1789206113.520395,
+          "last_stamp_seconds": 1789206218.329166,
+          "nonpositive_stamp_steps": 0,
+          "nonpositive_frame_steps": 0,
+          "missing_frame_numbers": 0,
+          "max_stamp_gap_seconds": 0.06667709350585938
+        },
+        "Gyro": {
+          "count": 20974,
+          "first_arrival_seconds": 0.20238,
+          "last_arrival_seconds": 105.047231,
+          "first_stamp_seconds": 1789206113.5353181,
+          "last_stamp_seconds": 1789206218.380778,
+          "nonpositive_stamp_steps": 0,
+          "nonpositive_frame_steps": 0,
+          "missing_frame_numbers": 0,
+          "max_stamp_gap_seconds": 0.005000114440917969
+        },
+        "Accel": {
+          "count": 10607,
+          "first_arrival_seconds": 0.14677500000000002,
+          "last_arrival_seconds": 105.042479,
+          "first_stamp_seconds": 1789206113.478434,
+          "last_stamp_seconds": 1789206218.376094,
+          "nonpositive_stamp_steps": 0,
+          "nonpositive_frame_steps": 0,
+          "missing_frame_numbers": 0,
+          "max_stamp_gap_seconds": 0.009895086288452148
+        }
+      },
+      "three_30_second_windows_pass": true,
+      "five_minute_soak": "NO EVIDENCE FOUND",
+      "N2": "NOT DECIDED in original capture/analysis; no historical final PASS inferred.",
+      "calibration": "IMU Calibration is not available, default intrinsic and extrinsic will be used. Historical warning blocks calibration/VIO qualification.",
+      "sources": [
+        "smoke-02-analysis.json",
+        "smoke-02-capture-result.json",
+        "sustained-analysis.json",
+        "sustained-capture-result.json",
+        "sustained-sdk.log",
+        "sustained-kernel.log",
+        "ir-content-analysis.json"
+      ]
+    },
+    "current_revalidation": {
+      "evidence_directory": "usb-revalidation-20260912T095610Z",
+      "diagnostic_interval_utc": [
+        "2026-09-12T09:56:14Z",
+        "2026-09-12T09:57:52Z"
+      ],
+      "streaming_performed": false,
+      "sdk_enumeration_returncode": 0,
+      "sdk_profiles": {
+        "ir1": "640x480 Y8 30/15/6 Hz (full current enumeration saved)",
+        "gyro": "MOTION_XYZ32F 400/200 Hz",
+        "accel": "MOTION_XYZ32F 400/200/100 Hz"
+      },
+      "current_sample_counts": null,
+      "current_rates_hz": null,
+      "current_timestamp_statistics": null,
+      "sustained_duration_seconds": 0,
+      "usb_negotiated_mbps_before_after": [
+        480,
+        480
+      ],
+      "usb_resets_disconnects_reenumerations_in_diagnostic_interval": 0,
+      "usb_stability_scope": "Idle diagnostics and SDK enumeration only; no current streaming stability verdict.",
+      "boot_context": "Current boot shows High Speed enumeration with SerialNumber=0 and an unknown UVC format warning. Early boot journal wall-clock dates precede corrected current time; do not treat them as a measured streaming interval.",
+      "health_scope": "One idle snapshot and two-second CPU sample; not load/thermal qualification.",
+      "temperature_c": 47.7,
+      "throttled": "0x0",
+      "memory_available_human": "7.4 GiB",
+      "cpu_system_busy_percent": 0.125,
+      "cpu_sample_seconds": 2.000451,
+      "data_written_on_pi": false,
+      "next_physical_action": "Reconnect the D435i directly to a Pi USB 3 Type-A port using the previous known-SuperSpeed A↔C cable, bypassing both hubs.",
+      "mount_command_pending_on_pi": "sudo mount -t exfat -o uid=1000,gid=1000,umask=0022 /dev/sda1 /mnt/wbr-data",
+      "resume": "Recheck current N1 USB speed/identity; then normal-user HID/IIO/SDK and exact storage mount. Only after gates clear, new smoke, at least 60 seconds and practical 300-second soak at unchanged profiles/thresholds.",
+      "sudo_noninteractive_available": false,
+      "mount_subtask": "PAUSED: sudo -n true requires a password; exact manual mount command recorded, not executed.",
+      "installed_permission_files_match_local_sha256": true
+    }
+  },
+  "limitations": [
+    "Current C↔C path is 480 Mb/s; N1 regressed and N2 blocked. Enumeration does not establish streaming.",
+    "Current USB serial absent and HID/IIO permissions denied; do not broaden permissions to bypass failed physical gate.",
+    "USB storage currently unmounted. Historical files on it were not read or overwritten in this resumption.",
+    "Successful historical 105-second timing evidence exists; no 300-second soak or final historical N2 PASS established.",
+    "Historical IMU calibration fallback warning; model accuracy and camera/IMU synchronization are not established.",
+    "Historical storage write+fsync probe 0.944 MB/s does not support raw IR1 payload 4.608 MB/s recording.",
+    "No current stream, bag, ROS N3, ORB-SLAM3, firmware update, installation, commit or push performed."
+  ],
+  "reproduction": "See COMMANDS.md and README.md in this experiment; all sudo-authenticated commands are run manually by the user.",
+  "file_sha256": {
+    "99-wbr-d435i.rules": "dd3c3c069e924891dfb9609fdcd8a8a0193969f64d31b93862ca514f01225c52",
+    "COMMANDS.md": "c5292c8749d4b89f6e566f5a8c48b3c857208a893d479854d7f74eb3f06b3078",
+    "N3_PREPARATION.md": "3e70b2e282707ee092d186e184b8b9f8e7a36d262333a1a8985e138a2b0213c4",
+    "README.md": "71600650abec0e878f83f14a627cdc223865b735b39e96f0c339d37254706048",
+    "analyze_sdk_csv.py": "a5955b16e64233a1782205725da5d4c4456daa7c41843cbe0658a80293809386",
+    "custom-hid-denial.txt": "172e29ae9c26ac54dd7efc89a2da18b53557fa6992b38bef99dc9b4bc2a77621",
+    "custom-hid-fix-preview.txt": "23f112be6366f05395f25cabd24247b0e867ae051b41fb7b8d259f01fbae8a31",
+    "dependency-costs.json": "49d8038aac61adce14fb4797093a13664c9f8ecaa115027d0376465b81559bc2",
+    "git-log-before.txt": "d5bd1ed93e8024ed4e0423530e1cf8900f9929049bfae79410670c713bd3c7c7",
+    "git-status-before.txt": "469e116ed47e14ab2f3469e9a6fb95779d580bc31dd8d06a2a1c76d2ee0a127e",
+    "inspect_dependencies.py": "10e03650ca82b4330cb9b904b603fa37a2d70b78b53df13918c58e07059d5aab",
+    "ir-content-analysis.json": "c1ae9035347cb8e75b52a41fb1c68b50aa172440682160f3db6dec5e4c38c664",
+    "ir-content-command.json": "65ea68cb245daff4714a9a15ac051dceb367127f277bac98ec681c37b8a0a8d2",
+    "ir-content-frame-metadata.csv": "d08d9fee79a0883bf188a1d9a20c23c2222762cd88c58d8b228074345f669ae1",
+    "ir-content.log": "5979f014515f6ffa05a8499bee7c3f94c88160d1d8bb32996e4ebcf51ef9a208",
+    "permission-setup-preview.txt": "178e96f72e7b10644c71782ef6fe775ebcae3d09b5fc19de68d499879ba45c1f",
+    "raw-profile.csv": "a11535f814aa363128895dee94dedeaa1ad2b93384aec5c03b91322d614bb838",
+    "run_sdk_capture.py": "c00bb0dfbb3cd1db69b3c911abfb5ece7c0d80e3a06eff304bf0655532707699",
+    "sample_ir.cpp": "5daddff1475d311045c123a31aaf658812f0f44c8810e8942129918c67835eda",
+    "sdk-enumeration-full.txt": "17ac8a9b48c7f91b34c32f419657ef9d7c9ad3841ee0a0f2d880a5c31c2cee24",
+    "sdk-package-inspection.txt": "b12654110df183852a3edf220e0c21f33f56cd76e4f4703b9ce0f6939d4f357c",
+    "sdk-tools-and-access.txt": "7f70e9d73a088f1a7198ab34e4b6da88445e370e1e4970bcef29f421c7b720e8",
+    "smoke-01-capture-result.json": "78e6e0a28d5fea9468cd406cc050af5f3363f1137a41417c17c11e3c23be067b",
+    "smoke-01-kernel.log": "f0061718083382a19b9bc71da9e18e140d3681dfaf8bea60a4afca3b53a8088c",
+    "smoke-01-sdk.log": "10e131b4a815184b7542a641d657f3eced1725c5207cf910d9cf7c55c0f05afe",
+    "smoke-02-analysis.json": "6871747f8b94ab80a97e582e060d29e0e5b05fa7cef50c0d70e2526313a0c906",
+    "smoke-02-capture-result.json": "7b71f026cdc214b8301ca62d58ddd72abde64fd90b520d6bd2a28c81814864f7",
+    "smoke-02-run-console.txt": "89f09dd46a4c216c2186fffb77912bb280744e2679c31955a20274d17b29ba62",
+    "smoke-analysis.json": "e41fbef498c4503778a41be52fe8428032f2095818fb2c210573ed72b00b2169",
+    "smoke-run-console.txt": "0d4fd2d11730106d53cf59fac74eaebc06fca51b0ae2d4e55911bec39d43a2fb",
+    "storage-preflight.txt": "165cc963739d882d59f6966560a94e8a69a20ebd5e3b4ccde9c20a4d4d0239b7",
+    "storage-write-probe.json": "cb10232de5b4e882f1aa065caeb40f440f99fe621e1c65f1e7d716fa107743ae",
+    "sustained-analysis.json": "363d657c570f48fc5367c7f98539ee0081fb1949e55ef2825d8e2bdee9cbf48b",
+    "sustained-capture-result.json": "4b0d5d2de150723ab8c5bd31af1111e5f73630425e5128a52d6a62890370f570",
+    "sustained-kernel.log": "37fdc4d22cca41be1087c2ecd0fb559586d98932b714bdbae3e6cf552406d50e",
+    "sustained-run-console.txt": "e887b9ab66af74f3598ec3d8d50484d97927866bb085311f34f99d7a6abfc942",
+    "sustained-sdk.log": "13841de0a1aa54b7ea0528222aca4b53d83f4c5afe4db16fd1ec163c9b2c779b",
+    "wbr-d435i-iio-permissions.py": "747e1941e30ea00dc4035a543e1937d5e531762919e4c11364b21c1c90482f35"
+  }
+}

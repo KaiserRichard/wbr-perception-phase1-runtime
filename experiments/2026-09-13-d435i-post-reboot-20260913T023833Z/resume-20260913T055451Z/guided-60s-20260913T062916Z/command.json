@@ -1,0 +1,100 @@
+{
+  "stage": "PHYSICAL_FULL_PRECISION",
+  "verdict": "FAIL",
+  "utc_start": "2026-09-13T06:29:17.557637+00:00",
+  "seconds": 60,
+  "image_every": 1,
+  "emitter_off": true,
+  "estimated_max_bytes": 318060000.0,
+  "notes": {
+    "recorded_utc": "2026-09-13T06:29:16.609804+00:00",
+    "purpose": "Bounded real VIO-development motion sequence; no target geometry or calibration qualification",
+    "operator_target_confirmation": "No verified checkerboard or AprilGrid available",
+    "target": null,
+    "calibration_qualified": false,
+    "seconds": 60,
+    "image_every": 1,
+    "profile": "IR1 640x480 Y8 15Hz; gyro XYZ32F 200Hz; accel XYZ32F 100Hz",
+    "intended_phases_seconds": [
+      [
+        0,
+        5,
+        "stationary"
+      ],
+      [
+        5,
+        15,
+        "slow yaw left/right"
+      ],
+      [
+        15,
+        25,
+        "slow pitch up/down"
+      ],
+      [
+        25,
+        35,
+        "slow roll each direction"
+      ],
+      [
+        35,
+        45,
+        "gentle combined rotations"
+      ],
+      [
+        45,
+        55,
+        "small translations through left/right, up/down, forward/back"
+      ],
+      [
+        55,
+        60,
+        "stationary"
+      ]
+    ],
+    "cue_timing": "Actual assistant cue dispatch times will be recorded in a companion cues.jsonl; operator reaction delay is unknown.",
+    "emitter": "Temporarily off; restored on clean exit",
+    "native_metadata_sha256": "f983cfb39dd98e7cc0c076891ca7ade3acdc16e4b872c30697636aa1e9588168",
+    "storage": "Bounded microSD evidence, approximately 280 MB at exact raw profile; no external-storage qualification",
+    "limitations": [
+      "No verified calibration target or motion ground truth",
+      "SDK fallback IMU intrinsics/extrinsics preserved",
+      "Matching timestamp domains do not establish physical synchronization"
+    ],
+    "canonical_head": "593245740fa962ad2325dc531cdb48c21d5f15b2",
+    "prior_attempt": "guided-60s",
+    "operator_authorization": "Proceed directly to the guided 60-second VIO-development capture and then validate/sync it."
+  },
+  "camera": {
+    "sysfs_path": "/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1",
+    "sysfs_name": "5-1",
+    "speed_mbps": 5000.0,
+    "usb_descriptor_serial": "251843061466",
+    "idVendor": "8086",
+    "idProduct": "0b3a",
+    "busnum": "5",
+    "devnum": "2",
+    "product": "Intel(R) RealSense(TM) Depth Camera 435i",
+    "device_serial": "243322073847",
+    "firmware": "5.17.3.10",
+    "sdk_usb_type_descriptor": "3.2",
+    "asic_serial": "251843061466",
+    "firmware_update_id": "251843061466",
+    "imu_type": "BMI085"
+  },
+  "runtime_bundle": "/home/richard/wbr-runtime/wbr-runtime-20260913T055800Z",
+  "binary_sha256": "31d76f37b8f60d8269e9843525d6269d7cdd67a2af3862f7ffcc34b88e073816",
+  "n1_sha256": "92b0b1acb56379ef18f93820ac5f24042dc606008054ae6de239a2e0e7a2fc22",
+  "n2_sha256": "52870cc1c66e960f26c76f06463aeac838ff6bee2812bd30f57fa78c4a77c5c6",
+  "boot_id": "c86c7804-4d39-44e8-90a7-3ae379be6910",
+  "failures": [],
+  "storage": "bounded microSD; not external-storage qualification",
+  "argv": [
+    "/home/richard/wbr-runtime/wbr-runtime-20260913T055800Z/precision_capture",
+    "--camera-available",
+    "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/guided-60s-20260913T062916Z/data",
+    "60",
+    "1",
+    "1"
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "stage": "N3_RECORD",
+  "verdict": "FAIL",
+  "utc_start": "2026-09-13T07:19:36.646340+00:00",
+  "bag": "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/n3-physical-20260913T071621Z/bag",
+  "seconds": 60,
+  "domain": 42,
+  "failures": [
+    "RuntimeError: depth_module.infra_profile: requested '640,480,15'; read back None; depth_module.infra1_format: requested 'Y8'; read back None; pointcloud.enable: requested False; read back None; align_depth.enable: requested False; read back None"
+  ],
+  "storage_scope": "BOUNDED_MICROSD_DIAGNOSTIC_ONLY",
+  "storage_binding": {
+    "scope": "BOUNDED_MICROSD_DIAGNOSTIC_ONLY",
+    "mount": {
+      "target": "/",
+      "source": "/dev/mmcblk0p2",
+      "fstype": "ext4",
+      "options": "rw,relatime"
+    },
+    "mount_st_dev": 45826,
+    "minimum_free_bytes": 8589934592,
+    "maximum_bag_bytes": 536870912,
+    "bag_parent": "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/n3-physical-20260913T071621Z",
+    "probe_utc_end": "2026-09-13T02:50:11.697678+00:00"
+  },
+  "camera": {
+    "sysfs_path": "/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1",
+    "sysfs_name": "5-1",
+    "speed_mbps": 5000.0,
+    "usb_descriptor_serial": "251843061466",
+    "idVendor": "8086",
+    "idProduct": "0b3a",
+    "busnum": "5",
+    "devnum": "2",
+    "product": "Intel(R) RealSense(TM) Depth Camera 435i",
+    "device_serial": "243322073847",
+    "firmware": "5.17.3.10",
+    "sdk_usb_type_descriptor": "3.2",
+    "asic_serial": "251843061466",
+    "firmware_update_id": "251843061466",
+    "imu_type": "BMI085"
+  },
+  "boot_id": "c86c7804-4d39-44e8-90a7-3ae379be6910",
+  "runtime_bundle": "/home/richard/wbr-runtime/wbr-runtime-20260913T055800Z",
+  "calibration_qualified": false,
+  "commands": {
+    "journal": [
+      "journalctl",
+      "-k",
+      "-f",
+      "-n",
+      "0",
+      "--no-pager",
+      "-o",
+      "short-iso-precise"
+    ],
+    "camera": [
+      "ros2",
+      "run",
+      "realsense2_camera",
+      "realsense2_camera_node",
+      "--ros-args",
+      "-r",
+      "__ns:=/camera",
+      "-r",
+      "__node:=camera",
+      "--params-file",
+      "/home/richard/wbr-runtime/wbr-runtime-20260913T055800Z/n3_baseline.yaml"
+    ]
+  },
+  "recorder_cleanup": "already_exited",
+  "recording-observer_cleanup": "already_exited",
+  "camera_cleanup": "SIGINT",
+  "journal_cleanup": "SIGINT",
+  "utc_end": "2026-09-13T07:19:46.241098+00:00",
+  "power_after": "throttled=0x0",
+  "log_analysis": {
+    "camera": {
+      "faults": [],
+      "calibration_warnings": [
+        {
+          "line": 27,
+          "text": " 13/09 14:19:37,959 WARNING [281472778100736] (ds-calib-parsers.cpp:36) IMU Calibration is not available, default intrinsic and extrinsic will be used."
+        }
+      ],
+      "automatic_checks_pass": true,
+      "raw_log_review_required": true,
+      "vio_calibration_qualified": false
+    },
+    "journal": {
+      "faults": [],
+      "calibration_warnings": [],
+      "automatic_checks_pass": true,
+      "raw_log_review_required": true,
+      "vio_calibration_qualified": false
+    }
+  },
+  "evidence_sha256": {
+    "bounded_microsd.py": "f1c0ff0f6e301f430f0ab5e8c0a2b8e2eb47706f6148fe1af49ad82892c1d8ee",
+    "camera.log": "2018b0b66fdc041b7f153b84a84da8cba689d8a08c57691b8eaafcbcda89cbd4",
+    "context.json": "c65787bda6a21afd482985f0d627236c22f6cb0240ac67361937cd4ad224f617",
+    "domain-before.json": "80415a3f7288803167270b9a0da49cdda319773a8a2b24df1961c239853388bf",
+    "health.jsonl": "7a75725d4ca3c8fdc33f7e8662737d7db45c3112c1d5c5ea07f2427e23d36fef",
+    "journal.log": "6807520d0be4cb4344989a92b8ff3f7ec849b0549cc2ea85261fa527ee5e7a3b",
+    "kernel-boot-after.json": "54158eaa06b2c2eef6aeb5dcd93a7a2226f9c89a8c5d7e33c530f149d870437f",
+    "kernel-boot-before.json": "b0a1390287a2a879c01e9ea800cfcc7d84b7e9bb471f3399b1e0ebd3273ae6b4",
+    "parameter-readback.json": "98b3e67e6c86c0eec5c9f7ca8fef848ab04d6fba20c5545dd6584c98097ef13f",
+    "physical_session.py": "3226b297f9a6d3ef6aae8f0756afea56a5929c5a8204d715c1d9ff03789374f3",
+    "power-after.json": "2469074e1c8220581b2d2c1c70c5753e112179a2a7db40967ef1bec3b1dc77aa",
+    "requested-parameters.yaml": "ce77484e672f4bbcdcd1cf89ad831c89ecb8cd5768f4002f6cbc69ef15474f2b",
+    "session-source-sha256.json": "bce2a8c97e8de53c56fab77788cd9cf296b3163c17c0915ea85e01f68e894c0b",
+    "usb-after.json": "5de8112f36c99a5afe1440f3d9dacbd69e166ae92e8ded6a63fc001758d05653",
+    "usb-before.json": "19c3a41cf936eea906b69c99c880d83e79381c2fed8f8ce0de59734c386911d4",
+    "wrapper-static.json": "02ee3883d1ff396957b8a316b81f51d50115c01be71d9e21fdecb32324cbf948"
+  }
+}

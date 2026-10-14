@@ -1,0 +1,62 @@
+%YAML:1.0
+# Status: OPEN. Runnable development candidate; no N4 qualification.
+# MEASURED SDK factory readback: ../2026-10-13-pi5-env-snapshot/rs_calibration_new_unit.txt
+# SDK serial 317422076650, firmware 5.17.3.10, BMI085, 2026-10-13.
+# See calibration_notes.md for provenance, transform math and upstream comparison.
+File.version: "1.0"
+Camera.type: "Rectified"
+
+# Both IR1 and IR2 640x480 Y8 have identical MEASURED SDK intrinsics and
+# Brown Conrady coefficients [0,0,0,0,0]. Rectified schema uses Camera1 only.
+Camera1.fx: 386.953308105469
+Camera1.fy: 386.953308105469
+Camera1.cx: 321.034301757812
+Camera1.cy: 241.040130615234
+# Positive baseline magnitude, from IR1 -> IR2 translation [-b,0,0] metres.
+Stereo.b: 0.049912553280592
+Camera.width: 640
+Camera.height: 480
+# ASSUMED operating choice; supported by enumeration, delivery not measured.
+Camera.fps: 30
+Camera.RGB: 1
+Stereo.ThDepth: 40.0
+
+# Actual ORB convention: camera -> IMU/body, p_b = T_b_c1 * p_c1.
+# SDK IR1 -> Gyro/Accel readback, NOT its inverse. Values read are MEASURED;
+# physical IMU alignment is INFERRED nominal mechanical/CAD, not calibrated.
+# The upstream RealSense matrix's body-to-camera comment is misleading.
+IMU.T_b_c1: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: f
+   data: [1.0, 0.0, 0.0, -0.00552000012248755,
+          0.0, 1.0, 0.0,  0.00510000018402934,
+          0.0, 0.0, 1.0,  0.011739999987185,
+          0.0, 0.0, 0.0,  1.0]
+IMU.InsertKFsWhenLost: 0
+# SOURCE-SUPPORTED upstream RealSense_D435i.yaml; ASSUMED for this BMI085 unit.
+# Continuous-time densities; do not pre-discretize. Allan variance is required
+# for N4 qualification. IMU intrinsic calibration and time offset are UNKNOWN.
+IMU.NoiseGyro: 1e-3
+IMU.NoiseAcc: 1e-2
+IMU.GyroWalk: 1e-6
+IMU.AccWalk: 1e-4
+# Gyro-grid combined input, with bracketed accel/100 interpolation. Not raw accel Hz.
+IMU.Frequency: 200.0
+
+# SOURCE-SUPPORTED upstream tuning; ASSUMED suitability for this experiment.
+ORBextractor.nFeatures: 1250
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 8
+ORBextractor.iniThFAST: 20
+ORBextractor.minThFAST: 7
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1.0
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -3.5
+Viewer.ViewpointF: 500.0

@@ -1,0 +1,134 @@
+In file included from /opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp:8,
+                 from /opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:8,
+                 from /opt/ros/jazzy/include/librealsense2/hpp/rs_record_playback.hpp:8,
+                 from /opt/ros/jazzy/include/librealsense2/hpp/rs_context.hpp:8,
+                 from /opt/ros/jazzy/include/librealsense2/rs.hpp:9,
+                 from precision_capture.cpp:3:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp:559:9: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+  559 |         const int get_data_size() const
+      |         ^~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp: In lambda function:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp:1297:60: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const size_t’ {aka ‘const long unsigned int’} [-Wsign-compare]
+ 1297 |                           frm.get_profile().stream_index() == index )
+      |                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp: In lambda function:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp:1306:64: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const size_t’ {aka ‘const long unsigned int’} [-Wsign-compare]
+ 1306 |                               frm.get_profile().stream_index() == index &&
+      |                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp: In lambda function:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp:1337:64: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const size_t’ {aka ‘const long unsigned int’} [-Wsign-compare]
+ 1337 |                               frm.get_profile().stream_index() == index )
+      |                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp: In lambda function:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp:1360:58: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const size_t’ {aka ‘const long unsigned int’} [-Wsign-compare]
+ 1360 |                         frm.get_profile().stream_index() == index) f = frm;
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp: In lambda function:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp:1382:58: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const size_t’ {aka ‘const long unsigned int’} [-Wsign-compare]
+ 1382 |                         frm.get_profile().stream_index() == index) f = frm;
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp: In lambda function:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_frame.hpp:1404:58: warning: comparison of integer expressions of different signedness: ‘int’ and ‘const size_t’ {aka ‘const long unsigned int’} [-Wsign-compare]
+ 1404 |                         frm.get_profile().stream_index() == index) f = frm;
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+In file included from /opt/ros/jazzy/include/librealsense2/hpp/rs_processing.hpp:8,
+                 from /opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp:9:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp: In constructor ‘rs2::option_value::option_value(rs2_option, invalid_t)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp:30:85: warning: missing initializer for member ‘rs2_option_value::<anonymous>’ [-Wmissing-field-initializers]
+   30 |             : _value( new rs2_option_value{ option_id, false, RS2_OPTION_TYPE_COUNT } ) {}
+      |                                                                                     ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp: In constructor ‘rs2::option_value::option_value(rs2_option, int64_t)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp:33:86: warning: missing initializer for member ‘rs2_option_value::<anonymous>’ [-Wmissing-field-initializers]
+   33 |             : _value( new rs2_option_value{ option_id, true, RS2_OPTION_TYPE_INTEGER } )
+      |                                                                                      ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp: In constructor ‘rs2::option_value::option_value(rs2_option, float)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp:38:84: warning: missing initializer for member ‘rs2_option_value::<anonymous>’ [-Wmissing-field-initializers]
+   38 |             : _value( new rs2_option_value{ option_id, true, RS2_OPTION_TYPE_FLOAT } )
+      |                                                                                    ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp: In constructor ‘rs2::option_value::option_value(rs2_option, const char*)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp:43:85: warning: missing initializer for member ‘rs2_option_value::<anonymous>’ [-Wmissing-field-initializers]
+   43 |             : _value( new rs2_option_value{ option_id, true, RS2_OPTION_TYPE_STRING } )
+      |                                                                                     ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp: In constructor ‘rs2::option_value::option_value(rs2_option, bool)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_options.hpp:48:86: warning: missing initializer for member ‘rs2_option_value::<anonymous>’ [-Wmissing-field-initializers]
+   48 |             : _value( new rs2_option_value{ option_id, true, RS2_OPTION_TYPE_BOOLEAN } )
+      |                                                                                      ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_processing.hpp: In constructor ‘rs2::embedded_filter::embedded_filter(std::shared_ptr<rs2_embedded_filter>)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_processing.hpp:1344:46: warning: ‘rs2::embedded_filter::_embedded_filter’ will be initialized after [-Wreorder]
+ 1344 |         std::shared_ptr<rs2_embedded_filter> _embedded_filter;
+      |                                              ^~~~~~~~~~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_processing.hpp:1307:49: warning:   base ‘rs2::options’ [-Wreorder]
+ 1307 |             , options((rs2_options*)filter.get())
+      |                                                 ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_processing.hpp:1305:9: warning:   when initialized here [-Wreorder]
+ 1305 |         embedded_filter(std::shared_ptr<rs2_embedded_filter> filter)
+      |         ^~~~~~~~~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp: In constructor ‘rs2::depth_stereo_sensor::depth_stereo_sensor(rs2::sensor)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp:522:54: warning: implicitly-declared ‘rs2::sensor::sensor(const rs2::sensor&)’ is deprecated [-Wdeprecated-copy]
+  522 |         depth_stereo_sensor(sensor s): depth_sensor(s)
+      |                                                      ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp:342:17: note: because ‘rs2::sensor’ has user-provided ‘rs2::sensor& rs2::sensor::operator=(const rs2::sensor&)’
+  342 |         sensor& operator=(const sensor& other)
+      |                 ^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp:493:29: note:   initializing argument 1 of ‘rs2::depth_sensor::depth_sensor(rs2::sensor)’
+  493 |         depth_sensor(sensor s)
+      |                      ~~~~~~~^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp: In constructor ‘rs2::auto_calibrated_device::auto_calibrated_device(rs2::device)’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:416:34: warning: implicitly-declared ‘rs2::device::device(const rs2::device&)’ is deprecated [-Wdeprecated-copy]
+  416 |             : calibrated_device(d)
+      |                                  ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:165:17: note: because ‘rs2::device’ has user-provided ‘rs2::device& rs2::device::operator=(const rs2::device&)’
+  165 |         device& operator=(const device& dev)
+      |                 ^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:387:34: note:   initializing argument 1 of ‘rs2::calibrated_device::calibrated_device(rs2::device)’
+  387 |         calibrated_device(device d)
+      |                           ~~~~~~~^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp: In member function ‘rs2::device rs2::device_list::front() const’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:1131:48: warning: moving a temporary object prevents copy elision [-Wpessimizing-move]
+ 1131 |         device front() const { return std::move((*this)[0]); }
+      |                                       ~~~~~~~~~^~~~~~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:1131:48: note: remove ‘std::move’ call
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:1131:48: warning: implicitly-declared ‘rs2::device::device(const rs2::device&)’ is deprecated [-Wdeprecated-copy]
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:165:17: note: because ‘rs2::device’ has user-provided ‘rs2::device& rs2::device::operator=(const rs2::device&)’
+  165 |         device& operator=(const device& dev)
+      |                 ^~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp: In member function ‘rs2::device rs2::device_list::back() const’:
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:1134:29: warning: moving a temporary object prevents copy elision [-Wpessimizing-move]
+ 1134 |             return std::move((*this)[size() - 1]);
+      |                    ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:1134:29: note: remove ‘std::move’ call
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:1134:29: warning: implicitly-declared ‘rs2::device::device(const rs2::device&)’ is deprecated [-Wdeprecated-copy]
+/opt/ros/jazzy/include/librealsense2/hpp/rs_device.hpp:165:17: note: because ‘rs2::device’ has user-provided ‘rs2::device& rs2::device::operator=(const rs2::device&)’
+  165 |         device& operator=(const device& dev)
+      |                 ^~~~~~~~
+precision_capture.cpp: In function ‘int main(int, char**)’:
+precision_capture.cpp:68:45: warning: implicitly-declared ‘rs2::sensor::sensor(const rs2::sensor&)’ is deprecated [-Wdeprecated-copy]
+   68 |     for (auto sensor : device.query_sensors()) {
+      |                                             ^
+/opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp:342:17: note: because ‘rs2::sensor’ has user-provided ‘rs2::sensor& rs2::sensor::operator=(const rs2::sensor&)’
+  342 |         sensor& operator=(const sensor& other)
+      |                 ^~~~~~~~
+precision_capture.cpp:69:23: warning: implicitly-declared ‘rs2::sensor::sensor(const rs2::sensor&)’ is deprecated [-Wdeprecated-copy]
+   69 |         Sensor chosen{sensor, {}};
+      |                       ^~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp:342:17: note: because ‘rs2::sensor’ has user-provided ‘rs2::sensor& rs2::sensor::operator=(const rs2::sensor&)’
+  342 |         sensor& operator=(const sensor& other)
+      |                 ^~~~~~~~
+precision_capture.cpp: In instantiation of ‘void std::__new_allocator<_Tp>::construct(_Up*, _Args&& ...) [with _Up = Sensor; _Args = {const Sensor&}; _Tp = Sensor]’:
+/usr/include/c++/13/bits/alloc_traits.h:538:17:   required from ‘static void std::allocator_traits<std::allocator<_CharT> >::construct(allocator_type&, _Up*, _Args&& ...) [with _Up = Sensor; _Args = {const Sensor&}; _Tp = Sensor; allocator_type = std::allocator<Sensor>]’
+/usr/include/c++/13/bits/stl_vector.h:1286:30:   required from ‘void std::vector<_Tp, _Alloc>::push_back(const value_type&) [with _Tp = Sensor; _Alloc = std::allocator<Sensor>; value_type = Sensor]’
+precision_capture.cpp:78:56:   required from here
+precision_capture.cpp:35:8: warning: implicitly-declared ‘rs2::sensor::sensor(const rs2::sensor&)’ is deprecated [-Wdeprecated-copy]
+   35 | struct Sensor {
+      |        ^~~~~~
+/opt/ros/jazzy/include/librealsense2/hpp/rs_sensor.hpp:342:17: note: because ‘rs2::sensor’ has user-provided ‘rs2::sensor& rs2::sensor::operator=(const rs2::sensor&)’
+  342 |         sensor& operator=(const sensor& other)
+      |                 ^~~~~~~~
+In file included from /usr/include/aarch64-linux-gnu/c++/13/bits/c++allocator.h:33,
+                 from /usr/include/c++/13/bits/allocator.h:46,
+                 from /usr/include/c++/13/string:43,
+                 from /opt/ros/jazzy/include/librealsense2/hpp/rs_types.hpp:16,
+                 from /opt/ros/jazzy/include/librealsense2/rs.hpp:8:
+/usr/include/c++/13/bits/new_allocator.h:191:11: note: synthesized method ‘Sensor::Sensor(const Sensor&)’ first required here
+  191 |         { ::new((void *)__p) _Up(std::forward<_Args>(__args)...); }
+      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

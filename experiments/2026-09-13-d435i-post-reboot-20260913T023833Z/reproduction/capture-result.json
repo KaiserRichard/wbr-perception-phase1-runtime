@@ -1,0 +1,359 @@
+{
+  "stage": "N2_REPRODUCTION",
+  "verdict": "REVIEW_REQUIRED",
+  "automatic_checks_pass": true,
+  "utc_start": "2026-09-13T02:41:18.748065+00:00",
+  "duration_requested_seconds": 105,
+  "argv": [
+    "/opt/ros/jazzy/bin/rs-data-collect",
+    "--no-eth",
+    "-s",
+    "243322073847",
+    "-c",
+    "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/reproduction/profile.csv",
+    "-t",
+    "105",
+    "-f",
+    "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/reproduction/frames.csv"
+  ],
+  "shell_command": "/opt/ros/jazzy/bin/rs-data-collect --no-eth -s 243322073847 -c /home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/reproduction/profile.csv -t 105 -f /home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/reproduction/frames.csv",
+  "hostname": "wbr-pi5",
+  "platform": "Linux-6.8.0-1064-raspi-aarch64-with-glibc2.39",
+  "boot_id": "a5a9b519-6883-4f44-b7fb-943c94c8f92c",
+  "n1_sha256": "0080054ff65bc63a42c3441361b114219daf1eea60246d249277c2ee66849ef0",
+  "camera": {
+    "sysfs_path": "/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1",
+    "sysfs_name": "5-1",
+    "speed_mbps": 5000.0,
+    "usb_descriptor_serial": "251843061466",
+    "idVendor": "8086",
+    "idProduct": "0b3a",
+    "busnum": "5",
+    "devnum": "2",
+    "product": "Intel(R) RealSense(TM) Depth Camera 435i",
+    "device_serial": "243322073847",
+    "firmware": "5.17.3.10",
+    "sdk_usb_type_descriptor": "3.2",
+    "asic_serial": "251843061466",
+    "firmware_update_id": "251843061466",
+    "imu_type": "BMI085"
+  },
+  "failures": [],
+  "review_required": [
+    "Read unfiltered kernel and SDK logs",
+    "Review representative IR images",
+    "Review SDK pre-open timer/start-boundary offsets; no automatic loss exemption"
+  ],
+  "N2": "NOT DECIDED: complete 300-second soak and human evidence review required",
+  "goal": "Measure native raw IR1/gyro/accel delivery and shutdown without ROS",
+  "hypothesis": "Direct SuperSpeed transport and scoped access sustain the exact baseline profile",
+  "input_source": "Physical D435i selected by SDK serial; not synthetic",
+  "monitor_interval_seconds": 1,
+  "raw_image_dataset_recorded": false,
+  "before": {
+    "lsusb": {
+      "argv": [
+        "lsusb"
+      ],
+      "returncode": 0,
+      "stdout": "Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 004 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 005 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 005 Device 002: ID 8086:0b3a Intel Corp. Intel(R) RealSense(TM) Depth Camera 435i\n",
+      "stderr": ""
+    },
+    "usb_tree": {
+      "argv": [
+        "lsusb",
+        "-t"
+      ],
+      "returncode": 0,
+      "stdout": "/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=dwc2/1p, 480M\n/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n    |__ Port 001: Dev 002, If 0, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 1, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 2, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 3, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 4, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 5, Class=Human Interface Device, Driver=usbhid, 5000M\n",
+      "stderr": ""
+    },
+    "storage": {
+      "argv": [
+        "findmnt",
+        "-J",
+        "-T",
+        "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/reproduction"
+      ],
+      "returncode": 0,
+      "stdout": "{\n   \"filesystems\": [\n      {\n         \"target\": \"/\",\n         \"source\": \"/dev/mmcblk0p2\",\n         \"fstype\": \"ext4\",\n         \"options\": \"rw,relatime\"\n      }\n   ]\n}\n",
+      "stderr": ""
+    },
+    "user": {
+      "argv": [
+        "id"
+      ],
+      "returncode": 0,
+      "stdout": "uid=1000(richard) gid=1000(richard) groups=1000(richard),4(adm),24(cdrom),27(sudo),30(dip),44(video),101(lxd)\n",
+      "stderr": ""
+    },
+    "kernel": {
+      "argv": [
+        "uname",
+        "-a"
+      ],
+      "returncode": 0,
+      "stdout": "Linux wbr-pi5 6.8.0-1064-raspi #68-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug 14 10:05:02 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux\n",
+      "stderr": ""
+    },
+    "packages": {
+      "argv": [
+        "dpkg-query",
+        "-W",
+        "-f=${Package}\t${Version}\n",
+        "ros-jazzy-librealsense2",
+        "ros-jazzy-rosbag2",
+        "ros-jazzy-realsense2-camera"
+      ],
+      "returncode": 1,
+      "stdout": "ros-jazzy-librealsense2\t2.58.4-1noble.20260831.020056\nros-jazzy-rosbag2\t0.26.11-1noble.20260903.023557\n",
+      "stderr": "dpkg-query: no packages found matching ros-jazzy-realsense2-camera\n"
+    }
+  },
+  "provenance": {
+    "utc": "2026-09-13T02:41:18.793749+00:00",
+    "hostname": "wbr-pi5",
+    "boot_id": "a5a9b519-6883-4f44-b7fb-943c94c8f92c",
+    "kernel": "Linux wbr-pi5 6.8.0-1064-raspi #68-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug 14 10:05:02 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux",
+    "os_release": "PRETTY_NAME=\"Ubuntu 24.04.4 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.4 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo",
+    "user": "uid=1000(richard) gid=1000(richard) groups=1000(richard),4(adm),24(cdrom),27(sudo),30(dip),44(video),101(lxd)",
+    "source_sha256": {
+      "image_content.py": "98236993f618276b2bf20dfe2dd780d56070849481fab2dabbf811017b83d2f8",
+      "test_takeover_tooling.py": "cdf399d45540c4af657f28df50f27e3cbf33873a19413d77fbbcf5538c6d806f",
+      "test_gate_tooling.py": "b5b2454ee86ee4cbc05f4879d7d8f0743471f5bcbd1e3b28e63a4de634ba4d68",
+      "storage_qualify.py": "c19daaeff495056eeeeb8e15114b224fbf5184f6ae5f0d8e05052ff199ecc2fb",
+      "health_monitor.py": "bf213f56cafa9366025eaee4f4e08b72ae36f98ebce1a722d551728f29fb10b2",
+      "wbr-d435i-iio-permissions.py": "747e1941e30ea00dc4035a543e1937d5e531762919e4c11364b21c1c90482f35",
+      "99-wbr-d435i.rules": "dd3c3c069e924891dfb9609fdcd8a8a0193969f64d31b93862ca514f01225c52",
+      "n3_baseline.yaml": "ce77484e672f4bbcdcd1cf89ad831c89ecb8cd5768f4002f6cbc69ef15474f2b",
+      "sdk_analysis.py": "d4220883a146528fc03bfca423a83e0833b4af36502a7383fa7b74071cc2a873",
+      "phase_gate.py": "4f403039f3b63c1f9658728e79f070d47e93718874eff25068a15b787c230c49",
+      "kernel_analysis.py": "aecc8430f4a510a9325cf8cc9fd1fc52915bc4ed499922cd5535f67d7f17a640",
+      "test_ros_offline.py": "9aa65adbac8e6b141cd149adc0447b16a2211ba7d355dccfc7f5e25ea495232e",
+      "n3_observer.py": "1d17279e60e331f03a461dcebe89534d8aa116c3e8e479523480f5998dbf3c16",
+      "camera_metadata.cpp": "774ea69cb21b25f9dc2d96d8563dcf80a5795e0299e687e87902adbb671273d9",
+      "platform_inspect.py": "403cc6102261ff328afa135f11b0801ee7af92cf32da3a228166e82723e5392d",
+      "validation_common.py": "5b7da49eda8da271605507244a507d3f2c944802842be32cc8ee283523f81331",
+      "n3_bag.py": "0884145d1316937fc4508edb84d62a722336eec2f416bd6129dafd0d6ed1a139",
+      "n3_metrics.py": "e281271528c6e18036a6bdbafeef6a88ea1a6f6b36a6045a2379f92db03f8584",
+      "n3_qos.yaml": "1800251b37f3690685549c668ed686705dcf22712efdde96cfd58cb6a84fc04b",
+      "bundle_runtime.py": "246a7a938d0d90c45076c03e9940fca6b516d951a88ba780a36700ee55b9f728",
+      "n3_record.py": "e519c0a8e20ffe7e3f180440f15be5653fec20045339f462c8538a6abdde2211",
+      "n1_precheck.py": "d2d85115cbb3e102dba7395a761eff6b2a5334c81722f0fa976b9548ddd719d2",
+      "wrapper_inspect.py": "8eceb77e2a09f58f6fc1add87ba519935c1a55a37ae8f821e939abd00d1df5d6",
+      "test_n3_metrics.py": "97478348f3ac4346c87140371ab102fd1c7ccc440209d57d586645a073edc424",
+      "sample_ir_checked.cpp": "a70f3132d2184581baed907c182e5b8b36d4267b36de05b90bde24e53cd14a4d",
+      "sdk_capture.py": "663b562ab8d3ab8ac53800daa2300fa7d74576c75cf70f6d258d254692b02592",
+      "test_n2_tooling.py": "908ec83d9d1abc42bbfa7dbb718f87c4d1ba6719b64b53e957250dff3aa07492",
+      "n3_topics.json": "5b740d1e43155cd21e8ea784ba261689736d7f3ddd114f669280870a603bf140"
+    },
+    "canonical_bundle": {
+      "scope": "TOOL_BUNDLE_NOT_HARDWARE_PASS",
+      "created_utc": "2026-09-13T02:11:30.825548+00:00",
+      "canonical_git_revision": "593245740fa962ad2325dc531cdb48c21d5f15b2",
+      "canonical_branch": "feat/d435i-camera-capture-20260913",
+      "canonical_worktree_status": "D ../../D435I_BASELINE_AUDIT.md\n M ../../docs/DOCKER_RUNTIME_ARCHITECTURE_REVIEW.md\n M ../../docs/RPI5_NATIVE_PERCEPTION_BRINGUP.md\n ? ../../third_party/ORB_SLAM3\n?? ../../.obsidian/\n?? ../../AGENTS.md\n?? ../../docs/.obsidian/\n?? ../../docs/D435I_BASELINE_AUDIT.md\n?? ../../docs/D435I_VIO_CALIBRATION_READINESS.md\n?? ../../docs/NEXT_TWO_WEEKS_PERCEPTION_PLAN.md\n?? ../../docs/ORB_SLAM3_OFFLINE_PREPARATION.md\n?? ../../docs/PERCEPTION_TOOLING_ARCHITECTURE.md\n?? ../../docs/PI5_NATIVE_SENSOR_VALIDATION_2026-09-12.md\n?? ./\n?? ../2026-09-13-d435i-camera-capture-20260913T015621Z/",
+      "source_sha256": {
+        "validation_common.py": "5b7da49eda8da271605507244a507d3f2c944802842be32cc8ee283523f81331",
+        "n1_precheck.py": "d2d85115cbb3e102dba7395a761eff6b2a5334c81722f0fa976b9548ddd719d2",
+        "wbr-d435i-iio-permissions.py": "747e1941e30ea00dc4035a543e1937d5e531762919e4c11364b21c1c90482f35",
+        "99-wbr-d435i.rules": "dd3c3c069e924891dfb9609fdcd8a8a0193969f64d31b93862ca514f01225c52",
+        "sdk_capture.py": "663b562ab8d3ab8ac53800daa2300fa7d74576c75cf70f6d258d254692b02592",
+        "sdk_analysis.py": "d4220883a146528fc03bfca423a83e0833b4af36502a7383fa7b74071cc2a873",
+        "sample_ir_checked.cpp": "a70f3132d2184581baed907c182e5b8b36d4267b36de05b90bde24e53cd14a4d",
+        "camera_metadata.cpp": "774ea69cb21b25f9dc2d96d8563dcf80a5795e0299e687e87902adbb671273d9",
+        "image_content.py": "98236993f618276b2bf20dfe2dd780d56070849481fab2dabbf811017b83d2f8",
+        "health_monitor.py": "bf213f56cafa9366025eaee4f4e08b72ae36f98ebce1a722d551728f29fb10b2",
+        "kernel_analysis.py": "aecc8430f4a510a9325cf8cc9fd1fc52915bc4ed499922cd5535f67d7f17a640",
+        "storage_qualify.py": "c19daaeff495056eeeeb8e15114b224fbf5184f6ae5f0d8e05052ff199ecc2fb",
+        "n3_metrics.py": "e281271528c6e18036a6bdbafeef6a88ea1a6f6b36a6045a2379f92db03f8584",
+        "n3_observer.py": "1d17279e60e331f03a461dcebe89534d8aa116c3e8e479523480f5998dbf3c16",
+        "n3_bag.py": "0884145d1316937fc4508edb84d62a722336eec2f416bd6129dafd0d6ed1a139",
+        "n3_record.py": "e519c0a8e20ffe7e3f180440f15be5653fec20045339f462c8538a6abdde2211",
+        "phase_gate.py": "4f403039f3b63c1f9658728e79f070d47e93718874eff25068a15b787c230c49",
+        "n3_baseline.yaml": "ce77484e672f4bbcdcd1cf89ad831c89ecb8cd5768f4002f6cbc69ef15474f2b",
+        "n3_topics.json": "5b740d1e43155cd21e8ea784ba261689736d7f3ddd114f669280870a603bf140",
+        "n3_qos.yaml": "1800251b37f3690685549c668ed686705dcf22712efdde96cfd58cb6a84fc04b",
+        "platform_inspect.py": "403cc6102261ff328afa135f11b0801ee7af92cf32da3a228166e82723e5392d",
+        "bundle_runtime.py": "246a7a938d0d90c45076c03e9940fca6b516d951a88ba780a36700ee55b9f728",
+        "wrapper_inspect.py": "8eceb77e2a09f58f6fc1add87ba519935c1a55a37ae8f821e939abd00d1df5d6",
+        "test_gate_tooling.py": "b5b2454ee86ee4cbc05f4879d7d8f0743471f5bcbd1e3b28e63a4de634ba4d68",
+        "test_n2_tooling.py": "908ec83d9d1abc42bbfa7dbb718f87c4d1ba6719b64b53e957250dff3aa07492",
+        "test_n3_metrics.py": "97478348f3ac4346c87140371ab102fd1c7ccc440209d57d586645a073edc424",
+        "test_takeover_tooling.py": "cdf399d45540c4af657f28df50f27e3cbf33873a19413d77fbbcf5538c6d806f",
+        "test_ros_offline.py": "9aa65adbac8e6b141cd149adc0447b16a2211ba7d355dccfc7f5e25ea495232e",
+        "sdk-enumeration-full.txt": "17ac8a9b48c7f91b34c32f419657ef9d7c9ad3841ee0a0f2d880a5c31c2cee24",
+        "sustained-sdk.log": "13841de0a1aa54b7ea0528222aca4b53d83f4c5afe4db16fd1ec163c9b2c779b",
+        "sustained-analysis.json": "363d657c570f48fc5367c7f98539ee0081fb1949e55ef2825d8e2bdee9cbf48b",
+        "PHASE_A_RUNBOOK.md": "4944c0c25f93a944cdffbb29945bb4e554807a55e8141780e444cb0b4a1f8d46",
+        "N3_PREPARATION.md": "56437ad910e5d963d43174d84b69dc470e23f7765a64179f3e29159ce0b00a09"
+      }
+    },
+    "runtime_git": {
+      "argv": [
+        "git",
+        "-C",
+        "/home/richard/wbr-runtime/wbr-runtime-20260913T021130Z",
+        "rev-parse",
+        "HEAD"
+      ],
+      "returncode": 128,
+      "stdout": "",
+      "stderr": "fatal: not a git repository (or any of the parent directories): .git\n"
+    },
+    "package_versions": {
+      "argv": [
+        "dpkg-query",
+        "-W",
+        "ros-jazzy-librealsense2",
+        "ros-jazzy-realsense2-camera",
+        "ros-jazzy-rosbag2*"
+      ],
+      "returncode": 1,
+      "stdout": "ros-jazzy-librealsense2\t2.58.4-1noble.20260831.020056\nros-jazzy-rosbag2\t0.26.11-1noble.20260903.023557\nros-jazzy-rosbag2-compression\t0.26.11-1noble.20260902.230826\nros-jazzy-rosbag2-compression-zstd\t0.26.11-1noble.20260902.231217\nros-jazzy-rosbag2-cpp\t0.26.11-1noble.20260902.225917\nros-jazzy-rosbag2-interfaces\t0.26.11-1noble.20260902.021151\nros-jazzy-rosbag2-py\t0.26.11-1noble.20260902.232852\nros-jazzy-rosbag2-storage\t0.26.11-1noble.20260902.224341\nros-jazzy-rosbag2-storage-default-plugins\t0.26.11-1noble.20260903.023406\nros-jazzy-rosbag2-storage-mcap\t0.26.11-1noble.20260903.022942\nros-jazzy-rosbag2-storage-sqlite3\t0.26.11-1noble.20260903.023000\nros-jazzy-rosbag2-transport\t0.26.11-1noble.20260902.231544\n",
+      "stderr": "dpkg-query: no packages found matching ros-jazzy-realsense2-camera\n"
+    }
+  },
+  "sdk_binary_sha256": "9d39cc0bd984947b62512cf1130b2f0f7b6e53ddd0249dcaf10cfe9450237aba",
+  "image_sampler_sha256": "1529e9985ecc5d8579890fcc5fb86ae164294f66b7adfc1aa29029c35c8f7a81",
+  "git_revision": {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "returncode": 128,
+    "stdout": "",
+    "stderr": "fatal: not a git repository (or any of the parent directories): .git\n"
+  },
+  "git_status": {
+    "argv": [
+      "git",
+      "status",
+      "--short"
+    ],
+    "returncode": 128,
+    "stdout": "",
+    "stderr": "fatal: not a git repository (or any of the parent directories): .git\n"
+  },
+  "os_release": "PRETTY_NAME=\"Ubuntu 24.04.4 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.4 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo\n",
+  "sdk_utc_start": "2026-09-13T02:41:19.147656+00:00",
+  "sdk_returncode": 0,
+  "sdk_elapsed_seconds": 107.20745781099993,
+  "sdk_utc_end": "2026-09-13T02:43:06.355135+00:00",
+  "sdk_orderly_shutdown": true,
+  "collector_cleanup": "already_exited",
+  "kernel_monitor_cleanup": "SIGINT",
+  "utc_end": "2026-09-13T02:43:21.147411+00:00",
+  "elapsed_seconds": 122.39757464299998,
+  "health_sample_count": 122,
+  "after": {
+    "lsusb": {
+      "argv": [
+        "lsusb"
+      ],
+      "returncode": 0,
+      "stdout": "Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 004 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 005 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 005 Device 002: ID 8086:0b3a Intel Corp. Intel(R) RealSense(TM) Depth Camera 435i\n",
+      "stderr": ""
+    },
+    "usb_tree": {
+      "argv": [
+        "lsusb",
+        "-t"
+      ],
+      "returncode": 0,
+      "stdout": "/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=dwc2/1p, 480M\n/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n    |__ Port 001: Dev 002, If 0, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 1, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 2, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 3, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 4, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 002, If 5, Class=Human Interface Device, Driver=usbhid, 5000M\n",
+      "stderr": ""
+    },
+    "storage": {
+      "argv": [
+        "findmnt",
+        "-J",
+        "-T",
+        "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/reproduction"
+      ],
+      "returncode": 0,
+      "stdout": "{\n   \"filesystems\": [\n      {\n         \"target\": \"/\",\n         \"source\": \"/dev/mmcblk0p2\",\n         \"fstype\": \"ext4\",\n         \"options\": \"rw,relatime\"\n      }\n   ]\n}\n",
+      "stderr": ""
+    },
+    "user": {
+      "argv": [
+        "id"
+      ],
+      "returncode": 0,
+      "stdout": "uid=1000(richard) gid=1000(richard) groups=1000(richard),4(adm),24(cdrom),27(sudo),30(dip),44(video),101(lxd)\n",
+      "stderr": ""
+    },
+    "kernel": {
+      "argv": [
+        "uname",
+        "-a"
+      ],
+      "returncode": 0,
+      "stdout": "Linux wbr-pi5 6.8.0-1064-raspi #68-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug 14 10:05:02 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux\n",
+      "stderr": ""
+    },
+    "packages": {
+      "argv": [
+        "dpkg-query",
+        "-W",
+        "-f=${Package}\t${Version}\n",
+        "ros-jazzy-librealsense2",
+        "ros-jazzy-rosbag2",
+        "ros-jazzy-realsense2-camera"
+      ],
+      "returncode": 1,
+      "stdout": "ros-jazzy-librealsense2\t2.58.4-1noble.20260831.020056\nros-jazzy-rosbag2\t0.26.11-1noble.20260903.023557\n",
+      "stderr": "dpkg-query: no packages found matching ros-jazzy-realsense2-camera\n"
+    }
+  },
+  "log_analysis": {
+    "kernel-live.log": {
+      "faults": [],
+      "calibration_warnings": [],
+      "automatic_checks_pass": true,
+      "raw_log_review_required": true,
+      "vio_calibration_qualified": false
+    },
+    "sdk.log": {
+      "faults": [],
+      "calibration_warnings": [
+        {
+          "line": 7,
+          "text": " 13/09 09:41:19,314 WARNING [281472876372000] (ds-calib-parsers.cpp:36) IMU Calibration is not available, default intrinsic and extrinsic will be used."
+        }
+      ],
+      "automatic_checks_pass": true,
+      "raw_log_review_required": true,
+      "vio_calibration_qualified": false
+    },
+    "image-content.log": {
+      "faults": [],
+      "calibration_warnings": [],
+      "automatic_checks_pass": true,
+      "raw_log_review_required": true,
+      "vio_calibration_qualified": false
+    }
+  },
+  "health_coverage_seconds": 121.9925238840001,
+  "health_max_sampling_gap_seconds": 2.2332199540001056,
+  "evidence_sha256": {
+    "SUMMARY.md": "b9b1e39d9ca3e53df563942641305c3ca507a6170eb959e47270b69a8e6fcd5d",
+    "command.json": "897c7dbfb1f03e699515040a17a2a869cbef574fe54b4fe5de083846218acc6b",
+    "frames.csv": "cbc77312b2488aba1075aa1a9703a0461af99b7a020f3da81550dfe919093584",
+    "health.jsonl": "b69c8a39e5f95a979836fa077a18a3cd46f94495c9e7f92361da95239850f263",
+    "image-analysis.json": "dc33cb0767afdbdb0ab513569c0171e03c01e7d851f7070f746958fd467169db",
+    "image-command.json": "8eff2d6a75581e02cfd70a9f98a9474233e77cdc31396dfaf52f664db2a19324",
+    "image-content/frames.csv": "083f08a0d16e7f290b235f71422f5ea0d790c74d0719a9ce55db332f5d239d09",
+    "image-content/ir1-frame-150.pgm": "4072d47f36d8a6ccc159f5ea9c7c022160596431899bcddf4b1d0315509d0ccd",
+    "image-content/ir1-frame-30.pgm": "3f0603751228fb25e028a22f3cc4c734ecb0c1a9ce0427ed79ec9d004169c148",
+    "image-content/ir1-frame-90.pgm": "de26b4e33ea260f46893e47446db45d03b5db4d797845acb847e21db65c4b17e",
+    "image-content.log": "3f8149e127c75dd1fac7d7a7a571acdeac02b303a5ce5a4fd0a7bd7756fffde2",
+    "kernel-baseline.json": "715ba6f1fdb07ae603e0d837252dc141d95d485e5abfd64241fd95ef4818d1be",
+    "kernel-live.log": "49459833810350d4d38810b00670f466ce2d7cd2ffd0b07b023fcdc0e1a0715d",
+    "n1-result.json": "0080054ff65bc63a42c3441361b114219daf1eea60246d249277c2ee66849ef0",
+    "profile.csv": "6227b2eaa21a6fbb4adb1df52ad0b9bbab9d9cb290890e6a92b536eb8d0b1e97",
+    "sdk.log": "bb81bdfcb3364141f112bd11d99d7f39a587f0faeabfa5c536501935e496b731",
+    "timing-analysis.json": "06ddb5b5db623a9250c5ef43084e60f0b92896706393dae93a94b27684d87065"
+  }
+}

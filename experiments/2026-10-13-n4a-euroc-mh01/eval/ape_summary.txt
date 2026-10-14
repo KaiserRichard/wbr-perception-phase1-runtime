@@ -1,0 +1,21 @@
+== run1 SE3
+       max	0.081394
+      mean	0.038090
+    median	0.042723
+      rmse	0.041461
+-- Sim3
+      rmse	0.018874
+== run2 SE3
+       max	0.076001
+      mean	0.034089
+    median	0.036917
+      rmse	0.036844
+-- Sim3
+      rmse	0.023794
+== run3 SE3
+       max	0.087709
+      mean	0.038548
+    median	0.042754
+      rmse	0.041604
+-- Sim3
+      rmse	0.022288

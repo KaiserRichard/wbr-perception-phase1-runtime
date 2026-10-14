@@ -1,0 +1,9 @@
+{
+  "local": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/n3-20260913T065103Z",
+  "remote": "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/n3-20260913T065103Z",
+  "prior_resume_local": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z",
+  "prior_resume_remote": "/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z",
+  "runtime_bundle": "/home/richard/wbr-runtime/wbr-runtime-20260913T055800Z",
+  "ethernet_host": "richard@192.168.50.2",
+  "created_utc": "20260913T065103Z"
+}

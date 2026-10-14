@@ -1,0 +1,7 @@
+# Only D435i serial 251843061466; native V4L2 + HID/IIO SDK path.
+# The ROS SDK .deb contains no udev rules. No world-writable device access.
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="8086", ATTR{idProduct}=="0b3a", ATTR{serial}=="251843061466", GROUP:="video", MODE:="0660"
+SUBSYSTEM=="video4linux", ATTRS{idVendor}=="8086", ATTRS{idProduct}=="0b3a", ATTRS{serial}=="251843061466", GROUP:="video", MODE:="0660"
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="8086", ATTRS{idProduct}=="0b3a", ATTRS{serial}=="251843061466", GROUP:="video", MODE:="0660"
+SUBSYSTEM=="iio", KERNEL=="iio:device*", ATTRS{idVendor}=="8086", ATTRS{idProduct}=="0b3a", ATTRS{serial}=="251843061466", GROUP:="video", MODE:="0660", RUN+="/usr/local/libexec/wbr-d435i-iio-permissions --apply /sys%p"
+SUBSYSTEM=="platform", KERNEL=="HID-SENSOR-2000e1.*", DRIVER=="hid_sensor_custom", ATTRS{idVendor}=="8086", ATTRS{idProduct}=="0b3a", ATTRS{serial}=="251843061466", RUN+="/usr/local/libexec/wbr-d435i-iio-permissions --apply /sys%p"

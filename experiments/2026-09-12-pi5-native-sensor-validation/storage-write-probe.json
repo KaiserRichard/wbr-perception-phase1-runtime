@@ -1,0 +1,10 @@
+{
+  "utc": "2026-09-12T09:38:01.428759+00:00",
+  "bytes": 67108864,
+  "method": "64 x 1 MiB writes plus fsync; buffered filesystem write, not direct I/O; readback may use cache",
+  "write_and_fsync_seconds": 71.062006226,
+  "decimal_MB_per_second": 0.9443705232100015,
+  "readback_checksum_matches": true,
+  "probe_file_removed": true,
+  "free_bytes_after": 61452976128
+}

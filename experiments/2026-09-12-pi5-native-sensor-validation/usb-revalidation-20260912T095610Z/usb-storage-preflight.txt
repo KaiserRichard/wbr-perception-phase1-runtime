@@ -1,0 +1,60 @@
+2026-09-12T16:56:14+07:00
+
+CURRENT USB ENUMERATION
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 002: ID 346d:5678 USB Disk 2.0
+Bus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 004 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 004 Device 002: ID 214b:7260 Huasheng Electronics USB2.0 HUB
+Bus 004 Device 003: ID 214b:7260 Huasheng Electronics USB2.0 HUB
+Bus 004 Device 004: ID 8086:0b3a Intel Corp. Intel(R) RealSense(TM) Depth Camera 435i
+Bus 004 Device 005: ID 001f:0b21 Generic AB13X USB Audio
+Bus 005 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=dwc2/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M
+    |__ Port 001: Dev 002, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M
+    |__ Port 001: Dev 002, If 0, Class=Hub, Driver=hub/4p, 480M
+        |__ Port 001: Dev 003, If 0, Class=Hub, Driver=hub/4p, 480M
+            |__ Port 002: Dev 004, If 0, Class=Video, Driver=uvcvideo, 480M
+            |__ Port 002: Dev 004, If 1, Class=Video, Driver=uvcvideo, 480M
+            |__ Port 002: Dev 004, If 2, Class=Video, Driver=uvcvideo, 480M
+            |__ Port 002: Dev 004, If 3, Class=Video, Driver=uvcvideo, 480M
+            |__ Port 002: Dev 004, If 4, Class=Video, Driver=uvcvideo, 480M
+            |__ Port 002: Dev 004, If 5, Class=Human Interface Device, Driver=usbhid, 480M
+            |__ Port 003: Dev 005, If 0, Class=Audio, Driver=snd-usb-audio, 12M
+            |__ Port 003: Dev 005, If 1, Class=Audio, Driver=snd-usb-audio, 12M
+            |__ Port 003: Dev 005, If 2, Class=Audio, Driver=snd-usb-audio, 12M
+            |__ Port 003: Dev 005, If 3, Class=Human Interface Device, Driver=usbhid, 12M
+/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M
+
+D435I SYSFS FIELDS
+SYSFS_PATH=/sys/bus/usb/devices/4-1.1.2
+REAL_PATH=/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb4/4-1/4-1.1/4-1.1.2
+busnum=4
+devnum=4
+devpath=1.1.2
+idVendor=8086
+idProduct=0b3a
+product=Intel(R) RealSense(TM) Depth Camera 435i
+serial=speed=480
+bcdDevice=5113
+
+STORAGE
+NAME        MODEL        SIZE FSTYPE   LABEL       MOUNTPOINTS       TRAN
+loop0                   41.6M squashfs             /snap/snapd/25939 
+sda         ProductCode 58.6G                                        usb
+└─sda1                  58.6G exfat                                  
+mmcblk0                 29.1G                                        mmc
+├─mmcblk0p1              512M vfat     system-boot /boot/firmware    mmc
+└─mmcblk0p2             28.6G ext4     writable    /                 mmc
+TARGET SOURCE         FSTYPE UUID                                 OPTIONS
+/      /dev/mmcblk0p2 ext4   c5da9c27-d622-4e80-89db-6af2e32618b4 rw,relatime
+Filesystem     Type  Size  Used Avail Use% Mounted on
+/dev/mmcblk0p2 ext4   29G  7.3G   20G  27% /
+
+UTC END
+2026-09-12T09:56:14+00:00
+cat: /sys/bus/usb/devices/4-1.1.2/serial: No such file or directory

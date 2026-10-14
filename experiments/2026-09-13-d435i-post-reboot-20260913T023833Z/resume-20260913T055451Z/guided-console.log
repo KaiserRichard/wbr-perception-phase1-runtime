@@ -1,0 +1,1 @@
+{"verdict": "FAIL", "failures": ["Full-precision timing/frame continuity failed; inspect timing-analysis.json"], "utc_end": "2026-09-13T06:19:04.416741+00:00"}

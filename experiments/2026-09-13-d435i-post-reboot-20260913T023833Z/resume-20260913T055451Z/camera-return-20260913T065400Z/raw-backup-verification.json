@@ -1,0 +1,16 @@
+{
+  "guided-60s-20260913T062916Z": {
+    "pi_files": 908,
+    "mac_files": 908,
+    "same_relative_paths": true,
+    "mismatches": [],
+    "verdict": "PASS"
+  },
+  "stationary-600s": {
+    "pi_files": 70,
+    "mac_files": 70,
+    "same_relative_paths": true,
+    "mismatches": [],
+    "verdict": "PASS"
+  }
+}

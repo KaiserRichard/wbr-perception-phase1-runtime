@@ -1,0 +1,24 @@
+{
+  "mode": "no-publishers",
+  "domain": 181,
+  "start_utc": "2026-09-13T02:13:24.147240+00:00",
+  "end_utc": "2026-09-13T02:13:27.154468+00:00",
+  "graph": {
+    "/camera/camera/infra1/image_rect_raw": [],
+    "/camera/camera/infra1/camera_info": [],
+    "/camera/camera/gyro/sample": [],
+    "/camera/camera/accel/sample": [],
+    "/camera/camera/gyro/imu_info": [],
+    "/camera/camera/accel/imu_info": [],
+    "/camera/camera/extrinsics/depth_to_infra1": [],
+    "/camera/camera/extrinsics/depth_to_gyro": [],
+    "/camera/camera/extrinsics/depth_to_accel": [],
+    "/tf_static": []
+  },
+  "camera_nodes": [],
+  "checks": 6,
+  "completed": false,
+  "forbidden_publishers": [],
+  "failures": [],
+  "verdict": "PASS"
+}

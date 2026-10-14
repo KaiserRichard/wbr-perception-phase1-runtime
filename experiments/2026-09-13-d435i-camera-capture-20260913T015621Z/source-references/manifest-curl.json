@@ -1,0 +1,41 @@
+[
+  {
+    "path": "ds-calib-parsers-v2.58.4.cpp",
+    "url": "https://raw.githubusercontent.com/realsenseai/librealsense/v2.58.4/src/ds/ds-calib-parsers.cpp",
+    "returncode": 0,
+    "retrieved_utc": "2026-09-13T02:03:29.069646+00:00",
+    "bytes": 15858,
+    "sha256": "2dfd7ca217f6a54ad26156ba3a45206f002cb741840d067d8f24344fbd2cf013"
+  },
+  {
+    "path": "global-timestamp-reader-v2.58.4.cpp",
+    "url": "https://raw.githubusercontent.com/realsenseai/librealsense/v2.58.4/src/global_timestamp_reader.cpp",
+    "returncode": 0,
+    "retrieved_utc": "2026-09-13T02:03:29.517604+00:00",
+    "bytes": 25463,
+    "sha256": "78368c199d8f65c1dc78a8a2855513ab403818a5d652c7fdd807a28d7eba5b36"
+  },
+  {
+    "path": "camera-imu-calibration.md",
+    "url": "https://raw.githubusercontent.com/wiki/ethz-asl/kalibr/camera-imu-calibration.md",
+    "returncode": 56,
+    "retrieved_utc": "2026-09-13T02:03:29.926500+00:00",
+    "error": "curl: (56) The requested URL returned error: 404\n"
+  },
+  {
+    "path": "imu-noise-model.md",
+    "url": "https://raw.githubusercontent.com/wiki/ethz-asl/kalibr/IMU-Noise-Model.md",
+    "returncode": 0,
+    "retrieved_utc": "2026-09-13T02:03:30.520135+00:00",
+    "bytes": 10390,
+    "sha256": "e0d5d4ca79355f6f39665ae3eed586ca07768debee9f0970497707207228be90"
+  },
+  {
+    "path": "librealsense-LICENSE",
+    "url": "https://raw.githubusercontent.com/realsenseai/librealsense/v2.58.4/LICENSE",
+    "returncode": 0,
+    "retrieved_utc": "2026-09-13T02:03:31.070083+00:00",
+    "bytes": 11352,
+    "sha256": "c7aa1fdf0e38c4827fef17859ddbfac800b8995f3ec875a06dd23c79135f956d"
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "started_utc": "2026-09-12T09:32:58.600696+00:00",
+  "argv": [
+    "/opt/ros/jazzy/bin/rs-data-collect",
+    "-s",
+    "243322073847",
+    "-c",
+    "/mnt/wbr-data/wbr-perception-phase1/2026-09-12/raw/sdk-smoke-01/profile.csv",
+    "-t",
+    "20",
+    "-f",
+    "/mnt/wbr-data/wbr-perception-phase1/2026-09-12/raw/sdk-smoke-01/frames.csv"
+  ],
+  "duration_requested_seconds": 20,
+  "user": "uid=1000(richard) gid=1000(richard) groups=1000(richard),4(adm),24(cdrom),27(sudo),30(dip),44(video),101(lxd)",
+  "device_serial": "243322073847",
+  "asic_usb_serial": "251843061466",
+  "usb_before": "/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=dwc2/1p, 480M\n/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n    |__ Port 001: Dev 002, If 0, Class=Mass Storage, Driver=usb-storage, 480M\n/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n    |__ Port 001: Dev 003, If 0, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 1, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 2, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 3, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 4, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 5, Class=Human Interface Device, Driver=usbhid, 5000M",
+  "lsusb_before": "Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 002: ID 346d:5678 USB Disk 2.0\nBus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 004 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 005 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 005 Device 003: ID 8086:0b3a Intel Corp. Intel(R) RealSense(TM) Depth Camera 435i",
+  "failures": [
+    " 12/09 16:33:19,817 ERROR [281473883635744] (librealsense-exception.h:53) Failed to enable_sensor /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0002/HID-SENSOR-2000e1.4.auto/enable_sensor Last Error: Permission denied",
+    " 12/09 16:33:19,818 ERROR [281473883635744] (rs.cpp:288) [rs2_stop( sensor:0xaaaae86613e0 ) Backend] Failed to enable_sensor /sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb5/5-1/5-1:1.5/0003:8086:0B3A.0002/HID-SENSOR-2000e1.4.auto/enable_sensor Last Error: Permission denied"
+  ],
+  "sdk_returncode": -2,
+  "finished_utc": "2026-09-12T09:33:21.030424+00:00",
+  "elapsed_seconds": 22.403522447999876,
+  "usb_after": "/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=dwc2/1p, 480M\n/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n    |__ Port 001: Dev 002, If 0, Class=Mass Storage, Driver=usb-storage, 480M\n/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M\n/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M\n    |__ Port 001: Dev 003, If 0, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 1, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 2, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 3, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 4, Class=Video, Driver=uvcvideo, 5000M\n    |__ Port 001: Dev 003, If 5, Class=Human Interface Device, Driver=usbhid, 5000M",
+  "lsusb_after": "Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 002 Device 002: ID 346d:5678 USB Disk 2.0\nBus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 004 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 005 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 005 Device 003: ID 8086:0b3a Intel Corp. Intel(R) RealSense(TM) Depth Camera 435i",
+  "capture_completed_without_detected_fault": false,
+  "N2": "NOT DECIDED: analyze all three streams, image samples and kernel/health evidence"
+}

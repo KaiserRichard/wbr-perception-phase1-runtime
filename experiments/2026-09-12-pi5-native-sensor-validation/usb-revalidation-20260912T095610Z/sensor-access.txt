@@ -1,0 +1,190 @@
+2026-09-12T09:57:15+00:00
+uid=1000(richard) gid=1000(richard) groups=1000(richard),4(adm),24(cdrom),27(sudo),30(dip),44(video),101(lxd)
+
+VIDEO MODES
+crw-rw---- 1 root video 81,  0 Sep 11 11:08 /dev/video0
+crw-rw---- 1 root video 81,  1 Sep 11 11:08 /dev/video1
+crw-rw---- 1 root video 81, 15 Sep 11 11:08 /dev/video19
+crw-rw---- 1 root video 81,  2 Sep 11 11:08 /dev/video2
+crw-rw---- 1 root video 81,  6 Sep 11 11:08 /dev/video20
+crw-rw---- 1 root video 81,  7 Sep 11 11:08 /dev/video21
+crw-rw---- 1 root video 81,  8 Sep 11 11:08 /dev/video22
+crw-rw---- 1 root video 81,  9 Sep 11 11:08 /dev/video23
+crw-rw---- 1 root video 81, 10 Sep 11 11:08 /dev/video24
+crw-rw---- 1 root video 81, 11 Sep 11 11:08 /dev/video25
+crw-rw---- 1 root video 81, 12 Sep 11 11:08 /dev/video26
+crw-rw---- 1 root video 81, 13 Sep 11 11:08 /dev/video27
+crw-rw---- 1 root video 81, 14 Sep 11 11:08 /dev/video28
+crw-rw---- 1 root video 81, 16 Sep 11 11:08 /dev/video29
+crw-rw---- 1 root video 81,  3 Sep 11 11:08 /dev/video3
+crw-rw---- 1 root video 81, 17 Sep 11 11:08 /dev/video30
+crw-rw---- 1 root video 81, 18 Sep 11 11:08 /dev/video31
+crw-rw---- 1 root video 81, 19 Sep 11 11:08 /dev/video32
+crw-rw---- 1 root video 81, 20 Sep 11 11:08 /dev/video33
+crw-rw---- 1 root video 81, 21 Sep 11 11:08 /dev/video34
+crw-rw---- 1 root video 81, 22 Sep 11 11:08 /dev/video35
+crw-rw---- 1 root video 81, 23 Sep 11 11:08 /dev/video36
+crw-rw---- 1 root video 81, 24 Sep 11 11:08 /dev/video37
+crw-rw---- 1 root video 81,  4 Sep 11 11:08 /dev/video4
+crw-rw---- 1 root video 81,  5 Sep 11 11:08 /dev/video5
+
+HID MODES
+crw------- 1 root root 243, 0 Sep 11 11:08 /dev/hidraw0
+crw------- 1 root root 243, 1 Sep 11 11:08 /dev/hidraw1
+
+IIO EXPOSURE
+=== /sys/bus/iio/devices/iio:device0 ===
+accel_3d
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb4/4-1/4-1.1/4-1.1.2/4-1.1.2:1.5/0003:8086:0B3A.0001/HID-SENSOR-200073.2.auto/iio:device0
+=== /sys/bus/iio/devices/iio:device1 ===
+gyro_3d
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb4/4-1/4-1.1/4-1.1.2/4-1.1.2:1.5/0003:8086:0B3A.0001/HID-SENSOR-200076.3.auto/iio:device1
+crw------- 1 root root 234, 0 Sep 11 11:08 /dev/iio:device0
+crw------- 1 root root 234, 1 Sep 11 11:08 /dev/iio:device1
+
+NONROOT DEVICE OPEN / CONTROL ACCESS (NO STREAMING OR CONTROL WRITES)
+/dev/video0: OPEN_RDWR_OK
+/dev/video1: OPEN_RDWR_OK
+/dev/video2: OPEN_RDWR_OK
+/dev/video3: OPEN_RDWR_OK
+/dev/video4: OPEN_RDWR_OK
+/dev/video5: OPEN_RDWR_OK
+/dev/hidraw0: [Errno 13] Permission denied: '/dev/hidraw0'
+/sys/bus/iio/devices/iio:device0/buffer/data_available: read=True write=False mode=0o444 uid=0 gid=0
+/sys/bus/iio/devices/iio:device0/buffer/direction: read=True write=False mode=0o444 uid=0 gid=0
+/sys/bus/iio/devices/iio:device0/buffer/enable: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device0/buffer/length: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device0/buffer/watermark: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device0/in_accel_hysteresis: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device0/in_accel_sampling_frequency: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device0/scan_elements/in_accel_x_en: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device0/scan_elements/in_accel_y_en: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device0/scan_elements/in_accel_z_en: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device0/scan_elements/in_timestamp_en: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device0/trigger/current_trigger: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device1/buffer/data_available: read=True write=False mode=0o444 uid=0 gid=0
+/sys/bus/iio/devices/iio:device1/buffer/direction: read=True write=False mode=0o444 uid=0 gid=0
+/sys/bus/iio/devices/iio:device1/buffer/enable: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device1/buffer/length: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device1/buffer/watermark: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device1/in_anglvel_hysteresis: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device1/in_anglvel_sampling_frequency: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device1/scan_elements/in_anglvel_x_en: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device1/scan_elements/in_anglvel_y_en: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device1/scan_elements/in_anglvel_z_en: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device1/scan_elements/in_timestamp_en: read=True write=False mode=0o644 uid=0 gid=0
+/sys/bus/iio/devices/iio:device1/trigger/current_trigger: read=True write=False mode=0o644 uid=0 gid=0
+/sys/devices/platform/axi/1000120000.pcie/1f00300000.usb/xhci-hcd.1/usb4/4-1/4-1.1/4-1.1.2/4-1.1.2:1.5/0003:8086:0B3A.0001/HID-SENSOR-2000e1.4.auto/enable_sensor: read=True write=False
+
+V4L2 QUERY
+pispbe (platform:1000880000.pisp_be):
+	/dev/video20
+	/dev/video21
+	/dev/video22
+	/dev/video23
+	/dev/video24
+	/dev/video25
+	/dev/video26
+	/dev/video27
+	/dev/video28
+	/dev/video29
+	/dev/video30
+	/dev/video31
+	/dev/video32
+	/dev/video33
+	/dev/video34
+	/dev/video35
+	/dev/video36
+	/dev/video37
+	/dev/media2
+	/dev/media4
+
+rpivid (platform:rpivid):
+	/dev/video19
+	/dev/media3
+
+Intel(R) RealSense(TM) Depth Ca (usb-xhci-hcd.1-1.1.2):
+	/dev/video0
+	/dev/video1
+	/dev/video2
+	/dev/video3
+	/dev/video4
+	/dev/video5
+	/dev/media0
+	/dev/media1
+
+Driver Info:
+	Driver name      : uvcvideo
+	Card type        : Intel(R) RealSense(TM) Depth Ca
+	Bus info         : usb-xhci-hcd.1-1.1.2
+	Driver version   : 6.8.12
+	Capabilities     : 0x84a00001
+		Video Capture
+		Metadata Capture
+		Streaming
+		Extended Pix Format
+		Device Capabilities
+	Device Caps      : 0x04200001
+		Video Capture
+		Streaming
+		Extended Pix Format
+Media Driver Info:
+	Driver name      : uvcvideo
+	Model            : Intel(R) RealSense(TM) Depth Ca
+	Serial           : 
+	Bus info         : usb-xhci-hcd.1-1.1.2
+	Media version    : 6.8.12
+	Hardware revision: 0x00005113 (20755)
+	Driver version   : 6.8.12
+Interface Info:
+	ID               : 0x03000002
+	Type             : V4L Video
+Entity Info:
+	ID               : 0x00000001 (1)
+	Name             : Intel(R) RealSense(TM) Depth Ca
+	Function         : V4L2 I/O
+	Flags            : default
+	Pad 0x0100000d   : 0: Sink
+	  Link 0x02000017: from remote pad 0x1000010 of entity 'Extension 3' (Video Pixel Formatter): Data, Enabled, Immutable
+Priority: 2
+Video input : 0 (Camera 1: ok)
+Format Video Capture:
+	Width/Height      : 256/144
+	Pixel Format      : 'Z16 ' (16-bit Depth)
+	Field             : None
+	Bytes per Line    : 512
+	Size Image        : 73728
+	Colorspace        : sRGB
+	Transfer Function : Default (maps to sRGB)
+	YCbCr/HSV Encoding: Default (maps to ITU-R 601)
+	Quantization      : Default (maps to Full Range)
+	Flags             : 
+Crop Capability Video Capture:
+	Bounds      : Left 0, Top 0, Width 256, Height 144
+	Default     : Left 0, Top 0, Width 256, Height 144
+	Pixel Aspect: 1/1
+Selection Video Capture: crop_default, Left 0, Top 0, Width 256, Height 144, Flags: 
+Selection Video Capture: crop_bounds, Left 0, Top 0, Width 256, Height 144, Flags: 
+Streaming Parameters Video Capture:
+	Capabilities     : timeperframe
+	Frames per second: 30.000 (30/1)
+	Read buffers     : 0
+
+User Controls
+
+                           gain 0x00980913 (int)    : min=16 max=248 step=1 default=16 value=16
+
+DEVICE OWNERS
+
+SDK PACKAGE
+ros-jazzy-librealsense2 2.58.4-1noble.20260831.020056 arm64
+
+PI REPOSITORY (READ ONLY)
+main
+5a2a7be docs: define native Pi 5 perception baseline
+5932457 docs: plan Raspberry Pi 5 native perception bring-up
+144746c exp: document D435i UTM baseline audit
+1b16be7 chore: add Phase-1 runtime structure and environment
+e39c8ff chore: initialize Phase-1 perception runtime workspace
+
+SDK FULL ENUMERATION FOLLOWS IN SEPARATE CAPTURE

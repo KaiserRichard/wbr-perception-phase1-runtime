@@ -1,0 +1,3 @@
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+eth0             UP             192.168.50.2/24 fe80::2ecf:67ff:fea2:86d3/64 
+wlan0            UP             15.15.14.219/22 metric 600 fe80::2ecf:67ff:fea2:86d4/64 

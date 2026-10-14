@@ -1,0 +1,606 @@
+{
+  "mode": "stored_bag",
+  "inspected_utc": "2026-09-12T16:09:20.655044+00:00",
+  "bag": "/tmp/wbr-SYNTHETIC-ros-0mb284cc/SYNTHETIC-bag",
+  "bag_sha256": {
+    "SYNTHETIC-bag_0.db3": "76400e8352df724ef8520ccf51b33ba41bc831aa11d6a0b8eb7feccb24f161cc",
+    "metadata.yaml": "d8120fbcbb7ef8205792e6a58c7bfe614b65cc84d6ee8b91a4ce914c2936782e"
+  },
+  "metadata": {
+    "version": 9,
+    "storage_identifier": "sqlite3",
+    "duration": {
+      "nanoseconds": 1997500000
+    },
+    "starting_time": {
+      "nanoseconds_since_epoch": 1000000000
+    },
+    "message_count": 666,
+    "topics_with_message_count": [
+      {
+        "topic_metadata": {
+          "name": "/camera/camera/extrinsics/depth_to_gyro",
+          "type": "realsense2_camera_msgs/msg/Extrinsics",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 1
+      },
+      {
+        "topic_metadata": {
+          "name": "/camera/camera/extrinsics/depth_to_infra1",
+          "type": "realsense2_camera_msgs/msg/Extrinsics",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 1
+      },
+      {
+        "topic_metadata": {
+          "name": "/camera/camera/accel/imu_info",
+          "type": "realsense2_camera_msgs/msg/IMUInfo",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 1
+      },
+      {
+        "topic_metadata": {
+          "name": "/tf_static",
+          "type": "tf2_msgs/msg/TFMessage",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 1
+      },
+      {
+        "topic_metadata": {
+          "name": "/camera/camera/gyro/imu_info",
+          "type": "realsense2_camera_msgs/msg/IMUInfo",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 1
+      },
+      {
+        "topic_metadata": {
+          "name": "/camera/camera/accel/sample",
+          "type": "sensor_msgs/msg/Imu",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 200
+      },
+      {
+        "topic_metadata": {
+          "name": "/camera/camera/gyro/sample",
+          "type": "sensor_msgs/msg/Imu",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 400
+      },
+      {
+        "topic_metadata": {
+          "name": "/camera/camera/extrinsics/depth_to_accel",
+          "type": "realsense2_camera_msgs/msg/Extrinsics",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 1
+      },
+      {
+        "topic_metadata": {
+          "name": "/camera/camera/infra1/camera_info",
+          "type": "sensor_msgs/msg/CameraInfo",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 30
+      },
+      {
+        "topic_metadata": {
+          "name": "/camera/camera/infra1/image_rect_raw",
+          "type": "sensor_msgs/msg/Image",
+          "serialization_format": "cdr",
+          "offered_qos_profiles": [],
+          "type_description_hash": ""
+        },
+        "message_count": 30
+      }
+    ],
+    "compression_format": "",
+    "compression_mode": "",
+    "relative_file_paths": [
+      "SYNTHETIC-bag_0.db3"
+    ],
+    "files": [
+      {
+        "path": "SYNTHETIC-bag_0.db3",
+        "starting_time": {
+          "nanoseconds_since_epoch": 1000000000
+        },
+        "duration": {
+          "nanoseconds": 1997500000
+        },
+        "message_count": 1332
+      }
+    ],
+    "custom_data": null,
+    "ros_distro": "jazzy"
+  },
+  "storage_plugin": "sqlite3",
+  "duration_s": 1.9975,
+  "reader_count": 666,
+  "reader_completed": true,
+  "first_receipt_ns": 1000000000,
+  "last_receipt_ns": 2997500000,
+  "topics": {
+    "/camera/camera/infra1/image_rect_raw": {
+      "type": "sensor_msgs/msg/Image",
+      "role": "image",
+      "count": 30,
+      "window_s": 1.9975,
+      "whole_window_hz": 15.018773466833542,
+      "first_stamp_ns": 1033333333,
+      "last_stamp_ns": 2966666667,
+      "stamp_span_hz": 14.999999994827586,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.066666667,
+      "max_arrival_gap_s": 0.06666666700000023,
+      "start_boundary_gap_s": 0.033333333000000076,
+      "end_boundary_gap_s": 0.030833332999999907,
+      "frame_ids": [
+        "camera_infra1_optical_frame"
+      ],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": {
+        "width": 640,
+        "height": 480,
+        "encoding": "mono8",
+        "step": 640,
+        "is_bigendian": 0
+      },
+      "tf_edges": [],
+      "header_sha256": "95dd635965c1f732c15d57f5432601ff78335165eb30fb064e56c303fd9d4cd1",
+      "payload_sha256": "5068d4e598164345863059651b7da8f26ef7785b36779032e490f7d02e8ea1d8",
+      "payload_hash_method": "all decoded fields, sequence order and exact numeric bits; excludes wire padding",
+      "serialized_payload_sha256": "07cc54d5619497c1e0ed45096ef09e65553a3399d4a8de2e1b94f700558480aa",
+      "first_camera_info_wire_hex": null
+    },
+    "/camera/camera/infra1/camera_info": {
+      "type": "sensor_msgs/msg/CameraInfo",
+      "role": "camera_info",
+      "count": 30,
+      "window_s": 1.9975,
+      "whole_window_hz": 15.018773466833542,
+      "first_stamp_ns": 1033333333,
+      "last_stamp_ns": 2966666667,
+      "stamp_span_hz": 14.999999994827586,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.066666667,
+      "max_arrival_gap_s": 0.06666666700000023,
+      "start_boundary_gap_s": 0.033333333000000076,
+      "end_boundary_gap_s": 0.030833332999999907,
+      "frame_ids": [
+        "camera_infra1_optical_frame"
+      ],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": {
+        "width": 640,
+        "height": 480,
+        "distortion_model": "plumb_bob",
+        "k": [
+          400.0,
+          0.0,
+          320.0,
+          0.0,
+          400.0,
+          240.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "p": [
+          400.0,
+          0.0,
+          320.0,
+          0.0,
+          0.0,
+          400.0,
+          240.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "r": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "d": []
+      },
+      "tf_edges": [],
+      "header_sha256": "95dd635965c1f732c15d57f5432601ff78335165eb30fb064e56c303fd9d4cd1",
+      "payload_sha256": "976a7aeda12d8597c3cb41f8b77e3a2a2c9d347306db30dd8b4fbb37d2aeb811",
+      "payload_hash_method": "all decoded fields, sequence order and exact numeric bits; excludes wire padding",
+      "serialized_payload_sha256": "0c3aa01ebdea5e354560ecf1e073f7808f4ddf78fff3e1f6f8eecb487c77d79c",
+      "first_camera_info_wire_hex": "000100000100000055a0fc011c00000063616d6572615f696e667261315f6f70746963616c5f6672616d6500e0010000800200000a000000706c756d625f626f62000000000000006f707400000000000000794000000000000000000000000000007440000000000000000000000000000079400000000000006e4000000000000000000000000000000000000000000000f03f000000000000f03f000000000000000000000000000000000000000000000000000000000000f03f000000000000000000000000000000000000000000000000000000000000f03f0000000000007940000000000000000000000000000074400000000000000000000000000000000000000000000079400000000000006e40000000000000000000000000000000000000000000000000000000000000f03f000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "/camera/camera/gyro/sample": {
+      "type": "sensor_msgs/msg/Imu",
+      "role": "gyro",
+      "count": 400,
+      "window_s": 1.9975,
+      "whole_window_hz": 200.25031289111388,
+      "first_stamp_ns": 1002500000,
+      "last_stamp_ns": 2997500000,
+      "stamp_span_hz": 200.0,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.005,
+      "max_arrival_gap_s": 0.0050000000000003375,
+      "start_boundary_gap_s": 0.0024999999999999467,
+      "end_boundary_gap_s": 0.0,
+      "frame_ids": [
+        "camera_gyro_optical_frame"
+      ],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": null,
+      "tf_edges": [],
+      "header_sha256": "6b0c80b5b425aa0668711e361ced0f8cc9ce9f38914852c62325297f1bc8ff18",
+      "payload_sha256": "e63261811186e2febdb92a26ecf4a11f32425e0c6c5565aa653a752fa955b39f",
+      "payload_hash_method": "all decoded fields, sequence order and exact numeric bits; excludes wire padding",
+      "serialized_payload_sha256": "710db0c639d2b022e84233e3611d2b81af339b061f9cbc7f0abca453635be990",
+      "first_camera_info_wire_hex": null
+    },
+    "/camera/camera/accel/sample": {
+      "type": "sensor_msgs/msg/Imu",
+      "role": "accel",
+      "count": 200,
+      "window_s": 1.9975,
+      "whole_window_hz": 100.12515644555694,
+      "first_stamp_ns": 1005000000,
+      "last_stamp_ns": 2995000000,
+      "stamp_span_hz": 100.0,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.01,
+      "max_arrival_gap_s": 0.010000000000000231,
+      "start_boundary_gap_s": 0.004999999999999893,
+      "end_boundary_gap_s": 0.0024999999999999467,
+      "frame_ids": [
+        "camera_accel_optical_frame"
+      ],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": null,
+      "tf_edges": [],
+      "header_sha256": "4cf766cb608da7bc778fb41c8f2d8f3202ecc1ec322342c2d8631290fce85eb6",
+      "payload_sha256": "0b92f8db0bca6de56980ba5594e48c972ee8cfb1c6fcca50256d7eb5dbbf2290",
+      "payload_hash_method": "all decoded fields, sequence order and exact numeric bits; excludes wire padding",
+      "serialized_payload_sha256": "7b87b26e047f088db7bded22536685e80d68d78187cfa11c1694f4bfa4d71a4c",
+      "first_camera_info_wire_hex": null
+    },
+    "/camera/camera/gyro/imu_info": {
+      "type": "realsense2_camera_msgs/msg/IMUInfo",
+      "role": "imu_info",
+      "count": 1,
+      "window_s": 1.9975,
+      "whole_window_hz": 0.5006257822277848,
+      "first_stamp_ns": 0,
+      "last_stamp_ns": 0,
+      "stamp_span_hz": null,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 1,
+      "max_stamp_gap_s": 0.0,
+      "max_arrival_gap_s": 0.0,
+      "start_boundary_gap_s": 0.0,
+      "end_boundary_gap_s": 1.9975,
+      "frame_ids": [
+        "camera_gyro_optical_frame"
+      ],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": {
+        "data": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "noise_variances": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bias_variances": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "calibration_adequacy": "NOT_QUALIFIED_BY_TRANSPORT_TEST"
+      },
+      "tf_edges": [],
+      "header_sha256": "d4a188f847e6c77db70b759e8cb63266e6d463617e29394c106f1164949d92f4",
+      "payload_sha256": "afecace5fc13dee1b166c901dcbbd7c49980653d3e284814eba8c4a0c8462faf",
+      "payload_hash_method": "all decoded fields, sequence order and exact numeric bits; excludes wire padding",
+      "serialized_payload_sha256": "22f1831f1f1bb37b29d628ccb39c2f13a983239d85bc8f8f9392b7ab60b6f0bd",
+      "first_camera_info_wire_hex": null
+    },
+    "/camera/camera/accel/imu_info": {
+      "type": "realsense2_camera_msgs/msg/IMUInfo",
+      "role": "imu_info",
+      "count": 1,
+      "window_s": 1.9975,
+      "whole_window_hz": 0.5006257822277848,
+      "first_stamp_ns": 0,
+      "last_stamp_ns": 0,
+      "stamp_span_hz": null,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 1,
+      "max_stamp_gap_s": 0.0,
+      "max_arrival_gap_s": 0.0,
+      "start_boundary_gap_s": 0.0,
+      "end_boundary_gap_s": 1.9975,
+      "frame_ids": [
+        "camera_accel_optical_frame"
+      ],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": {
+        "data": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "noise_variances": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bias_variances": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "calibration_adequacy": "NOT_QUALIFIED_BY_TRANSPORT_TEST"
+      },
+      "tf_edges": [],
+      "header_sha256": "471dd37322d7730861dff5e8f23109c99ffb21b8af551721c8d2c1f4bc45a476",
+      "payload_sha256": "27f3cf302f91872575f1b4cf5d43f8a6cb55cb18aac93c4d3152fb70ed00ce22",
+      "payload_hash_method": "all decoded fields, sequence order and exact numeric bits; excludes wire padding",
+      "serialized_payload_sha256": "8c8ba178cf436bde014eb9f49f7afc68e9b9e5178a02b830daf5d7bc96d92ccf",
+      "first_camera_info_wire_hex": null
+    },
+    "/camera/camera/extrinsics/depth_to_infra1": {
+      "type": "realsense2_camera_msgs/msg/Extrinsics",
+      "role": "extrinsics",
+      "count": 1,
+      "window_s": 1.9975,
+      "whole_window_hz": 0.5006257822277848,
+      "first_stamp_ns": null,
+      "last_stamp_ns": null,
+      "stamp_span_hz": null,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.0,
+      "max_arrival_gap_s": 0.0,
+      "start_boundary_gap_s": 0.0,
+      "end_boundary_gap_s": 1.9975,
+      "frame_ids": [],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": {
+        "rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "tf_edges": [],
+      "header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "payload_sha256": "704a703c688e244ac89bf112a1ba370998db262b82ae7c2fb030e9eb5d214d1d",
+      "payload_hash_method": "all decoded fields, sequence order and exact numeric bits; excludes wire padding",
+      "serialized_payload_sha256": "43300423da55981783fbb65091ab20f41d98ec07a99f984ce2744a10832026af",
+      "first_camera_info_wire_hex": null
+    },
+    "/camera/camera/extrinsics/depth_to_gyro": {
+      "type": "realsense2_camera_msgs/msg/Extrinsics",
+      "role": "extrinsics",
+      "count": 1,
+      "window_s": 1.9975,
+      "whole_window_hz": 0.5006257822277848,
+      "first_stamp_ns": null,
+      "last_stamp_ns": null,
+      "stamp_span_hz": null,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.0,
+      "max_arrival_gap_s": 0.0,
+      "start_boundary_gap_s": 0.0,
+      "end_boundary_gap_s": 1.9975,
+      "frame_ids": [],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": {
+        "rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "tf_edges": [],
+      "header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "payload_sha256": "704a703c688e244ac89bf112a1ba370998db262b82ae7c2fb030e9eb5d214d1d",
+      "payload_hash_method": "all decoded fields, sequence order and exact numeric bits; excludes wire padding",
+      "serialized_payload_sha256": "43300423da55981783fbb65091ab20f41d98ec07a99f984ce2744a10832026af",
+      "first_camera_info_wire_hex": null
+    },
+    "/camera/camera/extrinsics/depth_to_accel": {
+      "type": "realsense2_camera_msgs/msg/Extrinsics",
+      "role": "extrinsics",
+      "count": 1,
+      "window_s": 1.9975,
+      "whole_window_hz": 0.5006257822277848,
+      "first_stamp_ns": null,
+      "last_stamp_ns": null,
+      "stamp_span_hz": null,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.0,
+      "max_arrival_gap_s": 0.0,
+      "start_boundary_gap_s": 0.0,
+      "end_boundary_gap_s": 1.9975,
+      "frame_ids": [],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": {
+        "rotation": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "tf_edges": [],
+      "header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "payload_sha256": "704a703c688e244ac89bf112a1ba370998db262b82ae7c2fb030e9eb5d214d1d",
+      "payload_hash_method": "all decoded fields, sequence order and exact numeric bits; excludes wire padding",
+      "serialized_payload_sha256": "43300423da55981783fbb65091ab20f41d98ec07a99f984ce2744a10832026af",
+      "first_camera_info_wire_hex": null
+    },
+    "/tf_static": {
+      "type": "tf2_msgs/msg/TFMessage",
+      "role": "tf_static",
+      "count": 1,
+      "window_s": 1.9975,
+      "whole_window_hz": 0.5006257822277848,
+      "first_stamp_ns": null,
+      "last_stamp_ns": null,
+      "stamp_span_hz": null,
+      "nonpositive_stamp_steps": 0,
+      "repeated_stamps": 0,
+      "backward_stamps": 0,
+      "nonpositive_stamps": 0,
+      "max_stamp_gap_s": 0.0,
+      "max_arrival_gap_s": 0.0,
+      "start_boundary_gap_s": 0.0,
+      "end_boundary_gap_s": 1.9975,
+      "frame_ids": [],
+      "invalid_messages": 0,
+      "errors": [],
+      "sample": null,
+      "tf_edges": [
+        [
+          "camera_link",
+          "camera_accel_optical_frame"
+        ],
+        [
+          "camera_link",
+          "camera_gyro_optical_frame"
+        ],
+        [
+          "camera_link",
+          "camera_infra1_optical_frame"
+        ]
+      ],
+      "header_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "payload_sha256": "0571ae91a3d580f0b80e753592ab77f521ca5b63fc07595158d50e5a49489340",
+      "payload_hash_method": "all decoded fields, sequence order and exact numeric bits; excludes wire padding",
+      "serialized_payload_sha256": "ad7870229a0caacbafa76673df9b1ad55897a8ef5a0564a58ede90f281f628fa",
+      "first_camera_info_wire_hex": null
+    }
+  },
+  "failures": [],
+  "verdict": "PASS"
+}

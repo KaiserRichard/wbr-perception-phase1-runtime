@@ -1,0 +1,12 @@
+{
+  "source": "richard@192.168.50.2:/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/guided-60s-20260913T062916Z",
+  "recorded_utc": "2026-09-13T06:33:10.402836+00:00",
+  "files_verified": 908,
+  "bytes_verified": 283006956,
+  "missing_files": [],
+  "extra_files": [],
+  "hash_mismatches": [],
+  "original_receipt_files_verified": 907,
+  "original_receipt_mismatches": [],
+  "verdict": "PASS"
+}

@@ -1,0 +1,126 @@
+Running rs-data-collect: --no-eth -s 243322073847 -c /home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/reproduction/profile.csv -t 105 -f /home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/reproduction/frames.csv 
+
+ 13/09 09:41:19,163 WARNING [281472876372000] (context.cpp:41) No valid configuration file found at : /home/richard/.realsense-config.json loading defaults
+Request added for INFRARED,640,480,15,Y8,1
+Request added for GYRO,1,1,200,MOTION_XYZ32F,0
+Request added for ACCEL,1,1,100,MOTION_XYZ32F,0
+ 13/09 09:41:19,314 WARNING [281472876372000] (ds-calib-parsers.cpp:36) IMU Calibration is not available, default intrinsic and extrinsic will be used.
+
+Device selected: 
+	RealSense D435I. USB Type: 3.2 
+	S.N: 243322073847
+	FW Ver: 5.17.3.10
+
+User streams requested: 3, actual matches: 3
+
+Data collection started.... 
+
+Collecting data for 1 sec
+Collecting data for 2 sec
+Collecting data for 3 sec
+Collecting data for 4 sec
+Collecting data for 5 sec
+Collecting data for 6 sec
+Collecting data for 7 sec
+Collecting data for 8 sec
+Collecting data for 9 sec
+Collecting data for 10 sec
+Collecting data for 11 sec
+Collecting data for 12 sec
+Collecting data for 13 sec
+Collecting data for 14 sec
+Collecting data for 15 sec
+Collecting data for 16 sec
+Collecting data for 17 sec
+Collecting data for 18 sec
+Collecting data for 19 sec
+Collecting data for 20 sec
+Collecting data for 21 sec
+Collecting data for 22 sec
+Collecting data for 23 sec
+Collecting data for 24 sec
+Collecting data for 25 sec
+Collecting data for 26 sec
+Collecting data for 27 sec
+Collecting data for 28 sec
+Collecting data for 29 sec
+Collecting data for 30 sec
+Collecting data for 31 sec
+Collecting data for 32 sec
+Collecting data for 33 sec
+Collecting data for 34 sec
+Collecting data for 35 sec
+Collecting data for 36 sec
+Collecting data for 37 sec
+Collecting data for 38 sec
+Collecting data for 39 sec
+Collecting data for 40 sec
+Collecting data for 41 sec
+Collecting data for 42 sec
+Collecting data for 43 sec
+Collecting data for 44 sec
+Collecting data for 45 sec
+Collecting data for 46 sec
+Collecting data for 47 sec
+Collecting data for 48 sec
+Collecting data for 49 sec
+Collecting data for 50 sec
+Collecting data for 51 sec
+Collecting data for 52 sec
+Collecting data for 53 sec
+Collecting data for 54 sec
+Collecting data for 55 sec
+Collecting data for 56 sec
+Collecting data for 57 sec
+Collecting data for 58 sec
+Collecting data for 59 sec
+Collecting data for 60 sec
+Collecting data for 61 sec
+Collecting data for 62 sec
+Collecting data for 63 sec
+Collecting data for 64 sec
+Collecting data for 65 sec
+Collecting data for 66 sec
+Collecting data for 67 sec
+Collecting data for 68 sec
+Collecting data for 69 sec
+Collecting data for 70 sec
+Collecting data for 71 sec
+Collecting data for 72 sec
+Collecting data for 73 sec
+Collecting data for 74 sec
+Collecting data for 75 sec
+Collecting data for 76 sec
+Collecting data for 77 sec
+Collecting data for 78 sec
+Collecting data for 79 sec
+Collecting data for 80 sec
+Collecting data for 81 sec
+Collecting data for 82 sec
+Collecting data for 83 sec
+Collecting data for 84 sec
+Collecting data for 85 sec
+Collecting data for 86 sec
+Collecting data for 87 sec
+Collecting data for 88 sec
+Collecting data for 89 sec
+Collecting data for 90 sec
+Collecting data for 91 sec
+Collecting data for 92 sec
+Collecting data for 93 sec
+Collecting data for 94 sec
+Collecting data for 95 sec
+Collecting data for 96 sec
+Collecting data for 97 sec
+Collecting data for 98 sec
+Collecting data for 99 sec
+Collecting data for 100 sec
+Collecting data for 101 sec
+Collecting data for 102 sec
+Collecting data for 103 sec
+Collecting data for 104 sec
+Collecting data for 105 sec
+
+Data collection accomplished with [1572-20973] frames recorded per stream
+Serializing captured results to /home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/reproduction/frames.csv
+Task completed

@@ -1,0 +1,21 @@
+[WARN] [1789229369.413869444] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[WARN] [1789229369.413939646] [rcl]: 'localhost_only' is enabled, 'automatic_discovery_range' and 'static_peers' will be ignored.
+stdin is not a terminal device. Keyboard handling disabled.[INFO] [1789229369.440023592] [rosbag2_storage]: Opened database '/tmp/wbr-SYNTHETIC-ros-0mb284cc/SYNTHETIC-bag/SYNTHETIC-bag_0.db3' for READ_ONLY.
+[INFO] [1789229369.440185719] [rosbag2_player]: Set rate to 1
+[INFO] [1789229369.440310328] [rosbag2_player]: Overriding QoS profile for topic /camera/camera/extrinsics/depth_to_gyro
+[INFO] [1789229369.444701648] [rosbag2_player]: Overriding QoS profile for topic /camera/camera/extrinsics/depth_to_infra1
+[INFO] [1789229369.445263214] [rosbag2_player]: Overriding QoS profile for topic /camera/camera/accel/imu_info
+[INFO] [1789229369.445987536] [rosbag2_player]: Overriding QoS profile for topic /tf_static
+[INFO] [1789229369.448059485] [rosbag2_player]: Overriding QoS profile for topic /camera/camera/gyro/imu_info
+[INFO] [1789229369.448590106] [rosbag2_player]: Overriding QoS profile for topic /camera/camera/accel/sample
+[INFO] [1789229369.449796254] [rosbag2_player]: Overriding QoS profile for topic /camera/camera/gyro/sample
+[INFO] [1789229369.450260302] [rosbag2_player]: Overriding QoS profile for topic /camera/camera/extrinsics/depth_to_accel
+[INFO] [1789229369.450837293] [rosbag2_player]: Overriding QoS profile for topic /camera/camera/infra1/camera_info
+[INFO] [1789229369.451622189] [rosbag2_player]: Overriding QoS profile for topic /camera/camera/infra1/image_rect_raw
+[INFO] [1789229369.459244792] [rosbag2_player]: Adding keyboard callbacks.
+[INFO] [1789229369.459308124] [rosbag2_player]: Press SPACE for Pause/Resume
+[INFO] [1789229369.459322013] [rosbag2_player]: Press CURSOR_RIGHT for Play Next Message
+[INFO] [1789229369.459335587] [rosbag2_player]: Press CURSOR_UP for Increase Rate 10%
+[INFO] [1789229369.459348457] [rosbag2_player]: Press CURSOR_DOWN for Decrease Rate 10%
+[INFO] [1789229369.459655582] [rosbag2_player]: Playback until timestamp: -1
+[INFO] [1789229369.459857338] [rosbag2_player]: Sleep 3000000000 ns

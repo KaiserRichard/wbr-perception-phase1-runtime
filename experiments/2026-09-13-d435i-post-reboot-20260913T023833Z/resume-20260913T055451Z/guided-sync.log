@@ -1,0 +1,14 @@
+{"started_utc": "2026-09-13T06:27:21.011466+00:00", "argv": ["rsync", "-a", "--ignore-existing", "--stats", "-e", "ssh -o BatchMode=yes -o ConnectTimeout=8", "richard@192.168.50.2:/home/richard/wbr-evidence/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/guided-60s/", "experiments/2026-09-13-d435i-post-reboot-20260913T023833Z/resume-20260913T055451Z/guided-60s/"]}
+
+sent 19988 bytes  received 282839432 bytes  2828594200000 bytes/sec
+total size is 282715149  speedup is 1.00
+Number of files: 910
+Number of files transferred: 907
+Total file size: 282715149 B
+Total transferred file size: 282715149 B
+Unmatched data: 282715149 B
+Matched data: 0 B
+File list size: 16211 B
+Total sent: 19992 B
+Total received: 282806296 B
+{"ended_utc": "2026-09-13T06:27:45.613142+00:00", "returncode": 0}

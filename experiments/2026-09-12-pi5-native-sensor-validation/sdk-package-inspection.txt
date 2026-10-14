@@ -1,0 +1,91 @@
+PACKAGE_CONTROL
+Package: ros-jazzy-librealsense2
+Version: 2.58.4-1noble.20260831.020056
+Architecture: arm64
+Maintainer: "LibRealSense ROS Team" <rsswsdk@realsensecloud.onmicrosoft.com>
+Installed-Size: 35798
+Depends: libc6 (>= 2.38), libgcc-s1 (>= 3.3.1), libglfw3 (>= 3.3), libglu1-mesa | libglu1, libopengl0, libssl3t64 (>= 3.0.0), libstdc++6 (>= 13.1), libudev1 (>= 183), libusb-1.0-0 (>= 2:1.0.16), libgl1-mesa-dev, libglfw3-dev, libglu1-mesa-dev, libx11-dev, ros-jazzy-ros-workspace
+Section: misc
+Priority: optional
+Homepage: https://github.com/realsenseai/librealsense/
+Description: Library for controlling and capturing data from the RealSense depth streaming devices.
+PACKAGE_FILES
+drwxr-xr-x root/root         0 2026-08-31 09:00 ./opt/ros/jazzy/bin/
+-rwxr-xr-x root/root   4153008 2026-08-31 09:00 ./opt/ros/jazzy/bin/realsense-viewer
+-rwxr-xr-x root/root    526976 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-align
+-rwxr-xr-x root/root    461440 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-align-advanced
+-rwxr-xr-x root/root    527040 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-align-gl
+-rwxr-xr-x root/root    329944 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-benchmark
+-rwxr-xr-x root/root    133272 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-callback
+-rwxr-xr-x root/root    133720 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-capture
+-rwxr-xr-x root/root     67512 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-color
+-rwxr-xr-x root/root    264408 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-convert
+-rwxr-xr-x root/root    330904 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-data-collect
+-rwxr-xr-x root/root     67512 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-depth
+-rwxr-xr-x root/root   4153008 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-depth-quality
+-rwxr-xr-x root/root     67512 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-distance
+-rwxr-xr-x root/root    133264 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-embed
+-rwxr-xr-x root/root     67704 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-embedded-filters
+-rwxr-xr-x root/root    198808 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-enumerate-devices
+-rwxr-xr-x root/root    133272 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-eth-config
+-rwxr-xr-x root/root    198808 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-fw-logger
+-rwxr-xr-x root/root    198808 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-fw-update
+-rwxr-xr-x root/root    133784 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-gl
+-rwxr-xr-x root/root     67704 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-gpu-frame
+-rwxr-xr-x root/root    461400 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-hdr
+-rwxr-xr-x root/root    133272 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-hello-realsense
+-rwxr-xr-x root/root     67512 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-infrared
+-rwxr-xr-x root/root     67704 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-labeled-pointcloud
+-rwxr-xr-x root/root    264832 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-measure
+-rwxr-xr-x root/root    333032 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-motion
+-rwxr-xr-x root/root    133720 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-multicam
+-rwxr-xr-x root/root     67704 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-object-detection
+-rwxr-xr-x root/root    133272 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-on-chip-calib
+-rwxr-xr-x root/root     67704 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-pointcloud
+-rwxr-xr-x root/root    395864 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-post-processing
+-rwxr-xr-x root/root    198808 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-record
+-rwxr-xr-x root/root    395864 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-record-playback
+-rwxr-xr-x root/root    921544 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-rosbag-inspector
+-rwxr-xr-x root/root     67760 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-save-to-disk
+-rwxr-xr-x root/root    133720 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-sensor-control
+-rwxr-xr-x root/root    269992 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-software-device
+-rwxr-xr-x root/root    264344 2026-08-31 09:00 ./opt/ros/jazzy/bin/rs-terminal
+drwxr-xr-x root/root         0 2026-08-31 09:00 ./opt/ros/jazzy/lib/
+drwxr-xr-x root/root         0 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/
+drwxr-xr-x root/root         0 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/cmake/
+drwxr-xr-x root/root         0 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/cmake/realsense2/
+-rw-r--r-- root/root      1283 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/cmake/realsense2/realsense2Config.cmake
+-rw-r--r-- root/root      1862 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/cmake/realsense2/realsense2ConfigVersion.cmake
+-rw-r--r-- root/root      3060 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/cmake/realsense2/realsense2Targets-none.cmake
+-rw-r--r-- root/root      5771 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/cmake/realsense2/realsense2Targets.cmake
+drwxr-xr-x root/root         0 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/cmake/realsense2-gl/
+-rw-r--r-- root/root      1318 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/cmake/realsense2-gl/realsense2-glConfig.cmake
+-rw-r--r-- root/root      1862 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/cmake/realsense2-gl/realsense2-glConfigVersion.cmake
+-rw-r--r-- root/root      1038 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/cmake/realsense2-gl/realsense2-glTargets-none.cmake
+-rw-r--r-- root/root      4025 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/cmake/realsense2-gl/realsense2-glTargets.cmake
+-rw-r--r-- root/root   3632322 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/librealsense-file.a
+-rw-r--r-- root/root   1522496 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/librealsense2-gl.so.2.58.4
+-rw-r--r-- root/root  11174432 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/librealsense2.so.2.58.4
+-rw-r--r-- root/root     90262 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/librs_lz4.a
+-rw-r--r-- root/root   1347312 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/librsutils.a
+-rw-r--r-- root/root   1418030 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/libsqlite3_lib.a
+drwxr-xr-x root/root         0 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/pkgconfig/
+-rw-r--r-- root/root       460 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/pkgconfig/realsense2-gl.pc
+-rw-r--r-- root/root       433 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/pkgconfig/realsense2.pc
+lrwxrwxrwx root/root         0 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/librealsense2-gl.so -> librealsense2-gl.so.2.58
+lrwxrwxrwx root/root         0 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/librealsense2-gl.so.2.58 -> librealsense2-gl.so.2.58.4
+lrwxrwxrwx root/root         0 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/librealsense2.so -> librealsense2.so.2.58
+lrwxrwxrwx root/root         0 2026-08-31 09:00 ./opt/ros/jazzy/lib/aarch64-linux-gnu/librealsense2.so.2.58 -> librealsense2.so.2.58.4
+CONTROL_FILES
+control
+md5sums
+shlibs
+triggers
+AVAILABLE_BUILD_TOOLS
+/usr/bin/g++
+/usr/bin/pkg-config
+/usr/bin/cmake
+APT_PYTHON
+/usr/lib/python3/dist-packages/apt/__init__.py
+CURRENT_MOUNT
+/dev/sda1 exfat /mnt/wbr-data rw,relatime,uid=1000,gid=1000,fmask=0022,dmask=0022,iocharset=utf8,errors=remount-ro

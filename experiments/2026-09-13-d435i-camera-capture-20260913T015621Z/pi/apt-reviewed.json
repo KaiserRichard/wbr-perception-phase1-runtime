@@ -1,0 +1,1339 @@
+{
+  "required_disk_bytes": 565048320,
+  "download_bytes": 137372870,
+  "deletions": [],
+  "changes": [
+    {
+      "name": "libsvtav1enc1d1",
+      "installed": null,
+      "candidate": "1.7.0+dfsg-2build1",
+      "downgrade": false
+    },
+    {
+      "name": "ros-jazzy-cv-bridge",
+      "installed": null,
+      "candidate": "4.1.0-1noble.20260902.175525",
+      "downgrade": false
+    },
+    {
+      "name": "libhwy1t64",
+      "installed": null,
+      "candidate": "1.0.7-8.1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libxnvctrl0",
+      "installed": null,
+      "candidate": "510.47.03-0ubuntu4.24.04.1",
+      "downgrade": false
+    },
+    {
+      "name": "libvtk9.1t64",
+      "installed": null,
+      "candidate": "9.1.0+really9.1.0+dfsg2-7.1build3",
+      "downgrade": false
+    },
+    {
+      "name": "libgl2ps1.4",
+      "installed": null,
+      "candidate": "1.4.2+dfsg1-2build1",
+      "downgrade": false
+    },
+    {
+      "name": "libcharls2",
+      "installed": null,
+      "candidate": "2.4.2-2build2",
+      "downgrade": false
+    },
+    {
+      "name": "libvpx9",
+      "installed": null,
+      "candidate": "1.14.0-1ubuntu2.3",
+      "downgrade": false
+    },
+    {
+      "name": "libexif-dev",
+      "installed": null,
+      "candidate": "0.6.24-1ubuntu0.24.04.1",
+      "downgrade": false
+    },
+    {
+      "name": "libcodec2-1.2",
+      "installed": null,
+      "candidate": "1.2.0-2build1",
+      "downgrade": false
+    },
+    {
+      "name": "libhwloc-plugins",
+      "installed": null,
+      "candidate": "2.10.0-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libxcb-util1",
+      "installed": null,
+      "candidate": "0.4.0-1build3",
+      "downgrade": false
+    },
+    {
+      "name": "libgeotiff5",
+      "installed": null,
+      "candidate": "1.7.1-5build1",
+      "downgrade": false
+    },
+    {
+      "name": "libwacom9",
+      "installed": null,
+      "candidate": "2.10.0-2",
+      "downgrade": false
+    },
+    {
+      "name": "libtwolame0",
+      "installed": null,
+      "candidate": "0.4.0-2build3",
+      "downgrade": false
+    },
+    {
+      "name": "libfyba0t64",
+      "installed": null,
+      "candidate": "4.1.1-11build1",
+      "downgrade": false
+    },
+    {
+      "name": "libtbb-dev",
+      "installed": null,
+      "candidate": "2021.11.0-2ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "libzvbi-common",
+      "installed": null,
+      "candidate": "0.2.42-2",
+      "downgrade": false
+    },
+    {
+      "name": "liburiparser1",
+      "installed": null,
+      "candidate": "0.9.7+dfsg-2build1",
+      "downgrade": false
+    },
+    {
+      "name": "libgdal34t64",
+      "installed": null,
+      "candidate": "3.8.4+dfsg-3ubuntu3",
+      "downgrade": false
+    },
+    {
+      "name": "libopenmpi3t64",
+      "installed": null,
+      "candidate": "4.1.6-7ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "libwacom-common",
+      "installed": null,
+      "candidate": "2.10.0-2",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-shape406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libtesseract5",
+      "installed": null,
+      "candidate": "5.3.4-1build5",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-videoio-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-objdetect-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "librdmacm1t64",
+      "installed": null,
+      "candidate": "50.0-2ubuntu0.2",
+      "downgrade": false
+    },
+    {
+      "name": "libxerces-c3.2t64",
+      "installed": null,
+      "candidate": "3.2.4+debian-1.2ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "gdal-plugins",
+      "installed": null,
+      "candidate": "3.8.4+dfsg-3ubuntu3",
+      "downgrade": false
+    },
+    {
+      "name": "libxcb-image0",
+      "installed": null,
+      "candidate": "0.4.0-2build1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-superres-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libaec0",
+      "installed": null,
+      "candidate": "1.1.2-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libarmadillo12",
+      "installed": null,
+      "candidate": "1:12.6.7+dfsg-1build2",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-contrib-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libsrt1.5-gnutls",
+      "installed": null,
+      "candidate": "1.5.3-1build2",
+      "downgrade": false
+    },
+    {
+      "name": "libxcb-icccm4",
+      "installed": null,
+      "candidate": "0.4.1-1.1build3",
+      "downgrade": false
+    },
+    {
+      "name": "libx264-164",
+      "installed": null,
+      "candidate": "2:0.164.3108+git31e19f9-1",
+      "downgrade": false
+    },
+    {
+      "name": "libshine3",
+      "installed": null,
+      "candidate": "3.1.1-2build1",
+      "downgrade": false
+    },
+    {
+      "name": "libmunge2",
+      "installed": null,
+      "candidate": "0.5.15-4ubuntu0.1",
+      "downgrade": false
+    },
+    {
+      "name": "libjpeg-dev",
+      "installed": null,
+      "candidate": "8c-2ubuntu11",
+      "downgrade": false
+    },
+    {
+      "name": "libodbc2",
+      "installed": null,
+      "candidate": "2.3.12-1ubuntu0.24.04.1",
+      "downgrade": false
+    },
+    {
+      "name": "libx265-199",
+      "installed": null,
+      "candidate": "3.5-2build1",
+      "downgrade": false
+    },
+    {
+      "name": "libwebpdecoder3",
+      "installed": null,
+      "candidate": "1.3.2-0.4build3",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-features2d406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libpciaccess0",
+      "installed": null,
+      "candidate": "0.17-3ubuntu0.24.04.2",
+      "downgrade": false
+    },
+    {
+      "name": "libbluray2",
+      "installed": null,
+      "candidate": "1:1.3.4-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libvorbisfile3",
+      "installed": null,
+      "candidate": "1.3.7-1build3",
+      "downgrade": false
+    },
+    {
+      "name": "libwebp-dev",
+      "installed": null,
+      "candidate": "1.3.2-0.4build3",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-imgcodecs-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "mysql-common",
+      "installed": null,
+      "candidate": "5.8+1.1.0build1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-imgcodecs406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libnetcdf19t64",
+      "installed": null,
+      "candidate": "1:4.9.2-5ubuntu4",
+      "downgrade": false
+    },
+    {
+      "name": "libdeflate0",
+      "installed": "1.19-1build1",
+      "candidate": "1.19-1build1.1",
+      "downgrade": false
+    },
+    {
+      "name": "libgif7",
+      "installed": null,
+      "candidate": "5.2.2-1ubuntu1.2",
+      "downgrade": false
+    },
+    {
+      "name": "libqt5test5t64",
+      "installed": null,
+      "candidate": "5.15.13+dfsg-1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libpng-dev",
+      "installed": null,
+      "candidate": "1.6.43-5ubuntu0.6",
+      "downgrade": false
+    },
+    {
+      "name": "libgme0",
+      "installed": null,
+      "candidate": "0.6.3-7build1",
+      "downgrade": false
+    },
+    {
+      "name": "libdav1d7",
+      "installed": null,
+      "candidate": "1.4.1-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "liblerc-dev",
+      "installed": null,
+      "candidate": "4.0.0+ds-4ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "libraw1394-11",
+      "installed": null,
+      "candidate": "2.1.2-2build3",
+      "downgrade": false
+    },
+    {
+      "name": "libtiffxx6",
+      "installed": null,
+      "candidate": "4.5.1+git230720-4ubuntu2.5",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-video406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libfreexl1",
+      "installed": null,
+      "candidate": "2.0.0-1build2",
+      "downgrade": false
+    },
+    {
+      "name": "libopenexr-dev",
+      "installed": null,
+      "candidate": "3.1.5-5.1build3",
+      "downgrade": false
+    },
+    {
+      "name": "libinput10",
+      "installed": null,
+      "candidate": "1.25.0-1ubuntu3.6",
+      "downgrade": false
+    },
+    {
+      "name": "libsuperlu6",
+      "installed": null,
+      "candidate": "6.0.1+dfsg1-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libva-x11-2",
+      "installed": null,
+      "candidate": "2.20.0-2ubuntu0.2",
+      "downgrade": false
+    },
+    {
+      "name": "librist4",
+      "installed": null,
+      "candidate": "0.2.10+dfsg-2",
+      "downgrade": false
+    },
+    {
+      "name": "libgsm1",
+      "installed": null,
+      "candidate": "1.0.22-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libcjson1",
+      "installed": null,
+      "candidate": "1.7.17-1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-objdetect406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libminizip1t64",
+      "installed": null,
+      "candidate": "1:1.3.dfsg-3.1ubuntu2.2",
+      "downgrade": false
+    },
+    {
+      "name": "libssh-gcrypt-4",
+      "installed": null,
+      "candidate": "0.10.6-2ubuntu0.5",
+      "downgrade": false
+    },
+    {
+      "name": "libkmldom1t64",
+      "installed": null,
+      "candidate": "1.3.0-12build1",
+      "downgrade": false
+    },
+    {
+      "name": "libxft2",
+      "installed": null,
+      "candidate": "2.3.6-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-video-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "liblept5",
+      "installed": null,
+      "candidate": "1.82.0-3build4",
+      "downgrade": false
+    },
+    {
+      "name": "libjbig-dev",
+      "installed": null,
+      "candidate": "2.1-6.1ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "libgphoto2-dev",
+      "installed": null,
+      "candidate": "2.5.31-2.1ubuntu1.1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-shape-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libtk8.6",
+      "installed": null,
+      "candidate": "8.6.14-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-calib3d406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-photo406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libdouble-conversion3",
+      "installed": null,
+      "candidate": "3.3.0-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libmysqlclient21",
+      "installed": null,
+      "candidate": "8.0.46-0ubuntu0.24.04.4",
+      "downgrade": false
+    },
+    {
+      "name": "libvdpau1",
+      "installed": null,
+      "candidate": "1.5-2build1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-highgui406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-core406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libopenexr-3-1-30",
+      "installed": null,
+      "candidate": "3.1.5-5.1build3",
+      "downgrade": false
+    },
+    {
+      "name": "libtbbbind-2-5",
+      "installed": null,
+      "candidate": "2021.11.0-2ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "libxss1",
+      "installed": null,
+      "candidate": "1:1.2.3-1build3",
+      "downgrade": false
+    },
+    {
+      "name": "libproj25",
+      "installed": null,
+      "candidate": "9.4.0-1build2",
+      "downgrade": false
+    },
+    {
+      "name": "libcfitsio10t64",
+      "installed": null,
+      "candidate": "4.3.1-1.1build2",
+      "downgrade": false
+    },
+    {
+      "name": "libarpack2t64",
+      "installed": null,
+      "candidate": "3.9.1-1.1build2",
+      "downgrade": false
+    },
+    {
+      "name": "libsocket++1",
+      "installed": null,
+      "candidate": "1.12.13+git20131030.5d039ba-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "python3-opencv",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libkmlbase1t64",
+      "installed": null,
+      "candidate": "1.3.0-12build1",
+      "downgrade": false
+    },
+    {
+      "name": "libjxl0.7",
+      "installed": null,
+      "candidate": "0.7.0-10.2ubuntu6.1",
+      "downgrade": false
+    },
+    {
+      "name": "libimath-dev",
+      "installed": null,
+      "candidate": "3.1.9-3.1ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "libmp3lame0",
+      "installed": null,
+      "candidate": "3.100-6build1",
+      "downgrade": false
+    },
+    {
+      "name": "libsoxr0",
+      "installed": null,
+      "candidate": "0.1.3-4build3",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-highgui-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "liblzma-dev",
+      "installed": null,
+      "candidate": "5.6.1+really5.4.5-1ubuntu0.3",
+      "downgrade": false
+    },
+    {
+      "name": "libdc1394-dev",
+      "installed": null,
+      "candidate": "2.2.6-4build1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-core-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "librttopo1",
+      "installed": null,
+      "candidate": "1.1.0-3build2",
+      "downgrade": false
+    },
+    {
+      "name": "libswscale-dev",
+      "installed": null,
+      "candidate": "7:6.1.1-3ubuntu5",
+      "downgrade": false
+    },
+    {
+      "name": "libqt5gui5t64",
+      "installed": null,
+      "candidate": "5.15.13+dfsg-1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libudfread0",
+      "installed": null,
+      "candidate": "1.1.2-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-stitching-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libmbedcrypto7t64",
+      "installed": null,
+      "candidate": "2.28.8-1",
+      "downgrade": false
+    },
+    {
+      "name": "libpcre2-16-0",
+      "installed": null,
+      "candidate": "10.42-4ubuntu2.1",
+      "downgrade": false
+    },
+    {
+      "name": "libsnappy1v5",
+      "installed": null,
+      "candidate": "1.1.10-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libopus0",
+      "installed": null,
+      "candidate": "1.4-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libnorm1t64",
+      "installed": null,
+      "candidate": "1.5.9+dfsg-3.1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libhdf5-103-1t64",
+      "installed": null,
+      "candidate": "1.10.10+repack-3.1ubuntu4",
+      "downgrade": false
+    },
+    {
+      "name": "libavcodec60",
+      "installed": null,
+      "candidate": "7:6.1.1-3ubuntu5",
+      "downgrade": false
+    },
+    {
+      "name": "libimath-3-1-29t64",
+      "installed": null,
+      "candidate": "3.1.9-3.1ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "libzvbi0t64",
+      "installed": null,
+      "candidate": "0.2.42-2",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-stitching406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libdeflate-dev",
+      "installed": null,
+      "candidate": "1.19-1build1.1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-ml406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-videoio406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libpoppler134",
+      "installed": null,
+      "candidate": "24.02.0-1ubuntu9.9",
+      "downgrade": false
+    },
+    {
+      "name": "libgphoto2-6t64",
+      "installed": null,
+      "candidate": "2.5.31-2.1ubuntu1.1",
+      "downgrade": false
+    },
+    {
+      "name": "libvorbisenc2",
+      "installed": null,
+      "candidate": "1.3.7-1build3",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-contrib406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libodbcinst2",
+      "installed": null,
+      "candidate": "2.3.12-1ubuntu0.24.04.1",
+      "downgrade": false
+    },
+    {
+      "name": "libtheora0",
+      "installed": null,
+      "candidate": "1.1.1+dfsg.1-16.1build3",
+      "downgrade": false
+    },
+    {
+      "name": "libxvidcore4",
+      "installed": null,
+      "candidate": "2:1.3.7-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libjpeg-turbo8-dev",
+      "installed": null,
+      "candidate": "2.1.5-2ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "libxcb-keysyms1",
+      "installed": null,
+      "candidate": "0.4.0-1build4",
+      "downgrade": false
+    },
+    {
+      "name": "libqhull-r8.0",
+      "installed": null,
+      "candidate": "2020.2-6build1",
+      "downgrade": false
+    },
+    {
+      "name": "libblosc1",
+      "installed": null,
+      "candidate": "1.21.5+ds-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libkmlengine1t64",
+      "installed": null,
+      "candidate": "1.3.0-12build1",
+      "downgrade": false
+    },
+    {
+      "name": "libavutil58",
+      "installed": null,
+      "candidate": "7:6.1.1-3ubuntu5",
+      "downgrade": false
+    },
+    {
+      "name": "libqt5widgets5t64",
+      "installed": null,
+      "candidate": "5.15.13+dfsg-1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "liborc-0.4-0t64",
+      "installed": null,
+      "candidate": "1:0.4.38-1ubuntu0.1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-imgproc406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "ros-jazzy-image-transport",
+      "installed": null,
+      "candidate": "5.1.8-1noble.20260902.180007",
+      "downgrade": false
+    },
+    {
+      "name": "libswscale7",
+      "installed": null,
+      "candidate": "7:6.1.1-3ubuntu5",
+      "downgrade": false
+    },
+    {
+      "name": "libspeex1",
+      "installed": null,
+      "candidate": "1.2.1-2ubuntu2.24.04.1",
+      "downgrade": false
+    },
+    {
+      "name": "libprotobuf32t64",
+      "installed": null,
+      "candidate": "3.21.12-8.2ubuntu0.3",
+      "downgrade": false
+    },
+    {
+      "name": "libspatialite8t64",
+      "installed": null,
+      "candidate": "5.1.0-3build1",
+      "downgrade": false
+    },
+    {
+      "name": "libfabric1",
+      "installed": null,
+      "candidate": "1.17.0-3build2",
+      "downgrade": false
+    },
+    {
+      "name": "libboost-python1.83.0",
+      "installed": null,
+      "candidate": "1.83.0-2.1ubuntu3.2",
+      "downgrade": false
+    },
+    {
+      "name": "ros-jazzy-realsense2-camera",
+      "installed": null,
+      "candidate": "4.58.4-1noble.20260902.181721",
+      "downgrade": false
+    },
+    {
+      "name": "ocl-icd-libopencl1",
+      "installed": null,
+      "candidate": "2.3.2-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libgeos3.12.1t64",
+      "installed": null,
+      "candidate": "3.12.1-3build1",
+      "downgrade": false
+    },
+    {
+      "name": "libqt5dbus5t64",
+      "installed": null,
+      "candidate": "5.15.13+dfsg-1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libgphoto2-port12t64",
+      "installed": null,
+      "candidate": "2.5.31-2.1ubuntu1.1",
+      "downgrade": false
+    },
+    {
+      "name": "libglew2.2",
+      "installed": null,
+      "candidate": "2.2.0-4build1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-dnn406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libqt5network5t64",
+      "installed": null,
+      "candidate": "5.15.13+dfsg-1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libogg0",
+      "installed": null,
+      "candidate": "1.3.5-3build1",
+      "downgrade": false
+    },
+    {
+      "name": "libgdcm-dev",
+      "installed": null,
+      "candidate": "3.0.22-2.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libavutil-dev",
+      "installed": null,
+      "candidate": "7:6.1.1-3ubuntu5",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-viz-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libqt5opengl5t64",
+      "installed": null,
+      "candidate": "5.15.13+dfsg-1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libxcb-shape0",
+      "installed": null,
+      "candidate": "1.15-1ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "libvorbis0a",
+      "installed": null,
+      "candidate": "1.3.7-1build3",
+      "downgrade": false
+    },
+    {
+      "name": "libgdcm3.0t64",
+      "installed": null,
+      "candidate": "3.0.22-2.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libtbbmalloc2",
+      "installed": null,
+      "candidate": "2021.11.0-2ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "libzmq5",
+      "installed": null,
+      "candidate": "4.3.5-1build2",
+      "downgrade": false
+    },
+    {
+      "name": "libchromaprint1",
+      "installed": null,
+      "candidate": "1.5.1-5",
+      "downgrade": false
+    },
+    {
+      "name": "unixodbc-common",
+      "installed": null,
+      "candidate": "2.3.12-1ubuntu0.24.04.1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-features2d-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libhdf5-hl-100t64",
+      "installed": null,
+      "candidate": "1.10.10+repack-3.1ubuntu4",
+      "downgrade": false
+    },
+    {
+      "name": "libswresample4",
+      "installed": null,
+      "candidate": "7:6.1.1-3ubuntu5",
+      "downgrade": false
+    },
+    {
+      "name": "librabbitmq4",
+      "installed": null,
+      "candidate": "0.11.0-1ubuntu0.2",
+      "downgrade": false
+    },
+    {
+      "name": "ros-jazzy-diagnostic-updater",
+      "installed": null,
+      "candidate": "4.2.7-1noble.20260902.152037",
+      "downgrade": false
+    },
+    {
+      "name": "libucx0",
+      "installed": null,
+      "candidate": "1.16.0+ds-5ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libxcb-xkb1",
+      "installed": null,
+      "candidate": "1.15-1ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-viz406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libdc1394-25",
+      "installed": null,
+      "candidate": "2.2.6-4build1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-dnn-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libhwloc15",
+      "installed": null,
+      "candidate": "2.10.0-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-superres406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libavformat60",
+      "installed": null,
+      "candidate": "7:6.1.1-3ubuntu5",
+      "downgrade": false
+    },
+    {
+      "name": "libmpg123-0t64",
+      "installed": null,
+      "candidate": "1.32.5-1ubuntu1.1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-ml-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libxcb-render-util0",
+      "installed": null,
+      "candidate": "0.3.9-1build4",
+      "downgrade": false
+    },
+    {
+      "name": "libva-drm2",
+      "installed": null,
+      "candidate": "2.20.0-2ubuntu0.2",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-flann406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libraw1394-dev",
+      "installed": null,
+      "candidate": "2.1.2-2build3",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-videostab406t64",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libpmix2t64",
+      "installed": null,
+      "candidate": "5.0.1-4.1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-calib3d-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libmd4c0",
+      "installed": null,
+      "candidate": "0.4.8-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libgstreamer-plugins-base1.0-0",
+      "installed": null,
+      "candidate": "1.24.2-1ubuntu0.4",
+      "downgrade": false
+    },
+    {
+      "name": "gdal-data",
+      "installed": null,
+      "candidate": "3.8.4+dfsg-3ubuntu3",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-flann-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libopenmpt0t64",
+      "installed": null,
+      "candidate": "0.7.3-1.1build3",
+      "downgrade": false
+    },
+    {
+      "name": "libxkbcommon-x11-0",
+      "installed": null,
+      "candidate": "1.6.0-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libtiff-dev",
+      "installed": null,
+      "candidate": "4.5.1+git230720-4ubuntu2.5",
+      "downgrade": false
+    },
+    {
+      "name": "libavformat-dev",
+      "installed": null,
+      "candidate": "7:6.1.1-3ubuntu5",
+      "downgrade": false
+    },
+    {
+      "name": "libhdf4-0-alt",
+      "installed": null,
+      "candidate": "4.2.16-4build1",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-videostab-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libavcodec-dev",
+      "installed": null,
+      "candidate": "7:6.1.1-3ubuntu5",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-imgproc-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libxcb-xinerama0",
+      "installed": null,
+      "candidate": "1.15-1ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "libxcb-xinput0",
+      "installed": null,
+      "candidate": "1.15-1ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "libpgm-5.3-0t64",
+      "installed": null,
+      "candidate": "5.3.128~dfsg-2.1build1",
+      "downgrade": false
+    },
+    {
+      "name": "libjpeg8-dev",
+      "installed": null,
+      "candidate": "8c-2ubuntu11",
+      "downgrade": false
+    },
+    {
+      "name": "libpq5",
+      "installed": null,
+      "candidate": "16.15-0ubuntu0.24.04.1",
+      "downgrade": false
+    },
+    {
+      "name": "libsharpyuv-dev",
+      "installed": null,
+      "candidate": "1.3.2-0.4build3",
+      "downgrade": false
+    },
+    {
+      "name": "libevent-pthreads-2.1-7t64",
+      "installed": null,
+      "candidate": "2.1.12-stable-9ubuntu2.1",
+      "downgrade": false
+    },
+    {
+      "name": "libsz2",
+      "installed": null,
+      "candidate": "1.1.2-1build1",
+      "downgrade": false
+    },
+    {
+      "name": "librav1e0",
+      "installed": null,
+      "candidate": "0.7.1-2",
+      "downgrade": false
+    },
+    {
+      "name": "libogdi4.1",
+      "installed": null,
+      "candidate": "4.1.1+ds-3build1",
+      "downgrade": false
+    },
+    {
+      "name": "libva2",
+      "installed": null,
+      "candidate": "2.20.0-2ubuntu0.2",
+      "downgrade": false
+    },
+    {
+      "name": "ros-jazzy-realsense2-camera-msgs",
+      "installed": null,
+      "candidate": "4.58.4-1noble.20260902.134137",
+      "downgrade": false
+    },
+    {
+      "name": "libgeos-c1t64",
+      "installed": null,
+      "candidate": "3.12.1-3build1",
+      "downgrade": false
+    },
+    {
+      "name": "libexif12",
+      "installed": null,
+      "candidate": "0.6.24-1ubuntu0.24.04.1",
+      "downgrade": false
+    },
+    {
+      "name": "libqt5core5t64",
+      "installed": null,
+      "candidate": "5.15.13+dfsg-1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libswresample-dev",
+      "installed": null,
+      "candidate": "7:6.1.1-3ubuntu5",
+      "downgrade": false
+    },
+    {
+      "name": "libopencv-photo-dev",
+      "installed": null,
+      "candidate": "4.6.0+dfsg-13.1ubuntu1",
+      "downgrade": false
+    },
+    {
+      "name": "libinput-bin",
+      "installed": null,
+      "candidate": "1.25.0-1ubuntu3.6",
+      "downgrade": false
+    },
+    {
+      "name": "proj-data",
+      "installed": null,
+      "candidate": "9.4.0-1build2",
+      "downgrade": false
+    },
+    {
+      "name": "libtbb12",
+      "installed": null,
+      "candidate": "2021.11.0-2ubuntu2",
+      "downgrade": false
+    },
+    {
+      "name": "libmtdev1t64",
+      "installed": null,
+      "candidate": "1.1.6-1.1build1",
+      "downgrade": false
+    }
+  ]
+}

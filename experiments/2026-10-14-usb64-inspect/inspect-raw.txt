@@ -1,0 +1,173 @@
++ date -u
+Wed Oct 14 03:51:31 AM UTC 2026
++ lsusb
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 002: ID 346d:5678 USB Disk 2.0
+Bus 003 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 004 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 005 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 005 Device 002: ID 8086:0b3a Intel Corp. Intel(R) RealSense(TM) Depth Camera 435i
++ lsusb -t
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=dwc2/1p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M
+    |__ Port 002: Dev 002, If 0, Class=Mass Storage, Driver=usb-storage, 480M
+/:  Bus 003.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M
+/:  Bus 004.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/2p, 480M
+/:  Bus 005.Port 001: Dev 001, Class=root_hub, Driver=xhci-hcd/1p, 5000M
+    |__ Port 001: Dev 002, If 0, Class=Video, Driver=uvcvideo, 5000M
+    |__ Port 001: Dev 002, If 1, Class=Video, Driver=uvcvideo, 5000M
+    |__ Port 001: Dev 002, If 2, Class=Video, Driver=uvcvideo, 5000M
+    |__ Port 001: Dev 002, If 3, Class=Video, Driver=uvcvideo, 5000M
+    |__ Port 001: Dev 002, If 4, Class=Video, Driver=uvcvideo, 5000M
+    |__ Port 001: Dev 002, If 5, Class=Human Interface Device, Driver=usbhid, 5000M
++ lsblk -o NAME,PATH,TRAN,SIZE,FSTYPE,LABEL,UUID,MOUNTPOINTS,MODEL,VENDOR,SERIAL,ROTA
+NAME        PATH           TRAN  SIZE FSTYPE   LABEL       UUID                                 MOUNTPOINTS       MODEL       VENDOR   SERIAL              ROTA
+loop0       /dev/loop0          41.6M squashfs                                                  /snap/snapd/25939                                             0
+loop1       /dev/loop1          43.5M squashfs                                                  /snap/snapd/27740                                             0
+sda         /dev/sda       usb  58.6G                                                                             ProductCode VendorCo 6784041157130050443    1
+└─sda1      /dev/sda1           58.6G exfat                1017-F615                                                                                          1
+mmcblk0     /dev/mmcblk0   mmc  29.1G                                                                                                  0x1070f2b0             0
+├─mmcblk0p1 /dev/mmcblk0p1 mmc   512M vfat     system-boot F766-26D3                            /boot/firmware                                                0
+└─mmcblk0p2 /dev/mmcblk0p2 mmc  28.6G ext4     writable    c5da9c27-d622-4e80-89db-6af2e32618b4 /                                                             0
++ sudo blkid
+/dev/mmcblk0p1: LABEL_FATBOOT="system-boot" LABEL="system-boot" UUID="F766-26D3" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="a06488b5-01"
+/dev/mmcblk0p2: LABEL="writable" UUID="c5da9c27-d622-4e80-89db-6af2e32618b4" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="a06488b5-02"
+/dev/loop1: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/loop0: BLOCK_SIZE="131072" TYPE="squashfs"
+/dev/sda1: UUID="1017-F615" BLOCK_SIZE="512" TYPE="exfat" PARTUUID="009721b2-01"
++ findmnt -rn -o SOURCE,TARGET,FSTYPE,OPTIONS
++ grep -E 'sd|mnt|media'
+cgroup2 /sys/fs/cgroup cgroup2 rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/1-0:1.0/idVendor ']'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/2-0:1.0/idVendor ']'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/2-2/idVendor ']'
+++ cat /sys/bus/usb/devices/2-2/idVendor
+++ cat /sys/bus/usb/devices/2-2/idProduct
+++ cat /sys/bus/usb/devices/2-2/speed
+++ cat /sys/bus/usb/devices/2-2/version
+++ cat /sys/bus/usb/devices/2-2/product
+++ cat /sys/bus/usb/devices/2-2/bMaxPower
+/sys/bus/usb/devices/2-2 346d:5678 speed=480 ver= 2.00 prod=Disk 2.0 bMaxPower=100mA
++ echo '/sys/bus/usb/devices/2-2 346d:5678 speed=480 ver= 2.00 prod=Disk 2.0 bMaxPower=100mA'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/2-2:1.0/idVendor ']'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/3-0:1.0/idVendor ']'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/4-0:1.0/idVendor ']'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/5-0:1.0/idVendor ']'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/5-1/idVendor ']'
+++ cat /sys/bus/usb/devices/5-1/idVendor
+++ cat /sys/bus/usb/devices/5-1/idProduct
+++ cat /sys/bus/usb/devices/5-1/speed
+++ cat /sys/bus/usb/devices/5-1/version
+++ cat /sys/bus/usb/devices/5-1/product
+++ cat /sys/bus/usb/devices/5-1/bMaxPower
+/sys/bus/usb/devices/5-1 8086:0b3a speed=5000 ver= 3.20 prod=Intel(R) RealSense(TM) Depth Camera 435i bMaxPower=720mA
++ echo '/sys/bus/usb/devices/5-1 8086:0b3a speed=5000 ver= 3.20 prod=Intel(R) RealSense(TM) Depth Camera 435i bMaxPower=720mA'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/5-1:1.0/idVendor ']'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/5-1:1.1/idVendor ']'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/5-1:1.2/idVendor ']'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/5-1:1.3/idVendor ']'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/5-1:1.4/idVendor ']'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/5-1:1.5/idVendor ']'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/usb1/idVendor ']'
+++ cat /sys/bus/usb/devices/usb1/idVendor
+++ cat /sys/bus/usb/devices/usb1/idProduct
+++ cat /sys/bus/usb/devices/usb1/speed
+++ cat /sys/bus/usb/devices/usb1/version
+++ cat /sys/bus/usb/devices/usb1/product
+++ cat /sys/bus/usb/devices/usb1/bMaxPower
+/sys/bus/usb/devices/usb1 1d6b:0002 speed=480 ver= 2.00 prod=DWC OTG Controller bMaxPower=0mA
++ echo '/sys/bus/usb/devices/usb1 1d6b:0002 speed=480 ver= 2.00 prod=DWC OTG Controller bMaxPower=0mA'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/usb2/idVendor ']'
+++ cat /sys/bus/usb/devices/usb2/idVendor
+++ cat /sys/bus/usb/devices/usb2/idProduct
+++ cat /sys/bus/usb/devices/usb2/speed
+++ cat /sys/bus/usb/devices/usb2/version
+++ cat /sys/bus/usb/devices/usb2/product
+++ cat /sys/bus/usb/devices/usb2/bMaxPower
+/sys/bus/usb/devices/usb2 1d6b:0002 speed=480 ver= 2.00 prod=xHCI Host Controller bMaxPower=0mA
++ echo '/sys/bus/usb/devices/usb2 1d6b:0002 speed=480 ver= 2.00 prod=xHCI Host Controller bMaxPower=0mA'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/usb3/idVendor ']'
+++ cat /sys/bus/usb/devices/usb3/idVendor
+++ cat /sys/bus/usb/devices/usb3/idProduct
+++ cat /sys/bus/usb/devices/usb3/speed
+++ cat /sys/bus/usb/devices/usb3/version
+++ cat /sys/bus/usb/devices/usb3/product
+++ cat /sys/bus/usb/devices/usb3/bMaxPower
+/sys/bus/usb/devices/usb3 1d6b:0003 speed=5000 ver= 3.00 prod=xHCI Host Controller bMaxPower=0mA
++ echo '/sys/bus/usb/devices/usb3 1d6b:0003 speed=5000 ver= 3.00 prod=xHCI Host Controller bMaxPower=0mA'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/usb4/idVendor ']'
+++ cat /sys/bus/usb/devices/usb4/idVendor
+++ cat /sys/bus/usb/devices/usb4/idProduct
+++ cat /sys/bus/usb/devices/usb4/speed
+++ cat /sys/bus/usb/devices/usb4/version
+++ cat /sys/bus/usb/devices/usb4/product
+++ cat /sys/bus/usb/devices/usb4/bMaxPower
+/sys/bus/usb/devices/usb4 1d6b:0002 speed=480 ver= 2.00 prod=xHCI Host Controller bMaxPower=0mA
++ echo '/sys/bus/usb/devices/usb4 1d6b:0002 speed=480 ver= 2.00 prod=xHCI Host Controller bMaxPower=0mA'
++ for d in /sys/bus/usb/devices/*
++ '[' -f /sys/bus/usb/devices/usb5/idVendor ']'
+++ cat /sys/bus/usb/devices/usb5/idVendor
+++ cat /sys/bus/usb/devices/usb5/idProduct
+++ cat /sys/bus/usb/devices/usb5/speed
+++ cat /sys/bus/usb/devices/usb5/version
+++ cat /sys/bus/usb/devices/usb5/product
+++ cat /sys/bus/usb/devices/usb5/bMaxPower
+/sys/bus/usb/devices/usb5 1d6b:0003 speed=5000 ver= 3.00 prod=xHCI Host Controller bMaxPower=0mA
++ echo '/sys/bus/usb/devices/usb5 1d6b:0003 speed=5000 ver= 3.00 prod=xHCI Host Controller bMaxPower=0mA'
++ sudo dmesg
++ grep -iE 'sd[a-z]|usb-storage|uas|scsi'
++ tail -15
+[    0.905300] mmc1: new ultra high speed DDR50 SDIO card at address 0001
+[    5.312137] brcmfmac: brcmf_fw_alloc_request: using brcm/brcmfmac43455-sdio for chip BCM4345/6
+[  294.059792] usb-storage 2-2:1.0: USB Mass Storage device detected
+[  294.060022] scsi host0: usb-storage 2-2:1.0
+[  294.060181] usbcore: registered new interface driver usb-storage
+[  294.063982] usbcore: registered new interface driver uas
+[  295.110466] scsi 0:0:0:0: Direct-Access     VendorCo ProductCode      2.00 PQ: 0 ANSI: 4
+[  295.110846] sd 0:0:0:0: Attached scsi generic sg0 type 0
+[  295.112717] sd 0:0:0:0: [sda] 122880000 512-byte logical blocks: (62.9 GB/58.6 GiB)
+[  295.112868] sd 0:0:0:0: [sda] Write Protect is off
+[  295.112873] sd 0:0:0:0: [sda] Mode Sense: 03 00 00 00
+[  295.113010] sd 0:0:0:0: [sda] No Caching mode page found
+[  295.113014] sd 0:0:0:0: [sda] Assuming drive cache: write through
+[  295.116354]  sda: sda1
+[  295.116597] sd 0:0:0:0: [sda] Attached SCSI removable disk
++ vcgencmd get_throttled
+throttled=0x50000
++ ls -la /mnt
+total 16
+drwxr-xr-x  4 root root 4096 Sep 13 10:39 .
+drwxr-xr-x 22 root root 4096 Oct 14 10:45 ..
+drwxr-xr-x  2 root root 4096 Sep 13 10:39 nvme-root
+drwxr-xr-x  2 root root 4096 Sep 12 15:50 wbr-data
++ sudo fdisk -l /dev/sda
++ head -12
+Disk /dev/sda: 58.59 GiB, 62914560000 bytes, 122880000 sectors
+Disk model: ProductCode     
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x009721b2
+
+Device     Boot Start       End   Sectors  Size Id Type
+/dev/sda1  *     2048 122879935 122877888 58.6G  7 HPFS/NTFS/exFAT

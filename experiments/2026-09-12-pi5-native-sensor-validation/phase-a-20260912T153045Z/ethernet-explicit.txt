@@ -1,0 +1,12 @@
+2026-09-12T15:37:31+00:00
+SSH_CONNECTION=fe80::38:e79f:456c:70b3%eth0 50828 fe80::2ecf:67ff:fea2:86d3%eth0 22
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+eth0             UP             2c:cf:67:a2:86:d3 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+wlan0            UP             2c:cf:67:a2:86:d4 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+eth0             UP             fe80::2ecf:67ff:fea2:86d3/64 
+wlan0            UP             192.168.1.234/24 metric 600 2405:4802:1d73:2dd0::6/128 fd00:db80::6/128 fd00:db80::2ecf:67ff:fea2:86d4/64 2405:4802:1d73:2dd0:2ecf:67ff:fea2:86d4/64 fe80::2ecf:67ff:fea2:86d4/64 
+default via 192.168.1.1 dev wlan0 proto dhcp src 192.168.1.234 metric 600 
+192.168.1.0/24 dev wlan0 proto kernel scope link src 192.168.1.234 metric 600 
+192.168.1.1 dev wlan0 proto dhcp scope link src 192.168.1.234 metric 600 
+throttled=0x50000

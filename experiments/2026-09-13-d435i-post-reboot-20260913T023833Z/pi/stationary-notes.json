@@ -1,0 +1,16 @@
+{
+  "recorded_utc": "2026-09-13T03:09:24.149048+00:00",
+  "purpose": "600-second stationary full-precision IMU for future short-duration noise/bias and Allan preparation",
+  "orientation": "Operator confirms stationary, approximately level, looking forward",
+  "environment": "Indoor textured room; ambient temperature unmeasured; Raspibase fan running; do not touch support",
+  "target": null,
+  "operator_instruction": "Leave camera/support untouched throughout ten-minute capture",
+  "calibration_qualified": false,
+  "limitations": [
+    "Duration may limit long-tau Allan estimates",
+    "Factory IMU calibration unavailable; SDK motion correction remains configured as observed",
+    "Ambient and IMU die temperature unmeasured unless available frame metadata supplies it"
+  ],
+  "emitter": "Temporarily off, restored on clean exit",
+  "canonical_head": "593245740fa962ad2325dc531cdb48c21d5f15b2"
+}

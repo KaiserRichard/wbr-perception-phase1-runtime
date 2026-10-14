@@ -1,0 +1,73 @@
+{
+  "source": "/mnt/wbr-data/wbr-perception-phase1/2026-09-12/raw/sdk-smoke-02/frames.csv",
+  "method": "tool-relative whole windows, half-open [start,end)",
+  "timestamp_domain": "Not serialized by rs-data-collect; no synchronization claim",
+  "imu_precision": "Vendor CSV rounds vectors to 0.001; retain original CSV",
+  "windows": [
+    {
+      "start_seconds": 5.0,
+      "duration_seconds": 10.0,
+      "streams": {
+        "Infrared": {
+          "count": 150,
+          "whole_window_hz": 15.0,
+          "first_arrival_offset_seconds": 0.06153099999999956,
+          "last_arrival_silence_seconds": 0.004353999999999303,
+          "max_arrival_gap_seconds": 0.06675599999999804,
+          "max_arrival_gap_with_boundaries_seconds": 0.06675599999999804,
+          "max_stamp_gap_seconds": 0.06667327880859375,
+          "nonpositive_stamp_steps": 0,
+          "nonpositive_arrival_steps": 0,
+          "nonpositive_frame_steps": 0,
+          "missing_frame_numbers": 0,
+          "finite_values": true,
+          "timing_pass": true
+        },
+        "Gyro": {
+          "count": 2001,
+          "whole_window_hz": 200.1,
+          "first_arrival_offset_seconds": 0.0009399999999999409,
+          "last_arrival_silence_seconds": 0.0014020000000005695,
+          "max_arrival_gap_seconds": 0.00525999999999982,
+          "max_arrival_gap_with_boundaries_seconds": 0.00525999999999982,
+          "max_stamp_gap_seconds": 0.005000114440917969,
+          "nonpositive_stamp_steps": 0,
+          "nonpositive_arrival_steps": 0,
+          "nonpositive_frame_steps": 0,
+          "missing_frame_numbers": 0,
+          "finite_values": true,
+          "mean_xyz": [
+            -0.0037031484257871064,
+            -0.003732633683158421,
+            -0.0018855572213893055
+          ],
+          "mean_vector_norm": 0.006763374033219459,
+          "timing_pass": true
+        },
+        "Accel": {
+          "count": 1011,
+          "whole_window_hz": 101.1,
+          "first_arrival_offset_seconds": 0.004442000000000057,
+          "last_arrival_silence_seconds": 0.009408999999999779,
+          "max_arrival_gap_seconds": 0.010078999999999283,
+          "max_arrival_gap_with_boundaries_seconds": 0.010078999999999283,
+          "max_stamp_gap_seconds": 0.009890317916870117,
+          "nonpositive_stamp_steps": 0,
+          "nonpositive_arrival_steps": 0,
+          "nonpositive_frame_steps": 0,
+          "missing_frame_numbers": 0,
+          "finite_values": true,
+          "mean_xyz": [
+            -0.37010484668644905,
+            -4.3370267062314545,
+            -8.713180019782394
+          ],
+          "mean_vector_norm": 9.740059908711942,
+          "timing_pass": true
+        }
+      }
+    }
+  ],
+  "all_timing_windows_pass": true,
+  "N2": "NOT DECIDED: requires image, device/kernel logs, calibration context and health evidence"
+}

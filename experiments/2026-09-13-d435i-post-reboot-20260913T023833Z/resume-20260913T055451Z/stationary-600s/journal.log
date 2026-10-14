@@ -1,0 +1,4 @@
+2026-09-13T13:06:28.284608+07:00 wbr-pi5 kernel: hid-sensor-hub 0003:8086:0B3A.0001: No report with id 0xffffffff found
+2026-09-13T13:06:28.285123+07:00 wbr-pi5 kernel: hid-sensor-hub 0003:8086:0B3A.0001: No report with id 0xffffffff found
+2026-09-13T13:16:31.777657+07:00 wbr-pi5 kernel: hid-sensor-hub 0003:8086:0B3A.0001: No report with id 0xffffffff found
+2026-09-13T13:16:31.820611+07:00 wbr-pi5 kernel: hid-sensor-hub 0003:8086:0B3A.0001: No report with id 0xffffffff found

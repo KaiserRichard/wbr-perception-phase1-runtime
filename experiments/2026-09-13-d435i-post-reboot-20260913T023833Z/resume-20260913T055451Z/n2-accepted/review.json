@@ -1,0 +1,15 @@
+{
+  "utc": "2026-09-13T06:05:50.913553+00:00",
+  "reviewer": "Codex: inspected actual 20/105/300-second logs, timing, IMU norms and all nine IR images",
+  "notes": "Current-boot exact IR1 Y8 640x480 15 Hz, gyro 200 Hz, accel 100 Hz. All whole-window rates and internal/trailing gaps pass; no missing or nonpositive frame/timestamp steps. Initial 0.140-0.263 second offsets are SDK pre-open timer setup, with whole-window rates still enforced. All nine IR samples coherent; bright ceiling lamp, foreground and projected pattern limit VIO scene quality. SDK resource exhaustion occurred only in older stationary precision capture, preserved separately; none in these N2 logs.",
+  "power_supply": "User confirms this reboot intentional. Supply model/capacity unverified. All current N2 power samples 0x0, max Pi temperature 50.7 C; bounded evidence only.",
+  "cooling": "Fan reported running in post-reboot operator setup.",
+  "scene": "Indoor table, room and moving operator; coherent geometry and texture, bright clipped lamp/foreground. No calibration target.",
+  "calibration_provenance": "IMU Calibration is not available, default intrinsic and extrinsic will be used. HID report-id 0xffffffff warnings preserved. No VIO calibration qualification.",
+  "raw_logs_clean": true,
+  "images_coherent": true,
+  "startup_offsets_explained": true,
+  "imu_values_plausible": true,
+  "power_cooling_documented": true,
+  "calibration_warning_preserved": true
+}
