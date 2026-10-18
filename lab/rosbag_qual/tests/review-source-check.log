@@ -1,0 +1,4 @@
+SOURCE-SUPPORTED: reference converter decode_imu(standard ROS Imu fixture): ValueError truncated CDR field
+Reference decode_imu consumes 9 doubles for orientation; ROS Imu orientation is a four-double Quaternion.
+Reference CDR aligns against absolute buffer offset; standard CDR alignment is relative to the four-byte encapsulation payload.
+Read-only inspection; reference file was not modified.

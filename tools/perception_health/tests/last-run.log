@@ -1,0 +1,34 @@
+$ python3 -B -m unittest discover -s tools/perception_health/tests -v
+test_c99_encoder_decoder_matches_frozen_vector (test_perception_health.CTests.test_c99_encoder_decoder_matches_frozen_vector) ... ok
+test_degraded_tracking_holds_and_reset_counter_survives_wire (test_perception_health.ModelTests.test_degraded_tracking_holds_and_reset_counter_survives_wire) ... ok
+test_duplicate_wire_sequence_does_not_refresh_health (test_perception_health.ModelTests.test_duplicate_wire_sequence_does_not_refresh_health) ... ok
+test_fresh_then_hold_age (test_perception_health.ModelTests.test_fresh_then_hold_age) ... ok
+test_health_alone_cannot_enable_fresh (test_perception_health.ModelTests.test_health_alone_cannot_enable_fresh) ... ok
+test_heartbeat_silence_failsafe (test_perception_health.ModelTests.test_heartbeat_silence_failsafe) ... ok
+test_invalid_imu_boolean_downgrades (test_perception_health.ModelTests.test_invalid_imu_boolean_downgrades) ... ok
+test_lost_latches_until_rearm (test_perception_health.ModelTests.test_lost_latches_until_rearm) ... ok
+test_map_reset_counter_change_downgrades (test_perception_health.ModelTests.test_map_reset_counter_change_downgrades) ... ok
+test_mcu_clock_regression_latches (test_perception_health.ModelTests.test_mcu_clock_regression_latches) ... ok
+test_missing_mapping_holds_then_silence_fails (test_perception_health.ModelTests.test_missing_mapping_holds_then_silence_fails) ... ok
+test_receipt_silence_hold_before_timeout (test_perception_health.ModelTests.test_receipt_silence_hold_before_timeout) ... ok
+test_session_change_cannot_exit_latched_failsafe (test_perception_health.ModelTests.test_session_change_cannot_exit_latched_failsafe) ... ok
+test_source_age_timeout_uses_upstream_reason (test_perception_health.ModelTests.test_source_age_timeout_uses_upstream_reason) ... ok
+test_transit_allowance_downgrades_fresh_report (test_perception_health.ModelTests.test_transit_allowance_downgrades_fresh_report) ... ok
+test_unavailable_age_keeps_independent_watchdogs (test_perception_health.ModelTests.test_unavailable_age_keeps_independent_watchdogs) ... ok
+test_unavailable_age_stays_hold_with_continuous_reports (test_perception_health.ModelTests.test_unavailable_age_stays_hold_with_continuous_reports) ... ok
+test_unknown_age_recovery_and_lost_still_latches (test_perception_health.ModelTests.test_unknown_age_recovery_and_lost_still_latches) ... ok
+test_valid_saturation_and_expired_age_cannot_be_hidden_by_unknown (test_perception_health.ModelTests.test_valid_saturation_and_expired_age_cannot_be_hidden_by_unknown) ... ok
+test_crc_and_len_errors_resync (test_perception_health.ProtocolTests.test_crc_and_len_errors_resync) ... ok
+test_crc_vector_and_frozen_vector_python (test_perception_health.ProtocolTests.test_crc_vector_and_frozen_vector_python) ... ok
+test_non_boolean_imu_status_is_rejected (test_perception_health.ProtocolTests.test_non_boolean_imu_status_is_rejected) ... ok
+test_saturation_and_invalid_clock (test_perception_health.ProtocolTests.test_saturation_and_invalid_clock) ... ok
+test_sender_rejects_clock_domain_mismatch (test_perception_health.ProtocolTests.test_sender_rejects_clock_domain_mismatch) ... ok
+test_upstream_frozen_frames_byte_at_a_time (test_perception_health.ProtocolTests.test_upstream_frozen_frames_byte_at_a_time) ... ok
+test_v3_heartbeat_matches_upstream_layout (test_perception_health.ProtocolTests.test_v3_heartbeat_matches_upstream_layout) ... ok
+test_corruption_is_counted_and_parser_recovers (test_perception_health.PtyTests.test_corruption_is_counted_and_parser_recovers) ... ok
+test_sender_pty_round_trip_and_silence (test_perception_health.PtyTests.test_sender_pty_round_trip_and_silence) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 0.968s
+
+OK

@@ -1,0 +1,69 @@
+test_drop_fixture_is_fail (test_qual.QualificationTests.test_drop_fixture_is_fail) ... ok
+test_missing_bag_is_blocked (test_qual.QualificationTests.test_missing_bag_is_blocked) ... ok
+test_pass_fixture_and_analyze_only (test_qual.QualificationTests.test_pass_fixture_and_analyze_only) ... ok
+test_real_saved_evidence_fixture (test_qual.QualificationTests.test_real_saved_evidence_fixture)
+Use the saved 2026-10-14 DB3 as an input fixture, never copy or modify it. ... ok
+test_stamp_reversal_is_fail (test_qual.QualificationTests.test_stamp_reversal_is_fail) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.612s
+
+OK
+BLOCKED  offline_input: null 
+Overall: BLOCKED
+PASS     topic:/left:count: 3 messages
+PASS     topic:/left:header_rate: 2.0 Hz
+PASS     topic:/left:drops: 0 gaps
+PASS     topic:/left:max_gap: 0.5 s
+PASS     topic:/left:stamp_order: 0 reversals
+PASS     topic:/left:bag_receive_order: 0 reversals
+PASS     topic:/right:count: 3 messages
+PASS     topic:/right:header_rate: 2.0 Hz
+PASS     topic:/right:drops: 0 gaps
+PASS     topic:/right:max_gap: 0.5 s
+PASS     topic:/right:stamp_order: 0 reversals
+PASS     topic:/right:bag_receive_order: 0 reversals
+PASS     topic:/gyro:count: 5 messages
+PASS     topic:/gyro:header_rate: 4.0 Hz
+PASS     topic:/gyro:drops: 0 gaps
+PASS     topic:/gyro:max_gap: 0.25 s
+PASS     topic:/gyro:stamp_order: 0 reversals
+PASS     topic:/gyro:bag_receive_order: 0 reversals
+PASS     topic:/accel:count: 5 messages
+PASS     topic:/accel:header_rate: 4.0 Hz
+PASS     topic:/accel:drops: 0 gaps
+PASS     topic:/accel:max_gap: 0.25 s
+PASS     topic:/accel:stamp_order: 0 reversals
+PASS     topic:/accel:bag_receive_order: 0 reversals
+PASS     ir_pairing: 1.0 fraction
+PASS     disk:duration: 1.0 s
+PASS     disk:write_rate: 12288.0 bytes/s
+Overall: PASS
+PASS     topic:/left:count: 3 messages
+PASS     topic:/left:header_rate: 2.0 Hz
+PASS     topic:/left:drops: 0 gaps
+PASS     topic:/left:max_gap: 0.5 s
+PASS     topic:/left:stamp_order: 0 reversals
+PASS     topic:/left:bag_receive_order: 0 reversals
+PASS     topic:/right:count: 3 messages
+PASS     topic:/right:header_rate: 2.0 Hz
+PASS     topic:/right:drops: 0 gaps
+PASS     topic:/right:max_gap: 0.5 s
+PASS     topic:/right:stamp_order: 0 reversals
+PASS     topic:/right:bag_receive_order: 0 reversals
+PASS     topic:/gyro:count: 5 messages
+PASS     topic:/gyro:header_rate: 4.0 Hz
+PASS     topic:/gyro:drops: 0 gaps
+PASS     topic:/gyro:max_gap: 0.25 s
+PASS     topic:/gyro:stamp_order: 0 reversals
+PASS     topic:/gyro:bag_receive_order: 0 reversals
+PASS     topic:/accel:count: 5 messages
+PASS     topic:/accel:header_rate: 4.0 Hz
+PASS     topic:/accel:drops: 0 gaps
+PASS     topic:/accel:max_gap: 0.25 s
+PASS     topic:/accel:stamp_order: 0 reversals
+PASS     topic:/accel:bag_receive_order: 0 reversals
+PASS     ir_pairing: 1.0 fraction
+PASS     disk:duration: 1.0 s
+PASS     disk:write_rate: 12288.0 bytes/s
+Overall: PASS
