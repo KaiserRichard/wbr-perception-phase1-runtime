@@ -12,8 +12,9 @@ Built in `tools/eval_pipeline/profile/`:
   counts frames exceeding the single configured 33.3 ms budget, and documents
   realtime factor clock requirements.
 - `profile.py validity`: analyze-only PASS/FAIL/BLOCKED gate. Any sampled
-  current/historical voltage/throttle bit or temperature at/above the configured
-  ceiling invalidates the latency run; missing telemetry blocks it.
+  current/historical voltage/throttle bit or temperature at/above 80 °C
+  invalidates the latency run; missing telemetry blocks it. The inclusive
+  boundary is source-supported by Raspberry Pi's Pi 5 thermal article.
 - `profile.py report`: summary JSON/Markdown and optional matplotlib plot;
   explicitly marks latency VALID only on a PASS validity gate and INVALID on
   FAIL/BLOCKED; centralized threshold config; fixtures and unittest suite.
@@ -27,7 +28,8 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools/eval_pipeline/pr
 ```
 
 The exact test output is saved in `tests/last-run.log`. Software fixtures cover
-PASS, FAIL, BLOCKED, nearest-rank latency and host-clock event timing. The N4A
+PASS, FAIL, BLOCKED, the 79.9/80.0 °C boundary, nearest-rank latency and
+host-clock event timing. The N4A
 fixture is derived from the shared checkout's saved report: `vcgencmd` reported
 `0x50005` and max temperature 63 °C; the report records this value in 87/178
 five-second samples. The fixture intentionally retains only a representative
@@ -41,8 +43,9 @@ PSS cost, and actual performance under sustained ORB-SLAM3 load. No hardware,
 camera, serial, SSH, package install or network was used. Tests on the Mac do
 not establish any hardware gate PASS.
 
-INFERRED limitation: soft temperature 80 °C is a PROPOSED profiling validity
-limit and needs confirmation against the deployed thermal policy. `vcgencmd`
+INFERRED limitation: the 80 °C boundary is based on Raspberry Pi's public Pi 5
+description; actual sampled SoC temperatures and deployed firmware behavior
+remain UNKNOWN until physical verification. `vcgencmd`
 polling at 1 Hz can miss transient state if a firmware exposes non-sticky
 current bits only; historical bits help but do not establish a full-window
 physical truth. Procfs CPU snapshots and sampled resource values are
@@ -56,3 +59,27 @@ decodes the documented eight named bits locally; the shared implementation was
 left untouched per COMMON.md.
 
 Proposed commit message: `Add Pi runtime profiling sampler and validity analysis`
+
+## Independent T21 review — 2026-10-18
+
+**OPEN inherited defect:** `profile.py:307-310` accepts non-finite temperatures.
+For saved values `[55.0, NaN]`, `max` returns 55.0, the unknown-temperature flag
+remains false, and validity returns PASS/0 instead of BLOCKED/2. The named
+`test_known_defect_nonfinite_temperature_must_block` regression is explicitly
+marked expected-failure until the owning tool ticket adds finite-value
+validation. `tests/known-defect.log` records it run without that marker:
+one assertion failure (`0 != 2`) and the erroneous PASS table. This was also
+present before T21; `profile.py` is unchanged against origin/main.
+
+COMMON.md requires reporting existing-tool bugs; T21 owns this directory's
+config and tests, so production code was not edited. The final suite executes
+14 tests: 13 pass and one expected failure. This is not a clean qualification
+PASS. The 79.9/80.0 °C finite-value boundary itself passes its regressions.
+Exact output is in `tests/last-run.log`; full commands and verdict are in
+[`calibration/allan/REVIEW.md`](../../../calibration/allan/REVIEW.md).
+
+The older shared-decoder bug paragraph above is stale for this checkout:
+`resource_sampler.py` currently uses `FIELDS[14:]`, correctly beginning at
+`undervoltage_now`, and its tests pass. No decoder fix is needed here.
+
+Proposed review commit message: `test: expose inherited profile temperature validation defect`

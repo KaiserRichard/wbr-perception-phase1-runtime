@@ -1,6 +1,7 @@
 import csv
 import json
 from pathlib import Path
+import shutil
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -36,6 +37,15 @@ class ProfileTests(unittest.TestCase):
         root = fixture_dir("synthetic", throttle="0", temp=55)
         self.assertEqual(profile.validity(type("Args", (), {"analyze_only": root, "out": root})()), 0)
         self.assertEqual(json.loads((root / "result.json").read_text())["status"], "PASS")
+
+    def test_temperature_boundary_79_9_passes_and_80_0_fails(self):
+        for temperature, expected in ((79.9, 0), (80.0, 1)):
+            with self.subTest(temperature=temperature):
+                root = fixture_dir("synthetic", throttle="0", temp=temperature)
+                self.assertEqual(profile.validity(type("Args", (), {"analyze_only": root, "out": root})()), expected)
+                result = json.loads((root / "result.json").read_text())
+                criterion = next(item for item in result["criteria"] if item["id"] == "max_temperature")
+                self.assertEqual(criterion["status"], "PASS" if expected == 0 else "FAIL")
 
     def test_validity_ignores_rows_without_throttle_poll(self):
         root = fixture_dir("synthetic", throttle="0", temp=55)
@@ -75,6 +85,20 @@ class ProfileTests(unittest.TestCase):
         rows.append(missing)
         with (root / "samples.csv").open("w", newline="") as stream:
             writer = csv.DictWriter(stream, fieldnames=rows[0].keys()); writer.writeheader(); writer.writerows(rows)
+        self.assertEqual(profile.validity(type("Args", (), {"analyze_only": root, "out": root})()), 2)
+
+    def test_nonfinite_temperature_must_block(self):
+        # Regression: a NaN reading must not hide behind other finite readings.
+        root = fixture_dir("synthetic", throttle="0", temp=55)
+        self.addCleanup(shutil.rmtree, root)
+        with (root / "samples.csv").open(newline="") as stream:
+            rows = list(csv.DictReader(stream))
+        rows.append(dict(rows[0], monotonic_ns="2", thermal_c_json=json.dumps(
+            {"thermal_zone0": {"type": "cpu-thermal", "c": float("nan")}})))
+        with (root / "samples.csv").open("w", newline="") as stream:
+            writer = csv.DictWriter(stream, fieldnames=rows[0].keys())
+            writer.writeheader()
+            writer.writerows(rows)
         self.assertEqual(profile.validity(type("Args", (), {"analyze_only": root, "out": root})()), 2)
 
     def test_validity_fail_on_real_saved_n4a_throttle_fixture(self):

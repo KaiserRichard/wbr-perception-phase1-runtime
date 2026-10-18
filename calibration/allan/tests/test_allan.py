@@ -2,6 +2,8 @@
 import csv
 import json
 import importlib.util
+import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -24,6 +26,19 @@ class AllanTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(prefix="synthetic-", dir=ROOT / "tests")
         self.addCleanup(self.temp.cleanup)
         self.work = Path(self.temp.name)
+
+    def test_recorder_skips_interval_across_timestamp_domain_change(self):
+        compiler = os.environ.get("CXX") or shutil.which("c++") or shutil.which("clang++")
+        if not compiler:
+            self.skipTest("no C++17 compiler available for recorder Stats regression")
+        executable = self.work / "test_stats"
+        source = ROOT / "tests/test_stats.cpp"
+        command = [compiler, "-std=c++17", "-Wall", "-Wextra", "-pedantic",
+                   "-pthread", "-I", str(ROOT / "tests/stub"), str(source), "-o", str(executable)]
+        built = subprocess.run(command, capture_output=True, text=True)
+        self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
+        ran = subprocess.run([str(executable)], capture_output=True, text=True)
+        self.assertEqual(ran.returncode, 0, ran.stdout + ran.stderr)
 
     def write_stream(self, path, sensor, domain="Hardware Clock", seconds=100):
         rate = allan.RATES[sensor]

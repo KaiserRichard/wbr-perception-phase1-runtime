@@ -1,0 +1,105 @@
+test_clockmap_must_target_observer_session (test_profile.ProfileTests.test_clockmap_must_target_observer_session) ... profile: clockmap must map source stamps to this observer host_steady session
+ok
+test_event_latency_one_host_clock (test_profile.ProfileTests.test_event_latency_one_host_clock) ... ok
+test_fake_proc_sys_snapshot (test_profile.ProfileTests.test_fake_proc_sys_snapshot) ... ok
+test_missing_proc_sys_fields_are_unknown (test_profile.ProfileTests.test_missing_proc_sys_fields_are_unknown) ... ok
+test_temperature_boundary_79_9_passes_and_80_0_fails (test_profile.ProfileTests.test_temperature_boundary_79_9_passes_and_80_0_fails) ... ok
+test_tracking_latency_uses_existing_parser_and_budget (test_profile.ProfileTests.test_tracking_latency_uses_existing_parser_and_budget) ... ok
+test_validity_blocked_on_unknown_sensor_data (test_profile.ProfileTests.test_validity_blocked_on_unknown_sensor_data) ... ok
+test_validity_blocks_on_missing_samples_file (test_profile.ProfileTests.test_validity_blocks_on_missing_samples_file) ... ok
+test_validity_blocks_when_a_temperature_sample_is_missing (test_profile.ProfileTests.test_validity_blocks_when_a_temperature_sample_is_missing) ... ok
+test_validity_blocks_without_any_throttle_poll (test_profile.ProfileTests.test_validity_blocks_without_any_throttle_poll) ... ok
+test_validity_fail_on_real_saved_n4a_throttle_fixture (test_profile.ProfileTests.test_validity_fail_on_real_saved_n4a_throttle_fixture) ... ok
+test_validity_ignores_rows_without_throttle_poll (test_profile.ProfileTests.test_validity_ignores_rows_without_throttle_poll) ... ok
+test_validity_pass (test_profile.ProfileTests.test_validity_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.259s
+
+OK
+{
+  "evidence": "MEASURED from event timestamps; values are conditional on complete retained event pairs",
+  "quantile_method": "nearest-rank (tools/runtime_observer/stats.py)",
+  "sessions": {
+    "run": {
+      "clock_domain": "host_steady / Linux CLOCK_MONOTONIC",
+      "frame_count": 1,
+      "tracking_latency_ns": {
+        "status": "AVAILABLE",
+        "count": 1,
+        "p50": 10000000,
+        "p95": 10000000,
+        "p99": 10000000,
+        "max": 10000000
+      },
+      "end_to_end_latency_ns": {
+        "status": "AVAILABLE",
+        "count": 1,
+        "p50": 14000000,
+        "p95": 14000000,
+        "p99": 14000000,
+        "max": 14000000
+      },
+      "over_camera_budget_count": 0,
+      "camera_budget_ns": 33300000,
+      "realtime_factor": "UNKNOWN",
+      "realtime_factor_definition": "frame_received source timestamp span mapped to host_steady / full observer host_steady span; UNKNOWN unless source epochs are same-session host_steady or an explicit --clockmap is supplied"
+    }
+  },
+  "input_sha256": "d2c1b1ea5de5bc81a8249a6a0cb3a0c1bb455c19f33f786ccbd8a8e9396ab778"
+}
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	PASS	[]	<=0 occurrences
+max_temperature	PASS	79.9	<80.0 degC
+overall	PASS
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	PASS	[]	<=0 occurrences
+max_temperature	FAIL	80.0	<80.0 degC
+overall	FAIL
+{
+  "evidence": "MEASURED tracking duration parsed by tools/runtime_observer/patch_timing.py; hardware clock epoch UNKNOWN",
+  "clock_domain": "host_steady duration only; image_s is a source timestamp with no cross-clock mapping",
+  "quantile_method": "nearest-rank (tools/runtime_observer/stats.py)",
+  "tracking_latency_ns": {
+    "status": "AVAILABLE",
+    "count": 2,
+    "p50": 10000000,
+    "p95": 40000000,
+    "p99": 40000000,
+    "max": 40000000
+  },
+  "end_to_end_latency_ns": "UNKNOWN",
+  "over_camera_budget_count": 1,
+  "camera_budget_ns": 33300000,
+  "realtime_factor": "UNKNOWN",
+  "frame_count": 2,
+  "input_sha256": "f717f523f9069655ae6e3285dd35fe722ba025bdbaa86f65bb289a5ac0920a4e"
+}
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	BLOCKED	None	<=0 occurrences
+max_temperature	BLOCKED	None	<80.0 degC
+overall	BLOCKED
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	BLOCKED	[]	<=0 occurrences
+max_temperature	BLOCKED	None	<80.0 degC
+overall	BLOCKED
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	PASS	[]	<=0 occurrences
+max_temperature	BLOCKED	55.0	<80.0 degC
+overall	BLOCKED
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	BLOCKED	[]	<=0 occurrences
+max_temperature	PASS	55.0	<80.0 degC
+overall	BLOCKED
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	PASS	[]	<=0 occurrences
+max_temperature	PASS	55.0	<80.0 degC
+overall	PASS
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	PASS	[]	<=0 occurrences
+max_temperature	PASS	55.0	<80.0 degC
+overall	PASS

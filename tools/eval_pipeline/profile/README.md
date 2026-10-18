@@ -47,9 +47,11 @@ mapped epochs are compared.
 `validity` supports `--analyze-only <run-dir>` and writes `result.json` using
 the shared PASS/FAIL/BLOCKED contract. Any current or historical
 under-voltage/frequency-cap/throttle/soft-temperature bit fails the run. Missing
-throttle or temperature observations block it. The maximum sampled SoC
-temperature must be strictly below the soft limit in `config.json`; latency
-results from any non-PASS run are INVALID. All numeric thresholds and defaults
+throttle or temperature observations block it. Raspberry Pi says Pi 5 begins
+throttling when temperature reaches 80 °C ([official Pi 5 article](https://www.raspberrypi.com/news/heating-and-cooling-raspberry-pi-5/));
+the maximum sampled SoC temperature must remain strictly below the 80 °C limit
+in `config.json` (79.9 °C passes, 80.0 °C fails). Latency results from any
+non-PASS run are INVALID. All numeric thresholds and defaults
 are centralized in `config.json`, with source/rationale labels; selected limits
 are marked PROPOSED.
 
