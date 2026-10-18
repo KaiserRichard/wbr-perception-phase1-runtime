@@ -1,0 +1,21 @@
+test_c99_encoder_decoder_matches_frozen_vector (test_perception_health.CTests.test_c99_encoder_decoder_matches_frozen_vector) ... ok
+test_degraded_tracking_holds_and_reset_counter_survives_wire (test_perception_health.ModelTests.test_degraded_tracking_holds_and_reset_counter_survives_wire) ... ok
+test_fresh_then_hold_age (test_perception_health.ModelTests.test_fresh_then_hold_age) ... ok
+test_heartbeat_silence_failsafe (test_perception_health.ModelTests.test_heartbeat_silence_failsafe) ... ok
+test_lost_latches_until_rearm (test_perception_health.ModelTests.test_lost_latches_until_rearm) ... ok
+test_map_reset_counter_change_downgrades (test_perception_health.ModelTests.test_map_reset_counter_change_downgrades) ... ok
+test_mcu_clock_regression_latches (test_perception_health.ModelTests.test_mcu_clock_regression_latches) ... ok
+test_missing_mapping_holds_then_silence_fails (test_perception_health.ModelTests.test_missing_mapping_holds_then_silence_fails) ... ok
+test_receipt_silence_hold_before_timeout (test_perception_health.ModelTests.test_receipt_silence_hold_before_timeout) ... ok
+test_source_age_timeout_uses_upstream_reason (test_perception_health.ModelTests.test_source_age_timeout_uses_upstream_reason) ... ok
+test_crc_and_len_errors_resync (test_perception_health.ProtocolTests.test_crc_and_len_errors_resync) ... ok
+test_crc_vector_and_frozen_vector_python (test_perception_health.ProtocolTests.test_crc_vector_and_frozen_vector_python) ... ok
+test_saturation_and_invalid_clock (test_perception_health.ProtocolTests.test_saturation_and_invalid_clock) ... ok
+test_upstream_frozen_frames_byte_at_a_time (test_perception_health.ProtocolTests.test_upstream_frozen_frames_byte_at_a_time) ... ok
+test_corruption_is_counted_and_parser_recovers (test_perception_health.PtyTests.test_corruption_is_counted_and_parser_recovers) ... ok
+test_sender_pty_round_trip_and_silence (test_perception_health.PtyTests.test_sender_pty_round_trip_and_silence) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 2.597s
+
+OK
