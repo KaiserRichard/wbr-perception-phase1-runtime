@@ -119,11 +119,22 @@ def compare_run_imu(run_imu, provisional_imu, g, evidence):
 def check(inputs, output, thresholds_path):
     started = utc_now()
     output.mkdir(parents=True, exist_ok=True)
-    limits = threshold_config(thresholds_path)
+    thresholds_path = Path(thresholds_path)
+    policy_available = thresholds_path.is_file()
+    policy_error = None
+    try:
+        limits = threshold_config(thresholds_path) if policy_available else {}
+    except (OSError, ValueError, KeyError, TypeError, yaml.YAMLError) as exc:
+        limits = {}
+        policy_error = 'Threshold policy could not be evaluated: ' + str(exc)
     g = Gate(limits)
     policy_copy = output / 'input-thresholds.yaml'
-    if Path(thresholds_path).resolve() != policy_copy.resolve():
+    if policy_available and thresholds_path.resolve() != policy_copy.resolve():
         shutil.copyfile(thresholds_path, policy_copy)
+    if not policy_available:
+        g.missing('Required threshold policy unavailable: ' + str(thresholds_path))
+    elif policy_error:
+        g.missing(policy_error)
     expected = ('camimu_chain', 'camimu_results', 'stereo_chain', 'stereo_results', 'run_imu', 'provisional_imu', 'factory')
     sources = {k: Path(v) for k, v in inputs.items() if v is not None}
     for key in expected:
@@ -132,7 +143,8 @@ def check(inputs, output, thresholds_path):
     missing = [f'{key}: {path}' for key, path in sources.items() if not path.is_file()]
     for item in missing:
         g.missing('Required input unavailable: ' + item)
-    raw = [{'path': policy_copy.name, 'sha256': sha256(policy_copy)}]
+    raw = ([{'path': policy_copy.name, 'sha256': sha256(policy_copy)}]
+           if policy_copy.is_file() else [])
     copied = {}
     for key, src in sources.items():
         if src.is_file():
@@ -274,8 +286,14 @@ def check(inputs, output, thresholds_path):
     return {'PASS': 0, 'FAIL': 1, 'BLOCKED': 2}[status]
 
 
+class ContractArgumentParser(argparse.ArgumentParser):
+    def error(self, message):
+        self.print_usage(sys.stderr)
+        self.exit(3, f'{self.prog}: error: {message}\n')
+
+
 def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = ContractArgumentParser(description=__doc__)
     parser.add_argument('--camimu-chain', type=Path)
     parser.add_argument('--camimu-results', type=Path)
     parser.add_argument('--stereo-chain', type=Path)
@@ -294,8 +312,6 @@ def main(argv=None):
                  'run_imu': 'input-run_imu.yaml', 'provisional_imu': 'input-provisional_imu.yaml', 'factory': 'input-factory.yaml'}
         inputs = {key: args.analyze_only / names[key] for key in keys}
         thresholds = args.analyze_only / 'input-thresholds.yaml'
-        if not thresholds.exists():
-            thresholds = args.thresholds
     else:
         inputs = dict(zip(keys, (args.camimu_chain, args.camimu_results, args.stereo_chain,
                                  args.stereo_results, args.run_imu, args.provisional_imu, args.factory)))

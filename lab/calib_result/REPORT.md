@@ -15,11 +15,12 @@
 
 ## Test results
 
-`python3 -m unittest discover -s lab/calib_result/tests -v` passes 5 tests.
+`python3 -m unittest discover -s lab/calib_result/tests -v` passes 8 tests.
 Coverage includes fixture PASS, residual/extrinsic/time/baseline/intrinsic/
 distortion FAIL cases, IMU noise provenance FAIL, missing-input BLOCKED, and
-offline saved-input reanalysis. The real TUM-VI result verifies parser behavior
-only.
+offline saved-input reanalysis, missing/invalid saved threshold policy BLOCKED
+behavior, and usage exit-code handling. The real TUM-VI result verifies parser
+behavior only.
 
 ## Not verified and open risks
 

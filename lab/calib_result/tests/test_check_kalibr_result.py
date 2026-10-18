@@ -145,6 +145,37 @@ class Acceptance(unittest.TestCase):
         self.assertEqual(data['status'], 'BLOCKED')
         self.assertTrue(any(c['status'] == 'BLOCKED' for c in data['criteria']))
 
+    def test_analyze_only_missing_saved_policy_is_blocked(self):
+        source = self.inputs('policy')
+        original = self.run_gate(self.cli_args(source), 0)
+        self.assertEqual(original['status'], 'PASS')
+        (self.root / 'out/input-thresholds.yaml').unlink()
+
+        result = subprocess.run([sys.executable, str(SCRIPT), '--outdir', str(self.root / 'reanalysis'),
+                                 '--analyze-only', str(self.root / 'out')], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        data = json.loads((self.root / 'reanalysis/result.json').read_text())
+        self.assertEqual(data['status'], 'BLOCKED')
+        self.assertTrue(any('threshold policy unavailable' in c['description'] for c in data['criteria']))
+
+    def test_unreadable_threshold_policy_writes_blocked_result(self):
+        source = self.inputs('bad-policy')
+        bad_policy = self.root / 'thresholds.yaml'
+        bad_policy.write_text('thresholds: [not, a, mapping]\n')
+        out = self.root / 'bad-policy-out'
+        result = subprocess.run([sys.executable, str(SCRIPT), '--outdir', str(out), '--thresholds', str(bad_policy),
+                                 *self.cli_args(source)], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        data = json.loads((out / 'result.json').read_text())
+        self.assertEqual(data['status'], 'BLOCKED')
+        self.assertTrue(any('threshold policy could not be evaluated' in c['description'].lower()
+                            for c in data['criteria']))
+
+    def test_usage_error_uses_contract_exit_code(self):
+        result = subprocess.run([sys.executable, str(SCRIPT), '--outdir', str(self.root / 'usage-out'), '--unknown'],
+                                capture_output=True, text=True)
+        self.assertEqual(result.returncode, 3)
+
     def test_real_saved_tumvi_report_is_a_parser_fixture_only(self):
         # Real Kalibr smoke output, unrelated TUM-VI fisheye rig; never an acceptance PASS.
         fixture = HERE / 'tests/fixtures/real-tumvi-smoke'
