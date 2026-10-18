@@ -1,0 +1,26 @@
+python3 scripts/generate_config.py config/defaults.json build/defaults.hpp
+c++ -Iinclude -Ibuild -I../../tools/vio_adapter -I../../tools/ros2_bridge/src -I../../tools/runtime_observer -std=c++17 -O2 -Wall -Wextra -Wpedantic -pthread tests/core_test.cpp src/core.cpp ../../tools/vio_adapter/adapter.cpp -o build/core_test
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
+test_clock_faults_and_replay_seek (test_node.CoreTests.test_clock_faults_and_replay_seek) ... ok
+test_drop_oldest_and_fault_after_imu_loss (test_node.CoreTests.test_drop_oldest_and_fault_after_imu_loss) ... ok
+test_engine_exception_keeps_source_image_identity (test_node.CoreTests.test_engine_exception_keeps_source_image_identity) ... ok
+test_exact_pairing (test_node.CoreTests.test_exact_pairing) ... ok
+test_executor_ingress_progress_during_slow_tracking (test_node.CoreTests.test_executor_ingress_progress_during_slow_tracking) ... ok
+test_health_schema_and_runtime_recorder_compatibility (test_node.CoreTests.test_health_schema_and_runtime_recorder_compatibility) ... ok
+test_imu_coverage (test_node.CoreTests.test_imu_coverage) ... ok
+test_loss_reset_and_reinitialization (test_node.CoreTests.test_loss_reset_and_reinitialization) ... ok
+test_original_stamp_and_camera_imu_composition (test_node.CoreTests.test_original_stamp_and_camera_imu_composition) ... ok
+test_real_saved_source_epochs (test_node.CoreTests.test_real_saved_source_epochs) ... ok
+test_sender_tracking_enum_compatibility (test_node.CoreTests.test_sender_tracking_enum_compatibility) ... ok
+test_absent_mapping_does_not_need_numpy (test_node.MappingTests.test_absent_mapping_does_not_need_numpy) ... ok
+test_mapping_cli_refuses_missing_input (test_node.MappingTests.test_mapping_cli_refuses_missing_input) ... ok
+test_prepared_mapping_uses_existing_clockmap (test_node.MappingTests.test_prepared_mapping_uses_existing_clockmap) ... ok
+test_blocked_missing_executable (test_node.ResultContractTests.test_blocked_missing_executable) ... ok
+test_fail_from_saved_nonzero_run (test_node.ResultContractTests.test_fail_from_saved_nonzero_run) ... ok
+test_malformed_raw_is_internal_error (test_node.ResultContractTests.test_malformed_raw_is_internal_error) ... ok
+test_pass_and_analyze_saved_raw_files (test_node.ResultContractTests.test_pass_and_analyze_saved_raw_files) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 1.732s
+
+OK
