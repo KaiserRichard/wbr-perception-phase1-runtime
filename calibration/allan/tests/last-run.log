@@ -8,7 +8,7 @@ test_recorder_skips_interval_across_timestamp_domain_change (test_allan.AllanTes
 test_system_time_cli_diagnostic (test_allan.AllanTests.test_system_time_cli_diagnostic) ... ok
 test_three_hour_native_200hz_noise_and_walk (test_allan.AllanTests.test_three_hour_native_200hz_noise_and_walk) ... 
 SYNTHETIC 3 h, 200 Hz, no decimation: {"x": {"N": 0.03002165632496944, "K": 0.009487051883562502, "N_slope": -0.4996322134536536, "K_slope": 0.4636469872241274, "N_r2": 0.9999986682076752, "K_r2": 0.9997829312971933}, "y": {"N": 0.02997891618645073, "K": 0.009809823547806495, "N_slope": -0.5001619846712447, "K_slope": 0.5126117447514066, "N_r2": 0.999999782606195, "K_r2": 0.9982470172192905}, "z": {"N": 0.029992037285683535, "K": 0.009641300038012795, "N_slope": -0.5000111744878641, "K_slope": 0.5029234508712765, "N_r2": 0.999999835978065, "K_r2": 0.9992568226741755}}
-SYNTHETIC recovery elapsed_s=7.420
+SYNTHETIC recovery elapsed_s=8.045
 ok
 test_timestamp_validation (test_allan.AllanTests.test_timestamp_validation) ... ok
 test_yaml_maxima_and_inflation (test_allan.AllanTests.test_yaml_maxima_and_inflation) ... ok
@@ -17,6 +17,6 @@ test_live_undervoltage_and_space_refusal (test_wrapper.WrapperTests.test_live_un
 test_sigterm_drains_recorder_and_finalizes_power (test_wrapper.WrapperTests.test_sigterm_drains_recorder_and_finalizes_power) ... ok
 
 ----------------------------------------------------------------------
-Ran 13 tests in 44.268s
+Ran 13 tests in 42.231s
 
 OK

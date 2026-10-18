@@ -1,6 +1,7 @@
 import csv
 import json
 from pathlib import Path
+import shutil
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -84,6 +85,20 @@ class ProfileTests(unittest.TestCase):
         rows.append(missing)
         with (root / "samples.csv").open("w", newline="") as stream:
             writer = csv.DictWriter(stream, fieldnames=rows[0].keys()); writer.writeheader(); writer.writerows(rows)
+        self.assertEqual(profile.validity(type("Args", (), {"analyze_only": root, "out": root})()), 2)
+
+    def test_nonfinite_temperature_must_block(self):
+        # Regression: a NaN reading must not hide behind other finite readings.
+        root = fixture_dir("synthetic", throttle="0", temp=55)
+        self.addCleanup(shutil.rmtree, root)
+        with (root / "samples.csv").open(newline="") as stream:
+            rows = list(csv.DictReader(stream))
+        rows.append(dict(rows[0], monotonic_ns="2", thermal_c_json=json.dumps(
+            {"thermal_zone0": {"type": "cpu-thermal", "c": float("nan")}})))
+        with (root / "samples.csv").open("w", newline="") as stream:
+            writer = csv.DictWriter(stream, fieldnames=rows[0].keys())
+            writer.writeheader()
+            writer.writerows(rows)
         self.assertEqual(profile.validity(type("Args", (), {"analyze_only": root, "out": root})()), 2)
 
     def test_validity_fail_on_real_saved_n4a_throttle_fixture(self):

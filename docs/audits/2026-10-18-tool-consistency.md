@@ -105,3 +105,29 @@ No contract defect was found in the lab qualification checks audited. The accura
 - Allan recorder `Stats::add` now counts timestamp-domain transitions and skips interval subtraction across the boundary; the next sample establishes the new domain baseline. A C++ regression test exercises transition, recovery, and same-domain duplicate accounting using the local librealsense stub.
 - Power/USB and profile validity both fail inclusively at 80 °C (79.9 °C passes; 80.0 °C fails). Raspberry Pi's Pi 5 article says the processor begins throttling when the temperature reaches 80 °C: https://www.raspberrypi.com/news/heating-and-cooling-raspberry-pi-5/ . Both configs and operator docs cite this source.
 - Clockmap retains NumPy's percentile calculation and labels every percentile object and top-level report `numpy linear interpolation`; its README records that runtime_observer/profile uses nearest-rank and finite-sample values can differ.
+
+### Resolved by T21 — independent review addendum, 2026-10-18
+
+- Correction to the preceding Allan description: the transition sample itself
+  establishes the new domain baseline; the next same-domain sample contributes
+  an interval. Expanded C++ tests cover forward, backward and equal-valued
+  cross-domain stamps, Global Time, baseline recovery and frame counters.
+- Clockmap's README now names the actual directories `tools/runtime_observer`
+  and `tools/eval_pipeline/profile`. Tests check every percentile object,
+  including absolute residuals and per-segment latency, and both CLI reports.
+- The historical profile contract-compliance statement above is too broad.
+  **MEASURED (synthetic):** saved temperature values `[55.0, NaN]` yield PASS
+  because `max` retains the first finite value and non-finite input is not
+  marked missing. Required behavior is BLOCKED. The inherited defect is in
+  `tools/eval_pipeline/profile/profile.py:307-310`, outside T21's ownership
+  (config and tests only); COMMON.md requires reporting existing-tool bugs.
+  A named expected-failure regression and an unsuppressed failure transcript
+  are retained in profile tests. This remains OPEN, not a gate PASS.
+- The cited Raspberry Pi article was not fetched during this review: COMMON.md
+  prohibits network use beyond git. The configured inclusive 80 °C policy and
+  local saved runbook agree; the exact external wording and whether “soft
+  throttling” is appropriate terminology remain independently unverified.
+- The audit's aggregate test table is historical. This review reran the four
+  affected Python suites and the imported runtime-observer make target;
+  commands, outputs, scope and remaining items are in
+  [`calibration/allan/REVIEW.md`](../../calibration/allan/REVIEW.md).

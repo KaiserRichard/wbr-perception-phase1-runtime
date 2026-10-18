@@ -2,6 +2,7 @@ test_cli_both_module_and_script_and_input_errors (test_analyze.AnalyzerTests.tes
 test_decimal_ms_sub_nanosecond_rounding (test_analyze.AnalyzerTests.test_decimal_ms_sub_nanosecond_rounding) ... ok
 test_domain_transitions_never_stitched (test_analyze.AnalyzerTests.test_domain_transitions_never_stitched) ... ok
 test_empty_and_short_csv (test_analyze.AnalyzerTests.test_empty_and_short_csv) ... ok
+test_every_percentile_object_is_labeled (test_analyze.AnalyzerTests.test_every_percentile_object_is_labeled) ... ok
 test_fit_and_absolute_latency_separated (test_analyze.AnalyzerTests.test_fit_and_absolute_latency_separated) ... ok
 test_hardware_only_unavailable (test_analyze.AnalyzerTests.test_hardware_only_unavailable) ... ok
 test_invalid_headers_fields_and_nonfinite_sdk_refused (test_analyze.AnalyzerTests.test_invalid_headers_fields_and_nonfinite_sdk_refused) ... ok
@@ -37,6 +38,6 @@ test_uint32_validation (test_clockmap.UnwrapTests.test_uint32_validation) ... ok
 test_wrap_and_equal_ticks (test_clockmap.UnwrapTests.test_wrap_and_equal_ticks) ... ok
 
 ----------------------------------------------------------------------
-Ran 37 tests in 0.764s
+Ran 38 tests in 0.680s
 
 OK

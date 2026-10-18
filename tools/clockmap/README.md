@@ -165,7 +165,7 @@ min/p50/p90/p95/p99/max, latency distribution, and negative-latency counts.
 Every percentile object and top-level report labels its method as
 **numpy linear interpolation** (`numpy.percentile` default). This differs from
 the **nearest-rank** method (`ceil(q*n)`, one-indexed) used by
-`tools/runtime_observer/profile`; finite-sample percentile values are not always
+`tools/runtime_observer` and `tools/eval_pipeline/profile`; finite-sample percentile values are not always
 directly comparable across these methods.
 The recorder has no boot/session column: the file hash supplies provenance only,
 not trusted session identity. Hidden resets or forward SDK steps remain UNKNOWN.

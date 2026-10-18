@@ -1,0 +1,18 @@
+test_known_defect_nonfinite_temperature_must_block (test_profile.ProfileTests.test_known_defect_nonfinite_temperature_must_block) ... FAIL
+
+======================================================================
+FAIL: test_known_defect_nonfinite_temperature_must_block (test_profile.ProfileTests.test_known_defect_nonfinite_temperature_must_block)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-auditfix/tools/eval_pipeline/profile/tests/test_profile.py", line 104, in test_known_defect_nonfinite_temperature_must_block
+    self.assertEqual(profile.validity(type("Args", (), {"analyze_only": root, "out": root})()), 2)
+AssertionError: 0 != 2
+
+----------------------------------------------------------------------
+Ran 1 test in 0.023s
+
+FAILED (failures=1)
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	PASS	[]	<=0 occurrences
+max_temperature	PASS	55.0	<80.0 degC
+overall	PASS

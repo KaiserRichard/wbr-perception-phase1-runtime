@@ -5,6 +5,7 @@ import csv
 from decimal import Decimal
 import hashlib
 import io
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -78,6 +79,25 @@ class AnalyzerTests(unittest.TestCase):
         self.assertEqual(stats["p50"], 4_500_000)
         self.assertEqual(stats["p99"], 8_910_000)
         self.assertEqual(streams[1]["arrival_latency_proxy_ns"]["max"], 3_000_000)
+
+    def test_every_percentile_object_is_labeled(self):
+        self.write([row(i, delay_ns=i * 1_000_000) for i in range(6)])
+        report = analyze_timestamps(self.path)
+        distributions = []
+
+        def visit(value):
+            if isinstance(value, dict):
+                if "p50" in value:
+                    distributions.append(value)
+                    self.assertEqual(value["percentile_method"], "numpy linear interpolation")
+                for child in value.values():
+                    visit(child)
+            elif isinstance(value, list):
+                for child in value:
+                    visit(child)
+
+        visit(report)
+        self.assertEqual(len(distributions), 4)  # Stream, segment, signed/absolute residuals.
 
     def test_domain_transitions_never_stitched(self):
         rows = [row(i) for i in range(3)]
@@ -158,6 +178,8 @@ class AnalyzerTests(unittest.TestCase):
             result = subprocess.run(command, cwd=root, capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn('"drift_ppm"', result.stdout)
+            self.assertEqual(json.loads(result.stdout)["percentile_method"],
+                             "numpy linear interpolation")
         stderr = io.StringIO()
         with contextlib.redirect_stderr(stderr):
             code = main([str(self.path.parent / "missing.csv")])

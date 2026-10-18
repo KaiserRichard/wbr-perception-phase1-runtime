@@ -2,6 +2,7 @@ test_clockmap_must_target_observer_session (test_profile.ProfileTests.test_clock
 ok
 test_event_latency_one_host_clock (test_profile.ProfileTests.test_event_latency_one_host_clock) ... ok
 test_fake_proc_sys_snapshot (test_profile.ProfileTests.test_fake_proc_sys_snapshot) ... ok
+test_known_defect_nonfinite_temperature_must_block (test_profile.ProfileTests.test_known_defect_nonfinite_temperature_must_block) ... expected failure
 test_missing_proc_sys_fields_are_unknown (test_profile.ProfileTests.test_missing_proc_sys_fields_are_unknown) ... ok
 test_temperature_boundary_79_9_passes_and_80_0_fails (test_profile.ProfileTests.test_temperature_boundary_79_9_passes_and_80_0_fails) ... ok
 test_tracking_latency_uses_existing_parser_and_budget (test_profile.ProfileTests.test_tracking_latency_uses_existing_parser_and_budget) ... ok
@@ -14,9 +15,9 @@ test_validity_ignores_rows_without_throttle_poll (test_profile.ProfileTests.test
 test_validity_pass (test_profile.ProfileTests.test_validity_pass) ... ok
 
 ----------------------------------------------------------------------
-Ran 13 tests in 0.257s
+Ran 14 tests in 0.255s
 
-OK
+OK (expected failures=1)
 {
   "evidence": "MEASURED from event timestamps; values are conditional on complete retained event pairs",
   "quantile_method": "nearest-rank (tools/runtime_observer/stats.py)",
@@ -48,6 +49,10 @@ OK
   },
   "input_sha256": "d2c1b1ea5de5bc81a8249a6a0cb3a0c1bb455c19f33f786ccbd8a8e9396ab778"
 }
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	PASS	[]	<=0 occurrences
+max_temperature	PASS	55.0	<80.0 degC
+overall	PASS
 criterion	status	measured	threshold
 no_throttle_or_undervoltage	PASS	[]	<=0 occurrences
 max_temperature	PASS	79.9	<80.0 degC

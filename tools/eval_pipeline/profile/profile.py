@@ -304,8 +304,10 @@ def validity(args):
             zones = json.loads(row["thermal_c_json"])
         except (ValueError, KeyError): zones = {}
         soc = zones.get("thermal_zone0") if isinstance(zones, dict) else None
-        if isinstance(soc, dict) and isinstance(soc.get("c"), (float, int)):
-            temps.append(float(soc["c"]))
+        value_c = soc.get("c") if isinstance(soc, dict) else None
+        # NaN/inf is not a temperature observation: treat it as missing evidence.
+        if isinstance(value_c, (float, int)) and not isinstance(value_c, bool) and math.isfinite(value_c):
+            temps.append(float(value_c))
         else:
             unknown_temperature = True
         for key in THROTTLE_NAMES:

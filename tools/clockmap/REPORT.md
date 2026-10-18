@@ -14,3 +14,16 @@ files, SDK/host mapping and hardware timing remain UNKNOWN; this statistical
 label does not qualify a clock map or a physical gate.
 
 Proposed commit message: `fix(clockmap): label percentile interpolation method`
+
+## Independent review — 2026-10-18
+
+Corrected the README's nonexistent `tools/runtime_observer/profile` path to
+the two actual tool directories. Regression coverage now checks all four
+percentile objects (stream/segment latency and signed/absolute fit residuals)
+and the JSON method label from both CLI invocation forms. Final suite:
+38 tests, no failures; `tests/last-run.log` preserves exact output. The imported
+runtime-observer make suite also passed (C++ probe plus 20 Python tests), with
+output in `tests/runtime-observer-review.log`.
+
+See [`calibration/allan/REVIEW.md`](../../calibration/allan/REVIEW.md) for the
+full T21 review, inherited profile defect and source-verification limits.

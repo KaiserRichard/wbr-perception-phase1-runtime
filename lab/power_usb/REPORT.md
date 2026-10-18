@@ -105,3 +105,16 @@ profile's saved N4A fixture remain included.
 tested; fixture PASS results establish software behavior only.
 
 Proposed commit message: `fix: resolve cross-tool audit findings`
+
+## Independent review — 2026-10-18
+
+The inclusive boundary is correct. Added regression coverage with exactly
+80.0 °C in only vcgencmd or only sysfs, while the other source remains 79.9 °C;
+either independently causes FAIL. The final 59-test run includes the historical
+partial-evidence BLOCKED replay; exact output is `tests/last-run.log`.
+The earlier statement that all four suites pass needs qualification after
+review: profile now retains an expected-failure regression for an inherited
+non-finite-temperature false PASS. Full findings and exact commands are in
+[`calibration/allan/REVIEW.md`](../../calibration/allan/REVIEW.md). No hardware
+or network was used, so the external thermal article was not independently
+rechecked.

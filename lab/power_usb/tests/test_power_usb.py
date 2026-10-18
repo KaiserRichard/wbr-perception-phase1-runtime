@@ -177,6 +177,17 @@ class AnalyzeTests(unittest.TestCase):
         self.set_all_temperatures(80.0)
         self.run_analysis("FAIL", "temperature")
 
+    def test_temperature_boundary_fails_for_either_source_alone(self):
+        for source in ("vcgencmd", "sysfs"):
+            with self.subTest(source=source):
+                self.set_all_temperatures(79.9)
+                sample = self.cap["samples"][1]
+                if source == "vcgencmd":
+                    self.replace(sample["temperature"], "temp=80.0'C")
+                else:
+                    self.replace(sample["thermal"][0]["temperature"], "80000\n", False)
+                self.run_analysis("FAIL", "temperature")
+
     def test_temperature_missing_one_source_blocks(self):
         self.cap["samples"][1]["thermal"] = []
         self.run_analysis("BLOCKED", "temperature")

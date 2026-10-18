@@ -59,3 +59,27 @@ decodes the documented eight named bits locally; the shared implementation was
 left untouched per COMMON.md.
 
 Proposed commit message: `Add Pi runtime profiling sampler and validity analysis`
+
+## Independent T21 review — 2026-10-18
+
+**OPEN inherited defect:** `profile.py:307-310` accepts non-finite temperatures.
+For saved values `[55.0, NaN]`, `max` returns 55.0, the unknown-temperature flag
+remains false, and validity returns PASS/0 instead of BLOCKED/2. The named
+`test_known_defect_nonfinite_temperature_must_block` regression is explicitly
+marked expected-failure until the owning tool ticket adds finite-value
+validation. `tests/known-defect.log` records it run without that marker:
+one assertion failure (`0 != 2`) and the erroneous PASS table. This was also
+present before T21; `profile.py` is unchanged against origin/main.
+
+COMMON.md requires reporting existing-tool bugs; T21 owns this directory's
+config and tests, so production code was not edited. The final suite executes
+14 tests: 13 pass and one expected failure. This is not a clean qualification
+PASS. The 79.9/80.0 °C finite-value boundary itself passes its regressions.
+Exact output is in `tests/last-run.log`; full commands and verdict are in
+[`calibration/allan/REVIEW.md`](../../../calibration/allan/REVIEW.md).
+
+The older shared-decoder bug paragraph above is stale for this checkout:
+`resource_sampler.py` currently uses `FIELDS[14:]`, correctly beginning at
+`undervoltage_now`, and its tests pass. No decoder fix is needed here.
+
+Proposed review commit message: `test: expose inherited profile temperature validation defect`
