@@ -20,7 +20,7 @@ REAL_DB3 = Path("/Users/quockaiser/Desktop/Research/wbr-data/2026-10-14-d435i-ra
 
 
 def _align(data: bytearray, boundary: int) -> None:
-    while len(data) % boundary:
+    while (len(data) - 4) % boundary:
         data.append(0)
 
 
@@ -46,7 +46,7 @@ def image(stamp_ns: int) -> bytes:
     _string(data, "mono8")
     data.extend(b"\0")
     _align(data, 4)
-    data.extend(struct.pack("<I", 2))
+    data.extend(struct.pack("<II", 2, 4))
     data.extend(b"\x01\x02\x03\x04")
     return bytes(data)
 

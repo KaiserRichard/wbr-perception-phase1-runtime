@@ -27,7 +27,7 @@ class CDR:
         self.pos = 4
 
     def align(self, boundary: int) -> None:
-        self.pos = (self.pos + boundary - 1) & ~(boundary - 1)
+        self.pos = 4 + ((self.pos - 4 + boundary - 1) & ~(boundary - 1))
 
     def unpack(self, fmt: str) -> Any:
         size = struct.calcsize("<" + fmt)
@@ -52,24 +52,32 @@ class CDR:
 def header(cdr: CDR) -> tuple[int, str]:
     sec = cdr.unpack("i")
     nanosec = cdr.unpack("I")
+    if not 0 <= nanosec < 1_000_000_000:
+        raise ValueError("ROS Time.nanosec must be in [0, 1e9)")
     return int(sec) * 1_000_000_000 + int(nanosec), cdr.string()
 
 
 def extract_header(data: bytes, msg_type: str, role: str) -> tuple[int | None, str | None]:
     """Extract a standard ROS header without importing ROS message classes."""
+    values = extract_headers(data, msg_type, role)
+    return values[0] if values else (None, None)
+
+
+def extract_headers(data: bytes, msg_type: str, role: str) -> list[tuple[int, str]]:
     cdr = CDR(data)
     if msg_type in {"sensor_msgs/msg/Image", "sensor_msgs/msg/CameraInfo",
                     "sensor_msgs/msg/Imu", "realsense2_camera_msgs/msg/IMUInfo"}:
-        return header(cdr)
+        return [header(cdr)]
     if msg_type == "tf2_msgs/msg/TFMessage":
-        count = cdr.unpack("I")
-        if count:
-            return header(cdr)
-        return None, None
-    # Some calibration/context messages are not stamped. They are still counted
-    # and type-checked by the SQLite manifest; rate checks are not applicable.
-    if role in {"tf_static", "extrinsics", "imu_info"}:
-        return None, None
+        values = []
+        for _ in range(cdr.unpack("I")):
+            values.append(header(cdr))
+            cdr.string()  # child_frame_id
+            for _ in range(7):  # translation xyz, quaternion xyzw
+                cdr.unpack("d")
+        return values
+    if role in {"extrinsics", "imu_info"}:
+        return []
     raise ValueError(f"unsupported header extraction for {msg_type}")
 
 
@@ -100,7 +108,7 @@ def storage_files(path: Path) -> list[Path]:
 def bag_bytes(path: Path) -> int:
     if path.is_file():
         return path.stat().st_size
-    return sum(item.stat().st_size for item in path.rglob("*") if item.is_file())
+    return sum(item.stat().st_size for item in storage_files(path))
 
 
 def _rate(stamps: list[int]) -> float | None:
@@ -116,17 +124,18 @@ def _digest_stamps(stamps: Iterable[int]) -> str:
     return digest.hexdigest()
 
 
-def _topic_report(spec: dict[str, Any], rows: list[tuple[int, bytes]]) -> dict[str, Any]:
+def _topic_report(spec: dict[str, Any], rows: Iterable[tuple[int, bytes]]) -> dict[str, Any]:
     header_stamps: list[int] = []
     frame_ids: list[str] = []
     parse_errors = 0
-    receive_stamps = [int(row[0]) for row in rows]
-    for _, payload in rows:
+    receive_stamps: list[int] = []
+    count = 0
+    for receive_ns, payload in rows:
+        count += 1
+        receive_stamps.append(int(receive_ns))
         try:
-            stamp, frame_id = extract_header(payload, spec["type"], spec.get("role", ""))
-            if stamp is not None:
+            for stamp, frame_id in extract_headers(payload, spec["type"], spec.get("role", "")):
                 header_stamps.append(stamp)
-            if frame_id is not None:
                 frame_ids.append(frame_id)
         except (ValueError, struct.error, UnicodeError):
             parse_errors += 1
@@ -142,11 +151,13 @@ def _topic_report(spec: dict[str, Any], rows: list[tuple[int, bytes]]) -> dict[s
     receive_drops = sum(gap / 1e9 > drop_limit for gap in receive_gaps) if drop_limit else None
     return {
         "name": spec["name"], "type": spec["type"], "role": spec.get("role"),
-        "count": len(rows), "header_count": len(header_stamps),
+        "count": count, "header_count": len(header_stamps),
         "first_header_stamp_ns": header_stamps[0] if header_stamps else None,
         "last_header_stamp_ns": header_stamps[-1] if header_stamps else None,
         "header_rate_hz": _rate(header_stamps),
         "bag_receive_rate_hz": _rate(receive_stamps),
+        "first_bag_receive_stamp_ns": receive_stamps[0] if receive_stamps else None,
+        "last_bag_receive_stamp_ns": receive_stamps[-1] if receive_stamps else None,
         "header_reversals": header_reversals, "header_repeated_stamps": header_repeats,
         "bag_receive_reversals": receive_reversals,
         "max_header_gap_s": max(header_gaps, default=0) / 1e9,
@@ -160,7 +171,7 @@ def _topic_report(spec: dict[str, Any], rows: list[tuple[int, bytes]]) -> dict[s
 
 def read_sqlite(path: Path, config: dict[str, Any]) -> dict[str, Any]:
     db3 = find_db3(path)
-    conn = sqlite3.connect(f"file:{db3}?mode=ro", uri=True)
+    conn = sqlite3.connect(db3.as_uri() + "?mode=ro", uri=True)
     try:
         topic_rows = conn.execute("SELECT id,name,type,serialization_format FROM topics ORDER BY id").fetchall()
         available = {row[1]: row for row in topic_rows}
@@ -177,10 +188,14 @@ def read_sqlite(path: Path, config: dict[str, Any]) -> dict[str, Any]:
                 continue
             if topic[2] != spec["type"]:
                 raise ValueError(f"{spec['name']}: type {topic[2]} != configured {spec['type']}")
-            rows = conn.execute("SELECT timestamp,data FROM messages WHERE topic_id=? ORDER BY id", (topic[0],)).fetchall()
-            metadata_message_count += len(rows)
-            all_receive.extend(int(row[0]) for row in rows)
+            if topic[3] != "cdr":
+                raise ValueError(f"{spec['name']}: unsupported serialization {topic[3]}")
+            # Stream large image payloads instead of retaining the entire bag in RAM.
+            rows = conn.execute("SELECT timestamp,data FROM messages WHERE topic_id=? ORDER BY id", (topic[0],))
             reports[spec["name"]] = _topic_report(spec, rows)
+            metadata_message_count += reports[spec["name"]]["count"]
+            bounds = conn.execute("SELECT MIN(timestamp),MAX(timestamp) FROM messages WHERE topic_id=?", (topic[0],)).fetchone()
+            all_receive.extend(value for value in bounds if value is not None)
         all_receive.sort()
         return {"database": str(db3), "storage_format": "sqlite3", "topic_count": len(topic_rows),
                 "configured_message_count": metadata_message_count,
@@ -202,7 +217,7 @@ def read_rosbag2(path: Path, config: dict[str, Any]) -> dict[str, Any]:
     except ImportError as error:
         raise RuntimeError("no SQLite storage and rosbag2_py is unavailable for non-SQLite bags") from error
     uri = Path(path).resolve()
-    storage_id = config.get("storage", {}).get("storage_id", "mcap")
+    storage_id = "mcap" if uri.suffix == ".mcap" or (uri.is_dir() and any(uri.glob("*.mcap"))) else config.get("storage", {}).get("storage_id", "mcap")
     reader = rosbag2_py.SequentialReader()
     reader.open(rosbag2_py.StorageOptions(uri=str(uri), storage_id=storage_id),
                 rosbag2_py.ConverterOptions(input_serialization_format="cdr", output_serialization_format="cdr"))
@@ -213,6 +228,14 @@ def read_rosbag2(path: Path, config: dict[str, Any]) -> dict[str, Any]:
         name, payload, receive_ns = reader.read_next()
         total += 1
         if name in rows_by_name:
+            if available.get(name) in {"sensor_msgs/msg/Image", "sensor_msgs/msg/Imu", "sensor_msgs/msg/CameraInfo"}:
+                # Only header bytes are needed; do not retain MCAP image payloads.
+                try:
+                    cdr = CDR(payload)
+                    header(cdr)
+                    payload = payload[:cdr.pos]
+                except (ValueError, struct.error, UnicodeError):
+                    payload = b""  # retained as a decode error by _topic_report
             rows_by_name[name].append((int(receive_ns), bytes(payload)))
     reports = {}
     all_receive: list[int] = []
@@ -237,37 +260,46 @@ def read_rosbag2(path: Path, config: dict[str, Any]) -> dict[str, Any]:
             "available_topics": [{"name": name, "type": msg_type} for name, msg_type in sorted(available.items())]}
 
 
-def _topic_criteria(report: dict[str, Any], spec: dict[str, Any], evidence: str) -> list[dict[str, Any]]:
+def _topic_criteria(report: dict[str, Any], spec: dict[str, Any], evidence: str,
+                    limits: dict[str, Any]) -> list[dict[str, Any]]:
     source = spec.get("threshold_source", "UNKNOWN: no threshold source provided")
     required = spec.get("required", True)
+    if not report:
+        return [criterion(f"topic:{spec['name']}:evidence", "Saved topic measurements exist",
+                          None, "", "available", "BLOCKED", evidence, source)]
     if report.get("missing"):
         return [criterion(f"topic:{spec['name']}:present", "Configured topic is present in the bag",
                           0, "messages", ">= 1", "FAIL" if required else "PASS", evidence, source)]
-    criteria = [criterion(f"topic:{spec['name']}:count", "Configured topic message count",
-                          report["count"], "messages", ">= 1" if required else "not empty when published",
-                          "PASS" if report["count"] or not required else "FAIL", evidence, source)]
+    count = report.get("count")
+    criteria = [criterion(f"topic:{spec['name']}:count", "Configured topic message count", count,
+                          "messages", ">= 1" if required else "optional",
+                          "BLOCKED" if count is None else ("PASS" if count or not required else "FAIL"), evidence, source)]
+    if not required and count == 0:
+        return criteria
     if "rate_min_hz" in spec:
-        rate = report.get("header_rate_hz")
-        status = "BLOCKED" if rate is None else ("PASS" if spec["rate_min_hz"] <= rate <= spec["rate_max_hz"] else "FAIL")
-        criteria.append(criterion(f"topic:{spec['name']}:header_rate", "Rate from ROS header.stamp",
-                                  rate, "Hz", f"{spec['rate_min_hz']}..{spec['rate_max_hz']}", status, evidence, source))
-        drops = report.get("header_drop_count")
-        drop_status = "BLOCKED" if drops is None else ("PASS" if drops == 0 else "FAIL")
-        criteria.append(criterion(f"topic:{spec['name']}:drops", "Header-stamp gaps above k times nominal period",
-                                  drops, "gaps", "0", drop_status, evidence, source))
+        for metric, ident, description in (
+            ("header_rate_hz", "header_rate", "Rate from ROS header.stamp (source mapping UNKNOWN)"),
+            ("bag_receive_rate_hz", "bag_receive_rate", "Rate from rosbag2 receive timestamp (recorder clock; mapping UNKNOWN)")):
+            rate = report.get(metric)
+            status = "BLOCKED" if rate is None else ("PASS" if spec["rate_min_hz"] <= rate <= spec["rate_max_hz"] else "FAIL")
+            criteria.append(criterion(f"topic:{spec['name']}:{ident}", description, rate, "Hz",
+                                      f"{spec['rate_min_hz']}..{spec['rate_max_hz']}", status, evidence, source))
         max_gap = report.get("max_header_gap_s")
-        gap_status = "BLOCKED" if max_gap is None else ("PASS" if max_gap <= spec["max_gap_s"] else "FAIL")
-        criteria.append(criterion(f"topic:{spec['name']}:max_gap", "Maximum positive header-stamp gap",
-                                  max_gap, "s", f"<= {spec['max_gap_s']}", gap_status, evidence, source))
-        reverse_status = "PASS" if report.get("header_reversals", 0) == 0 else "FAIL"
-        criteria.append(criterion(f"topic:{spec['name']}:stamp_order", "Header stamps do not reverse",
-                                  report.get("header_reversals"), "reversals", "0", reverse_status, evidence, source))
-        receive_status = "PASS" if report.get("bag_receive_reversals", 0) == 0 else "FAIL"
-        criteria.append(criterion(f"topic:{spec['name']}:bag_receive_order", "Bag receive timestamps do not reverse",
-                                  report.get("bag_receive_reversals"), "reversals", "0", receive_status, evidence, source))
-    if report.get("parse_errors"):
-        criteria.append(criterion(f"topic:{spec['name']}:cdr", "CDR headers decode without errors",
-                                  report["parse_errors"], "errors", "0", "FAIL", evidence, source))
+        criteria.append(criterion(f"topic:{spec['name']}:max_gap", "Maximum positive header-stamp gap", max_gap,
+                                  "s", f"<= {spec['max_gap_s']}", "BLOCKED" if max_gap is None else (
+                                      "PASS" if max_gap <= spec["max_gap_s"] else "FAIL"), evidence, source))
+        for metric, ident, unit in (("header_drop_count", "drops", "gaps"),
+                                    ("header_reversals", "stamp_order", "reversals"),
+                                    ("header_repeated_stamps", "stamp_repeats", "repeats"),
+                                    ("bag_receive_reversals", "bag_receive_order", "reversals")):
+            measured, limit = report.get(metric), limits.get("max_" + metric)
+            status = "BLOCKED" if measured is None or limit is None else ("PASS" if measured <= limit else "FAIL")
+            criteria.append(criterion(f"topic:{spec['name']}:{ident}", metric, measured, unit,
+                                      f"<= {limit}", status, evidence, limits.get("threshold_source", "UNKNOWN")))
+    errors, limit = report.get("parse_errors"), limits.get("max_parse_errors")
+    criteria.append(criterion(f"topic:{spec['name']}:cdr", "CDR headers decode without errors", errors, "errors",
+                              f"<= {limit}", "BLOCKED" if errors is None or limit is None else (
+                                  "PASS" if errors <= limit else "FAIL"), evidence, limits.get("threshold_source", "UNKNOWN")))
     return criteria
 
 
@@ -275,18 +307,21 @@ def evaluate_report(report: dict[str, Any], config: dict[str, Any], evidence: st
     criteria: list[dict[str, Any]] = []
     topics = report.get("topics", {})
     for spec in config["topics"]:
-        criteria.extend(_topic_criteria(topics.get(spec["name"], {"missing": True}), spec, evidence))
+        criteria.extend(_topic_criteria(topics.get(spec["name"], {}), spec, evidence, config.get("validation", {})))
+        if "rate_min_hz" in spec and not topics.get(spec["name"], {}).get("missing"):
+            topic = topics.get(spec["name"], {})
+            bounds = [report.get("first_bag_receive_stamp_ns"), report.get("last_bag_receive_stamp_ns"),
+                      topic.get("first_bag_receive_stamp_ns"), topic.get("last_bag_receive_stamp_ns")]
+            gap = None if any(value is None for value in bounds) else max(bounds[2] - bounds[0], bounds[1] - bounds[3]) / 1e9
+            criteria.append(criterion(f"topic:{spec['name']}:receive_boundary_gap", "Largest start/end gap within bag receive-time window",
+                                      gap, "s", f"<= {spec['max_gap_s']}", "BLOCKED" if gap is None else (
+                                          "PASS" if gap <= spec["max_gap_s"] else "FAIL"), evidence, spec["threshold_source"]))
 
     pairing = config.get("pairing", {})
-    left = next((topics.get(s["name"]) for s in config["topics"] if s.get("role") == pairing.get("left_role")), None)
-    right = next((topics.get(s["name"]) for s in config["topics"] if s.get("role") == pairing.get("right_role")), None)
-    if left and right and not left.get("missing") and not right.get("missing"):
-        # Counts are used as a conservative fallback because only the digest is
-        # retained in an analysis artifact. The live reader also records exact
-        # pairing counts below when the stamp lists are available.
+    if pairing:
         pairing_counts = report.get("pairing", {})
         matched = pairing_counts.get("matched")
-        denominator = pairing_counts.get("denominator", max(left.get("count", 0), right.get("count", 0)))
+        denominator = pairing_counts.get("denominator")
         fraction = (matched / denominator) if matched is not None and denominator else None
         status = "BLOCKED" if fraction is None else ("PASS" if fraction >= pairing["min_fraction"] else "FAIL")
         criteria.append(criterion("ir_pairing", "IR left/right exact header-stamp pairing fraction",
@@ -295,7 +330,7 @@ def evaluate_report(report: dict[str, Any], config: dict[str, Any], evidence: st
 
     storage = config.get("storage", {})
     duration = report.get("duration_s")
-    write_rate = (report.get("bag_bytes") / duration) if duration and duration > 0 else None
+    write_rate = (report["bag_bytes"] / duration) if duration and duration > 0 and report.get("bag_bytes") is not None else None
     duration_status = "BLOCKED" if duration is None else ("PASS" if duration >= storage.get("min_duration_s", 0) else "FAIL")
     criteria.append(criterion("disk:duration", "Bag has a positive measurable receive-time duration",
                               duration, "s", f">= {storage.get('min_duration_s', 0)}", duration_status,
@@ -309,6 +344,8 @@ def evaluate_report(report: dict[str, Any], config: dict[str, Any], evidence: st
 
 def analyze_database(path: Path, config: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     path = Path(path)
+    if not path.exists():
+        raise FileNotFoundError(path)
     sqlite_available = False
     if path.is_file():
         sqlite_available = path.suffix in {".db3", ".sqlite3", ".sqlite"}
@@ -329,6 +366,9 @@ def analyze_database(path: Path, config: dict[str, Any]) -> tuple[dict[str, Any]
                                   "unmatched_left": len(left_stamps) - matched, "unmatched_right": len(right_stamps) - matched}
     for topic in report.get("topics", {}).values():
         topic.pop("_header_stamps", None)
+    report["evidence_label"] = "MEASURED"
+    report["clock_domains"] = {"header_stamp": "ROS header.stamp; device hardware/global mapping UNKNOWN unless established by run evidence",
+                               "bag_receive_stamp": "rosbag2 messages.timestamp; recorder clock identity/mapping UNKNOWN; never subtracted from header.stamp"}
     report["criteria"] = evaluate_report(report, config)
     return report, report["criteria"]
 
