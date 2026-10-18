@@ -1,0 +1,26 @@
+test_absent_reset_not_invented (test_integration.ConverterTests.test_absent_reset_not_invented) ... ok
+test_all_exact_orb_state_names (test_integration.ConverterTests.test_all_exact_orb_state_names) ... ok
+test_cli_streaming_and_usage_error (test_integration.ConverterTests.test_cli_streaming_and_usage_error) ... ok
+test_invalid_fields_rejected_and_feature_count_saturates (test_integration.ConverterTests.test_invalid_fields_rejected_and_feature_count_saturates) ... ok
+test_mapping_explicit_file_and_identity_matching (test_integration.ConverterTests.test_mapping_explicit_file_and_identity_matching) ... ok
+test_mapping_rejects_wrong_clock_and_insufficient_exchanges (test_integration.ConverterTests.test_mapping_rejects_wrong_clock_and_insufficient_exchanges) ... ok
+test_no_mapping_has_invalid_mapping_without_timestamp_subtraction (test_integration.ConverterTests.test_no_mapping_has_invalid_mapping_without_timestamp_subtraction) ... ok
+test_null_source_and_unknown_state_never_fresh (test_integration.ConverterTests.test_null_source_and_unknown_state_never_fresh) ... ok
+test_real_evidence_fixture_preserves_unknowns (test_integration.ConverterTests.test_real_evidence_fixture_preserves_unknowns) ... ok
+test_regressions_and_domain_switch_are_rejected (test_integration.ConverterTests.test_regressions_and_domain_switch_are_rejected) ... ok
+test_reset_epoch_wrap_and_map_change_derivation (test_integration.ConverterTests.test_reset_epoch_wrap_and_map_change_derivation) ... ok
+test_analyzer_blocked_for_missing_captures (test_integration.EndToEndTests.test_analyzer_blocked_for_missing_captures) ... ok
+test_analyzer_fail_contract_with_real_evidence (test_integration.EndToEndTests.test_analyzer_fail_contract_with_real_evidence) ... ok
+test_analyzer_pass_fixture_single_unmapped_report (test_integration.EndToEndTests.test_analyzer_pass_fixture_single_unmapped_report) ... ok
+test_analyzer_uses_raw_bytes_instead_of_saved_trace (test_integration.EndToEndTests.test_analyzer_uses_raw_bytes_instead_of_saved_trace) ... ok
+test_entire_saved_real_replay_passes_through_sender (test_integration.EndToEndTests.test_entire_saved_real_replay_passes_through_sender) ... ok
+test_lost_is_latched_after_recovery (test_integration.EndToEndTests.test_lost_is_latched_after_recovery) ... ok
+test_mapped_ok_is_fresh (test_integration.EndToEndTests.test_mapped_ok_is_fresh) ... ok
+test_required_no_mapping_hold_only_upstream_defect (test_integration.EndToEndTests.test_required_no_mapping_hold_only_upstream_defect) ... expected failure
+test_sender_eof_is_receipt_silence_with_isolated_policy (test_integration.EndToEndTests.test_sender_eof_is_receipt_silence_with_isolated_policy) ... ok
+test_unmapped_defect_is_reproduced_and_never_fresh (test_integration.EndToEndTests.test_unmapped_defect_is_reproduced_and_never_fresh) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 2.711s
+
+OK (expected failures=1)

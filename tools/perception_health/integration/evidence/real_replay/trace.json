@@ -1,0 +1,3131 @@
+[
+  {
+    "kind": "heartbeat",
+    "seq": 0,
+    "simulated_MCU_timer_us": 238657,
+    "state": "INIT",
+    "reason": "NONE"
+  },
+  {
+    "kind": "health",
+    "seq": 1,
+    "simulated_MCU_timer_us": 254212,
+    "state": "HOLD",
+    "reason": "SOURCE_AGE_UNAVAILABLE"
+  },
+  {
+    "kind": "health",
+    "seq": 2,
+    "simulated_MCU_timer_us": 254423,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 3,
+    "simulated_MCU_timer_us": 254614,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 4,
+    "simulated_MCU_timer_us": 254791,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 5,
+    "simulated_MCU_timer_us": 254977,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 6,
+    "simulated_MCU_timer_us": 255139,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 7,
+    "simulated_MCU_timer_us": 255341,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 8,
+    "simulated_MCU_timer_us": 255521,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 9,
+    "simulated_MCU_timer_us": 255687,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 10,
+    "simulated_MCU_timer_us": 255856,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 11,
+    "simulated_MCU_timer_us": 256011,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 12,
+    "simulated_MCU_timer_us": 256187,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 13,
+    "simulated_MCU_timer_us": 256405,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 14,
+    "simulated_MCU_timer_us": 256652,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 15,
+    "simulated_MCU_timer_us": 256824,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 16,
+    "simulated_MCU_timer_us": 256987,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 17,
+    "simulated_MCU_timer_us": 257204,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 18,
+    "simulated_MCU_timer_us": 257428,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 19,
+    "simulated_MCU_timer_us": 257624,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 20,
+    "simulated_MCU_timer_us": 257835,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 21,
+    "simulated_MCU_timer_us": 258089,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 22,
+    "simulated_MCU_timer_us": 258288,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 23,
+    "simulated_MCU_timer_us": 258464,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 24,
+    "simulated_MCU_timer_us": 258614,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 25,
+    "simulated_MCU_timer_us": 258775,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 26,
+    "simulated_MCU_timer_us": 258932,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 27,
+    "simulated_MCU_timer_us": 259147,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 28,
+    "simulated_MCU_timer_us": 259384,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 29,
+    "simulated_MCU_timer_us": 259550,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 30,
+    "simulated_MCU_timer_us": 259727,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 31,
+    "simulated_MCU_timer_us": 259895,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 32,
+    "simulated_MCU_timer_us": 260064,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 33,
+    "simulated_MCU_timer_us": 260265,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 34,
+    "simulated_MCU_timer_us": 260488,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 35,
+    "simulated_MCU_timer_us": 260655,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 36,
+    "simulated_MCU_timer_us": 260863,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 37,
+    "simulated_MCU_timer_us": 261077,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 38,
+    "simulated_MCU_timer_us": 261346,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 39,
+    "simulated_MCU_timer_us": 261562,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 40,
+    "simulated_MCU_timer_us": 261717,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 41,
+    "simulated_MCU_timer_us": 261901,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 42,
+    "simulated_MCU_timer_us": 262097,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 43,
+    "simulated_MCU_timer_us": 262339,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 44,
+    "simulated_MCU_timer_us": 262527,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 45,
+    "simulated_MCU_timer_us": 262750,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 46,
+    "simulated_MCU_timer_us": 262975,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 47,
+    "simulated_MCU_timer_us": 263167,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 48,
+    "simulated_MCU_timer_us": 263398,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 49,
+    "simulated_MCU_timer_us": 263641,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 50,
+    "simulated_MCU_timer_us": 263842,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 51,
+    "simulated_MCU_timer_us": 264091,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 52,
+    "simulated_MCU_timer_us": 264320,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 53,
+    "simulated_MCU_timer_us": 264526,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 54,
+    "simulated_MCU_timer_us": 264716,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 55,
+    "simulated_MCU_timer_us": 264935,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 56,
+    "simulated_MCU_timer_us": 265149,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 57,
+    "simulated_MCU_timer_us": 265364,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 58,
+    "simulated_MCU_timer_us": 265540,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 59,
+    "simulated_MCU_timer_us": 265754,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 60,
+    "simulated_MCU_timer_us": 265995,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 61,
+    "simulated_MCU_timer_us": 266162,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 62,
+    "simulated_MCU_timer_us": 266329,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 63,
+    "simulated_MCU_timer_us": 266490,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 64,
+    "simulated_MCU_timer_us": 266639,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 65,
+    "simulated_MCU_timer_us": 266811,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 66,
+    "simulated_MCU_timer_us": 266983,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 67,
+    "simulated_MCU_timer_us": 267141,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 68,
+    "simulated_MCU_timer_us": 267293,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 69,
+    "simulated_MCU_timer_us": 267449,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 70,
+    "simulated_MCU_timer_us": 267649,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 71,
+    "simulated_MCU_timer_us": 267823,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 72,
+    "simulated_MCU_timer_us": 268021,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 73,
+    "simulated_MCU_timer_us": 268251,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 74,
+    "simulated_MCU_timer_us": 268439,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 75,
+    "simulated_MCU_timer_us": 268617,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 76,
+    "simulated_MCU_timer_us": 268829,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 77,
+    "simulated_MCU_timer_us": 269038,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 78,
+    "simulated_MCU_timer_us": 269199,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 79,
+    "simulated_MCU_timer_us": 269419,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 80,
+    "simulated_MCU_timer_us": 269658,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 81,
+    "simulated_MCU_timer_us": 269892,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 82,
+    "simulated_MCU_timer_us": 270128,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 83,
+    "simulated_MCU_timer_us": 270379,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 84,
+    "simulated_MCU_timer_us": 270628,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 85,
+    "simulated_MCU_timer_us": 270865,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 86,
+    "simulated_MCU_timer_us": 271112,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 87,
+    "simulated_MCU_timer_us": 271354,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 88,
+    "simulated_MCU_timer_us": 271625,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 89,
+    "simulated_MCU_timer_us": 271857,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 90,
+    "simulated_MCU_timer_us": 272093,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 91,
+    "simulated_MCU_timer_us": 272338,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 92,
+    "simulated_MCU_timer_us": 272584,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 93,
+    "simulated_MCU_timer_us": 272828,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 94,
+    "simulated_MCU_timer_us": 273106,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 95,
+    "simulated_MCU_timer_us": 273298,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 96,
+    "simulated_MCU_timer_us": 273502,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 97,
+    "simulated_MCU_timer_us": 273715,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 98,
+    "simulated_MCU_timer_us": 273906,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 99,
+    "simulated_MCU_timer_us": 274129,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 100,
+    "simulated_MCU_timer_us": 274363,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 101,
+    "simulated_MCU_timer_us": 274587,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 102,
+    "simulated_MCU_timer_us": 274791,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 103,
+    "simulated_MCU_timer_us": 275032,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 104,
+    "simulated_MCU_timer_us": 275221,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 105,
+    "simulated_MCU_timer_us": 275487,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 106,
+    "simulated_MCU_timer_us": 275709,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 107,
+    "simulated_MCU_timer_us": 275921,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 108,
+    "simulated_MCU_timer_us": 276137,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 109,
+    "simulated_MCU_timer_us": 276394,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 110,
+    "simulated_MCU_timer_us": 276741,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 111,
+    "simulated_MCU_timer_us": 276993,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 112,
+    "simulated_MCU_timer_us": 277241,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 113,
+    "simulated_MCU_timer_us": 277491,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 114,
+    "simulated_MCU_timer_us": 277745,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 115,
+    "simulated_MCU_timer_us": 278029,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 116,
+    "simulated_MCU_timer_us": 278274,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 117,
+    "simulated_MCU_timer_us": 278519,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 118,
+    "simulated_MCU_timer_us": 278769,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 119,
+    "simulated_MCU_timer_us": 278985,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 120,
+    "simulated_MCU_timer_us": 279264,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 121,
+    "simulated_MCU_timer_us": 279494,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 122,
+    "simulated_MCU_timer_us": 279722,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 123,
+    "simulated_MCU_timer_us": 280017,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 124,
+    "simulated_MCU_timer_us": 280262,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 125,
+    "simulated_MCU_timer_us": 280524,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 126,
+    "simulated_MCU_timer_us": 280770,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 127,
+    "simulated_MCU_timer_us": 281012,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 128,
+    "simulated_MCU_timer_us": 281234,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 129,
+    "simulated_MCU_timer_us": 281482,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 130,
+    "simulated_MCU_timer_us": 281728,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 131,
+    "simulated_MCU_timer_us": 281988,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 132,
+    "simulated_MCU_timer_us": 282225,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 133,
+    "simulated_MCU_timer_us": 282436,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 134,
+    "simulated_MCU_timer_us": 282586,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 135,
+    "simulated_MCU_timer_us": 282740,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 136,
+    "simulated_MCU_timer_us": 282880,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 137,
+    "simulated_MCU_timer_us": 283019,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 138,
+    "simulated_MCU_timer_us": 283186,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 139,
+    "simulated_MCU_timer_us": 283346,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 140,
+    "simulated_MCU_timer_us": 283530,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 141,
+    "simulated_MCU_timer_us": 283728,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 142,
+    "simulated_MCU_timer_us": 283972,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 143,
+    "simulated_MCU_timer_us": 284228,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 144,
+    "simulated_MCU_timer_us": 284464,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 145,
+    "simulated_MCU_timer_us": 284680,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 146,
+    "simulated_MCU_timer_us": 284928,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 147,
+    "simulated_MCU_timer_us": 285130,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 148,
+    "simulated_MCU_timer_us": 285356,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 149,
+    "simulated_MCU_timer_us": 285534,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 150,
+    "simulated_MCU_timer_us": 285745,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 151,
+    "simulated_MCU_timer_us": 285997,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 152,
+    "simulated_MCU_timer_us": 286250,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 153,
+    "simulated_MCU_timer_us": 286468,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 154,
+    "simulated_MCU_timer_us": 286669,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 155,
+    "simulated_MCU_timer_us": 286841,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 156,
+    "simulated_MCU_timer_us": 287011,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 157,
+    "simulated_MCU_timer_us": 287162,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 158,
+    "simulated_MCU_timer_us": 287309,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 159,
+    "simulated_MCU_timer_us": 287580,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 160,
+    "simulated_MCU_timer_us": 287839,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 161,
+    "simulated_MCU_timer_us": 288089,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 162,
+    "simulated_MCU_timer_us": 288355,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 163,
+    "simulated_MCU_timer_us": 288607,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 164,
+    "simulated_MCU_timer_us": 288864,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 165,
+    "simulated_MCU_timer_us": 289123,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 166,
+    "simulated_MCU_timer_us": 289342,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 167,
+    "simulated_MCU_timer_us": 289588,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 168,
+    "simulated_MCU_timer_us": 289842,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 169,
+    "simulated_MCU_timer_us": 290083,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 170,
+    "simulated_MCU_timer_us": 290330,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 171,
+    "simulated_MCU_timer_us": 290603,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 172,
+    "simulated_MCU_timer_us": 290868,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 173,
+    "simulated_MCU_timer_us": 291095,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 174,
+    "simulated_MCU_timer_us": 291359,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 175,
+    "simulated_MCU_timer_us": 291623,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 176,
+    "simulated_MCU_timer_us": 291878,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 177,
+    "simulated_MCU_timer_us": 292120,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 178,
+    "simulated_MCU_timer_us": 292384,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 179,
+    "simulated_MCU_timer_us": 292632,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 180,
+    "simulated_MCU_timer_us": 292887,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 181,
+    "simulated_MCU_timer_us": 293091,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 182,
+    "simulated_MCU_timer_us": 293301,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 183,
+    "simulated_MCU_timer_us": 293515,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 184,
+    "simulated_MCU_timer_us": 293711,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 185,
+    "simulated_MCU_timer_us": 293927,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 186,
+    "simulated_MCU_timer_us": 294193,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 187,
+    "simulated_MCU_timer_us": 294406,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 188,
+    "simulated_MCU_timer_us": 294671,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 189,
+    "simulated_MCU_timer_us": 294919,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 190,
+    "simulated_MCU_timer_us": 295141,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 191,
+    "simulated_MCU_timer_us": 295347,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 192,
+    "simulated_MCU_timer_us": 295564,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 193,
+    "simulated_MCU_timer_us": 295817,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 194,
+    "simulated_MCU_timer_us": 296071,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 195,
+    "simulated_MCU_timer_us": 296284,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 196,
+    "simulated_MCU_timer_us": 296519,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 197,
+    "simulated_MCU_timer_us": 296752,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 198,
+    "simulated_MCU_timer_us": 296994,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 199,
+    "simulated_MCU_timer_us": 297255,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 200,
+    "simulated_MCU_timer_us": 297458,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 201,
+    "simulated_MCU_timer_us": 297744,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 202,
+    "simulated_MCU_timer_us": 297958,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 203,
+    "simulated_MCU_timer_us": 298213,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 204,
+    "simulated_MCU_timer_us": 298460,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 205,
+    "simulated_MCU_timer_us": 298714,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 206,
+    "simulated_MCU_timer_us": 298968,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 207,
+    "simulated_MCU_timer_us": 299214,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 208,
+    "simulated_MCU_timer_us": 299451,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 209,
+    "simulated_MCU_timer_us": 299646,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 210,
+    "simulated_MCU_timer_us": 299848,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 211,
+    "simulated_MCU_timer_us": 300024,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 212,
+    "simulated_MCU_timer_us": 300244,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 213,
+    "simulated_MCU_timer_us": 300452,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 214,
+    "simulated_MCU_timer_us": 300670,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 215,
+    "simulated_MCU_timer_us": 300900,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 216,
+    "simulated_MCU_timer_us": 301188,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 217,
+    "simulated_MCU_timer_us": 301443,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 218,
+    "simulated_MCU_timer_us": 301650,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 219,
+    "simulated_MCU_timer_us": 301872,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 220,
+    "simulated_MCU_timer_us": 302090,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 221,
+    "simulated_MCU_timer_us": 302264,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 222,
+    "simulated_MCU_timer_us": 302477,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 223,
+    "simulated_MCU_timer_us": 302666,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 224,
+    "simulated_MCU_timer_us": 302856,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 225,
+    "simulated_MCU_timer_us": 303046,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 226,
+    "simulated_MCU_timer_us": 303248,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 227,
+    "simulated_MCU_timer_us": 303425,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 228,
+    "simulated_MCU_timer_us": 303635,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 229,
+    "simulated_MCU_timer_us": 303896,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 230,
+    "simulated_MCU_timer_us": 304115,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 231,
+    "simulated_MCU_timer_us": 304343,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 232,
+    "simulated_MCU_timer_us": 304554,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 233,
+    "simulated_MCU_timer_us": 304775,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 234,
+    "simulated_MCU_timer_us": 304965,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 235,
+    "simulated_MCU_timer_us": 305116,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 236,
+    "simulated_MCU_timer_us": 305268,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 237,
+    "simulated_MCU_timer_us": 305437,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 238,
+    "simulated_MCU_timer_us": 305590,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 239,
+    "simulated_MCU_timer_us": 305761,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 240,
+    "simulated_MCU_timer_us": 305915,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 241,
+    "simulated_MCU_timer_us": 306067,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 242,
+    "simulated_MCU_timer_us": 306208,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 243,
+    "simulated_MCU_timer_us": 306348,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 244,
+    "simulated_MCU_timer_us": 306497,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 245,
+    "simulated_MCU_timer_us": 306653,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 246,
+    "simulated_MCU_timer_us": 306868,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 247,
+    "simulated_MCU_timer_us": 307042,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 248,
+    "simulated_MCU_timer_us": 307238,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 249,
+    "simulated_MCU_timer_us": 307392,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 250,
+    "simulated_MCU_timer_us": 307541,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 251,
+    "simulated_MCU_timer_us": 307687,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 252,
+    "simulated_MCU_timer_us": 307832,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 253,
+    "simulated_MCU_timer_us": 307974,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 254,
+    "simulated_MCU_timer_us": 308116,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 255,
+    "simulated_MCU_timer_us": 308313,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 256,
+    "simulated_MCU_timer_us": 308495,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 257,
+    "simulated_MCU_timer_us": 308660,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 258,
+    "simulated_MCU_timer_us": 308809,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 259,
+    "simulated_MCU_timer_us": 308962,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 260,
+    "simulated_MCU_timer_us": 309154,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 261,
+    "simulated_MCU_timer_us": 309344,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 262,
+    "simulated_MCU_timer_us": 309497,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 263,
+    "simulated_MCU_timer_us": 309644,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 264,
+    "simulated_MCU_timer_us": 309791,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 265,
+    "simulated_MCU_timer_us": 309982,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 266,
+    "simulated_MCU_timer_us": 310182,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 267,
+    "simulated_MCU_timer_us": 310404,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 268,
+    "simulated_MCU_timer_us": 310603,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 269,
+    "simulated_MCU_timer_us": 310777,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 270,
+    "simulated_MCU_timer_us": 310935,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 271,
+    "simulated_MCU_timer_us": 311120,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 272,
+    "simulated_MCU_timer_us": 311332,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 273,
+    "simulated_MCU_timer_us": 311603,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 274,
+    "simulated_MCU_timer_us": 311850,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 275,
+    "simulated_MCU_timer_us": 312112,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 276,
+    "simulated_MCU_timer_us": 312370,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 277,
+    "simulated_MCU_timer_us": 312607,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 278,
+    "simulated_MCU_timer_us": 312866,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 279,
+    "simulated_MCU_timer_us": 313065,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 280,
+    "simulated_MCU_timer_us": 313299,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 281,
+    "simulated_MCU_timer_us": 313518,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 282,
+    "simulated_MCU_timer_us": 313749,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 283,
+    "simulated_MCU_timer_us": 313928,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 284,
+    "simulated_MCU_timer_us": 314120,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 285,
+    "simulated_MCU_timer_us": 314294,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 286,
+    "simulated_MCU_timer_us": 314486,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 287,
+    "simulated_MCU_timer_us": 314665,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 288,
+    "simulated_MCU_timer_us": 314876,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 289,
+    "simulated_MCU_timer_us": 315135,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 290,
+    "simulated_MCU_timer_us": 315380,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 291,
+    "simulated_MCU_timer_us": 315560,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 292,
+    "simulated_MCU_timer_us": 315723,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 293,
+    "simulated_MCU_timer_us": 315874,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 294,
+    "simulated_MCU_timer_us": 316032,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 295,
+    "simulated_MCU_timer_us": 316225,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 296,
+    "simulated_MCU_timer_us": 316474,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 297,
+    "simulated_MCU_timer_us": 316647,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 298,
+    "simulated_MCU_timer_us": 316822,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 299,
+    "simulated_MCU_timer_us": 317034,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 300,
+    "simulated_MCU_timer_us": 317242,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 301,
+    "simulated_MCU_timer_us": 317424,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 302,
+    "simulated_MCU_timer_us": 317614,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 303,
+    "simulated_MCU_timer_us": 317796,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 304,
+    "simulated_MCU_timer_us": 317979,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 305,
+    "simulated_MCU_timer_us": 318159,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 306,
+    "simulated_MCU_timer_us": 318342,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 307,
+    "simulated_MCU_timer_us": 318524,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 308,
+    "simulated_MCU_timer_us": 318725,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 309,
+    "simulated_MCU_timer_us": 318968,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 310,
+    "simulated_MCU_timer_us": 319174,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 311,
+    "simulated_MCU_timer_us": 319457,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 312,
+    "simulated_MCU_timer_us": 319650,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 313,
+    "simulated_MCU_timer_us": 319863,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 314,
+    "simulated_MCU_timer_us": 320122,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 315,
+    "simulated_MCU_timer_us": 320326,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 316,
+    "simulated_MCU_timer_us": 320521,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 317,
+    "simulated_MCU_timer_us": 320756,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 318,
+    "simulated_MCU_timer_us": 320977,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 319,
+    "simulated_MCU_timer_us": 321199,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 320,
+    "simulated_MCU_timer_us": 321387,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 321,
+    "simulated_MCU_timer_us": 321581,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 322,
+    "simulated_MCU_timer_us": 321820,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 323,
+    "simulated_MCU_timer_us": 322017,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 324,
+    "simulated_MCU_timer_us": 322248,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 325,
+    "simulated_MCU_timer_us": 322476,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 326,
+    "simulated_MCU_timer_us": 322666,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 327,
+    "simulated_MCU_timer_us": 322858,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 328,
+    "simulated_MCU_timer_us": 323060,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 329,
+    "simulated_MCU_timer_us": 323272,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 330,
+    "simulated_MCU_timer_us": 323464,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 331,
+    "simulated_MCU_timer_us": 323653,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 332,
+    "simulated_MCU_timer_us": 323849,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 333,
+    "simulated_MCU_timer_us": 324109,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 334,
+    "simulated_MCU_timer_us": 324302,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 335,
+    "simulated_MCU_timer_us": 324531,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 336,
+    "simulated_MCU_timer_us": 324722,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 337,
+    "simulated_MCU_timer_us": 324915,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 338,
+    "simulated_MCU_timer_us": 325103,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 339,
+    "simulated_MCU_timer_us": 325289,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 340,
+    "simulated_MCU_timer_us": 325471,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 341,
+    "simulated_MCU_timer_us": 325711,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 342,
+    "simulated_MCU_timer_us": 325901,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 343,
+    "simulated_MCU_timer_us": 326142,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 344,
+    "simulated_MCU_timer_us": 326418,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 345,
+    "simulated_MCU_timer_us": 326686,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 346,
+    "simulated_MCU_timer_us": 326944,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 347,
+    "simulated_MCU_timer_us": 327233,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 348,
+    "simulated_MCU_timer_us": 327521,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 349,
+    "simulated_MCU_timer_us": 327803,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 350,
+    "simulated_MCU_timer_us": 328038,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 351,
+    "simulated_MCU_timer_us": 328244,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 352,
+    "simulated_MCU_timer_us": 328475,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 353,
+    "simulated_MCU_timer_us": 328697,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 354,
+    "simulated_MCU_timer_us": 328922,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 355,
+    "simulated_MCU_timer_us": 329177,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 356,
+    "simulated_MCU_timer_us": 329406,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 357,
+    "simulated_MCU_timer_us": 329638,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 358,
+    "simulated_MCU_timer_us": 329869,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 359,
+    "simulated_MCU_timer_us": 330126,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 360,
+    "simulated_MCU_timer_us": 330360,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 361,
+    "simulated_MCU_timer_us": 330615,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 362,
+    "simulated_MCU_timer_us": 330847,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 363,
+    "simulated_MCU_timer_us": 331068,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 364,
+    "simulated_MCU_timer_us": 331311,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 365,
+    "simulated_MCU_timer_us": 331527,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 366,
+    "simulated_MCU_timer_us": 331756,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 367,
+    "simulated_MCU_timer_us": 331959,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 368,
+    "simulated_MCU_timer_us": 332164,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 369,
+    "simulated_MCU_timer_us": 332419,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 370,
+    "simulated_MCU_timer_us": 332669,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 371,
+    "simulated_MCU_timer_us": 332926,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 372,
+    "simulated_MCU_timer_us": 333153,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 373,
+    "simulated_MCU_timer_us": 333405,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 374,
+    "simulated_MCU_timer_us": 333604,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 375,
+    "simulated_MCU_timer_us": 333770,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 376,
+    "simulated_MCU_timer_us": 333919,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 377,
+    "simulated_MCU_timer_us": 334072,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 378,
+    "simulated_MCU_timer_us": 334219,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 379,
+    "simulated_MCU_timer_us": 334361,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 380,
+    "simulated_MCU_timer_us": 334502,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 381,
+    "simulated_MCU_timer_us": 334644,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 382,
+    "simulated_MCU_timer_us": 334785,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 383,
+    "simulated_MCU_timer_us": 334925,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 384,
+    "simulated_MCU_timer_us": 335066,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 385,
+    "simulated_MCU_timer_us": 335217,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 386,
+    "simulated_MCU_timer_us": 335359,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 387,
+    "simulated_MCU_timer_us": 335502,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 388,
+    "simulated_MCU_timer_us": 335644,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 389,
+    "simulated_MCU_timer_us": 335785,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 390,
+    "simulated_MCU_timer_us": 335927,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 391,
+    "simulated_MCU_timer_us": 336068,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 392,
+    "simulated_MCU_timer_us": 336214,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 393,
+    "simulated_MCU_timer_us": 336355,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 394,
+    "simulated_MCU_timer_us": 336495,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 395,
+    "simulated_MCU_timer_us": 336635,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 396,
+    "simulated_MCU_timer_us": 336776,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 397,
+    "simulated_MCU_timer_us": 336917,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 398,
+    "simulated_MCU_timer_us": 337060,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 399,
+    "simulated_MCU_timer_us": 337202,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 400,
+    "simulated_MCU_timer_us": 337347,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 401,
+    "simulated_MCU_timer_us": 337496,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 402,
+    "simulated_MCU_timer_us": 337638,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 403,
+    "simulated_MCU_timer_us": 337778,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 404,
+    "simulated_MCU_timer_us": 337919,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 405,
+    "simulated_MCU_timer_us": 338061,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 406,
+    "simulated_MCU_timer_us": 338202,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 407,
+    "simulated_MCU_timer_us": 338344,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 408,
+    "simulated_MCU_timer_us": 338489,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 409,
+    "simulated_MCU_timer_us": 338631,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 410,
+    "simulated_MCU_timer_us": 338773,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 411,
+    "simulated_MCU_timer_us": 338914,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 412,
+    "simulated_MCU_timer_us": 339055,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 413,
+    "simulated_MCU_timer_us": 339197,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 414,
+    "simulated_MCU_timer_us": 339339,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 415,
+    "simulated_MCU_timer_us": 339481,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 416,
+    "simulated_MCU_timer_us": 339623,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 417,
+    "simulated_MCU_timer_us": 339802,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 418,
+    "simulated_MCU_timer_us": 339953,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 419,
+    "simulated_MCU_timer_us": 340133,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 420,
+    "simulated_MCU_timer_us": 340354,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 421,
+    "simulated_MCU_timer_us": 340598,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 422,
+    "simulated_MCU_timer_us": 340849,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "heartbeat",
+    "seq": 423,
+    "simulated_MCU_timer_us": 341005,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 424,
+    "simulated_MCU_timer_us": 341074,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 425,
+    "simulated_MCU_timer_us": 341315,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 426,
+    "simulated_MCU_timer_us": 341535,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 427,
+    "simulated_MCU_timer_us": 341756,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 428,
+    "simulated_MCU_timer_us": 341978,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 429,
+    "simulated_MCU_timer_us": 342157,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 430,
+    "simulated_MCU_timer_us": 342332,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 431,
+    "simulated_MCU_timer_us": 342504,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 432,
+    "simulated_MCU_timer_us": 342646,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 433,
+    "simulated_MCU_timer_us": 342787,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 434,
+    "simulated_MCU_timer_us": 342943,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 435,
+    "simulated_MCU_timer_us": 343080,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 436,
+    "simulated_MCU_timer_us": 343220,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 437,
+    "simulated_MCU_timer_us": 343358,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 438,
+    "simulated_MCU_timer_us": 343495,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 439,
+    "simulated_MCU_timer_us": 343632,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 440,
+    "simulated_MCU_timer_us": 343775,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 441,
+    "simulated_MCU_timer_us": 343913,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 442,
+    "simulated_MCU_timer_us": 344078,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 443,
+    "simulated_MCU_timer_us": 344218,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 444,
+    "simulated_MCU_timer_us": 344353,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 445,
+    "simulated_MCU_timer_us": 344487,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  },
+  {
+    "kind": "health",
+    "seq": 446,
+    "simulated_MCU_timer_us": 344622,
+    "state": "FAILSAFE",
+    "reason": "SOURCE_AGE_TIMEOUT"
+  }
+]

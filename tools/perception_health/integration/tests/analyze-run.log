@@ -1,0 +1,17 @@
+criterion                      status
+no_mapping.transport           PASS
+no_mapping                     FAIL
+mapped_ok.transport            PASS
+mapped_ok                      PASS
+lost_latched.transport         PASS
+lost_latched                   PASS
+sender_stops.transport         PASS
+sender_stops                   PASS
+real_replay.transport          PASS
+real_replay                    PASS
+Overall: FAIL
+MEASURED no_mapping: 9.70 frames/s, 264.35 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.023 utilization); CALCULATED 921600 baud 92160 bytes/s (0.003 utilization)
+MEASURED mapped_ok: 11.73 frames/s, 314.33 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.027 utilization); CALCULATED 921600 baud 92160 bytes/s (0.003 utilization)
+MEASURED lost_latched: 14.77 frames/s, 402.40 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.035 utilization); CALCULATED 921600 baud 92160 bytes/s (0.004 utilization)
+MEASURED sender_stops: 13.76 frames/s, 375.06 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.033 utilization); CALCULATED 921600 baud 92160 bytes/s (0.004 utilization)
+MEASURED real_replay: 1201.70 frames/s, 33631.41 bytes/s; CALCULATED 115200 baud 11520 bytes/s (2.919 utilization); CALCULATED 921600 baud 92160 bytes/s (0.365 utilization)

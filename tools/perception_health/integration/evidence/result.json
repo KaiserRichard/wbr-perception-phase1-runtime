@@ -1,0 +1,287 @@
+{
+  "check": "perception_health_e2e_pty",
+  "tool_version": "1.0.0",
+  "status": "FAIL",
+  "started_utc": "2026-10-18T08:46:33.848062+00:00",
+  "analysis_started_utc": "2026-10-18T08:46:55.583550+00:00",
+  "ended_utc": "2026-10-18T08:46:55.646983+00:00",
+  "host": {
+    "platform": "macOS-15.7.9-x86_64-i386-64bit",
+    "python": "3.11.0rc2 (v3.11.0rc2:ed7c3ff156, Sep 11 2022, 16:22:23) [Clang 13.0.0 (clang-1300.0.29.30)]"
+  },
+  "criteria": [
+    {
+      "id": "no_mapping.transport",
+      "description": "sender frames/bytes/count/CRC/sequence complete",
+      "measured": true,
+      "unit": "boolean",
+      "threshold": "all input events written as valid frames",
+      "status": "PASS",
+      "evidence": "no_mapping/uart.bin",
+      "threshold_source": "SOURCE-SUPPORTED: T10 ticket behavior contract"
+    },
+    {
+      "id": "no_mapping",
+      "description": "no explicit clockmap -> HOLD for every OK report",
+      "measured": false,
+      "unit": "boolean",
+      "threshold": "HOLD only",
+      "status": "FAIL",
+      "evidence": "no_mapping/trace.json",
+      "threshold_source": "SOURCE-SUPPORTED: T10 ticket behavior contract"
+    },
+    {
+      "id": "mapped_ok.transport",
+      "description": "sender frames/bytes/count/CRC/sequence complete",
+      "measured": true,
+      "unit": "boolean",
+      "threshold": "all input events written as valid frames",
+      "status": "PASS",
+      "evidence": "mapped_ok/uart.bin",
+      "threshold_source": "SOURCE-SUPPORTED: T10 ticket behavior contract"
+    },
+    {
+      "id": "mapped_ok",
+      "description": "explicit synthetic mapping + known OK/IMU/reset/features -> FRESH",
+      "measured": true,
+      "unit": "boolean",
+      "threshold": "FRESH only",
+      "status": "PASS",
+      "evidence": "mapped_ok/trace.json",
+      "threshold_source": "SOURCE-SUPPORTED: T10 ticket behavior contract"
+    },
+    {
+      "id": "lost_latched.transport",
+      "description": "sender frames/bytes/count/CRC/sequence complete",
+      "measured": true,
+      "unit": "boolean",
+      "threshold": "all input events written as valid frames",
+      "status": "PASS",
+      "evidence": "lost_latched/uart.bin",
+      "threshold_source": "SOURCE-SUPPORTED: T10 ticket behavior contract"
+    },
+    {
+      "id": "lost_latched",
+      "description": "LOST latches FAILSAFE through subsequent OK",
+      "measured": true,
+      "unit": "boolean",
+      "threshold": "FRESH, FAILSAFE, FAILSAFE",
+      "status": "PASS",
+      "evidence": "lost_latched/trace.json",
+      "threshold_source": "SOURCE-SUPPORTED: T10 ticket behavior contract"
+    },
+    {
+      "id": "sender_stops.transport",
+      "description": "sender frames/bytes/count/CRC/sequence complete",
+      "measured": true,
+      "unit": "boolean",
+      "threshold": "all input events written as valid frames",
+      "status": "PASS",
+      "evidence": "sender_stops/uart.bin",
+      "threshold_source": "SOURCE-SUPPORTED: T10 ticket behavior contract"
+    },
+    {
+      "id": "sender_stops",
+      "description": "EOF stops sender; isolated receipt-silence deadlines downgrade",
+      "measured": true,
+      "unit": "boolean",
+      "threshold": "FRESH -> HOLD/RESULT_SILENCE -> FAILSAFE/RESULT_TIMEOUT",
+      "status": "PASS",
+      "evidence": "sender_stops/trace.json",
+      "threshold_source": "SOURCE-SUPPORTED: T10 ticket behavior contract"
+    },
+    {
+      "id": "real_replay.transport",
+      "description": "sender frames/bytes/count/CRC/sequence complete",
+      "measured": true,
+      "unit": "boolean",
+      "threshold": "all input events written as valid frames",
+      "status": "PASS",
+      "evidence": "real_replay/uart.bin",
+      "threshold_source": "SOURCE-SUPPORTED: T10 ticket behavior contract"
+    },
+    {
+      "id": "real_replay",
+      "description": "saved association/fake engine: unknown age flags, degraded, never FRESH",
+      "measured": true,
+      "unit": "boolean",
+      "threshold": "unavailable age + degraded; no FRESH",
+      "status": "PASS",
+      "evidence": "real_replay/trace.json",
+      "threshold_source": "SOURCE-SUPPORTED: T10 ticket behavior contract"
+    }
+  ],
+  "raw_files": [
+    {
+      "path": "integration_config.json",
+      "sha256": "4961bf6b5455d3683862748ceb3f230b61f3d99947cb9dd1711d3354e8788338"
+    },
+    {
+      "path": "lost_latched/capture.json",
+      "sha256": "f860b04235f47b5a2a77b8c7490b5347181d382d9a4dab619226cfd09f4b61ea"
+    },
+    {
+      "path": "lost_latched/clockmap.json",
+      "sha256": "bcff62da279f8e1855580e941313a968c6aed5b758605cc744764ed4cda4a300"
+    },
+    {
+      "path": "lost_latched/events.jsonl",
+      "sha256": "bde7cf449f71cb4e8ad201b47ae29af404f48e6a6f0f74af27dbe2952d1b3eee"
+    },
+    {
+      "path": "lost_latched/reads.json",
+      "sha256": "2dc9d4eb526057398e1092fe9905b5adf9ad07602ae70dc0c782bb8b06118108"
+    },
+    {
+      "path": "lost_latched/sender.stderr",
+      "sha256": "32c451c145a459a31af54ec3e8019013d8d35106a2fcff1e4a3fe91ad075294b"
+    },
+    {
+      "path": "lost_latched/sender.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "lost_latched/snapshots.jsonl",
+      "sha256": "d10b7ba421b7fcdf81ee88cee77f97c658ca0afbcaeec41bf8b7bb488a844571"
+    },
+    {
+      "path": "lost_latched/uart.bin",
+      "sha256": "08b7c11439c3d618627fa7e3fe6c7e53dba7d22f4d9f47748eac9c22510d06a7"
+    },
+    {
+      "path": "mapped_ok/capture.json",
+      "sha256": "d7286f0fa469549b81980dfbf513b5e8f421a926c8a104abd585cf1d384e3ee5"
+    },
+    {
+      "path": "mapped_ok/clockmap.json",
+      "sha256": "be0934c66e8f3e06651cf8060064594e2aab70c230a5c62a365438658814381a"
+    },
+    {
+      "path": "mapped_ok/events.jsonl",
+      "sha256": "a0480c86c17eb4f18da4559c245dd926f11c601a327de355caec43238f51dca5"
+    },
+    {
+      "path": "mapped_ok/reads.json",
+      "sha256": "33ac58e03ffdd55aeb9f96ca072202c7f6a884552a05426dd268667090d5247f"
+    },
+    {
+      "path": "mapped_ok/sender.stderr",
+      "sha256": "fa01ec70c99f3c934f0173708ecddc36ce5b093596a3f465e1e8cc0d908ee172"
+    },
+    {
+      "path": "mapped_ok/sender.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "mapped_ok/snapshots.jsonl",
+      "sha256": "2fd6318d3844f1cb75f0e9b71017c75482bf1c898a4a9d117bfa2079096cc776"
+    },
+    {
+      "path": "mapped_ok/uart.bin",
+      "sha256": "b0249cf6b04c3c1a77d0c687f052099e56ece46bae34b5e55d5c0be6033ed200"
+    },
+    {
+      "path": "no_mapping/capture.json",
+      "sha256": "a6bd6aacbba2f68dc4e189e8f773b56163b27fc676f40f2b4ffa4df149a022dc"
+    },
+    {
+      "path": "no_mapping/events.jsonl",
+      "sha256": "e9bd02c3b5d80d3711544cfc2fc40ce521ed592b80262d7c9fe82c71109a8212"
+    },
+    {
+      "path": "no_mapping/reads.json",
+      "sha256": "51248e209472171705241cafbb6f7b362a0ba5b0d44b917e5d0c35273c1652e2"
+    },
+    {
+      "path": "no_mapping/sender.stderr",
+      "sha256": "f6a7c015084bf2105b9aa5525d7a4fe9fd0d4efacc215a0e8c53ca6d5e61f44d"
+    },
+    {
+      "path": "no_mapping/sender.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "no_mapping/snapshots.jsonl",
+      "sha256": "2fd6318d3844f1cb75f0e9b71017c75482bf1c898a4a9d117bfa2079096cc776"
+    },
+    {
+      "path": "no_mapping/uart.bin",
+      "sha256": "e926556dd89a9f616fd7133dbac8d16613d76dae6a47fe85f9aca208dcc4fc55"
+    },
+    {
+      "path": "policy.json",
+      "sha256": "7827905ec8407033a23383f823f874699b9e0c0c22b98f03bc3c59aab784ecff"
+    },
+    {
+      "path": "provenance.json",
+      "sha256": "d8f9a92ab44ffdd0c9982a86adf1f1ef4d6128d3b2b0b9c27d2011927b1b59d1"
+    },
+    {
+      "path": "real_replay/capture.json",
+      "sha256": "3e840ffd8649189cd9228ea043c5f75f9a4f5794271fe5437fdbbc91fb6a2025"
+    },
+    {
+      "path": "real_replay/events.jsonl",
+      "sha256": "d53fb21b84c132b6bdb6906f05d99ef7998d332f70869fd829981f97c24b4fde"
+    },
+    {
+      "path": "real_replay/reads.json",
+      "sha256": "7f02043a6c209b7b7eaa81074c9cdd121f9cf0970e9643eff821cec2cc0f0784"
+    },
+    {
+      "path": "real_replay/sender.stderr",
+      "sha256": "6e31eca95bf4e3da8e2bba0187bbdec50ff42df720d609ae826aca3edf012d93"
+    },
+    {
+      "path": "real_replay/sender.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "real_replay/snapshots.jsonl",
+      "sha256": "16809cff956b6d2a735d67f64c4df6bd5bbc20aa3c8c22b5b831401598a54ce8"
+    },
+    {
+      "path": "real_replay/uart.bin",
+      "sha256": "148fd7ea54233fa1f54308baabb320ea5fd99171957b718198864e83feb8cfb7"
+    },
+    {
+      "path": "sender_stops/capture.json",
+      "sha256": "cfd62ff8f1ad05223021b3be273b04abf11f24cdcd166e2a8d63f063e79af397"
+    },
+    {
+      "path": "sender_stops/clockmap.json",
+      "sha256": "cd2b25d060ca7dacd7bf0d59185e1c5449d1f522f9adb8a0253f92c394334d35"
+    },
+    {
+      "path": "sender_stops/events.jsonl",
+      "sha256": "eeef139d5cfb9a11833b6974582dc8be3f08508c79d247def68306c121bc436f"
+    },
+    {
+      "path": "sender_stops/reads.json",
+      "sha256": "06277b78eaa15571dcef56540c6fb54544be67ae8e69bb2ef8a682deab760dd7"
+    },
+    {
+      "path": "sender_stops/sender.stderr",
+      "sha256": "d9642cc9e0400bd9b8b7a1501f1718947e545b2e043b07a2b99313727d1efeb6"
+    },
+    {
+      "path": "sender_stops/sender.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sender_stops/snapshots.jsonl",
+      "sha256": "2fd6318d3844f1cb75f0e9b71017c75482bf1c898a4a9d117bfa2079096cc776"
+    },
+    {
+      "path": "sender_stops/uart.bin",
+      "sha256": "131f7e35c7c91d1c0e85c1dd67949317a7fbbfebfc76087cd8fc2c047b47a506"
+    }
+  ],
+  "notes": [
+    "Software fixture result is not a gate PASS. No Pi/UART/STM32 hardware exercised.",
+    "Known T7 defect: unavailable-age UINT32_MAX is aged before validity on the next model update.",
+    "Real replay estimates are synthetic, and contain LOST; no clockmap was fabricated for them.",
+    "Silence uses simulated MCU-local timer increments with diagnostic overrides in integration/config.json.",
+    "Metrics are local PTY software write throughput; CALCULATED baud capacity is not physical link performance."
+  ]
+}

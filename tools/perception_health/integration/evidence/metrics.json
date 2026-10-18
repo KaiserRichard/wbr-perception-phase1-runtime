@@ -1,0 +1,137 @@
+{
+  "no_mapping": {
+    "evidence": "MEASURED on macOS-15.7.9-x86_64-i386-64bit; software PTY only",
+    "observation_window": "sender process launch through EOF exit (includes startup/imports)",
+    "duration_s": 0.412338332,
+    "health_frames": 3,
+    "heartbeat_frames": 1,
+    "total_frames": 4,
+    "bytes_written_and_received": 109,
+    "frames_per_s": 9.700771646910576,
+    "bytes_per_s": 264.34602737831324,
+    "uart_budget": [
+      {
+        "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+        "baud": 115200,
+        "capacity_bytes_per_s": 11520.0,
+        "measured_utilization": 0.02294670376547858,
+        "within_ideal_capacity": true
+      },
+      {
+        "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+        "baud": 921600,
+        "capacity_bytes_per_s": 92160.0,
+        "measured_utilization": 0.0028683379706848223,
+        "within_ideal_capacity": true
+      }
+    ]
+  },
+  "mapped_ok": {
+    "evidence": "MEASURED on macOS-15.7.9-x86_64-i386-64bit; software PTY only",
+    "observation_window": "sender process launch through EOF exit (includes startup/imports)",
+    "duration_s": 0.426304633,
+    "health_frames": 3,
+    "heartbeat_frames": 2,
+    "total_frames": 5,
+    "bytes_written_and_received": 134,
+    "frames_per_s": 11.72870199606768,
+    "bytes_per_s": 314.32921349461384,
+    "uart_budget": [
+      {
+        "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+        "baud": 115200,
+        "capacity_bytes_per_s": 11520.0,
+        "measured_utilization": 0.027285522004740787,
+        "within_ideal_capacity": true
+      },
+      {
+        "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+        "baud": 921600,
+        "capacity_bytes_per_s": 92160.0,
+        "measured_utilization": 0.0034106902505925984,
+        "within_ideal_capacity": true
+      }
+    ]
+  },
+  "lost_latched": {
+    "evidence": "MEASURED on macOS-15.7.9-x86_64-i386-64bit; software PTY only",
+    "observation_window": "sender process launch through EOF exit (includes startup/imports)",
+    "duration_s": 0.270872865,
+    "health_frames": 3,
+    "heartbeat_frames": 1,
+    "total_frames": 4,
+    "bytes_written_and_received": 109,
+    "frames_per_s": 14.767075321479691,
+    "bytes_per_s": 402.4028025103216,
+    "uart_budget": [
+      {
+        "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+        "baud": 115200,
+        "capacity_bytes_per_s": 11520.0,
+        "measured_utilization": 0.03493079882902097,
+        "within_ideal_capacity": true
+      },
+      {
+        "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+        "baud": 921600,
+        "capacity_bytes_per_s": 92160.0,
+        "measured_utilization": 0.004366349853627621,
+        "within_ideal_capacity": true
+      }
+    ]
+  },
+  "sender_stops": {
+    "evidence": "MEASURED on macOS-15.7.9-x86_64-i386-64bit; software PTY only",
+    "observation_window": "sender process launch through EOF exit (includes startup/imports)",
+    "duration_s": 0.290622482,
+    "health_frames": 3,
+    "heartbeat_frames": 1,
+    "total_frames": 4,
+    "bytes_written_and_received": 109,
+    "frames_per_s": 13.763560108883798,
+    "bytes_per_s": 375.0570129670835,
+    "uart_budget": [
+      {
+        "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+        "baud": 115200,
+        "capacity_bytes_per_s": 11520.0,
+        "measured_utilization": 0.032557032375614886,
+        "within_ideal_capacity": true
+      },
+      {
+        "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+        "baud": 921600,
+        "capacity_bytes_per_s": 92160.0,
+        "measured_utilization": 0.004069629046951861,
+        "within_ideal_capacity": true
+      }
+    ]
+  },
+  "real_replay": {
+    "evidence": "MEASURED on macOS-15.7.9-x86_64-i386-64bit; software PTY only",
+    "observation_window": "sender process launch through EOF exit (includes startup/imports)",
+    "duration_s": 0.37197365,
+    "health_frames": 445,
+    "heartbeat_frames": 2,
+    "total_frames": 447,
+    "bytes_written_and_received": 12510,
+    "frames_per_s": 1201.6980235024712,
+    "bytes_per_s": 33631.41448325708,
+    "uart_budget": [
+      {
+        "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+        "baud": 115200,
+        "capacity_bytes_per_s": 11520.0,
+        "measured_utilization": 2.919393618338288,
+        "within_ideal_capacity": false
+      },
+      {
+        "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+        "baud": 921600,
+        "capacity_bytes_per_s": 92160.0,
+        "measured_utilization": 0.364924202292286,
+        "within_ideal_capacity": true
+      }
+    ]
+  }
+}
