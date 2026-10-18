@@ -1,0 +1,88 @@
+{
+  "check": "orb_node_software_core",
+  "tool_version": "0.1.0",
+  "status": "PASS",
+  "started_utc": "2026-10-18T09:09:27.074842+00:00",
+  "ended_utc": "2026-10-18T09:09:27.322683+00:00",
+  "host": {
+    "system": "Darwin",
+    "release": "24.6.0",
+    "machine": "x86_64",
+    "python": "3.11.0rc2"
+  },
+  "criteria": [
+    {
+      "id": "all",
+      "description": "ROS-free fake-engine all",
+      "measured": 0,
+      "unit": "exit code",
+      "threshold": "successful probe assertions and scenario completion",
+      "status": "PASS",
+      "evidence": "all.stdout",
+      "threshold_source": "SOURCE-SUPPORTED T14 software requirements"
+    },
+    {
+      "id": "real",
+      "description": "ROS-free fake-engine real",
+      "measured": 0,
+      "unit": "exit code",
+      "threshold": "successful probe assertions and scenario completion",
+      "status": "PASS",
+      "evidence": "real.stdout",
+      "threshold_source": "SOURCE-SUPPORTED T14 software requirements"
+    },
+    {
+      "id": "emit",
+      "description": "ROS-free fake-engine emit",
+      "measured": 0,
+      "unit": "exit code",
+      "threshold": "successful probe assertions and scenario completion",
+      "status": "PASS",
+      "evidence": "emit.stdout",
+      "threshold_source": "SOURCE-SUPPORTED T14 software requirements"
+    }
+  ],
+  "raw_files": [
+    {
+      "path": "all.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "all.stdout",
+      "sha256": "2ace430f3cbdfda96a20ca7d911a4d9e80d05e6dd930b21406cdc7469f2c7551"
+    },
+    {
+      "path": "emit.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "emit.stdout",
+      "sha256": "7ae51d1a60b05cbc7510ca142c8ec2c37a99c0905596a10c3a19a8d98d3e3734"
+    },
+    {
+      "path": "events.csv",
+      "sha256": "d96ee99f0d3defe386799766ed743bd0a9456cac4999fe09ad7311600e763516"
+    },
+    {
+      "path": "execution.json",
+      "sha256": "84aec44aa243df7b18aa5bb5d5786105a1088df52b97009f228496010c6b74c5"
+    },
+    {
+      "path": "pose_events.jsonl",
+      "sha256": "6721106476e18d00ce1ee0e9d89a88ace21072af6286f20769ce1af41f3ad078"
+    },
+    {
+      "path": "real.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "real.stdout",
+      "sha256": "d0f69d6e17fdbc299e096be0c438ef58ba6f1706ec2fb03742609e21decedf9f"
+    }
+  ],
+  "notes": [
+    "MEASURED software regression outcome only; no hardware gate PASS.",
+    "Real fixture preserves saved source epochs only; pixels, IMU and poses are synthetic.",
+    "ROS 2 and ORB bindings are UNBUILT and physical behavior UNKNOWN."
+  ]
+}

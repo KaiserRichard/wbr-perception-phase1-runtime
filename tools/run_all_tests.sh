@@ -91,12 +91,29 @@ done
 for suite_dir in tools/*/tests; do
   [[ -d "$suite_dir" ]] && add_python_dir "$suite_dir"
 done
+for suite_dir in ros2/*/tests; do
+  [[ -d "$suite_dir" ]] && add_python_dir "$suite_dir"
+done
 add_python_dir tools/trajectory_eval
-for suite_dir in calibration/*/tests lab/*/tests tools/eval_pipeline/tests tools/eval_pipeline/*/tests tools/perception_health/tests; do
+for suite_dir in calibration/*/tests lab/*/tests tools/eval_pipeline/tests tools/eval_pipeline/*/tests tools/perception_health/tests tools/perception_health/integration; do
   [[ -d "$suite_dir" ]] && add_python_dir "$suite_dir"
 done
 
 for suite_dir in tools/link_proto tools/link_bench tools/runtime_observer tools/vio_adapter tools/ros2_bridge; do
+  run_make_suite "$suite_dir"
+done
+
+# Optional host-only Makefile suites added after the T8 baseline.
+for suite_dir in tools/perception_health/c/mcu; do
+  [[ -d "$suite_dir" && -f "$suite_dir/Makefile" ]] || continue
+  run_make_suite "$suite_dir"
+done
+
+# ROS packages with host-only Makefile tests are discoverable without making
+# the root runner depend on a ROS installation.  A package's own target keeps
+# its test command authoritative, just as the explicitly listed tool suites do.
+for suite_dir in ros2/*; do
+  [[ -d "$suite_dir" && -f "$suite_dir/Makefile" ]] || continue
   run_make_suite "$suite_dir"
 done
 
