@@ -30,18 +30,27 @@
       "source": "PROPOSED: bounded wait for the profiling sampler to flush metadata after SIGINT"
     },
     "invalid_throttle_bits": {
-      "value": [0, 1, 2, 3, 16, 17, 18, 19],
+      "value": [
+        0,
+        1,
+        2,
+        3,
+        16,
+        17,
+        18,
+        19
+      ],
       "source": "SOURCE-SUPPORTED: vcgencmd current and historical under-voltage, frequency-cap, throttle and soft-temperature bits"
     }
   },
   "profiling": {
     "sample_period_s": {
       "value": 0.1,
-      "source": "SOURCE-SUPPORTED: delegated to tools/eval_pipeline/profile/config.json"
+      "source": "PROPOSED: package override for sampler cadence; initial value matches tools/eval_pipeline/profile/config.json"
     },
     "throttle_period_s": {
       "value": 1.0,
-      "source": "SOURCE-SUPPORTED: delegated to tools/eval_pipeline/profile/config.json"
+      "source": "PROPOSED: package override for VideoCore polling cadence; initial value matches tools/eval_pipeline/profile/config.json"
     }
   }
 }

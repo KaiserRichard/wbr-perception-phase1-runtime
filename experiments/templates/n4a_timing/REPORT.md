@@ -1,33 +1,80 @@
-# T15 report — N4A controlled timing rerun package
+# T15 report — reviewed N4A controlled timing package
 
-## Built
+## Built and corrected
 
-- `run_n4a_timing.sh` and its stdlib Python helper perform a preflight, record provenance, run one reviewed EuRoC launcher invocation per repetition, attach the reviewed profiler to the exact ORB PID, stop it cleanly, and cool between runs.
-- `analyze_n4a_timing.py` delegates accuracy and profile work to the reviewed tools, writes per-run accuracy/latency/temperature/throttle/VALID results, excludes invalid runs, and aggregates only VALID runs.
-- `PROTOCOL.md` defines the active-cooling / 5 V / 5 A hypothesis, fixed variables, operator sequence, evidence and falsifiers. `config.json` owns package-specific numeric limits with source/rationale labels.
-- Unit tests exercise a valid stub capture, a throttled run excluded from aggregation, and a preflight refusal, plus a fixture derived from the saved N4A throttle evidence.
+The package provides a preflight/capture runner, delegated accuracy and profile
+analysis, VALID-only aggregates and an operator protocol. The independent review
+corrected default analyzer paths, result/exit-code precedence, stale derived
+outputs, missing/partial telemetry handling, event-session latency parsing,
+capture completion checks and inter-run preflight checks. Version is 1.1.0.
+
+Preflight and combined analysis now write the COMMON.md `result.json` contract
+and print tables. Both support hardware-free saved-evidence re-evaluation.
+Capture distinguishes engine failure from missing sampler evidence, handles
+process names containing spaces/parentheses, closes logs and cleans up processes
+on exceptions. Numeric settings remain in `config.json`, with the existing
+accuracy/profile limits delegated to their original configurations.
+
+`REVIEW.md` records ranked findings, fixes, the requirements audit and remaining
+integration items. No dependency implementation was changed.
 
 ## Verification
 
-The exact command and output are in `tests/last-run.log`. The intended checks are:
+Run from the repository root:
 
-```text
-PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s experiments/templates/n4a_timing/tests -v
-bash -n experiments/templates/n4a_timing/run_n4a_timing.sh
-bash -n experiments/templates/n4a_timing/analyze_n4a_timing.sh
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 experiments/templates/n4a_timing/tests/run_checks.py
 ```
 
-The tests are offline fixture/stub checks. They do not establish a Pi performance result, a thermal/power result, or an N4A gate PASS.
+Exact subprocess commands, complete output and exit codes are saved in
+`tests/last-run.log`. Final coverage: 21 ticket tests, 10 accuracy tests,
+12 profile tests, 37 ClockMap tests, 20 observer tests and 30 trajectory tests:
+**130 unittest tests passed, none skipped**. The observer C++ executable also
+passes, as do all three relevant `bash -n` checks and the owned-path whitespace
+check. Dependency scratch and the C++ executable are redirected into temporary
+owned directories; no dependency source/build directory is modified.
+
+The accuracy suite reads the shared historical MH01 evidence and reproduces
+SE3 ATE RMSE 0.041461 / 0.036844 / 0.041604 m (CALCULATED). The trajectory suite
+also checks historical evo/TUM agreement using those read-only inputs. The
+compact throttle fixture is derived from reported measured values, with
+synthetic scaffolding explicitly described in `tests/fixtures/README.md`.
+These results verify software and saved-file evaluation only, not a Pi gate.
 
 ## Not verified and open risks
 
-- No Pi, camera, serial device, SSH session, system package installation or network access was used.
-- The exact `/proc` executable/parent relationship, `vcgencmd` availability, CPUFreq paths, thermal-zone identity, cooling-device exposure, profiler overhead and accuracy-runner behavior remain unverified on the target Pi.
-- `run_euroc.sh` holds the authoritative execution lock; the template's preflight lock observation is necessarily a point-in-time check before that runner reacquires it.
-- The existing profile sampler's 1 Hz throttle polling and sampled sysfs values cannot prove conditions between polls. The existing tools' proposed temperature/accuracy limits remain proposed or source-supported as documented in their configs.
-- A latency result requires an observer event CSV or ORB tracking CSV. The sampler alone records resources and cannot prove camera-to-pose latency or real-time factor.
-- Prior historical throttle bits are deliberately treated as invalid unless the operator opts into a diagnostic exception; such runs never enter the VALID aggregate.
+- UNKNOWN: hardware behavior, actual Pi process/sysfs paths, sampling overhead,
+  cooling effectiveness, power quality and sustained EuRoC performance. No SSH,
+  camera, serial device, GUI, installation or network action was used.
+- UNKNOWN: full-window real-time pace/backlog. VALID means usable saved accuracy
+  and timing evidence; it does not mean real time. The dependency's 33.3 ms
+  budget assumes 30 Hz, whereas saved MH01 evidence reports 20 Hz. This package
+  does not use that over-budget count as MH01 acceptance. The operator must
+  establish full-window pacing with an appropriate clock relationship.
+- A latency trace must already be produced by the selected instrumented engine.
+  An uninstrumented ORB executable cannot produce VALID timing via the resource
+  sampler alone. Patch timing is a tracking duration, not camera-to-pose age.
+- Shared execution locking protects cooperating accuracy launchers. A preflight
+  observation does not hold the lock until launch, but the reviewed launcher
+  independently acquires it for execution. Uncoordinated ORB jobs remain an
+  operator responsibility. Locks between repetitions are not held continuously.
+- The sampler attaches after discovering the engine PID and may miss startup.
+  Boundary throttle snapshots guard sticky faults at the tail; they cannot
+  prove physical conditions between polls. The profile temperature ceiling
+  and package cooldown/start settings remain PROPOSED.
+- Dataset identity/checksums, headless engine build, ORB revision/patches and
+  supply/cooling arrangement must be confirmed and saved by the operator as
+  directed in PROTOCOL.md; labels/paths alone do not establish their identity.
+- Existing dependency defect, reported only: the shared observer sampler's
+  `throttling()` field zip is shifted by inclusion of `throttled_raw` in its
+  slice. The profile dependency decodes its own eight fields, so the template
+  does not use that faulty decoder. See profile/REPORT.md.
+- The diff against the advancing origin/main contains inherited deletions
+  outside this ticket (lab checks and other tools). They were present before
+  review edits and were not changed. Conductor integration must preserve those
+  unrelated main-branch files; this review approves only the T15 owned path.
 
-Existing defects found in the reviewed dependency directories were not changed, per the ticket and COMMON.md. In particular, the profiling review records a known field-mapping defect in `tools/runtime_observer/resource_sampler.py`; this package delegates to the reviewed profile tool and reports its output rather than modifying that directory.
+All review changes remain uncommitted, inside
+`experiments/templates/n4a_timing/`. No git state-changing command was run.
 
-Proposed commit message: `Add controlled N4A timing rerun package`
+Proposed commit message: `Fix N4A timing review: evidence validity, capture status and offline replay`

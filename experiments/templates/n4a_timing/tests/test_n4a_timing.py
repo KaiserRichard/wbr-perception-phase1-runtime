@@ -154,13 +154,20 @@ class N4ATimingTests(unittest.TestCase):
     def test_throttled_run_is_excluded_from_aggregate(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td); experiment = root / "experiment"; experiment.mkdir()
-            (experiment / "preflight.json").write_text(json.dumps({"prior_throttle_allowed": False,
+            (experiment / "provenance.json").write_text(json.dumps({"runs": 2}))
+            shutil.copy2(HERE / "config.json", experiment / "config.json")
+            (experiment / "preflight.json").write_text(json.dumps({"status": "PASS", "prior_throttle_allowed": False,
                                                                       "criteria": [{"id": "no_prior_throttle_bits",
                                                                                      "measured": {"invalid_bits_set": []}}]}))
             for number, throttled in ((1, False), (2, True)):
                 run = experiment / f"run{number:02d}"; engine = run / "accuracy/run01"; engine.mkdir(parents=True)
                 (engine / "exit_code.txt").write_text("0\n")
+                for name in ("throttled_before.txt", "throttled_after.txt"):
+                    (engine / name).write_text("throttled=0x0\n")
+                (run / "capture.json").write_text(json.dumps({"check_status": "PASS"}))
                 profile = run / "profile"; profile.mkdir()
+                (profile / "metadata.json").write_text(json.dumps({"sample_count": 1}))
+                shutil.copy2(FIXTURE, profile / "samples.csv")
                 (profile / "run_tracking.csv").write_text("image_s,state,imu_initialized,imu_samples,track_ms\n1,2,1,4,10\n")
                 (run / ("throttled" if throttled else "healthy")).write_text("")
             accuracy = root / "accuracy_stub.py"
@@ -176,7 +183,7 @@ class N4ATimingTests(unittest.TestCase):
                 run = directory.parent
                 bad = (run / 'throttled').exists()
                 if command == 'validity':
-                    result = {'status': 'FAIL' if bad else 'PASS', 'criteria': [{'id': 'max_temperature', 'measured': 63.0}], 'raw_files': []}
+                    result = {'status': 'FAIL' if bad else 'PASS', 'criteria': [{'id': 'max_temperature', 'measured': 63.0}, {'id': 'no_throttle_or_undervoltage', 'status': 'FAIL' if bad else 'PASS'}], 'raw_files': []}
                     (directory / 'result.json').write_text(json.dumps(result)); raise SystemExit(1 if bad else 0)
                 (directory / 'latency.json').write_text(json.dumps({'frame_count': 1, 'tracking_latency_ns': {'p50': 10000000, 'p95': 20000000, 'p99': 30000000}}))
             """))
@@ -184,7 +191,7 @@ class N4ATimingTests(unittest.TestCase):
             proc = self.command([sys.executable, str(ANALYZER), "--experiment", str(experiment), "--sequence", "MH01",
                                  "--ground-truth", str(gt), "--times", str(times), "--accuracy-tool", str(accuracy),
                                  "--profile-tool", str(profile)])
-            self.assertEqual(proc.returncode, 0, proc.stdout)
+            self.assertEqual(proc.returncode, 1, proc.stdout)
             result = json.loads((experiment / "summary.json").read_text())
             self.assertEqual(result["valid_run_count"], 1)
             self.assertEqual(result["excluded_run_count"], 1)

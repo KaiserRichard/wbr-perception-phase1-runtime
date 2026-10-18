@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 import argparse
-import csv
+from contextlib import ExitStack
 from datetime import datetime, timezone
 import fcntl
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import platform
@@ -17,7 +18,12 @@ import sys
 import time
 
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
+
+
+class ArgumentParser(argparse.ArgumentParser):
+    def error(self, message):
+        self.exit(3, f"{self.prog}: {message}\n")
 
 
 def utc_now() -> str:
@@ -42,6 +48,21 @@ def value(config: dict, section: str, key: str):
 
 def write_json(path: Path, data: dict) -> None:
     path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def blocked_replay(out: Path, reason: str) -> int:
+    out.mkdir(parents=True, exist_ok=True)
+    result = {"check": "n4a_preflight", "tool_version": VERSION, "status": "BLOCKED",
+              "started_utc": utc_now(), "ended_utc": utc_now(),
+              "host": {"system": platform.system(), "machine": platform.machine()},
+              "criteria": [{"id": "saved_preflight_inputs", "description": "Saved evidence is available",
+                  "measured": None, "unit": "files", "threshold": "saved config and preflight inputs present",
+                  "status": "BLOCKED", "evidence": "result.json",
+                  "threshold_source": "SOURCE-SUPPORTED: preflight replay input contract"}],
+              "raw_files": [], "notes": ["UNKNOWN: " + reason]}
+    write_json(out / "result.json", result)
+    print("criterion\tstatus\tmeasured\nsaved_preflight_inputs\tBLOCKED\t" + reason)
+    return 2
 
 
 def command_text(command: list[str]) -> str:
@@ -114,8 +135,9 @@ def process_exe(pid: int) -> str | None:
 
 def parent_pid(pid: int) -> int | None:
     try:
-        fields = Path(f"/proc/{pid}/stat").read_text(encoding="utf-8").split()
-        return int(fields[3])
+        text = Path(f"/proc/{pid}/stat").read_text(encoding="utf-8")
+        fields = text[text.rindex(")") + 1:].split()
+        return int(fields[1])
     except (OSError, ValueError, IndexError):
         return None
 
@@ -220,7 +242,7 @@ def try_shared_lock(path: Path) -> tuple[bool, str]:
 
 
 def parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description=__doc__)
+    p = ArgumentParser(description=__doc__)
     p.add_argument("--config", type=Path, default=Path(__file__).with_name("config.json"))
     p.add_argument("--wait-for-cooldown", action="store_true")
     p.add_argument("--allow-prior-throttle", action="store_true")
@@ -243,8 +265,15 @@ def parser() -> argparse.ArgumentParser:
     return p
 
 
-def preflight(args, config: dict, out: Path, lock_file: Path, runner: Path, profile_tool: Path) -> dict:
+def preflight(args, config: dict, out: Path, lock_file: Path, runner: Path, profile_tool: Path,
+              *, replay: bool = False) -> dict:
+    started = utc_now()
+    def save_text(path, content):
+        if not replay:
+            write_text(path, content)
     preflight_dir = out
+    if not replay:
+        (out / "config.json").write_bytes(args.config.read_bytes())
     start_temp_limit = float(value(config, "preflight", "start_temperature_c"))
     cooldown_timeout = float(value(config, "preflight", "cooldown_timeout_s"))
     cooldown_period = float(value(config, "preflight", "cooldown_poll_period_s"))
@@ -252,19 +281,27 @@ def preflight(args, config: dict, out: Path, lock_file: Path, runner: Path, prof
     criteria: list[dict] = []
     notes: list[str] = []
 
-    lock_ok, lock_note = try_shared_lock(lock_file)
+    if replay:
+        lock_note = (out / "lock.txt").read_text().strip() if (out / "lock.txt").is_file() else "UNKNOWN"
+        lock_ok = lock_note.startswith("acquired:")
+    else:
+        lock_ok, lock_note = try_shared_lock(lock_file)
     criteria.append({"id": "shared_orb_lock_available", "description": "Accuracy runner shared lock is available",
                      "measured": lock_note, "unit": "lock", "threshold": "available",
-                     "status": "PASS" if lock_ok else "FAIL", "evidence": "lock.txt",
+                     "status": "PASS" if lock_ok else "FAIL" if lock_note.startswith("busy:") else "BLOCKED", "evidence": "lock.txt",
                      "threshold_source": "SOURCE-SUPPORTED: tools/eval_pipeline/accuracy/run_euroc.sh shared lock"})
-    write_text(preflight_dir / "lock.txt", lock_note)
+    save_text(preflight_dir / "lock.txt", lock_note)
 
-    temp, temp_source = read_temperature(args.thermal_root)
+    if replay:
+        saved_temp = read_json(out / "temperature.txt") if (out / "temperature.txt").is_file() else {}
+        temp, temp_source = saved_temp.get("temperature_c"), saved_temp.get("source", "UNKNOWN")
+    else:
+        temp, temp_source = read_temperature(args.thermal_root)
     wait_started = time.monotonic()
-    while temp is not None and temp >= start_temp_limit and args.wait_for_cooldown:
+    while temp is not None and temp >= start_temp_limit and args.wait_for_cooldown and not replay:
         if time.monotonic() - wait_started >= cooldown_timeout:
             break
-        time.sleep(cooldown_period)
+        time.sleep(min(cooldown_period, max(0, cooldown_timeout - (time.monotonic() - wait_started))))
         temp, temp_source = read_temperature(args.thermal_root)
     temp_status = ("BLOCKED" if temp is None else
                    ("PASS" if temp < start_temp_limit else "FAIL"))
@@ -272,14 +309,18 @@ def preflight(args, config: dict, out: Path, lock_file: Path, runner: Path, prof
                      "measured": temp, "unit": "degC", "threshold": f"<{start_temp_limit} degC",
                      "status": temp_status, "evidence": "temperature.txt",
                      "threshold_source": config["preflight"]["start_temperature_c"]["source"]})
-    write_text(preflight_dir / "temperature.txt", json.dumps({"temperature_c": temp, "source": temp_source,
+    save_text(preflight_dir / "temperature.txt", json.dumps({"temperature_c": temp, "source": temp_source,
                                                                   "limit_c": start_temp_limit,
                                                                   "wait_requested": args.wait_for_cooldown,
                                                                   "wait_timeout_s": cooldown_timeout}) )
 
-    governor, governor_status = governor_snapshot(args.governor_root)
-    write_text(preflight_dir / "governor.json", json.dumps(governor, indent=2, sort_keys=True))
-    if not governor:
+    if replay:
+        governor = read_json(out / "governor.json") if (out / "governor.json").is_file() else {}
+        governor_status = "UNKNOWN: no saved governor snapshot"
+    else:
+        governor, governor_status = governor_snapshot(args.governor_root)
+    save_text(preflight_dir / "governor.json", json.dumps(governor, indent=2, sort_keys=True))
+    if not governor or any(item in ("", "UNKNOWN") for item in governor.values()):
         gov_state = "BLOCKED"
     elif args.require_performance and any(item != "performance" for item in governor.values()):
         gov_state = "FAIL"
@@ -291,22 +332,30 @@ def preflight(args, config: dict, out: Path, lock_file: Path, runner: Path, prof
                      "status": gov_state, "evidence": "governor.json",
                      "threshold_source": "PROPOSED: operator-selected governor requirement; absence is not silently accepted"})
 
-    cooling = cooling_snapshot(args.thermal_root)
-    write_text(preflight_dir / "cooling_state.json", json.dumps(cooling, indent=2, sort_keys=True))
+    cooling = ((read_json(out / "cooling_state.json") if (out / "cooling_state.json").is_file() else None)
+               if replay else cooling_snapshot(args.thermal_root))
+    save_text(preflight_dir / "cooling_state.json", json.dumps(cooling, indent=2, sort_keys=True))
     criteria.append({"id": "cooling_state_recorded", "description": "Cooling-device state is recorded",
                      "measured": cooling if cooling else "NONE_FOUND", "unit": "cooling devices",
-                     "threshold": "recorded (zero devices is recorded as NONE_FOUND)", "status": "PASS",
+                     "threshold": "recorded (zero devices is recorded as NONE_FOUND)",
+                     "status": "BLOCKED" if cooling is None or any(
+                         item.get("type") == "UNKNOWN" or item.get("cur_state") == "UNKNOWN" for item in cooling) else "PASS",
                      "evidence": "cooling_state.json",
                      "threshold_source": "SOURCE-SUPPORTED: Linux thermal cooling_device state files"})
 
     try:
-        throttle_proc = run_capture([str(args.vcgencmd), "get_throttled"])
-        throttle_output = throttle_proc.stdout
-        throttle_rc = throttle_proc.returncode
+        if replay:
+            throttle_output = (out / "throttled_before.txt").read_text() if (out / "throttled_before.txt").is_file() else "UNKNOWN"
+            throttle_rc = read_json(out / "preflight_inputs.json").get("throttle_exit_code", 127)
+        else:
+            throttle_proc = run_capture([str(args.vcgencmd), "get_throttled"])
+            throttle_output = throttle_proc.stdout
+            throttle_rc = throttle_proc.returncode
     except OSError as exc:
         throttle_output = f"{type(exc).__name__}: {exc}"
         throttle_rc = 127
-    write_text(preflight_dir / "throttled_before.txt", throttle_output)
+    if not replay:
+        (preflight_dir / "throttled_before.txt").write_text(throttle_output, encoding="utf-8")
     bits, throttle_text = parse_throttle(throttle_output)
     if throttle_rc != 0 or bits is None:
         throttle_status = "BLOCKED"
@@ -326,22 +375,32 @@ def preflight(args, config: dict, out: Path, lock_file: Path, runner: Path, prof
                      "threshold_source": config["preflight"]["invalid_throttle_bits"]["source"]})
 
     required = [args.binary, args.vocabulary, args.settings, args.dataset, args.times]
-    if not args.preflight_only and any(not path.exists() for path in required):
+    if replay:
+        missing = read_json(out / "preflight_inputs.json").get("missing_inputs", [])
+    else:
+        missing = [str(path) for path in required if not path.exists()]
+        missing += [str(path) for path in (runner, profile_tool) if not path.is_file()]
+        if args.binary.exists() and not os.access(args.binary, os.X_OK):
+            missing.append(str(args.binary) + " (not executable)")
+        write_json(out / "preflight_inputs.json", {"missing_inputs": missing, "throttle_exit_code": throttle_rc,
+                   "require_performance": args.require_performance, "allow_prior_throttle": args.allow_prior_throttle,
+                   "preflight_only": args.preflight_only})
+    if not args.preflight_only and missing:
         notes.append("One or more launcher inputs do not exist; the accuracy runner will not be started.")
         criteria.append({"id": "launcher_inputs_present", "description": "EuRoC launcher inputs exist",
-                         "measured": [str(path) for path in required if not path.exists()], "unit": "paths",
-                         "threshold": "all inputs present", "status": "BLOCKED", "evidence": "provenance.json",
+                         "measured": missing, "unit": "paths",
+                         "threshold": "all inputs present", "status": "BLOCKED", "evidence": "preflight_inputs.json",
                          "threshold_source": "SOURCE-SUPPORTED: accuracy runner input contract"})
 
     status = "FAIL" if any(c["status"] == "FAIL" for c in criteria) else (
         "BLOCKED" if any(c["status"] == "BLOCKED" for c in criteria) else "PASS")
-    raw_names = ["lock.txt", "temperature.txt", "governor.json", "cooling_state.json", "throttled_before.txt"]
+    raw_names = ["lock.txt", "temperature.txt", "governor.json", "cooling_state.json", "throttled_before.txt", "preflight_inputs.json"]
     result = {"check": "n4a_preflight", "tool_version": VERSION, "status": status,
-              "started_utc": utc_now(), "ended_utc": utc_now(),
+              "started_utc": started, "ended_utc": utc_now(),
               "host": {"system": platform.system(), "release": platform.release(),
                        "machine": platform.machine(), "python": platform.python_version()},
               "criteria": criteria, "raw_files": [{"path": name, "sha256": sha256(preflight_dir / name)}
-                                                   for name in raw_names], "notes": notes,
+                                                   for name in raw_names if (preflight_dir / name).is_file()], "notes": notes,
               "prior_throttle_allowed": bool(args.allow_prior_throttle),
               "prior_throttle_bits": (measured.get("invalid_bits_set", [])
                                       if isinstance(measured, dict) else []),
@@ -350,10 +409,15 @@ def preflight(args, config: dict, out: Path, lock_file: Path, runner: Path, prof
                            "vcgencmd": command_text([str(args.vcgencmd), "get_throttled"]),
                            "lock_file": str(lock_file)}}
     write_json(preflight_dir / "preflight.json", result)
+    write_json(preflight_dir / "result.json", result)
+    print("criterion\tstatus\tmeasured")
+    for criterion in criteria:
+        print(f"{criterion['id']}\t{criterion['status']}\t{criterion['measured']}")
     return result
 
 
-def run_experiment(args, config: dict, out: Path, runner: Path, profile_tool: Path) -> None:
+def run_experiment(args, config: dict, out: Path, runner: Path, profile_tool: Path) -> str:
+    statuses = []
     between_cooldown = float(value(config, "preflight", "between_run_cooldown_s"))
     discovery_timeout = float(value(config, "preflight", "process_discovery_timeout_s"))
     discovery_period = float(value(config, "preflight", "process_discovery_poll_period_s"))
@@ -363,18 +427,36 @@ def run_experiment(args, config: dict, out: Path, runner: Path, profile_tool: Pa
     for index in range(1, args.runs + 1):
         run_dir = out / f"run{index:02d}"
         run_dir.mkdir()
+        if index > 1:
+            start_dir = run_dir / "start_preflight"
+            start_dir.mkdir()
+            result = preflight(args, config, start_dir, Path(args.lock_file), runner, profile_tool)
+            if result["status"] != "PASS":
+                write_json(run_dir / "capture.json", {"status": "INCOMPLETE", "check_status": result["status"],
+                           "reason": "inter_run_preflight_refused"})
+                return "FAIL" if "FAIL" in statuses else result["status"]
         accuracy_out = run_dir / "accuracy"
         profile_out = run_dir / "profile"
-        runner_cmd = [str(runner), str(args.binary.resolve()), str(args.vocabulary.resolve()),
+        runner_cmd = ["bash", str(runner), str(args.binary.resolve()), str(args.vocabulary.resolve()),
                       str(args.settings.resolve()), str(args.dataset.resolve()), str(args.times.resolve()),
                       args.sequence, "1", str(accuracy_out)]
         write_json(run_dir / "command.json", {"accuracy_runner": runner_cmd, "profile": [sys.executable,
                    str(profile_tool), "sampler", "--pid", "<orb-pid>", "--out", str(profile_out),
                    "--period-s", sample_period, "--throttle-period-s", throttle_period]})
         started = utc_now()
-        with (run_dir / "runner.stdout.log").open("w", encoding="utf-8") as stdout, \
-             (run_dir / "runner.stderr.log").open("w", encoding="utf-8") as stderr:
-            runner_proc = subprocess.Popen(runner_cmd, stdout=stdout, stderr=stderr, text=True)
+        with ExitStack() as stack:
+            stdout = stack.enter_context((run_dir / "runner.stdout.log").open("w", encoding="utf-8"))
+            stderr = stack.enter_context((run_dir / "runner.stderr.log").open("w", encoding="utf-8"))
+            runner_proc = subprocess.Popen(runner_cmd, stdout=stdout, stderr=stderr, text=True, start_new_session=True)
+            def clean_runner():
+                if runner_proc.poll() is None:
+                    os.killpg(runner_proc.pid, signal.SIGTERM)
+                    try:
+                        runner_proc.wait(timeout=stop_timeout)
+                    except subprocess.TimeoutExpired:
+                        os.killpg(runner_proc.pid, signal.SIGKILL)
+                        runner_proc.wait()
+            stack.callback(clean_runner)
             orb_pid = None
             deadline = time.monotonic() + discovery_timeout
             while time.monotonic() < deadline and runner_proc.poll() is None:
@@ -389,32 +471,80 @@ def run_experiment(args, config: dict, out: Path, runner: Path, profile_tool: Pa
                                "--out", str(profile_out), "--period-s", str(sample_period),
                                "--throttle-period-s", str(throttle_period)]
                 write_json(run_dir / "sampler_command.json", {"command": sampler_cmd, "orb_pid": orb_pid})
-                sampler_proc = subprocess.Popen(sampler_cmd, stdout=(run_dir / "sampler.stdout.log").open("w"),
-                                                stderr=(run_dir / "sampler.stderr.log").open("w"), text=True)
+                sample_stdout = stack.enter_context((run_dir / "sampler.stdout.log").open("w"))
+                sample_stderr = stack.enter_context((run_dir / "sampler.stderr.log").open("w"))
+                sampler_proc = subprocess.Popen(sampler_cmd, stdout=sample_stdout, stderr=sample_stderr, text=True)
+                stack.callback(stop_sampler, sampler_proc, stop_timeout)
             runner_rc = runner_proc.wait()
             if sampler_proc is not None:
                 sampler_rc = stop_sampler(sampler_proc, stop_timeout)
             else:
                 write_text(run_dir / "sampler_status.txt", "BLOCKED: exact ORB executable was not discovered\n")
+        try:
+            engine_rc = int((accuracy_out / "run01/exit_code.txt").read_text().strip())
+        except (OSError, ValueError):
+            engine_rc = None
+        try:
+            sampler_count = read_json(profile_out / "metadata.json").get("sample_count")
+        except (OSError, ValueError, AttributeError):
+            sampler_count = None
+        status = ("FAIL" if engine_rc not in (0, None) else "BLOCKED" if
+                  runner_rc != 0 or engine_rc is None or orb_pid is None or sampler_rc != 0 or
+                  not (profile_out / "samples.csv").is_file() or
+                  not isinstance(sampler_count, int) or sampler_count <= 0
+                  else "PASS")
+        statuses.append(status)
         write_json(run_dir / "capture.json", {"started_utc": started, "ended_utc": utc_now(),
                    "runner_exit_code": runner_rc, "sampler_exit_code": sampler_rc, "orb_pid": orb_pid,
-                   "status": "CAPTURED" if orb_pid is not None and runner_rc == 0 else "INCOMPLETE"})
+                   "engine_exit_code": engine_rc, "check_status": status,
+                   "status": "CAPTURED" if status == "PASS" else "INCOMPLETE"})
         if index < args.runs and between_cooldown > 0:
             time.sleep(between_cooldown)
+    return "FAIL" if "FAIL" in statuses else "BLOCKED" if "BLOCKED" in statuses else "PASS"
 
 
 def main(argv: list[str] | None = None) -> int:
+    argv = sys.argv[1:] if argv is None else argv
+    if any(arg == "--analyze-only" or arg.startswith("--analyze-only=") for arg in argv):
+        replay_parser = ArgumentParser(description="Re-evaluate saved preflight snapshots without hardware")
+        replay_parser.add_argument("--analyze-only", type=Path, required=True)
+        saved = replay_parser.parse_args(argv).analyze_only.resolve()
+        if not saved.is_dir():
+            return blocked_replay(saved, "saved preflight directory is absent")
+        config_path = saved / "config.json"
+        if not config_path.is_file() or not (saved / "preflight_inputs.json").is_file():
+            return blocked_replay(saved, "saved config or preflight inputs are absent")
+        flags = read_json(saved / "preflight_inputs.json")
+        replay_args = argparse.Namespace(config=config_path, wait_for_cooldown=False,
+            require_performance=flags.get("require_performance", False),
+            allow_prior_throttle=flags.get("allow_prior_throttle", False),
+            preflight_only=flags.get("preflight_only", False),
+            binary=Path("UNKNOWN"), vocabulary=Path("UNKNOWN"), settings=Path("UNKNOWN"),
+            dataset=Path("UNKNOWN"), times=Path("UNKNOWN"), vcgencmd=Path("vcgencmd"))
+        result = preflight(replay_args, read_json(config_path), saved, Path("UNKNOWN"),
+                           Path("UNKNOWN"), Path("UNKNOWN"), replay=True)
+        return {"PASS": 0, "FAIL": 1, "BLOCKED": 2}[result["status"]]
     args = parser().parse_args(argv)
     if args.runs <= 0:
         print("runs must be positive", file=sys.stderr)
         return 3
     args.config = args.config.resolve()
     config = read_json(args.config)
+    for section in ("preflight", "profiling"):
+        for name, setting in config[section].items():
+            if name.endswith("_s") or name.endswith("_c"):
+                number = float(setting["value"])
+                if not math.isfinite(number) or number < 0 or (number == 0 and name != "between_run_cooldown_s"):
+                    raise ValueError(f"invalid {section}.{name}")
     script_dir = Path(__file__).resolve().parent
     repo_root = script_dir.parents[2]
     runner = (args.accuracy_runner or repo_root / "tools/eval_pipeline/accuracy/run_euroc.sh").resolve()
     profile_tool = (args.profile_tool or repo_root / "tools/eval_pipeline/profile/profile.py").resolve()
-    lock_file = (args.lock_file or Path(os.environ.get("TMPDIR", "/tmp")) / "wbr-stereo-inertial-euroc.lock").resolve()
+    lock_file = (args.lock_file or Path(os.environ.get("TMPDIR") or "/tmp") / "wbr-stereo-inertial-euroc.lock").resolve()
+    if not args.preflight_only and args.accuracy_runner is None and args.lock_file is not None and lock_file != (
+            Path(os.environ.get("TMPDIR") or "/tmp") / "wbr-stereo-inertial-euroc.lock").resolve():
+        raise ValueError("--lock-file must match the reviewed runner's TMPDIR shared lock")
+    args.lock_file = lock_file
     out = args.out.resolve()
     if out.exists() and any(out.iterdir()):
         print(f"output directory is not empty: {out}", file=sys.stderr)
@@ -438,10 +568,30 @@ def main(argv: list[str] | None = None) -> int:
     if args.preflight_only:
         print("preflight=PASS; --preflight-only selected")
         return 0
-    run_experiment(args, config, out, runner, profile_tool)
-    print(f"completed {args.runs} run(s) in {out}; run analyze_n4a_timing.py next")
-    return 0
+    status = run_experiment(args, config, out, runner, profile_tool)
+    result["check"] = "n4a_timing_capture"
+    result["status"] = status
+    result["ended_utc"] = utc_now()
+    for receipt in sorted(out.glob("run[0-9]*/capture.json")):
+        capture = read_json(receipt)
+        result["criteria"].append({"id": receipt.parent.name, "description": "Engine and sampler capture completed",
+            "measured": capture, "unit": "run", "threshold": "engine exit 0 and sampler capture complete",
+            "status": capture["check_status"], "evidence": str(receipt.relative_to(out)),
+            "threshold_source": "PROPOSED: T15 requires profiler evidence for each engine run"})
+    result["raw_files"] = [{"path": str(path.relative_to(out)), "sha256": sha256(path)}
+                           for path in sorted(out.rglob("*")) if path.is_file()
+                           and path.name not in ("result.json", "preflight.json")]
+    write_json(out / "result.json", result)
+    print("run\tstatus")
+    for criterion in result["criteria"]:
+        print(f"{criterion['id']}\t{criterion['status']}")
+    print(f"capture={status} in {out}; run analyze_n4a_timing.py next")
+    return {"PASS": 0, "FAIL": 1, "BLOCKED": 2}[status]
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except (OSError, ValueError, KeyError, TypeError, KeyboardInterrupt) as exc:
+        print(f"run_n4a_timing: {exc}", file=sys.stderr)
+        raise SystemExit(3)
