@@ -105,4 +105,4 @@ this owned directory; dependency source files remain untouched. Existing NumPy
 and a C++17 compiler are needed; it installs nothing. When present, shared
 historical evidence is read only.
 
-The tests use stub launcher/sampler processes and a compact fixture derived from the saved 2026-10-13 N4A throttle evidence. No camera, serial device, SSH, package installation or network access is used.
+The tests use stub launcher/sampler processes and a compact fixture derived from the saved 2026-10-13 N4A throttle evidence. The valid-capture stub holds its engine process until the sampler records its first row, avoiding a scheduler-dependent fixed engine lifetime. No camera, serial device, SSH, package installation or network access is used.
