@@ -12,9 +12,9 @@
 
 Command: `python3 -m unittest discover -s tools/perception_health/tests -v`
 
-Result: 16 tests passed on the development Mac / Python 3.11; C encoder/decoder compiled with `cc -std=c99 -Wall -Wextra -Werror` and matched the Python frozen bytes. Full stdout is saved in `tests/last-run.log`. These are fixture/software checks, not a gate PASS.
+Result after review fixes: 24 tests passed on the development Mac / Python 3.11; C encoder/decoder compiled with `cc -std=c99 -Wall -Wextra -Werror` and matched the Python frozen bytes. The imported ClockMap suite also passed all 37 tests. Exact commands and full stdout are saved in `tests/last-run.log`. These are fixture/software checks, not a gate PASS.
 
-Covered paths: CRC `123456789 -> 0x29B1`; captured upstream v1 frames; new v3 frozen vector; CRC/length error counts and recovery; source-age freshness, HOLD and FAILSAFE; LOST latch/rearm; heartbeat and receipt silence; missing mapping; map-reset downgrade; pty wire round-trip; sender killed and silence; saturation and clock regression.
+Covered paths: CRC `123456789 -> 0x29B1`; captured upstream v1 frames; new v3 frozen vector; CRC/length error counts and recovery; source-age freshness, HOLD and FAILSAFE; LOST latch/rearm qualification; heartbeat and receipt silence; missing mapping and clock-domain mismatch; map-reset downgrade; duplicate-sequence rejection; health-only non-promotion; invalid IMU boolean handling; pty wire round-trip; sender killed and silence; saturation and clock regression.
 
 ## Not verified / open risks
 

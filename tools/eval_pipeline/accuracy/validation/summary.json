@@ -1,0 +1,1056 @@
+{
+  "pipeline": "euroc_accuracy",
+  "version": "1.0.0",
+  "status": "PASS",
+  "evidence_label": "CALCULATED from saved run files",
+  "generated_utc": "2026-10-18T08:31:47.992325+00:00",
+  "sequence": "MH01",
+  "ground_truth": {
+    "path": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/eval/gt_data.csv",
+    "sha256": "aae2d7c5684724c8afe364d2fd8499a6ed77a9169adf03736531f67d8e7b2117",
+    "clock_domain": "EuRoC dataset time base"
+  },
+  "times_file": null,
+  "expected_frame_count_override": {
+    "value": 3682,
+    "evidence": "caller-supplied sequence timestamp row count"
+  },
+  "clock_assumption": "EuRoC camera, IMU, and state_groundtruth_estimate0 timestamps are in the same dataset time base (SOURCE-SUPPORTED: EuRoC dataset documentation and Burri et al., The EuRoC micro aerial vehicle datasets, IJRR 2016, https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets). Estimate offset is explicitly zero; this is not a live-device clock mapping.",
+  "alignment": "SE3 primary; Sim3 reported as labelled secondary",
+  "acceptance": {
+    "ate_rmse_se3_max_m": {
+      "value": 0.046,
+      "evidence_label": "PROPOSED",
+      "source": "PROPOSED: ORB-SLAM3 Campos et al. IEEE T-RO 2021 Table II reports 0.036 m for stereo-inertial MH01; proposed 0.010 m margin. https://arxiv.org/abs/2007.11898"
+    },
+    "min_pose_fraction": {
+      "value": 0.95,
+      "evidence_label": "PROPOSED",
+      "source": "PROPOSED: project-selected minimum pose output coverage; not a published ORB-SLAM3 criterion"
+    },
+    "max_pose_fraction": {
+      "value": 1.0,
+      "evidence_label": "CALCULATED",
+      "source": "CALCULATED: a pose-row count divided by the expected frame-row count cannot exceed 1 for a valid coverage fraction"
+    }
+  },
+  "criteria": [
+    {
+      "id": "all_engine_runs_exit_zero",
+      "status": "PASS",
+      "measured": [
+        0,
+        0,
+        0
+      ],
+      "threshold": "every evaluable run exits 0",
+      "threshold_source": "SOURCE-SUPPORTED: ORB-SLAM3 process exit status; nonzero exits are not accuracy evidence"
+    },
+    {
+      "id": "all_runs_initialized",
+      "status": "PASS",
+      "measured": 3,
+      "threshold": "every evaluable run",
+      "threshold_source": "PROPOSED project acceptance; initialization log phrase detector documented in README"
+    },
+    {
+      "id": "se3_ate_rmse_each_run",
+      "status": "PASS",
+      "measured": [
+        0.04146129415816942,
+        0.036844344136910095,
+        0.041603882857669285
+      ],
+      "unit": "m",
+      "threshold": "<= 0.046",
+      "threshold_source": "PROPOSED: ORB-SLAM3 Campos et al. IEEE T-RO 2021 Table II reports 0.036 m for stereo-inertial MH01; proposed 0.010 m margin. https://arxiv.org/abs/2007.11898"
+    },
+    {
+      "id": "pose_fraction_each_run",
+      "status": "PASS",
+      "measured": [
+        0.9989136338946225,
+        0.9989136338946225,
+        0.9989136338946225
+      ],
+      "threshold": ">= 0.95 and <= 1.0",
+      "threshold_source": "PROPOSED: project-selected minimum pose output coverage; not a published ORB-SLAM3 criterion; CALCULATED: a pose-row count divided by the expected frame-row count cannot exceed 1 for a valid coverage fraction"
+    }
+  ],
+  "aggregate_metrics_se3": {
+    "ate_rmse_se3_m": {
+      "n": 3,
+      "mean": 0.039969840384249604,
+      "std_population": 0.0022108260866934267,
+      "min": 0.036844344136910095,
+      "max": 0.041603882857669285
+    },
+    "rpe_1m_translation_rmse_m": {
+      "n": 3,
+      "mean": 0.019907005846243695,
+      "std_population": 0.00023989498092108816,
+      "min": 0.01962504992901471,
+      "max": 0.020211385299225178
+    },
+    "rpe_1m_rotation_rmse_deg": {
+      "n": 3,
+      "mean": 0.14161307518758418,
+      "std_population": 0.002457036044167369,
+      "min": 0.13906379743333327,
+      "max": 0.14493256769816792
+    },
+    "rpe_10frames_translation_rmse_m": {
+      "n": 3,
+      "mean": 0.00892803076571015,
+      "std_population": 0.0001845133249002352,
+      "min": 0.008716085540005119,
+      "max": 0.009165825859855661
+    },
+    "rpe_10frames_rotation_rmse_deg": {
+      "n": 3,
+      "mean": 0.05336640414257487,
+      "std_population": 0.0005827450792685378,
+      "min": 0.05276739179000606,
+      "max": 0.05415608976785732
+    }
+  },
+  "aggregate_ate_rmse_se3_m": {
+    "n": 3,
+    "mean": 0.039969840384249604,
+    "std_population": 0.0022108260866934267,
+    "min": 0.036844344136910095,
+    "max": 0.041603882857669285
+  },
+  "runs": [
+    {
+      "run": "run1",
+      "status": "PASS",
+      "trajectory": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/run1/f_mh01_stereoi.txt",
+      "trajectory_sha256": "feb43173ca49a2b15eebfba98e3b06413800878fcfa6361fcff21c0dd5ca5ddb",
+      "stdout_sha256": "c3f5c9dc56eb0545c7b2dc46b3fd06a8d827be15f627aef082401beef0d5c417",
+      "trajectory_format": {
+        "format": "orbslam3",
+        "time_unit": "ns",
+        "detection": "first non-comment timestamp magnitude; see thresholds.json"
+      },
+      "capture_provenance": {
+        "stderr.log": {
+          "path": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/run1/stderr.log",
+          "sha256": "579d9eaf984548ee693f727083b2f9e11e075740fd62756ca48a5c54461ad75e",
+          "text": null
+        }
+      },
+      "exit_code": 0,
+      "exit_code_evidence": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/runs.log",
+      "diagnostics": {
+        "initialization_success": true,
+        "tracking_loss_log_count": 0,
+        "map_reset_log_count": 0,
+        "pose_count": 3678,
+        "expected_frame_count": 3682,
+        "pose_fraction": 0.9989136338946225,
+        "pose_fraction_evidence": "CALCULATED: emitted pose rows / non-comment times-file rows"
+      },
+      "ate_rpe_1m": {
+        "se3": {
+          "alignment": {
+            "R": [
+              [
+                -0.3038203217523977,
+                0.32741151237686195,
+                -0.894703813366952
+              ],
+              [
+                0.15726048881002797,
+                0.9434481051444191,
+                0.2918472401079652
+              ],
+              [
+                0.9396607636532988,
+                -0.052032436638131604,
+                -0.3381276013400831
+              ]
+            ],
+            "t": [
+              4.664786097623338,
+              -1.7358744401763047,
+              0.8643089415136211
+            ],
+            "s": 1.0,
+            "n_to_align": 3639,
+            "mapping": "p_est_aligned = s * R * p_est + t; R_est_aligned = R * R_est",
+            "method": "Umeyama (1991), reflection fixed, first n associated pairs"
+          },
+          "ate_translation_m": {
+            "n": 3639,
+            "rmse": 0.04146129415816942,
+            "mean": 0.03808980552142204,
+            "median": 0.042723277146893675,
+            "std": 0.016376984722790117,
+            "min": 0.003189179595047164,
+            "max": 0.0813941239547179,
+            "SSE": 6.255582605390453
+          },
+          "rpe_translation_m": {
+            "n": 3555,
+            "rmse": 0.01962504992901471,
+            "mean": 0.017508014874714907,
+            "median": 0.015765646200979432,
+            "std": 0.008866340838422684,
+            "min": 0.0007063328351152468,
+            "max": 0.048155210938493155
+          },
+          "rpe_rotation_deg": {
+            "n": 3555,
+            "rmse": 0.14084286043125138,
+            "mean": 0.12176305530629716,
+            "median": 0.10886946498160142,
+            "std": 0.07078467134155939,
+            "min": 0.009519192766790224,
+            "max": 0.5569698060414578
+          },
+          "rpe_estimate_scale_applied": 1.0,
+          "ate_rotation_deg": {
+            "n": 3639,
+            "rmse": 1.263833236901537,
+            "mean": 1.1724386187498685,
+            "median": 1.2256869606087208,
+            "std": 0.4718708890797538,
+            "min": 0.37100723854710366,
+            "max": 2.717402263530766
+          }
+        },
+        "sim3": {
+          "alignment": {
+            "R": [
+              [
+                -0.3038203217523977,
+                0.32741151237686195,
+                -0.894703813366952
+              ],
+              [
+                0.15726048881002797,
+                0.9434481051444191,
+                0.2918472401079652
+              ],
+              [
+                0.9396607636532988,
+                -0.052032436638131604,
+                -0.3381276013400831
+              ]
+            ],
+            "t": [
+              4.6863481064533055,
+              -1.77430513824492,
+              0.8695399934647972
+            ],
+            "s": 1.0086437965661337,
+            "n_to_align": 3639,
+            "mapping": "p_est_aligned = s * R * p_est + t; R_est_aligned = R * R_est",
+            "method": "Umeyama (1991), reflection fixed, first n associated pairs"
+          },
+          "ate_translation_m": {
+            "n": 3639,
+            "rmse": 0.018873870288641095,
+            "mean": 0.016677605178721484,
+            "median": 0.013880095615765779,
+            "std": 0.00883631513557158,
+            "min": 0.001605123536520166,
+            "max": 0.047082922354259885,
+            "SSE": 1.2962954230280421
+          },
+          "rpe_translation_m": {
+            "n": 3555,
+            "rmse": 0.020059699108825393,
+            "mean": 0.018067476667066776,
+            "median": 0.016782525389023018,
+            "std": 0.008715378088276373,
+            "min": 0.0005797813953872027,
+            "max": 0.047445651910760084
+          },
+          "rpe_rotation_deg": {
+            "n": 3555,
+            "rmse": 0.14084286043125138,
+            "mean": 0.12176305530629716,
+            "median": 0.10886946498160142,
+            "std": 0.07078467134155939,
+            "min": 0.009519192766790224,
+            "max": 0.5569698060414578
+          },
+          "rpe_estimate_scale_applied": 1.0086437965661337,
+          "ate_rotation_deg": {
+            "n": 3639,
+            "rmse": 1.263833236901537,
+            "mean": 1.1724386187498685,
+            "median": 1.2256869606087208,
+            "std": 0.4718708890797538,
+            "min": 0.37100723854710366,
+            "max": 2.717402263530766
+          }
+        }
+      },
+      "ate_rpe_10frames": {
+        "se3": {
+          "alignment": {
+            "R": [
+              [
+                -0.3038203217523977,
+                0.32741151237686195,
+                -0.894703813366952
+              ],
+              [
+                0.15726048881002797,
+                0.9434481051444191,
+                0.2918472401079652
+              ],
+              [
+                0.9396607636532988,
+                -0.052032436638131604,
+                -0.3381276013400831
+              ]
+            ],
+            "t": [
+              4.664786097623338,
+              -1.7358744401763047,
+              0.8643089415136211
+            ],
+            "s": 1.0,
+            "n_to_align": 3639,
+            "mapping": "p_est_aligned = s * R * p_est + t; R_est_aligned = R * R_est",
+            "method": "Umeyama (1991), reflection fixed, first n associated pairs"
+          },
+          "ate_translation_m": {
+            "n": 3639,
+            "rmse": 0.04146129415816942,
+            "mean": 0.03808980552142204,
+            "median": 0.042723277146893675,
+            "std": 0.016376984722790117,
+            "min": 0.003189179595047164,
+            "max": 0.0813941239547179,
+            "SSE": 6.255582605390453
+          },
+          "rpe_translation_m": {
+            "n": 3629,
+            "rmse": 0.008716085540005119,
+            "mean": 0.00695494937146691,
+            "median": 0.006044662484532375,
+            "std": 0.005253458516160414,
+            "min": 2.667040724602306e-05,
+            "max": 0.039301639294156684
+          },
+          "rpe_rotation_deg": {
+            "n": 3629,
+            "rmse": 0.05415608976785732,
+            "mean": 0.04315409467322012,
+            "median": 0.03485754108475605,
+            "std": 0.03272011876321622,
+            "min": 0.002006236929706245,
+            "max": 0.36281685796818836
+          },
+          "rpe_estimate_scale_applied": 1.0,
+          "ate_rotation_deg": {
+            "n": 3639,
+            "rmse": 1.263833236901537,
+            "mean": 1.1724386187498685,
+            "median": 1.2256869606087208,
+            "std": 0.4718708890797538,
+            "min": 0.37100723854710366,
+            "max": 2.717402263530766
+          }
+        },
+        "sim3": {
+          "alignment": {
+            "R": [
+              [
+                -0.3038203217523977,
+                0.32741151237686195,
+                -0.894703813366952
+              ],
+              [
+                0.15726048881002797,
+                0.9434481051444191,
+                0.2918472401079652
+              ],
+              [
+                0.9396607636532988,
+                -0.052032436638131604,
+                -0.3381276013400831
+              ]
+            ],
+            "t": [
+              4.6863481064533055,
+              -1.77430513824492,
+              0.8695399934647972
+            ],
+            "s": 1.0086437965661337,
+            "n_to_align": 3639,
+            "mapping": "p_est_aligned = s * R * p_est + t; R_est_aligned = R * R_est",
+            "method": "Umeyama (1991), reflection fixed, first n associated pairs"
+          },
+          "ate_translation_m": {
+            "n": 3639,
+            "rmse": 0.018873870288641095,
+            "mean": 0.016677605178721484,
+            "median": 0.013880095615765779,
+            "std": 0.00883631513557158,
+            "min": 0.001605123536520166,
+            "max": 0.047082922354259885,
+            "SSE": 1.2962954230280421
+          },
+          "rpe_translation_m": {
+            "n": 3629,
+            "rmse": 0.00873256051123499,
+            "mean": 0.006959531306013875,
+            "median": 0.006082245888356353,
+            "std": 0.005274707298324098,
+            "min": 2.707775819408958e-05,
+            "max": 0.03952530963846471
+          },
+          "rpe_rotation_deg": {
+            "n": 3629,
+            "rmse": 0.05415608976785732,
+            "mean": 0.04315409467322012,
+            "median": 0.03485754108475605,
+            "std": 0.03272011876321622,
+            "min": 0.002006236929706245,
+            "max": 0.36281685796818836
+          },
+          "rpe_estimate_scale_applied": 1.0086437965661337,
+          "ate_rotation_deg": {
+            "n": 3639,
+            "rmse": 1.263833236901537,
+            "mean": 1.1724386187498685,
+            "median": 1.2256869606087208,
+            "std": 0.4718708890797538,
+            "min": 0.37100723854710366,
+            "max": 2.717402263530766
+          }
+        }
+      },
+      "trajectory_evaluator_provenance": {
+        "version": "1.0.0",
+        "result_path": "tools/eval_pipeline/accuracy/validation/run01/rpe_1m/result.json"
+      }
+    },
+    {
+      "run": "run2",
+      "status": "PASS",
+      "trajectory": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/run2/f_mh01_stereoi.txt",
+      "trajectory_sha256": "01e95964d83f65e09e894b89d590b5bf55b5f1b7a5a37efb8cccb7a695d72cd8",
+      "stdout_sha256": "c3f5c9dc56eb0545c7b2dc46b3fd06a8d827be15f627aef082401beef0d5c417",
+      "trajectory_format": {
+        "format": "orbslam3",
+        "time_unit": "ns",
+        "detection": "first non-comment timestamp magnitude; see thresholds.json"
+      },
+      "capture_provenance": {
+        "stderr.log": {
+          "path": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/run2/stderr.log",
+          "sha256": "8921d5476cc5f997e516a7634e5ce29effc90ad41ae598e88c0011a3e976f0de",
+          "text": null
+        }
+      },
+      "exit_code": 0,
+      "exit_code_evidence": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/runs.log",
+      "diagnostics": {
+        "initialization_success": true,
+        "tracking_loss_log_count": 0,
+        "map_reset_log_count": 0,
+        "pose_count": 3678,
+        "expected_frame_count": 3682,
+        "pose_fraction": 0.9989136338946225,
+        "pose_fraction_evidence": "CALCULATED: emitted pose rows / non-comment times-file rows"
+      },
+      "ate_rpe_1m": {
+        "se3": {
+          "alignment": {
+            "R": [
+              [
+                -0.304230126632041,
+                0.32701587815889893,
+                -0.8947092519256837
+              ],
+              [
+                0.15690810022080695,
+                0.9436039135614077,
+                0.29153302110857576
+              ],
+              [
+                0.9395870785268122,
+                -0.05169400104035517,
+                -0.33838417829722806
+              ]
+            ],
+            "t": [
+              4.669824575019341,
+              -1.749122457157926,
+              0.8684413036072212
+            ],
+            "s": 1.0,
+            "n_to_align": 3639,
+            "mapping": "p_est_aligned = s * R * p_est + t; R_est_aligned = R * R_est",
+            "method": "Umeyama (1991), reflection fixed, first n associated pairs"
+          },
+          "ate_translation_m": {
+            "n": 3639,
+            "rmse": 0.036844344136910095,
+            "mean": 0.03408903872723103,
+            "median": 0.03691684660050229,
+            "std": 0.013980097765480915,
+            "min": 0.0008972714911618382,
+            "max": 0.07600058816228195,
+            "SSE": 4.939963223664904
+          },
+          "rpe_translation_m": {
+            "n": 3555,
+            "rmse": 0.0198845823104912,
+            "mean": 0.0176587494705526,
+            "median": 0.016045048808113103,
+            "std": 0.009141399280140747,
+            "min": 0.0005554854191347627,
+            "max": 0.04921058699078185
+          },
+          "rpe_rotation_deg": {
+            "n": 3555,
+            "rmse": 0.14493256769816792,
+            "mean": 0.12546817611965363,
+            "median": 0.11581325722810654,
+            "std": 0.07254781844267687,
+            "min": 0.009583491078963818,
+            "max": 0.6046642152272331
+          },
+          "rpe_estimate_scale_applied": 1.0,
+          "ate_rotation_deg": {
+            "n": 3639,
+            "rmse": 1.3024053576665426,
+            "mean": 1.2226502253956872,
+            "median": 1.2501464473405772,
+            "std": 0.4487606734311628,
+            "min": 0.4337056364318722,
+            "max": 2.6701852811696942
+          }
+        },
+        "sim3": {
+          "alignment": {
+            "R": [
+              [
+                -0.304230126632041,
+                0.32701587815889893,
+                -0.8947092519256837
+              ],
+              [
+                0.15690810022080695,
+                0.9436039135614077,
+                0.29153302110857576
+              ],
+              [
+                0.9395870785268122,
+                -0.05169400104035517,
+                -0.33838417829722806
+              ]
+            ],
+            "t": [
+              4.686254910640787,
+              -1.7784348538426848,
+              0.872446514193616
+            ],
+            "s": 1.006573330011913,
+            "n_to_align": 3639,
+            "mapping": "p_est_aligned = s * R * p_est + t; R_est_aligned = R * R_est",
+            "method": "Umeyama (1991), reflection fixed, first n associated pairs"
+          },
+          "ate_translation_m": {
+            "n": 3639,
+            "rmse": 0.023793632555041883,
+            "mean": 0.020977342722471128,
+            "median": 0.01788795025039256,
+            "std": 0.011228893198723396,
+            "min": 0.0014154186824475484,
+            "max": 0.05712028373979457,
+            "SSE": 2.060172361648066
+          },
+          "rpe_translation_m": {
+            "n": 3555,
+            "rmse": 0.020457505689777944,
+            "mean": 0.018252592240170524,
+            "median": 0.016961651975327122,
+            "std": 0.009238637105188387,
+            "min": 0.0007549075728863659,
+            "max": 0.05028781132513936
+          },
+          "rpe_rotation_deg": {
+            "n": 3555,
+            "rmse": 0.14493256769816792,
+            "mean": 0.12546817611965363,
+            "median": 0.11581325722810654,
+            "std": 0.07254781844267687,
+            "min": 0.009583491078963818,
+            "max": 0.6046642152272331
+          },
+          "rpe_estimate_scale_applied": 1.006573330011913,
+          "ate_rotation_deg": {
+            "n": 3639,
+            "rmse": 1.3024053576665426,
+            "mean": 1.2226502253956872,
+            "median": 1.2501464473405772,
+            "std": 0.4487606734311628,
+            "min": 0.4337056364318722,
+            "max": 2.6701852811696942
+          }
+        }
+      },
+      "ate_rpe_10frames": {
+        "se3": {
+          "alignment": {
+            "R": [
+              [
+                -0.304230126632041,
+                0.32701587815889893,
+                -0.8947092519256837
+              ],
+              [
+                0.15690810022080695,
+                0.9436039135614077,
+                0.29153302110857576
+              ],
+              [
+                0.9395870785268122,
+                -0.05169400104035517,
+                -0.33838417829722806
+              ]
+            ],
+            "t": [
+              4.669824575019341,
+              -1.749122457157926,
+              0.8684413036072212
+            ],
+            "s": 1.0,
+            "n_to_align": 3639,
+            "mapping": "p_est_aligned = s * R * p_est + t; R_est_aligned = R * R_est",
+            "method": "Umeyama (1991), reflection fixed, first n associated pairs"
+          },
+          "ate_translation_m": {
+            "n": 3639,
+            "rmse": 0.036844344136910095,
+            "mean": 0.03408903872723103,
+            "median": 0.03691684660050229,
+            "std": 0.013980097765480915,
+            "min": 0.0008972714911618382,
+            "max": 0.07600058816228195,
+            "SSE": 4.939963223664904
+          },
+          "rpe_translation_m": {
+            "n": 3629,
+            "rmse": 0.008902180897269671,
+            "mean": 0.0070606994509244516,
+            "median": 0.00624093301785987,
+            "std": 0.005421747687916523,
+            "min": 2.6525502185014135e-05,
+            "max": 0.05074369025078323
+          },
+          "rpe_rotation_deg": {
+            "n": 3629,
+            "rmse": 0.05317573086986123,
+            "mean": 0.042310654178698226,
+            "median": 0.03322382373903899,
+            "std": 0.032209732946960584,
+            "min": 0.0020606073283976237,
+            "max": 0.35850101153912933
+          },
+          "rpe_estimate_scale_applied": 1.0,
+          "ate_rotation_deg": {
+            "n": 3639,
+            "rmse": 1.3024053576665426,
+            "mean": 1.2226502253956872,
+            "median": 1.2501464473405772,
+            "std": 0.4487606734311628,
+            "min": 0.4337056364318722,
+            "max": 2.6701852811696942
+          }
+        },
+        "sim3": {
+          "alignment": {
+            "R": [
+              [
+                -0.304230126632041,
+                0.32701587815889893,
+                -0.8947092519256837
+              ],
+              [
+                0.15690810022080695,
+                0.9436039135614077,
+                0.29153302110857576
+              ],
+              [
+                0.9395870785268122,
+                -0.05169400104035517,
+                -0.33838417829722806
+              ]
+            ],
+            "t": [
+              4.686254910640787,
+              -1.7784348538426848,
+              0.872446514193616
+            ],
+            "s": 1.006573330011913,
+            "n_to_align": 3639,
+            "mapping": "p_est_aligned = s * R * p_est + t; R_est_aligned = R * R_est",
+            "method": "Umeyama (1991), reflection fixed, first n associated pairs"
+          },
+          "ate_translation_m": {
+            "n": 3639,
+            "rmse": 0.023793632555041883,
+            "mean": 0.020977342722471128,
+            "median": 0.01788795025039256,
+            "std": 0.011228893198723396,
+            "min": 0.0014154186824475484,
+            "max": 0.05712028373979457,
+            "SSE": 2.060172361648066
+          },
+          "rpe_translation_m": {
+            "n": 3629,
+            "rmse": 0.00894473832503282,
+            "mean": 0.007074643752127084,
+            "median": 0.006304865282360215,
+            "std": 0.0054733682028345375,
+            "min": 2.816521241796811e-05,
+            "max": 0.05252728689861312
+          },
+          "rpe_rotation_deg": {
+            "n": 3629,
+            "rmse": 0.05317573086986123,
+            "mean": 0.042310654178698226,
+            "median": 0.03322382373903899,
+            "std": 0.032209732946960584,
+            "min": 0.0020606073283976237,
+            "max": 0.35850101153912933
+          },
+          "rpe_estimate_scale_applied": 1.006573330011913,
+          "ate_rotation_deg": {
+            "n": 3639,
+            "rmse": 1.3024053576665426,
+            "mean": 1.2226502253956872,
+            "median": 1.2501464473405772,
+            "std": 0.4487606734311628,
+            "min": 0.4337056364318722,
+            "max": 2.6701852811696942
+          }
+        }
+      },
+      "trajectory_evaluator_provenance": {
+        "version": "1.0.0",
+        "result_path": "tools/eval_pipeline/accuracy/validation/run02/rpe_1m/result.json"
+      }
+    },
+    {
+      "run": "run3",
+      "status": "PASS",
+      "trajectory": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/run3/f_mh01_stereoi.txt",
+      "trajectory_sha256": "48a44acc44fe3b885f8e88946167eaf9131e119d222aa913df4701d58d0caf63",
+      "stdout_sha256": "db6a4e6a4056ad4a98c2d67f368f5ef3c82b67e9bdbb5854cc0a628987a371ad",
+      "trajectory_format": {
+        "format": "orbslam3",
+        "time_unit": "ns",
+        "detection": "first non-comment timestamp magnitude; see thresholds.json"
+      },
+      "capture_provenance": {
+        "stderr.log": {
+          "path": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/run3/stderr.log",
+          "sha256": "be9abfa255cbfd0442e3973d848a5176b825005d7abea094962ff944277e6408",
+          "text": null
+        }
+      },
+      "exit_code": 0,
+      "exit_code_evidence": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/runs.log",
+      "diagnostics": {
+        "initialization_success": true,
+        "tracking_loss_log_count": 0,
+        "map_reset_log_count": 0,
+        "pose_count": 3678,
+        "expected_frame_count": 3682,
+        "pose_fraction": 0.9989136338946225,
+        "pose_fraction_evidence": "CALCULATED: emitted pose rows / non-comment times-file rows"
+      },
+      "ate_rpe_1m": {
+        "se3": {
+          "alignment": {
+            "R": [
+              [
+                -0.30522750223167777,
+                0.3269943058388834,
+                -0.8943773788677564
+              ],
+              [
+                0.1560189413716753,
+                0.9436769804174551,
+                0.29177362211731134
+              ],
+              [
+                0.9394116572699494,
+                -0.05048247794176464,
+                -0.3390534730779
+              ]
+            ],
+            "t": [
+              4.664513563969501,
+              -1.7421496938560774,
+              0.8667713094434502
+            ],
+            "s": 1.0,
+            "n_to_align": 3639,
+            "mapping": "p_est_aligned = s * R * p_est + t; R_est_aligned = R * R_est",
+            "method": "Umeyama (1991), reflection fixed, first n associated pairs"
+          },
+          "ate_translation_m": {
+            "n": 3639,
+            "rmse": 0.041603882857669285,
+            "mean": 0.03854799844580137,
+            "median": 0.04275386682908159,
+            "std": 0.01565039567094593,
+            "min": 0.0034019410410484237,
+            "max": 0.08770913005626389,
+            "SSE": 6.298683487489358
+          },
+          "rpe_translation_m": {
+            "n": 3555,
+            "rmse": 0.020211385299225178,
+            "mean": 0.017263693704760736,
+            "median": 0.015499194380524906,
+            "std": 0.01051023193759016,
+            "min": 0.0005161822774631889,
+            "max": 0.05601255467730953
+          },
+          "rpe_rotation_deg": {
+            "n": 3555,
+            "rmse": 0.13906379743333327,
+            "mean": 0.1209368521672928,
+            "median": 0.11017345492067775,
+            "std": 0.06865142055664633,
+            "min": 0.007340282550160794,
+            "max": 0.5188559622244382
+          },
+          "rpe_estimate_scale_applied": 1.0,
+          "ate_rotation_deg": {
+            "n": 3639,
+            "rmse": 1.2785384104084005,
+            "mean": 1.1974208405094406,
+            "median": 1.2507194637794319,
+            "std": 0.4481559969511782,
+            "min": 0.36868112685445076,
+            "max": 2.6775243051772457
+          }
+        },
+        "sim3": {
+          "alignment": {
+            "R": [
+              [
+                -0.30522750223167777,
+                0.3269943058388834,
+                -0.8943773788677564
+              ],
+              [
+                0.1560189413716753,
+                0.9436769804174551,
+                0.29177362211731134
+              ],
+              [
+                0.9394116572699494,
+                -0.05048247794176464,
+                -0.3390534730779
+              ]
+            ],
+            "t": [
+              4.6850214992629144,
+              -1.778757270852085,
+              0.8717674274031575
+            ],
+            "s": 1.0082221369615003,
+            "n_to_align": 3639,
+            "mapping": "p_est_aligned = s * R * p_est + t; R_est_aligned = R * R_est",
+            "method": "Umeyama (1991), reflection fixed, first n associated pairs"
+          },
+          "ate_translation_m": {
+            "n": 3639,
+            "rmse": 0.022288179175232646,
+            "mean": 0.020032527152059717,
+            "median": 0.01725601455414938,
+            "std": 0.009770403617520849,
+            "min": 0.0018363786691926846,
+            "max": 0.05467094944063071,
+            "SSE": 1.8077203057171307
+          },
+          "rpe_translation_m": {
+            "n": 3555,
+            "rmse": 0.020514912982295595,
+            "mean": 0.01782254455427638,
+            "median": 0.015818661932931483,
+            "std": 0.010159653551277894,
+            "min": 0.0005950988421581803,
+            "max": 0.05537254308360059
+          },
+          "rpe_rotation_deg": {
+            "n": 3555,
+            "rmse": 0.13906379743333327,
+            "mean": 0.1209368521672928,
+            "median": 0.11017345492067775,
+            "std": 0.06865142055664633,
+            "min": 0.007340282550160794,
+            "max": 0.5188559622244382
+          },
+          "rpe_estimate_scale_applied": 1.0082221369615003,
+          "ate_rotation_deg": {
+            "n": 3639,
+            "rmse": 1.2785384104084005,
+            "mean": 1.1974208405094406,
+            "median": 1.2507194637794319,
+            "std": 0.4481559969511782,
+            "min": 0.36868112685445076,
+            "max": 2.6775243051772457
+          }
+        }
+      },
+      "ate_rpe_10frames": {
+        "se3": {
+          "alignment": {
+            "R": [
+              [
+                -0.30522750223167777,
+                0.3269943058388834,
+                -0.8943773788677564
+              ],
+              [
+                0.1560189413716753,
+                0.9436769804174551,
+                0.29177362211731134
+              ],
+              [
+                0.9394116572699494,
+                -0.05048247794176464,
+                -0.3390534730779
+              ]
+            ],
+            "t": [
+              4.664513563969501,
+              -1.7421496938560774,
+              0.8667713094434502
+            ],
+            "s": 1.0,
+            "n_to_align": 3639,
+            "mapping": "p_est_aligned = s * R * p_est + t; R_est_aligned = R * R_est",
+            "method": "Umeyama (1991), reflection fixed, first n associated pairs"
+          },
+          "ate_translation_m": {
+            "n": 3639,
+            "rmse": 0.041603882857669285,
+            "mean": 0.03854799844580137,
+            "median": 0.04275386682908159,
+            "std": 0.01565039567094593,
+            "min": 0.0034019410410484237,
+            "max": 0.08770913005626389,
+            "SSE": 6.298683487489358
+          },
+          "rpe_translation_m": {
+            "n": 3629,
+            "rmse": 0.009165825859855661,
+            "mean": 0.007164342748463729,
+            "median": 0.006286278855793304,
+            "std": 0.00571704090205186,
+            "min": 3.064419611353512e-05,
+            "max": 0.055589559036639695
+          },
+          "rpe_rotation_deg": {
+            "n": 3629,
+            "rmse": 0.05276739179000606,
+            "mean": 0.042404365463792275,
+            "median": 0.03429853565491767,
+            "std": 0.031404894935871695,
+            "min": 0.00161332642741404,
+            "max": 0.363966826930162
+          },
+          "rpe_estimate_scale_applied": 1.0,
+          "ate_rotation_deg": {
+            "n": 3639,
+            "rmse": 1.2785384104084005,
+            "mean": 1.1974208405094406,
+            "median": 1.2507194637794319,
+            "std": 0.4481559969511782,
+            "min": 0.36868112685445076,
+            "max": 2.6775243051772457
+          }
+        },
+        "sim3": {
+          "alignment": {
+            "R": [
+              [
+                -0.30522750223167777,
+                0.3269943058388834,
+                -0.8943773788677564
+              ],
+              [
+                0.1560189413716753,
+                0.9436769804174551,
+                0.29177362211731134
+              ],
+              [
+                0.9394116572699494,
+                -0.05048247794176464,
+                -0.3390534730779
+              ]
+            ],
+            "t": [
+              4.6850214992629144,
+              -1.778757270852085,
+              0.8717674274031575
+            ],
+            "s": 1.0082221369615003,
+            "n_to_align": 3639,
+            "mapping": "p_est_aligned = s * R * p_est + t; R_est_aligned = R * R_est",
+            "method": "Umeyama (1991), reflection fixed, first n associated pairs"
+          },
+          "ate_translation_m": {
+            "n": 3639,
+            "rmse": 0.022288179175232646,
+            "mean": 0.020032527152059717,
+            "median": 0.01725601455414938,
+            "std": 0.009770403617520849,
+            "min": 0.0018363786691926846,
+            "max": 0.05467094944063071,
+            "SSE": 1.8077203057171307
+          },
+          "rpe_translation_m": {
+            "n": 3629,
+            "rmse": 0.009194247092321318,
+            "mean": 0.007166519884971357,
+            "median": 0.006274828713779009,
+            "std": 0.005759789261159575,
+            "min": 3.037175285129498e-05,
+            "max": 0.0577776100337962
+          },
+          "rpe_rotation_deg": {
+            "n": 3629,
+            "rmse": 0.05276739179000606,
+            "mean": 0.042404365463792275,
+            "median": 0.03429853565491767,
+            "std": 0.031404894935871695,
+            "min": 0.00161332642741404,
+            "max": 0.363966826930162
+          },
+          "rpe_estimate_scale_applied": 1.0082221369615003,
+          "ate_rotation_deg": {
+            "n": 3639,
+            "rmse": 1.2785384104084005,
+            "mean": 1.1974208405094406,
+            "median": 1.2507194637794319,
+            "std": 0.4481559969511782,
+            "min": 0.36868112685445076,
+            "max": 2.6775243051772457
+          }
+        }
+      },
+      "trajectory_evaluator_provenance": {
+        "version": "1.0.0",
+        "result_path": "tools/eval_pipeline/accuracy/validation/run03/rpe_1m/result.json"
+      }
+    }
+  ]
+}

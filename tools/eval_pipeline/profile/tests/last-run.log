@@ -1,0 +1,126 @@
+$ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools/eval_pipeline/profile/tests -v
+EXIT CODE: 0
+test_clockmap_must_target_observer_session (test_profile.ProfileTests.test_clockmap_must_target_observer_session) ... profile: clockmap must map source stamps to this observer host_steady session
+ok
+test_event_latency_one_host_clock (test_profile.ProfileTests.test_event_latency_one_host_clock) ... ok
+test_fake_proc_sys_snapshot (test_profile.ProfileTests.test_fake_proc_sys_snapshot) ... ok
+test_missing_proc_sys_fields_are_unknown (test_profile.ProfileTests.test_missing_proc_sys_fields_are_unknown) ... ok
+test_tracking_latency_uses_existing_parser_and_budget (test_profile.ProfileTests.test_tracking_latency_uses_existing_parser_and_budget) ... ok
+test_validity_blocked_on_unknown_sensor_data (test_profile.ProfileTests.test_validity_blocked_on_unknown_sensor_data) ... ok
+test_validity_blocks_on_missing_samples_file (test_profile.ProfileTests.test_validity_blocks_on_missing_samples_file) ... ok
+test_validity_blocks_when_a_temperature_sample_is_missing (test_profile.ProfileTests.test_validity_blocks_when_a_temperature_sample_is_missing) ... ok
+test_validity_blocks_without_any_throttle_poll (test_profile.ProfileTests.test_validity_blocks_without_any_throttle_poll) ... ok
+test_validity_fail_on_real_saved_n4a_throttle_fixture (test_profile.ProfileTests.test_validity_fail_on_real_saved_n4a_throttle_fixture) ... ok
+test_validity_ignores_rows_without_throttle_poll (test_profile.ProfileTests.test_validity_ignores_rows_without_throttle_poll) ... ok
+test_validity_pass (test_profile.ProfileTests.test_validity_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.202s
+
+OK
+{
+  "evidence": "MEASURED from event timestamps; values are conditional on complete retained event pairs",
+  "quantile_method": "nearest-rank (tools/runtime_observer/stats.py)",
+  "sessions": {
+    "run": {
+      "clock_domain": "host_steady / Linux CLOCK_MONOTONIC",
+      "frame_count": 1,
+      "tracking_latency_ns": {
+        "status": "AVAILABLE",
+        "count": 1,
+        "p50": 10000000,
+        "p95": 10000000,
+        "p99": 10000000,
+        "max": 10000000
+      },
+      "end_to_end_latency_ns": {
+        "status": "AVAILABLE",
+        "count": 1,
+        "p50": 14000000,
+        "p95": 14000000,
+        "p99": 14000000,
+        "max": 14000000
+      },
+      "over_camera_budget_count": 0,
+      "camera_budget_ns": 33300000,
+      "realtime_factor": "UNKNOWN",
+      "realtime_factor_definition": "frame_received source timestamp span mapped to host_steady / full observer host_steady span; UNKNOWN unless source epochs are same-session host_steady or an explicit --clockmap is supplied"
+    }
+  },
+  "input_sha256": "d2c1b1ea5de5bc81a8249a6a0cb3a0c1bb455c19f33f786ccbd8a8e9396ab778"
+}
+{
+  "evidence": "MEASURED tracking duration parsed by tools/runtime_observer/patch_timing.py; hardware clock epoch UNKNOWN",
+  "clock_domain": "host_steady duration only; image_s is a source timestamp with no cross-clock mapping",
+  "quantile_method": "nearest-rank (tools/runtime_observer/stats.py)",
+  "tracking_latency_ns": {
+    "status": "AVAILABLE",
+    "count": 2,
+    "p50": 10000000,
+    "p95": 40000000,
+    "p99": 40000000,
+    "max": 40000000
+  },
+  "end_to_end_latency_ns": "UNKNOWN",
+  "over_camera_budget_count": 1,
+  "camera_budget_ns": 33300000,
+  "realtime_factor": "UNKNOWN",
+  "frame_count": 2,
+  "input_sha256": "f717f523f9069655ae6e3285dd35fe722ba025bdbaa86f65bb289a5ac0920a4e"
+}
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	BLOCKED	None	<=0 occurrences
+max_temperature	BLOCKED	None	<80.0 degC
+overall	BLOCKED
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	BLOCKED	[]	<=0 occurrences
+max_temperature	BLOCKED	None	<80.0 degC
+overall	BLOCKED
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	PASS	[]	<=0 occurrences
+max_temperature	BLOCKED	55.0	<80.0 degC
+overall	BLOCKED
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	BLOCKED	[]	<=0 occurrences
+max_temperature	PASS	55.0	<80.0 degC
+overall	BLOCKED
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	PASS	[]	<=0 occurrences
+max_temperature	PASS	55.0	<80.0 degC
+overall	PASS
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	PASS	[]	<=0 occurrences
+max_temperature	PASS	55.0	<80.0 degC
+overall	PASS
+
+$ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools/runtime_observer/tests -v
+EXIT CODE: 0
+test_clockmap_json_cli_loader (test_observer.AggregateTests.test_clockmap_json_cli_loader) ... ok
+test_cpp_csv_to_python_and_cli (test_observer.AggregateTests.test_cpp_csv_to_python_and_cli) ... skipped 'run make test to include C++ round-trip'
+test_cross_clock_age_requires_explicit_map (test_observer.AggregateTests.test_cross_clock_age_requires_explicit_map) ... ok
+test_incomplete_trace_and_empty_ring (test_observer.AggregateTests.test_incomplete_trace_and_empty_ring) ... ok
+test_invalid_maps_sessions_future_and_unknown_domains (test_observer.AggregateTests.test_invalid_maps_sessions_future_and_unknown_domains) ... ok
+test_known_stages_age_drops_backlog_throughput (test_observer.AggregateTests.test_known_stages_age_drops_backlog_throughput) ... ok
+test_large_epoch_ns_precision_and_single_sample (test_observer.AggregateTests.test_large_epoch_ns_precision_and_single_sample) ... ok
+test_malformed_and_inconsistent_streams (test_observer.AggregateTests.test_malformed_and_inconsistent_streams) ... ok
+test_quantiles_nearest_rank (test_observer.AggregateTests.test_quantiles_nearest_rank) ... ok
+test_sessions_are_never_combined (test_observer.AggregateTests.test_sessions_are_never_combined) ... ok
+test_exact_patch_formats (test_observer.PatchTests.test_exact_patch_formats) ... ok
+test_negative_nonfinite_malformed_repeated_and_mismatched (test_observer.PatchTests.test_negative_nonfinite_malformed_repeated_and_mismatched) ... ok
+test_patch_cli_and_input_immutability (test_observer.PatchTests.test_patch_cli_and_input_immutability) ... ok
+test_command_absent_timeout_and_bad_output (test_observer.ResourceTests.test_command_absent_timeout_and_bad_output) ... ok
+test_counter_reversal_pid_reuse_and_missing_baselines (test_observer.ResourceTests.test_counter_reversal_pid_reuse_and_missing_baselines) ... ok
+test_fake_proc_sysfs_cpu_memory_frequency_throttle (test_observer.ResourceTests.test_fake_proc_sysfs_cpu_memory_frequency_throttle) ... ok
+test_macos_ignores_linux_readers (test_observer.ResourceTests.test_macos_ignores_linux_readers) ... ok
+test_missing_malformed_and_removed_files (test_observer.ResourceTests.test_missing_malformed_and_removed_files) ... ok
+test_one_hz_schedule_csv_and_missed_slots (test_observer.ResourceTests.test_one_hz_schedule_csv_and_missed_slots) ... ok
+test_sampler_cli_new_file_only (test_observer.ResourceTests.test_sampler_cli_new_file_only) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.317s
+
+OK (skipped=1)

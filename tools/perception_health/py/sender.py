@@ -14,10 +14,16 @@ def monotonic_raw_ns():
     clock_id = getattr(time, "CLOCK_MONOTONIC_RAW", time.CLOCK_MONOTONIC)
     return time.clock_gettime_ns(clock_id)
 
+def json_true(event, key):
+    """Accept JSON booleans only; malformed truthy values must not claim health."""
+    return event.get(key) is True
+
 def map_source_time(source_ns, mapping):
     """Map camera epoch with the existing qualified ClockMap implementation."""
     from tools.clockmap.clockmap import ClockMap, Exchange, Stamp
     domain_a=mapping["camera_domain"]; domain_b=mapping["pi_domain"]
+    if domain_b != "CLOCK_MONOTONIC_RAW":
+        raise ValueError("Pi mapping domain must be CLOCK_MONOTONIC_RAW to match linux_send_ns")
     session_a=mapping["camera_session"]; session_b=mapping["pi_session"]
     cmap=ClockMap(domain_a,domain_b,session_a,session_b,min_samples=3)
     for t1,t2,t3,t4 in mapping["exchanges_ns"]:
@@ -77,7 +83,7 @@ def process(args):
             event = json.loads(line)
             source_ns = int(event["pose_source_d435i_ns"])
             mapping = event.get("mapping")
-            mapping_valid = bool(mapping and mapping.get("valid"))
+            mapping_valid = bool(mapping and json_true(mapping, "valid"))
             pi_source_ns = uncertainty_ns = None
             if mapping_valid:
                 try:
@@ -89,18 +95,20 @@ def process(args):
                 mapping_valid=False
             state = event["tracking_state"]
             state_id = TRACKING_STATES[state] if isinstance(state, str) else int(state)
-            send_ns = monotonic_raw_ns()
-            if mapping_valid:
-                try: age=min(U32_MAX,saturating_age_us(send_ns,pi_source_ns)+(uncertainty_ns+999)//1000)
-                except ValueError:
-                    mapping_valid=False; age=U32_MAX
-                    print(f"line {line_num}: mapped source time is in the future; age unavailable",file=sys.stderr)
-            else: age=U32_MAX
-            flags = (FLAG_AGE_VALID | FLAG_MAPPING_VALID) if mapping_valid else 0
-            if event.get("degraded", False): flags |= FLAG_DEGRADED
-            payload = PerceptionHealth(send_ns, age, state_id, int(event.get("map_reset_counter", 0)) & 0xFFFF,
-                int(bool(event.get("imu_initialized", False))), int(event.get("tracked_features", 0)), flags)
             with lock:
+                # Take the Pi raw-monotonic timestamp at the write boundary, after
+                # lock contention and all mapping work, so reported age is conservative.
+                send_ns = monotonic_raw_ns()
+                if mapping_valid:
+                    try: age=min(U32_MAX,saturating_age_us(send_ns,pi_source_ns)+(uncertainty_ns+999)//1000)
+                    except ValueError:
+                        mapping_valid=False; age=U32_MAX
+                        print(f"line {line_num}: mapped source time is in the future; age unavailable",file=sys.stderr)
+                else: age=U32_MAX
+                flags = (FLAG_AGE_VALID | FLAG_MAPPING_VALID) if mapping_valid else 0
+                if event.get("degraded", False) is not False: flags |= FLAG_DEGRADED
+                payload = PerceptionHealth(send_ns, age, state_id, int(event.get("map_reset_counter", 0)) & 0xFFFF,
+                    int(json_true(event, "imu_initialized")), int(event.get("tracked_features", 0)), flags)
                 port.write(encode_health(seq, payload)); seq = (seq + 1) & 0xFFFF
             print(json.dumps({"line": line_num, "seq": (seq - 1) & 0xFFFF, "pose_age_us": age,
                               "mapping_valid": mapping_valid, "status": "SENT"}), file=sys.stderr)
