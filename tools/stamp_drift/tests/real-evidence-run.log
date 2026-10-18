@@ -1,0 +1,48 @@
+$ PYTHONDONTWRITEBYTECODE=1 python3 - <<'PY'
+from pathlib import Path
+from decimal import Decimal
+import csv, hashlib, itertools, json, sqlite3
+from tools.stamp_drift.analyze import analyze_path
+fixture_dir=Path('tools/stamp_drift/tests/fixtures')
+fixture=json.loads((fixture_dir/'real_ros_headers.json').read_text())
+source=Path(fixture['source'])
+report=analyze_path(source)
+assert report['input']['sha256']==fixture['source_sha256']
+assert report['input']['row_count']==5372
+with sqlite3.connect(source.as_uri()+'?mode=ro',uri=True) as db:
+    for topic in fixture['topics']:
+        ident=db.execute('SELECT id FROM topics WHERE name=?',(topic['name'],)).fetchone()[0]
+        values=db.execute('SELECT timestamp,data FROM messages WHERE topic_id=? ORDER BY id LIMIT 3',(ident,)).fetchall()
+        assert len(values)==len(topic['rows'])
+        for row,(receive_ns,payload) in zip(topic['rows'],values):
+            assert receive_ns==row['bag_receive_stamp_ns']
+            assert bytes(payload).startswith(bytes.fromhex(row['cdr_header_hex']))
+print('MEASURED: 12 exact portable Header prefixes and DB3 timestamps verified against source.')
+print('MEASURED source SHA-256:',report['input']['sha256'])
+for stream in report['streams']:
+    print('CALCULATED',stream['topic'],'samples=',stream['sample_count'],'drift_ppm=',stream['drift_ppm'],'diagnostic_status=',stream['diagnostic_status'])
+print('LIMIT: converted source pairs share timestamps by construction; this is not a live ROS recorder or hardware gate PASS.')
+metadata=json.loads((fixture_dir/'real_saved_evidence.json').read_text())
+sdk_source=Path('/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime')/metadata['source']
+assert hashlib.sha256(sdk_source.read_bytes()).hexdigest()==metadata['source_sha256']
+with sdk_source.open() as stream:
+    originals=list(itertools.islice((line for line in stream if json.loads(line)['stream']=='Accel'),12))
+assert ''.join(originals)==(fixture_dir/'real_sdk_source.jsonl').read_text()
+with (fixture_dir/'real_saved_evidence.csv').open() as stream:
+    for original,row in zip(originals,csv.DictReader(stream)):
+        value=json.loads(original,parse_float=Decimal)
+        assert int(value['sdk_timestamp_ms']*1000000)==int(row['header_stamp_ns'])
+        assert value['host_steady_ns']==int(row['receive_ns'])
+print('MEASURED: 12 adapted Accel fixture rows verified exactly against SDK decimal milliseconds and host CLOCK_MONOTONIC source.')
+PY
+MEASURED: 12 exact portable Header prefixes and DB3 timestamps verified against source.
+MEASURED source SHA-256: d9adff8ae17b4e9f8b89bf6a8a798ca1abfd19bf06575efdd7ea1befe05ea1fe
+CALCULATED /device_0/sensor_0/Infrared_1/image/data samples= 447 drift_ppm= 0.0 diagnostic_status= PASS
+CALCULATED /device_0/sensor_0/Infrared_2/image/data samples= 447 drift_ppm= 0.0 diagnostic_status= PASS
+CALCULATED /device_0/sensor_2/Accel_0/imu/data samples= 1507 drift_ppm= 0.0 diagnostic_status= PASS
+CALCULATED /device_0/sensor_2/Gyro_0/imu/data samples= 2971 drift_ppm= 0.0 diagnostic_status= PASS
+LIMIT: converted source pairs share timestamps by construction; this is not a live ROS recorder or hardware gate PASS.
+MEASURED: 12 adapted Accel fixture rows verified exactly against SDK decimal milliseconds and host CLOCK_MONOTONIC source.
+
+exit_code=0
+
