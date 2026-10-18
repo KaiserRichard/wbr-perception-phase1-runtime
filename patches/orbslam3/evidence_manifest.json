@@ -1,0 +1,62 @@
+{
+  "label": "SOURCE-SUPPORTED identity of locally inspected read-only evidence; no network",
+  "shared_root": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime",
+  "files": [
+    {
+      "path": "experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md",
+      "sha256": "9dae15c3001c6a39366414054f850f41b6c94b9a6d5a3e9b93385607ecd1c36d"
+    },
+    {
+      "path": "experiments/2026-10-14-codex-queue/OUTCOME.md",
+      "sha256": "9c3f2aceadb3d0199e8539c27420d55e872ab716109598bdfed30398de37fc3a"
+    },
+    {
+      "path": "experiments/2026-10-14-codex-queue/TICKET.md",
+      "sha256": "b8789fe3086732977937ee3a7c91117569eb15644139fa9feb7b4b90ae51856d"
+    },
+    {
+      "path": "experiments/2026-10-14-codex-queue/codex_run.log",
+      "sha256": "d64b52fda4d0623569053996b51adb00d7074fee5d842ad52291bbfaaad718e7"
+    },
+    {
+      "path": "experiments/2026-10-14-codex-queue/rebuild_j1.sh",
+      "sha256": "235e32bcf2b78c95a65e037f149f5ea72c97d7445257749822459f6053cdb2d0"
+    },
+    {
+      "path": "experiments/2026-10-14-codex-queue/run_offline.sh",
+      "sha256": "44d6e6e81689d836de1c4bdfcce9aece008d379a8a6bebb3b0107430995701dd"
+    },
+    {
+      "path": "experiments/2026-10-13-n4b-d435i-prep/stereo_inertial_d435i_file.patch",
+      "sha256": "67264b563e67f1fb6826d846168cce84ca253df0bd8e4e1082d687ba877a51b9"
+    },
+    {
+      "path": "experiments/2026-10-13-n4b-d435i-prep/d435i_input.h",
+      "sha256": "ba637972921e7504274b9b879d684fc6366246214b0f8afb495556517a9a951f"
+    },
+    {
+      "path": "third_party/ORB_SLAM3/Changelog.md",
+      "sha256": "de3350358454fe68fc15ac0567ae9a8e931908a849fd2c22b3e406c58b4544fa"
+    },
+    {
+      "path": "third_party/ORB_SLAM3/README.md",
+      "sha256": "b6dc671f967dd52e7e6ebcd6f4072692c93b0ab570aa9a9bcb6e4917cd4707f4"
+    },
+    {
+      "path": "third_party/ORB_SLAM3/src/Settings.cc",
+      "sha256": "bfa34355c01cf497ba5edbc3631fe403fb084e961386b832a62ed12a1fea261e"
+    },
+    {
+      "path": "third_party/ORB_SLAM3/include/Settings.h",
+      "sha256": "1a04bc0eafe5019b0559f33aa0193ef35f921b82afc34fd9a5c61ba1364227bb"
+    },
+    {
+      "path": "third_party/ORB_SLAM3/src/Tracking.cc",
+      "sha256": "3a3654bcc675f859cce1f2fb28ab32a129e8d734d0ac3d55417ff8b47a013264"
+    },
+    {
+      "path": "third_party/ORB_SLAM3/Examples/Stereo-Inertial/stereo_inertial_euroc.cc",
+      "sha256": "652979ce9058c9a8cd319710a0578174d2f8117ed186133243f356d291b00b69"
+    }
+  ]
+}

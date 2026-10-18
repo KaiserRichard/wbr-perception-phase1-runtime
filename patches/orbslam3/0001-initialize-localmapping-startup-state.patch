@@ -1,0 +1,45 @@
+From: WBR Runtime Maintainers <wbr-runtime@example.invalid>
+Subject: [PATCH] Initialize LocalMapping state read before the first keyframe
+
+Base-commit: 4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4
+
+The D435i file runner calls System::GetTimeFromIMUInit after TrackStereo,
+including before LocalMapping has processed a keyframe. GetCurrKFTime
+checks an indeterminate mpCurrentKeyFrame and may dereference garbage.
+Initialize it to nullptr so the existing no-keyframe branch returns zero.
+
+GetTimeFromIMUInit also subtracts mFirstTs before checking the atlas IMU
+flag. Initialize that timestamp to zero in the same clock domain as the
+keyframe timestamps, avoiding a second indeterminate read on this path.
+InitializeIMU still replaces it with the first keyframe timestamp.
+
+This extends the recorded Pi patch 4 by initializing mFirstTs as well.
+It does not address Settings printing, reset lifetime or thread safety.
+The saved report names SIGSEGV in GetCurrKFTime; no raw gdb trace or
+successful patched Pi rerun is available in the inspected evidence.
+
+---
+ include/LocalMapping.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/include/LocalMapping.h b/include/LocalMapping.h
+--- a/include/LocalMapping.h
++++ b/include/LocalMapping.h
+@@ -93,7 +93,7 @@
+     unsigned int mInitSect;
+     unsigned int mIdxInit;
+     unsigned int mnKFs;
+-    double mFirstTs;
++    double mFirstTs = 0.0;
+     int mnMatchesInliers;
+ 
+     // For debugging (erase in normal mode)
+@@ -163,7 +163,7 @@
+ 
+     std::list<KeyFrame*> mlNewKeyFrames;
+ 
+-    KeyFrame* mpCurrentKeyFrame;
++    KeyFrame* mpCurrentKeyFrame = nullptr;
+ 
+     std::list<MapPoint*> mlpRecentAddedMapPoints;
+ 

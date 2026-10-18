@@ -1,0 +1,219 @@
+{
+  "check": "orbslam3_n4b_startup_patch",
+  "tool_version": "1.0",
+  "status": "FAIL",
+  "started_utc": "2026-10-18T09:59:36.773378+00:00",
+  "ended_utc": "2026-10-18T09:59:39.769385+00:00",
+  "host": {
+    "system": "Darwin",
+    "machine": "x86_64",
+    "python": "3.11.0rc2"
+  },
+  "criteria": [
+    {
+      "id": "source_pin",
+      "description": "Exact pinned revision and source bytes",
+      "status": "PASS",
+      "measured": {
+        "hashes": {
+          "include/LocalMapping.h": "c786993960d52b74a064c2e487f0e450f989b954b17585febb5e6f8d95e1915b",
+          "src/LocalMapping.cc": "6da465cd5b88b6278188935f7b9264d493dd88d3487a75bccf4614bd40c8a30e",
+          "src/System.cc": "935dd45007a75d6750bb8c3b5c41f4edb91b7ef0b0944f655d4348955bbd168a"
+        },
+        "missing": []
+      },
+      "unit": "semantic check",
+      "threshold": "exact revision and SHA-256 equality",
+      "evidence": "raw/source_identity.json",
+      "threshold_source": "SOURCE-SUPPORTED: source_manifest.json; pinned upstream behavior"
+    },
+    {
+      "id": "patch_applies",
+      "description": "Patch checks/applies to pinned source copy",
+      "status": "PASS",
+      "measured": 0,
+      "unit": "semantic check",
+      "threshold": "git apply --check and git apply succeed",
+      "evidence": "raw/apply-check.stderr",
+      "threshold_source": "SOURCE-SUPPORTED: source_manifest.json; pinned upstream behavior"
+    },
+    {
+      "id": "startup_probe",
+      "description": "Isolated real declarations/methods compile and satisfy startup/initialized invariants",
+      "status": "FAIL",
+      "measured": [
+        0,
+        -6,
+        0,
+        -6
+      ],
+      "unit": "semantic check",
+      "threshold": "both C++11/C++17 compilation and assertions succeed",
+      "evidence": "raw/probe.cc",
+      "threshold_source": "SOURCE-SUPPORTED: source_manifest.json; pinned upstream behavior"
+    }
+  ],
+  "raw_files": [
+    {
+      "path": "raw/0001-initialize-localmapping-startup-state.patch",
+      "sha256": "2273145e1482d6d548b42f49fbea2b3acb7984c4241bd7f2de14dd4005e4a85e"
+    },
+    {
+      "path": "raw/apply-check.command.json",
+      "sha256": "7438741dab8c521eef8eda573c54f2c8815ffa1bba75c37ca3ad22984feb4b3a"
+    },
+    {
+      "path": "raw/apply-check.exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "raw/apply-check.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/apply-check.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/apply.command.json",
+      "sha256": "9fe0c5152f63a6fbe8c71c03b620ee2e2bf2961181189158bfd9467b5c1cc2f8"
+    },
+    {
+      "path": "raw/apply.exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "raw/apply.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/apply.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/c++11-compile.command.json",
+      "sha256": "53c10c321f0424c55568d8f7edd4c3c3404e41ed64ced591b5270c4a3f14a8db"
+    },
+    {
+      "path": "raw/c++11-compile.exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "raw/c++11-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/c++11-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/c++11-run.command.json",
+      "sha256": "a498fb0e7e0f8b6feefbda69e6a461ae98dd1c1637f78961ae4f882ad347f357"
+    },
+    {
+      "path": "raw/c++11-run.exit.txt",
+      "sha256": "d7b906a85360766ca93a7f2a3391ddc205bb248d2ec6e045769e67889fc1ebd5"
+    },
+    {
+      "path": "raw/c++11-run.stderr",
+      "sha256": "a98daf7a9d844c9b64c4b76060bfae8f42c800c70db85f6cdda23527e6a5e01a"
+    },
+    {
+      "path": "raw/c++11-run.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/c++17-compile.command.json",
+      "sha256": "013e323b5e1717e54c955b51186c1ede3ee37ec107da9f727b3c90881859ce63"
+    },
+    {
+      "path": "raw/c++17-compile.exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "raw/c++17-compile.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/c++17-compile.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/c++17-run.command.json",
+      "sha256": "d852d101df270421579e4134c942625c8bd0d951e5f11a6327d9e052aa99aba2"
+    },
+    {
+      "path": "raw/c++17-run.exit.txt",
+      "sha256": "d7b906a85360766ca93a7f2a3391ddc205bb248d2ec6e045769e67889fc1ebd5"
+    },
+    {
+      "path": "raw/c++17-run.stderr",
+      "sha256": "a98daf7a9d844c9b64c4b76060bfae8f42c800c70db85f6cdda23527e6a5e01a"
+    },
+    {
+      "path": "raw/c++17-run.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/compiler-version.command.json",
+      "sha256": "b4828860b0b6e0068a923c78cabb7806a765041621083d4829424a95453e7c7d"
+    },
+    {
+      "path": "raw/compiler-version.exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "raw/compiler-version.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/compiler-version.stdout",
+      "sha256": "d2af3d44a09719f99fc175b793416a798be04a5fa8684e903a324eebcc5c93a4"
+    },
+    {
+      "path": "raw/include/LocalMapping.h",
+      "sha256": "c786993960d52b74a064c2e487f0e450f989b954b17585febb5e6f8d95e1915b"
+    },
+    {
+      "path": "raw/probe.cc",
+      "sha256": "c976ea3417d0c25e238b34201a32a6b682c388bef1b901a9845fd9d64b496ada"
+    },
+    {
+      "path": "raw/revision.command.json",
+      "sha256": "78577c9a5daf0f3286f33634c86ec3c3a1418b3941c9b5c19a1f35a342b5bf3b"
+    },
+    {
+      "path": "raw/revision.exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "raw/revision.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/revision.stdout",
+      "sha256": "b60e77e6208934cd9d4eba618182dde5ec06543157c35234aa271d7bfd571c30"
+    },
+    {
+      "path": "raw/revision.txt",
+      "sha256": "b60e77e6208934cd9d4eba618182dde5ec06543157c35234aa271d7bfd571c30"
+    },
+    {
+      "path": "raw/source_identity.json",
+      "sha256": "a64315c67f4d3c934fccf2253c629107688d287a496546acbc073e13105a1edd"
+    },
+    {
+      "path": "raw/src/LocalMapping.cc",
+      "sha256": "6da465cd5b88b6278188935f7b9264d493dd88d3487a75bccf4614bd40c8a30e"
+    },
+    {
+      "path": "raw/src/System.cc",
+      "sha256": "935dd45007a75d6750bb8c3b5c41f4edb91b7ef0b0944f655d4348955bbd168a"
+    }
+  ],
+  "notes": [
+    "MEASURED offline software checks only. No Pi or N4B gate PASS.",
+    "SOURCE-SUPPORTED probe uses actual member declarations and method bodies, a surrogate constructor and stub KeyFrame/Atlas.",
+    "UNKNOWN: full translation-unit compilation, linked Pi behavior, concurrency/reset safety, physical sensor input."
+  ]
+}

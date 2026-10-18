@@ -1,0 +1,9 @@
+{
+  "label": "MEASURED offline documentation checks only",
+  "bash_blocks": 4,
+  "bash_n_exit": 0,
+  "bash_n_stderr": "",
+  "embedded_python_blocks_syntax_checked": 2,
+  "missing_local_links": [],
+  "document_sha256": "9443ec9fa25662943cbf0e8c13942a1e52fc4ee9980640c0a7fbf5f4932b7450"
+}

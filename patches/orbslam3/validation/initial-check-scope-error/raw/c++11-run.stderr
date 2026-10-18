@@ -1,0 +1,1 @@
+Assertion failed: (mapping->mpCurrentKeyFrame == nullptr), function main, file probe.cc, line 39.

@@ -1,0 +1,14 @@
+test_blocked_missing_compiler (test_patch.PatchChecks.test_blocked_missing_compiler) ... ok
+test_blocked_missing_source (test_patch.PatchChecks.test_blocked_missing_source) ... ok
+test_fail_source_bytes_changed (test_patch.PatchChecks.test_fail_source_bytes_changed) ... ok
+test_fail_unapplicable_patch (test_patch.PatchChecks.test_fail_unapplicable_patch) ... ok
+test_fail_wrong_revision (test_patch.PatchChecks.test_fail_wrong_revision) ... ok
+test_pass_reanalyzes_actual_pinned_source_and_executes_probe (test_patch.PatchChecks.test_pass_reanalyzes_actual_pinned_source_and_executes_probe) ... ok
+test_patch_four_alone_leaves_timestamp_indeterminate (test_patch.PatchChecks.test_patch_four_alone_leaves_timestamp_indeterminate) ... ok
+test_real_saved_crash_report_is_explicit_about_missing_raw_trace (test_patch.PatchChecks.test_real_saved_crash_report_is_explicit_about_missing_raw_trace) ... ok
+test_usage_exit_code (test_patch.PatchChecks.test_usage_exit_code) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 5.684s
+
+OK
