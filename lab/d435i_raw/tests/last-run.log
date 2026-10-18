@@ -28,6 +28,29 @@ test_wrong_serial_firmware_usb_fail (test_check.QualificationTests.test_wrong_se
 test_zero_and_saturated_images_fail (test_check.QualificationTests.test_zero_and_saturated_images_fail) ... ok
 
 ----------------------------------------------------------------------
-Ran 28 tests in 14.293s
+Ran 28 tests in 15.532s
+
+OK
+test_absent_camera_guard_fails_before_n1_or_hardware_read (__main__.ImageAndGuardTests.test_absent_camera_guard_fails_before_n1_or_hardware_read) ... ok
+test_accept_n2_refuses_diagnostic_inputs (__main__.ImageAndGuardTests.test_accept_n2_refuses_diagnostic_inputs) ... ok
+test_diagnostic_stage_progression_requires_opt_in (__main__.ImageAndGuardTests.test_diagnostic_stage_progression_requires_opt_in) ... ok
+test_failed_n1_never_reads_hardware (__main__.ImageAndGuardTests.test_failed_n1_never_reads_hardware) ... ok
+test_pgm_does_not_eat_whitespace_pixel_bytes (__main__.ImageAndGuardTests.test_pgm_does_not_eat_whitespace_pixel_bytes) ... ok
+test_synthetic_capture_records_diagnostic_mode_and_stops_on_live_flags (__main__.ImageAndGuardTests.test_synthetic_capture_records_diagnostic_mode_and_stops_on_live_flags) ... ok
+test_synthetic_n1_new_identity_and_explicit_diagnostic_receipt (__main__.ImageAndGuardTests.test_synthetic_n1_new_identity_and_explicit_diagnostic_receipt) ... ok
+test_calibration_warning_preserved_separately (__main__.KernelAndHealthTests.test_calibration_warning_preserved_separately) ... ok
+test_health_nonzero_flags_fail (__main__.KernelAndHealthTests.test_health_nonzero_flags_fail) ... ok
+test_historical_logs_are_analysis_only (__main__.KernelAndHealthTests.test_historical_logs_are_analysis_only) ... ok
+test_usb2_reset_disconnect_and_corruption_are_faults (__main__.KernelAndHealthTests.test_usb2_reset_disconnect_and_corruption_are_faults) ... ok
+test_analyzer_cli_failure_is_nonzero_and_additive (__main__.SDKAnalysisTests.test_analyzer_cli_failure_is_nonzero_and_additive) ... ok
+test_burst_does_not_pass_full_window (__main__.SDKAnalysisTests.test_burst_does_not_pass_full_window) ... ok
+test_full_interval_and_exact_profile (__main__.SDKAnalysisTests.test_full_interval_and_exact_profile) ... ok
+test_nonfinite_or_wrong_profile_rejected (__main__.SDKAnalysisTests.test_nonfinite_or_wrong_profile_rejected) ... ok
+test_repeat_backward_missing_and_unexpected_stream_fail (__main__.SDKAnalysisTests.test_repeat_backward_missing_and_unexpected_stream_fail) ... ok
+test_startup_gap_is_explicit_review_not_loss_exemption (__main__.SDKAnalysisTests.test_startup_gap_is_explicit_review_not_loss_exemption) ... ok
+test_synthetic_300_second_soak_uses_whole_interval (__main__.SDKAnalysisTests.test_synthetic_300_second_soak_uses_whole_interval) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 1.751s
 
 OK
