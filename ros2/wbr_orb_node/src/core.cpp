@@ -156,7 +156,14 @@ void Core::pump() {
         const auto before=adapter_.counters();
         vio::Stereo pair{std::move(left_.front().image),std::move(right_.front().image)};
         left_.pop_front(); right_.pop_front();
-        if (!adapter_.feed_stereo(std::move(pair))) input_imu_loss();
+        if (!adapter_.feed_stereo(std::move(pair))) {
+            // A rejected stereo pair is an image/association fault, not evidence
+            // that an IMU sample was lost.  Source clock/value faults still fail
+            // closed through their own validation paths above.
+            ++counts_.invalid;
+            if (adapter_.counters().image==before.image)
+                event(observer::Kind::dropped,active_id_,t,"adapter_stereo_rejected");
+        }
         if (adapter_.counters().prefix_pairs>before.prefix_pairs)
             event(observer::Kind::dropped,active_id_,t,"adapter_prefix_pair");
         if (adapter_.counters().image>before.image)

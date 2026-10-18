@@ -43,6 +43,23 @@ void coverage() {
     require(h.outputs[0].snapshot.source->ns==15,"coverage gate restamped image");
     h.core.finish();
 }
+void image_rejection_does_not_invent_imu_fault() {
+    Harness h;
+    h.feed(imu(0)); h.feed(imu(20));
+    auto mismatched=image(15);
+    mismatched.width=2; mismatched.y8={42,43};
+    h.feed(Left{image(15)}); h.feed(Right{mismatched});
+    require(h.outputs.empty(),"rejected stereo pair produced output");
+    require(!h.core.faulted(),"image rejection was misclassified as IMU loss");
+    require(h.core.counts().invalid==1 && h.core.adapter_counts().image==1,
+            "stereo image rejection was not counted");
+    h.core.finish();
+    std::ostringstream trace; h.events->dump_csv(trace);
+    const auto csv=trace.str();
+    const auto first=csv.find(",adapter_image_invalid,");
+    require(first!=std::string::npos && csv.find(",adapter_image_invalid,",first+1)==std::string::npos,
+            "stereo image rejection emitted duplicate drop events");
+}
 void drops() {
     Config c=config(); c.image_capacity=2; c.imu_capacity=2; c.ingress_capacity=2;
     auto events=std::make_unique<Recorder>("synthetic-host");
@@ -196,6 +213,7 @@ int main(int argc,char** argv) {
         std::string scenario=argv[1];
         if (scenario=="pairing" || scenario=="all") pairing();
         if (scenario=="coverage" || scenario=="all") coverage();
+        if (scenario=="image_rejection" || scenario=="all") image_rejection_does_not_invent_imu_fault();
         if (scenario=="drops" || scenario=="all") drops();
         if (scenario=="frames" || scenario=="all") stamps_and_frames();
         if (scenario=="faults" || scenario=="all") faults();

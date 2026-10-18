@@ -12,6 +12,7 @@ test_loss_reset_and_reinitialization (test_node.CoreTests.test_loss_reset_and_re
 test_original_stamp_and_camera_imu_composition (test_node.CoreTests.test_original_stamp_and_camera_imu_composition) ... ok
 test_real_saved_source_epochs (test_node.CoreTests.test_real_saved_source_epochs) ... ok
 test_sender_tracking_enum_compatibility (test_node.CoreTests.test_sender_tracking_enum_compatibility) ... ok
+test_stereo_image_rejection_not_imu_fault (test_node.CoreTests.test_stereo_image_rejection_not_imu_fault) ... ok
 test_absent_mapping_does_not_need_numpy (test_node.MappingTests.test_absent_mapping_does_not_need_numpy) ... ok
 test_mapping_cli_refuses_missing_input (test_node.MappingTests.test_mapping_cli_refuses_missing_input) ... ok
 test_prepared_mapping_uses_existing_clockmap (test_node.MappingTests.test_prepared_mapping_uses_existing_clockmap) ... ok
@@ -21,6 +22,6 @@ test_malformed_raw_is_internal_error (test_node.ResultContractTests.test_malform
 test_pass_and_analyze_saved_raw_files (test_node.ResultContractTests.test_pass_and_analyze_saved_raw_files) ... ok
 
 ----------------------------------------------------------------------
-Ran 18 tests in 1.732s
+Ran 19 tests in 2.434s
 
 OK

@@ -34,6 +34,9 @@ class CoreTests(unittest.TestCase):
     def test_imu_coverage(self):
         self.scenario('coverage')
 
+    def test_stereo_image_rejection_not_imu_fault(self):
+        self.scenario('image_rejection')
+
     def test_drop_oldest_and_fault_after_imu_loss(self):
         self.scenario('drops')
 

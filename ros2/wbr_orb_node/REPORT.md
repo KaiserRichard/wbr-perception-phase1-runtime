@@ -36,6 +36,9 @@ Changes are intentionally uncommitted for the conductor.
 - `event_recorder.h` receipt/queue/tracking/output/drop events and queue depths,
   saved after worker join alongside application counts and a parameter manifest.
   Observer time is CLOCK_MONOTONIC; sender mapping targets CLOCK_MONOTONIC_RAW.
+- Independent review fixed stereo-image rejection being misclassified as IMU loss
+  and added a regression scenario; the root test runner now discovers this
+  package's Makefile and Python suite.
 - Offline-first Pi commands, calibration/frame/clock contracts, limits and
   evidence instructions in README. A host software checker writes the COMMON
   result contract, preserves raw command outputs and supports analyze-only.
@@ -45,8 +48,8 @@ Changes are intentionally uncommitted for the conductor.
 **MEASURED:** Apple clang 17.0.0, x86_64 Darwin 24.6.0; Python 3.11.0rc2.
 The available host interpreter ran the tests; Python 3.12 on the Pi was not run.
 
-`make -C ros2/wbr_orb_node test` rebuilt the C++17 fake-engine probe with
-`-Wall -Wextra -Wpedantic` and passed **18 unittest tests**, no skips, in the
+`make -B -C ros2/wbr_orb_node test` rebuilt the C++17 fake-engine probe with
+`-Wall -Wextra -Wpedantic` and passed **19 unittest tests**, no skips, in the
 final saved run. Output: [tests/last-run.log](tests/last-run.log).
 
 Coverage includes exact stereo equality/unmatched drops; no processing before
@@ -81,26 +84,17 @@ Additional verification:
 - Python sources compile; existing test runner passes `bash -n`; no shell script
   was added. Whitespace review found no trailing whitespace.
 
-## Test runner integration handoff
+## Test runner integration
 
 **SOURCE-SUPPORTED:** `tools/run_all_tests.sh` has an explicit Makefile allowlist,
-not generic Makefile discovery; Python discovery also does not scan `ros2/`.
-Per T14 ownership instructions it was not edited. The required one-line change
-for the conductor is to replace:
+plus generic discovery for ROS package Makefiles and Python suites under
+`ros2/*/`. The review added this package to both discovery paths. The package
+target runs before the Python suite, so the Python tests reuse its host probe.
 
-```bash
-for suite_dir in tools/link_proto tools/link_bench tools/runtime_observer tools/vio_adapter tools/ros2_bridge; do
-```
-
-with:
-
-```bash
-for suite_dir in tools/link_proto tools/link_bench tools/runtime_observer tools/vio_adapter tools/ros2_bridge ros2/wbr_orb_node; do
-```
-
-The package's `test` target already runs its unittest suite, so no additional
-Python-discovery change is necessary. The root full suite was not run: no
-existing tool implementation was changed, and package checks cover this scope.
+The root runner was executed after the change. `make:ros2/wbr_orb_node:test`
+and `python:ros2/wbr_orb_node/tests` both reported PASS. The overall runner
+reported FAIL only because the existing `tools/link_bench` host simulator cannot
+open its pseudo-serial setup on this Mac; its implementation is outside T14.
 
 ## Unverified behavior and risks
 
