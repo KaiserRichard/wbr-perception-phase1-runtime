@@ -28,6 +28,7 @@ class SupervisorModel:
         self.primary_fresh = bool(primary_fresh)
         self.last_hb = self.last_health = None
         self.last_age = 0
+        self.last_age_valid = False
         self.latched = False
         self.session_id = None
         self.last_wire_seq = None
@@ -55,14 +56,18 @@ class SupervisorModel:
             self._transition("FAILSAFE", "HEARTBEAT_TIMEOUT")
         if self.last_health is not None:
             silence = now_us - self.last_health
-            age = min(0xFFFFFFFFFFFFFFFF, self.last_age + silence + self.c["transit_bound_us"])
-            if (silence >= self.c["receipt_silence_timeout_us"] or age >= self.c["pose_age_timeout_us"]) and not self.latched:
+            # UINT32_MAX with validity flags clear means unknown, not measured
+            # stale age. Receipt/heartbeat watchdogs still expire independently.
+            age = (min(0xFFFFFFFFFFFFFFFF, self.last_age + silence + self.c["transit_bound_us"])
+                   if self.last_age_valid else None)
+            age_timeout = age is not None and age >= self.c["pose_age_timeout_us"]
+            if (silence >= self.c["receipt_silence_timeout_us"] or age_timeout) and not self.latched:
                 self.latched = True
                 self.healthy_since = None
-                self._transition("FAILSAFE", "SOURCE_AGE_TIMEOUT" if age >= self.c["pose_age_timeout_us"] else "RESULT_TIMEOUT")
+                self._transition("FAILSAFE", "SOURCE_AGE_TIMEOUT" if age_timeout else "RESULT_TIMEOUT")
             elif silence >= self.c["receipt_silence_hold_us"]:
                 self._transition("HOLD", "RESULT_SILENCE"); self.healthy_since = None
-            elif age >= self.c["pose_age_hold_us"]:
+            elif age is not None and age >= self.c["pose_age_hold_us"]:
                 self._transition("HOLD", "SOURCE_AGE_HOLD"); self.healthy_since = None
         if event is not None:
             if not 0 <= event.wire_seq <= 0xFFFF or event.received_us > now_us:
@@ -71,6 +76,7 @@ class SupervisorModel:
                 if self.session_id is None or self.session_id != event.session_id:
                     self.session_id = event.session_id
                     self.last_hb = None; self.last_health = None
+                    self.last_age_valid = False
                     self.map_reset_counter = None
                     self.last_report_fresh = False
                     self.healthy_since = None
@@ -88,11 +94,13 @@ class SupervisorModel:
                 self.map_reset_counter = event.map_reset_counter
                 self.last_health = event.received_us
                 self.last_age = min(U32_MAX, event.age_at_send_us)
+                self.last_age_valid = (event.flags & (FLAG_AGE_VALID | FLAG_MAPPING_VALID) ==
+                                       (FLAG_AGE_VALID | FLAG_MAPPING_VALID))
                 self.last_report_fresh = False
                 if event.tracking_state == TRACKING_STATES["LOST"]:
                     self.latched = True; self.healthy_since = None
                     self._transition("FAILSAFE", "SOURCE_AGE_TIMEOUT"); return self.state
-                if event.flags & (FLAG_AGE_VALID | FLAG_MAPPING_VALID) != (FLAG_AGE_VALID | FLAG_MAPPING_VALID):
+                if not self.last_age_valid:
                     self._transition("HOLD", "SOURCE_AGE_HOLD"); self.healthy_since = None; return self.state
                 conservative_age = self.last_age + self.c["transit_bound_us"]
                 if conservative_age >= self.c["pose_age_timeout_us"]:
@@ -104,8 +112,9 @@ class SupervisorModel:
                 self.last_report_fresh = True
         if self.last_hb is not None and self.last_health is not None:
             silence = max(0, now_us - self.last_health)
-            age = min(0xFFFFFFFFFFFFFFFF, self.last_age + silence + self.c["transit_bound_us"])
-            healthy = (self.primary_fresh and self.last_report_fresh and age < self.c["pose_age_hold_us"] and
+            age = (min(0xFFFFFFFFFFFFFFFF, self.last_age + silence + self.c["transit_bound_us"])
+                   if self.last_age_valid else None)
+            healthy = (self.primary_fresh and self.last_report_fresh and age is not None and age < self.c["pose_age_hold_us"] and
                        silence < self.c["receipt_silence_hold_us"] and
                        now_us - self.last_hb < self.c["heartbeat_timeout_us"])
             if healthy:
@@ -114,7 +123,7 @@ class SupervisorModel:
             else:
                 self.healthy_since = None
                 if not self.latched and self.state == "FRESH":
-                    self._transition("HOLD", "SOURCE_AGE_HOLD" if age >= self.c["pose_age_hold_us"] else "RESULT_SILENCE")
+                    self._transition("HOLD", "SOURCE_AGE_HOLD" if age is None or age >= self.c["pose_age_hold_us"] else "RESULT_SILENCE")
         return self.state
 
     def rearm(self, now_us: int):
@@ -125,6 +134,7 @@ class SupervisorModel:
         if (self.healthy_since is None or now_us < self.healthy_since or
                 now_us - self.healthy_since < self.c["rearm_healthy_us"]): return False
         self.latched = False; self.last_hb = self.last_health = None
+        self.last_age_valid = False
         self.last_report_fresh = False; self.map_reset_counter = None
         self.healthy_since = None; self._transition("INIT", "REARM")
         return True
