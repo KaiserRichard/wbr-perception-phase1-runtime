@@ -1,0 +1,13 @@
+test_builds_manifest_from_temp_git_fixture_and_excludes_host_bits (test_deploy.DeployTests.test_builds_manifest_from_temp_git_fixture_and_excludes_host_bits) ... ok
+test_bundle_manifest_retains_real_saved_power_usb_fixture (test_deploy.DeployTests.test_bundle_manifest_retains_real_saved_power_usb_fixture) ... ok
+test_dirty_tree_refused_unless_explicitly_allowed (test_deploy.DeployTests.test_dirty_tree_refused_unless_explicitly_allowed) ... ok
+test_dry_run_prints_fake_host_transport_commands (test_deploy.DeployTests.test_dry_run_prints_fake_host_transport_commands) ... ok
+test_local_deploy_keeps_previous_and_shell_rollback_swaps_links (test_deploy.DeployTests.test_local_deploy_keeps_previous_and_shell_rollback_swaps_links) ... ok
+test_manifest_verification_detects_tampered_file (test_deploy.DeployTests.test_manifest_verification_detects_tampered_file) ... ok
+test_shell_local_transport_installs_and_verifies_release (test_deploy.DeployTests.test_shell_local_transport_installs_and_verifies_release) ... ok
+test_smoke_status_precedence_covers_pass_fail_and_blocked (test_deploy.DeployTests.test_smoke_status_precedence_covers_pass_fail_and_blocked) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 8.474s
+
+OK
