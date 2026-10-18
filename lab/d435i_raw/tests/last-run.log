@@ -1,0 +1,33 @@
+test_absent_device_and_unsupported_profile_are_blocked (test_check.CaptureTests.test_absent_device_and_unsupported_profile_are_blocked) ... ok
+test_fake_sdk_complete_capture_no_imu_decimation_and_emitter_restore (test_check.CaptureTests.test_fake_sdk_complete_capture_no_imu_decimation_and_emitter_restore) ... ok
+test_queue_overflow_is_a_failure (test_check.CaptureTests.test_queue_overflow_is_a_failure) ... ok
+test_sdk_global_timestamp_does_not_become_fake_hardware_time (test_check.CaptureTests.test_sdk_global_timestamp_does_not_become_fake_hardware_time) ... ok
+test_shutdown_error_and_callback_error_are_failures (test_check.CaptureTests.test_shutdown_error_and_callback_error_are_failures) ... ok
+test_boundary_stall_cannot_hide_behind_full_rate (test_check.QualificationTests.test_boundary_stall_cannot_hide_behind_full_rate) ... ok
+test_cli_usage_errors_use_contract_exit_three (test_check.QualificationTests.test_cli_usage_errors_use_contract_exit_three) ... ok
+test_config_requires_sources_and_finite_numeric_values (test_check.QualificationTests.test_config_requires_sources_and_finite_numeric_values) ... ok
+test_domain_transition_has_no_cross_clock_delta (test_check.QualificationTests.test_domain_transition_has_no_cross_clock_delta) ... ok
+test_duplicate_reversed_and_nonincreasing_frames (test_check.QualificationTests.test_duplicate_reversed_and_nonincreasing_frames) ... ok
+test_frame_gap_and_shortfall_fail (test_check.QualificationTests.test_frame_gap_and_shortfall_fail) ... ok
+test_host_realtime_reversal_is_separate_from_monotonic (test_check.QualificationTests.test_host_realtime_reversal_is_separate_from_monotonic) ... ok
+test_missing_ir_samples_blocked_and_bad_pgm_fail (test_check.QualificationTests.test_missing_ir_samples_blocked_and_bad_pgm_fail) ... ok
+test_missing_raw_blocked_and_malformed_metadata_fail (test_check.QualificationTests.test_missing_raw_blocked_and_malformed_metadata_fail) ... ok
+test_nan_truncated_csv_and_unsafe_image_fail (test_check.QualificationTests.test_nan_truncated_csv_and_unsafe_image_fail) ... ok
+test_parent_timeout_preserves_partial_metadata_and_logs (test_check.QualificationTests.test_parent_timeout_preserves_partial_metadata_and_logs) ... ok
+test_pass_contract_and_no_unmapped_latency (test_check.QualificationTests.test_pass_contract_and_no_unmapped_latency) ... ok
+test_real_old_unit_fixture_cli_and_provenance (test_check.QualificationTests.test_real_old_unit_fixture_cli_and_provenance) ... ok
+test_replay_cli_immutable_inputs_raw_logs_and_exit_codes (test_check.QualificationTests.test_replay_cli_immutable_inputs_raw_logs_and_exit_codes) ... ok
+test_sdk_missing_is_blocked_without_hardware (test_check.QualificationTests.test_sdk_missing_is_blocked_without_hardware) ... ok
+test_short_duration_wrong_profiles_emitter_and_overflow_fail (test_check.QualificationTests.test_short_duration_wrong_profiles_emitter_and_overflow_fail) ... ok
+test_static_confirmation_required_and_fail_beats_blocked (test_check.QualificationTests.test_static_confirmation_required_and_fail_beats_blocked) ... ok
+test_static_plausibility_fail_and_noise_not_calibration (test_check.QualificationTests.test_static_plausibility_fail_and_noise_not_calibration) ... ok
+test_stereo_domain_mismatch_never_subtracts_clocks (test_check.QualificationTests.test_stereo_domain_mismatch_never_subtracts_clocks) ... ok
+test_stereo_tolerance_and_missing_pair (test_check.QualificationTests.test_stereo_tolerance_and_missing_pair) ... ok
+test_unknown_domain_and_clock_field_inconsistency (test_check.QualificationTests.test_unknown_domain_and_clock_field_inconsistency) ... ok
+test_wrong_serial_firmware_usb_fail (test_check.QualificationTests.test_wrong_serial_firmware_usb_fail) ... ok
+test_zero_and_saturated_images_fail (test_check.QualificationTests.test_zero_and_saturated_images_fail) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 14.293s
+
+OK
