@@ -21,6 +21,7 @@ else:
     from clockmap import _fit_affine
 
 VERSION = "0.1.0"
+PERCENTILE_METHOD = "numpy linear interpolation"
 REQUIRED_COLUMNS = {
     "stream", "index", "frame_number", "sdk_ms", "domain",
     "host_steady_ns", "host_utc_ns",
@@ -52,6 +53,7 @@ def _domain(value: str) -> str:
 def _percentiles(values: list[int] | tuple[float, ...]) -> dict:
     return {
         "count": len(values),
+        "percentile_method": PERCENTILE_METHOD,
         **{name: float(np.percentile(values, p)) for name, p in
            (("min", 0), ("p50", 50), ("p90", 90), ("p95", 95),
             ("p99", 99), ("max", 100))},
@@ -189,6 +191,7 @@ def analyze_timestamps(path: str | Path, *, utc_step_threshold_ns: int = 1_000_0
     return {
         "tool": "clockmap",
         "version": VERSION,
+        "percentile_method": PERCENTILE_METHOD,
         "evidence": "INFERRED diagnostic method; real recorder files NOT verified",
         "input": {"path": str(path), "sha256": hashlib.sha256(raw).hexdigest()},
         "utc_step_threshold_ns": utc_step_threshold_ns,

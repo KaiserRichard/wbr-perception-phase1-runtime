@@ -82,11 +82,14 @@ struct Stats {
     void add(const Sample& s) {
         const std::string d = rs2_timestamp_domain_to_string(s.domain);
         if (count) {
-            if (d != domain) ++domain_changes;
-            const double dt = s.stamp - last_stamp;
-            if (dt < 0) ++backwards;
-            if (dt == 0) ++duplicates;
-            max_gap_ms = std::max(max_gap_ms, dt);
+            if (d != domain) {
+                ++domain_changes;
+            } else {
+                const double dt = s.stamp - last_stamp;
+                if (dt < 0) ++backwards;
+                if (dt == 0) ++duplicates;
+                max_gap_ms = std::max(max_gap_ms, dt);
+            }
             if (s.number > last_number && s.number - last_number > 1) frame_gaps += s.number - last_number - 1;
             if (s.number <= last_number) ++frame_reversals;
         }
@@ -194,6 +197,7 @@ public:
 };
 } // namespace
 
+#ifndef ALLAN_RECORDER_TEST
 int main(int argc, char** argv) {
     if (argc != 3 && argc != 5) {
         std::cerr << "Usage: d435i_imu_record OUTPUT_DIR HOURS (0.01..30) [--serial 317422076650|ANY]\n"; return 2;
@@ -279,3 +283,4 @@ int main(int argc, char** argv) {
         std::cout << "OPEN: clean recorder stop; physical timing/noise/power qualification pending\n"; return 0;
     } catch (const std::exception& e) { std::cerr << "OPEN: " << e.what() << '\n'; return 1; }
 }
+#endif

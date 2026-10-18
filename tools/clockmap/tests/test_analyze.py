@@ -56,6 +56,10 @@ class AnalyzerTests(unittest.TestCase):
         self.assertEqual(fit["offset_at_reference_ns"], STEADY_BASE + 2_000_000 - UTC_BASE)
         self.assertLess(fit["absolute_residual_ns"]["max"], 0.01)
         self.assertEqual(stream["arrival_latency_proxy_ns"]["p50"], 2_000_000)
+        self.assertEqual(report["percentile_method"], "numpy linear interpolation")
+        self.assertEqual(stream["arrival_latency_proxy_ns"]["percentile_method"],
+                         "numpy linear interpolation")
+        self.assertEqual(fit["residual_ns"]["percentile_method"], "numpy linear interpolation")
         self.assertIn("USB/driver delay", report["arrival_latency_label"])
         self.assertIn("not exposure-to-arrival", report["arrival_latency_label"])
         self.assertEqual(report["input"]["sha256"], hashlib.sha256(before).hexdigest())

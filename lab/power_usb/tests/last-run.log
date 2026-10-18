@@ -40,6 +40,8 @@ test_psu_3a_fails (test_power_usb.AnalyzeTests.test_psu_3a_fails) ... ok
 test_psu_big_endian_no_ascii_or_usb_override_inference (test_power_usb.AnalyzeTests.test_psu_big_endian_no_ascii_or_usb_override_inference) ... ok
 test_replay_immutable_and_cli_status (test_power_usb.AnalyzeTests.test_replay_immutable_and_cli_status) ... ok
 test_sample_coverage_blocks (test_power_usb.AnalyzeTests.test_sample_coverage_blocks) ... ok
+test_temperature_79_9_passes (test_power_usb.AnalyzeTests.test_temperature_79_9_passes) ... ok
+test_temperature_80_0_fails_inclusively (test_power_usb.AnalyzeTests.test_temperature_80_0_fails_inclusively) ... ok
 test_temperature_hot_sysfs (test_power_usb.AnalyzeTests.test_temperature_hot_sysfs) ... ok
 test_temperature_hot_vcgencmd (test_power_usb.AnalyzeTests.test_temperature_hot_vcgencmd) ... ok
 test_temperature_missing_one_source_blocks (test_power_usb.AnalyzeTests.test_temperature_missing_one_source_blocks) ... ok
@@ -56,6 +58,6 @@ test_sysfs_enumeration_and_binary_supply (test_power_usb.CaptureTests.test_sysfs
 test_real_snapshot_is_partial_blocked_not_new_fault (test_power_usb.RealEvidenceTests.test_real_snapshot_is_partial_blocked_not_new_fault) ... ok
 
 ----------------------------------------------------------------------
-Ran 56 tests in 5.642s
+Ran 58 tests in 5.834s
 
 OK

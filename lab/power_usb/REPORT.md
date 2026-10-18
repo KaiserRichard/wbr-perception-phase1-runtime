@@ -43,6 +43,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s lab/power_usb/tests -v
 
 - Complete synthetic PASS and the required result fields, evidence references and SHA-256 values.
 - Current/newly latched under-voltage FAIL, pre-existing history handling, all eight decoded bits, missing/malformed flags and history resets.
+- Temperature policy checks 79.9 °C PASS and exactly 80.0 °C FAIL, matching Raspberry Pi's published Pi 5 throttling boundary.
 - PMIC channel formats, low input voltage FAIL, exact boundary, and refusal to substitute core voltage for EXT5V.
 - Hot firmware/sysfs temperatures and incomplete thermal evidence.
 - Big-endian PSU declarations, 3 A FAIL, unavailable declarations, USB override semantics and optional 5 A policy.
@@ -73,7 +74,7 @@ no shell script files to run through `bash -n`.
 **NOT VERIFIED / open risks:**
 
 - No live Pi firmware commands, PMIC values, real negotiated-current property, kernel-access permissions or new-unit USB stability were tested. The 5 A property is a firmware declaration, not electrical proof. A USB-current override alone cannot pass it.
-- PROPOSED voltage/temperature/sampling limits need bench-owner review before accepting production evidence. The ADC's calibration/accuracy is UNKNOWN; values are sampled, not continuous rail measurements.
+- PROPOSED voltage/sampling limits need bench-owner review before accepting production evidence. The 80 °C inclusive temperature boundary is SOURCE-SUPPORTED by Raspberry Pi's Pi 5 thermal article. The ADC's calibration/accuracy is UNKNOWN; values are sampled, not continuous rail measurements.
 - A historical under-voltage bit already set at baseline cannot distinguish another historical-only event. The result explains this limitation. Current bits, ADC readings and kernel messages remain checked.
 - Other throttling/capping/soft-temperature bits are recorded but do not independently fail T1. An idle or T1 PASS does not validate timing benchmarks under throttling.
 - Sequential reads perturb timing. Missing samples or large gaps block; undetected events between samples remain possible. Shell-command lifetime is a polled upper-bound estimate of activity, not proof of useful load or camera frame delivery.
@@ -87,3 +88,20 @@ Proposed commit message:
 ```text
 lab: add replayable Pi 5 power and D435i USB qualification check
 ```
+
+## T21 audit corrections — 2026-10-18
+
+The shared audit findings are resolved across this directory, Allan recording,
+clockmap, and profile validity. The power check now uses the same inclusive
+80 °C failure boundary as profile validity; Raspberry Pi's Pi 5 article says
+throttling begins when temperature reaches 80 °C. Allan interval counters skip
+timestamp subtraction across domain changes, and clockmap labels its NumPy
+linear interpolation percentiles. Details and per-tool test results are in the
+owned directory REPORT.md files; all four suites pass and logs are saved under
+their respective `tests/last-run.log` paths. The real partial power fixture and
+profile's saved N4A fixture remain included.
+
+**NOT verified:** no Pi, camera, librealsense runtime or physical gate was
+tested; fixture PASS results establish software behavior only.
+
+Proposed commit message: `fix: resolve cross-tool audit findings`

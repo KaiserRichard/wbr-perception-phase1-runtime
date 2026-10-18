@@ -37,6 +37,15 @@ class ProfileTests(unittest.TestCase):
         self.assertEqual(profile.validity(type("Args", (), {"analyze_only": root, "out": root})()), 0)
         self.assertEqual(json.loads((root / "result.json").read_text())["status"], "PASS")
 
+    def test_temperature_boundary_79_9_passes_and_80_0_fails(self):
+        for temperature, expected in ((79.9, 0), (80.0, 1)):
+            with self.subTest(temperature=temperature):
+                root = fixture_dir("synthetic", throttle="0", temp=temperature)
+                self.assertEqual(profile.validity(type("Args", (), {"analyze_only": root, "out": root})()), expected)
+                result = json.loads((root / "result.json").read_text())
+                criterion = next(item for item in result["criteria"] if item["id"] == "max_temperature")
+                self.assertEqual(criterion["status"], "PASS" if expected == 0 else "FAIL")
+
     def test_validity_ignores_rows_without_throttle_poll(self):
         root = fixture_dir("synthetic", throttle="0", temp=55)
         with (root / "samples.csv").open(newline="") as stream:

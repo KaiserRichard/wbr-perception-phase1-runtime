@@ -1,0 +1,42 @@
+test_cli_both_module_and_script_and_input_errors (test_analyze.AnalyzerTests.test_cli_both_module_and_script_and_input_errors) ... ok
+test_decimal_ms_sub_nanosecond_rounding (test_analyze.AnalyzerTests.test_decimal_ms_sub_nanosecond_rounding) ... ok
+test_domain_transitions_never_stitched (test_analyze.AnalyzerTests.test_domain_transitions_never_stitched) ... ok
+test_empty_and_short_csv (test_analyze.AnalyzerTests.test_empty_and_short_csv) ... ok
+test_fit_and_absolute_latency_separated (test_analyze.AnalyzerTests.test_fit_and_absolute_latency_separated) ... ok
+test_hardware_only_unavailable (test_analyze.AnalyzerTests.test_hardware_only_unavailable) ... ok
+test_invalid_headers_fields_and_nonfinite_sdk_refused (test_analyze.AnalyzerTests.test_invalid_headers_fields_and_nonfinite_sdk_refused) ... ok
+test_negative_latency_retained_as_diagnostic (test_analyze.AnalyzerTests.test_negative_latency_retained_as_diagnostic) ... ok
+test_per_stream_counts_indices_and_latency_percentiles (test_analyze.AnalyzerTests.test_per_stream_counts_indices_and_latency_percentiles) ... ok
+test_sdk_and_frame_reversals_split_fit (test_analyze.AnalyzerTests.test_sdk_and_frame_reversals_split_fit) ... ok
+test_utc_step_splits_fit (test_analyze.AnalyzerTests.test_utc_step_splits_fit) ... ok
+test_certain_future_unavailable (test_clockmap.AgeTests.test_certain_future_unavailable) ... ok
+test_no_map_invalid_map_wrong_domains_and_boot_are_unavailable (test_clockmap.AgeTests.test_no_map_invalid_map_wrong_domains_and_boot_are_unavailable) ... ok
+test_r2_upper_bound_and_frozen_epoch_age (test_clockmap.AgeTests.test_r2_upper_bound_and_frozen_epoch_age) ... ok
+test_constant_asymmetry_bias_is_bounded (test_clockmap.MappingTests.test_constant_asymmetry_bias_is_bounded) ... ok
+test_duplicate_exchange_refused (test_clockmap.MappingTests.test_duplicate_exchange_refused) ... ok
+test_forward_and_backward_steps_invalidate (test_clockmap.MappingTests.test_forward_and_backward_steps_invalidate) ... ok
+test_insufficient_samples_unavailable (test_clockmap.MappingTests.test_insufficient_samples_unavailable) ... ok
+test_inverse_recovers_epoch_and_units (test_clockmap.MappingTests.test_inverse_recovers_epoch_and_units) ... ok
+test_large_integer_epochs_preserve_nanoseconds (test_clockmap.MappingTests.test_large_integer_epochs_preserve_nanoseconds) ... ok
+test_long_rtt_alone_is_not_a_clock_step (test_clockmap.MappingTests.test_long_rtt_alone_is_not_a_clock_step) ... ok
+test_minimum_rtt_samples_preferred (test_clockmap.MappingTests.test_minimum_rtt_samples_preferred) ... ok
+test_offset_and_drift_recovered (test_clockmap.MappingTests.test_offset_and_drift_recovered) ... ok
+test_old_session_conversion_invalidates (test_clockmap.MappingTests.test_old_session_conversion_invalidates) ... ok
+test_session_change_invalidates_until_explicit_bind (test_clockmap.MappingTests.test_session_change_invalidates_until_explicit_bind) ... ok
+test_source_clock_reversal_invalidates (test_clockmap.MappingTests.test_source_clock_reversal_invalidates) ... ok
+test_time_varying_asymmetry_and_extrapolation_bounded (test_clockmap.MappingTests.test_time_varying_asymmetry_and_extrapolation_bounded) ... ok
+test_window_bounded_and_revisions_advance (test_clockmap.MappingTests.test_window_bounded_and_revisions_advance) ... ok
+test_cross_domain_arithmetic_and_order_refused (test_clockmap.StampTests.test_cross_domain_arithmetic_and_order_refused) ... ok
+test_cross_session_refused (test_clockmap.StampTests.test_cross_session_refused) ... ok
+test_float_stamps_durations_and_missing_session_refused (test_clockmap.StampTests.test_float_stamps_durations_and_missing_session_refused) ... ok
+test_same_domain_durations_and_shifts (test_clockmap.StampTests.test_same_domain_durations_and_shifts) ... ok
+test_map_fit_across_mcu_wrap (test_clockmap.UnwrapTests.test_map_fit_across_mcu_wrap) ... ok
+test_reboot_needs_reset (test_clockmap.UnwrapTests.test_reboot_needs_reset) ... ok
+test_reversal_and_half_range_latch (test_clockmap.UnwrapTests.test_reversal_and_half_range_latch) ... ok
+test_uint32_validation (test_clockmap.UnwrapTests.test_uint32_validation) ... ok
+test_wrap_and_equal_ticks (test_clockmap.UnwrapTests.test_wrap_and_equal_ticks) ... ok
+
+----------------------------------------------------------------------
+Ran 37 tests in 0.764s
+
+OK

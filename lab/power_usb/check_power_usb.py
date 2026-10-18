@@ -346,10 +346,10 @@ def analyze(out, capture, cfg):
         min(available_volts) if available_volts else None, "V", "min_ext5v_v",
         ok=bool(voltage) and all(v is not None for v in voltage),
         fail=any(v < cfg["min_ext5v_v"]["value"] for v in available_volts))
-    add("temperature", "Maximum across vcgencmd and all sysfs thermal zones",
+    add("temperature", f"Maximum across vcgencmd and all sysfs thermal zones; FAIL at or above the configured {cfg['max_temperature_c']['value']} degC throttling boundary",
         max(temperatures) if temperatures else None, "degC", "max_temperature_c",
         ok=bool(samples) and all(temp_complete),
-        fail=any(v > cfg["max_temperature_c"]["value"] for v in temperatures))
+        fail=any(v >= cfg["max_temperature_c"]["value"] for v in temperatures))
 
     times = [s.get("clock_monotonic_ns") for s in samples]
     valid_times = bool(times) and all(type(t) is int for t in times)

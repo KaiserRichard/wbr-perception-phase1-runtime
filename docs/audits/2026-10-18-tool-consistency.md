@@ -99,3 +99,9 @@ No contract defect was found in the lab qualification checks audited. The accura
 **Recommended owner decisions:** fix the Allan recorder cross-domain interval accounting with a regression test; name and version the sensor profiles and bag provenance; decide 80 °C boundary behavior; decide whether to centralize storage constants; label clockmap percentile method and choose a common method if direct comparison is needed; decide whether accuracy summaries should adopt the lab result contract.
 
 **Proposed commit message:** `docs: audit cross-tool consistency and open profile decisions`
+
+### Resolved by T21 — 2026-10-18
+
+- Allan recorder `Stats::add` now counts timestamp-domain transitions and skips interval subtraction across the boundary; the next sample establishes the new domain baseline. A C++ regression test exercises transition, recovery, and same-domain duplicate accounting using the local librealsense stub.
+- Power/USB and profile validity both fail inclusively at 80 °C (79.9 °C passes; 80.0 °C fails). Raspberry Pi's Pi 5 article says the processor begins throttling when the temperature reaches 80 °C: https://www.raspberrypi.com/news/heating-and-cooling-raspberry-pi-5/ . Both configs and operator docs cite this source.
+- Clockmap retains NumPy's percentile calculation and labels every percentile object and top-level report `numpy linear interpolation`; its README records that runtime_observer/profile uses nearest-rank and finite-sample values can differ.

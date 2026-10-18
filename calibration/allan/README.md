@@ -57,6 +57,12 @@ must not be used for accepted unit-specific calibration. SDK, ASIC,
 firmware-update and USB descriptor serials are separate fields. The last three
 are null/UNKNOWN in the recorder, not copied from the SDK serial.
 
+Recorder timing counters never subtract SDK timestamps across timestamp-domain
+changes. A transition increments `domain_changes` and starts a new interval
+baseline; subsequent same-domain samples resume gap/reversal accounting. A
+synthetic C++ regression test exercises this behavior with the local
+`tests/stub` librealsense API surface.
+
 Only motion streams start. No images, bag, ROS, ORB-SLAM3, calibration/firmware
 write or option change occurs. Global-time values are read before/after for
 every sensor that supports the option, otherwise null. Global-time and motion

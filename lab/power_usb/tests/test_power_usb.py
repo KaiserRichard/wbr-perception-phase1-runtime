@@ -164,6 +164,19 @@ class AnalyzeTests(unittest.TestCase):
         self.replace(self.cap["samples"][1]["temperature"], "temp=80.1'C")
         self.run_analysis("FAIL", "temperature")
 
+    def set_all_temperatures(self, degrees_c):
+        for sample in self.cap["samples"]:
+            self.replace(sample["temperature"], f"temp={degrees_c:.1f}'C")
+            self.replace(sample["thermal"][0]["temperature"], f"{degrees_c * 1000:.0f}\n", False)
+
+    def test_temperature_79_9_passes(self):
+        self.set_all_temperatures(79.9)
+        self.run_analysis("PASS", "temperature")
+
+    def test_temperature_80_0_fails_inclusively(self):
+        self.set_all_temperatures(80.0)
+        self.run_analysis("FAIL", "temperature")
+
     def test_temperature_missing_one_source_blocks(self):
         self.cap["samples"][1]["thermal"] = []
         self.run_analysis("BLOCKED", "temperature")
@@ -332,7 +345,7 @@ class AnalyzeTests(unittest.TestCase):
                 self.assertFalse((self.out / "new").exists())
 
     def test_config_rejects_unjustified_nonfinite_thresholds_and_bad_patterns(self):
-        for mutate in (lambda c: c["max_temperature_c"].pop("rationale"),
+        for mutate in (lambda c: c["max_temperature_c"].pop("source"),
                        lambda c: c["sample_interval_s"].update(value=float("nan")),
                        lambda c: c["kernel_patterns"]["patterns"].update(bad="[")):
             bad = copy.deepcopy(self.cfg)

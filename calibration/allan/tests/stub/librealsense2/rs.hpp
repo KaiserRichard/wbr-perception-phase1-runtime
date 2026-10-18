@@ -10,7 +10,9 @@ enum rs2_camera_info { RS2_CAMERA_INFO_NAME, RS2_CAMERA_INFO_SERIAL_NUMBER, RS2_
 enum rs2_option { RS2_OPTION_GLOBAL_TIME_ENABLED };
 enum rs2_log_severity { RS2_LOG_SEVERITY_INFO };
 struct rs2_vector { float x = 0, y = 0, z = 0; };
-inline const char* rs2_timestamp_domain_to_string(rs2_timestamp_domain) { return "Hardware Clock"; }
+inline const char* rs2_timestamp_domain_to_string(rs2_timestamp_domain d) {
+    return d == RS2_TIMESTAMP_DOMAIN_HARDWARE_CLOCK ? "Hardware Clock" : "System Time";
+}
 namespace rs2 {
 class stream_profile {
 public:
