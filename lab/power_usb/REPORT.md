@@ -7,7 +7,7 @@ conductor. No commit, push, installation, network access, SSH, GUI, camera,
 serial-device access, or change to the shared checkout was performed.
 
 Built `check_power_usb.py`, `thresholds.yaml`, the operator/replay README,
-52 unittest cases, small historical fixtures with provenance, and saved
+56 unittest cases, small historical fixtures with provenance, and saved
 verification logs. Python uses the standard library only. The `.yaml` file is
 JSON-form YAML 1.2 so the Pi does not need PyYAML. Thresholds have sources or
 rationales; chosen bench limits are explicitly PROPOSED. Runtime duration and
@@ -25,10 +25,11 @@ FAIL > BLOCKED > PASS precedence, with exits 0/1/2/3 as specified.
 from `tools/runtime_observer/resource_sampler.py`. Loads the existing
 `experiments/2026-09-12-pi5-native-sensor-validation/kernel_analysis.py`
 classifier into an isolated module and supplies the ticket's configurable
-patterns. Existing tool files were not edited or refactored. The general
+patterns. Existing tool files were not edited or refactored. The review also
+corrected the PMIC channel invocation, rejected malformed successful PSU
+configuration output, and validated UTC sample timestamps. The general
 run-harness and take-tools READMEs were inspected; camera recording, trajectory
-analysis and clock mapping are outside this check. No upstream tool bug was
-identified that required a separate fix.
+analysis and clock mapping are outside this check.
 
 **MEASURED software verification:** host Darwin 24.6.0 x86_64, available
 Python 3.11.0rc2. The target Pi's Python 3.12 was not available or executed.
@@ -38,7 +39,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s lab/power_usb/tests -v
   > lab/power_usb/tests/last-run.log 2>&1
 ```
 
-52 tests passed; complete output is in `tests/last-run.log`. Tests cover:
+56 tests passed; complete output is in `tests/last-run.log`. Tests cover:
 
 - Complete synthetic PASS and the required result fields, evidence references and SHA-256 values.
 - Current/newly latched under-voltage FAIL, pre-existing history handling, all eight decoded bits, missing/malformed flags and history resets.

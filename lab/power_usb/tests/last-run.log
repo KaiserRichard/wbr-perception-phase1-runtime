@@ -22,14 +22,17 @@ test_load_natural_nonzero_fails (test_power_usb.AnalyzeTests.test_load_natural_n
 test_load_planned_termination_records_exit (test_power_usb.AnalyzeTests.test_load_planned_termination_records_exit) ... ok
 test_low_ext5v_fails (test_power_usb.AnalyzeTests.test_low_ext5v_fails) ... ok
 test_low_usb_current_setting_fails (test_power_usb.AnalyzeTests.test_low_usb_current_setting_fails) ... ok
+test_malformed_successful_usb_current_output_blocks (test_power_usb.AnalyzeTests.test_malformed_successful_usb_current_output_blocks) ... ok
 test_missing_camera_blocks (test_power_usb.AnalyzeTests.test_missing_camera_blocks) ... ok
 test_missing_lsusb_blocks (test_power_usb.AnalyzeTests.test_missing_lsusb_blocks) ... ok
 test_missing_or_malformed_throttle (test_power_usb.AnalyzeTests.test_missing_or_malformed_throttle) ... ok
 test_missing_raw_blocks (test_power_usb.AnalyzeTests.test_missing_raw_blocks) ... ok
 test_multiple_devices_one_usb2_fails (test_power_usb.AnalyzeTests.test_multiple_devices_one_usb2_fails) ... ok
+test_multiple_matching_cameras_block_as_ambiguous (test_power_usb.AnalyzeTests.test_multiple_matching_cameras_block_as_ambiguous) ... ok
 test_new_historical_under_voltage_fails (test_power_usb.AnalyzeTests.test_new_historical_under_voltage_fails) ... ok
 test_no_negotiation_evidence_blocks_even_override_enabled (test_power_usb.AnalyzeTests.test_no_negotiation_evidence_blocks_even_override_enabled) ... ok
 test_non_d435i_super_speed_device_cannot_pass (test_power_usb.AnalyzeTests.test_non_d435i_super_speed_device_cannot_pass) ... ok
+test_non_utc_sample_clock_blocks (test_power_usb.AnalyzeTests.test_non_utc_sample_clock_blocks) ... ok
 test_optional_5a_policy (test_power_usb.AnalyzeTests.test_optional_5a_policy) ... ok
 test_pass_and_contract (test_power_usb.AnalyzeTests.test_pass_and_contract) ... ok
 test_pmic_volt_channel_format (test_power_usb.AnalyzeTests.test_pmic_volt_channel_format) ... ok
@@ -47,11 +50,12 @@ test_bounded_load_process_and_output (test_power_usb.CaptureTests.test_bounded_l
 test_idle_capture_has_before_during_after (test_power_usb.CaptureTests.test_idle_capture_has_before_during_after) ... ok
 test_missing_command_and_timeout_record_blocking_errors (test_power_usb.CaptureTests.test_missing_command_and_timeout_record_blocking_errors) ... ok
 test_nonzero_load_exit_saved (test_power_usb.CaptureTests.test_nonzero_load_exit_saved) ... ok
+test_pmic_capture_selects_ext5v_channel (test_power_usb.CaptureTests.test_pmic_capture_selects_ext5v_channel) ... ok
 test_raw_stdout_stderr_verbatim_and_file_bytes (test_power_usb.CaptureTests.test_raw_stdout_stderr_verbatim_and_file_bytes) ... ok
 test_sysfs_enumeration_and_binary_supply (test_power_usb.CaptureTests.test_sysfs_enumeration_and_binary_supply) ... ok
 test_real_snapshot_is_partial_blocked_not_new_fault (test_power_usb.RealEvidenceTests.test_real_snapshot_is_partial_blocked_not_new_fault) ... ok
 
 ----------------------------------------------------------------------
-Ran 52 tests in 5.086s
+Ran 56 tests in 5.642s
 
 OK

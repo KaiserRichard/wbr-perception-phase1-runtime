@@ -44,7 +44,9 @@ skipped; excessive sample gaps produce BLOCKED. A short or interrupted run is
 not silently promoted to PASS.
 
 `vcgencmd`, `lsusb`, Linux sysfs/procfs, and readable kernel logs must already
-be available. `dmesg` and `journalctl -k -b` are captured before and after.
+be available. `dmesg` and `journalctl -k -b` are captured before and after. The
+PMIC read uses `vcgencmd pmic_read_adc EXT5V_V`, matching the repository's Pi
+diagnostics.
 The checker never escalates privileges. Missing tools, denied access or absent
 sensor evidence produce BLOCKED unless another observed failure takes precedence.
 Supply negotiation uses the device-tree property if present; firmware exposing
@@ -68,7 +70,7 @@ with an operator-override rationale. Capture-time config is also preserved in
 | `temperature` | FAIL strictly above the configured maximum (default 80 °C, PROPOSED). Max combines `measure_temp` and every thermal-zone reading; both sources are required in each sample. Missing/malformed values block. |
 | `window_coverage` | Requires a complete declared window, before/during/after samples in order, UTC labels, and no gap above the configured host-monotonic gap limit. Interruptions or missing clocks block. |
 | `supply` | With `require_5a: true` (PROPOSED default), FAIL for a device-tree declared current below 5000 mA or an explicitly disabled USB-current flag. Missing negotiated-current evidence blocks even if the flag is 1. The property is interpreted as a big-endian u32 in mA; textual values are not accepted. Missing/unsupported `get_config` is tolerated when the device-tree declaration is available. With `require_5a: false`, observations remain in the result but this requirement is waived. |
-| `usb_link` | Reads VID/PID, speed, serial, bus number, device number, port path and sysfs path before/after. FAIL if any matched D435i reports less than 5000 Mbit/s. Missing camera/speed, unreadable identity, disappearance, or changed before/after enumeration blocks. Serial numbers are recorded, not assumed to identify the SDK serial. |
+| `usb_link` | Reads VID/PID, speed, serial, bus number, device number, port path and sysfs path before/after. FAIL if any matched D435i reports less than 5000 Mbit/s. Missing or ambiguous matching cameras, missing speed, unreadable identity, disappearance, or changed before/after enumeration blocks. Serial numbers are recorded, not assumed to identify the SDK serial. |
 | `usb_topology` | Requires readable, nonempty `lsusb -t` before and after. Speed acceptance uses the matched sysfs device, not a root hub or another device in the tree. |
 | `kernel_log` | FAIL on configured reset/disconnect, UVC/xHCI errors, under-voltage or lost-message patterns in the new kernel lines. Matches include text, line number and categories. Attribution is conservative across the whole board. Incomplete logs block. |
 | `load_window` | Idle is explicitly declared; a requested load needs a successful launch, adequate observed lifetime and an acceptable exit. Early exit or natural nonzero exit fails; launch failure/missing exit evidence blocks. |

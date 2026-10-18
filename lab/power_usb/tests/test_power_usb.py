@@ -180,6 +180,10 @@ class AnalyzeTests(unittest.TestCase):
         self.cap["supply_before"]["max_current"]["error"] = "not found"
         self.run_analysis("BLOCKED", "supply")
 
+    def test_malformed_successful_usb_current_output_blocks(self):
+        self.replace(self.cap["supply_before"]["config"], "usb_max_current_enable=2")
+        self.run_analysis("BLOCKED", "supply")
+
     def test_low_usb_current_setting_fails(self):
         self.replace(self.cap["supply_after"]["config"], "usb_max_current_enable=0")
         self.run_analysis("FAIL", "supply")
@@ -215,6 +219,13 @@ class AnalyzeTests(unittest.TestCase):
         (self.out / "raw/second-speed").write_text("480")
         self.cap["usb_after"]["devices"].append(second)
         self.run_analysis("FAIL", "usb_link")
+
+    def test_multiple_matching_cameras_block_as_ambiguous(self):
+        second = copy.deepcopy(self.cap["usb_after"]["devices"][0])
+        second["port_path"] = "5-2"
+        second["sysfs_path"] = "/sys/bus/usb/devices/5-2"
+        self.cap["usb_after"]["devices"].append(second)
+        self.run_analysis("BLOCKED", "usb_link")
 
     def test_missing_lsusb_blocks(self):
         self.cap["usb_before"]["tree"]["error"] = "command not found"
@@ -258,6 +269,10 @@ class AnalyzeTests(unittest.TestCase):
 
     def test_sample_coverage_blocks(self):
         self.cap["samples"][1]["clock_monotonic_ns"] = 10_000_000_000
+        self.run_analysis("BLOCKED", "window_coverage")
+
+    def test_non_utc_sample_clock_blocks(self):
+        self.cap["samples"][1]["clock_realtime_utc"] = "not-a-utc-timestamp"
         self.run_analysis("BLOCKED", "window_coverage")
 
     def test_incomplete_capture_blocks(self):
@@ -333,6 +348,21 @@ class AnalyzeTests(unittest.TestCase):
 
 
 class CaptureTests(unittest.TestCase):
+    def test_pmic_capture_selects_ext5v_channel(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            c = p.Collector(Path(tmp), p.load_config(p.DEFAULT_CONFIG))
+            commands = []
+
+            def fake_command(argv, label):
+                commands.append(argv)
+                return {"argv": argv, "returncode": 0, "error": None,
+                        "stdout": c.artifact(label + ".stdout", b""),
+                        "stderr": c.artifact(label + ".stderr", b"")}
+
+            with patch.object(c, "command", side_effect=fake_command):
+                c.sample("before")
+            self.assertIn(["vcgencmd", "pmic_read_adc", "EXT5V_V"], commands)
+
     def test_raw_stdout_stderr_verbatim_and_file_bytes(self):
         with tempfile.TemporaryDirectory() as tmp:
             c = p.Collector(Path(tmp), p.load_config(p.DEFAULT_CONFIG))

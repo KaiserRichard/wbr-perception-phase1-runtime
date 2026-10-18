@@ -119,9 +119,10 @@ class Collector:
 
     def sample(self, phase):
         sample = {"phase": phase, **stamp()}
-        for key, cmd in (("throttled", "get_throttled"), ("temperature", "measure_temp"),
-                         ("volts", "measure_volts"), ("pmic", "pmic_read_adc")):
-            sample[key] = self.command(["vcgencmd", cmd], key)
+        for key, cmd in (("throttled", ["get_throttled"]), ("temperature", ["measure_temp"]),
+                         ("volts", ["measure_volts"]),
+                         ("pmic", ["pmic_read_adc", "EXT5V_V"])):
+            sample[key] = self.command(["vcgencmd", *cmd], key)
         sample["thermal"] = []
         for zone in sorted((self.sys / "class/thermal").glob("thermal_zone*")):
             sample["thermal"].append({"zone": zone.name,
@@ -271,6 +272,16 @@ def number(text, pattern):
     return value if math.isfinite(value) else None
 
 
+def is_utc_timestamp(value):
+    if not isinstance(value, str) or not value:
+        return False
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return parsed.tzinfo is not None and parsed.utcoffset() == timezone.utc.utcoffset(parsed)
+
+
 def analyze(out, capture, cfg):
     e = Evidence(out)
     criteria, details = [], {"decoded_samples": [], "usb": [], "supply": []}
@@ -350,7 +361,7 @@ def analyze(out, capture, cfg):
     coverage = (capture.get("complete") is True and valid_times and bool(gaps) and
                 phases[0] == "before" and phases[-1] == "after" and "during" in phases and
                 all(g > 0 for g in gaps) and max(gaps) <= cfg["max_sample_gap_s"]["value"] and
-                all(s.get("clock_realtime_utc") for s in samples) and elapsed is not None and
+                all(is_utc_timestamp(s.get("clock_realtime_utc")) for s in samples) and elapsed is not None and
                 elapsed >= capture["requested_window_s"] and times[0] <= start <= end <= times[-1])
     add("window_coverage", "Complete before/during/after observations in host CLOCK_MONOTONIC",
         {"elapsed_s": elapsed, "max_gap_s": max(gaps) if gaps else None}, "s",
@@ -363,13 +374,19 @@ def analyze(out, capture, cfg):
         text = e.text(supplied.get("config"), True)
         match = re.fullmatch(r"usb_max_current_enable=([01])", text or "")
         enabled = int(match[1]) if match else None
-        details["supply"].append({"phase": label, "max_current_ma": ma, "usb_max_current_enable": enabled})
+        config_entry = supplied.get("config") or {}
+        config_malformed = (not config_entry.get("error") and
+                            config_entry.get("returncode") == 0 and enabled is None)
+        details["supply"].append({"phase": label, "max_current_ma": ma,
+                                   "usb_max_current_enable": enabled,
+                                   "config_malformed": config_malformed})
     require = cfg["require_5a"]["value"]
     supply_fail = require and any((s["max_current_ma"] is not None and s["max_current_ma"] < cfg["min_psu_current_ma"]["value"])
                                   or s["usb_max_current_enable"] == 0 for s in details["supply"])
     supply_known = all(s["max_current_ma"] is not None for s in details["supply"])
+    supply_malformed = any(s["config_malformed"] for s in details["supply"])
     add("supply", "Declared PSU current; USB-current override cannot prove negotiation", details["supply"],
-        "mA", "min_psu_current_ma", ok=not require or supply_known, fail=supply_fail,
+        "mA", "min_psu_current_ma", ok=not require or (supply_known and not supply_malformed), fail=supply_fail,
         extra=cfg["require_5a"].get("source", cfg["require_5a"].get("rationale", "")))
 
     usb_known, usb_fail, trees_known = True, False, True
@@ -391,6 +408,8 @@ def analyze(out, capture, cfg):
                 unknown = True
             elif speed < cfg["usb_min_speed_mbps"]["value"]:
                 usb_fail = True
+        if len(matched) != 1:
+            unknown = True
         trees_known &= bool(e.text(snapshot.get("tree"), True))
         usb_known &= bool(matched) and not unknown
         identities.append([(d["port_path"], d["serial"], d["devnum"]) for d in matched])
