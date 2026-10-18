@@ -22,5 +22,6 @@
               "threshold_source": "PROPOSED: synthetic fixture replay limit"},
   "record": {"duration_s": 2, "command_timeout_s": 5, "shutdown_grace_s": 1,
              "node_list_timeout_s": 1, "bag_info_timeout_s": 1, "parameter_timeout_s": 1,
-             "topic_info_timeout_s": 1, "threshold_source": "PROPOSED: test-only timeout"}
+             "topic_info_timeout_s": 1, "threshold_source": "PROPOSED: test-only timeout"},
+  "validation": {"max_header_reversals": 0, "max_header_repeated_stamps": 0, "max_bag_receive_reversals": 0, "max_parse_errors": 0, "max_header_drop_count": 0, "threshold_source": "PROPOSED: no reversed/repeated dynamic header stamps, receive-time reversals, malformed CDR headers or gaps over the configured nominal-period multiple"}
 }
