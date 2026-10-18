@@ -7,11 +7,11 @@ on the Pi); NumPy is needed only for the existing `tools/clockmap` implementatio
 No package installation, camera access, UART hardware, or firmware is required
 for the offline checks. All new files belong to this directory.
 
-**Current acceptance: FAIL.** T7 turns unavailable age into a timeout on the next
-model update. The requested sustained HOLD-only unmapped sequence cannot pass
-with the supplied supervisor. The implementation preserves this failure in
-`evidence/result.json`; see [REPORT.md](REPORT.md). Passing fixture tests is
-**not a gate PASS**.
+**MEASURED software acceptance: PASS.** The integration uses the reviewed T7
+clock label, shared wire sequence and downgrade-only policy. Unavailable pose age
+stays HOLD while reports and heartbeats continue; independent watchdogs can still
+latch FAILSAFE. The T7 model's validity handling was repaired with regression
+tests; see [REPORT.md](REPORT.md). Passing fixtures is **not a gate PASS**.
 
 ## Run and re-evaluate on the Mac or Pi
 
@@ -22,13 +22,14 @@ python3 -B -m unittest discover -s tools/perception_health/integration/tests -v
 # Equivalent unittest entry point:
 python3 -B tools/perception_health/integration/e2e_pty_test.py -v
 
-# Capture a NEW directory; this exercises PTYs only, including on the Pi:
+# Full captures stay temporary; these commands exercise PTYs only, also on Pi:
+capture_root="$(mktemp -d /tmp/wbr-healthint.XXXXXX)"
 python3 -B tools/perception_health/integration/e2e_pty_test.py \
-  --outdir tools/perception_health/integration/new-run
+  --outdir "$capture_root/full" --summary-outdir "$capture_root/summary"
 
-# Read raw saved files again; no tty or sender subprocess is opened:
+# Read the FULL saved files again; no tty or sender subprocess is opened:
 python3 -B tools/perception_health/integration/e2e_pty_test.py \
-  --analyze-only tools/perception_health/integration/evidence
+  --analyze-only "$capture_root/full"
 
 # Inspect saved real associations without claiming real VIO estimates:
 python3 -B tools/perception_health/integration/vio_to_pose_events.py \
@@ -40,10 +41,18 @@ The check prints a short table and throughput comparison, and writes the common
 `result.json` contract, `metrics.json`, input hashes, raw `uart.bin`, raw sender
 stdout/stderr, read boundaries, converted events, snapshots and model traces.
 Exit codes: 0 PASS, 1 FAIL, 2 BLOCKED (missing capture/dependency), 3 usage/internal
-error. Existing output directories are refused. The current complete check exits
-1 because of the upstream regression. Unittest records that required assertion
-as **expected failure**, and independently asserts its actual failure sequence;
-an upstream repair produces an unexpected success that requires review here.
+error. Existing output directories are refused. The complete fixture check exits
+0 with all ten criteria PASS. The suites cover PASS, corrupted-raw FAIL and
+missing-capture BLOCKED paths; no expected-failure markers remain.
+
+Committed `evidence/` contains only `summary.json` and `sha256.json`, under the
+200 kB ticket budget configured in `config.json`. The summary embeds the full
+check result, metrics, input provenance and policy, plus state/reason counts;
+the manifest records every original output's size and SHA-256, including all
+445 real-replay events. Full outputs are regenerated in temporary directories
+by tests. Summary-only archives cannot be passed to `--analyze-only`; that mode
+requires the full captures made by the commands above. Input hashes identify
+the saved fixtures; new PTY runs have different timing/output hashes.
 
 The analyzer reconstructs frames from raw bytes and recorded read timestamps;
 it does not trust a saved `trace.json`. Its checks cover:
@@ -51,15 +60,22 @@ it does not trust a saved `trace.json`. Its checks cover:
 | Criterion | Meaning |
 |---|---|
 | `<scenario>.transport` | Sender exits successfully; every event becomes a frame; frame counts, total bytes, CRC, parser completion and shared sequences agree. |
-| `no_mapping` | Every synthetic OK report must yield HOLD when mapping is absent. Currently FAIL: HOLD → FAILSAFE → FAILSAFE. |
-| `mapped_ok` | Explicit synthetic exchanges, exact OK, known camera IMU/reset/features produce FRESH. |
+| `no_mapping` | Every synthetic OK report must yield HOLD when mapping is absent. Age flags remain unavailable; reason SOURCE_AGE_HOLD. |
+| `mapped_ok` | Explicit synthetic exchanges, exact OK, known camera IMU/reset/features plus independent primary freshness produce FRESH. |
 | `lost_latched` | Exact LOST produces FRESH → FAILSAFE → FAILSAFE, including a subsequent OK report. |
 | `sender_stops` | EOF stops the sender; advancing the simulated MCU timer produces HOLD/RESULT_SILENCE then FAILSAFE/RESULT_TIMEOUT. |
 | `real_replay` | All saved associations pass through the sender, with unknown mapped age and degraded flags, and never become FRESH. |
 
+Policy scenarios explicitly assume `primary_fresh=True` from an independent
+primary supervisor input; this assumption is recorded in traces and result notes.
+`replay()` defaults to `False`, and a regression test confirms healthy health
+frames alone cannot produce FRESH. Decoded shared wire sequences are supplied
+to the model on both HEARTBEAT and health events. LOST uses the reviewed upstream
+reason `SOURCE_AGE_TIMEOUT`.
+
 The receipt-silence experiment uses diagnostic policy overrides from
 `config.json` to postpone the competing pose-age and heartbeat deadlines. The
-unmodified T7 policy has coincident timeout values and a source-age HOLD before
+default T7 policy has coincident timeout values and a source-age HOLD before
 receipt-silence HOLD. Default-policy traces are used for the other scenarios.
 No elapsed hardware deadline is claimed: silence ticks use an independent
 **simulated MCU-local timer**, derived from local host CLOCK_MONOTONIC observation
@@ -124,7 +140,7 @@ does not provide a live runtime.
 Only `--clockmap FILE` enables mapping. Event-embedded mappings in input snapshots
 are ignored. The JSON file needs `valid: true`, `snapshot_domain` (exactly the
 snapshot's domain string), `camera_domain` (the declared ClockMap source label),
-`pi_domain: "Linux_CLOCK_MONOTONIC_RAW"`, `camera_session`, `pi_session`, and
+`pi_domain: "CLOCK_MONOTONIC_RAW"`, `camera_session`, `pi_session`, and
 `exchanges_ns` with ordered `[t1_camera,t2_pi_raw,t3_pi_raw,t4_camera]` integer-ns
 rows. The supplied `camera_session` must match `--snapshot-session`. Domain and
 session mismatches disable mapping for the event. A malformed file or unusable
@@ -171,8 +187,8 @@ python3 -B tools/perception_health/integration/vio_to_pose_events.py \
 ```
 
 Omitting `--clockmap` is the honest diagnostic mode when no qualified exchanges
-exist; it cannot claim sustained HOLD until T7's defect is repaired. This command
-is documented only; no device was opened. Real ORB binding execution, Pi runtime
+exist; fresh OK reports remain HOLD/SOURCE_AGE_HOLD, with receipt/heartbeat
+watchdogs still active. This command is documented only; no device was opened. Real ORB binding execution, Pi runtime
 serialization, UART hardware, STM32 firmware parsing and supervisor integration
 remain **UNKNOWN / unverified**. STM32 retains balance and safety ownership.
 

@@ -1,3 +1,0 @@
-{"source_ns": 1000000000, "domain": "global_time", "sequence": 1, "state": "TRACKING", "orb_tracking_state": "OK", "valid": true, "reasons": 0, "reset_counter": 0, "imu_initialized": true, "tracked_features": 77, "evidence": "ASSUMED synthetic fixture"}
-{"source_ns": 1000000000, "domain": "global_time", "sequence": 1, "state": "TRACKING", "orb_tracking_state": "OK", "valid": true, "reasons": 0, "reset_counter": 0, "imu_initialized": true, "tracked_features": 77, "evidence": "ASSUMED synthetic fixture"}
-{"source_ns": 1000000000, "domain": "global_time", "sequence": 1, "state": "TRACKING", "orb_tracking_state": "OK", "valid": true, "reasons": 0, "reset_counter": 0, "imu_initialized": true, "tracked_features": 77, "evidence": "ASSUMED synthetic fixture"}

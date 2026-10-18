@@ -12,6 +12,7 @@ import subprocess
 import sys
 import time
 import unittest
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -50,7 +51,7 @@ def synthetic_mapping():
     for a in (base - 2000000, base - 1000000, base):
         exchanges.append([a, a + offset + 1000, a + offset + 2000, a + 3000])
     return {"valid": True, "snapshot_domain": "global_time", "camera_domain": "D435i_global_time",
-            "pi_domain": "Linux_CLOCK_MONOTONIC_RAW", "camera_session": "synthetic-camera",
+            "pi_domain": "CLOCK_MONOTONIC_RAW", "camera_session": "synthetic-camera",
             "pi_session": "synthetic-host-current-process", "exchanges_ns": exchanges,
             "evidence": "ASSUMED synthetic affine exchanges; not calibration"}
 
@@ -154,7 +155,7 @@ def capture(directory, name):
     }, indent=2) + "\n")
 
 
-def replay(directory, silence=False):
+def replay(directory, silence=False, primary_fresh=False):
     meta = json.loads((directory / "capture.json").read_text())
     reads = json.loads((directory / "reads.json").read_text())
     wire = (directory / "uart.bin").read_bytes()
@@ -163,7 +164,9 @@ def replay(directory, silence=False):
     config = json.loads(config_path.read_text()) if config_path.exists() else CONFIG
     if silence:
         policy.update({k: v for k, v in config["silence_policy_overrides"].items() if k != "source"})
-    model = SupervisorModel(policy)
+    # Independent primary freshness is an explicit simulation input. The health
+    # report itself must never supply motion authority.
+    model = SupervisorModel(policy, primary_fresh=primary_fresh)
     parser = StreamParser()
     trace, health, sequences = [], [], []
     offset = 0
@@ -180,18 +183,19 @@ def replay(directory, silence=False):
             encoded_bytes += len(encode_frame(typ, seq, payload))
             if typ == TYPE_HEARTBEAT:
                 _, session = HEARTBEAT.unpack(payload)
-                event = Event("heartbeat", now, session_id=session)
+                event = Event("heartbeat", now, session_id=session, wire_seq=seq)
             elif typ == TYPE_PERCEPTION_HEALTH:
                 value = decode_health_payload(payload)
                 health.append(value)
                 event = Event("health", now, value.pose_age_us, value.tracking_state, value.flags,
                               map_reset_counter=value.map_reset_counter,
-                              imu_initialized=bool(value.imu_initialized))
+                              imu_initialized=value.imu_initialized, wire_seq=seq)
             else:
                 raise ValueError("unexpected message type")
             model.update(now, event)
             trace.append({"kind": event.kind, "seq": seq, "simulated_MCU_timer_us": now,
-                          "state": model.state, "reason": model.reason})
+                          "state": model.state, "reason": model.reason,
+                          "primary_fresh": primary_fresh})
         offset = end
     if offset != len(wire):
         raise ValueError("raw reads do not cover all bytes")
@@ -233,12 +237,13 @@ def analyze(outdir):
         criteria.append({"id": ident, "description": description, "measured": measured,
                          "unit": "boolean", "threshold": expected,
                          "status": "BLOCKED" if blocked else "PASS" if measured else "FAIL",
-                         "evidence": path, "threshold_source": "SOURCE-SUPPORTED: T10 ticket behavior contract"})
+                         "evidence": path, "threshold_source": "SOURCE-SUPPORTED: T10b ticket and tools/perception_health/SPEC.md supervisor recommendation"})
 
     for name in SCENARIOS:
         directory = outdir / name
         try:
-            trace, health, integrity, metric = replay(directory, silence=name == "sender_stops")
+            trace, health, integrity, metric = replay(directory, silence=name == "sender_stops",
+                                                     primary_fresh=True)
         except (FileNotFoundError, ImportError) as exc:
             criterion(name, str(exc), None, "saved capture present and dependencies available",
                       f"{name}/capture.json", blocked=True)
@@ -257,7 +262,7 @@ def analyze(outdir):
                       "HOLD only", f"{name}/trace.json")
         elif name == "mapped_ok":
             criterion(name, "explicit synthetic mapping + known OK/IMU/reset/features -> FRESH",
-                      bool(health) and states == ["FRESH"] * len(health), "FRESH only", f"{name}/trace.json")
+                      bool(health) and states == ["FRESH"] * len(health), "FRESH with independent primary freshness", f"{name}/trace.json")
         elif name == "lost_latched":
             criterion(name, "LOST latches FAILSAFE through subsequent OK", states == ["FRESH", "FAILSAFE", "FAILSAFE"],
                       "FRESH, FAILSAFE, FAILSAFE", f"{name}/trace.json")
@@ -284,7 +289,7 @@ def analyze(outdir):
               "host": {"platform": platform.platform(), "python": sys.version},
               "criteria": criteria, "raw_files": raw_files,
               "notes": ["Software fixture result is not a gate PASS. No Pi/UART/STM32 hardware exercised.",
-                        "Known T7 defect: unavailable-age UINT32_MAX is aged before validity on the next model update.",
+                        "ASSUMED independent primary_fresh=True in policy scenarios; health alone cannot enable FRESH.",
                         "Real replay estimates are synthetic, and contain LOST; no clockmap was fabricated for them.",
                         "Silence uses simulated MCU-local timer increments with diagnostic overrides in integration/config.json.",
                         "Metrics are local PTY software write throughput; CALCULATED baud capacity is not physical link performance."]}
@@ -300,17 +305,54 @@ def analyze(outdir):
     return {"PASS": 0, "FAIL": 1, "BLOCKED": 2}[status]
 
 
+def summarize(outdir, destination):
+    """Archive summaries and hashes; full raw evidence stays in the capture dir."""
+    result = json.loads((outdir / "result.json").read_text())
+    manifest = [{"path": str(path.relative_to(outdir)), "bytes": path.stat().st_size,
+                 "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+                for path in sorted(outdir.rglob("*")) if path.is_file()]
+    scenarios = {}
+    for name in SCENARIOS:
+        trace_path = outdir / name / "trace.json"
+        if trace_path.exists():
+            trace = json.loads(trace_path.read_text())
+            counts = Counter((row["kind"], row["state"], row["reason"]) for row in trace)
+            scenarios[name] = [{"kind": kind, "state": state, "reason": reason, "count": count}
+                               for (kind, state, reason), count in sorted(counts.items())]
+    def saved_json(name):
+        path = outdir / name
+        return json.loads(path.read_text()) if path.exists() else None
+
+    summary = {"retention": "Summary only. Criterion evidence paths refer to full capture files listed in sha256.json; regenerate full captures with --outdir before --analyze-only.",
+               "result": result, "trace_counts": scenarios,
+               "metrics": saved_json("metrics.json"),
+               "provenance": saved_json("provenance.json"),
+               "policy": saved_json("policy.json"),
+               "integration_config": saved_json("integration_config.json")}
+    files = {"summary.json": json.dumps(summary, indent=2) + "\n",
+             "sha256.json": json.dumps(manifest, indent=2) + "\n"}
+    if sum(len(value.encode()) for value in files.values()) >= CONFIG["evidence_max_bytes"]["value"]:
+        raise ValueError("summary archive exceeds configured evidence budget")
+    destination.mkdir(parents=True, exist_ok=False)
+    for name, value in files.items():
+        (destination / name).write_text(value)
+
+
 def main():
     parser = ArgumentParser(description=__doc__)
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--outdir", type=Path, help="new directory for offline PTY captures")
     group.add_argument("--analyze-only", type=Path, help="re-evaluate saved raw bytes, no subprocess or tty")
+    parser.add_argument("--summary-outdir", type=Path, help="new directory for compact summaries and SHA-256 hashes")
     args = parser.parse_args()
     try:
         if args.analyze_only:
             if not args.analyze_only.is_dir():
                 raise ValueError("analyze directory does not exist")
-            return analyze(args.analyze_only)
+            status = analyze(args.analyze_only)
+            if args.summary_outdir:
+                summarize(args.analyze_only, args.summary_outdir)
+            return status
         args.outdir.mkdir(parents=True, exist_ok=False)
         (args.outdir / "policy.json").write_bytes(POLICY_PATH.read_bytes())
         (args.outdir / "integration_config.json").write_bytes((HERE / "config.json").read_bytes())
@@ -325,7 +367,10 @@ def main():
             if name in ("mapped_ok", "lost_latched", "sender_stops") and importlib.util.find_spec("numpy") is None:
                 continue
             capture(args.outdir / name, name)
-        return analyze(args.outdir)
+        status = analyze(args.outdir)
+        if args.summary_outdir:
+            summarize(args.outdir, args.summary_outdir)
+        return status
     except (OSError, ValueError, RuntimeError, KeyError, TypeError) as exc:
         print(f"check error: {exc}", file=sys.stderr)
         return 3

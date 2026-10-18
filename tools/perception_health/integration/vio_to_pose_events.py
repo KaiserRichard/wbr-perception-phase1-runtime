@@ -41,7 +41,7 @@ def load_mapping(path):
     for key in ("snapshot_domain", "camera_domain", "pi_domain", "camera_session", "pi_session"):
         if not isinstance(mapping.get(key), str) or not mapping[key]:
             raise ValueError(f"clockmap requires nonempty {key}")
-    if mapping["pi_domain"] != "Linux_CLOCK_MONOTONIC_RAW":
+    if mapping["pi_domain"] != "CLOCK_MONOTONIC_RAW":
         raise ValueError("T7 samples Linux CLOCK_MONOTONIC_RAW; a steady/realtime label is insufficient")
     from tools.clockmap.clockmap import ClockMap, Exchange, Stamp
     opts = {k: v for k, v in CONFIG["clockmap"].items() if k != "source"}

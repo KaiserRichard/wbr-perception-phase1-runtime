@@ -1,6 +1,7 @@
+$ /Library/Frameworks/Python.framework/Versions/3.11/bin/python3 -B /Users/quockaiser/Desktop/Research/wbr-wt-healthint/tools/perception_health/integration/e2e_pty_test.py --analyze-only /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/wbr-healthint-zyjztfak/full --summary-outdir /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/wbr-healthint-zyjztfak/summary
 criterion                      status
 no_mapping.transport           PASS
-no_mapping                     FAIL
+no_mapping                     PASS
 mapped_ok.transport            PASS
 mapped_ok                      PASS
 lost_latched.transport         PASS
@@ -9,9 +10,11 @@ sender_stops.transport         PASS
 sender_stops                   PASS
 real_replay.transport          PASS
 real_replay                    PASS
-Overall: FAIL
-MEASURED no_mapping: 9.70 frames/s, 264.35 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.023 utilization); CALCULATED 921600 baud 92160 bytes/s (0.003 utilization)
-MEASURED mapped_ok: 11.73 frames/s, 314.33 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.027 utilization); CALCULATED 921600 baud 92160 bytes/s (0.003 utilization)
-MEASURED lost_latched: 14.77 frames/s, 402.40 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.035 utilization); CALCULATED 921600 baud 92160 bytes/s (0.004 utilization)
-MEASURED sender_stops: 13.76 frames/s, 375.06 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.033 utilization); CALCULATED 921600 baud 92160 bytes/s (0.004 utilization)
-MEASURED real_replay: 1201.70 frames/s, 33631.41 bytes/s; CALCULATED 115200 baud 11520 bytes/s (2.919 utilization); CALCULATED 921600 baud 92160 bytes/s (0.365 utilization)
+Overall: PASS
+MEASURED no_mapping: 12.38 frames/s, 337.48 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.029 utilization); CALCULATED 921600 baud 92160 bytes/s (0.004 utilization)
+MEASURED mapped_ok: 10.95 frames/s, 293.46 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.025 utilization); CALCULATED 921600 baud 92160 bytes/s (0.003 utilization)
+MEASURED lost_latched: 15.94 frames/s, 434.38 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.038 utilization); CALCULATED 921600 baud 92160 bytes/s (0.005 utilization)
+MEASURED sender_stops: 16.32 frames/s, 444.85 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.039 utilization); CALCULATED 921600 baud 92160 bytes/s (0.005 utilization)
+MEASURED real_replay: 1286.89 frames/s, 36024.18 bytes/s; CALCULATED 115200 baud 11520 bytes/s (3.127 utilization); CALCULATED 921600 baud 92160 bytes/s (0.391 utilization)
+
+Exit code: 0

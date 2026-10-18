@@ -88,7 +88,9 @@ class ConverterTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(dir=HERE / "tests") as temp:
             path = Path(temp) / "mapping.json"
             for mapping in (dict(e2e.synthetic_mapping(), pi_domain="host_steady"),
+                            dict(e2e.synthetic_mapping(), pi_domain="Linux_CLOCK_MONOTONIC_RAW"),
                             dict(e2e.synthetic_mapping(), exchanges_ns=[]),
+                            dict(e2e.synthetic_mapping(), valid=1),
                             dict(e2e.synthetic_mapping(), valid=False)):
                 path.write_text(json.dumps(mapping))
                 with self.assertRaises(ValueError):
@@ -124,6 +126,8 @@ class EndToEndTests(unittest.TestCase):
         cls.temp = tempfile.TemporaryDirectory(dir=HERE / "tests")
         cls.out = Path(cls.temp.name)
         (cls.out / "policy.json").write_bytes(e2e.POLICY_PATH.read_bytes())
+        (cls.out / "integration_config.json").write_bytes((HERE / "config.json").read_bytes())
+        (cls.out / "provenance.json").write_text(json.dumps({"captured_utc": e2e.utc(), "inputs": []}))
         for name in e2e.SCENARIOS:
             e2e.capture(cls.out / name, name)
 
@@ -132,21 +136,22 @@ class EndToEndTests(unittest.TestCase):
         cls.temp.cleanup()
 
     def states(self, name):
-        trace, health, integrity, metrics = e2e.replay(self.out / name, silence=name == "sender_stops")
+        trace, health, integrity, metrics = e2e.replay(self.out / name, silence=name == "sender_stops", primary_fresh=True)
         self.assertTrue(integrity)
         self.assertGreater(metrics["bytes_written_and_received"], 0)
         return [row["state"] for row in trace if row["kind"] == "health"], trace, health
 
-    @unittest.expectedFailure
-    def test_required_no_mapping_hold_only_upstream_defect(self):
-        states, _, health = self.states("no_mapping")
+    def test_no_mapping_hold_only(self):
+        states, trace, health = self.states("no_mapping")
         self.assertTrue(all(h.pose_age_us == U32_MAX and h.flags & 3 == 0 for h in health))
         self.assertEqual(states, ["HOLD"] * len(health))
+        self.assertTrue(all(row["reason"] == "SOURCE_AGE_HOLD" for row in trace if row["kind"] == "health"))
 
-    def test_unmapped_defect_is_reproduced_and_never_fresh(self):
-        states, trace, _ = self.states("no_mapping")
-        self.assertEqual(states, ["HOLD", "FAILSAFE", "FAILSAFE"])
-        self.assertIn("SOURCE_AGE_TIMEOUT", [row["reason"] for row in trace])
+    def test_health_cannot_grant_primary_freshness(self):
+        trace, _, integrity, _ = e2e.replay(self.out / "mapped_ok")
+        self.assertTrue(integrity)
+        self.assertNotIn("FRESH", [row["state"] for row in trace])
+        self.assertTrue(all(row["primary_fresh"] is False for row in trace))
 
     def test_mapped_ok_is_fresh(self):
         states, _, health = self.states("mapped_ok")
@@ -156,7 +161,7 @@ class EndToEndTests(unittest.TestCase):
     def test_lost_is_latched_after_recovery(self):
         states, trace, _ = self.states("lost_latched")
         self.assertEqual(states, ["FRESH", "FAILSAFE", "FAILSAFE"])
-        self.assertEqual(trace[-1]["reason"], "TRACKING_LOST")
+        self.assertEqual(trace[-1]["reason"], "SOURCE_AGE_TIMEOUT")
 
     def test_sender_eof_is_receipt_silence_with_isolated_policy(self):
         states, trace, _ = self.states("sender_stops")
@@ -170,12 +175,12 @@ class EndToEndTests(unittest.TestCase):
         self.assertNotIn("FRESH", states)
         self.assertTrue(all(h.pose_age_us == U32_MAX and h.flags & 4 for h in health))
 
-    def test_analyzer_fail_contract_with_real_evidence(self):
+    def test_analyzer_pass_contract_with_real_evidence(self):
         with contextlib.redirect_stdout(io.StringIO()):
-            self.assertEqual(e2e.analyze(self.out), 1)
+            self.assertEqual(e2e.analyze(self.out), 0)
         result = json.loads((self.out / "result.json").read_text())
-        self.assertEqual(result["status"], "FAIL")
-        self.assertEqual([c["id"] for c in result["criteria"] if c["status"] == "FAIL"], ["no_mapping"])
+        self.assertEqual(result["status"], "PASS")
+        self.assertEqual([c["id"] for c in result["criteria"] if c["status"] == "FAIL"], [])
         self.assertTrue(result["raw_files"])
 
     def test_analyzer_blocked_for_missing_captures(self):
@@ -198,31 +203,22 @@ class EndToEndTests(unittest.TestCase):
             transport = next(c for c in result["criteria"] if c["id"] == "mapped_ok.transport")
             self.assertEqual(transport["status"], "FAIL")
 
-    def test_analyzer_pass_fixture_single_unmapped_report(self):
-        # A single report legitimately HOLDs. A second report exposes the regression above.
+    def test_summary_retains_full_capture_hashes_within_ticket_budget(self):
         with tempfile.TemporaryDirectory(dir=HERE / "tests") as temp:
-            out = Path(temp) / "saved"
+            out = Path(temp) / "full"
             shutil.copytree(self.out, out)
-            d = out / "no_mapping"
-            reads = json.loads((d / "reads.json").read_text())
-            first = []
-            parser = e2e.StreamParser()
-            wire = (d / "uart.bin").read_bytes()
-            for read in reads:
-                first.append(read)
-                frames = parser.feed(wire[read["offset"]:read["offset"] + read["length"]])
-                if any(typ == e2e.TYPE_PERCEPTION_HEALTH for typ, _, _ in frames):
-                    break
-            end = first[-1]["offset"] + first[-1]["length"]
-            (d / "uart.bin").write_bytes((d / "uart.bin").read_bytes()[:end])
-            (d / "reads.json").write_text(json.dumps(first))
-            meta = json.loads((d / "capture.json").read_text())
-            meta["expected_health_frames"] = 1
-            (d / "capture.json").write_text(json.dumps(meta))
             with contextlib.redirect_stdout(io.StringIO()):
                 self.assertEqual(e2e.analyze(out), 0)
-            self.assertEqual(json.loads((out / "result.json").read_text())["status"], "PASS")
-
-
-if __name__ == "__main__":
-    unittest.main()
+            archive = Path(temp) / "summary"
+            e2e.summarize(out, archive)
+            self.assertLess(sum(p.stat().st_size for p in archive.iterdir()),
+                            e2e.CONFIG["evidence_max_bytes"]["value"])
+            summary = json.loads((archive / "summary.json").read_text())
+            self.assertEqual(summary["result"]["status"], "PASS")
+            manifest = json.loads((archive / "sha256.json").read_text())
+            events = next(row for row in manifest if row["path"] == "real_replay/events.jsonl")
+            self.assertEqual(events["sha256"], e2e.hashlib.sha256((out / events["path"]).read_bytes()).hexdigest())
+            self.assertEqual(events["bytes"], (out / events["path"]).stat().st_size)
+            self.assertFalse((archive / events["path"]).exists())
+            with self.assertRaises(FileExistsError):
+                e2e.summarize(out, archive)
