@@ -7,6 +7,11 @@ from pathlib import Path
 VERSION='1.0.0'
 CONFIG=Path(__file__).with_name('qualify_config.json')
 
+class ContractParser(argparse.ArgumentParser):
+ def error(self,message):
+  self.print_usage(sys.stderr)
+  self.exit(3,f'{self.prog}: error: {message}\n')
+
 def sha(p):
  h=hashlib.sha256(p.read_bytes()); return h.hexdigest()
 def stamps(path):
@@ -60,7 +65,7 @@ def evaluate(seq):
  return criteria,raw,notes
 
 def main():
- p=argparse.ArgumentParser(); p.add_argument('sequence',type=Path,nargs='?'); p.add_argument('--analyze-only',type=Path); p.add_argument('--outdir',type=Path); a=p.parse_args()
+ p=ContractParser(); p.add_argument('sequence',type=Path,nargs='?'); p.add_argument('--analyze-only',type=Path); p.add_argument('--outdir',type=Path); a=p.parse_args()
  seq=a.analyze_only or a.sequence
  if seq is None or a.outdir is None: p.error('provide SEQUENCE (or --analyze-only DIR) and --outdir DIR')
  start=datetime.now(timezone.utc).isoformat(); out=a.outdir; out.mkdir(parents=True,exist_ok=True)

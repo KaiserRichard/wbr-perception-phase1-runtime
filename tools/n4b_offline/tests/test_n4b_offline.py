@@ -1,4 +1,4 @@
-import csv,importlib.util,json,sqlite3,struct,subprocess,sys,tempfile,unittest
+import csv,importlib.util,json,os,sqlite3,struct,subprocess,sys,tempfile,unittest
 from pathlib import Path
 HERE=Path(__file__).resolve().parents[1]
 ROOT=HERE.parents[1]
@@ -57,6 +57,21 @@ class TestN4B(unittest.TestCase):
    seq=Path(td)/'seq';(seq/'mav0/cam1').mkdir(parents=True);q=self.qualify(seq,Path(td)/'q');self.assertEqual(q.returncode,2,q.stdout+q.stderr)
    result=json.loads((Path(td)/'q/result.json').read_text());self.assertEqual(result['status'],'BLOCKED')
    self.assertTrue(all((Path(td)/'q'/c['evidence']).is_file() for c in result['criteria']))
+ def test_qualifier_usage_error_uses_contract_exit_code(self):
+  p=subprocess.run([sys.executable,str(HERE/'qualify_euroc.py')],capture_output=True,text=True)
+  self.assertEqual(p.returncode,3,p.stdout+p.stderr)
+ def test_runner_sets_orb_library_path_before_ldd(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td); orb=root/'orb'; (orb/'Examples/Stereo-Inertial').mkdir(parents=True); (orb/'Vocabulary').mkdir()
+   binary=orb/'Examples/Stereo-Inertial/stereo_inertial_euroc'; binary.write_text('#!/usr/bin/env bash\nexit 0\n'); binary.chmod(0o755)
+   (orb/'Vocabulary/ORBvoc.txt').write_text('fixture'); (orb/'lib').mkdir(); (orb/'lib/libORB_SLAM3.so').write_text('fixture library')
+   seq=root/'seq'; (seq/'mav0').mkdir(parents=True); (seq/'times_ns.txt').write_text('1\n'); settings=root/'settings.yaml'; settings.write_text('fixture')
+   fakebin=root/'bin'; fakebin.mkdir(); ldd=fakebin/'ldd'; ldd.write_text('#!/usr/bin/env bash\nprintf "LD_LIBRARY_PATH=%s\\n" "$LD_LIBRARY_PATH"\nprintf "libfixture.so => not found\\n"\n'); ldd.chmod(0o755)
+   out=root/'run'; env=os.environ.copy(); env['PATH']=str(fakebin)+os.pathsep+env['PATH']; env.pop('LD_LIBRARY_PATH',None)
+   p=subprocess.run(['bash',str(HERE/'run_n4b.sh'),'--allow-unpatched',str(orb),str(seq),str(seq/'times_ns.txt'),str(settings),str(out)],capture_output=True,text=True,env=env)
+   self.assertEqual(p.returncode,2,p.stdout+p.stderr)
+   self.assertIn(f'LD_LIBRARY_PATH={orb}/lib:{orb}/Thirdparty/DBoW2/lib:{orb}/Thirdparty/g2o/lib',(out/'ldd.txt').read_text())
+   self.assertIn(str(orb/'lib/libORB_SLAM3.so'),(out/'provenance.sha256').read_text())
  def test_saved_real_evidence_fixture_is_labeled(self):
   d=json.loads((HERE/'tests/fixtures/real_saved_stream_summary.json').read_text());self.assertEqual(d['evidence_label'],'MEASURED');self.assertEqual(d['streams']['ir_count'] if 'ir_count' in d['streams'] else d['streams']['ir1_count'],447)
 if __name__=='__main__':unittest.main()

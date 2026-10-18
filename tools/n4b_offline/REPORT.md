@@ -9,7 +9,7 @@
 
 ## Verification
 
-Four unittest cases pass: synthetic DB3 round-trip/qualification PASS, injected IMU order reversal FAIL, missing camera BLOCKED, and a MEASURED saved-stream summary fixture check. Test output is in `tests/last-run.log`. `make_orb_yaml.py` was exercised against the repository calibration inputs and emitted 45 per-field provenance entries. `bash -n` passed for `run_n4b.sh`.
+Six N4B unittest cases pass: synthetic DB3 round-trip/qualification PASS, injected IMU order reversal FAIL, missing camera BLOCKED, usage exit-code contract, runner library-path/provenance capture, and a MEASURED saved-stream summary fixture check. All 16 existing `calib_tools` tests also pass. Exact test output is in `tests/last-run.log`. `make_orb_yaml.py` was exercised against the repository calibration inputs and emitted 45 per-field provenance entries. `bash -n` passed for `run_n4b.sh`.
 
 A real `.db3` bag was not present in the shared checkout. The real-evidence fixture is a saved summary (447 IR frames per camera at 29.992 Hz, gyro 2971 at 200.159 Hz, accel 1507 at 100.978 Hz) and is not used as a synthetic gate PASS. No camera, Pi, SSH, ORB binary or hardware was accessed. N4B remains OPEN.
 

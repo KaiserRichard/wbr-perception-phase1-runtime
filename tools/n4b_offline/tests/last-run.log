@@ -1,11 +1,36 @@
 test_injected_imu_reversal_fails (test_n4b_offline.TestN4B.test_injected_imu_reversal_fails) ... ok
 test_missing_camera_is_blocked (test_n4b_offline.TestN4B.test_missing_camera_is_blocked) ... ok
+test_qualifier_usage_error_uses_contract_exit_code (test_n4b_offline.TestN4B.test_qualifier_usage_error_uses_contract_exit_code) ... ok
 test_round_trip_qualifies_pass (test_n4b_offline.TestN4B.test_round_trip_qualifies_pass) ... ok
+test_runner_sets_orb_library_path_before_ldd (test_n4b_offline.TestN4B.test_runner_sets_orb_library_path_before_ldd) ... ok
 test_saved_real_evidence_fixture_is_labeled (test_n4b_offline.TestN4B.test_saved_real_evidence_fixture_is_labeled) ... ok
 
 ----------------------------------------------------------------------
-Ran 4 tests in 0.664s
+Ran 6 tests in 1.206s
 
 OK
+$ bash -n tools/n4b_offline/run_n4b.sh
+(exit 0; no output)
 EuRoC export: 2 stereo pairs, 12 IMU rows; clock=header.stamp; accel policy=UNKNOWN
 EuRoC export: 2 stereo pairs, 12 IMU rows; clock=header.stamp; accel policy=UNKNOWN
+test_ambiguous_inputs (test_calib_convert.CalibrationTests.test_ambiguous_inputs) ... ok
+test_cli_success_and_validation_failure_before_outputs (test_calib_convert.CalibrationTests.test_cli_success_and_validation_failure_before_outputs) ... ok
+test_explicit_units_fps_and_no_overwrite (test_calib_convert.CalibrationTests.test_explicit_units_fps_and_no_overwrite) ... ok
+test_missing_fields_noise_and_units (test_calib_convert.CalibrationTests.test_missing_fields_noise_and_units) ... ok
+test_nested_imu_and_opencv_inputs (test_calib_convert.CalibrationTests.test_nested_imu_and_opencv_inputs) ... ok
+test_nonidentity_inverse_and_transformed_point_roundtrip (test_calib_convert.CalibrationTests.test_nonidentity_inverse_and_transformed_point_roundtrip) ... ok
+test_openvins_equidistant_is_native_but_orb_rejects (test_calib_convert.CalibrationTests.test_openvins_equidistant_is_native_but_orb_rejects) ... ok
+test_openvins_preserves_values_and_flat_imu_wrapper (test_calib_convert.CalibrationTests.test_openvins_preserves_values_and_flat_imu_wrapper) ... ok
+test_orb_rejects_values_that_overflow_or_underflow_native_float (test_calib_convert.CalibrationTests.test_orb_rejects_values_that_overflow_or_underflow_native_float) ... ok
+test_provenance_hashes_timeshift_units_and_warning (test_calib_convert.CalibrationTests.test_provenance_hashes_timeshift_units_and_warning) ... ok
+test_rejection_cases (test_calib_convert.CalibrationTests.test_rejection_cases) ... ok
+test_schema_roundtrip_types_and_continuous_noise (test_calib_convert.CalibrationTests.test_schema_roundtrip_types_and_continuous_noise) ... ok
+test_stereo_direction_baseline_sign_and_small_rotations (test_calib_convert.CalibrationTests.test_stereo_direction_baseline_sign_and_small_rotations) ... ok
+test_subnanosecond_negative_shift_rounding_is_reported (test_calib_convert.CalibrationTests.test_subnanosecond_negative_shift_rounding_is_reported) ... ok
+test_transform_rejections (test_calib_convert.CalibrationTests.test_transform_rejections) ... ok
+test_unequal_shifts_openvins_rejected_orb_preserved (test_calib_convert.CalibrationTests.test_unequal_shifts_openvins_rejected_orb_preserved) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.898s
+
+OK

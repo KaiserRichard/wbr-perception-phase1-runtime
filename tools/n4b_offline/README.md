@@ -46,7 +46,7 @@ bash tools/n4b_offline/run_n4b.sh --allow-unpatched \
   "$HOME/wbr-evidence/n4b-offline-run"
 ```
 
-The exported path in the command must contain `mav0` layout accepted by the selected binary. This existing example YAML is an experiment artifact; generate/review a current YAML before use. The script hashes inputs and binary, saves `ldd`, a shell-quoted command receipt, `/usr/bin/time -v`, command output and exit code, and optionally starts `tools/eval_pipeline/profile` if that tool exists on the Pi branch. It never opens a camera. No physical Pi run is claimed here.
+The exported path in the command must contain `mav0` layout accepted by the selected binary. This existing example YAML is an experiment artifact; generate/review a current YAML before use. The script hashes the executable, linked ORB library when present, dataset time list, settings, vocabulary, runner and build manifest; it saves `ldd`, a shell-quoted command receipt, `/usr/bin/time -v`, command output and exit code, and optionally starts `tools/eval_pipeline/profile` if that tool exists on the Pi branch. It never opens a camera. No physical Pi run is claimed here.
 
 ## Evidence and limitations
 
