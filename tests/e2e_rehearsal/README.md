@@ -1,72 +1,87 @@
 # Synthetic end-to-end toolchain rehearsal
 
-This software-only test builds a temporary ROS 2 SQLite `.db3` bag using
-hand-written CDR `Image` and `Imu` messages, then drives the existing tool CLIs
-and checks their JSON outputs. No files generated during a run are retained
-outside the temporary directory.
+This software-only unittest suite checks the documented tool CLIs and their
+machine-readable artifacts with generated SQLite/CDR fixtures. **One standard
+ROS bag interface is blocked:** the existing exporter misaligns IMU doubles.
+See [FINDINGS.md](FINDINGS.md), R26-01, and its expected-failure regression.
+Later stages run using an explicitly named compatibility copy of the bag.
 
-## Run
+## Run on the Mac or Pi
 
-From the repository root:
+From a full repository checkout, with Python 3.11+ (3.12 on Pi), the repository's
+NumPy dependency, POSIX PTYs, bash and make already available:
 
 ```sh
 make -C tests/e2e_rehearsal test
 ```
 
-The command writes the unittest transcript to
-`tests/e2e_rehearsal/tests/last-run.log`. Python standard library modules build
-the bag and run the tests. `tools/stamp_drift` and the existing trajectory
-evaluator use the repository's NumPy dependency. The synthetic bag contains
-two 640×480 mono8 IR topics at 30 Hz, separate gyro and accel topics at 200 Hz,
-and a 2 second sample window. Header stamps use an **ASSUMED synthetic device
-clock**; SQLite receive stamps use a distinct **ASSUMED bag receive clock**.
-The affine relation injects 1200 ppm drift and a configured offset. See
-`config.json` for every synthetic value and test tolerance.
+No ROS installation, camera, UART device, network or GUI is used. This command
+writes `tests/last-run.log`, propagates Python failure through `tee` on both
+older Mac make and Linux make, and normally finishes in about 12 seconds on
+the review Mac, below the ticket's 120 second limit. The Pi duration is UNKNOWN.
+Generated bags, trajectories, PNGs, raw PTY bytes, sender logs and health summary
+are temporary and removed after each test. The review's expanded dependency
+suite transcript is also recorded in `tests/last-run.log`; a new `make test`
+replaces it with the rehearsal-only transcript.
 
-## Pipeline and assertions
+## Pipeline and criteria
 
-1. `lab/rosbag_qual/analyze_bag.py --bag ... --config ... --output-dir ...`
-   must write `result.json` with `PASS`. It checks CDR header decoding, the
-   configured synthetic topic rates/gaps, monotonic stamps, exact IR pairing,
-   bag receive span, and the configured synthetic byte-rate ceiling. The custom
-   config adapts its profile to 30 Hz images and 200 Hz gyro/accel.
-2. `tools/stamp_drift/analyze.py <bag> ... --output-dir ...` must write a
-   passing result and report per-stream drift within the configured tolerance
-   of the injected 1200 ppm. This tests affine-fit arithmetic across
-   nanosecond epochs; it does not measure sensor/host synchronization.
-3. `tools/n4b_offline/db3_to_euroc.py <bag> <out>` exports the four streams;
-   `qualify_euroc.py <out> --outdir ...` must report `PASS`. The test also
-   mutates a stereo timestamp to assert `FAIL` and supplies an absent export to
-   assert `BLOCKED`. Separate gyro/accel topics do not reveal a RealSense
-   driver's unite method; expected metadata is `UNKNOWN`.
-4. A fake ORB output is generated from synthetic ground truth with deterministic
-   translation noise. `tools/eval_pipeline/accuracy/evaluate.py` must write a
-   passing `summary.json`; its SE3 ATE must recover the configured noise scale
-   within tolerance. The fake output is not produced by ORB-SLAM3.
-5. `vio_to_pose_events.py`'s converter creates one event without a mapping and
-   one with an assumed synthetic camera-to-`CLOCK_MONOTONIC_RAW` exchange set.
-   The documented sender CLI writes real protocol frames through a POSIX PTY;
-   parsed payloads feed the existing supervisor model. The asserted states are
-   `HOLD` without mapping and `FRESH` with valid mapped synthetic health and
-   independent `primary_fresh=True`.
+1. Generate two seconds of standard ROS 2 little-endian CDR: two textured
+   640×480 mono8 IR topics at 30 Hz and separate gyro/accel topics at 200 Hz.
+   The gyro is `(0.01, 0.02, 0.03)` rad/s and accel `(0, 0, 9.81)` m/s²;
+   those are **ASSUMED** camera-IMU values, independent of the STM32 body IMU.
+   `header.stamp` names an assumed synthetic D435i device clock; SQLite
+   receive stamps name a separate assumed bag receive clock, related explicitly
+   by `receive = bag_receive_start + clock_offset + round((header - device_header_start) * (1 + drift_ppm / 1e6))`.
+2. Run `lab/rosbag_qual/analyze_bag.py --bag ... --config ... --output-dir ...`.
+   Assert PASS in `result.json` and re-evaluate with `--analyze-only ...`.
+   The generated config declares topic presence, rates, gaps, exact stereo
+   pairing and a synthetic byte-rate ceiling; it does not qualify real storage.
+3. Run `tools/stamp_drift/analyze.py <bag> --header-clock D435I_GLOBAL_TIME
+   --global-time-enabled true --output-dir ...`. All four streams must exist,
+   report PASS and recover the injected 1200 ppm within the configured tolerance.
+   The global-time option is an assumption for this synthetic fixture.
+4. Standard IMU export is tested separately as expected failure R26-01. For
+   downstream exercise, copy the bag and change only IMU padding to match the
+   exporter's legacy alignment. Run `tools/n4b_offline/db3_to_euroc.py <copy>
+   <export>` and `qualify_euroc.py <export> --outdir ...`. Assert metadata,
+   exported gyro/accel values and PASS. A one-nanosecond stereo fault must
+   produce FAIL/exit 1; absent export inputs must produce BLOCKED/exit 2.
+5. Generate fake ORB output and EuRoC ground truth on the exported timestamp
+   grid. Complete orthogonal Fourier modes make the exact post-SE3 ATE
+   `0.025 * sqrt(3/2) = 0.0306186218 m`; the configured tolerance is `1e-8 m`.
+   Run `tools/eval_pipeline/accuracy/evaluate.py --sequence SYNTHETIC --runs ...
+   --ground-truth ... --times ... --out ...` and assert `summary.json`.
+   EuRoC ground-truth quaternions use wxyz; fake ORB trajectories use xyzw.
+6. Feed a snapshot from the last fake pose through the direct
+   `vio_to_pose_events.py --input ... --snapshot-session ...` CLI, then run the
+   documented `sender.py --device <PTY> --session-id 9` CLI. Missing or unusable
+   mappings must yield HOLD with age/mapping flags clear. Start a persistent
+   converter with `--clockmap ...` and explicit synthetic device-to-Pi
+   `CLOCK_MONOTONIC_RAW` exchanges. Schedule the same last acquisition stamp
+   into that map's send window; continue unavailable health reports during
+   preparation. Valid mapping plus explicit OK/camera-IMU/reset/features and
+   independent `primary_fresh=True` must yield FRESH. `health-summary.json`
+   records decoded states/flags. CRC, frame completion and the shared sequence
+   are checked; every heartbeat reaches the supervisor model.
 
-Assertions read `result.json`, `report.json`, `metadata.json`, and
-`summary.json` artifacts. They do not rely on stdout wording. The unittest also
-checks PASS/FAIL/BLOCKED result precedence. No compatible saved physical `.db3`
-fixture was present in the shared evidence checkout, so the test is synthetic
-only.
+All tool steps assert JSON artifacts, rather than stdout wording. Converter
+stdout is its documented JSONL data interface and is saved before assertions.
+Thresholds and synthetic parameters live in [config.json](config.json), with
+sources; existing tool limits remain in their own configs.
 
-## What this proves and does not prove
+## Regression evidence and limits
 
-**CALCULATED / ASSUMED:** the existing CLIs accept a common synthetic bag
-shape, read the same CDR/header timestamps, export their expected intermediate
-files, recover a deliberately injected drift/noise scale, and connect converter,
-sender, PTY parser, and supervisor model interfaces. Test thresholds and
-injected values are labelled in `config.json`; outputs from fixture runs are
-not gate PASS evidence.
+The main pipeline uses synthetic data only. A separate regression reuses the
+repository's exact saved `tools/stamp_drift/tests/fixtures/real_ros_headers.json`
+excerpt, rebuilding only its header prefixes and receive stamps in SQLite,
+then running the drift CLI and saved-evidence analysis. These **MEASURED** bytes
+come from a converted historical bag: zero fitted drift is a conversion artifact,
+not live clock synchronization. No complete physical DB3 was found under the
+permitted shared `experiments/` evidence directory.
 
-It does not prove any RealSense timestamp domain or offset, ROS graph behavior,
-physical sensor cadence, camera calibration, camera–IMU alignment, actual
-storage throughput, Pi timing, ORB-SLAM3 behavior, UART baud performance,
-STM32 firmware behavior, or a project gate PASS. The test creates no hardware
-access and writes no generated bag or trajectory into the repository.
+The suite proves interface and arithmetic consistency within its stated
+compatibility workaround. Passing fixtures is **not a gate PASS**. It cannot
+prove standard ROS export until R26-01 is fixed, ROS graph behavior, sensor
+cadence, physical clock identities, calibration, camera–IMU alignment, ORB-SLAM3
+execution, Pi timing/storage/power, UART throughput, STM32 firmware or safety.

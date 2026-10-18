@@ -1,0 +1,24 @@
+test_compatibility_pipeline (test_rehearsal.RehearsalTests.test_compatibility_pipeline) ... ok
+test_accuracy_fixture_has_exact_known_ate_and_quaternions (test_review.ReviewTests.test_accuracy_fixture_has_exact_known_ate_and_quaternions) ... ok
+test_make_uses_bash_and_propagates_failed_python (test_review.ReviewTests.test_make_uses_bash_and_propagates_failed_python) ... FAIL
+test_real_saved_header_excerpt_through_cli_and_analyze_only (test_review.ReviewTests.test_real_saved_header_excerpt_through_cli_and_analyze_only) ... ok
+test_standard_cdr_export_R26_01 (test_review.ReviewTests.test_standard_cdr_export_R26_01)
+R26-01: exporter aligns doubles to encapsulation, not CDR body. ... expected failure
+test_standard_cdr_imu_fields_and_alignment (test_review.ReviewTests.test_standard_cdr_imu_fields_and_alignment) ... ok
+test_synthetic_thresholds_come_from_config (test_review.ReviewTests.test_synthetic_thresholds_come_from_config) ... ok
+
+======================================================================
+FAIL: test_make_uses_bash_and_propagates_failed_python (test_review.ReviewTests.test_make_uses_bash_and_propagates_failed_python)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-rehearsal/tests/e2e_rehearsal/test_review.py", line 89, in test_make_uses_bash_and_propagates_failed_python
+    self.assertNotEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+AssertionError: 0 == 0 : mkdir -p tests
+python3 -B -m unittest discover -s . -p 'test_*.py' -v 2>&1 | tee tests/last-run.log
+
+
+----------------------------------------------------------------------
+Ran 7 tests in 10.803s
+
+FAILED (failures=1, expected failures=1)
+R26-01 standard CDR exporter: exit=1; ERROR: truncated CDR
