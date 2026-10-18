@@ -1,0 +1,18 @@
+{
+  "source": "tools/perception_health/integration/tests/fixtures/real_excerpt.jsonl",
+  "source_sha256": "51038dac4c4b00bc049ebfb7d5648eada15d1d7f9034e7f0becb9c96fc9fd2b0",
+  "upstream": {
+    "source": "tools/vio_adapter/real_replay/snapshots.jsonl",
+    "source_sha256": "14c6a1caf12bb2b458e96b09f7cef14620ae4bc883bc6f6c3efcc80b4062c7ce",
+    "selection": "first four lines, verbatim",
+    "evidence": "MEASURED real D435i input association; SYNTHETIC fake engine estimates"
+  },
+  "selection": "All four MEASURED saved source epochs, converted into T14 pose-event fields; health and estimates remain SYNTHETIC/UNKNOWN",
+  "source_epochs_ns": [
+    1791950284553748047,
+    1791950284587092529,
+    1791950284620437744,
+    1791950284653783203
+  ],
+  "fixture_sha256": "662987db7f589311c6d5362082c3fd64e0aa1486c049f034ab9547280205090d"
+}

@@ -1,0 +1,27 @@
+test_file_mode_emits_real_sender_frames_without_uart (test_stack.HealthTests.test_file_mode_emits_real_sender_frames_without_uart) ... ok
+test_partial_line_follow_and_truncation (test_stack.HealthTests.test_partial_line_follow_and_truncation) ... ok
+test_real_saved_epochs_converter_preserves_unknowns (test_stack.HealthTests.test_real_saved_epochs_converter_preserves_unknowns) ... ok
+test_regression_session_change_and_malformed_event (test_stack.HealthTests.test_regression_session_change_and_malformed_event) ... ok
+test_real_launch_file_uses_planner_and_exit_handler (test_stack.LaunchWiringTests.test_real_launch_file_uses_planner_and_exit_handler) ... ok
+test_all_required_process_exits_shutdown (test_stack.PlannerTests.test_all_required_process_exits_shutdown) ... ok
+test_health_none_and_device (test_stack.PlannerTests.test_health_none_and_device) ... ok
+test_invalid_options_and_bool (test_stack.PlannerTests.test_invalid_options_and_bool) ... ok
+test_live_order_and_reverse (test_stack.PlannerTests.test_live_order_and_reverse) ... ok
+test_profile_direct_orb_pid (test_stack.PlannerTests.test_profile_direct_orb_pid) ... ok
+test_record_reuses_lab_topics_and_includes_combined_imu (test_stack.PlannerTests.test_record_reuses_lab_topics_and_includes_combined_imu) ... ok
+test_replay_excludes_camera_and_clock_policy (test_stack.PlannerTests.test_replay_excludes_camera_and_clock_policy) ... ok
+test_sensor_only (test_stack.PlannerTests.test_sensor_only) ... ok
+test_absent_uart_is_blocked_before_start_or_open (test_stack.SupervisorTests.test_absent_uart_is_blocked_before_start_or_open) ... ok
+test_blocked_no_processes (test_stack.SupervisorTests.test_blocked_no_processes) ... ok
+test_each_required_exit_fails_and_tears_down (test_stack.SupervisorTests.test_each_required_exit_fails_and_tears_down) ... ok
+test_normal_bag_eof_is_stack_shutdown_not_stale_orb (test_stack.SupervisorTests.test_normal_bag_eof_is_stack_shutdown_not_stale_orb) ... ok
+test_pass_and_analyze_roundtrip (test_stack.SupervisorTests.test_pass_and_analyze_roundtrip) ... ok
+test_permission_error_does_not_claim_group_gone (test_stack.SupervisorTests.test_permission_error_does_not_claim_group_gone) ... ok
+test_readiness_timeout_never_starts_orb (test_stack.SupervisorTests.test_readiness_timeout_never_starts_orb) ... ok
+test_real_preflight_missing_ros (test_stack.SupervisorTests.test_real_preflight_missing_ros) ... ok
+test_sigterm_to_supervisor_and_sigint_escalation (test_stack.SupervisorTests.test_sigterm_to_supervisor_and_sigint_escalation) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 7.172s
+
+OK

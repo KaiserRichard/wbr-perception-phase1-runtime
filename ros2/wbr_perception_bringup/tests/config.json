@@ -1,0 +1,7 @@
+{
+  "poll_s": {"value": 0.01, "source": "PROPOSED host-fixture poll only"},
+  "readiness_timeout_s": {"value": 2.0, "source": "PROPOSED host-fixture readiness bound only"},
+  "shutdown_grace_s": {"value": 1.0, "source": "PROPOSED host-fixture SIGINT deadline only"},
+  "terminate_grace_s": {"value": 0.5, "source": "PROPOSED host-fixture termination deadline only"},
+  "fixture_timeout_s": {"value": 15.0, "source": "PROPOSED maximum host test wait; no robot acceptance meaning"}
+}

@@ -1,0 +1,21 @@
+{
+  "readiness_timeout_s": {"value": 30.0, "source": "PROPOSED startup deadline; not a sensor acceptance limit"},
+  "poll_s": {"value": 0.05, "source": "PROPOSED supervisor and file-follow polling interval"},
+  "shutdown_grace_s": {"value": 15.0, "source": "PROPOSED per-process-group SIGINT drain deadline, including rosbag flush"},
+  "terminate_grace_s": {"value": 3.0, "source": "PROPOSED per-process-group SIGTERM deadline before SIGKILL"},
+  "launch_shutdown_grace_s": {"value": 180.0, "source": "PROPOSED outer ROS launch grace; exceeds sequential child shutdown deadlines"},
+  "readiness_messages": {"value": 1, "source": "SOURCE-SUPPORTED T27: first combined camera IMU and both IR messages; no rate qualification"},
+  "readiness_qos_depth": {"value": 10, "source": "PROPOSED sensor-data best-effort volatile subscription depth"},
+  "combined_imu_bag_qos_depth": {"value": 1000, "source": "PROPOSED combined D435i camera IMU record/play queue; SOURCE-SUPPORTED depth from lab/rosbag_qual/qos_overrides.yaml gyro stream"},
+  "max_event_bytes": {"value": 1048576, "source": "PROPOSED maximum JSONL event size to bound a malformed or incomplete producer line"},
+  "uart_baud": {"value": 115200, "source": "SOURCE-SUPPORTED tools/perception_health/py/sender.py default; deployment requires receiver agreement"},
+  "topics": {
+    "left": "/camera/camera/infra1/image_rect_raw",
+    "right": "/camera/camera/infra2/image_rect_raw",
+    "imu": "/camera/camera/imu"
+  },
+  "camera_package": "wbr_d435i_bringup",
+  "camera_launch": "d435i_stereo_inertial.launch.py",
+  "camera_profile": "d435i_vio_v1",
+  "camera_contract_source": "SOURCE-SUPPORTED T27: launch supplies pinned d435i_vio_v1 (640x480@30 IR, emitter off, gyro 200, accel 100); launch argument API UNKNOWN until the camera branch is merged"
+}

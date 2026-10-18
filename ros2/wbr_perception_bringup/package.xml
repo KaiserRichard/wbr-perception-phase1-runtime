@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>wbr_perception_bringup</name>
+  <version>0.1.0</version>
+  <description>Ordered native D435i, ORB, health and profiling bring-up.</description>
+  <maintainer email="maintainer@example.invalid">WBR maintainers</maintainer>
+  <license>GPL-3.0-or-later</license>
+  <buildtool_depend>ament_python</buildtool_depend>
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>ros2bag</exec_depend>
+  <exec_depend>ros2launch</exec_depend>
+  <exec_depend>rosbag2_transport</exec_depend>
+  <exec_depend>wbr_orb_node</exec_depend>
+  <!-- wbr_d435i_bringup is a live-only runtime prerequisite on an unmerged branch. -->
+  <export><build_type>ament_python</build_type></export>
+</package>
