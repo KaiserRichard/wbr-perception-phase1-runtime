@@ -1,0 +1,11 @@
+test_saved_mh01_runs_reproduce_report (test_accuracy.RealEvidenceTests.test_saved_mh01_runs_reproduce_report) ... ok
+test_aggregate_population_stats (test_accuracy.StatusTests.test_aggregate_population_stats) ... ok
+test_blocked (test_accuracy.StatusTests.test_blocked) ... ok
+test_detects_euroc_nanoseconds_and_seconds (test_accuracy.StatusTests.test_detects_euroc_nanoseconds_and_seconds) ... ok
+test_fail (test_accuracy.StatusTests.test_fail) ... ok
+test_pass (test_accuracy.StatusTests.test_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 7.362s
+
+OK

@@ -1,0 +1,331 @@
+{
+  "tool": {
+    "name": "trajectory_eval",
+    "version": "1.0.0"
+  },
+  "evidence_label": "CALCULATED",
+  "evaluated_at_utc": "2026-10-18T08:18:10.711900+00:00",
+  "environment": {
+    "python": "3.11.0rc2 (v3.11.0rc2:ed7c3ff156, Sep 11 2022, 16:22:23) [Clang 13.0.0 (clang-1300.0.29.30)]",
+    "numpy": "1.26.4"
+  },
+  "inputs": {
+    "estimate": {
+      "path": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/run3/f_mh01_stereoi.txt",
+      "sha256": "48a44acc44fe3b885f8e88946167eaf9131e119d222aa913df4701d58d0caf63",
+      "format": "orbslam3",
+      "time_unit": "ns",
+      "time_unit_source": "explicit",
+      "timestamp_parser": "decimal.Decimal, no float round-trip; int64 nanoseconds",
+      "sub_nanosecond_policy": "round to nearest nanosecond, ties to even (ROUND_HALF_EVEN)",
+      "timestamps_rounded": 0,
+      "max_rounding_ns": 0.0,
+      "input_quaternion_order": "xyzw",
+      "internal_quaternion_order": "xyzw",
+      "quaternion_norm_tolerance": 0.001,
+      "quaternion_max_norm_deviation": 1.1372506070195243e-07,
+      "quaternion_normalized_after_validation": true
+    },
+    "reference": {
+      "path": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/eval/gt_data.csv",
+      "sha256": "aae2d7c5684724c8afe364d2fd8499a6ed77a9169adf03736531f67d8e7b2117",
+      "format": "euroc_gt",
+      "time_unit": "ns",
+      "time_unit_source": "explicit",
+      "timestamp_parser": "decimal.Decimal, no float round-trip; int64 nanoseconds",
+      "sub_nanosecond_policy": "round to nearest nanosecond, ties to even (ROUND_HALF_EVEN)",
+      "timestamps_rounded": 0,
+      "max_rounding_ns": 0.0,
+      "input_quaternion_order": "wxyz",
+      "internal_quaternion_order": "xyzw",
+      "quaternion_norm_tolerance": 0.001,
+      "quaternion_max_norm_deviation": 6.754059313407446e-05,
+      "quaternion_normalized_after_validation": true
+    }
+  },
+  "assumptions": {
+    "clock_assumption": "EuRoC camera, IMU, and state_groundtruth_estimate0 timestamps are in the same dataset time base (SOURCE-SUPPORTED: EuRoC dataset documentation and Burri et al., The EuRoC micro aerial vehicle datasets, IJRR 2016, https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets). Estimate offset is explicitly zero; this is not a live-device clock mapping.",
+    "est_frame": "imu_camera (ORB-SLAM3 camera IMU body)",
+    "ref_frame": "body (EuRoC state_groundtruth_estimate0)",
+    "frames_differ_textually": true,
+    "extrinsics_applied": false,
+    "pose_convention": "active body-to-world rotations; translations in metres",
+    "t_offset_s": "0.0",
+    "t_offset_ns": 0,
+    "t_max_diff_s": "0.02",
+    "t_max_diff_ns": 20000000,
+    "offset_convention": "add offset to estimate timestamps before association",
+    "est_time_unit": "ns",
+    "ref_time_unit": "ns",
+    "alignments": [
+      "se3",
+      "sim3"
+    ],
+    "n_to_align_requested": null,
+    "alignment_evaluation": "fit first n pairs, evaluate all associated pairs",
+    "rpe_delta": "1.0",
+    "rpe_unit": "m",
+    "rpe_pair_selection": "one endpoint per start; frames: i+delta; s: first reference timestamp >= t_i+delta; m: first matched-reference cumulative distance >= d_i+delta; no interpolation",
+    "rpe_convention": "E = (Ref_i^-1 Ref_j)^-1 (Est_i^-1 Est_j); global rigid alignment cancels; Sim3 scale is applied to estimate translations before RPE",
+    "std_convention": "population (ddof=0)",
+    "scope": "Does not establish frames, extrinsics, clock synchronization, sensor readiness or gate PASS."
+  },
+  "association": {
+    "est_poses": 3678,
+    "ref_poses": 36382,
+    "matched_pairs": 3639,
+    "unique_est_matched": 3639,
+    "unique_ref_matched": 3639,
+    "unmatched_est": 39,
+    "unmatched_ref": 32743,
+    "reference_sample_reused": false,
+    "estimate_sample_reused": false,
+    "reference_reuse_count": 0,
+    "estimate_reuse_count": 0,
+    "max_abs_dt_s": 0.02,
+    "mean_abs_dt_s": 5.547229458642484e-06,
+    "max_abs_dt_ns": 20000000,
+    "iteration_side": "estimate",
+    "semantics": "shorter-side nearest neighbour, inclusive tolerance, earliest tie, reuse allowed; equal lengths iterate estimate",
+    "t_offset_ns": 0,
+    "t_max_diff_ns": 20000000
+  },
+  "trajectory": {
+    "est_time_span": {
+      "start_ns": 1403636579963555584,
+      "end_ns": 1403636763813555456,
+      "duration_s": 183.849999872
+    },
+    "ref_time_span": {
+      "start_ns": 1403636580838555648,
+      "end_ns": 1403636762743555584,
+      "duration_s": 181.904999936
+    },
+    "est_offset_time_span": {
+      "start_ns": 1403636579963555584,
+      "end_ns": 1403636763813555456,
+      "duration_s": 183.849999872
+    },
+    "est_matched_time_span": {
+      "start_ns": 1403636580863555584,
+      "end_ns": 1403636762763555584,
+      "duration_s": 181.9
+    },
+    "ref_matched_time_span": {
+      "start_ns": 1403636580863555328,
+      "end_ns": 1403636762743555584,
+      "duration_s": 181.880000256
+    },
+    "duration_s": 181.880000256,
+    "reference_length_matched_span_m": 80.60597718125896,
+    "reference_matched_polyline_length_m": 80.52455433064866,
+    "length_convention": "matched-span length includes all original reference poses between first and last matched reference; matched polyline uses associated samples only"
+  },
+  "metrics": {
+    "se3": {
+      "alignment": {
+        "R": [
+          [
+            -0.30522750223167777,
+            0.3269943058388834,
+            -0.8943773788677564
+          ],
+          [
+            0.1560189413716753,
+            0.9436769804174551,
+            0.29177362211731134
+          ],
+          [
+            0.9394116572699494,
+            -0.05048247794176464,
+            -0.3390534730779
+          ]
+        ],
+        "t": [
+          4.664513563969501,
+          -1.7421496938560774,
+          0.8667713094434502
+        ],
+        "s": 1.0,
+        "n_to_align": 3639,
+        "mapping": "p_est_aligned = s * R * p_est + t; R_est_aligned = R * R_est",
+        "method": "Umeyama (1991), reflection fixed, first n associated pairs"
+      },
+      "ate_translation_m": {
+        "n": 3639,
+        "rmse": 0.041603882857669285,
+        "mean": 0.03854799844580137,
+        "median": 0.04275386682908159,
+        "std": 0.01565039567094593,
+        "min": 0.0034019410410484237,
+        "max": 0.08770913005626389,
+        "SSE": 6.298683487489358
+      },
+      "rpe_translation_m": {
+        "n": 3555,
+        "rmse": 0.020211385299225178,
+        "mean": 0.017263693704760736,
+        "median": 0.015499194380524906,
+        "std": 0.01051023193759016,
+        "min": 0.0005161822774631889,
+        "max": 0.05601255467730953
+      },
+      "rpe_rotation_deg": {
+        "n": 3555,
+        "rmse": 0.13906379743333327,
+        "mean": 0.1209368521672928,
+        "median": 0.11017345492067775,
+        "std": 0.06865142055664633,
+        "min": 0.007340282550160794,
+        "max": 0.5188559622244382
+      },
+      "rpe_estimate_scale_applied": 1.0,
+      "ate_rotation_deg": {
+        "n": 3639,
+        "rmse": 1.2785384104084005,
+        "mean": 1.1974208405094406,
+        "median": 1.2507194637794319,
+        "std": 0.4481559969511782,
+        "min": 0.36868112685445076,
+        "max": 2.6775243051772457
+      }
+    },
+    "sim3": {
+      "alignment": {
+        "R": [
+          [
+            -0.30522750223167777,
+            0.3269943058388834,
+            -0.8943773788677564
+          ],
+          [
+            0.1560189413716753,
+            0.9436769804174551,
+            0.29177362211731134
+          ],
+          [
+            0.9394116572699494,
+            -0.05048247794176464,
+            -0.3390534730779
+          ]
+        ],
+        "t": [
+          4.6850214992629144,
+          -1.778757270852085,
+          0.8717674274031575
+        ],
+        "s": 1.0082221369615003,
+        "n_to_align": 3639,
+        "mapping": "p_est_aligned = s * R * p_est + t; R_est_aligned = R * R_est",
+        "method": "Umeyama (1991), reflection fixed, first n associated pairs"
+      },
+      "ate_translation_m": {
+        "n": 3639,
+        "rmse": 0.022288179175232646,
+        "mean": 0.020032527152059717,
+        "median": 0.01725601455414938,
+        "std": 0.009770403617520849,
+        "min": 0.0018363786691926846,
+        "max": 0.05467094944063071,
+        "SSE": 1.8077203057171307
+      },
+      "rpe_translation_m": {
+        "n": 3555,
+        "rmse": 0.020514912982295595,
+        "mean": 0.01782254455427638,
+        "median": 0.015818661932931483,
+        "std": 0.010159653551277894,
+        "min": 0.0005950988421581803,
+        "max": 0.05537254308360059
+      },
+      "rpe_rotation_deg": {
+        "n": 3555,
+        "rmse": 0.13906379743333327,
+        "mean": 0.1209368521672928,
+        "median": 0.11017345492067775,
+        "std": 0.06865142055664633,
+        "min": 0.007340282550160794,
+        "max": 0.5188559622244382
+      },
+      "rpe_estimate_scale_applied": 1.0082221369615003,
+      "ate_rotation_deg": {
+        "n": 3639,
+        "rmse": 1.2785384104084005,
+        "mean": 1.1974208405094406,
+        "median": 1.2507194637794319,
+        "std": 0.4481559969511782,
+        "min": 0.36868112685445076,
+        "max": 2.6775243051772457
+      }
+    }
+  },
+  "warnings": [
+    "WARNING: frame labels differ textually; no extrinsics are applied. Metrics may compare different physical frames."
+  ],
+  "cli": {
+    "argv": [
+      "single",
+      "--est",
+      "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/run3/f_mh01_stereoi.txt",
+      "--ref",
+      "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/eval/gt_data.csv",
+      "--est-format",
+      "orbslam3",
+      "--est-time-unit",
+      "ns",
+      "--ref-format",
+      "euroc_gt",
+      "--ref-time-unit",
+      "ns",
+      "--clock-assumption",
+      "EuRoC camera, IMU, and state_groundtruth_estimate0 timestamps are in the same dataset time base (SOURCE-SUPPORTED: EuRoC dataset documentation and Burri et al., The EuRoC micro aerial vehicle datasets, IJRR 2016, https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets). Estimate offset is explicitly zero; this is not a live-device clock mapping.",
+      "--est-frame",
+      "imu_camera (ORB-SLAM3 camera IMU body)",
+      "--ref-frame",
+      "body (EuRoC state_groundtruth_estimate0)",
+      "--t-offset",
+      "0.0",
+      "--t-max-diff",
+      "0.02",
+      "--align-both",
+      "--rotation-ate",
+      "--rpe-delta",
+      "1.0",
+      "--rpe-unit",
+      "m",
+      "--no-plots",
+      "--out",
+      "tools/eval_pipeline/accuracy/validation/run03/rpe_1m",
+      "--overwrite"
+    ],
+    "args": {
+      "command": "single",
+      "est": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/run3/f_mh01_stereoi.txt",
+      "ref": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/eval/gt_data.csv",
+      "est_format": "orbslam3",
+      "est_time_unit": "ns",
+      "est_frame": "imu_camera (ORB-SLAM3 camera IMU body)",
+      "ref_format": "euroc_gt",
+      "ref_time_unit": "ns",
+      "ref_frame": "body (EuRoC state_groundtruth_estimate0)",
+      "clock_assumption": "EuRoC camera, IMU, and state_groundtruth_estimate0 timestamps are in the same dataset time base (SOURCE-SUPPORTED: EuRoC dataset documentation and Burri et al., The EuRoC micro aerial vehicle datasets, IJRR 2016, https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets). Estimate offset is explicitly zero; this is not a live-device clock mapping.",
+      "t_offset": "0.0",
+      "t_max_diff": "0.02",
+      "align": "se3",
+      "align_both": true,
+      "n_to_align": null,
+      "rotation_ate": true,
+      "rpe_delta": "1.0",
+      "rpe_unit": "m",
+      "out": "tools/eval_pipeline/accuracy/validation/run03/rpe_1m",
+      "overwrite": true,
+      "no_plots": true
+    },
+    "run_name": "estimate"
+  },
+  "plots": {
+    "status": "disabled",
+    "files": []
+  },
+  "csv_convention": "t_ns uses associated reference timestamps; RPE t_ns is the start; align-both uses separate columns"
+}
