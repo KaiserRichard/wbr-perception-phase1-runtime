@@ -65,10 +65,24 @@ class N4ATimingTests(unittest.TestCase):
             bin=$1
             out=$8
             mkdir -p "$out/run01"
-            (cd "$out/run01" && "$bin" 0.20) &
+            # Keep the target alive until the sampler has initialized and
+            # captured its first row. A fixed short sleep makes this fixture
+            # depend on host scheduling and can expire before Python starts.
+            (cd "$out/run01" && "$bin" 30) &
             child=$!
             if [ -n "${N4A_ORB_PID_FILE:-}" ]; then printf '%s\\n' "$child" > "$N4A_ORB_PID_FILE"; fi
-            wait "$child"
+            attempts=0
+            while [ ! -f "$N4A_SAMPLER_READY_FILE" ] && [ "$attempts" -lt 1000 ]; do
+                sleep 0.01
+                attempts=$((attempts + 1))
+            done
+            if [ ! -f "$N4A_SAMPLER_READY_FILE" ]; then
+                kill "$child" 2>/dev/null || true
+                wait "$child" 2>/dev/null || true
+                exit 1
+            fi
+            kill "$child"
+            wait "$child" || true
             printf '0\\n' > "$out/run01/exit_code.txt"
             printf 'IMU initialized\\n' > "$out/run01/stdout.log"
         """))
@@ -102,6 +116,7 @@ class N4ATimingTests(unittest.TestCase):
                 row[field] = '0'
             with (out / 'samples.csv').open('w', newline='') as stream:
                 writer = csv.DictWriter(stream, fieldnames=fields); writer.writeheader(); writer.writerow(row)
+            pathlib.Path(__import__('os').environ['N4A_SAMPLER_READY_FILE']).write_text('first sample captured\\n')
             (out / 'metadata.json').write_text(json.dumps({'sample_count': 1}))
             while not stop: time.sleep(0.01)
         """))
@@ -127,13 +142,16 @@ class N4ATimingTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td); platform = self.make_platform(root); config = self.make_config(root)
             stubs = self.make_stubs(root); inputs = self.create_inputs(root); out = root / "experiment"
-            env = dict(__import__('os').environ, N4A_ORB_PID_FILE=str(root / "orb.pid"))
+            env = dict(__import__('os').environ, N4A_ORB_PID_FILE=str(root / "orb.pid"),
+                       N4A_SAMPLER_READY_FILE=str(root / "sampler.ready"))
             proc = self.command(["bash", str(RUNNER), "--config", str(config), "--accuracy-runner", str(stubs["runner"]),
                                  "--profile-tool", str(stubs["sampler"]), "--thermal-root", str(platform["thermal"]),
                                  "--governor-root", str(platform["governors"]), "--vcgencmd", str(platform["vcgencmd"]),
                                  "--lock-file", str(root / "lock"), str(inputs["binary"]), str(inputs["vocab"]),
                                  str(inputs["settings"]), str(inputs["dataset"]), str(inputs["times"]), "MH01", "1", str(out)], env=env)
-            self.assertEqual(proc.returncode, 0, proc.stdout)
+            self.assertEqual(proc.returncode, 0, proc.stdout + "\n" + "\n".join(
+                path.relative_to(out).as_posix() + ": " + path.read_text(errors="replace")
+                for path in out.rglob("*.log") if path.is_file()))
             self.assertEqual(json.loads((out / "preflight.json").read_text())["status"], "PASS")
             self.assertEqual(json.loads((out / "run01/capture.json").read_text())["status"], "CAPTURED")
             self.assertTrue((out / "run01/profile/samples.csv").is_file())

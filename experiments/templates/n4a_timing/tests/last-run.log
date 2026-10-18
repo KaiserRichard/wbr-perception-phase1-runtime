@@ -22,7 +22,7 @@ test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_no
 test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
 
 ----------------------------------------------------------------------
-Ran 21 tests in 36.229s
+Ran 21 tests in 65.529s
 
 OK
 criterion	status	measured	threshold
@@ -44,7 +44,7 @@ test_pose_file_rejects_multiple_supported_outputs (test_accuracy.StatusTests.tes
 test_pose_fraction_rejects_more_rows_than_expected_frames (test_accuracy.StatusTests.test_pose_fraction_rejects_more_rows_than_expected_frames) ... ok
 
 ----------------------------------------------------------------------
-Ran 10 tests in 11.084s
+Ran 10 tests in 16.561s
 
 OK
 EXIT CODE: 0
@@ -65,7 +65,7 @@ test_validity_ignores_rows_without_throttle_poll (test_profile.ProfileTests.test
 test_validity_pass (test_profile.ProfileTests.test_validity_pass) ... ok
 
 ----------------------------------------------------------------------
-Ran 12 tests in 0.248s
+Ran 12 tests in 0.290s
 
 OK
 {
@@ -188,7 +188,7 @@ test_uint32_validation (test_clockmap.UnwrapTests.test_uint32_validation) ... ok
 test_wrap_and_equal_ticks (test_clockmap.UnwrapTests.test_wrap_and_equal_ticks) ... ok
 
 ----------------------------------------------------------------------
-Ran 37 tests in 0.779s
+Ran 37 tests in 0.957s
 
 OK
 EXIT CODE: 0
@@ -205,7 +205,7 @@ with tempfile.TemporaryDirectory(dir='"'"'experiments/templates/n4a_timing/tests
     test_observer.__file__ = str(executable.parent / '"'"'test_observer.py'"'"')
     result = unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromModule(test_observer))
 sys.exit(0 if result.wasSuccessful() else 1)'
-C++ build: ['c++', '-std=c++17', '-Wall', '-Wextra', '-Werror', '-pedantic', '-pthread', 'tools/runtime_observer/tests/test_recorder.cpp', '-o', '/Users/quockaiser/Desktop/Research/wbr-wt-n4atiming/experiments/templates/n4a_timing/tests/tmp3liroqup/test_recorder']
+C++ build: ['c++', '-std=c++17', '-Wall', '-Wextra', '-Werror', '-pedantic', '-pthread', 'tools/runtime_observer/tests/test_recorder.cpp', '-o', '/Users/quockaiser/Desktop/Research/wbr-wt-n4aflake/experiments/templates/n4a_timing/tests/tmptayrg4j9/test_recorder']
 Recorder checks passed (allocation, wrap, validation, copied epochs, contention, concurrency).
 test_clockmap_json_cli_loader (test_observer.AggregateTests.test_clockmap_json_cli_loader) ... ok
 test_cpp_csv_to_python_and_cli (test_observer.AggregateTests.test_cpp_csv_to_python_and_cli) ... ok
@@ -229,7 +229,7 @@ test_one_hz_schedule_csv_and_missed_slots (test_observer.ResourceTests.test_one_
 test_sampler_cli_new_file_only (test_observer.ResourceTests.test_sampler_cli_new_file_only) ... ok
 
 ----------------------------------------------------------------------
-Ran 20 tests in 0.549s
+Ran 20 tests in 0.645s
 
 OK
 EXIT CODE: 0
@@ -276,7 +276,7 @@ test_synthetic_timestamp_decimal_exactness_and_rounding (test_traj_eval.Syntheti
 test_synthetic_umeyama_se3_and_sim3 (test_traj_eval.SyntheticTests.test_synthetic_umeyama_se3_and_sim3) ... ok
 
 ----------------------------------------------------------------------
-Ran 30 tests in 2.977s
+Ran 30 tests in 4.954s
 
 OK
 EXIT CODE: 0
@@ -293,3 +293,683 @@ EXIT CODE: 0
 $ PYTHONDONTWRITEBYTECODE=1 git diff --check -- experiments/templates/n4a_timing
 EXIT CODE: 0
 
+
+=== T15b stability: 20 full-suite repetitions, normal load ===
+$ /Library/Frameworks/Python.framework/Versions/3.11/bin/python3 .github/run_unittest.py experiments/templates/n4a_timing/tests  # repeated 20 times
+--- repetition 01/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 64.533s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 02/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 65.975s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 03/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 81.307s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 04/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 70.509s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 05/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 67.043s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 06/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 78.726s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 07/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 102.911s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 08/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 72.254s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 09/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 70.113s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 10/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 74.194s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 11/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 68.501s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 12/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 76.754s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 13/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 91.776s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 14/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 89.520s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 15/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 76.252s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 16/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 82.513s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 17/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 82.126s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 18/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 71.453s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 19/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 68.244s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+--- repetition 20/20: exit 0 ---
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 69.481s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+NORMAL LOAD RESULT: 20/20 passed
+
+=== T15b full suite under CPU load ===
+LOAD: started 16 yes processes for 16 reported CPU cores; active at test start: 16
+$ /Library/Frameworks/Python.framework/Versions/3.11/bin/python3 .github/run_unittest.py experiments/templates/n4a_timing/tests
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+test_capture_engine_failure_and_missing_pid (test_review.ReviewTests.test_capture_engine_failure_and_missing_pid) ... ok
+test_default_tools_valid_and_repeatable (test_review.ReviewTests.test_default_tools_valid_and_repeatable) ... ok
+test_empty_or_nonfinite_latency_blocks (test_review.ReviewTests.test_empty_or_nonfinite_latency_blocks) ... ok
+test_engine_failure_and_post_run_throttle_fail (test_review.ReviewTests.test_engine_failure_and_post_run_throttle_fail) ... ok
+test_event_latency_session_schema_and_loss (test_review.ReviewTests.test_event_latency_session_schema_and_loss) ... ok
+test_inter_run_preflight_refuses_hot_second_run (test_review.ReviewTests.test_inter_run_preflight_refuses_hot_second_run) ... ok
+test_mismatched_sample_count_blocks (test_review.ReviewTests.test_mismatched_sample_count_blocks) ... ok
+test_missing_declared_repetition_blocks_overall (test_review.ReviewTests.test_missing_declared_repetition_blocks_overall) ... ok
+test_missing_evidence_blocks (test_review.ReviewTests.test_missing_evidence_blocks) ... ok
+test_missing_tools_block_without_stale_results (test_review.ReviewTests.test_missing_tools_block_without_stale_results) ... ok
+test_no_runs_writes_blocked_result (test_review.ReviewTests.test_no_runs_writes_blocked_result) ... ok
+test_preflight_hot_governor_missing_vcgencmd_and_busy_lock (test_review.ReviewTests.test_preflight_hot_governor_missing_vcgencmd_and_busy_lock) ... ok
+test_preflight_replay_without_hardware_and_verbatim_raw (test_review.ReviewTests.test_preflight_replay_without_hardware_and_verbatim_raw) ... ok
+test_proc_parent_with_spaces_and_parentheses (test_review.ReviewTests.test_proc_parent_with_spaces_and_parentheses) ... ok
+test_sampler_crash_blocks_capture (test_review.ReviewTests.test_sampler_crash_blocks_capture) ... ok
+test_stale_latency_is_not_used (test_review.ReviewTests.test_stale_latency_is_not_used) ... ok
+test_usage_and_invalid_config_exit_three (test_review.ReviewTests.test_usage_and_invalid_config_exit_three) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 81.672s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
+DISCOVERED: 2 test files, 21 tests, 0 skipped
+LOAD RESULT: exit 0; DISCOVERED: 2 test files, 21 tests, 0 skipped; workers terminated after run

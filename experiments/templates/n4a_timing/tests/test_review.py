@@ -230,7 +230,8 @@ class ReviewTests(unittest.TestCase):
             '--governor-root', str(platform['governors']), '--vcgencmd', str(platform['vcgencmd']),
             '--lock-file', str(root / 'lock'), str(inputs['binary']), str(inputs['vocab']), str(inputs['settings']),
             str(inputs['dataset']), str(inputs['times']), 'MH01', str(runs), str(root / 'experiment')],
-            env=dict(os.environ, N4A_ORB_PID_FILE=str(root / 'orb.pid')))
+            env=dict(os.environ, N4A_ORB_PID_FILE=str(root / 'orb.pid'),
+                     N4A_SAMPLER_READY_FILE=str(root / 'sampler.ready')))
 
     def test_sampler_crash_blocks_capture(self):
         with tempfile.TemporaryDirectory() as td:

@@ -20,6 +20,28 @@ integration items. No dependency implementation was changed.
 
 ## Verification
 
+### T15b flaky capture fixture
+
+The intermittent `test_valid_stub_capture` BLOCKED result came from the test
+stub, which ran `/bin/sleep` for a fixed 0.20 seconds. The runner first has to
+discover the child PID, launch Python, and let the sampler initialize and write
+its first sample. Under host scheduling delay, the stub engine could exit
+before that sequence completed; the sampler then had no live target and capture
+was correctly BLOCKED. This is a fixture timing assumption, not a Pi capture
+logic defect: the actual EuRoC engine is expected to remain active while the
+sampler attaches, and the capture contract requires sampled evidence.
+
+The test stub now holds the target process until the sampler signals that its
+first sample row is written, then ends the stub process and allows normal
+sampler shutdown. This keeps the test deterministic while still checking that
+the PID was discovered, the sampler ran, and sample metadata was saved.
+
+T15b verification: the full T15 test suite passes 20/20 in separate normal-load
+processes (21 tests each, 0 skipped), and passes once while CPU-bound `yes`
+processes occupy all 16 reported CPU cores. Exact commands and output are
+recorded in `tests/last-run.log`. These are Mac fixture results; Pi capture
+behavior remains UNKNOWN pending hardware execution.
+
 Run from the repository root:
 
 ```sh
@@ -77,4 +99,4 @@ These results verify software and saved-file evaluation only, not a Pi gate.
 All review changes remain uncommitted, inside
 `experiments/templates/n4a_timing/`. No git state-changing command was run.
 
-Proposed commit message: `Fix N4A timing review: evidence validity, capture status and offline replay`
+Proposed commit message: `Stabilize N4A timing capture fixture under scheduler load`
