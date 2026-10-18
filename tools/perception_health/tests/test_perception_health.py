@@ -3,6 +3,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "py"))
 from perception_health import *
 from supervisor_model import Event, SupervisorModel
+from sender import json_true, map_source_time
 
 class ProtocolTests(unittest.TestCase):
     def test_crc_vector_and_frozen_vector_python(self):
@@ -31,18 +32,76 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual(saturating_age_us(9_000_000_000_000_000,0),U32_MAX)
         with self.assertRaises(ValueError): saturating_age_us(1,2)
 
+    def test_v3_heartbeat_matches_upstream_layout(self):
+        frame=encode_heartbeat(0x1234,0x0102030405060708,0x1112131415161718)
+        self.assertEqual(len(frame),25)
+        self.assertEqual(frame[:7],bytes.fromhex("a55a0301341210"))
+        self.assertEqual(frame[7:23],bytes.fromhex("08070605040302011817161514131211"))
+        self.assertEqual(int.from_bytes(frame[23:25],"little"),crc16_ccitt_false(frame[2:23]))
+
+    def test_sender_rejects_clock_domain_mismatch(self):
+        with self.assertRaisesRegex(ValueError,"CLOCK_MONOTONIC_RAW"):
+            map_source_time(1,{"camera_domain":"D435i_global_time","pi_domain":"host_steady"})
+
+    def test_non_boolean_imu_status_is_rejected(self):
+        malformed=PAYLOAD.pack(1,1,3,2,0,10,3)
+        with self.assertRaisesRegex(ValueError,"0 or 1"):
+            decode_health_payload(malformed)
+        self.assertTrue(json_true({"imu_initialized":True},"imu_initialized"))
+        self.assertFalse(json_true({"imu_initialized":"false"},"imu_initialized"))
+        self.assertFalse(json_true({"valid":1},"valid"))
+
 class ModelTests(unittest.TestCase):
-    def setUp(self): self.m=SupervisorModel()
+    def setUp(self): self.m=SupervisorModel(primary_fresh=True); self.seq=0
+    def ev(self,kind,received_us,age=0,state=0,flags=0,**kwargs):
+        seq=self.seq; self.seq=(self.seq+1)&0xFFFF
+        return Event(kind,received_us,age,state,flags,wire_seq=seq,**kwargs)
     def start(self, age=1000, state=3, flags=3):
-        self.m.update(1000,Event("heartbeat",1000,session_id=9))
-        self.m.update(1100,Event("health",1100,age,state,flags))
+        self.m.update(1000,self.ev("heartbeat",1000,session_id=9))
+        self.m.update(1100,self.ev("health",1100,age,state,flags))
     def test_fresh_then_hold_age(self):
         self.start(); self.assertEqual(self.m.state,"FRESH")
-        self.m.update(1100+self.m.c["pose_age_hold_us"],Event("health",1100+self.m.c["pose_age_hold_us"],age_at_send_us=100000,tracking_state=3,flags=3))
+        self.m.update(1100+self.m.c["pose_age_hold_us"],self.ev("health",1100+self.m.c["pose_age_hold_us"],age=100000,state=3,flags=3))
         self.assertEqual((self.m.state,self.m.reason),("HOLD","SOURCE_AGE_HOLD"))
     def test_lost_latches_until_rearm(self):
-        self.start(); self.m.update(1200,Event("health",1200,tracking_state=5,flags=3))
-        self.assertEqual(self.m.state,"FAILSAFE"); self.assertTrue(self.m.rearm(1300)); self.assertEqual(self.m.state,"INIT")
+        self.start(); self.m.update(1200,self.ev("health",1200,state=5,flags=3))
+        self.assertEqual((self.m.state,self.m.reason),("FAILSAFE","SOURCE_AGE_TIMEOUT"))
+        self.assertFalse(self.m.rearm(1300), "rearm must wait for the configured healthy interval")
+        now=1301
+        while now <= 1_001_301:
+            self.m.update(now,self.ev("heartbeat",now,session_id=9))
+            self.m.update(now,self.ev("health",now,age=1000,state=3,flags=3))
+            now += 50_000
+        self.assertTrue(self.m.rearm(1_001_301)); self.assertEqual(self.m.state,"INIT")
+
+    def test_transit_allowance_downgrades_fresh_report(self):
+        self.start(age=self.m.c["pose_age_hold_us"] - self.m.c["transit_bound_us"])
+        self.assertEqual((self.m.state,self.m.reason),("HOLD","SOURCE_AGE_HOLD"))
+
+    def test_invalid_imu_boolean_downgrades(self):
+        self.m.update(1000,self.ev("heartbeat",1000,session_id=9))
+        self.m.update(1100,self.ev("health",1100,age=1000,state=3,flags=3,imu_initialized=2))
+        self.assertEqual(self.m.state,"HOLD")
+
+    def test_duplicate_wire_sequence_does_not_refresh_health(self):
+        self.start()
+        last_health=self.m.last_health
+        duplicate=self.ev("health",1200,age=1000,state=3,flags=3)
+        duplicate.wire_seq=(self.seq-2)&0xFFFF
+        self.m.update(1200,duplicate)
+        self.assertEqual(self.m.last_health,last_health)
+
+    def test_session_change_cannot_exit_latched_failsafe(self):
+        self.start(); self.m.update(1200,self.ev("health",1200,state=5,flags=3))
+        self.m.update(1300,self.ev("heartbeat",1300,session_id=10))
+        self.assertTrue(self.m.latched)
+        self.assertEqual(self.m.state,"FAILSAFE")
+
+    def test_health_alone_cannot_enable_fresh(self):
+        model=SupervisorModel()
+        model.update(1000,Event("heartbeat",1000,session_id=9,wire_seq=0))
+        model.update(1100,Event("health",1100,age_at_send_us=1000,tracking_state=3,flags=3,wire_seq=1))
+        self.assertEqual(model.state,"INIT")
     def test_missing_mapping_holds_then_silence_fails(self):
         self.start(flags=0); self.assertEqual(self.m.state,"HOLD")
         self.m.update(1100+self.m.c["pose_age_timeout_us"])
@@ -68,11 +127,11 @@ class ModelTests(unittest.TestCase):
         self.m.update(1200); self.assertEqual(self.m.state,"HOLD")
 
     def test_map_reset_counter_change_downgrades(self):
-        self.m.update(1000,Event("heartbeat",1000,session_id=9))
-        self.m.update(1100,Event("health",1100,age_at_send_us=1000,tracking_state=3,flags=3,map_reset_counter=4))
+        self.m.update(1000,self.ev("heartbeat",1000,session_id=9))
+        self.m.update(1100,self.ev("health",1100,age=1000,state=3,flags=3,map_reset_counter=4))
         self.assertEqual(self.m.state,"FRESH")
-        self.m.update(1200,Event("health",1200,age_at_send_us=1000,tracking_state=3,flags=3,map_reset_counter=5))
-        self.assertEqual((self.m.state,self.m.reason),("HOLD","MAP_RESET"))
+        self.m.update(1200,self.ev("health",1200,age=1000,state=3,flags=3,map_reset_counter=5))
+        self.assertEqual((self.m.state,self.m.reason),("HOLD","SOURCE_AGE_HOLD"))
 
 class PtyTests(unittest.TestCase):
     def test_sender_pty_round_trip_and_silence(self):
@@ -83,7 +142,7 @@ class PtyTests(unittest.TestCase):
         for i in range(3):
             a=source_ns+i*1_000_000_000; b=now-1_000_000+i*1_000_000_000
             exchanges.append([a,b+1000,b+2000,a+10000])
-        mapping={"valid":True,"camera_domain":"D435i_global_time","pi_domain":"host_steady",
+        mapping={"valid":True,"camera_domain":"D435i_global_time","pi_domain":"CLOCK_MONOTONIC_RAW",
                  "camera_session":"camera-session","pi_session":"pi-session","exchanges_ns":exchanges}
         events=[{"pose_source_d435i_ns":source_ns,"mapping":mapping,
                "tracking_state":"OK","map_reset_counter":n,"imu_initialized":True,"tracked_features":77} for n in (11,12)]
@@ -109,13 +168,15 @@ class PtyTests(unittest.TestCase):
             proc.stdin.close()
             stop.set(); receiver.join(timeout=2); os.close(master); os.close(slave)
         self.assertTrue(any(t==TYPE_HEARTBEAT for t,_,_ in got))
-        health=next(decode_health_payload(p) for t,_,p in got if t==TYPE_PERCEPTION_HEALTH)
+        hb_seq=next(seq for t,seq,_ in got if t==TYPE_HEARTBEAT)
+        health_seq,health_payload=next((seq,p) for t,seq,p in got if t==TYPE_PERCEPTION_HEALTH)
+        health=decode_health_payload(health_payload)
         self.assertEqual(health.map_reset_counter,11); self.assertEqual(health.tracked_features,77)
         cfg=json.loads((ROOT/"config.json").read_text()); cfg["pose_age_hold_us"]=5_000_000; cfg["pose_age_timeout_us"]=60_000_000
-        model=SupervisorModel(cfg); now=1000
-        model.update(now,Event("heartbeat",now,session_id=9))
+        model=SupervisorModel(cfg,primary_fresh=True); now=1000
+        model.update(now,Event("heartbeat",now,session_id=9,wire_seq=hb_seq))
         model.update(now+1,Event("health",now+1,health.pose_age_us,health.tracking_state,health.flags,
-                                 map_reset_counter=health.map_reset_counter,imu_initialized=bool(health.imu_initialized)))
+                                 map_reset_counter=health.map_reset_counter,imu_initialized=bool(health.imu_initialized),wire_seq=health_seq))
         self.assertEqual(model.state,"FRESH", (model.reason,health))
         model.update(now+1+model.c["receipt_silence_timeout_us"])
         self.assertEqual(model.state,"FAILSAFE")

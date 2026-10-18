@@ -12,11 +12,11 @@ Use `tools/perception_health/upstream_snapshot/PROTOCOL.md`: `A5 5A | version=3 
 | 8 | `pose_age_us` | u32 LE, rounded up `(t_send_ns - t_pose_source_ns)/1000`; saturates at UINT32_MAX |
 | 12 | `tracking_state` | u8 enum below |
 | 13 | `imu_initialized` | u8 boolean 0/1; camera IMU initialization status, never STM32 body IMU status |
-| 14 | `map_reset_counter` | u16 LE wrapping increment on map reset, merge, or pose-frame discontinuity; consumer detects change as reset, akin to MAVLink ODOMETRY reset counter |
+| 14 | `map_reset_counter` | u16 LE wrapping increment on map reset, merge, relocalization discontinuity, or other pose-frame discontinuity; consumer detects change as reset, following MAVLink ODOMETRY reset-counter semantics |
 | 16 | `tracked_features` | u16 LE raw count reported by estimator; no covariance or confidence fabricated |
 | 18 | `flags` | u8 bitfield |
 
-Tracking enum mirrors ORB-SLAM3 `Tracking.h` names: 0 SYSTEM_NOT_READY, 1 NO_IMAGES_YET, 2 NOT_INITIALIZED, 3 OK, 4 RECENTLY_LOST, 5 LOST, 6 OK_KLT. Source pin/evidence: official ORB-SLAM3 `include/Tracking.h`; this checkout does not contain the initialized third-party source file, so enum agreement remains **SOURCE-SUPPORTED by the upstream names in the ticket, not locally source-verified**. Unknown enum values are invalid and MUST downgrade to HOLD; LOST downgrades to FAILSAFE.
+Tracking enum mirrors ORB-SLAM3 `Tracking.h` names: 0 SYSTEM_NOT_READY, 1 NO_IMAGES_YET, 2 NOT_INITIALIZED, 3 OK, 4 RECENTLY_LOST, 5 LOST, 6 OK_KLT. Source pin/evidence: official ORB-SLAM3 `include/Tracking.h`; this checkout does not contain the initialized third-party source file, so enum agreement remains **SOURCE-SUPPORTED by the upstream names in the ticket, not locally source-verified**. Unknown enum values are invalid and MUST downgrade to HOLD (`SOURCE_AGE_HOLD`); LOST downgrades to latched FAILSAFE (`SOURCE_AGE_TIMEOUT`).
 
 | Bit | Name | Set/clear meaning |
 |---:|---|---|
@@ -40,7 +40,7 @@ No age values are computed by comparing Pi and MCU epochs. `tools/clockmap` prov
 
 ## Supervisor recommendation
 
-Thresholds live only in `config.json`; all are **PROPOSED**, not measured limits. A valid HEARTBEAT/session and valid health report are both required before INIT can become FRESH. On each accepted report, compute conservatively `source_age = pose_age_us + (MCU_now - MCU_received_at) + transit_bound_us`, saturating u64. A valid age above `pose_age_hold_us` enters HOLD with `SOURCE_AGE_HOLD`; above `pose_age_timeout_us` enters the existing FAILSAFE path with `SOURCE_AGE_TIMEOUT`. Tracking LOST immediately enters latched FAILSAFE. Any other state besides OK/OK_KLT, degraded flag, absent age/mapping, or map reset change enters/remains HOLD. Receipt silence enters HOLD at its configured threshold and FAILSAFE at timeout; heartbeat timeout uses the existing heartbeat reason. FAILSAFE is latched until an explicit local rearm. Session change clears freshness history but cannot release a latched FAILSAFE. Invalid frames do not refresh timers.
+Thresholds live only in `config.json`; all are **PROPOSED**, not measured limits. A valid HEARTBEAT/session and health report can only clear this optional health gate; the existing primary supervisor input must independently be FRESH before the combined model can report FRESH. This message cannot grant motion eligibility. On each accepted report, compute conservatively `source_age = pose_age_us + (MCU_now - MCU_received_at) + transit_bound_us`, saturating u64. A valid age above `pose_age_hold_us` enters HOLD with `SOURCE_AGE_HOLD`; above `pose_age_timeout_us` enters the existing FAILSAFE path with `SOURCE_AGE_TIMEOUT`. Tracking LOST immediately enters latched FAILSAFE. Any other state besides OK/OK_KLT, degraded flag, absent age/mapping, or map reset change enters/remains HOLD. Receipt silence enters HOLD at its configured threshold and FAILSAFE at timeout; heartbeat timeout uses the existing heartbeat reason. FAILSAFE is latched until an explicit local rearm after the configured uninterrupted healthy observation interval. Session change clears freshness history but cannot release a latched FAILSAFE. Invalid or duplicate/out-of-order frames do not refresh timers.
 
 The upstream supervisor implementation must add 0x05 as an event kind and preserve its existing sequencing, generation, capture receipt timestamps, expiry-before-acceptance, and rearm semantics. The Python model here describes intended behavior, not firmware integration. PERCEPTION_HEALTH can only DOWNGRADE; balance control, LQR, VMC, PID/PD, actuator commands and hard safety remain STM32-owned and do not depend on this message.
 
@@ -49,4 +49,4 @@ The upstream supervisor implementation must add 0x05 as an event kind and preser
 - Fixed 19-byte payload uses the full requested observables without inventing covariance.
 - `pose_age_us` is u32 to mirror existing v2 `age_at_send_us`; saturation means “at least this old,” never wrapping into fresh.
 - Mapping is explicit and flags unavailable ages instead of substituting receive time. The sender takes mapping parameters from each JSONL pose event so fixture events can carry provenance alongside the mapped values.
-- `map_reset_counter` follows reset-counter semantics: increment on discontinuities, not every map update. Wrap is tolerated through inequality; loss of multiple increments remains detectable as a change.
+- `map_reset_counter` follows reset-counter semantics: increment on map reset, merge, relocalization discontinuity, or another pose-frame discontinuity, not every map update. Wrap is tolerated through inequality; loss of multiple increments remains detectable as a change.

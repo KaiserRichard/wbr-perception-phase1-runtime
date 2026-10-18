@@ -59,6 +59,8 @@ def decode_health_payload(payload: bytes) -> PerceptionHealth:
     if len(payload) != PAYLOAD.size:
         raise ValueError(f"PERCEPTION_HEALTH payload must be {PAYLOAD.size} bytes")
     send, age, state, imu, reset, features, flags = PAYLOAD.unpack(payload)
+    if imu not in (0, 1):
+        raise ValueError("imu_initialized must be encoded as 0 or 1")
     return PerceptionHealth(send, age, state, reset, imu, features, flags)
 
 def encode_heartbeat(seq: int, send_ns: int, session_id: int) -> bytes:
