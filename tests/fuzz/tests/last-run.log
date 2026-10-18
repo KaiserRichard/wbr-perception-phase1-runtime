@@ -1,0 +1,17 @@
+PYTHONPATH=../.. PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v test_fuzz.py
+test_link_proto_python_encoder_inputs (test_fuzz.ParserMutationTests.test_link_proto_python_encoder_inputs) ... ok
+test_perception_stream_valid_roundtrip_and_mutations (test_fuzz.ParserMutationTests.test_perception_stream_valid_roundtrip_and_mutations) ... ok
+test_reversed_and_nonfinite_trajectory_rejected (test_fuzz.ParserMutationTests.test_reversed_and_nonfinite_trajectory_rejected) ... ok
+test_rosbag_and_n4b_cdr_mutations (test_fuzz.ParserMutationTests.test_rosbag_and_n4b_cdr_mutations) ... ok
+test_trajectory_file_mutations (test_fuzz.ParserMutationTests.test_trajectory_file_mutations) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.387s
+
+OK
+cc -std=c11 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -Wall -Wextra -I../../tools/perception_health/c c/fuzz_ph.c ../../tools/perception_health/c/perception_health.c -o fuzz_ph
+cc -std=c11 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer -Wall -Wextra -I../../tools/link_proto c/fuzz_link.c ../../tools/link_proto/link_proto.c -o fuzz_link
+ASAN_OPTIONS=detect_leaks=0 ./fuzz_ph 1200 20261018
+perception_health C mutations: 1200 seed=39046161
+ASAN_OPTIONS=detect_leaks=0 ./fuzz_link 1200 20261018
+link_proto C mutations: 1200 seed=1276391047
