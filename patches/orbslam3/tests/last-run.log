@@ -9,6 +9,6 @@ test_real_saved_crash_report_is_explicit_about_missing_raw_trace (test_patch.Pat
 test_usage_exit_code (test_patch.PatchChecks.test_usage_exit_code) ... ok
 
 ----------------------------------------------------------------------
-Ran 9 tests in 4.826s
+Ran 9 tests in 5.684s
 
 OK
