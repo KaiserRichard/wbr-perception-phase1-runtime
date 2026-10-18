@@ -1,0 +1,10 @@
+test_missing_required_input_is_blocked (test_check_kalibr_result.Acceptance.test_missing_required_input_is_blocked) ... ok
+test_noise_mismatch_fails_provenance (test_check_kalibr_result.Acceptance.test_noise_mismatch_fails_provenance) ... ok
+test_perturbations_fail_each_major_criterion (test_check_kalibr_result.Acceptance.test_perturbations_fail_each_major_criterion) ... ok
+test_real_saved_tumvi_report_is_a_parser_fixture_only (test_check_kalibr_result.Acceptance.test_real_saved_tumvi_report_is_a_parser_fixture_only) ... ok
+test_synthetic_fixtures_pass_and_saved_inputs_reanalyze (test_check_kalibr_result.Acceptance.test_synthetic_fixtures_pass_and_saved_inputs_reanalyze) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 7.921s
+
+OK
