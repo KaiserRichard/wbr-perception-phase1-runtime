@@ -1,0 +1,37 @@
+test_analyze_only_reuses_saved_fixture_without_collection (test_check_platform.PlatformAnalysisTests.test_analyze_only_reuses_saved_fixture_without_collection) ... ok
+test_minimum_version_accepts_newer_and_present_policy_rejects_wrong_serial (test_check_platform.PlatformAnalysisTests.test_minimum_version_accepts_newer_and_present_policy_rejects_wrong_serial) ... ok
+test_missing_command_is_saved_and_blocks (test_check_platform.PlatformAnalysisTests.test_missing_command_is_saved_and_blocks) ... ok
+test_missing_required_fact_is_blocked (test_check_platform.PlatformAnalysisTests.test_missing_required_fact_is_blocked) ... ok
+test_real_snapshot_fixture_passes_pinned_fields (test_check_platform.PlatformAnalysisTests.test_real_snapshot_fixture_passes_pinned_fields) ... ok
+test_required_mismatch_fails_field (test_check_platform.PlatformAnalysisTests.test_required_mismatch_fails_field) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.044s
+
+OK
+Platform environment check: PASS
+FIELD                                      STATUS   MEASURED
+pi_model                                   PASS     Raspberry Pi 5 Model B Rev 1.0
+board_ram_bytes                            PASS     4294967296
+kernel_release                             PASS     6.8.0-1064-raspi
+ubuntu_version                             PASS     24.04
+ros_distro                                 PASS     jazzy
+ros_jazzy_realsense2_camera_package        PASS     4.58.4-1noble.20260902.181721
+ros_jazzy_librealsense2_package            PASS     2.58.4-1noble.20260831.020056
+librealsense_sdk_version                   PASS     2.58.4
+d435i_firmware_expected                    INFO     not_probed_camera_access_prohibited
+orbslam3_source_commit                     PASS     4452a3c
+orbslam3_applied_patches                   PASS     ['C++11/C++14 to C++17; remove -march=native', 'disable Sophus tests/examples', 'mnFullBAIdx++ changed to mnFullBAIdx = true']
+liborbslam3_sha256                         PASS     2aa97a5a8b04107b5c4ccf95eb724c9cc7d1e2874a1f9463315ef5520d95f048
+stereo_inertial_euroc_sha256               PASS     2c518765b04bfeb6450995b0a1d4b48d1d47315f362c8eb1713ecdc76519efe2
+pangolin_version                           PASS     0.9.1
+opencv_version                             INFO     None
+eigen_version                              INFO     None
+python_version                             PASS     3.12.3
+clocksource                                INFO     None
+cpu_governor                               PASS     ondemand
+swap_bytes                                 PASS     0
+ntp_synchronized                           PASS     True
+recording_mount                            PASS     {'mountpoint': '/', 'source': '/dev/mmcblk0p2', 'fstype': 'ext4'}
+recording_free_bytes                       INFO     None
+d435i_udev_rule_present                    PASS     327743061057
