@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "camera_node": "/camera/camera",
+  "qos_overrides_file": "qos_overrides.yaml",
+  "topics": [
+    {
+      "name": "/camera/camera/infra1/image_rect_raw",
+      "type": "sensor_msgs/msg/Image",
+      "role": "image_left",
+      "required": true,
+      "nominal_hz": 15.0,
+      "rate_min_hz": 14.25,
+      "rate_max_hz": 15.75,
+      "max_gap_s": 0.2,
+      "drop_gap_factor": 2.0,
+      "threshold_source": "SOURCE-SUPPORTED: inherited from experiments/2026-09-12-pi5-native-sensor-validation/n3_topics.json"
+    },
+    {
+      "name": "/camera/camera/infra2/image_rect_raw",
+      "type": "sensor_msgs/msg/Image",
+      "role": "image_right",
+      "required": true,
+      "nominal_hz": 15.0,
+      "rate_min_hz": 14.25,
+      "rate_max_hz": 15.75,
+      "max_gap_s": 0.2,
+      "drop_gap_factor": 2.0,
+      "threshold_source": "SOURCE-SUPPORTED: inherited from experiments/2026-09-12-pi5-native-sensor-validation/n3_topics.json"
+    },
+    {
+      "name": "/camera/camera/infra1/camera_info",
+      "type": "sensor_msgs/msg/CameraInfo",
+      "role": "camera_info_left",
+      "required": true,
+      "nominal_hz": 15.0,
+      "rate_min_hz": 14.25,
+      "rate_max_hz": 15.75,
+      "max_gap_s": 0.2,
+      "drop_gap_factor": 2.0,
+      "threshold_source": "SOURCE-SUPPORTED: inherited from experiments/2026-09-12-pi5-native-sensor-validation/n3_topics.json"
+    },
+    {
+      "name": "/camera/camera/infra2/camera_info",
+      "type": "sensor_msgs/msg/CameraInfo",
+      "role": "camera_info_right",
+      "required": true,
+      "nominal_hz": 15.0,
+      "rate_min_hz": 14.25,
+      "rate_max_hz": 15.75,
+      "max_gap_s": 0.2,
+      "drop_gap_factor": 2.0,
+      "threshold_source": "SOURCE-SUPPORTED: inherited from experiments/2026-09-12-pi5-native-sensor-validation/n3_topics.json"
+    },
+    {
+      "name": "/camera/camera/gyro/sample",
+      "type": "sensor_msgs/msg/Imu",
+      "role": "gyro",
+      "required": true,
+      "nominal_hz": 200.0,
+      "rate_min_hz": 190.0,
+      "rate_max_hz": 210.0,
+      "max_gap_s": 0.05,
+      "drop_gap_factor": 2.0,
+      "threshold_source": "SOURCE-SUPPORTED: inherited from experiments/2026-09-12-pi5-native-sensor-validation/n3_topics.json"
+    },
+    {
+      "name": "/camera/camera/accel/sample",
+      "type": "sensor_msgs/msg/Imu",
+      "role": "accel",
+      "required": true,
+      "nominal_hz": 100.0,
+      "rate_min_hz": 95.0,
+      "rate_max_hz": 105.0,
+      "max_gap_s": 0.05,
+      "drop_gap_factor": 2.0,
+      "threshold_source": "SOURCE-SUPPORTED: inherited from experiments/2026-09-12-pi5-native-sensor-validation/n3_topics.json"
+    },
+    {
+      "name": "/tf_static",
+      "type": "tf2_msgs/msg/TFMessage",
+      "role": "tf_static",
+      "required": true,
+      "threshold_source": "SOURCE-SUPPORTED: required by docs/NEXT_GATE.md N3 candidate PASS criteria"
+    }
+  ],
+  "pairing": {
+    "left_role": "image_left",
+    "right_role": "image_right",
+    "min_fraction": 0.99,
+    "threshold_source": "PROPOSED: exact header-stamp pairing with at most 1% unmatched images"
+  },
+  "storage": {
+    "storage_id": "sqlite3",
+    "max_write_rate_bps": 18400000,
+    "min_duration_s": 1.0,
+    "threshold_source": "SOURCE-SUPPORTED: COMMON.md records 18.4 MB/s required versus 16.6 MB/s measured; retain as the current demand ceiling"
+  },
+  "replay": {
+    "rate_relative_tolerance": 0.10,
+    "min_count_fraction": 0.99,
+    "threshold_source": "PROPOSED: replay rate within 10% and at least 99% of recorded samples"
+  },
+  "record": {
+    "duration_s": 20,
+    "command_timeout_s": 90,
+    "shutdown_grace_s": 15,
+    "node_list_timeout_s": 10,
+    "bag_info_timeout_s": 30,
+    "parameter_timeout_s": 30,
+    "topic_info_timeout_s": 15,
+    "threshold_source": "PROPOSED: bounded diagnostic window and command timeouts for Pi operation"
+  }
+}

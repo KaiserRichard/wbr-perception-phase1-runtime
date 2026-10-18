@@ -1,0 +1,10 @@
+test_drop_fixture_is_fail (test_qual.QualificationTests.test_drop_fixture_is_fail) ... ok
+test_missing_bag_is_blocked (test_qual.QualificationTests.test_missing_bag_is_blocked) ... ok
+test_pass_fixture_and_analyze_only (test_qual.QualificationTests.test_pass_fixture_and_analyze_only) ... ok
+test_real_saved_evidence_fixture (test_qual.QualificationTests.test_real_saved_evidence_fixture) ... ok
+test_stamp_reversal_is_fail (test_qual.QualificationTests.test_stamp_reversal_is_fail) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.750s
+
+OK
