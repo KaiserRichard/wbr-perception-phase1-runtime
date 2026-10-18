@@ -1,0 +1,9 @@
+# SOURCE-SUPPORTED fixture reference values copied from upstream ORB-SLAM3
+# Examples/Stereo-Inertial/EuRoC.yaml. They are used only to cross-check the
+# verbatim upstream settings fixture and are not independent calibration data.
+# Continuous-time units (as described in tools/calib_tools/README.md).
+update_rate: 200.0 # Hz
+gyroscope_noise_density: 1.7e-04 # rad/s/sqrt(Hz)
+accelerometer_noise_density: 2.0e-03 # m/s^2/sqrt(Hz)
+gyroscope_random_walk: 1.9393e-05 # rad/s^2/sqrt(Hz)
+accelerometer_random_walk: 3.0e-03 # m/s^3/sqrt(Hz)

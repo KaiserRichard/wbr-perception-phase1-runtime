@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "euroc_mh01": {
+      "width": 752,
+      "height": 480,
+      "fps": 20,
+      "gyro_rate_hz": 200.0,
+      "stereo_baseline_m": 0.110080,
+      "imu_calibration": "../fixtures/euroc_imu_reference.yaml",
+      "baseline_source": "SOURCE-SUPPORTED: norm of Stereo.T_c1_c2 in the attributed upstream ORB-SLAM3 EuRoC.yaml fixture; fixture profile only, not independent calibration",
+      "source": "SOURCE-SUPPORTED: upstream ORB-SLAM3 Examples/Stereo-Inertial/EuRoC.yaml copied into fixtures; EuRoC MH_01_easy image 752x480 at 20 Hz, IMU 200 Hz"
+    },
+    "d435i_n4b": {
+      "width": 640,
+      "height": 480,
+      "fps": 30,
+      "gyro_rate_hz": 200.0,
+      "camera_calibration": "../../../calibration/lab/config/camchain_factory_317422076650.yaml",
+      "imu_calibration": "../../../calibration/lab/config/imu_d435i_provisional.yaml",
+      "source": "SOURCE-SUPPORTED stream selection: experiments/2026-10-13-n4b-d435i-prep/n4b_plan.md selects Y8 640x480/30 and gyro 200 Hz. Requested/capability profile is not measured sustained delivery."
+    }
+  },
+  "thresholds": {
+    "fx_fy_relative_tolerance": {
+      "value": 0.05,
+      "source": "PROPOSED: maximum 5% relative difference between horizontal and vertical focal lengths for ordinary stereo pinhole settings"
+    },
+    "rotation_orthonormal_abs_tolerance": {
+      "value": 0.001,
+      "source": "PROPOSED: absolute tolerance for R-transpose-R versus identity, allowing float32 OpenCV matrix serialization"
+    },
+    "rotation_determinant_abs_tolerance": {
+      "value": 0.001,
+      "source": "PROPOSED: absolute tolerance for rotation determinant versus +1, allowing float32 OpenCV matrix serialization"
+    },
+    "homogeneous_row_abs_tolerance": {
+      "value": 0.001,
+      "source": "PROPOSED: absolute tolerance for the homogeneous transform bottom row [0,0,0,1]"
+    },
+    "max_translation_m": {
+      "value": 1.0,
+      "source": "PROPOSED: one metre upper bound for camera-camera and camera-IMU translation magnitudes; override for larger rigs"
+    },
+    "baseline_relative_tolerance": {
+      "value": 0.05,
+      "source": "PROPOSED: maximum 5% relative difference between settings stereo baseline and calibration reference"
+    },
+    "imu_noise_relative_tolerance": {
+      "value": 0.05,
+      "source": "PROPOSED: maximum 5% relative difference versus continuous-time noise values in the selected calibration IMU YAML after documented unit conversion"
+    },
+    "profile_rate_abs_tolerance_hz": {
+      "value": 0.01,
+      "source": "PROPOSED: profile frame and gyro rates must agree within 0.01 Hz"
+    },
+    "extractor": {
+      "nFeatures_min": 1,
+      "nFeatures_max": 10000,
+      "scaleFactor_min_exclusive": 1.0,
+      "scaleFactor_max": 3.0,
+      "nLevels_min": 1,
+      "nLevels_max": 32,
+      "fast_threshold_min": 0,
+      "fast_threshold_max": 255,
+      "source": "PROPOSED: conservative bounds for ORBextractor settings accepted by the upstream implementation and useful for normal image pyramids"
+    },
+    "viewer_positive_max": {
+      "value": 10000.0,
+      "source": "PROPOSED: Viewer sizes, widths, point size, and image scale must be positive and below 10000 to reject nonsensical magnitudes"
+    }
+  }
+}

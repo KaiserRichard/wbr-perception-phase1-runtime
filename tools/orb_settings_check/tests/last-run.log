@@ -1,0 +1,13 @@
+test_analyze_only_rechecks_saved_raw_settings (test_check_orb_settings.OrbSettingsCliTests.test_analyze_only_rechecks_saved_raw_settings) ... ok
+test_bad_intrinsics_fail_intrinsics_criterion (test_check_orb_settings.OrbSettingsCliTests.test_bad_intrinsics_fail_intrinsics_criterion) ... ok
+test_bad_stereo_rotation_fails_transform_criterion (test_check_orb_settings.OrbSettingsCliTests.test_bad_stereo_rotation_fails_transform_criterion) ... ok
+test_make_orb_yaml_provenance_hash_is_checked (test_check_orb_settings.OrbSettingsCliTests.test_make_orb_yaml_provenance_hash_is_checked) ... ok
+test_missing_input_is_blocked_and_result_contract_is_present (test_check_orb_settings.OrbSettingsCliTests.test_missing_input_is_blocked_and_result_contract_is_present) ... ok
+test_saved_d435i_candidate_matches_factory_camchain_and_imu_reference (test_check_orb_settings.OrbSettingsCliTests.test_saved_d435i_candidate_matches_factory_camchain_and_imu_reference) ... ok
+test_upstream_euroc_fixture_passes_named_profile (test_check_orb_settings.OrbSettingsCliTests.test_upstream_euroc_fixture_passes_named_profile) ... ok
+test_wrong_camera_profile_rate_and_noise_each_fail (test_check_orb_settings.OrbSettingsCliTests.test_wrong_camera_profile_rate_and_noise_each_fail) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.468s
+
+OK
