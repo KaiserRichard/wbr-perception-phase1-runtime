@@ -1,4 +1,3 @@
-cc -std=c99 -Wall -Wextra -Werror -pedantic -O2 -I. link_proto.c tests/test_link_proto.c -o tests/test_link_proto
 ./tests/test_link_proto
 CANDIDATE: C codec, golden vectors and synthetic receiver faults PASS
 PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
@@ -23,7 +22,7 @@ test_firmware_binary_in_qemu (test_link_bench.EndToEnd.test_firmware_binary_in_q
 Same firmware sources (BENCH_EMU skips RCC/UID) on QEMU netduinoplus2 (STM32F405). ... skipped 'needs qemu-system-arm and arm-none-eabi-gcc'
 test_host_simulator (test_link_bench.EndToEnd.test_host_simulator) ... baud 460800 not supported by termios
 ERROR
-/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py:1123: ResourceWarning: subprocess 80883 is still running
+/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py:1123: ResourceWarning: subprocess 17408 is still running
   _warn("subprocess %s is still running" % self.pid,
 ResourceWarning: Enable tracemalloc to get the object allocation traceback
 
@@ -38,7 +37,7 @@ Traceback (most recent call last):
     subprocess.run(cmd, check=True, timeout=120, stdout=subprocess.DEVNULL)
   File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py", line 569, in run
     raise CalledProcessError(retcode, process.args,
-subprocess.CalledProcessError: Command '['/Library/Frameworks/Python.framework/Versions/3.11/bin/python3', '/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/pi/link_bench.py', '--port', '/dev/ttys008', '--out', '/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmphrrqy8_3/out', '--duration', '3', '--fault-trials', '3', '--timeout-repeats', '2']' returned non-zero exit status 1.
+subprocess.CalledProcessError: Command '['/Library/Frameworks/Python.framework/Versions/3.11/bin/python3', '/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/pi/link_bench.py', '--port', '/dev/ttys011', '--out', '/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpos7lwy9e/out', '--duration', '3', '--fault-trials', '3', '--timeout-repeats', '2']' returned non-zero exit status 1.
 
 During handling of the above exception, another exception occurred:
 
@@ -50,15 +49,14 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py", line 1987, in _wait
     raise TimeoutExpired(self.args, timeout)
-subprocess.TimeoutExpired: Command '['/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/host/sim', '/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmphrrqy8_3/counters.txt']' timed out after 5 seconds
+subprocess.TimeoutExpired: Command '['/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/host/sim', '/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpos7lwy9e/counters.txt']' timed out after 5 seconds
 
 ----------------------------------------------------------------------
-Ran 8 tests in 5.414s
+Ran 8 tests in 5.371s
 
 FAILED (errors=1, skipped=1)
 sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name=3 encoding='UTF-8'>
 make: *** [test] Error 1
-c++ -std=c++17 -Wall -Wextra -Werror -pedantic -pthread tests/test_recorder.cpp -o tests/test_recorder
 ./tests/test_recorder
 Recorder checks passed (allocation, wrap, validation, copied epochs, contention, concurrency).
 PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
@@ -84,14 +82,9 @@ test_one_hz_schedule_csv_and_missed_slots (test_observer.ResourceTests.test_one_
 test_sampler_cli_new_file_only (test_observer.ResourceTests.test_sampler_cli_new_file_only) ... ok
 
 ----------------------------------------------------------------------
-Ran 20 tests in 0.449s
+Ran 20 tests in 0.452s
 
 OK
-mkdir -p build
-c++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -c adapter.cpp -o build/adapter.o
-ar rcs build/libvio_adapter.a build/adapter.o
-c++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I. tests/test_adapter.cpp build/libvio_adapter.a  -o build/test_adapter
-c++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I. replay_fake.cpp build/libvio_adapter.a  -o build/replay_fake
 ./build/test_adapter
 MEASURED: 12 synthetic adapter fixture groups passed; ORB/hardware UNKNOWN
 python3 -m unittest discover -s tests -v
@@ -101,11 +94,9 @@ test_full_replay_and_read_only (test_replay.ReplayTests.test_full_replay_and_rea
 test_png_filters_and_crc (test_replay.ReplayTests.test_png_filters_and_crc) ... ok
 
 ----------------------------------------------------------------------
-Ran 4 tests in 0.816s
+Ran 4 tests in 0.085s
 
 OK
-mkdir -p build
-c++ -std=c++17 -Wall -Wextra -Werror -pedantic -Isrc -I../vio_adapter tests/core_probe.cpp -o build/core_probe
 ./build/core_probe < /dev/null
 PYTHONDONTWRITEBYTECODE=1 WBR_CPP_PROBE=/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/ros2_bridge/build/core_probe python3 -m unittest discover -s tests -v
 test_age_and_mapping_uncertainty_bounds (test_mapping.MappingTests.test_age_and_mapping_uncertainty_bounds) ... ok
@@ -130,7 +121,7 @@ test_tracking_loss_fault_and_reason_flags (test_mapping.MappingTests.test_tracki
 test_unconfigured_session_or_budgets (test_mapping.MappingTests.test_unconfigured_session_or_budgets) ... ok
 
 ----------------------------------------------------------------------
-Ran 20 tests in 0.033s
+Ran 20 tests in 0.037s
 
 OK
 test_ambiguous_inputs (test_calib_convert.CalibrationTests.test_ambiguous_inputs) ... ok
@@ -151,9 +142,10 @@ test_transform_rejections (test_calib_convert.CalibrationTests.test_transform_re
 test_unequal_shifts_openvins_rejected_orb_preserved (test_calib_convert.CalibrationTests.test_unequal_shifts_openvins_rejected_orb_preserved) ... ok
 
 ----------------------------------------------------------------------
-Ran 16 tests in 0.863s
+Ran 16 tests in 0.842s
 
 OK
+DISCOVERED: 1 test files, 16 tests, 0 skipped
 test_cli_both_module_and_script_and_input_errors (test_analyze.AnalyzerTests.test_cli_both_module_and_script_and_input_errors) ... ok
 test_decimal_ms_sub_nanosecond_rounding (test_analyze.AnalyzerTests.test_decimal_ms_sub_nanosecond_rounding) ... ok
 test_domain_transitions_never_stitched (test_analyze.AnalyzerTests.test_domain_transitions_never_stitched) ... ok
@@ -193,9 +185,10 @@ test_uint32_validation (test_clockmap.UnwrapTests.test_uint32_validation) ... ok
 test_wrap_and_equal_ticks (test_clockmap.UnwrapTests.test_wrap_and_equal_ticks) ... ok
 
 ----------------------------------------------------------------------
-Ran 37 tests in 0.634s
+Ran 37 tests in 0.566s
 
 OK
+DISCOVERED: 2 test files, 37 tests, 0 skipped
 test_bad_transforms (test_frames.FramesTests.test_bad_transforms) ... ok
 test_cli_and_tcw_normalization (test_frames.FramesTests.test_cli_and_tcw_normalization) ... ok
 test_decimal_timestamp (test_frames.FramesTests.test_decimal_timestamp) ... ok
@@ -209,9 +202,10 @@ test_sdk_column_major_and_imu_route (test_frames.FramesTests.test_sdk_column_maj
 test_velocity_overflow_is_rejected_before_valid_output (test_frames.FramesTests.test_velocity_overflow_is_rejected_before_valid_output) ... ok
 
 ----------------------------------------------------------------------
-Ran 11 tests in 0.451s
+Ran 11 tests in 0.501s
 
 OK
+DISCOVERED: 1 test files, 11 tests, 0 skipped
 test_missing_reply_is_counted_not_paired (test_la_analyze.Analyzer.test_missing_reply_is_counted_not_paired) ... ok
 test_vcd_and_logic2_csv (test_la_analyze.Analyzer.test_vcd_and_logic2_csv) ... ok
 test_bench_health_round_trip_and_corruption (test_link_bench.Decoder.test_bench_health_round_trip_and_corruption) ... ok
@@ -223,9 +217,6 @@ test_firmware_binary_in_qemu (test_link_bench.EndToEnd.test_firmware_binary_in_q
 Same firmware sources (BENCH_EMU skips RCC/UID) on QEMU netduinoplus2 (STM32F405). ... skipped 'needs qemu-system-arm and arm-none-eabi-gcc'
 test_host_simulator (test_link_bench.EndToEnd.test_host_simulator) ... baud 460800 not supported by termios
 ERROR
-/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py:1123: ResourceWarning: subprocess 81787 is still running
-  _warn("subprocess %s is still running" % self.pid,
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
 
 ======================================================================
 ERROR: test_host_simulator (test_link_bench.EndToEnd.test_host_simulator)
@@ -238,7 +229,7 @@ Traceback (most recent call last):
     subprocess.run(cmd, check=True, timeout=120, stdout=subprocess.DEVNULL)
   File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py", line 569, in run
     raise CalledProcessError(retcode, process.args,
-subprocess.CalledProcessError: Command '['/Library/Frameworks/Python.framework/Versions/3.11/bin/python3', '/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/pi/link_bench.py', '--port', '/dev/ttys009', '--out', '/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp_cl4a1q5/out', '--duration', '3', '--fault-trials', '3', '--timeout-repeats', '2']' returned non-zero exit status 1.
+subprocess.CalledProcessError: Command '['/Library/Frameworks/Python.framework/Versions/3.11/bin/python3', '/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/pi/link_bench.py', '--port', '/dev/ttys012', '--out', '/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpyd5xgi47/out', '--duration', '3', '--fault-trials', '3', '--timeout-repeats', '2']' returned non-zero exit status 1.
 
 During handling of the above exception, another exception occurred:
 
@@ -250,13 +241,12 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py", line 1987, in _wait
     raise TimeoutExpired(self.args, timeout)
-subprocess.TimeoutExpired: Command '['/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/host/sim', '/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp_cl4a1q5/counters.txt']' timed out after 5 seconds
+subprocess.TimeoutExpired: Command '['/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/host/sim', '/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpyd5xgi47/counters.txt']' timed out after 5 seconds
 
 ----------------------------------------------------------------------
-Ran 8 tests in 5.376s
+Ran 8 tests in 5.370s
 
 FAILED (errors=1, skipped=1)
-sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name=3 encoding='UTF-8'>
 test_cobs_known (test_python.EncoderTests.test_cobs_known) ... ok
 test_crc (test_python.EncoderTests.test_crc) ... ok
 test_frozen_golden_vectors (test_python.EncoderTests.test_frozen_golden_vectors) ... ok
@@ -266,6 +256,7 @@ test_nonfinite_rejected (test_python.EncoderTests.test_nonfinite_rejected) ... o
 Ran 4 tests in 0.001s
 
 OK
+DISCOVERED: 1 test files, 4 tests, 0 skipped
 test_age_and_mapping_uncertainty_bounds (test_mapping.MappingTests.test_age_and_mapping_uncertainty_bounds) ... ok
 test_available_covariance_remains_out_of_pose_message (test_mapping.MappingTests.test_available_covariance_remains_out_of_pose_message) ... ok
 test_cpp_field_mapping_parity (test_mapping.MappingTests.test_cpp_field_mapping_parity) ... skipped 'optional ROS-free C++ parity probe'
@@ -288,9 +279,10 @@ test_tracking_loss_fault_and_reason_flags (test_mapping.MappingTests.test_tracki
 test_unconfigured_session_or_budgets (test_mapping.MappingTests.test_unconfigured_session_or_budgets) ... ok
 
 ----------------------------------------------------------------------
-Ran 20 tests in 0.006s
+Ran 20 tests in 0.009s
 
 OK (skipped=1)
+DISCOVERED: 1 test files, 20 tests, 1 skipped
 test_changed_inputs_are_reported (test_harness.HarnessTests.test_changed_inputs_are_reported) ... ok
 test_cli_success_failure_and_template_paths_with_spaces (test_harness.HarnessTests.test_cli_success_failure_and_template_paths_with_spaces) ... ok
 test_comment_only_times_refused (test_harness.HarnessTests.test_comment_only_times_refused) ... ok
@@ -312,7 +304,7 @@ test_success_provenance_and_isolation (test_harness.HarnessTests.test_success_pr
 test_without_epochs_does_not_claim_reset_identity (test_harness.HarnessTests.test_without_epochs_does_not_claim_reset_identity) ... ok
 
 ----------------------------------------------------------------------
-Ran 19 tests in 13.379s
+Ran 19 tests in 15.306s
 
 OK
 {
@@ -359,6 +351,7 @@ OK
     }
   ]
 }
+DISCOVERED: 1 test files, 19 tests, 0 skipped
 test_clockmap_json_cli_loader (test_observer.AggregateTests.test_clockmap_json_cli_loader) ... ok
 test_cpp_csv_to_python_and_cli (test_observer.AggregateTests.test_cpp_csv_to_python_and_cli) ... ok
 test_cross_clock_age_requires_explicit_map (test_observer.AggregateTests.test_cross_clock_age_requires_explicit_map) ... ok
@@ -381,9 +374,10 @@ test_one_hz_schedule_csv_and_missed_slots (test_observer.ResourceTests.test_one_
 test_sampler_cli_new_file_only (test_observer.ResourceTests.test_sampler_cli_new_file_only) ... ok
 
 ----------------------------------------------------------------------
-Ran 20 tests in 0.469s
+Ran 20 tests in 0.420s
 
 OK
+DISCOVERED: 1 test files, 20 tests, 0 skipped
 test_audit_outputs_cannot_destroy_input (test_take_tools.TakeTests.test_audit_outputs_cannot_destroy_input) ... ok
 test_big_endian_and_mono8 (test_take_tools.TakeTests.test_big_endian_and_mono8) ... ok
 test_corruptions_refused_or_marked (test_take_tools.TakeTests.test_corruptions_refused_or_marked) ... ok
@@ -406,18 +400,20 @@ test_times_suppressed_for_bad_clock_or_order (test_take_tools.TakeTests.test_tim
 test_unknown_encoding_truncation_and_encapsulation_are_fatal (test_take_tools.TakeTests.test_unknown_encoding_truncation_and_encapsulation_are_fatal) ... ok
 
 ----------------------------------------------------------------------
-Ran 20 tests in 5.411s
+Ran 20 tests in 5.311s
 
 OK
+DISCOVERED: 1 test files, 20 tests, 0 skipped
 test_binary_truncation_rejected (test_replay.ReplayTests.test_binary_truncation_rejected) ... ok
 test_does_not_hide_reversals_or_domains (test_replay.ReplayTests.test_does_not_hide_reversals_or_domains) ... ok
 test_full_replay_and_read_only (test_replay.ReplayTests.test_full_replay_and_read_only) ... ok
 test_png_filters_and_crc (test_replay.ReplayTests.test_png_filters_and_crc) ... ok
 
 ----------------------------------------------------------------------
-Ran 4 tests in 0.086s
+Ran 4 tests in 0.099s
 
 OK
+DISCOVERED: 1 test files, 4 tests, 0 skipped
 test_real_data_mh01_evo_and_tum_crosscheck (test_traj_eval.RealDataValidationTests.test_real_data_mh01_evo_and_tum_crosscheck) ... skipped 'REAL-DATA MH01 fixtures missing: /Users/quockaiser/Desktop/Research/wbr-wt-ci/experiments/2026-10-13-n4a-euroc-mh01/eval/gt_data.csv, /Users/quockaiser/Desktop/Research/wbr-wt-ci/experiments/2026-10-13-n4a-euroc-mh01/eval/gt_data.tum'
 test_synthetic_association_boundary_offset_and_shorter_side (test_traj_eval.SyntheticTests.test_synthetic_association_boundary_offset_and_shorter_side) ... ok
 test_synthetic_association_equal_length_iterates_estimate_like_evo (test_traj_eval.SyntheticTests.test_synthetic_association_equal_length_iterates_estimate_like_evo) ... ok
@@ -450,9 +446,10 @@ test_synthetic_timestamp_decimal_exactness_and_rounding (test_traj_eval.Syntheti
 test_synthetic_umeyama_se3_and_sim3 (test_traj_eval.SyntheticTests.test_synthetic_umeyama_se3_and_sim3) ... ok
 
 ----------------------------------------------------------------------
-Ran 30 tests in 0.253s
+Ran 30 tests in 0.261s
 
 OK (skipped=1)
+DISCOVERED: 1 test files, 30 tests, 1 skipped
 test_csv_precision_and_cli_outputs_unknown_walk (test_allan.AllanTests.test_csv_precision_and_cli_outputs_unknown_walk) ... ok
 test_gap_splitting (test_allan.AllanTests.test_gap_splitting) ... ok
 test_optional_plotting_and_power_diagnostic (test_allan.AllanTests.test_optional_plotting_and_power_diagnostic) ... Matplotlib is building the font cache; this may take a moment.
@@ -462,7 +459,7 @@ test_power_bits_without_hardware (test_allan.AllanTests.test_power_bits_without_
 test_system_time_cli_diagnostic (test_allan.AllanTests.test_system_time_cli_diagnostic) ... ok
 test_three_hour_native_200hz_noise_and_walk (test_allan.AllanTests.test_three_hour_native_200hz_noise_and_walk) ... 
 SYNTHETIC 3 h, 200 Hz, no decimation: {"x": {"N": 0.03002165632496944, "K": 0.009487051883562502, "N_slope": -0.4996322134536536, "K_slope": 0.4636469872241274, "N_r2": 0.9999986682076752, "K_r2": 0.9997829312971933}, "y": {"N": 0.02997891618645073, "K": 0.009809823547806495, "N_slope": -0.5001619846712447, "K_slope": 0.5126117447514066, "N_r2": 0.999999782606195, "K_r2": 0.9982470172192905}, "z": {"N": 0.029992037285683535, "K": 0.009641300038012795, "N_slope": -0.5000111744878641, "K_slope": 0.5029234508712765, "N_r2": 0.999999835978065, "K_r2": 0.9992568226741755}}
-SYNTHETIC recovery elapsed_s=6.115
+SYNTHETIC recovery elapsed_s=6.079
 ok
 test_timestamp_validation (test_allan.AllanTests.test_timestamp_validation) ... ok
 test_yaml_maxima_and_inflation (test_allan.AllanTests.test_yaml_maxima_and_inflation) ... ok
@@ -471,9 +468,10 @@ test_live_undervoltage_and_space_refusal (test_wrapper.WrapperTests.test_live_un
 test_sigterm_drains_recorder_and_finalizes_power (test_wrapper.WrapperTests.test_sigterm_drains_recorder_and_finalizes_power) ... ok
 
 ----------------------------------------------------------------------
-Ran 12 tests in 33.766s
+Ran 12 tests in 38.947s
 
 OK
+DISCOVERED: 2 test files, 12 tests, 0 skipped
 test_existing_directory_preserved (test_lab.Layout.test_existing_directory_preserved) ... ok
 test_invalid_header_units_empty_nonfinite_and_stamps (test_lab.Layout.test_invalid_header_units_empty_nonfinite_and_stamps) ... ok
 test_layout_units_order_precision_links (test_lab.Layout.test_layout_units_order_precision_links) ... ok
@@ -496,9 +494,31 @@ test_stereo_components_and_baseline (test_lab.Summaries.test_stereo_components_a
 test_time_sign_and_integer_precision (test_lab.Summaries.test_time_sign_and_integer_precision) ... ok
 
 ----------------------------------------------------------------------
-Ran 20 tests in 0.826s
+Ran 20 tests in 0.829s
 
 OK
+DISCOVERED: 1 test files, 20 tests, 0 skipped
+test_all_python_directories_missing_still_prints_summary (test_ci_runner.RunnerTests.test_all_python_directories_missing_still_prints_summary) ... ok
+test_all_skipped_is_blocked_and_reason_is_visible (test_ci_runner.RunnerTests.test_all_skipped_is_blocked_and_reason_is_visible) ... ok
+test_comments_cannot_skip_reviewed_host_targets (test_ci_runner.RunnerTests.test_comments_cannot_skip_reviewed_host_targets) ... ok
+test_empty_baseline_suite_is_blocked (test_ci_runner.RunnerTests.test_empty_baseline_suite_is_blocked) ... ok
+test_failure_does_not_hide_remaining_suites (test_ci_runner.RunnerTests.test_failure_does_not_hide_remaining_suites) ... ok
+test_import_error_is_failure (test_ci_runner.RunnerTests.test_import_error_is_failure) ... ok
+test_individual_skip_with_executed_tests_is_visible (test_ci_runner.RunnerTests.test_individual_skip_with_executed_tests_is_visible) ... ok
+test_make_failure_is_reported (test_ci_runner.RunnerTests.test_make_failure_is_reported) ... ok
+test_missing_baseline_python_suite_is_blocked (test_ci_runner.RunnerTests.test_missing_baseline_python_suite_is_blocked) ... ok
+test_missing_makefile_is_blocked (test_ci_runner.RunnerTests.test_missing_makefile_is_blocked) ... ok
+test_nested_package_is_discovered (test_ci_runner.RunnerTests.test_nested_package_is_discovered) ... ok
+test_new_empty_suite_is_blocked (test_ci_runner.RunnerTests.test_new_empty_suite_is_blocked) ... ok
+test_optional_orb_environment_cannot_enable_real_engine (test_ci_runner.RunnerTests.test_optional_orb_environment_cannot_enable_real_engine) ... ok
+test_partially_undiscovered_nested_suite_is_blocked (test_ci_runner.RunnerTests.test_partially_undiscovered_nested_suite_is_blocked) ... ok
+test_saved_real_receipt_inventory_and_future_locations (test_ci_runner.RunnerTests.test_saved_real_receipt_inventory_and_future_locations) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 21.277s
+
+OK
+DISCOVERED: 1 test files, 15 tests, 0 skipped
 
 SUITE                                            STATUS   DETAIL
 ------------------------------------------------ -------- ------------------------------
@@ -520,3 +540,4 @@ python:tools/vio_adapter/tests                   PASS     unittest discovery
 python:tools/trajectory_eval                     PASS     unittest discovery
 python:calibration/allan/tests                   PASS     unittest discovery
 python:calibration/lab/tests                     PASS     unittest discovery
+python:.github/tests                             PASS     unittest discovery

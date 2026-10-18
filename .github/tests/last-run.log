@@ -1,0 +1,562 @@
+$ bash -n tools/run_all_tests.sh
+EXIT_CODE=0
+
+$ python3 -c 'import platform,sys,numpy,yaml; print(platform.platform()); print(sys.version); print("numpy",numpy.__version__,"PyYAML",yaml.__version__)'
+macOS-15.7.9-x86_64-i386-64bit
+3.11.0rc2 (v3.11.0rc2:ed7c3ff156, Sep 11 2022, 16:22:23) [Clang 13.0.0 (clang-1300.0.29.30)]
+numpy 1.26.4 PyYAML 6.0.3
+EXIT_CODE=0
+
+$ python3 -c 'from pathlib import Path; import yaml; w=yaml.load(Path(".github/workflows/tests.yml").read_text(),Loader=yaml.BaseLoader); j=w["jobs"]["test"]; s=j["steps"]; assert set(w["on"])=={"push","pull_request"}; assert j["runs-on"]=="ubuntu-24.04"; assert s[0]["with"]["submodules"]=="false"; assert s[1]["with"]["python-version"]=="3.12"; assert "numpy==1.26.4" in s[2]["run"]; assert "PyYAML==6.0.2" in s[2]["run"]; assert s[3]["run"]=="bash tools/run_all_tests.sh"; print("Workflow configuration checks: PASS")'
+Workflow configuration checks: PASS
+EXIT_CODE=0
+
+$ bash tools/run_all_tests.sh > tools/run_all_tests.last-run.log 2>&1
+./tests/test_link_proto
+CANDIDATE: C codec, golden vectors and synthetic receiver faults PASS
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
+test_cobs_known (test_python.EncoderTests.test_cobs_known) ... ok
+test_crc (test_python.EncoderTests.test_crc) ... ok
+test_frozen_golden_vectors (test_python.EncoderTests.test_frozen_golden_vectors) ... ok
+test_nonfinite_rejected (test_python.EncoderTests.test_nonfinite_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+OK
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
+test_missing_reply_is_counted_not_paired (test_la_analyze.Analyzer.test_missing_reply_is_counted_not_paired) ... ok
+test_vcd_and_logic2_csv (test_la_analyze.Analyzer.test_vcd_and_logic2_csv) ... ok
+test_bench_health_round_trip_and_corruption (test_link_bench.Decoder.test_bench_health_round_trip_and_corruption) ... ok
+test_frozen_c_status_vector (test_link_bench.Decoder.test_frozen_c_status_vector) ... ok
+test_gpio_marker_ioctl_layout (test_link_bench.Decoder.test_gpio_marker_ioctl_layout)
+No GPIO chip here: fake the ioctls and check the uAPI v2 request bytes ... ok
+test_percentile_nearest_rank (test_link_bench.Decoder.test_percentile_nearest_rank) ... ok
+test_firmware_binary_in_qemu (test_link_bench.EndToEnd.test_firmware_binary_in_qemu)
+Same firmware sources (BENCH_EMU skips RCC/UID) on QEMU netduinoplus2 (STM32F405). ... skipped 'needs qemu-system-arm and arm-none-eabi-gcc'
+test_host_simulator (test_link_bench.EndToEnd.test_host_simulator) ... baud 460800 not supported by termios
+ERROR
+/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py:1123: ResourceWarning: subprocess 17408 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+
+======================================================================
+ERROR: test_host_simulator (test_link_bench.EndToEnd.test_host_simulator)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/tests/test_link_bench.py", line 116, in test_host_simulator
+    s = run_bench(port, os.path.join(d, 'out'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/tests/test_link_bench.py", line 82, in run_bench
+    subprocess.run(cmd, check=True, timeout=120, stdout=subprocess.DEVNULL)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py", line 569, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/Library/Frameworks/Python.framework/Versions/3.11/bin/python3', '/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/pi/link_bench.py', '--port', '/dev/ttys011', '--out', '/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpos7lwy9e/out', '--duration', '3', '--fault-trials', '3', '--timeout-repeats', '2']' returned non-zero exit status 1.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/tests/test_link_bench.py", line 119, in test_host_simulator
+    sim.wait(timeout=5)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py", line 1260, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py", line 1987, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/host/sim', '/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpos7lwy9e/counters.txt']' timed out after 5 seconds
+
+----------------------------------------------------------------------
+Ran 8 tests in 5.371s
+
+FAILED (errors=1, skipped=1)
+sys:1: ResourceWarning: unclosed file <_io.TextIOWrapper name=3 encoding='UTF-8'>
+make: *** [test] Error 1
+./tests/test_recorder
+Recorder checks passed (allocation, wrap, validation, copied epochs, contention, concurrency).
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
+test_clockmap_json_cli_loader (test_observer.AggregateTests.test_clockmap_json_cli_loader) ... ok
+test_cpp_csv_to_python_and_cli (test_observer.AggregateTests.test_cpp_csv_to_python_and_cli) ... ok
+test_cross_clock_age_requires_explicit_map (test_observer.AggregateTests.test_cross_clock_age_requires_explicit_map) ... ok
+test_incomplete_trace_and_empty_ring (test_observer.AggregateTests.test_incomplete_trace_and_empty_ring) ... ok
+test_invalid_maps_sessions_future_and_unknown_domains (test_observer.AggregateTests.test_invalid_maps_sessions_future_and_unknown_domains) ... ok
+test_known_stages_age_drops_backlog_throughput (test_observer.AggregateTests.test_known_stages_age_drops_backlog_throughput) ... ok
+test_large_epoch_ns_precision_and_single_sample (test_observer.AggregateTests.test_large_epoch_ns_precision_and_single_sample) ... ok
+test_malformed_and_inconsistent_streams (test_observer.AggregateTests.test_malformed_and_inconsistent_streams) ... ok
+test_quantiles_nearest_rank (test_observer.AggregateTests.test_quantiles_nearest_rank) ... ok
+test_sessions_are_never_combined (test_observer.AggregateTests.test_sessions_are_never_combined) ... ok
+test_exact_patch_formats (test_observer.PatchTests.test_exact_patch_formats) ... ok
+test_negative_nonfinite_malformed_repeated_and_mismatched (test_observer.PatchTests.test_negative_nonfinite_malformed_repeated_and_mismatched) ... ok
+test_patch_cli_and_input_immutability (test_observer.PatchTests.test_patch_cli_and_input_immutability) ... ok
+test_command_absent_timeout_and_bad_output (test_observer.ResourceTests.test_command_absent_timeout_and_bad_output) ... ok
+test_counter_reversal_pid_reuse_and_missing_baselines (test_observer.ResourceTests.test_counter_reversal_pid_reuse_and_missing_baselines) ... ok
+test_fake_proc_sysfs_cpu_memory_frequency_throttle (test_observer.ResourceTests.test_fake_proc_sysfs_cpu_memory_frequency_throttle) ... ok
+test_macos_ignores_linux_readers (test_observer.ResourceTests.test_macos_ignores_linux_readers) ... ok
+test_missing_malformed_and_removed_files (test_observer.ResourceTests.test_missing_malformed_and_removed_files) ... ok
+test_one_hz_schedule_csv_and_missed_slots (test_observer.ResourceTests.test_one_hz_schedule_csv_and_missed_slots) ... ok
+test_sampler_cli_new_file_only (test_observer.ResourceTests.test_sampler_cli_new_file_only) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.452s
+
+OK
+./build/test_adapter
+MEASURED: 12 synthetic adapter fixture groups passed; ORB/hardware UNKNOWN
+python3 -m unittest discover -s tests -v
+test_binary_truncation_rejected (test_replay.ReplayTests.test_binary_truncation_rejected) ... ok
+test_does_not_hide_reversals_or_domains (test_replay.ReplayTests.test_does_not_hide_reversals_or_domains) ... ok
+test_full_replay_and_read_only (test_replay.ReplayTests.test_full_replay_and_read_only) ... ok
+test_png_filters_and_crc (test_replay.ReplayTests.test_png_filters_and_crc) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.085s
+
+OK
+./build/core_probe < /dev/null
+PYTHONDONTWRITEBYTECODE=1 WBR_CPP_PROBE=/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/ros2_bridge/build/core_probe python3 -m unittest discover -s tests -v
+test_age_and_mapping_uncertainty_bounds (test_mapping.MappingTests.test_age_and_mapping_uncertainty_bounds) ... ok
+test_available_covariance_remains_out_of_pose_message (test_mapping.MappingTests.test_available_covariance_remains_out_of_pose_message) ... ok
+test_cpp_field_mapping_parity (test_mapping.MappingTests.test_cpp_field_mapping_parity) ... ok
+test_foreign_domain_never_changes_source_watermark (test_mapping.MappingTests.test_foreign_domain_never_changes_source_watermark) ... ok
+test_frame_and_se3_rejection (test_mapping.MappingTests.test_frame_and_se3_rejection) ... ok
+test_frozen_heartbeat_becomes_stale_without_new_pose (test_mapping.MappingTests.test_frozen_heartbeat_becomes_stale_without_new_pose) ... ok
+test_identity_and_half_turn_quaternions (test_mapping.MappingTests.test_identity_and_half_turn_quaternions) ... ok
+test_invalid_same_sequence_cannot_republish (test_mapping.MappingTests.test_invalid_same_sequence_cannot_republish) ... ok
+test_map_change_suppresses_boundary_and_old_epoch (test_mapping.MappingTests.test_map_change_suppresses_boundary_and_old_epoch) ... ok
+test_missing_clock_and_mismatched_identity (test_mapping.MappingTests.test_missing_clock_and_mismatched_identity) ... ok
+test_missing_source_and_pose (test_mapping.MappingTests.test_missing_source_and_pose) ... ok
+test_native_integer_range_edges (test_mapping.MappingTests.test_native_integer_range_edges) ... ok
+test_nonidentity_source_pose_and_exact_stamp (test_mapping.MappingTests.test_nonidentity_source_pose_and_exact_stamp) ... ok
+test_numeric_inputs_are_typed_and_bounded_before_mutation (test_mapping.MappingTests.test_numeric_inputs_are_typed_and_bounded_before_mutation) ... ok
+test_replay_requires_distinct_binding (test_mapping.MappingTests.test_replay_requires_distinct_binding) ... ok
+test_reset_without_sequence_advance_and_recovery (test_mapping.MappingTests.test_reset_without_sequence_advance_and_recovery) ... ok
+test_sequence_and_source_regressions_latch (test_mapping.MappingTests.test_sequence_and_source_regressions_latch) ... ok
+test_stamp_limits_and_no_float_conversion (test_mapping.MappingTests.test_stamp_limits_and_no_float_conversion) ... ok
+test_tracking_loss_fault_and_reason_flags (test_mapping.MappingTests.test_tracking_loss_fault_and_reason_flags) ... ok
+test_unconfigured_session_or_budgets (test_mapping.MappingTests.test_unconfigured_session_or_budgets) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.037s
+
+OK
+test_ambiguous_inputs (test_calib_convert.CalibrationTests.test_ambiguous_inputs) ... ok
+test_cli_success_and_validation_failure_before_outputs (test_calib_convert.CalibrationTests.test_cli_success_and_validation_failure_before_outputs) ... ok
+test_explicit_units_fps_and_no_overwrite (test_calib_convert.CalibrationTests.test_explicit_units_fps_and_no_overwrite) ... ok
+test_missing_fields_noise_and_units (test_calib_convert.CalibrationTests.test_missing_fields_noise_and_units) ... ok
+test_nested_imu_and_opencv_inputs (test_calib_convert.CalibrationTests.test_nested_imu_and_opencv_inputs) ... ok
+test_nonidentity_inverse_and_transformed_point_roundtrip (test_calib_convert.CalibrationTests.test_nonidentity_inverse_and_transformed_point_roundtrip) ... ok
+test_openvins_equidistant_is_native_but_orb_rejects (test_calib_convert.CalibrationTests.test_openvins_equidistant_is_native_but_orb_rejects) ... ok
+test_openvins_preserves_values_and_flat_imu_wrapper (test_calib_convert.CalibrationTests.test_openvins_preserves_values_and_flat_imu_wrapper) ... ok
+test_orb_rejects_values_that_overflow_or_underflow_native_float (test_calib_convert.CalibrationTests.test_orb_rejects_values_that_overflow_or_underflow_native_float) ... ok
+test_provenance_hashes_timeshift_units_and_warning (test_calib_convert.CalibrationTests.test_provenance_hashes_timeshift_units_and_warning) ... ok
+test_rejection_cases (test_calib_convert.CalibrationTests.test_rejection_cases) ... ok
+test_schema_roundtrip_types_and_continuous_noise (test_calib_convert.CalibrationTests.test_schema_roundtrip_types_and_continuous_noise) ... ok
+test_stereo_direction_baseline_sign_and_small_rotations (test_calib_convert.CalibrationTests.test_stereo_direction_baseline_sign_and_small_rotations) ... ok
+test_subnanosecond_negative_shift_rounding_is_reported (test_calib_convert.CalibrationTests.test_subnanosecond_negative_shift_rounding_is_reported) ... ok
+test_transform_rejections (test_calib_convert.CalibrationTests.test_transform_rejections) ... ok
+test_unequal_shifts_openvins_rejected_orb_preserved (test_calib_convert.CalibrationTests.test_unequal_shifts_openvins_rejected_orb_preserved) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.842s
+
+OK
+DISCOVERED: 1 test files, 16 tests, 0 skipped
+test_cli_both_module_and_script_and_input_errors (test_analyze.AnalyzerTests.test_cli_both_module_and_script_and_input_errors) ... ok
+test_decimal_ms_sub_nanosecond_rounding (test_analyze.AnalyzerTests.test_decimal_ms_sub_nanosecond_rounding) ... ok
+test_domain_transitions_never_stitched (test_analyze.AnalyzerTests.test_domain_transitions_never_stitched) ... ok
+test_empty_and_short_csv (test_analyze.AnalyzerTests.test_empty_and_short_csv) ... ok
+test_fit_and_absolute_latency_separated (test_analyze.AnalyzerTests.test_fit_and_absolute_latency_separated) ... ok
+test_hardware_only_unavailable (test_analyze.AnalyzerTests.test_hardware_only_unavailable) ... ok
+test_invalid_headers_fields_and_nonfinite_sdk_refused (test_analyze.AnalyzerTests.test_invalid_headers_fields_and_nonfinite_sdk_refused) ... ok
+test_negative_latency_retained_as_diagnostic (test_analyze.AnalyzerTests.test_negative_latency_retained_as_diagnostic) ... ok
+test_per_stream_counts_indices_and_latency_percentiles (test_analyze.AnalyzerTests.test_per_stream_counts_indices_and_latency_percentiles) ... ok
+test_sdk_and_frame_reversals_split_fit (test_analyze.AnalyzerTests.test_sdk_and_frame_reversals_split_fit) ... ok
+test_utc_step_splits_fit (test_analyze.AnalyzerTests.test_utc_step_splits_fit) ... ok
+test_certain_future_unavailable (test_clockmap.AgeTests.test_certain_future_unavailable) ... ok
+test_no_map_invalid_map_wrong_domains_and_boot_are_unavailable (test_clockmap.AgeTests.test_no_map_invalid_map_wrong_domains_and_boot_are_unavailable) ... ok
+test_r2_upper_bound_and_frozen_epoch_age (test_clockmap.AgeTests.test_r2_upper_bound_and_frozen_epoch_age) ... ok
+test_constant_asymmetry_bias_is_bounded (test_clockmap.MappingTests.test_constant_asymmetry_bias_is_bounded) ... ok
+test_duplicate_exchange_refused (test_clockmap.MappingTests.test_duplicate_exchange_refused) ... ok
+test_forward_and_backward_steps_invalidate (test_clockmap.MappingTests.test_forward_and_backward_steps_invalidate) ... ok
+test_insufficient_samples_unavailable (test_clockmap.MappingTests.test_insufficient_samples_unavailable) ... ok
+test_inverse_recovers_epoch_and_units (test_clockmap.MappingTests.test_inverse_recovers_epoch_and_units) ... ok
+test_large_integer_epochs_preserve_nanoseconds (test_clockmap.MappingTests.test_large_integer_epochs_preserve_nanoseconds) ... ok
+test_long_rtt_alone_is_not_a_clock_step (test_clockmap.MappingTests.test_long_rtt_alone_is_not_a_clock_step) ... ok
+test_minimum_rtt_samples_preferred (test_clockmap.MappingTests.test_minimum_rtt_samples_preferred) ... ok
+test_offset_and_drift_recovered (test_clockmap.MappingTests.test_offset_and_drift_recovered) ... ok
+test_old_session_conversion_invalidates (test_clockmap.MappingTests.test_old_session_conversion_invalidates) ... ok
+test_session_change_invalidates_until_explicit_bind (test_clockmap.MappingTests.test_session_change_invalidates_until_explicit_bind) ... ok
+test_source_clock_reversal_invalidates (test_clockmap.MappingTests.test_source_clock_reversal_invalidates) ... ok
+test_time_varying_asymmetry_and_extrapolation_bounded (test_clockmap.MappingTests.test_time_varying_asymmetry_and_extrapolation_bounded) ... ok
+test_window_bounded_and_revisions_advance (test_clockmap.MappingTests.test_window_bounded_and_revisions_advance) ... ok
+test_cross_domain_arithmetic_and_order_refused (test_clockmap.StampTests.test_cross_domain_arithmetic_and_order_refused) ... ok
+test_cross_session_refused (test_clockmap.StampTests.test_cross_session_refused) ... ok
+test_float_stamps_durations_and_missing_session_refused (test_clockmap.StampTests.test_float_stamps_durations_and_missing_session_refused) ... ok
+test_same_domain_durations_and_shifts (test_clockmap.StampTests.test_same_domain_durations_and_shifts) ... ok
+test_map_fit_across_mcu_wrap (test_clockmap.UnwrapTests.test_map_fit_across_mcu_wrap) ... ok
+test_reboot_needs_reset (test_clockmap.UnwrapTests.test_reboot_needs_reset) ... ok
+test_reversal_and_half_range_latch (test_clockmap.UnwrapTests.test_reversal_and_half_range_latch) ... ok
+test_uint32_validation (test_clockmap.UnwrapTests.test_uint32_validation) ... ok
+test_wrap_and_equal_ticks (test_clockmap.UnwrapTests.test_wrap_and_equal_ticks) ... ok
+
+----------------------------------------------------------------------
+Ran 37 tests in 0.566s
+
+OK
+DISCOVERED: 2 test files, 37 tests, 0 skipped
+test_bad_transforms (test_frames.FramesTests.test_bad_transforms) ... ok
+test_cli_and_tcw_normalization (test_frames.FramesTests.test_cli_and_tcw_normalization) ... ok
+test_decimal_timestamp (test_frames.FramesTests.test_decimal_timestamp) ... ok
+test_domains_order_and_odom_rejected (test_frames.FramesTests.test_domains_order_and_odom_rejected) ... ok
+test_lever_arm_rotation_moves_base (test_frames.FramesTests.test_lever_arm_rotation_moves_base) ... ok
+test_nonidentity_inverse_and_frame_names (test_frames.FramesTests.test_nonidentity_inverse_and_frame_names) ... ok
+test_optical_basis_and_round_trip (test_frames.FramesTests.test_optical_basis_and_round_trip) ... ok
+test_orders (test_frames.FramesTests.test_orders) ... ok
+test_reset_map_split_and_no_boundary_velocity (test_frames.FramesTests.test_reset_map_split_and_no_boundary_velocity) ... ok
+test_sdk_column_major_and_imu_route (test_frames.FramesTests.test_sdk_column_major_and_imu_route) ... ok
+test_velocity_overflow_is_rejected_before_valid_output (test_frames.FramesTests.test_velocity_overflow_is_rejected_before_valid_output) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.501s
+
+OK
+DISCOVERED: 1 test files, 11 tests, 0 skipped
+test_missing_reply_is_counted_not_paired (test_la_analyze.Analyzer.test_missing_reply_is_counted_not_paired) ... ok
+test_vcd_and_logic2_csv (test_la_analyze.Analyzer.test_vcd_and_logic2_csv) ... ok
+test_bench_health_round_trip_and_corruption (test_link_bench.Decoder.test_bench_health_round_trip_and_corruption) ... ok
+test_frozen_c_status_vector (test_link_bench.Decoder.test_frozen_c_status_vector) ... ok
+test_gpio_marker_ioctl_layout (test_link_bench.Decoder.test_gpio_marker_ioctl_layout)
+No GPIO chip here: fake the ioctls and check the uAPI v2 request bytes ... ok
+test_percentile_nearest_rank (test_link_bench.Decoder.test_percentile_nearest_rank) ... ok
+test_firmware_binary_in_qemu (test_link_bench.EndToEnd.test_firmware_binary_in_qemu)
+Same firmware sources (BENCH_EMU skips RCC/UID) on QEMU netduinoplus2 (STM32F405). ... skipped 'needs qemu-system-arm and arm-none-eabi-gcc'
+test_host_simulator (test_link_bench.EndToEnd.test_host_simulator) ... baud 460800 not supported by termios
+ERROR
+
+======================================================================
+ERROR: test_host_simulator (test_link_bench.EndToEnd.test_host_simulator)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/tests/test_link_bench.py", line 116, in test_host_simulator
+    s = run_bench(port, os.path.join(d, 'out'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/tests/test_link_bench.py", line 82, in run_bench
+    subprocess.run(cmd, check=True, timeout=120, stdout=subprocess.DEVNULL)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py", line 569, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/Library/Frameworks/Python.framework/Versions/3.11/bin/python3', '/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/pi/link_bench.py', '--port', '/dev/ttys012', '--out', '/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpyd5xgi47/out', '--duration', '3', '--fault-trials', '3', '--timeout-repeats', '2']' returned non-zero exit status 1.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/tests/test_link_bench.py", line 119, in test_host_simulator
+    sim.wait(timeout=5)
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py", line 1260, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/subprocess.py", line 1987, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/Users/quockaiser/Desktop/Research/wbr-wt-ci/tools/link_bench/host/sim', '/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpyd5xgi47/counters.txt']' timed out after 5 seconds
+
+----------------------------------------------------------------------
+Ran 8 tests in 5.370s
+
+FAILED (errors=1, skipped=1)
+test_cobs_known (test_python.EncoderTests.test_cobs_known) ... ok
+test_crc (test_python.EncoderTests.test_crc) ... ok
+test_frozen_golden_vectors (test_python.EncoderTests.test_frozen_golden_vectors) ... ok
+test_nonfinite_rejected (test_python.EncoderTests.test_nonfinite_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+OK
+DISCOVERED: 1 test files, 4 tests, 0 skipped
+test_age_and_mapping_uncertainty_bounds (test_mapping.MappingTests.test_age_and_mapping_uncertainty_bounds) ... ok
+test_available_covariance_remains_out_of_pose_message (test_mapping.MappingTests.test_available_covariance_remains_out_of_pose_message) ... ok
+test_cpp_field_mapping_parity (test_mapping.MappingTests.test_cpp_field_mapping_parity) ... skipped 'optional ROS-free C++ parity probe'
+test_foreign_domain_never_changes_source_watermark (test_mapping.MappingTests.test_foreign_domain_never_changes_source_watermark) ... ok
+test_frame_and_se3_rejection (test_mapping.MappingTests.test_frame_and_se3_rejection) ... ok
+test_frozen_heartbeat_becomes_stale_without_new_pose (test_mapping.MappingTests.test_frozen_heartbeat_becomes_stale_without_new_pose) ... ok
+test_identity_and_half_turn_quaternions (test_mapping.MappingTests.test_identity_and_half_turn_quaternions) ... ok
+test_invalid_same_sequence_cannot_republish (test_mapping.MappingTests.test_invalid_same_sequence_cannot_republish) ... ok
+test_map_change_suppresses_boundary_and_old_epoch (test_mapping.MappingTests.test_map_change_suppresses_boundary_and_old_epoch) ... ok
+test_missing_clock_and_mismatched_identity (test_mapping.MappingTests.test_missing_clock_and_mismatched_identity) ... ok
+test_missing_source_and_pose (test_mapping.MappingTests.test_missing_source_and_pose) ... ok
+test_native_integer_range_edges (test_mapping.MappingTests.test_native_integer_range_edges) ... ok
+test_nonidentity_source_pose_and_exact_stamp (test_mapping.MappingTests.test_nonidentity_source_pose_and_exact_stamp) ... ok
+test_numeric_inputs_are_typed_and_bounded_before_mutation (test_mapping.MappingTests.test_numeric_inputs_are_typed_and_bounded_before_mutation) ... ok
+test_replay_requires_distinct_binding (test_mapping.MappingTests.test_replay_requires_distinct_binding) ... ok
+test_reset_without_sequence_advance_and_recovery (test_mapping.MappingTests.test_reset_without_sequence_advance_and_recovery) ... ok
+test_sequence_and_source_regressions_latch (test_mapping.MappingTests.test_sequence_and_source_regressions_latch) ... ok
+test_stamp_limits_and_no_float_conversion (test_mapping.MappingTests.test_stamp_limits_and_no_float_conversion) ... ok
+test_tracking_loss_fault_and_reason_flags (test_mapping.MappingTests.test_tracking_loss_fault_and_reason_flags) ... ok
+test_unconfigured_session_or_budgets (test_mapping.MappingTests.test_unconfigured_session_or_budgets) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.009s
+
+OK (skipped=1)
+DISCOVERED: 1 test files, 20 tests, 1 skipped
+test_changed_inputs_are_reported (test_harness.HarnessTests.test_changed_inputs_are_reported) ... ok
+test_cli_success_failure_and_template_paths_with_spaces (test_harness.HarnessTests.test_cli_success_failure_and_template_paths_with_spaces) ... ok
+test_comment_only_times_refused (test_harness.HarnessTests.test_comment_only_times_refused) ... ok
+test_drift_and_partial_evaluation_failure (test_harness.HarnessTests.test_drift_and_partial_evaluation_failure) ... ok
+test_duplicate_yaml_refused (test_harness.HarnessTests.test_duplicate_yaml_refused) ... ok
+test_ground_truth_clock_and_frame_rejected (test_harness.HarnessTests.test_ground_truth_clock_and_frame_rejected) ... ok
+test_invalid_trajectory_and_symlink (test_harness.HarnessTests.test_invalid_trajectory_and_symlink) ... ok
+test_launch_error_retains_all_trials (test_harness.HarnessTests.test_launch_error_retains_all_trials) ... ok
+test_leader_exit_cleans_descendants_before_return (test_harness.HarnessTests.test_leader_exit_cleans_descendants_before_return) ... ok
+test_log_map_points_are_not_map_ids (test_harness.HarnessTests.test_log_map_points_are_not_map_ids) ... ok
+test_missing_or_escaping_extra_artifact_fails_batch (test_harness.HarnessTests.test_missing_or_escaping_extra_artifact_fails_batch) ... ok
+test_mixed_failures_stay_in_denominator_and_partial_retained (test_harness.HarnessTests.test_mixed_failures_stay_in_denominator_and_partial_retained) ... ok
+test_mount_nonidentity_and_epoch_boundaries (test_harness.HarnessTests.test_mount_nonidentity_and_epoch_boundaries) ... ok
+test_normalized_inverse_ns_wxyz_rotation (test_harness.HarnessTests.test_normalized_inverse_ns_wxyz_rotation) ... ok
+test_real_evaluator_zero_ate_and_rpe (test_harness.HarnessTests.test_real_evaluator_zero_ate_and_rpe) ... ok
+test_reset_evaluation_refused_but_engine_status_preserved (test_harness.HarnessTests.test_reset_evaluation_refused_but_engine_status_preserved) ... ok
+test_spec_rejections_before_outputs (test_harness.HarnessTests.test_spec_rejections_before_outputs) ... ok
+test_success_provenance_and_isolation (test_harness.HarnessTests.test_success_provenance_and_isolation) ... ok
+test_without_epochs_does_not_claim_reset_identity (test_harness.HarnessTests.test_without_epochs_does_not_claim_reset_identity) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 15.306s
+
+OK
+{
+  "evidence": "MEASURED (run observations)",
+  "planned_repeats": 1,
+  "completed_repeats": 1,
+  "denominator": 1,
+  "status_counts": {
+    "OK": 1,
+    "CRASH": 0,
+    "NO_TRAJECTORY": 0,
+    "TIMEOUT": 0
+  },
+  "ok_fraction": 1.0,
+  "analysis_failures": 1,
+  "input_change_runs": 0,
+  "runs": [
+    {
+      "repeat": 1,
+      "status": "OK",
+      "trajectory_valid": true
+    }
+  ]
+}
+{
+  "evidence": "MEASURED (run observations)",
+  "planned_repeats": 1,
+  "completed_repeats": 1,
+  "denominator": 1,
+  "status_counts": {
+    "OK": 1,
+    "CRASH": 0,
+    "NO_TRAJECTORY": 0,
+    "TIMEOUT": 0
+  },
+  "ok_fraction": 1.0,
+  "analysis_failures": 1,
+  "input_change_runs": 0,
+  "runs": [
+    {
+      "repeat": 1,
+      "status": "OK",
+      "trajectory_valid": true
+    }
+  ]
+}
+DISCOVERED: 1 test files, 19 tests, 0 skipped
+test_clockmap_json_cli_loader (test_observer.AggregateTests.test_clockmap_json_cli_loader) ... ok
+test_cpp_csv_to_python_and_cli (test_observer.AggregateTests.test_cpp_csv_to_python_and_cli) ... ok
+test_cross_clock_age_requires_explicit_map (test_observer.AggregateTests.test_cross_clock_age_requires_explicit_map) ... ok
+test_incomplete_trace_and_empty_ring (test_observer.AggregateTests.test_incomplete_trace_and_empty_ring) ... ok
+test_invalid_maps_sessions_future_and_unknown_domains (test_observer.AggregateTests.test_invalid_maps_sessions_future_and_unknown_domains) ... ok
+test_known_stages_age_drops_backlog_throughput (test_observer.AggregateTests.test_known_stages_age_drops_backlog_throughput) ... ok
+test_large_epoch_ns_precision_and_single_sample (test_observer.AggregateTests.test_large_epoch_ns_precision_and_single_sample) ... ok
+test_malformed_and_inconsistent_streams (test_observer.AggregateTests.test_malformed_and_inconsistent_streams) ... ok
+test_quantiles_nearest_rank (test_observer.AggregateTests.test_quantiles_nearest_rank) ... ok
+test_sessions_are_never_combined (test_observer.AggregateTests.test_sessions_are_never_combined) ... ok
+test_exact_patch_formats (test_observer.PatchTests.test_exact_patch_formats) ... ok
+test_negative_nonfinite_malformed_repeated_and_mismatched (test_observer.PatchTests.test_negative_nonfinite_malformed_repeated_and_mismatched) ... ok
+test_patch_cli_and_input_immutability (test_observer.PatchTests.test_patch_cli_and_input_immutability) ... ok
+test_command_absent_timeout_and_bad_output (test_observer.ResourceTests.test_command_absent_timeout_and_bad_output) ... ok
+test_counter_reversal_pid_reuse_and_missing_baselines (test_observer.ResourceTests.test_counter_reversal_pid_reuse_and_missing_baselines) ... ok
+test_fake_proc_sysfs_cpu_memory_frequency_throttle (test_observer.ResourceTests.test_fake_proc_sysfs_cpu_memory_frequency_throttle) ... ok
+test_macos_ignores_linux_readers (test_observer.ResourceTests.test_macos_ignores_linux_readers) ... ok
+test_missing_malformed_and_removed_files (test_observer.ResourceTests.test_missing_malformed_and_removed_files) ... ok
+test_one_hz_schedule_csv_and_missed_slots (test_observer.ResourceTests.test_one_hz_schedule_csv_and_missed_slots) ... ok
+test_sampler_cli_new_file_only (test_observer.ResourceTests.test_sampler_cli_new_file_only) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.420s
+
+OK
+DISCOVERED: 1 test files, 20 tests, 0 skipped
+test_audit_outputs_cannot_destroy_input (test_take_tools.TakeTests.test_audit_outputs_cannot_destroy_input) ... ok
+test_big_endian_and_mono8 (test_take_tools.TakeTests.test_big_endian_and_mono8) ... ok
+test_corruptions_refused_or_marked (test_take_tools.TakeTests.test_corruptions_refused_or_marked) ... ok
+test_decoder_strictness (test_take_tools.TakeTests.test_decoder_strictness) ... ok
+test_exact_decimal_conversion_rejects_sub_ns (test_take_tools.TakeTests.test_exact_decimal_conversion_rejects_sub_ns) ... ok
+test_existing_output_not_overwritten (test_take_tools.TakeTests.test_existing_output_not_overwritten) ... ok
+test_finite_extreme_accel_interpolation_preserves_endpoints (test_take_tools.TakeTests.test_finite_extreme_accel_interpolation_preserves_endpoints) ... ok
+test_gap_is_not_interpolated (test_take_tools.TakeTests.test_gap_is_not_interpolated) ... ok
+test_inspection_and_cli_outputs (test_take_tools.TakeTests.test_inspection_and_cli_outputs) ... ok
+test_magic_not_extension (test_take_tools.TakeTests.test_magic_not_extension) ... ok
+test_missing_schema_and_ambiguous_topics (test_take_tools.TakeTests.test_missing_schema_and_ambiguous_topics) ... ok
+test_multiple_hardware_clocks_and_wal_refused (test_take_tools.TakeTests.test_multiple_hardware_clocks_and_wal_refused) ... ok
+test_real_cli_entry_point (test_take_tools.TakeTests.test_real_cli_entry_point) ... ok
+test_round_trip_pixels_stamps_hashes_and_derivative (test_take_tools.TakeTests.test_round_trip_pixels_stamps_hashes_and_derivative) ... ok
+test_times_empty_when_all_cameras_outside_combined_interval (test_take_tools.TakeTests.test_times_empty_when_all_cameras_outside_combined_interval) ... ok
+test_times_no_combined_imu_or_single_sample (test_take_tools.TakeTests.test_times_no_combined_imu_or_single_sample) ... ok
+test_times_require_true_pairs_and_identical_original_stamps (test_take_tools.TakeTests.test_times_require_true_pairs_and_identical_original_stamps) ... ok
+test_times_strict_combined_imu_endpoints_and_png_names (test_take_tools.TakeTests.test_times_strict_combined_imu_endpoints_and_png_names) ... ok
+test_times_suppressed_for_bad_clock_or_order (test_take_tools.TakeTests.test_times_suppressed_for_bad_clock_or_order) ... ok
+test_unknown_encoding_truncation_and_encapsulation_are_fatal (test_take_tools.TakeTests.test_unknown_encoding_truncation_and_encapsulation_are_fatal) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 5.311s
+
+OK
+DISCOVERED: 1 test files, 20 tests, 0 skipped
+test_binary_truncation_rejected (test_replay.ReplayTests.test_binary_truncation_rejected) ... ok
+test_does_not_hide_reversals_or_domains (test_replay.ReplayTests.test_does_not_hide_reversals_or_domains) ... ok
+test_full_replay_and_read_only (test_replay.ReplayTests.test_full_replay_and_read_only) ... ok
+test_png_filters_and_crc (test_replay.ReplayTests.test_png_filters_and_crc) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.099s
+
+OK
+DISCOVERED: 1 test files, 4 tests, 0 skipped
+test_real_data_mh01_evo_and_tum_crosscheck (test_traj_eval.RealDataValidationTests.test_real_data_mh01_evo_and_tum_crosscheck) ... skipped 'REAL-DATA MH01 fixtures missing: /Users/quockaiser/Desktop/Research/wbr-wt-ci/experiments/2026-10-13-n4a-euroc-mh01/eval/gt_data.csv, /Users/quockaiser/Desktop/Research/wbr-wt-ci/experiments/2026-10-13-n4a-euroc-mh01/eval/gt_data.tum'
+test_synthetic_association_boundary_offset_and_shorter_side (test_traj_eval.SyntheticTests.test_synthetic_association_boundary_offset_and_shorter_side) ... ok
+test_synthetic_association_equal_length_iterates_estimate_like_evo (test_traj_eval.SyntheticTests.test_synthetic_association_equal_length_iterates_estimate_like_evo) ... ok
+test_synthetic_association_inclusive_exact_boundary (test_traj_eval.SyntheticTests.test_synthetic_association_inclusive_exact_boundary) ... ok
+test_synthetic_association_tie_and_reuse_counts (test_traj_eval.SyntheticTests.test_synthetic_association_tie_and_reuse_counts) ... ok
+test_synthetic_ate_alignment_and_wrong_scale (test_traj_eval.SyntheticTests.test_synthetic_ate_alignment_and_wrong_scale) ... ok
+test_synthetic_batch_bad_name_and_late_input_fail_without_output (test_traj_eval.SyntheticTests.test_synthetic_batch_bad_name_and_late_input_fail_without_output) ... ok
+test_synthetic_batch_per_run_and_unweighted_aggregate (test_traj_eval.SyntheticTests.test_synthetic_batch_per_run_and_unweighted_aggregate) ... ok
+test_synthetic_cli_frame_warning_printed (test_traj_eval.SyntheticTests.test_synthetic_cli_frame_warning_printed) ... ok
+test_synthetic_cli_outputs_provenance_csv_and_overwrite (test_traj_eval.SyntheticTests.test_synthetic_cli_outputs_provenance_csv_and_overwrite) ... ok
+test_synthetic_cli_required_assumptions (test_traj_eval.SyntheticTests.test_synthetic_cli_required_assumptions) ... ok
+test_synthetic_explicit_time_unit_overrides_default (test_traj_eval.SyntheticTests.test_synthetic_explicit_time_unit_overrides_default) ... ok
+test_synthetic_large_int64_differences_and_offset_range (test_traj_eval.SyntheticTests.test_synthetic_large_int64_differences_and_offset_range) ... ok
+test_synthetic_length_includes_unmatched_reference_samples (test_traj_eval.SyntheticTests.test_synthetic_length_includes_unmatched_reference_samples) ... ok
+test_synthetic_n_to_align_fits_prefix_evaluates_all (test_traj_eval.SyntheticTests.test_synthetic_n_to_align_fits_prefix_evaluates_all) ... ok
+test_synthetic_no_matches_empty_rpe_and_frame_warning (test_traj_eval.SyntheticTests.test_synthetic_no_matches_empty_rpe_and_frame_warning) ... ok
+test_synthetic_no_matplotlib_core_and_output_fallback (test_traj_eval.SyntheticTests.test_synthetic_no_matplotlib_core_and_output_fallback) ... ok
+test_synthetic_nonmonotonic_and_quantized_duplicate_rejected (test_traj_eval.SyntheticTests.test_synthetic_nonmonotonic_and_quantized_duplicate_rejected) ... ok
+test_synthetic_output_symlinks_and_input_overlap_rejected (test_traj_eval.SyntheticTests.test_synthetic_output_symlinks_and_input_overlap_rejected) ... ok
+test_synthetic_pose_validation_and_norm_record (test_traj_eval.SyntheticTests.test_synthetic_pose_validation_and_norm_record) ... ok
+test_synthetic_quaternion_orders_and_comments (test_traj_eval.SyntheticTests.test_synthetic_quaternion_orders_and_comments) ... ok
+test_synthetic_reflection_fixed_and_degenerate_rejected (test_traj_eval.SyntheticTests.test_synthetic_reflection_fixed_and_degenerate_rejected) ... ok
+test_synthetic_rotation_angles_known_and_pi (test_traj_eval.SyntheticTests.test_synthetic_rotation_angles_known_and_pi) ... ok
+test_synthetic_rpe_analytic_constant_velocity_drift (test_traj_eval.SyntheticTests.test_synthetic_rpe_analytic_constant_velocity_drift) ... ok
+test_synthetic_rpe_first_endpoint_irregular_time_distance (test_traj_eval.SyntheticTests.test_synthetic_rpe_first_endpoint_irregular_time_distance) ... ok
+test_synthetic_rpe_independent_homogeneous_matrix_oracle (test_traj_eval.SyntheticTests.test_synthetic_rpe_independent_homogeneous_matrix_oracle) ... ok
+test_synthetic_rpe_rigid_invariance_and_sim3_scaling (test_traj_eval.SyntheticTests.test_synthetic_rpe_rigid_invariance_and_sim3_scaling) ... ok
+test_synthetic_statistics_sse_population_std_and_empty (test_traj_eval.SyntheticTests.test_synthetic_statistics_sse_population_std_and_empty) ... ok
+test_synthetic_timestamp_decimal_exactness_and_rounding (test_traj_eval.SyntheticTests.test_synthetic_timestamp_decimal_exactness_and_rounding) ... ok
+test_synthetic_umeyama_se3_and_sim3 (test_traj_eval.SyntheticTests.test_synthetic_umeyama_se3_and_sim3) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 0.261s
+
+OK (skipped=1)
+DISCOVERED: 1 test files, 30 tests, 1 skipped
+test_csv_precision_and_cli_outputs_unknown_walk (test_allan.AllanTests.test_csv_precision_and_cli_outputs_unknown_walk) ... ok
+test_gap_splitting (test_allan.AllanTests.test_gap_splitting) ... ok
+test_optional_plotting_and_power_diagnostic (test_allan.AllanTests.test_optional_plotting_and_power_diagnostic) ... Matplotlib is building the font cache; this may take a moment.
+ok
+test_overlapping_matches_brute_force (test_allan.AllanTests.test_overlapping_matches_brute_force) ... ok
+test_power_bits_without_hardware (test_allan.AllanTests.test_power_bits_without_hardware) ... ok
+test_system_time_cli_diagnostic (test_allan.AllanTests.test_system_time_cli_diagnostic) ... ok
+test_three_hour_native_200hz_noise_and_walk (test_allan.AllanTests.test_three_hour_native_200hz_noise_and_walk) ... 
+SYNTHETIC 3 h, 200 Hz, no decimation: {"x": {"N": 0.03002165632496944, "K": 0.009487051883562502, "N_slope": -0.4996322134536536, "K_slope": 0.4636469872241274, "N_r2": 0.9999986682076752, "K_r2": 0.9997829312971933}, "y": {"N": 0.02997891618645073, "K": 0.009809823547806495, "N_slope": -0.5001619846712447, "K_slope": 0.5126117447514066, "N_r2": 0.999999782606195, "K_r2": 0.9982470172192905}, "z": {"N": 0.029992037285683535, "K": 0.009641300038012795, "N_slope": -0.5000111744878641, "K_slope": 0.5029234508712765, "N_r2": 0.999999835978065, "K_r2": 0.9992568226741755}}
+SYNTHETIC recovery elapsed_s=6.079
+ok
+test_timestamp_validation (test_allan.AllanTests.test_timestamp_validation) ... ok
+test_yaml_maxima_and_inflation (test_allan.AllanTests.test_yaml_maxima_and_inflation) ... ok
+test_clean_stop_and_no_overwrite (test_wrapper.WrapperTests.test_clean_stop_and_no_overwrite) ... ok
+test_live_undervoltage_and_space_refusal (test_wrapper.WrapperTests.test_live_undervoltage_and_space_refusal) ... ok
+test_sigterm_drains_recorder_and_finalizes_power (test_wrapper.WrapperTests.test_sigterm_drains_recorder_and_finalizes_power) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 38.947s
+
+OK
+DISCOVERED: 2 test files, 12 tests, 0 skipped
+test_existing_directory_preserved (test_lab.Layout.test_existing_directory_preserved) ... ok
+test_invalid_header_units_empty_nonfinite_and_stamps (test_lab.Layout.test_invalid_header_units_empty_nonfinite_and_stamps) ... ok
+test_layout_units_order_precision_links (test_lab.Layout.test_layout_units_order_precision_links) ... ok
+test_real_bash_receipt_default_and_diagnostic_modes (test_lab.Layout.test_real_bash_receipt_default_and_diagnostic_modes) ... ok
+test_receipt_quotes_commands_and_hashes_input (test_lab.Layout.test_receipt_quotes_commands_and_hashes_input) ... ok
+test_shell_entrypoints_reject_missing_arguments_without_external_work (test_lab.Layout.test_shell_entrypoints_reject_missing_arguments_without_external_work) ... ok
+test_synthetic_chain_through_pr3_converter (test_lab.Layout.test_synthetic_chain_through_pr3_converter) ... ok
+test_clean_is_diagnostic_and_faults_never_usable (test_lab.RecorderDiagnostics.test_clean_is_diagnostic_and_faults_never_usable) ... ok
+test_gaps_steps_frames_and_domains (test_lab.RecorderDiagnostics.test_gaps_steps_frames_and_domains) ... ok
+test_ram_formula_and_bounds (test_lab.RecorderDiagnostics.test_ram_formula_and_bounds) ... ok
+test_cli_synthetic_fixture (test_lab.Summaries.test_cli_synthetic_fixture) ... ok
+test_duplicate_or_negative_pixel_statistics_rejected (test_lab.Summaries.test_duplicate_or_negative_pixel_statistics_rejected) ... ok
+test_duplicate_yaml_rejected (test_lab.Summaries.test_duplicate_yaml_rejected) ... ok
+test_factory_inverse_translation_sign (test_lab.Summaries.test_factory_inverse_translation_sign) ... ok
+test_invalid_transforms_and_chain (test_lab.Summaries.test_invalid_transforms_and_chain) ... ok
+test_missing_no_corners_and_malformed_are_unknown (test_lab.Summaries.test_missing_no_corners_and_malformed_are_unknown) ... ok
+test_nonidentity_inverse_origins_basis_and_composition (test_lab.Summaries.test_nonidentity_inverse_origins_basis_and_composition) ... ok
+test_raw_pixel_statistics_ignore_normalized (test_lab.Summaries.test_raw_pixel_statistics_ignore_normalized) ... ok
+test_stereo_components_and_baseline (test_lab.Summaries.test_stereo_components_and_baseline) ... ok
+test_time_sign_and_integer_precision (test_lab.Summaries.test_time_sign_and_integer_precision) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.829s
+
+OK
+DISCOVERED: 1 test files, 20 tests, 0 skipped
+test_all_python_directories_missing_still_prints_summary (test_ci_runner.RunnerTests.test_all_python_directories_missing_still_prints_summary) ... ok
+test_all_skipped_is_blocked_and_reason_is_visible (test_ci_runner.RunnerTests.test_all_skipped_is_blocked_and_reason_is_visible) ... ok
+test_comments_cannot_skip_reviewed_host_targets (test_ci_runner.RunnerTests.test_comments_cannot_skip_reviewed_host_targets) ... ok
+test_empty_baseline_suite_is_blocked (test_ci_runner.RunnerTests.test_empty_baseline_suite_is_blocked) ... ok
+test_failure_does_not_hide_remaining_suites (test_ci_runner.RunnerTests.test_failure_does_not_hide_remaining_suites) ... ok
+test_import_error_is_failure (test_ci_runner.RunnerTests.test_import_error_is_failure) ... ok
+test_individual_skip_with_executed_tests_is_visible (test_ci_runner.RunnerTests.test_individual_skip_with_executed_tests_is_visible) ... ok
+test_make_failure_is_reported (test_ci_runner.RunnerTests.test_make_failure_is_reported) ... ok
+test_missing_baseline_python_suite_is_blocked (test_ci_runner.RunnerTests.test_missing_baseline_python_suite_is_blocked) ... ok
+test_missing_makefile_is_blocked (test_ci_runner.RunnerTests.test_missing_makefile_is_blocked) ... ok
+test_nested_package_is_discovered (test_ci_runner.RunnerTests.test_nested_package_is_discovered) ... ok
+test_new_empty_suite_is_blocked (test_ci_runner.RunnerTests.test_new_empty_suite_is_blocked) ... ok
+test_optional_orb_environment_cannot_enable_real_engine (test_ci_runner.RunnerTests.test_optional_orb_environment_cannot_enable_real_engine) ... ok
+test_partially_undiscovered_nested_suite_is_blocked (test_ci_runner.RunnerTests.test_partially_undiscovered_nested_suite_is_blocked) ... ok
+test_saved_real_receipt_inventory_and_future_locations (test_ci_runner.RunnerTests.test_saved_real_receipt_inventory_and_future_locations) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 21.277s
+
+OK
+DISCOVERED: 1 test files, 15 tests, 0 skipped
+
+SUITE                                            STATUS   DETAIL
+------------------------------------------------ -------- ------------------------------
+make:tools/link_proto:test                       PASS     host target
+make:tools/link_bench:test                       FAIL     make exited 2
+make:tools/runtime_observer:test                 PASS     host target
+make:tools/vio_adapter:test                      PASS     host fake-engine target
+make:tools/ros2_bridge:test                      PASS     host target
+python:tools/calib_tools/tests                   PASS     unittest discovery
+python:tools/clockmap/tests                      PASS     unittest discovery
+python:tools/frames/tests                        PASS     unittest discovery
+python:tools/link_bench/tests                    FAIL     unittest exited 1
+python:tools/link_proto/tests                    PASS     unittest discovery
+python:tools/ros2_bridge/tests                   PASS     unittest discovery
+python:tools/run_harness/tests                   PASS     unittest discovery
+python:tools/runtime_observer/tests              PASS     unittest discovery
+python:tools/take_tools/tests                    PASS     unittest discovery
+python:tools/vio_adapter/tests                   PASS     unittest discovery
+python:tools/trajectory_eval                     PASS     unittest discovery
+python:calibration/allan/tests                   PASS     unittest discovery
+python:calibration/lab/tests                     PASS     unittest discovery
+python:.github/tests                             PASS     unittest discovery
+
+EXIT_CODE=1
+
+$ git diff --check
+EXIT_CODE=0
