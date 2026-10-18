@@ -1,0 +1,14 @@
+power_usb BLOCKED (idle; capture MEASURED partial historical excerpts, multiple sessions; NOT a combined qualification run)
+criterion              status
+raw_integrity          PASS
+under_voltage          PASS
+ext5v                  BLOCKED
+temperature            BLOCKED
+window_coverage        BLOCKED
+supply                 BLOCKED
+usb_link               BLOCKED
+usb_topology           BLOCKED
+kernel_log             BLOCKED
+load_window            PASS
+
+Expected exit=2; observed exit=2

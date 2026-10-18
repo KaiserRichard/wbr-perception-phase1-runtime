@@ -1,0 +1,5 @@
+WARNING: frame labels differ textually; no extrinsics are applied. Metrics may compare different physical frames.
+| Run | Align | ATE RMSE [m] | Mean [m] | Median [m] | Max [m] | RPE trans RMSE [m] | RPE rot RMSE [deg] | n pairs |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| estimate | se3 | 0.041604 | 0.038548 | 0.042754 | 0.087709 | 0.020211 | 0.139064 | 3639 |
+| estimate | sim3 | 0.022288 | 0.020033 | 0.017256 | 0.054671 | 0.020515 | 0.139064 | 3639 |
