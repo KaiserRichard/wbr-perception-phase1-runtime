@@ -22,7 +22,7 @@ but no committed hardware evidence produced by these current tools.
 | N0 | Is the Pi platform, power, cooling, storage and software environment ready? | lab/platform_env, lab/power_usb | OPEN; power is not stable |
 | N1 | Is the new D435i on a stable direct USB3 connection? | lab/power_usb; raw identity as support | OPEN |
 | N2 | Can native ROS 2 deliver separate IR1, gyro and accel reliably? | lab/d435i_raw; saved-take adjuncts | OPEN; new unit not run |
-| N3 | Can accepted sensor data be recorded and replayed intact? | lab/rosbag_qual; n4b_offline adjunct | OPEN; active gate |
+| N3 | Can accepted sensor data be recorded and replayed intact? | lab/rosbag_qual; stamp_drift and n4b_offline adjuncts | OPEN; active gate |
 | N4 | Does official ORB-SLAM3 establish the EuRoC reference? | eval_pipeline/accuracy, trajectory_eval, n4a_timing | OPEN; strong N4A evidence, timing invalid |
 | N5 | Does the official baseline build and execute natively on Pi? | platform_env, accuracy, profiling/timing | Not started |
 | N6 | Does reviewed wrapper integration process a saved bag? | n4b_offline, vio_adapter, calib_tools, frames, run_harness | Not started; N4B OPEN |
@@ -229,6 +229,50 @@ mapping, calibrate, or prove estimator replay.
 | Hardware run | NONE for both tools; historical real-file fixtures are offline evidence |
 |---|---|
 | Limits | Calibration-take checks are not N2 acceptance limits |
+
+### lab/calib_result — Kalibr result acceptance (Mac-side adjunct)
+
+This check evaluates saved Kalibr camera–IMU and stereo results as calibration
+candidates. Pi commands capture the takes; Kalibr fitting and this acceptance
+check run on the Mac. The checker is not an N2 stream check and does not establish
+physical calibration accuracy.
+
+Run from the repository root on the Mac, using the exact result directories and
+factory/profile inputs for the reviewed takes:
+
+    python3 lab/calib_result/check_kalibr_result.py \
+      --camimu-chain /path/to/derived/C1-imucam/take-camchain-imucam.yaml \
+      --camimu-results /path/to/derived/C1-imucam/take-results-imucam.txt \
+      --stereo-chain /path/to/derived/S1-stereo/take-camchain.yaml \
+      --stereo-results /path/to/derived/S1-stereo/take-results-cam.txt \
+      --run-imu /path/to/derived/C1-imucam/work/imu.yaml \
+      --outdir /path/to/derived/C1-acceptance
+
+Saved-evidence reanalysis:
+
+    python3 lab/calib_result/check_kalibr_result.py \
+      --analyze-only /path/to/derived/C1-acceptance \
+      --outdir /path/to/derived/C1-acceptance-reanalysis
+
+Criteria cover camera–IMU and stereo reprojection residuals, IMU residuals,
+camera–IMU time shift and transform, stereo baseline, intrinsics, distortion,
+and exact use of the provisional IMU noise parameters. Threshold policy and
+per-limit provenance are in `lab/calib_result/thresholds.yaml`; selected
+limits are PROPOSED. Missing residual summaries BLOCK. The fixture parser test
+derived from a real TUM-VI Kalibr smoke result is not D435i calibration evidence.
+Criterion IDs are `imu_translation_delta`, `imu_rotation_delta`,
+`cam0_camimu_reprojection_{mean,std}`, `cam1_camimu_reprojection_{mean,std}`,
+`cam{0,1}_stereo_reprojection_{mean,std}_{x,y}`,
+`gyro_residual_{mean,std}`, `accel_residual_{mean,std}`,
+`cam{0,1}_timeshift`, `cam{0,1}_distortion_model`,
+`cam{0,1}_{fx,fy,cx,cy}_drift`,
+`cam{0,1}_{k1,k2,p1,p2}_distortion_{delta,sanity}`,
+`stereo_baseline_delta`, `imu_noise_provenance`,
+and `input_available` on blocked input paths.
+
+| Hardware run | NONE; Kalibr and the checker are offline, and fixtures do not qualify physical calibration |
+|---|---|
+| Limits | Cannot prove target metrology, sensor alignment/time mapping, noise-model validity, runtime behavior, or a project gate PASS |
 
 ## N3 — rosbag record/replay
 
@@ -453,6 +497,50 @@ filesystem or prove full coverage.
 
 ## N6 — saved D435i bag to reviewed wrapper (N4B/offline)
 
+### ros2/wbr_orb_node — ROS wrapper software check and Pi replay candidate
+
+The package implements a proposed recorded/live stereo-plus-combined-camera-IMU
+node; its ROS 2 / ORB integration is UNBUILT in this checkout. Host software
+check from the repository root:
+
+    make -C ros2/wbr_orb_node test
+    python3 ros2/wbr_orb_node/scripts/check_core.py \
+      --outdir /path/to/new/software-check
+    python3 ros2/wbr_orb_node/scripts/check_core.py \
+      --analyze-only /path/to/saved/software-check
+
+The software-check IDs are `all`, `real`, and `emit`. `all` runs C++ fake-engine
+assertions, `real` checks preserved source epochs from the saved fixture, and
+`emit` checks synthetic health/runtime emission. These are host software checks,
+not N6/N7 acceptance IDs. The README also documents `core-test`, a separate
+fake-only Pi build, an optional existing-ORB build, and saved-bag replay. The
+fake-only Pi build command is:
+
+    colcon build --base-paths ros2/wbr_orb_node --packages-select wbr_orb_node \
+      --cmake-args -DWITH_ORB_SLAM3=OFF
+
+The offline replay commands, after sourcing the intended install and with the
+camera publisher stopped, are:
+
+    ros2 run wbr_orb_node orb_node --ros-args \
+      --params-file "$WBR_ROOT/ros2/wbr_orb_node/config/replay.yaml" \
+      -p source_session:=bag-run-unique-id \
+      -p output_directory:=/home/richard/wbr-evidence/NEW-orb-replay \
+      -p left_topic:=/camera/camera/infra1/image_rect_raw \
+      -p right_topic:=/camera/camera/infra2/image_rect_raw \
+      -p imu_topic:=/camera/camera/imu
+    ros2 bag play /absolute/path/ACCEPTED_BAG --clock
+
+The optional ORB build flags and required parameter details remain in
+`ros2/wbr_orb_node/README.md`. These commands require their documented ROS/build
+artifacts and their execution is not evidence that the node is live-qualified.
+Missing ROS/ORB build evidence, combined-IMU time synchronization, DDS/pre-
+callback drops and hard real-time behavior remain UNKNOWN.
+
+| Hardware run | NONE; README marks the ROS/ORB build unexecuted, and host fixtures are software-only |
+|---|---|
+| Limits | Fake-engine checks cannot qualify estimator behavior, calibration, sensor timing, runtime loss, or N6/N7 |
+
 ### tools/n4b_offline
 
 Question: can a finalized SQLite bag be exported and screened as a
@@ -591,7 +679,7 @@ or that tool policy is the project policy.
 | D435i enumerates normally | power_usb: usb_link, usb_topology; d435i_raw: identity.serial, identity.firmware, identity.usb_type | Partial; no standalone enumeration-only check |
 | Required infrared and IMU streams exist | d435i_raw: profiles, *.samples, stereo; rosbag_qual: topic:<name>:present, topic:<name>:count | Covered with configured assumptions |
 | Actual rates are measured | d435i_raw: *.rate; rosbag_qual: topic:<name>:header_rate, topic:<name>:bag_receive_rate; calib_record: rate_drops.*; n4b_offline: image_rate, imu_rate | Covered with separate clock labels |
-| Timestamp behavior inspected | d435i_raw: *.timestamps; rosbag_qual: stamp_order, stamp_repeats, bag_receive_order, max_gap; n4b_offline: image_order, imu_order, times_file | Covered per clock; mapping remains UNKNOWN |
+| Timestamp behavior inspected | d435i_raw: *.timestamps; rosbag_qual: `topic:<name>:stamp_order`, `topic:<name>:stamp_repeats`, `topic:<name>:bag_receive_order`, `topic:<name>:max_gap`; n4b_offline: image_order, imu_order, times_file; stamp_drift: `<topic>:fit`, `<topic>:continuity` | Covered per clock plus a diagnostic header/receive fit; mapping remains UNKNOWN |
 | QoS documented | rosbag_qual: record:topic_qos plus qos_overrides.yaml/topic_info.json/config | Covered as documentation; physical compatibility still needs run |
 | Bounded rosbag recorded | rosbag_qual: record:bounded, record:exit, record:capture_window, record:bag_exists | Covered |
 | ros2 bag info succeeds | rosbag_qual: record:bag_info | Covered |
@@ -600,6 +688,33 @@ or that tool policy is the project policy.
 | No serious USB/kernel failure | power_usb: usb_link, usb_topology, kernel_log, under_voltage | Covered only with the same complete observation window |
 | Pi power/throttling recorded | power_usb: under_voltage, ext5v, temperature, supply, window_coverage; profile: no_throttle_or_undervoltage, max_temperature | Covered as separate diagnostics; polling limits remain |
 | Evidence preserved in dedicated experiment directory | Output/raw-file contracts; raw_integrity, record:saved_input, input_unchanged support preservation | No single criterion asserts the project-level experiment-manifest requirement |
+
+### tools/stamp_drift (N3 timestamp diagnostic)
+
+This offline diagnostic compares each supported topic's ROS `header.stamp`
+with the rosbag2 `messages.timestamp` receive value. On the Pi, analyze a
+finalized DB3 from the repository root:
+
+    python3 tools/stamp_drift/analyze.py /qualified/path/bag_0.db3 \
+      --header-clock D435I_GLOBAL_TIME --global-time-enabled true \
+      --output-dir /qualified/path/stamp-drift
+
+Only declare `D435I_GLOBAL_TIME` when the effective RealSense parameter
+readback is recorded; otherwise use the documented hardware, system, or
+unknown domain. Offline CSV and saved-report commands are documented in
+`tools/stamp_drift/README.md`.
+
+The per-topic criteria are `<topic>:fit` and `<topic>:continuity`. The first
+requires every segment to have a usable positive-slope affine fit; the second
+checks detected reversals and residual steps against configured limits in
+`tools/stamp_drift/config.json`. These diagnostic thresholds are PROPOSED.
+The JSON and markdown statuses are diagnostics, not N3 verdicts. The fit cannot
+separate clock offset from transport delay or prove exposure latency, sensor
+synchronization, or which timestamp domain was actually active.
+
+| Hardware run | NONE; saved historical/conversion fixtures are offline and are not live ROS recorder evidence |
+|---|---|
+| Limits | Diagnostic only; no absolute latency or cross-clock mapping |
 
 No candidate line is silently treated as PASS because a matching ID exists.
 NEXT_GATE also asks for project-state/evidence-index updates; this ticket owns
@@ -633,6 +748,7 @@ bearing. Raw capture and N3 tools intentionally withhold unmapped latency.
 | tools/clockmap | python3 tools/clockmap/analyze.py /path/to/timestamps.csv | JSON diagnostics, no common IDs | Offline diagnostic fit, not online map/latency proof. NONE |
 | tools/runtime_observer | make -C tools/runtime_observer test; aggregate.py, patch_timing.py, resource_sampler.py as documented | Trace/resource fields, no common IDs | Observer loss/overhead and mapping limits. NONE |
 | tools/perception_health | python3 tools/perception_health/py/sender.py --device /dev/ttyAMA0 --baud 115200 --input /path/to/pose_events.jsonl | Prototype codec/model, no N0–N7 IDs | Not firmware/safety/gate evidence. NONE |
+| tools/perception_health/c/mcu | make -C tools/perception_health/c/mcu test | Host parity scenarios: sequence gaps/duplicates, CRC rejection, source-age HOLD/FAILSAFE, saturation/unavailable age, LOST, silence, timer wrap; no N0–N7 IDs | Host-only candidate; target integration, timing, firmware and safety are unverified. NONE |
 | tools/perception_health/integration | e2e_pty_test.py --outdir <tmp>/full --summary-outdir <tmp>/summary; --analyze-only | *.transport, no_mapping, mapped_ok, lost_latched, sender_stops, real_replay | PTY/software criteria, synthetic mapping, simulated MCU timer. NONE |
 | tools/ros2_bridge | python3 -m unittest discover -s tools/ros2_bridge/tests -v; make -C tools/ros2_bridge test | No common IDs | Explicitly UNBUILT; no rclcpp/ORB/live bridge. NONE |
 | tools/link_proto | make -C tools/link_proto test; unittest discover tools/link_proto/tests | No common IDs | CANDIDATE protocol, not accepted STM32 interface. NONE |
@@ -642,16 +758,16 @@ bearing. Raw capture and N3 tools intentionally withhold unmapped latency.
 | tools/take_tools | inspect/audit/export-euroc commands above | Audit status/rejections, no common IDs | Structural decoder/exporter only. NONE |
 | tools/run_harness | harness.py tools/run_harness/examples/orb_pi.yaml --out tools/run_harness/runs/NEW_RUN | Per-repeat OK/CRASH/NO_TRAJECTORY/TIMEOUT | Headless attestation, not sandbox/coverage/gate PASS. NONE |
 | tools/vio_adapter | make test; euroc_replay.py DATA NEW_OUTPUT | Counts/snapshots/summary, no common IDs | Fake-engine replay; optional ORB binding not compiled. NONE |
+| lab/calib_result | check_kalibr_result.py --camimu-chain ... --camimu-results ... --stereo-chain ... --stereo-results ... --run-imu ... --outdir ...; --analyze-only DIR --outdir ... | Calibration result acceptance criteria described above; no N0–N7 IDs | Offline candidate screening only; physical calibration unverified. NONE |
+| ros2/wbr_orb_node | `make -C ros2/wbr_orb_node test`; `check_core.py --outdir DIR` / `--analyze-only DIR` | Software-check IDs: `all`, `real`, `emit`; not common gate IDs | Software-only check; ROS 2 / ORB integration UNBUILT and hardware run NONE |
 
-Optional ticket paths absent from this checkout are ros2/, tools/stamp_drift,
-and tools/deploy. tools/eval_pipeline/ is present and indexed above. No command
-or criterion is invented for an absent path.
+Optional ticket paths absent from this checkout are `tools/deploy/` and a
+top-level `ros2/` directory; this checkout has `ros2/wbr_orb_node/`, documented
+above. `tools/eval_pipeline/` and `tools/stamp_drift/` are present and indexed
+above. No command or criterion is invented for an absent path.
 
 ## Verification
 
-All documented Python entry points were invoked with --help without opening
-hardware or writing repository files; all listed argparse entry points accepted
-the flag. The two shell wrappers were checked with bash -n and their usage lines
-were read because they do not implement --help. All repository shell scripts
-passed bash -n. This is CALCULATED CLI inspection only, not hardware evidence.
-
+See the review record for the exact commands, test results, and CLI checks run
+for this index update. This is CALCULATED software evidence only, not hardware
+evidence.

@@ -1,0 +1,352 @@
++zsh:4> PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s lab/calib_result/tests -v
+test_analyze_only_missing_saved_policy_is_blocked (test_check_kalibr_result.Acceptance.test_analyze_only_missing_saved_policy_is_blocked) ... ok
+test_missing_required_input_is_blocked (test_check_kalibr_result.Acceptance.test_missing_required_input_is_blocked) ... ok
+test_noise_mismatch_fails_provenance (test_check_kalibr_result.Acceptance.test_noise_mismatch_fails_provenance) ... ok
+test_perturbations_fail_each_major_criterion (test_check_kalibr_result.Acceptance.test_perturbations_fail_each_major_criterion) ... ok
+test_real_saved_tumvi_report_is_a_parser_fixture_only (test_check_kalibr_result.Acceptance.test_real_saved_tumvi_report_is_a_parser_fixture_only) ... ok
+test_synthetic_fixtures_pass_and_saved_inputs_reanalyze (test_check_kalibr_result.Acceptance.test_synthetic_fixtures_pass_and_saved_inputs_reanalyze) ... ok
+test_unreadable_threshold_policy_writes_blocked_result (test_check_kalibr_result.Acceptance.test_unreadable_threshold_policy_writes_blocked_result) ... ok
+test_usage_error_uses_contract_exit_code (test_check_kalibr_result.Acceptance.test_usage_error_uses_contract_exit_code) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 26.562s
+
+OK
++zsh:5> PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools/stamp_drift/tests -v
+test_csv_and_cli_errors_are_nonzero (test_analyze.StampDriftTests.test_csv_and_cli_errors_are_nonzero) ... ok
+test_forward_residual_step_is_reported_and_fits_are_split (test_analyze.StampDriftTests.test_forward_residual_step_is_reported_and_fits_are_split) ... ok
+test_header_reversal_splits_and_is_not_stitched (test_analyze.StampDriftTests.test_header_reversal_splits_and_is_not_stitched) ... ok
+test_inter_topic_and_ir_imu_comparison (test_analyze.StampDriftTests.test_inter_topic_and_ir_imu_comparison) ... ok
+test_known_offset_drift_jitter_and_outliers (test_analyze.StampDriftTests.test_known_offset_drift_jitter_and_outliers) ... ok
+test_real_saved_evidence_fixture_is_read_and_labeled (test_analyze.StampDriftTests.test_real_saved_evidence_fixture_is_read_and_labeled) ... ok
+test_short_fixture_is_blocked_without_a_fit (test_analyze.StampDriftTests.test_short_fixture_is_blocked_without_a_fit) ... ok
+test_synthetic_db3_cdr_header_reader (test_analyze.StampDriftTests.test_synthetic_db3_cdr_header_reader) ... ok
+test_adapted_sdk_fixture_preserves_exact_decimal_ns (test_review.ReviewTests.test_adapted_sdk_fixture_preserves_exact_decimal_ns) ... ok
+test_analyze_only_missing_or_corrupt_metadata_is_blocked (test_review.ReviewTests.test_analyze_only_missing_or_corrupt_metadata_is_blocked) ... ok
+test_cli_contract_all_statuses_roundtrip_hashes_and_missing_input (test_review.ReviewTests.test_cli_contract_all_statuses_roundtrip_hashes_and_missing_input) ... ok
+test_cli_usage_errors_exit_three_and_do_not_overwrite_input (test_review.ReviewTests.test_cli_usage_errors_exit_three_and_do_not_overwrite_input) ... ok
+test_config_rejects_nonfinite_short_fit_and_missing_percentiles (test_review.ReviewTests.test_config_rejects_nonfinite_short_fit_and_missing_percentiles) ... ok
+test_constant_receive_clock_is_blocked_without_exception (test_review.ReviewTests.test_constant_receive_clock_is_blocked_without_exception) ... ok
+test_db3_not_read_whole_into_memory (test_review.ReviewTests.test_db3_not_read_whole_into_memory) ... ok
+test_empty_rows_blocked (test_review.ReviewTests.test_empty_rows_blocked) ... ok
+test_fail_precedes_blocked_on_short_reversal (test_review.ReviewTests.test_fail_precedes_blocked_on_short_reversal) ... ok
+test_header_big_endian_and_malformed_headers (test_review.ReviewTests.test_header_big_endian_and_malformed_headers) ... ok
+test_header_clock_does_not_imply_option_readback (test_review.ReviewTests.test_header_clock_does_not_imply_option_readback) ... ok
+test_missing_numpy_is_blocked_with_result (test_review.ReviewTests.test_missing_numpy_is_blocked_with_result) ... ok
+test_mixed_bag_skips_unstamped_and_tf_and_reports_empty_sensor (test_review.ReviewTests.test_mixed_bag_skips_unstamped_and_tf_and_reports_empty_sensor) ... ok
+test_non_cdr_serialization_refused (test_review.ReviewTests.test_non_cdr_serialization_refused) ... ok
+test_real_converted_ros_headers_fixture (test_review.ReviewTests.test_real_converted_ros_headers_fixture) ... ok
+test_residuals_preserve_nanoseconds_at_receive_utc_epoch (test_review.ReviewTests.test_residuals_preserve_nanoseconds_at_receive_utc_epoch) ... ok
+test_step_segment_cap_is_enforced (test_review.ReviewTests.test_step_segment_cap_is_enforced) ... ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 16.323s
+
+OK
++zsh:6> PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools/clockmap/tests -v
+test_cli_both_module_and_script_and_input_errors (test_analyze.AnalyzerTests.test_cli_both_module_and_script_and_input_errors) ... ok
+test_decimal_ms_sub_nanosecond_rounding (test_analyze.AnalyzerTests.test_decimal_ms_sub_nanosecond_rounding) ... ok
+test_domain_transitions_never_stitched (test_analyze.AnalyzerTests.test_domain_transitions_never_stitched) ... ok
+test_empty_and_short_csv (test_analyze.AnalyzerTests.test_empty_and_short_csv) ... ok
+test_fit_and_absolute_latency_separated (test_analyze.AnalyzerTests.test_fit_and_absolute_latency_separated) ... ok
+test_hardware_only_unavailable (test_analyze.AnalyzerTests.test_hardware_only_unavailable) ... ok
+test_invalid_headers_fields_and_nonfinite_sdk_refused (test_analyze.AnalyzerTests.test_invalid_headers_fields_and_nonfinite_sdk_refused) ... ok
+test_negative_latency_retained_as_diagnostic (test_analyze.AnalyzerTests.test_negative_latency_retained_as_diagnostic) ... ok
+test_per_stream_counts_indices_and_latency_percentiles (test_analyze.AnalyzerTests.test_per_stream_counts_indices_and_latency_percentiles) ... ok
+test_sdk_and_frame_reversals_split_fit (test_analyze.AnalyzerTests.test_sdk_and_frame_reversals_split_fit) ... ok
+test_utc_step_splits_fit (test_analyze.AnalyzerTests.test_utc_step_splits_fit) ... ok
+test_certain_future_unavailable (test_clockmap.AgeTests.test_certain_future_unavailable) ... ok
+test_no_map_invalid_map_wrong_domains_and_boot_are_unavailable (test_clockmap.AgeTests.test_no_map_invalid_map_wrong_domains_and_boot_are_unavailable) ... ok
+test_r2_upper_bound_and_frozen_epoch_age (test_clockmap.AgeTests.test_r2_upper_bound_and_frozen_epoch_age) ... ok
+test_constant_asymmetry_bias_is_bounded (test_clockmap.MappingTests.test_constant_asymmetry_bias_is_bounded) ... ok
+test_duplicate_exchange_refused (test_clockmap.MappingTests.test_duplicate_exchange_refused) ... ok
+test_forward_and_backward_steps_invalidate (test_clockmap.MappingTests.test_forward_and_backward_steps_invalidate) ... ok
+test_insufficient_samples_unavailable (test_clockmap.MappingTests.test_insufficient_samples_unavailable) ... ok
+test_inverse_recovers_epoch_and_units (test_clockmap.MappingTests.test_inverse_recovers_epoch_and_units) ... ok
+test_large_integer_epochs_preserve_nanoseconds (test_clockmap.MappingTests.test_large_integer_epochs_preserve_nanoseconds) ... ok
+test_long_rtt_alone_is_not_a_clock_step (test_clockmap.MappingTests.test_long_rtt_alone_is_not_a_clock_step) ... ok
+test_minimum_rtt_samples_preferred (test_clockmap.MappingTests.test_minimum_rtt_samples_preferred) ... ok
+test_offset_and_drift_recovered (test_clockmap.MappingTests.test_offset_and_drift_recovered) ... ok
+test_old_session_conversion_invalidates (test_clockmap.MappingTests.test_old_session_conversion_invalidates) ... ok
+test_session_change_invalidates_until_explicit_bind (test_clockmap.MappingTests.test_session_change_invalidates_until_explicit_bind) ... ok
+test_source_clock_reversal_invalidates (test_clockmap.MappingTests.test_source_clock_reversal_invalidates) ... ok
+test_time_varying_asymmetry_and_extrapolation_bounded (test_clockmap.MappingTests.test_time_varying_asymmetry_and_extrapolation_bounded) ... ok
+test_window_bounded_and_revisions_advance (test_clockmap.MappingTests.test_window_bounded_and_revisions_advance) ... ok
+test_cross_domain_arithmetic_and_order_refused (test_clockmap.StampTests.test_cross_domain_arithmetic_and_order_refused) ... ok
+test_cross_session_refused (test_clockmap.StampTests.test_cross_session_refused) ... ok
+test_float_stamps_durations_and_missing_session_refused (test_clockmap.StampTests.test_float_stamps_durations_and_missing_session_refused) ... ok
+test_same_domain_durations_and_shifts (test_clockmap.StampTests.test_same_domain_durations_and_shifts) ... ok
+test_map_fit_across_mcu_wrap (test_clockmap.UnwrapTests.test_map_fit_across_mcu_wrap) ... ok
+test_reboot_needs_reset (test_clockmap.UnwrapTests.test_reboot_needs_reset) ... ok
+test_reversal_and_half_range_latch (test_clockmap.UnwrapTests.test_reversal_and_half_range_latch) ... ok
+test_uint32_validation (test_clockmap.UnwrapTests.test_uint32_validation) ... ok
+test_wrap_and_equal_ticks (test_clockmap.UnwrapTests.test_wrap_and_equal_ticks) ... ok
+
+----------------------------------------------------------------------
+Ran 37 tests in 0.993s
+
+OK
++zsh:7> PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s lab/rosbag_qual/tests -v
+test_drop_fixture_is_fail (test_qual.QualificationTests.test_drop_fixture_is_fail) ... ok
+test_missing_bag_is_blocked (test_qual.QualificationTests.test_missing_bag_is_blocked) ... ok
+test_pass_fixture_and_analyze_only (test_qual.QualificationTests.test_pass_fixture_and_analyze_only) ... ok
+test_real_saved_evidence_fixture (test_qual.QualificationTests.test_real_saved_evidence_fixture)
+Use the saved 2026-10-14 DB3 as an input fixture, never copy or modify it. ... ok
+test_stamp_reversal_is_fail (test_qual.QualificationTests.test_stamp_reversal_is_fail) ... ok
+test_bag_size_excludes_unrelated_files (test_review.ReviewTests.test_bag_size_excludes_unrelated_files) ... ok
+test_cdr_alignment_is_relative_to_encapsulation (test_review.ReviewTests.test_cdr_alignment_is_relative_to_encapsulation) ... ok
+test_corrupt_saved_replay_is_blocked (test_review.ReviewTests.test_corrupt_saved_replay_is_blocked) ... ok
+test_count_fail_overrides_blocked_rate_and_missing_guard (test_review.ReviewTests.test_count_fail_overrides_blocked_rate_and_missing_guard) ... ok
+test_empty_saved_record_does_not_pass (test_review.ReviewTests.test_empty_saved_record_does_not_pass) ... ok
+test_explicit_missing_config_is_not_replaced_by_default (test_review.ReviewTests.test_explicit_missing_config_is_not_replaced_by_default) ... ok
+test_invalid_ros_nanoseconds_rejected (test_review.ReviewTests.test_invalid_ros_nanoseconds_rejected) ... ok
+test_live_camera_in_replay_domain_blocks_player (test_review.ReviewTests.test_live_camera_in_replay_domain_blocks_player) ... ok
+test_missing_non_sqlite_support_is_blocked (test_review.ReviewTests.test_missing_non_sqlite_support_is_blocked) ... ok
+test_missing_observation_is_blocked_but_measured_zero_delivery_fails (test_review.ReviewTests.test_missing_observation_is_blocked_but_measured_zero_delivery_fails) ... ok
+test_missing_replay_player_evidence_is_blocked (test_review.ReviewTests.test_missing_replay_player_evidence_is_blocked) ... ok
+test_missing_saved_record_is_blocked_without_crashing (test_review.ReviewTests.test_missing_saved_record_is_blocked_without_crashing) ... ok
+test_missing_saved_replay_graph_guard_is_blocked (test_review.ReviewTests.test_missing_saved_replay_graph_guard_is_blocked) ... ok
+test_partial_stream_cannot_hide_inside_full_bag (test_review.ReviewTests.test_partial_stream_cannot_hide_inside_full_bag) ... ok
+test_portable_headers_from_real_evidence (test_review.ReviewTests.test_portable_headers_from_real_evidence) ... ok
+test_receive_rate_outside_band_fails (test_review.ReviewTests.test_receive_rate_outside_band_fails) ... ok
+test_record_waits_only_requested_duration_and_saves_recomputable_raw (test_review.ReviewTests.test_record_waits_only_requested_duration_and_saves_recomputable_raw) ... ok
+test_repeated_stamp_fails (test_review.ReviewTests.test_repeated_stamp_fails) ... ok
+test_replay_analyze_only_reduces_raw_observations_and_loads_saved_config (test_review.ReviewTests.test_replay_analyze_only_reduces_raw_observations_and_loads_saved_config) ... ok
+test_replay_failure_precedence_and_stored_fail_prevents_player (test_review.ReviewTests.test_replay_failure_precedence_and_stored_fail_prevents_player) ... ok
+test_replay_live_pass_roundtrip_and_changed_stamp_fail (test_review.ReviewTests.test_replay_live_pass_roundtrip_and_changed_stamp_fail) ... ok
+test_replay_missing_recorded_topic_is_blocked (test_review.ReviewTests.test_replay_missing_recorded_topic_is_blocked) ... ok
+test_replay_missing_verbatim_player_log_blocks (test_review.ReviewTests.test_replay_missing_verbatim_player_log_blocks) ... ok
+test_replay_stamp_change_is_fail (test_review.ReviewTests.test_replay_stamp_change_is_fail) ... ok
+test_replay_subscription_error_cannot_pass (test_review.ReviewTests.test_replay_subscription_error_cannot_pass) ... ok
+test_replay_uses_recorded_receive_rate (test_review.ReviewTests.test_replay_uses_recorded_receive_rate) ... ok
+test_ros_absent_checks_are_blocked (test_review.ReviewTests.test_ros_absent_checks_are_blocked) ... ok
+test_saved_analysis_requires_its_config (test_review.ReviewTests.test_saved_analysis_requires_its_config) ... ok
+test_saved_offline_missing_order_measurement_is_blocked (test_review.ReviewTests.test_saved_offline_missing_order_measurement_is_blocked) ... ok
+test_saved_offline_missing_topic_is_blocked (test_review.ReviewTests.test_saved_offline_missing_topic_is_blocked) ... ok
+test_short_record_window_fails_and_missing_window_blocks (test_review.ReviewTests.test_short_record_window_fails_and_missing_window_blocks) ... ok
+test_sqlite_uri_handles_hash_and_question_mark (test_review.ReviewTests.test_sqlite_uri_handles_hash_and_question_mark) ... ok
+test_static_tf_offline_and_subscriber_hash_match_all_stamps (test_review.ReviewTests.test_static_tf_offline_and_subscriber_hash_match_all_stamps) ... ok
+test_tf_stamps_are_observed (test_review.ReviewTests.test_tf_stamps_are_observed) ... ok
+test_unsafe_durations_and_config_numbers_are_usage_errors (test_review.ReviewTests.test_unsafe_durations_and_config_numbers_are_usage_errors) ... ok
+test_usage_exit_code_is_three (test_review.ReviewTests.test_usage_exit_code_is_three) ... usage: python3 -m unittest [-h] [--bag BAG] [--output-dir OUTPUT_DIR]
+                           [--config CONFIG] [--analyze-only ANALYZE_ONLY]
+python3 -m unittest: error: provide exactly one of --output-dir or --analyze-only
+usage: python3 -m unittest [-h] [--output-dir OUTPUT_DIR] [--config CONFIG]
+                           [--seconds SECONDS] [--analyze-only ANALYZE_ONLY]
+python3 -m unittest: error: provide exactly one of --output-dir or --analyze-only
+usage: python3 -m unittest [-h] [--bag BAG] [--output-dir OUTPUT_DIR]
+                           [--config CONFIG] [--live-domain LIVE_DOMAIN]
+                           [--replay-domain REPLAY_DOMAIN]
+                           [--analyze-only ANALYZE_ONLY]
+python3 -m unittest: error: provide exactly one of --output-dir or --analyze-only
+ok
+
+----------------------------------------------------------------------
+Ran 41 tests in 3.856s
+
+OK
+BLOCKED  offline_input: null
+Overall: BLOCKED
+PASS     topic:/left:count: 3 messages
+PASS     topic:/left:header_rate: 2.0 Hz
+PASS     topic:/left:bag_receive_rate: 2.0 Hz
+PASS     topic:/left:max_gap: 0.5 s
+PASS     topic:/left:drops: 0 gaps
+PASS     topic:/left:stamp_order: 0 reversals
+PASS     topic:/left:stamp_repeats: 0 repeats
+PASS     topic:/left:bag_receive_order: 0 reversals
+PASS     topic:/left:cdr: 0 errors
+PASS     topic:/left:receive_boundary_gap: 0.0 s
+PASS     topic:/right:count: 3 messages
+PASS     topic:/right:header_rate: 2.0 Hz
+PASS     topic:/right:bag_receive_rate: 2.0 Hz
+PASS     topic:/right:max_gap: 0.5 s
+PASS     topic:/right:drops: 0 gaps
+PASS     topic:/right:stamp_order: 0 reversals
+PASS     topic:/right:stamp_repeats: 0 repeats
+PASS     topic:/right:bag_receive_order: 0 reversals
+PASS     topic:/right:cdr: 0 errors
+PASS     topic:/right:receive_boundary_gap: 0.0 s
+PASS     topic:/gyro:count: 5 messages
+PASS     topic:/gyro:header_rate: 4.0 Hz
+PASS     topic:/gyro:bag_receive_rate: 4.0 Hz
+PASS     topic:/gyro:max_gap: 0.25 s
+PASS     topic:/gyro:drops: 0 gaps
+PASS     topic:/gyro:stamp_order: 0 reversals
+PASS     topic:/gyro:stamp_repeats: 0 repeats
+PASS     topic:/gyro:bag_receive_order: 0 reversals
+PASS     topic:/gyro:cdr: 0 errors
+PASS     topic:/gyro:receive_boundary_gap: 0.0 s
+PASS     topic:/accel:count: 5 messages
+PASS     topic:/accel:header_rate: 4.0 Hz
+PASS     topic:/accel:bag_receive_rate: 4.0 Hz
+PASS     topic:/accel:max_gap: 0.25 s
+PASS     topic:/accel:drops: 0 gaps
+PASS     topic:/accel:stamp_order: 0 reversals
+PASS     topic:/accel:stamp_repeats: 0 repeats
+PASS     topic:/accel:bag_receive_order: 0 reversals
+PASS     topic:/accel:cdr: 0 errors
+PASS     topic:/accel:receive_boundary_gap: 0.0 s
+PASS     ir_pairing: 1.0 fraction
+PASS     disk:duration: 1.0 s
+PASS     disk:write_rate: 12288.0 bytes/s
+Overall: PASS
+PASS     topic:/left:count: 3 messages
+PASS     topic:/left:header_rate: 2.0 Hz
+PASS     topic:/left:bag_receive_rate: 2.0 Hz
+PASS     topic:/left:max_gap: 0.5 s
+PASS     topic:/left:drops: 0 gaps
+PASS     topic:/left:stamp_order: 0 reversals
+PASS     topic:/left:stamp_repeats: 0 repeats
+PASS     topic:/left:bag_receive_order: 0 reversals
+PASS     topic:/left:cdr: 0 errors
+PASS     topic:/left:receive_boundary_gap: 0.0 s
+PASS     topic:/right:count: 3 messages
+PASS     topic:/right:header_rate: 2.0 Hz
+PASS     topic:/right:bag_receive_rate: 2.0 Hz
+PASS     topic:/right:max_gap: 0.5 s
+PASS     topic:/right:drops: 0 gaps
+PASS     topic:/right:stamp_order: 0 reversals
+PASS     topic:/right:stamp_repeats: 0 repeats
+PASS     topic:/right:bag_receive_order: 0 reversals
+PASS     topic:/right:cdr: 0 errors
+PASS     topic:/right:receive_boundary_gap: 0.0 s
+PASS     topic:/gyro:count: 5 messages
+PASS     topic:/gyro:header_rate: 4.0 Hz
+PASS     topic:/gyro:bag_receive_rate: 4.0 Hz
+PASS     topic:/gyro:max_gap: 0.25 s
+PASS     topic:/gyro:drops: 0 gaps
+PASS     topic:/gyro:stamp_order: 0 reversals
+PASS     topic:/gyro:stamp_repeats: 0 repeats
+PASS     topic:/gyro:bag_receive_order: 0 reversals
+PASS     topic:/gyro:cdr: 0 errors
+PASS     topic:/gyro:receive_boundary_gap: 0.0 s
+PASS     topic:/accel:count: 5 messages
+PASS     topic:/accel:header_rate: 4.0 Hz
+PASS     topic:/accel:bag_receive_rate: 4.0 Hz
+PASS     topic:/accel:max_gap: 0.25 s
+PASS     topic:/accel:drops: 0 gaps
+PASS     topic:/accel:stamp_order: 0 reversals
+PASS     topic:/accel:stamp_repeats: 0 repeats
+PASS     topic:/accel:bag_receive_order: 0 reversals
+PASS     topic:/accel:cdr: 0 errors
+PASS     topic:/accel:receive_boundary_gap: 0.0 s
+PASS     ir_pairing: 1.0 fraction
+PASS     disk:duration: 1.0 s
+PASS     disk:write_rate: 12288.0 bytes/s
+Overall: PASS
++zsh:8> PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s experiments/2026-09-12-pi5-native-sensor-validation -p test_n3_metrics.py -v
+test_camera_info_nan_rejected (test_n3_metrics.MetricsTests.test_camera_info_nan_rejected) ... ok
+test_disconnected_tf_is_not_presence_pass (test_n3_metrics.MetricsTests.test_disconnected_tf_is_not_presence_pass) ... ok
+test_header_digest_catches_changed_order (test_n3_metrics.MetricsTests.test_header_digest_catches_changed_order) ... ok
+test_missing_required_context_rejected (test_n3_metrics.MetricsTests.test_missing_required_context_rejected) ... ok
+test_nanosecond_precision_repeats_and_backward (test_n3_metrics.MetricsTests.test_nanosecond_precision_repeats_and_backward) ... ok
+test_payload_digest_catches_corruption (test_n3_metrics.MetricsTests.test_payload_digest_catches_corruption) ... ok
+test_replay_loss_rejected (test_n3_metrics.MetricsTests.test_replay_loss_rejected) ... ok
+test_static_zero_stamp_is_permitted (test_n3_metrics.MetricsTests.test_static_zero_stamp_is_permitted) ... ok
+test_whole_window_rate_does_not_hide_stall (test_n3_metrics.MetricsTests.test_whole_window_rate_does_not_hide_stall) ... ok
+test_wire_padding_is_preserved_but_not_semantic_corruption (test_n3_metrics.MetricsTests.test_wire_padding_is_preserved_but_not_semantic_corruption) ... ok
+test_wrong_image_dimensions_rejected (test_n3_metrics.MetricsTests.test_wrong_image_dimensions_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.051s
+
+OK
++zsh:9> make -C tools/perception_health/c/mcu test
+rm -rf .build
+C receiver and Python policy parity: PASS
+C receiver and Python policy parity: PASS
+__TEXT	__DATA	__OBJC	others	dec	hex
+1684	0	0	256	1940	794	.build/ph_rx.o
+2585	64	0	224	2873	b39	.build/ph_policy.o
++zsh:10> make -C ros2/wbr_orb_node test
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
+test_clock_faults_and_replay_seek (test_node.CoreTests.test_clock_faults_and_replay_seek) ... ok
+test_drop_oldest_and_fault_after_imu_loss (test_node.CoreTests.test_drop_oldest_and_fault_after_imu_loss) ... ok
+test_engine_exception_keeps_source_image_identity (test_node.CoreTests.test_engine_exception_keeps_source_image_identity) ... ok
+test_exact_pairing (test_node.CoreTests.test_exact_pairing) ... ok
+test_executor_ingress_progress_during_slow_tracking (test_node.CoreTests.test_executor_ingress_progress_during_slow_tracking) ... ok
+test_health_schema_and_runtime_recorder_compatibility (test_node.CoreTests.test_health_schema_and_runtime_recorder_compatibility) ... ok
+test_imu_coverage (test_node.CoreTests.test_imu_coverage) ... ok
+test_loss_reset_and_reinitialization (test_node.CoreTests.test_loss_reset_and_reinitialization) ... ok
+test_original_stamp_and_camera_imu_composition (test_node.CoreTests.test_original_stamp_and_camera_imu_composition) ... ok
+test_real_saved_source_epochs (test_node.CoreTests.test_real_saved_source_epochs) ... ok
+test_sender_tracking_enum_compatibility (test_node.CoreTests.test_sender_tracking_enum_compatibility) ... ok
+test_stereo_image_rejection_not_imu_fault (test_node.CoreTests.test_stereo_image_rejection_not_imu_fault) ... ok
+test_absent_mapping_does_not_need_numpy (test_node.MappingTests.test_absent_mapping_does_not_need_numpy) ... ok
+test_mapping_cli_refuses_missing_input (test_node.MappingTests.test_mapping_cli_refuses_missing_input) ... ok
+test_prepared_mapping_uses_existing_clockmap (test_node.MappingTests.test_prepared_mapping_uses_existing_clockmap) ... ok
+test_blocked_missing_executable (test_node.ResultContractTests.test_blocked_missing_executable) ... ok
+test_fail_from_saved_nonzero_run (test_node.ResultContractTests.test_fail_from_saved_nonzero_run) ... ok
+test_malformed_raw_is_internal_error (test_node.ResultContractTests.test_malformed_raw_is_internal_error) ... ok
+test_pass_and_analyze_saved_raw_files (test_node.ResultContractTests.test_pass_and_analyze_saved_raw_files) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 2.222s
+
+OK
++zsh:11> python3 lab/calib_result/check_kalibr_result.py --help
+usage: check_kalibr_result.py [-h] [--camimu-chain CAMIMU_CHAIN]
+                              [--camimu-results CAMIMU_RESULTS]
+                              [--stereo-chain STEREO_CHAIN]
+                              [--stereo-results STEREO_RESULTS]
+                              [--run-imu RUN_IMU]
+                              [--provisional-imu PROVISIONAL_IMU]
+                              [--factory FACTORY] [--thresholds THRESHOLDS]
+                              --outdir OUTDIR [--analyze-only SAVED_DIR]
+
+Offline acceptance gate for Kalibr camera-IMU and stereo-check results.
+
+options:
+  -h, --help            show this help message and exit
+  --camimu-chain CAMIMU_CHAIN
+  --camimu-results CAMIMU_RESULTS
+  --stereo-chain STEREO_CHAIN
+  --stereo-results STEREO_RESULTS
+  --run-imu RUN_IMU
+  --provisional-imu PROVISIONAL_IMU
+  --factory FACTORY
+  --thresholds THRESHOLDS
+  --outdir OUTDIR
+  --analyze-only SAVED_DIR
+                        re-evaluate raw input snapshots from a prior output
+                        directory
++zsh:12> python3 tools/stamp_drift/analyze.py --help
+usage: analyze.py [-h] [--analyze-only ANALYZE_ONLY] [--output-dir OUTPUT_DIR]
+                  [--json-out JSON_OUT] [--md-out MD_OUT] [--config CONFIG]
+                  [--header-clock {UNKNOWN,D435I_GLOBAL_TIME,D435I_HARDWARE_TIME,SYSTEM_TIME}]
+                  [--global-time-enabled {true,false,unknown}]
+                  [input]
+
+Analyze D435i ROS header.stamp against rosbag receive timestamps. The two
+timestamps are deliberately kept as separate clock-domain values. The fit is a
+diagnostic affine relation, not a latency measurement or an online clock map.
+CSV input is ``topic,header_stamp_ns,receive_ns``. SQLite input is a rosbag2
+sqlite3 database and uses ``messages.timestamp`` as receive time.
+
+positional arguments:
+  input                 CSV or rosbag2 .db3
+
+options:
+  -h, --help            show this help message and exit
+  --analyze-only ANALYZE_ONLY
+                        directory of saved raw input and configuration
+  --output-dir OUTPUT_DIR
+  --json-out JSON_OUT
+  --md-out MD_OUT
+  --config CONFIG
+  --header-clock {UNKNOWN,D435I_GLOBAL_TIME,D435I_HARDWARE_TIME,SYSTEM_TIME}
+  --global-time-enabled {true,false,unknown}
+                        independent saved option readback; header domain does
+                        not imply this value
++zsh:13> python3 ros2/wbr_orb_node/scripts/check_core.py --help
+usage: check_core.py [-h] (--outdir OUTDIR | --analyze-only ANALYZE_ONLY)
+                     [--probe PROBE]
+
+Host-only software regression check, never an N4B/N4C acceptance gate.
+
+options:
+  -h, --help            show this help message and exit
+  --outdir OUTDIR
+  --analyze-only ANALYZE_ONLY
+  --probe PROBE
