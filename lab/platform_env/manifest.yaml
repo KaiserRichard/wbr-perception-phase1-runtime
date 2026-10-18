@@ -2,8 +2,8 @@
   "schema_version": 1,
   "description": "JSON-compatible YAML: measured October 2026 Pi 5 4 GB stand-in environment. Refresh from a current Pi snapshot before treating it as the deployment target.",
   "fields": {
-    "pi_model": {"policy": "exact", "severity": "REQUIRED", "expected": "Raspberry Pi 5 Model B Rev 1.0", "source": "experiments/2026-10-13-pi5-env-snapshot/snapshot.txt: hardware (MEASURED)"},
-    "board_ram_bytes": {"policy": "exact", "severity": "REQUIRED", "expected": 4294967296, "source": "experiments/2026-10-13-pi5-env-snapshot/snapshot.txt: free -h and nproc; experiments/2026-10-13-n4a-euroc-mh01/REPORT.md (MEASURED 4 GB stand-in)"},
+    "pi_model": {"policy": "info", "severity": "INFO", "expected": "Raspberry Pi 5 Model B Rev 1.0", "source": "experiments/2026-10-13-pi5-env-snapshot/snapshot.txt: hardware (MEASURED 4 GB stand-in; re-pin after review on 8 GB target)"},
+    "board_ram_bytes": {"policy": "info", "severity": "INFO", "expected": 4294967296, "source": "experiments/2026-10-13-pi5-env-snapshot/snapshot.txt: free -h and nproc (MEASURED 4 GB stand-in); re-pin after review on 8 GB target"},
     "kernel_release": {"policy": "exact", "severity": "REQUIRED", "expected": "6.8.0-1064-raspi", "source": "experiments/2026-10-13-pi5-env-snapshot/snapshot.txt: os/kernel (MEASURED)"},
     "ubuntu_version": {"policy": "exact", "severity": "REQUIRED", "expected": "24.04", "source": "experiments/2026-10-13-pi5-env-snapshot/snapshot.txt: os/kernel VERSION_ID (MEASURED)"},
     "ros_distro": {"policy": "exact", "severity": "REQUIRED", "expected": "jazzy", "source": "experiments/2026-10-13-pi5-env-snapshot/snapshot.txt: ros env ROS_DISTRO (MEASURED)"},

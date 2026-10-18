@@ -2,7 +2,7 @@
 
 `check_platform.py` captures a read-only, camera-free inventory of the Pi software environment, compares required facts with `manifest.yaml`, writes `snapshot.json`, and records command output under `raw/`. The manifest is JSON syntax, which is also valid YAML, so this tool needs only the Python standard library.
 
-The checked-in manifest pins the **MEASURED October 13, 2026 4 GB Pi 5 stand-in**, not the later 8 GB target board. It also records the active D435i firmware expectation and currently known ORB build evidence. Review a candidate manifest after collecting on the intended board before adopting it as a new baseline. Unknown OpenCV, Eigen, and clocksource pins are INFO and do not affect the verdict.
+The checked-in manifest is based on the **MEASURED October 13, 2026 4 GB Pi 5 stand-in**, not the later 8 GB target board. Model and RAM are INFO fields so the stand-in's board identity cannot fail the target check; re-pin them after reviewing a snapshot from the 8 GB board. Other environment pins remain independently enforced. The manifest also records the active D435i firmware expectation and currently known ORB build evidence. Review a candidate manifest after collecting on the intended board before adopting it as a new baseline. Unknown OpenCV, Eigen, and clocksource pins are INFO and do not affect the verdict.
 
 ## Run on the Pi
 

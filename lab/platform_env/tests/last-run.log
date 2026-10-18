@@ -4,15 +4,16 @@ test_missing_command_is_saved_and_blocks (test_check_platform.PlatformAnalysisTe
 test_missing_required_fact_is_blocked (test_check_platform.PlatformAnalysisTests.test_missing_required_fact_is_blocked) ... ok
 test_real_snapshot_fixture_passes_pinned_fields (test_check_platform.PlatformAnalysisTests.test_real_snapshot_fixture_passes_pinned_fields) ... ok
 test_required_mismatch_fails_field (test_check_platform.PlatformAnalysisTests.test_required_mismatch_fails_field) ... ok
+test_target_board_model_and_ram_are_recorded_without_failing_standin_pins (test_check_platform.PlatformAnalysisTests.test_target_board_model_and_ram_are_recorded_without_failing_standin_pins) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.044s
+Ran 7 tests in 0.031s
 
 OK
 Platform environment check: PASS
 FIELD                                      STATUS   MEASURED
-pi_model                                   PASS     Raspberry Pi 5 Model B Rev 1.0
-board_ram_bytes                            PASS     4294967296
+pi_model                                   INFO     Raspberry Pi 5 Model B Rev 1.0
+board_ram_bytes                            INFO     4294967296
 kernel_release                             PASS     6.8.0-1064-raspi
 ubuntu_version                             PASS     24.04
 ros_distro                                 PASS     jazzy

@@ -21,6 +21,17 @@ class PlatformAnalysisTests(unittest.TestCase):
         self.assertEqual(result["status"], "PASS")
         self.assertTrue(any(c["status"] == "INFO" for c in result["criteria"]))
 
+    def test_target_board_model_and_ram_are_recorded_without_failing_standin_pins(self):
+        changed = json.loads(json.dumps(FIXTURE))
+        changed["facts"]["pi_model"] = "Raspberry Pi 5 Model B Rev 1.1"
+        changed["facts"]["board_ram_bytes"] = 8589934592
+        with tempfile.TemporaryDirectory() as temp:
+            result = check_platform.evaluate(changed, MANIFEST, Path(temp))
+        statuses = {c["id"]: c["status"] for c in result["criteria"]}
+        self.assertEqual(statuses["pi_model"], "INFO")
+        self.assertEqual(statuses["board_ram_bytes"], "INFO")
+        self.assertEqual(result["status"], "PASS")
+
     def test_required_mismatch_fails_field(self):
         changed = json.loads(json.dumps(FIXTURE))
         changed["facts"]["kernel_release"] = "6.8.0-unexpected"
