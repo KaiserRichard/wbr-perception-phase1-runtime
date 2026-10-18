@@ -23,6 +23,24 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     (out / "manifest-check.json").write_text(json.dumps({"valid": ok, "errors": errors, "git_commit": manifest.get("git_commit")}, indent=2) + "\n")
     criterion("manifest", "All bundled files match the SHA-256 manifest", errors or "verified", "zero missing, changed, or unlisted files", "PASS" if ok else "FAIL", "manifest-check.json", "T16 bundle integrity contract")
+    if not ok:
+        # Do not execute a release whose contents cannot be authenticated. Missing
+        # or unreadable manifest evidence is BLOCKED; a present but invalid
+        # manifest or payload is a FAIL.
+        manifest_status = "BLOCKED" if errors and errors[0].startswith("manifest missing or unreadable:") else "FAIL"
+        checks[0]["status"] = manifest_status
+        status = manifest_status
+        result = {"check": "pi_deployment_smoke", "tool_version": VERSION, "status": status,
+                  "started_utc": start, "ended_utc": utc(),
+                  "host": {"hostname": platform.node(), "system": platform.system(), "machine": platform.machine(), "python": sys.version.split()[0]},
+                  "criteria": checks, "raw_files": [],
+                  "notes": ["Smoke checks stopped because the bundle manifest is unavailable or invalid.",
+                            "No camera, serial device, ROS graph or network was accessed."]}
+        (out / "result.json").write_text(json.dumps(result, indent=2) + "\n")
+        print("criterion             status")
+        print(f"manifest              {status}")
+        print(f"OVERALL               {status}")
+        return {"BLOCKED": 2, "FAIL": 1}[status]
     if args.verify_only:
         print(json.dumps({"valid": ok, "errors": errors}, indent=2)); return 0 if ok else 1
     py = list(sys.version_info[:2]); minimum = [POLICY["python_minimum"]["major"], POLICY["python_minimum"]["minor"]]
@@ -124,10 +142,23 @@ def main():
     (out / "fixture-analysis.json").write_text(json.dumps(fixture_outcomes, indent=2) + "\n")
     suites = ["lab/d435i_raw/tests", "lab/calib_record/tests", "lab/power_usb/tests", "lab/rosbag_qual/tests",
               "tools/eval_pipeline/accuracy/tests", "tools/eval_pipeline/profile/tests", "tools/trajectory_eval",
-              "tools/clockmap/tests", "tools/take_tools/tests", "tools/run_harness/tests", "tools/frames/tests", "tools/calib_tools/tests"]
+              "tools/clockmap/tests", "tools/take_tools/tests", "tools/run_harness/tests", "tools/frames/tests", "tools/calib_tools/tests",
+              "tools/link_proto/tests", "tools/perception_health/tests", "tools/ros2_bridge/tests",
+              "tools/runtime_observer/tests", "tools/vio_adapter/tests"]
     suite_results = []
     for i, suite in enumerate(suites):
-        proc = subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", suite, "-p", "test*.py"], cwd=root, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        suite_root = root; suite_tmp = None
+        if suite == "tools/vio_adapter/tests":
+            # The documented suite builds ignored binaries under build/. Run a
+            # disposable copy so smoke never modifies the verified release.
+            suite_tmp = tempfile.TemporaryDirectory(prefix="wbr-vio-suite-")
+            suite_root = Path(suite_tmp.name)
+            shutil.copytree(root / "tools/vio_adapter", suite_root / "tools/vio_adapter")
+            command = ["make", "-s", "-C", str(suite_root / "tools/vio_adapter"), "test"]
+        else:
+            command = [sys.executable, "-m", "unittest", "discover", "-s", suite, "-p", "test*.py"]
+        proc = subprocess.run(command, cwd=suite_root, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        if suite_tmp is not None: suite_tmp.cleanup()
         log = out / f"unittest-{i}.log"; log.write_text(proc.stdout); raw.append(log)
         suite_results.append({"suite": suite, "exit": proc.returncode, "log": log.name})
     criterion("unittests", "Hardware-free lab and evaluation unit suites pass", suite_results, "all exit 0", "PASS" if all(x["exit"] == 0 for x in suite_results) else "FAIL", "unittest-summary.json", "T16 smoke requirement")

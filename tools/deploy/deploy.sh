@@ -15,10 +15,11 @@ while (($#)); do
   esac
 done
 if ((rollback)); then
-  [[ -z "$dest" ]] || { echo "--dest cannot be used with --rollback" >&2; exit 3; }
+  if [[ -n "$dest" && -n "$local_root" ]]; then echo "--dest cannot be used with local rollback" >&2; exit 3; fi
   if [[ -n "$local_root" ]]; then exec python3 "$here/deploy.py" local-rollback "$local_root"; fi
-  [[ -n "$host" ]] || { echo "usage: deploy.sh <ssh-host> [--rollback]" >&2; exit 3; }
-  cmd='set -euo pipefail; base="$HOME/wbr-tools"; test -L "$base/current" && test -L "$base/previous"; a=$(readlink "$base/current"); b=$(readlink "$base/previous"); test -d "$base/$b"; ln -s "$b" "$base/.current-new"; mv -Tf "$base/.current-new" "$base/current"; ln -s "$a" "$base/.previous-new"; mv -Tf "$base/.previous-new" "$base/previous"; echo "$base/$b"'
+  [[ -n "$host" ]] || { echo "usage: deploy.sh <ssh-host> [--rollback] [--dest PATH]" >&2; exit 3; }
+  [[ -n "$dest" ]] || dest="\$HOME/wbr-tools/current"
+  cmd="set -euo pipefail; base=\$(dirname \"$dest\"); test -L \"\$base/current\" && test -L \"\$base/previous\"; a=\$(readlink \"\$base/current\"); b=\$(readlink \"\$base/previous\"); test -d \"\$base/\$b\"; ln -s \"\$b\" \"\$base/.current-new\"; mv -Tf \"\$base/.current-new\" \"\$base/current\"; ln -s \"\$a\" \"\$base/.previous-new\"; mv -Tf \"\$base/.previous-new\" \"\$base/previous\"; echo \"\$base/\$b\""
   if ((dry)); then printf 'ssh %q %q\n' "$host" "$cmd"; exit 0; fi
   exec ssh "$host" "$cmd"
 fi

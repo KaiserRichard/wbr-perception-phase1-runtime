@@ -45,14 +45,23 @@ def make_bundle(repo, outdir, allow_dirty=False):
     return archive
 
 def verify_tree(root):
-    root = Path(root).resolve(); manifest = json.loads((root / "MANIFEST.json").read_text()); seen, errors = set(), []
+    root = Path(root).resolve(); manifest_path = root / "MANIFEST.json"
+    try:
+        manifest = json.loads(manifest_path.read_text())
+    except (OSError, json.JSONDecodeError) as exc:
+        return False, [f"manifest missing or unreadable: {exc}"], {}
+    if not isinstance(manifest, dict) or not isinstance(manifest.get("files"), list):
+        return False, ["manifest must be an object with a files list"], manifest if isinstance(manifest, dict) else {}
+    seen, errors = set(), []
     for item in manifest.get("files", []):
+        if not isinstance(item, dict):
+            errors.append("invalid manifest file entry: expected object"); continue
         rel = item.get("path", "")
-        if not rel or rel.startswith("/") or ".." in Path(rel).parts or rel in seen:
+        if not isinstance(rel, str) or not rel or rel.startswith("/") or ".." in Path(rel).parts or rel in seen:
             errors.append(f"invalid or duplicate path: {rel}"); continue
         seen.add(rel); path = root / rel
         if not path.is_file(): errors.append(f"missing: {rel}")
-        elif sha(path) != item.get("sha256"): errors.append(f"sha256 mismatch: {rel}")
+        elif not isinstance(item.get("sha256"), str) or sha(path) != item.get("sha256"): errors.append(f"sha256 mismatch: {rel}")
     actual = {p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_file() and p.name != "MANIFEST.json"}
     errors.extend(f"unlisted file: {rel}" for rel in sorted(actual - seen))
     return not errors, errors, manifest

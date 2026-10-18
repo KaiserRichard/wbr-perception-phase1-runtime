@@ -60,6 +60,20 @@ class DeployTests(unittest.TestCase):
             valid, errors, _ = deploy.verify_tree(root)
             self.assertFalse(valid); self.assertIn("sha256 mismatch: sample", errors)
 
+    def test_smoke_writes_blocked_result_when_manifest_is_missing_or_unreadable(self):
+        for manifest_text in (None, "not json"):
+            with self.subTest(manifest=manifest_text), tempfile.TemporaryDirectory() as td:
+                root = Path(td) / "bundle"; root.mkdir()
+                if manifest_text is not None:
+                    (root / "MANIFEST.json").write_text(manifest_text)
+                out = Path(td) / "out"
+                proc = subprocess.run([sys.executable, str(HERE / "smoke.py"), "--root", str(root), "--outdir", str(out)],
+                                      text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                self.assertEqual(proc.returncode, 2, proc.stdout)
+                result = json.loads((out / "result.json").read_text())
+                self.assertEqual(result["status"], "BLOCKED")
+                self.assertEqual(result["criteria"][0]["status"], "BLOCKED")
+
     def test_smoke_status_precedence_covers_pass_fail_and_blocked(self):
         self.assertEqual(smoke.overall_status([{"status": "PASS"}]), "PASS")
         self.assertEqual(smoke.overall_status([{"status": "BLOCKED"}]), "BLOCKED")
@@ -83,6 +97,14 @@ class DeployTests(unittest.TestCase):
             self.assertEqual(proc.returncode, 0, proc.stdout)
             self.assertIn("scp ", proc.stdout); self.assertIn("ssh fake-pi", proc.stdout)
             self.assertIn("wbr-tools-", proc.stdout)
+
+    def test_remote_rollback_dry_run_uses_custom_deployment_parent(self):
+        proc = subprocess.run([str(HERE / "deploy.sh"), "fake-pi", "--rollback", "--dest",
+                                "$HOME/custom/releases/current", "--dry-run"],
+                              text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        self.assertEqual(proc.returncode, 0, proc.stdout)
+        self.assertIn("$HOME/custom/releases/current", proc.stdout)
+        self.assertNotIn("$HOME/wbr-tools", proc.stdout)
 
     def test_shell_local_transport_installs_and_verifies_release(self):
         with tempfile.TemporaryDirectory() as td:

@@ -35,6 +35,10 @@ To restore it, run:
 bash tools/deploy/deploy.sh pi5 --rollback
 ```
 
+For a release installed with a custom `--dest`, pass that destination to
+`--rollback` as well so it switches the `current` and `previous` links in the
+same parent directory.
+
 Before using a real host, review the printed commands without connecting:
 
 ```bash
@@ -61,10 +65,13 @@ launcher has no `--help`, `--plan`, or analyze-only mode; smoke checks its
 no-argument usage path without starting the engine. Other current CLIs do not
 expose a `--plan` flag; the smoke tool uses their documented
 `--analyze-only` modes where available and reports expected fixture FAIL or
-BLOCKED outcomes as valid execution. It never starts a capture, publisher,
-recorder, serial link, or network client. Missing optional modules are reported
-in `modules.json`; the mandatory Python version criterion is Python 3.12 or
-newer on the Pi.
+BLOCKED outcomes as valid execution. The C++ VIO adapter suite builds and tests
+a temporary copy so the verified release stays unchanged. Builder tests run on
+the Mac checkout because the extracted bundle has no `.git`; the link-bench
+host-simulator suite is excluded because its host-only simulator is not bundled.
+The smoke check never starts a capture, publisher, recorder, serial link, or
+network client. Missing optional modules are reported in `modules.json`; the
+mandatory Python version criterion is Python 3.12 or newer on the Pi.
 
 Output includes `result.json`, per-command stdout logs, fixture outcomes and
 suite logs. Overall status follows the common FAIL > BLOCKED > PASS rule. A

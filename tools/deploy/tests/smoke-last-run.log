@@ -1,3 +1,4 @@
+$ PYTHONDONTWRITEBYTECODE=1 python3 tools/deploy/smoke.py --root /tmp/wbr-review-final2.YyaWMg/extracted --outdir /tmp/wbr-review-final2.YyaWMg/smoke
 criterion             status
 manifest              PASS
 python                BLOCKED
