@@ -1,0 +1,13 @@
+test_csv_and_cli_errors_are_nonzero (test_analyze.StampDriftTests.test_csv_and_cli_errors_are_nonzero) ... ok
+test_forward_residual_step_is_reported_and_fits_are_split (test_analyze.StampDriftTests.test_forward_residual_step_is_reported_and_fits_are_split) ... ok
+test_header_reversal_splits_and_is_not_stitched (test_analyze.StampDriftTests.test_header_reversal_splits_and_is_not_stitched) ... ok
+test_inter_topic_and_ir_imu_comparison (test_analyze.StampDriftTests.test_inter_topic_and_ir_imu_comparison) ... ok
+test_known_offset_drift_jitter_and_outliers (test_analyze.StampDriftTests.test_known_offset_drift_jitter_and_outliers) ... ok
+test_real_saved_evidence_fixture_is_read_and_labeled (test_analyze.StampDriftTests.test_real_saved_evidence_fixture_is_read_and_labeled) ... ok
+test_short_fixture_is_blocked_without_a_fit (test_analyze.StampDriftTests.test_short_fixture_is_blocked_without_a_fit) ... ok
+test_synthetic_db3_cdr_header_reader (test_analyze.StampDriftTests.test_synthetic_db3_cdr_header_reader) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.363s
+
+OK
