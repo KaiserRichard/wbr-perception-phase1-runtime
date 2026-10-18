@@ -34,7 +34,7 @@ ok
 test_unsupported_bag_blocked (test_check.TakeCheck.test_unsupported_bag_blocked) ... ok
 
 ----------------------------------------------------------------------
-Ran 26 tests in 9.909s
+Ran 26 tests in 10.496s
 
 OK
 BLOCKED dependencies: missing take_tools
