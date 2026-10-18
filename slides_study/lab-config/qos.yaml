@@ -1,0 +1,87 @@
+# Study override, extended from archived n3_qos.yaml.
+# Installed offers and metadata remain UNVERIFIED.
+/camera/camera/infra1/image_rect_raw:
+  reliability: best_effort
+  durability: volatile
+  history: keep_last
+  depth: 100
+/camera/camera/infra1/camera_info:
+  reliability: best_effort
+  durability: volatile
+  history: keep_last
+  depth: 100
+/camera/camera/gyro/sample:
+  reliability: best_effort
+  durability: volatile
+  history: keep_last
+  depth: 1000
+/camera/camera/accel/sample:
+  reliability: best_effort
+  durability: volatile
+  history: keep_last
+  depth: 1000
+/camera/camera/gyro/imu_info:
+  reliability: reliable
+  durability: transient_local
+  history: keep_last
+  depth: 100
+/camera/camera/accel/imu_info:
+  reliability: reliable
+  durability: transient_local
+  history: keep_last
+  depth: 100
+/camera/camera/extrinsics/depth_to_infra1:
+  reliability: reliable
+  durability: transient_local
+  history: keep_last
+  depth: 100
+/camera/camera/extrinsics/depth_to_gyro:
+  reliability: reliable
+  durability: transient_local
+  history: keep_last
+  depth: 100
+/camera/camera/extrinsics/depth_to_accel:
+  reliability: reliable
+  durability: transient_local
+  history: keep_last
+  depth: 100
+/tf_static:
+  reliability: reliable
+  durability: transient_local
+  history: keep_last
+  depth: 100
+/camera/camera/infra2/image_rect_raw:
+  reliability: best_effort
+  durability: volatile
+  history: keep_last
+  depth: 100
+/camera/camera/infra2/camera_info:
+  reliability: best_effort
+  durability: volatile
+  history: keep_last
+  depth: 100
+/camera/camera/infra1/metadata:
+  reliability: best_effort
+  durability: volatile
+  history: keep_last
+  depth: 1000
+/camera/camera/infra2/metadata:
+  reliability: best_effort
+  durability: volatile
+  history: keep_last
+  depth: 1000
+/camera/camera/gyro/metadata:
+  reliability: best_effort
+  durability: volatile
+  history: keep_last
+  depth: 1000
+/camera/camera/accel/metadata:
+  reliability: best_effort
+  durability: volatile
+  history: keep_last
+  depth: 1000
+/camera/camera/extrinsics/depth_to_infra2:
+  reliability: reliable
+  durability: transient_local
+  history: keep_last
+  depth: 100
