@@ -6,6 +6,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parents[1]
@@ -202,6 +203,55 @@ class EndToEndTests(unittest.TestCase):
             result = json.loads((out / "result.json").read_text())
             transport = next(c for c in result["criteria"] if c["id"] == "mapped_ok.transport")
             self.assertEqual(transport["status"], "FAIL")
+
+    def test_analyzer_requires_heartbeat_evidence(self):
+        with tempfile.TemporaryDirectory(dir=HERE / "tests") as temp:
+            out = Path(temp) / "saved"
+            shutil.copytree(self.out, out)
+            scenario = out / "no_mapping"
+            frames = e2e.StreamParser().feed((scenario / "uart.bin").read_bytes())
+            health_wire = b"".join(e2e.encode_frame(typ, seq, payload)
+                                     for typ, seq, payload in frames
+                                     if typ == e2e.TYPE_PERCEPTION_HEALTH)
+            capture = json.loads((scenario / "capture.json").read_text())
+            capture["ended_host_CLOCK_MONOTONIC_ns"] = capture["started_host_CLOCK_MONOTONIC_ns"] + 1_000_000
+            (scenario / "capture.json").write_text(json.dumps(capture))
+            (scenario / "uart.bin").write_bytes(health_wire)
+            (scenario / "reads.json").write_text(json.dumps([{
+                "offset": 0, "length": len(health_wire),
+                "host_CLOCK_MONOTONIC_ns": capture["started_host_CLOCK_MONOTONIC_ns"] + 500_000,
+            }]))
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(e2e.analyze(out), 1)
+            result = json.loads((out / "result.json").read_text())
+            transport = next(c for c in result["criteria"] if c["id"] == "no_mapping.transport")
+            self.assertEqual(transport["status"], "FAIL")
+
+    def test_analyzer_rejects_read_timestamp_before_capture_start(self):
+        with tempfile.TemporaryDirectory(dir=HERE / "tests") as temp:
+            out = Path(temp) / "saved"
+            shutil.copytree(self.out, out)
+            scenario = out / "no_mapping"
+            reads = json.loads((scenario / "reads.json").read_text())
+            capture = json.loads((scenario / "capture.json").read_text())
+            reads[0]["host_CLOCK_MONOTONIC_ns"] = capture["started_host_CLOCK_MONOTONIC_ns"] - 1
+            (scenario / "reads.json").write_text(json.dumps(reads))
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(e2e.analyze(out), 1)
+            result = json.loads((out / "result.json").read_text())
+            criterion = next(c for c in result["criteria"] if c["id"] == "no_mapping")
+            self.assertEqual(criterion["status"], "FAIL")
+
+    def test_missing_capture_prerequisite_returns_blocked_result(self):
+        with tempfile.TemporaryDirectory(dir=HERE / "tests") as temp:
+            out = Path(temp) / "missing"
+            missing_real = Path(temp) / "missing-snapshots.jsonl"
+            with mock.patch.object(e2e, "REAL", missing_real), \
+                    mock.patch.object(e2e.sys, "argv", ["e2e_pty_test.py", "--outdir", str(out)]), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(e2e.main(), 2)
+            result = json.loads((out / "result.json").read_text())
+            self.assertEqual(result["status"], "BLOCKED")
 
     def test_summary_retains_full_capture_hashes_within_ticket_budget(self):
         with tempfile.TemporaryDirectory(dir=HERE / "tests") as temp:

@@ -171,17 +171,26 @@ def replay(directory, silence=False, primary_fresh=False):
     trace, health, sequences = [], [], []
     offset = 0
     encoded_bytes = 0
+    heartbeat_count = 0
+    previous_read_ns = meta["started_host_CLOCK_MONOTONIC_ns"]
     for read in reads:
         if read["offset"] != offset or read["length"] <= 0:
             raise ValueError("invalid raw read offsets")
+        read_ns = read["host_CLOCK_MONOTONIC_ns"]
+        if (type(read_ns) is not int or
+                read_ns < meta["started_host_CLOCK_MONOTONIC_ns"] or
+                read_ns < previous_read_ns):
+            raise ValueError("read timestamps regress or precede capture start")
+        previous_read_ns = read_ns
         end = offset + read["length"]
         if end > len(wire):
             raise ValueError("read extends beyond raw bytes")
-        now = (read["host_CLOCK_MONOTONIC_ns"] - meta["started_host_CLOCK_MONOTONIC_ns"]) // 1000
+        now = (read_ns - meta["started_host_CLOCK_MONOTONIC_ns"]) // 1000
         for typ, seq, payload in parser.feed(wire[offset:end]):
             sequences.append(seq)
             encoded_bytes += len(encode_frame(typ, seq, payload))
             if typ == TYPE_HEARTBEAT:
+                heartbeat_count += 1
                 _, session = HEARTBEAT.unpack(payload)
                 event = Event("heartbeat", now, session_id=session, wire_seq=seq)
             elif typ == TYPE_PERCEPTION_HEALTH:
@@ -210,7 +219,8 @@ def replay(directory, silence=False, primary_fresh=False):
     if duration <= 0:
         raise ValueError("nonpositive capture interval")
     frame_count = len(sequences)
-    integrity = (meta["returncode"] == 0 and len(health) == meta["expected_health_frames"]
+    integrity = (meta["returncode"] == 0 and len(health) > 0 and heartbeat_count > 0
+                 and len(health) == meta["expected_health_frames"]
                  and encoded_bytes == len(wire)
                  and not parser.buf and not parser.crc_errors and not parser.len_errors
                  and not parser.bytes_dropped and sequences == list(range(len(sequences))))
@@ -218,7 +228,7 @@ def replay(directory, silence=False, primary_fresh=False):
     metrics = {"evidence": "MEASURED on " + meta["host"]["platform"] + "; software PTY only",
                "observation_window": "sender process launch through EOF exit (includes startup/imports)",
                "duration_s": duration, "health_frames": len(health),
-               "heartbeat_frames": frame_count - len(health), "total_frames": frame_count,
+               "heartbeat_frames": heartbeat_count, "total_frames": frame_count,
                "bytes_written_and_received": len(wire), "frames_per_s": frame_count / duration,
                "bytes_per_s": rate,
                "uart_budget": [{"evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
@@ -354,11 +364,17 @@ def main():
                 summarize(args.analyze_only, args.summary_outdir)
             return status
         args.outdir.mkdir(parents=True, exist_ok=False)
-        (args.outdir / "policy.json").write_bytes(POLICY_PATH.read_bytes())
+        if POLICY_PATH.is_file():
+            (args.outdir / "policy.json").write_bytes(POLICY_PATH.read_bytes())
         (args.outdir / "integration_config.json").write_bytes((HERE / "config.json").read_bytes())
         inputs = (SENDER, POLICY_PATH, HERE.parent / "py/supervisor_model.py",
                   HERE.parent / "py/perception_health.py", ROOT / "tools/clockmap/clockmap.py",
                   REAL, HERE / "vio_to_pose_events.py", Path(__file__))
+        missing = [str(path) for path in inputs if not path.is_file()]
+        if missing:
+            # A missing fixture/tool is unavailable evidence, not an internal
+            # error. Let the analyzer emit the common BLOCKED result contract.
+            return analyze(args.outdir)
         (args.outdir / "provenance.json").write_text(json.dumps({
             "captured_utc": utc(), "inputs": [{"path": str(p.relative_to(ROOT)),
                 "sha256": hashlib.sha256(p.read_bytes()).hexdigest()} for p in inputs]

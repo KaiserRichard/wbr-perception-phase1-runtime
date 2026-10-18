@@ -1,4 +1,4 @@
-$ /Library/Frameworks/Python.framework/Versions/3.11/bin/python3 -B -m unittest discover -s tools/perception_health/tests -v
+$ python3 -B -m unittest discover -s tools/perception_health/tests -v
 test_c99_encoder_decoder_matches_frozen_vector (test_perception_health.CTests.test_c99_encoder_decoder_matches_frozen_vector) ... ok
 test_degraded_tracking_holds_and_reset_counter_survives_wire (test_perception_health.ModelTests.test_degraded_tracking_holds_and_reset_counter_survives_wire) ... ok
 test_duplicate_wire_sequence_does_not_refresh_health (test_perception_health.ModelTests.test_duplicate_wire_sequence_does_not_refresh_health) ... ok
@@ -29,8 +29,6 @@ test_corruption_is_counted_and_parser_recovers (test_perception_health.PtyTests.
 test_sender_pty_round_trip_and_silence (test_perception_health.PtyTests.test_sender_pty_round_trip_and_silence) ... ok
 
 ----------------------------------------------------------------------
-Ran 28 tests in 1.470s
+Ran 28 tests in 0.968s
 
 OK
-
-Exit code: 0

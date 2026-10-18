@@ -90,7 +90,7 @@ Exact commands and complete outputs:
 | Check | Result | Saved output |
 |---|---|---|
 | `python3 -B -m unittest discover -s tools/perception_health/tests -v` | 28 tests PASS, exit 0 | `../tests/last-run.log` |
-| `python3 -B -m unittest discover -s tools/perception_health/integration -p 'test*.py' -v` | 21 tests PASS, exit 0 | `tests/last-run.log` |
+| `python3 -B -m unittest discover -s tools/perception_health/integration -p 'test*.py' -v` | 24 tests PASS, exit 0 | `tests/last-run.log` |
 | PTY check `--outdir <temporary-full-dir>` | 10/10 criteria PASS, exit 0 | `tests/e2e-run.log` |
 | `--analyze-only <temporary-full-dir> --summary-outdir <temporary-summary-dir>` | 10/10 criteria PASS, exit 0 | `tests/analyze-run.log` |
 
@@ -98,7 +98,11 @@ The T7 suite includes C99 codec compilation with `-Wall -Wextra -Werror`, frozen
 vector parity, CRC, malformed input, transit, sequence and latch/rearm checks.
 Integration tests cover converter availability, exact states, reset handling,
 clock identity and boolean rejection, real fixtures, all five PTY scenarios,
-non-promotion, corrupted-raw FAIL, missing-capture BLOCKED and archive size/hashes.
+non-promotion, corrupted-raw FAIL, missing-capture BLOCKED, missing-heartbeat
+FAIL, invalid read-clock FAIL, missing-prerequisite BLOCKED and archive
+size/hashes. Raw capture analysis requires both health and HEARTBEAT evidence
+and rejects read timestamps that precede or regress from the capture's host
+CLOCK_MONOTONIC start.
 Python syntax checks, `bash -n` for every README bash block, and `git diff --check`
 pass. Hardware commands in the README were syntax-checked only.
 
