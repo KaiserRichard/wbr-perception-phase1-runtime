@@ -1,0 +1,12 @@
+test_blocked_raw_propagates_to_ros_but_checks_saved_calibration (test_run_lab_session.LabSessionTests.test_blocked_raw_propagates_to_ros_but_checks_saved_calibration) ... ok
+test_continue_on_fail_runs_whole_chain (test_run_lab_session.LabSessionTests.test_continue_on_fail_runs_whole_chain) ... ok
+test_early_fail_stops_dependents (test_run_lab_session.LabSessionTests.test_early_fail_stops_dependents) ... ok
+test_missing_criterion_evidence_is_error_and_session_is_written (test_run_lab_session.LabSessionTests.test_missing_criterion_evidence_is_error_and_session_is_written) ... ok
+test_pass_chain (test_run_lab_session.LabSessionTests.test_pass_chain) ... ok
+test_plan_prints_commands_without_running_or_creating_session (test_run_lab_session.LabSessionTests.test_plan_prints_commands_without_running_or_creating_session) ... ok
+test_tilde_calibration_path_is_expanded_for_child_command (test_run_lab_session.LabSessionTests.test_tilde_calibration_path_is_expanded_for_child_command) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 2.070s
+
+OK
