@@ -1,0 +1,618 @@
+{
+  "retention": "Summary only. Criterion evidence paths refer to full capture files listed in sha256.json; regenerate full captures with --outdir before --analyze-only.",
+  "result": {
+    "check": "perception_health_e2e_pty",
+    "tool_version": "1.1.0",
+    "status": "PASS",
+    "started_utc": "2026-10-18T08:59:04.504593+00:00",
+    "analysis_started_utc": "2026-10-18T08:59:06.581764+00:00",
+    "ended_utc": "2026-10-18T08:59:06.633021+00:00",
+    "host": {
+      "platform": "macOS-15.7.9-x86_64-i386-64bit",
+      "python": "3.11.0rc2 (v3.11.0rc2:ed7c3ff156, Sep 11 2022, 16:22:23) [Clang 13.0.0 (clang-1300.0.29.30)]"
+    },
+    "criteria": [
+      {
+        "id": "no_mapping.transport",
+        "description": "sender frames/bytes/count/CRC/sequence complete",
+        "measured": true,
+        "unit": "boolean",
+        "threshold": "all input events written as valid frames",
+        "status": "PASS",
+        "evidence": "no_mapping/uart.bin",
+        "threshold_source": "SOURCE-SUPPORTED: T10b ticket and tools/perception_health/SPEC.md supervisor recommendation"
+      },
+      {
+        "id": "no_mapping",
+        "description": "no explicit clockmap -> HOLD for every OK report",
+        "measured": true,
+        "unit": "boolean",
+        "threshold": "HOLD only",
+        "status": "PASS",
+        "evidence": "no_mapping/trace.json",
+        "threshold_source": "SOURCE-SUPPORTED: T10b ticket and tools/perception_health/SPEC.md supervisor recommendation"
+      },
+      {
+        "id": "mapped_ok.transport",
+        "description": "sender frames/bytes/count/CRC/sequence complete",
+        "measured": true,
+        "unit": "boolean",
+        "threshold": "all input events written as valid frames",
+        "status": "PASS",
+        "evidence": "mapped_ok/uart.bin",
+        "threshold_source": "SOURCE-SUPPORTED: T10b ticket and tools/perception_health/SPEC.md supervisor recommendation"
+      },
+      {
+        "id": "mapped_ok",
+        "description": "explicit synthetic mapping + known OK/IMU/reset/features -> FRESH",
+        "measured": true,
+        "unit": "boolean",
+        "threshold": "FRESH with independent primary freshness",
+        "status": "PASS",
+        "evidence": "mapped_ok/trace.json",
+        "threshold_source": "SOURCE-SUPPORTED: T10b ticket and tools/perception_health/SPEC.md supervisor recommendation"
+      },
+      {
+        "id": "lost_latched.transport",
+        "description": "sender frames/bytes/count/CRC/sequence complete",
+        "measured": true,
+        "unit": "boolean",
+        "threshold": "all input events written as valid frames",
+        "status": "PASS",
+        "evidence": "lost_latched/uart.bin",
+        "threshold_source": "SOURCE-SUPPORTED: T10b ticket and tools/perception_health/SPEC.md supervisor recommendation"
+      },
+      {
+        "id": "lost_latched",
+        "description": "LOST latches FAILSAFE through subsequent OK",
+        "measured": true,
+        "unit": "boolean",
+        "threshold": "FRESH, FAILSAFE, FAILSAFE",
+        "status": "PASS",
+        "evidence": "lost_latched/trace.json",
+        "threshold_source": "SOURCE-SUPPORTED: T10b ticket and tools/perception_health/SPEC.md supervisor recommendation"
+      },
+      {
+        "id": "sender_stops.transport",
+        "description": "sender frames/bytes/count/CRC/sequence complete",
+        "measured": true,
+        "unit": "boolean",
+        "threshold": "all input events written as valid frames",
+        "status": "PASS",
+        "evidence": "sender_stops/uart.bin",
+        "threshold_source": "SOURCE-SUPPORTED: T10b ticket and tools/perception_health/SPEC.md supervisor recommendation"
+      },
+      {
+        "id": "sender_stops",
+        "description": "EOF stops sender; isolated receipt-silence deadlines downgrade",
+        "measured": true,
+        "unit": "boolean",
+        "threshold": "FRESH -> HOLD/RESULT_SILENCE -> FAILSAFE/RESULT_TIMEOUT",
+        "status": "PASS",
+        "evidence": "sender_stops/trace.json",
+        "threshold_source": "SOURCE-SUPPORTED: T10b ticket and tools/perception_health/SPEC.md supervisor recommendation"
+      },
+      {
+        "id": "real_replay.transport",
+        "description": "sender frames/bytes/count/CRC/sequence complete",
+        "measured": true,
+        "unit": "boolean",
+        "threshold": "all input events written as valid frames",
+        "status": "PASS",
+        "evidence": "real_replay/uart.bin",
+        "threshold_source": "SOURCE-SUPPORTED: T10b ticket and tools/perception_health/SPEC.md supervisor recommendation"
+      },
+      {
+        "id": "real_replay",
+        "description": "saved association/fake engine: unknown age flags, degraded, never FRESH",
+        "measured": true,
+        "unit": "boolean",
+        "threshold": "unavailable age + degraded; no FRESH",
+        "status": "PASS",
+        "evidence": "real_replay/trace.json",
+        "threshold_source": "SOURCE-SUPPORTED: T10b ticket and tools/perception_health/SPEC.md supervisor recommendation"
+      }
+    ],
+    "raw_files": [
+      {
+        "path": "integration_config.json",
+        "sha256": "bfbe1644eed3b956ba70691f73155d1daa174abdc67860fa5415ad76e06e93ab"
+      },
+      {
+        "path": "lost_latched/capture.json",
+        "sha256": "0ff63b578a622dd4731da8f2a1ed163429719ce53a4a4f4745fe43adbbc99242"
+      },
+      {
+        "path": "lost_latched/clockmap.json",
+        "sha256": "c04b75c32a739c9358202c0b4e3f637a3267b27b34e650ebbe285e7d1ce55e30"
+      },
+      {
+        "path": "lost_latched/events.jsonl",
+        "sha256": "02d3252ad569da1ae0ec3539a5caf5808fc33ed5d7e4817e83a5d57968ec1f21"
+      },
+      {
+        "path": "lost_latched/reads.json",
+        "sha256": "d60c93fde5af1df8f9922e90f2790167c7c58e2fba98a1dd2a0a0c84427f70e8"
+      },
+      {
+        "path": "lost_latched/sender.stderr",
+        "sha256": "2783202c8bdb8fb1fc45a0efad2302f1a7ad8edfd3501a13d7f7e481003f5a7d"
+      },
+      {
+        "path": "lost_latched/sender.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "lost_latched/snapshots.jsonl",
+        "sha256": "d10b7ba421b7fcdf81ee88cee77f97c658ca0afbcaeec41bf8b7bb488a844571"
+      },
+      {
+        "path": "lost_latched/uart.bin",
+        "sha256": "e2c04406b1e5b3b3f8f03540c1dbc6f4b75618aff4134020f80c635316a5d2b3"
+      },
+      {
+        "path": "mapped_ok/capture.json",
+        "sha256": "7cf5bff34723b76f1be7d602c72e20be5d3cc7a7ed4dfb4960880d774bd7e18d"
+      },
+      {
+        "path": "mapped_ok/clockmap.json",
+        "sha256": "412b42e30a97de216ec97e77272fdf96198368523603ce10e2bffd087ddad08d"
+      },
+      {
+        "path": "mapped_ok/events.jsonl",
+        "sha256": "503d6a661d5fcd84a8f67600f3d9eac4d6b4756a0166b098c26d1ec7d5fd5029"
+      },
+      {
+        "path": "mapped_ok/reads.json",
+        "sha256": "cb5e1c6c09870c9b348a1b50c4853da6167493749d5c200159ba835a5fb22501"
+      },
+      {
+        "path": "mapped_ok/sender.stderr",
+        "sha256": "ee2548124c88d9a9cb9322b7e29c395b15aa910e0d049871be72dedde3ba1cc8"
+      },
+      {
+        "path": "mapped_ok/sender.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "mapped_ok/snapshots.jsonl",
+        "sha256": "2fd6318d3844f1cb75f0e9b71017c75482bf1c898a4a9d117bfa2079096cc776"
+      },
+      {
+        "path": "mapped_ok/uart.bin",
+        "sha256": "5eac1656f367f438f4314484f122378f4b3b20a132f04bd576fdf2b2bc378e4e"
+      },
+      {
+        "path": "no_mapping/capture.json",
+        "sha256": "3c859577051db1ec0641b9da4a4dbdd62a06736119b722251803d5d49718ac28"
+      },
+      {
+        "path": "no_mapping/events.jsonl",
+        "sha256": "e9bd02c3b5d80d3711544cfc2fc40ce521ed592b80262d7c9fe82c71109a8212"
+      },
+      {
+        "path": "no_mapping/reads.json",
+        "sha256": "2dd10d7860e03ab8f906b98e2a2252d2655f30c4a89c4aca0e579c706a656baa"
+      },
+      {
+        "path": "no_mapping/sender.stderr",
+        "sha256": "f6a7c015084bf2105b9aa5525d7a4fe9fd0d4efacc215a0e8c53ca6d5e61f44d"
+      },
+      {
+        "path": "no_mapping/sender.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "no_mapping/snapshots.jsonl",
+        "sha256": "2fd6318d3844f1cb75f0e9b71017c75482bf1c898a4a9d117bfa2079096cc776"
+      },
+      {
+        "path": "no_mapping/uart.bin",
+        "sha256": "a43d1b8f4ea05a023dc49cdffa9576976d2bab1f13ed0d012e4f1c1c6dc209a4"
+      },
+      {
+        "path": "policy.json",
+        "sha256": "f35b0d2be0b0460d6cde1527c5e6250c5b5468b336b086612a9355feda45b0bb"
+      },
+      {
+        "path": "provenance.json",
+        "sha256": "70b484955f9312185c3c59e43261ad3c57af36a27439ec73fc3e525c50b4961a"
+      },
+      {
+        "path": "real_replay/capture.json",
+        "sha256": "b144497d79d36af162f0a490c4124954bba826c85afc8f61b73c7bf9fca15714"
+      },
+      {
+        "path": "real_replay/events.jsonl",
+        "sha256": "d53fb21b84c132b6bdb6906f05d99ef7998d332f70869fd829981f97c24b4fde"
+      },
+      {
+        "path": "real_replay/reads.json",
+        "sha256": "c9c78557a53c521badc18dc8c669b79d082c84d98f754f98b4b600605213d7b1"
+      },
+      {
+        "path": "real_replay/sender.stderr",
+        "sha256": "f0862cf71f0461ba9473011ad8aaa73069285c1229d86ce98ad96eb5c2399aa9"
+      },
+      {
+        "path": "real_replay/sender.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "real_replay/snapshots.jsonl",
+        "sha256": "16809cff956b6d2a735d67f64c4df6bd5bbc20aa3c8c22b5b831401598a54ce8"
+      },
+      {
+        "path": "real_replay/uart.bin",
+        "sha256": "02c39805ba5752a03fb621cbcbb137fcd79c60aef4b336f0a24af4534c52a0e0"
+      },
+      {
+        "path": "sender_stops/capture.json",
+        "sha256": "fd54c3e756706dd3d0b6976ddbb47282574a1b683208b734c979ec69618324c8"
+      },
+      {
+        "path": "sender_stops/clockmap.json",
+        "sha256": "11d03e73b7a85b004ae655fca8a454556d6719d1b5a35fe12e36c0f4ec2efa75"
+      },
+      {
+        "path": "sender_stops/events.jsonl",
+        "sha256": "af549ebaae3b1c42a76e3b3b708f1258ad996975d7a1afa6b8b4704834902348"
+      },
+      {
+        "path": "sender_stops/reads.json",
+        "sha256": "f322e805e7ab66a52c8628c414fff7284c4e8ba5ab84678063ab49c0eb3c9943"
+      },
+      {
+        "path": "sender_stops/sender.stderr",
+        "sha256": "a46d603a828a224aa35e865ce26f55c43e36b03097d6916b5defa996525238ac"
+      },
+      {
+        "path": "sender_stops/sender.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "sender_stops/snapshots.jsonl",
+        "sha256": "2fd6318d3844f1cb75f0e9b71017c75482bf1c898a4a9d117bfa2079096cc776"
+      },
+      {
+        "path": "sender_stops/uart.bin",
+        "sha256": "5065344dacb24bf580b839aa0198cc9155f28f4fd81d0601b42d05a19ab96c81"
+      }
+    ],
+    "notes": [
+      "Software fixture result is not a gate PASS. No Pi/UART/STM32 hardware exercised.",
+      "ASSUMED independent primary_fresh=True in policy scenarios; health alone cannot enable FRESH.",
+      "Real replay estimates are synthetic, and contain LOST; no clockmap was fabricated for them.",
+      "Silence uses simulated MCU-local timer increments with diagnostic overrides in integration/config.json.",
+      "Metrics are local PTY software write throughput; CALCULATED baud capacity is not physical link performance."
+    ]
+  },
+  "trace_counts": {
+    "no_mapping": [
+      {
+        "kind": "health",
+        "state": "HOLD",
+        "reason": "SOURCE_AGE_HOLD",
+        "count": 3
+      },
+      {
+        "kind": "heartbeat",
+        "state": "INIT",
+        "reason": "NONE",
+        "count": 1
+      }
+    ],
+    "mapped_ok": [
+      {
+        "kind": "health",
+        "state": "FRESH",
+        "reason": "READY",
+        "count": 3
+      },
+      {
+        "kind": "heartbeat",
+        "state": "INIT",
+        "reason": "NONE",
+        "count": 2
+      }
+    ],
+    "lost_latched": [
+      {
+        "kind": "health",
+        "state": "FAILSAFE",
+        "reason": "SOURCE_AGE_TIMEOUT",
+        "count": 2
+      },
+      {
+        "kind": "health",
+        "state": "FRESH",
+        "reason": "READY",
+        "count": 1
+      },
+      {
+        "kind": "heartbeat",
+        "state": "INIT",
+        "reason": "NONE",
+        "count": 1
+      }
+    ],
+    "sender_stops": [
+      {
+        "kind": "health",
+        "state": "FRESH",
+        "reason": "READY",
+        "count": 3
+      },
+      {
+        "kind": "heartbeat",
+        "state": "INIT",
+        "reason": "NONE",
+        "count": 1
+      },
+      {
+        "kind": "silence_tick",
+        "state": "FAILSAFE",
+        "reason": "RESULT_TIMEOUT",
+        "count": 1
+      },
+      {
+        "kind": "silence_tick",
+        "state": "HOLD",
+        "reason": "RESULT_SILENCE",
+        "count": 1
+      }
+    ],
+    "real_replay": [
+      {
+        "kind": "health",
+        "state": "FAILSAFE",
+        "reason": "SOURCE_AGE_TIMEOUT",
+        "count": 443
+      },
+      {
+        "kind": "health",
+        "state": "HOLD",
+        "reason": "SOURCE_AGE_HOLD",
+        "count": 2
+      },
+      {
+        "kind": "heartbeat",
+        "state": "INIT",
+        "reason": "NONE",
+        "count": 1
+      }
+    ]
+  },
+  "metrics": {
+    "no_mapping": {
+      "evidence": "MEASURED on macOS-15.7.9-x86_64-i386-64bit; software PTY only",
+      "observation_window": "sender process launch through EOF exit (includes startup/imports)",
+      "duration_s": 0.322986834,
+      "health_frames": 3,
+      "heartbeat_frames": 1,
+      "total_frames": 4,
+      "bytes_written_and_received": 109,
+      "frames_per_s": 12.384405737108157,
+      "bytes_per_s": 337.47505633619727,
+      "uart_budget": [
+        {
+          "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+          "baud": 115200,
+          "capacity_bytes_per_s": 11520.0,
+          "measured_utilization": 0.029294709751406012,
+          "within_ideal_capacity": true
+        },
+        {
+          "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+          "baud": 921600,
+          "capacity_bytes_per_s": 92160.0,
+          "measured_utilization": 0.0036618387189257516,
+          "within_ideal_capacity": true
+        }
+      ]
+    },
+    "mapped_ok": {
+      "evidence": "MEASURED on macOS-15.7.9-x86_64-i386-64bit; software PTY only",
+      "observation_window": "sender process launch through EOF exit (includes startup/imports)",
+      "duration_s": 0.456615377,
+      "health_frames": 3,
+      "heartbeat_frames": 2,
+      "total_frames": 5,
+      "bytes_written_and_received": 134,
+      "frames_per_s": 10.950134953514718,
+      "bytes_per_s": 293.46361675419445,
+      "uart_budget": [
+        {
+          "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+          "baud": 115200,
+          "capacity_bytes_per_s": 11520.0,
+          "measured_utilization": 0.02547427228769049,
+          "within_ideal_capacity": true
+        },
+        {
+          "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+          "baud": 921600,
+          "capacity_bytes_per_s": 92160.0,
+          "measured_utilization": 0.003184284035961311,
+          "within_ideal_capacity": true
+        }
+      ]
+    },
+    "lost_latched": {
+      "evidence": "MEASURED on macOS-15.7.9-x86_64-i386-64bit; software PTY only",
+      "observation_window": "sender process launch through EOF exit (includes startup/imports)",
+      "duration_s": 0.250930521,
+      "health_frames": 3,
+      "heartbeat_frames": 1,
+      "total_frames": 4,
+      "bytes_written_and_received": 109,
+      "frames_per_s": 15.940667496561726,
+      "bytes_per_s": 434.38318928130707,
+      "uart_budget": [
+        {
+          "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+          "baud": 115200,
+          "capacity_bytes_per_s": 11520.0,
+          "measured_utilization": 0.0377068740695579,
+          "within_ideal_capacity": true
+        },
+        {
+          "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+          "baud": 921600,
+          "capacity_bytes_per_s": 92160.0,
+          "measured_utilization": 0.004713359258694738,
+          "within_ideal_capacity": true
+        }
+      ]
+    },
+    "sender_stops": {
+      "evidence": "MEASURED on macOS-15.7.9-x86_64-i386-64bit; software PTY only",
+      "observation_window": "sender process launch through EOF exit (includes startup/imports)",
+      "duration_s": 0.245026137,
+      "health_frames": 3,
+      "heartbeat_frames": 1,
+      "total_frames": 4,
+      "bytes_written_and_received": 109,
+      "frames_per_s": 16.32478905709557,
+      "bytes_per_s": 444.85050180585426,
+      "uart_budget": [
+        {
+          "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+          "baud": 115200,
+          "capacity_bytes_per_s": 11520.0,
+          "measured_utilization": 0.038615494948424846,
+          "within_ideal_capacity": true
+        },
+        {
+          "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+          "baud": 921600,
+          "capacity_bytes_per_s": 92160.0,
+          "measured_utilization": 0.004826936868553106,
+          "within_ideal_capacity": true
+        }
+      ]
+    },
+    "real_replay": {
+      "evidence": "MEASURED on macOS-15.7.9-x86_64-i386-64bit; software PTY only",
+      "observation_window": "sender process launch through EOF exit (includes startup/imports)",
+      "duration_s": 0.346572745,
+      "health_frames": 445,
+      "heartbeat_frames": 1,
+      "total_frames": 446,
+      "bytes_written_and_received": 12485,
+      "frames_per_s": 1286.8871151423057,
+      "bytes_per_s": 36024.1830326271,
+      "uart_budget": [
+        {
+          "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+          "baud": 115200,
+          "capacity_bytes_per_s": 11520.0,
+          "measured_utilization": 3.1270992215822138,
+          "within_ideal_capacity": false
+        },
+        {
+          "evidence": "CALCULATED ideal 8N1; PTY does not emulate baud",
+          "baud": 921600,
+          "capacity_bytes_per_s": 92160.0,
+          "measured_utilization": 0.3908874026977767,
+          "within_ideal_capacity": true
+        }
+      ]
+    }
+  },
+  "provenance": {
+    "captured_utc": "2026-10-18T08:59:04.504593+00:00",
+    "inputs": [
+      {
+        "path": "tools/perception_health/py/sender.py",
+        "sha256": "23dfcd3988a7c6ec95184ee25b9708aed57208e33d6817e71f1940f29a986194"
+      },
+      {
+        "path": "tools/perception_health/config.json",
+        "sha256": "f35b0d2be0b0460d6cde1527c5e6250c5b5468b336b086612a9355feda45b0bb"
+      },
+      {
+        "path": "tools/perception_health/py/supervisor_model.py",
+        "sha256": "2b005e892797192231f77dcfcfe88f6ceea5c163963ca3800718027a0e206190"
+      },
+      {
+        "path": "tools/perception_health/py/perception_health.py",
+        "sha256": "e9a88da2d819cdde0842f0013f745557c4756758217ba679312296af9b752dc6"
+      },
+      {
+        "path": "tools/clockmap/clockmap.py",
+        "sha256": "0965a9bde2009b5b8246434669beb645c463a69392716f1438dcbf30cb56431a"
+      },
+      {
+        "path": "tools/vio_adapter/real_replay/snapshots.jsonl",
+        "sha256": "14c6a1caf12bb2b458e96b09f7cef14620ae4bc883bc6f6c3efcc80b4062c7ce"
+      },
+      {
+        "path": "tools/perception_health/integration/vio_to_pose_events.py",
+        "sha256": "a550ad99c5793d23dbcc5ac1391e494233a83d180af4cae0dbc72f23c631d0e8"
+      },
+      {
+        "path": "tools/perception_health/integration/e2e_pty_test.py",
+        "sha256": "0db2405a86c2ad6b176c0ea04104d5c969c179ef2f2382ae16757b040bb5233c"
+      }
+    ]
+  },
+  "policy": {
+    "protocol_version": 3,
+    "message_type": 5,
+    "pose_age_hold_us": 100000,
+    "pose_age_timeout_us": 500000,
+    "receipt_silence_hold_us": 200000,
+    "receipt_silence_timeout_us": 500000,
+    "heartbeat_timeout_us": 500000,
+    "rearm_healthy_us": 1000000,
+    "transit_bound_us": 5000,
+    "heartbeat_period_ms": 100,
+    "threshold_rationales": {
+      "pose_age_hold_us": "PROPOSED: bounded grace interval for stale pose; requires owner/MCU validation.",
+      "pose_age_timeout_us": "PROPOSED: stale pose timeout beyond HOLD; requires owner/MCU validation.",
+      "receipt_silence_hold_us": "PROPOSED: tolerate brief gaps before downgrade; requires owner/MCU validation.",
+      "receipt_silence_timeout_us": "PROPOSED: missing health report timeout; requires owner/MCU validation.",
+      "heartbeat_timeout_us": "PROPOSED: heartbeat watchdog exercise value; requires owner/MCU validation.",
+      "rearm_healthy_us": "PROPOSED: uninterrupted healthy observation required before explicit local rearm; requires owner/MCU validation.",
+      "transit_bound_us": "PROPOSED: conservative Pi-send to MCU-receipt allowance; not measured.",
+      "heartbeat_period_ms": "PROPOSED: sender heartbeat cadence below watchdog timeout; requires link validation."
+    }
+  },
+  "integration_config": {
+    "tool_version": "1.1.0",
+    "clockmap": {
+      "window_size": 32,
+      "min_samples": 3,
+      "step_threshold_ns": 1000000,
+      "source": "SOURCE-SUPPORTED: tools/clockmap defaults; step threshold is PROPOSED by that tool. Matches T7 sender's default ClockMap."
+    },
+    "pty_timeout_s": {
+      "value": 10,
+      "rationale": "PROPOSED: bounded local subprocess/PTY diagnostic timeout; not a robot deadline."
+    },
+    "synthetic_pose_age_ns": {
+      "value": 1000000,
+      "rationale": "ASSUMED: synthetic source is one millisecond before the local software injection boundary."
+    },
+    "silence_policy_overrides": {
+      "pose_age_hold_us": 5000000,
+      "pose_age_timeout_us": 60000000,
+      "heartbeat_timeout_us": 60000000,
+      "source": "PROPOSED: diagnostic-only override isolates receipt-silence from source-age and heartbeat expiry. Never deploy these as safety limits."
+    },
+    "uart": {
+      "bauds": [
+        115200,
+        921600
+      ],
+      "bits_per_byte": 10,
+      "max_utilization": 1.0,
+      "rationale": "CALCULATED: ideal 8N1 = start + 8 data + stop bits. PROPOSED full-capacity comparison only; no hardware margin established. Baud rates required by T10."
+    },
+    "evidence_max_bytes": {
+      "value": 200000,
+      "source": "SOURCE-SUPPORTED: T10b requires retained evidence under 200 kB; full captures are temporary and excluded from the archive."
+    }
+  }
+}
