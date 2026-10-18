@@ -1,9 +1,11 @@
+$ make -C tools/perception_health/c/mcu test
 rm -rf .build
 C receiver and Python policy parity: PASS
 C receiver and Python policy parity: PASS
 __TEXT	__DATA	__OBJC	others	dec	hex
 1684	0	0	256	1940	794	.build/ph_rx.o
-2817	64	0	256	3137	c41	.build/ph_policy.o
+2585	64	0	224	2873	b39	.build/ph_policy.o
+$ python3 -m unittest discover -s tools/perception_health/tests -v
 test_c99_encoder_decoder_matches_frozen_vector (test_perception_health.CTests.test_c99_encoder_decoder_matches_frozen_vector) ... ok
 test_degraded_tracking_holds_and_reset_counter_survives_wire (test_perception_health.ModelTests.test_degraded_tracking_holds_and_reset_counter_survives_wire) ... ok
 test_duplicate_wire_sequence_does_not_refresh_health (test_perception_health.ModelTests.test_duplicate_wire_sequence_does_not_refresh_health) ... ok
@@ -34,6 +36,6 @@ test_corruption_is_counted_and_parser_recovers (test_perception_health.PtyTests.
 test_sender_pty_round_trip_and_silence (test_perception_health.PtyTests.test_sender_pty_round_trip_and_silence) ... ok
 
 ----------------------------------------------------------------------
-Ran 28 tests in 0.837s
+Ran 28 tests in 0.825s
 
 OK

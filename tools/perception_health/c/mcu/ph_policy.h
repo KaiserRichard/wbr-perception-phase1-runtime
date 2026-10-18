@@ -12,7 +12,7 @@ enum ph_reason {
 struct ph_policy_config {
     uint32_t pose_age_hold_us, pose_age_timeout_us;
     uint32_t receipt_silence_hold_us, receipt_silence_timeout_us;
-    uint32_t heartbeat_timeout_us, transit_bound_us, rearm_healthy_us;
+    uint32_t heartbeat_timeout_us, transit_bound_us;
 };
 struct ph_policy {
     struct ph_policy_config c;
@@ -32,8 +32,5 @@ int ph_policy_init(struct ph_policy *p, const struct ph_policy_config *config);
 enum ph_downgrade ph_policy_update(struct ph_policy *p, uint32_t now_us,
                                   const struct ph_rx_event *event, uint32_t received_at_us,
                                   uint8_t primary_fresh);
-/* This optional input can never clear the upstream supervisor's latched state;
- * local rearm only resets this recommendation to NONE after healthy interval. */
-int ph_policy_rearm(struct ph_policy *p, uint32_t now_us);
 const char *ph_reason_name(enum ph_reason reason);
 #endif

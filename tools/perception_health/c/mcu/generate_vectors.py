@@ -56,9 +56,9 @@ def main(path):
         saved_input_excerpt(),
     ]
     with open(path, "w", encoding="ascii") as out:
-        out.write("C %d %d %d %d %d %d %d\n" % (c["pose_age_hold_us"], c["pose_age_timeout_us"],
+        out.write("C %d %d %d %d %d %d\n" % (c["pose_age_hold_us"], c["pose_age_timeout_us"],
             c["receipt_silence_hold_us"], c["receipt_silence_timeout_us"], c["heartbeat_timeout_us"],
-            c["transit_bound_us"], c["rearm_healthy_us"]))
+            c["transit_bound_us"]))
         for name, rows in scenarios:
             out.write("S " + name + "\n")
             for row in rows:

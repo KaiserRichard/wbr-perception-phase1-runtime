@@ -36,7 +36,7 @@ These estimates exclude heartbeat frames, inter-frame gaps, driver buffering and
 
 ## Host-only memory measurement
 
-`make test` compiles the receiver and policy objects and reports their host object sizes with `size`. Latest host build: `ph_rx.o` 1,940 bytes (`__TEXT` 1,684, `__DATA` 0, other object sections 256); `ph_policy.o` 3,137 bytes (`__TEXT` 2,817, `__DATA` 64, other object sections 256). Total reported object size is 5,077 bytes. **MEASURED on the development Mac host only**; this excludes target ABI/alignment effects, stack, caller-owned `struct ph_rx`/`struct ph_policy`, and final firmware linker layout. It does not predict STM32 flash or RAM use.
+`make test` compiles the receiver and policy objects and reports their host object sizes with `size`. Latest host build after review: `ph_rx.o` 1,940 bytes (`__TEXT` 1,684, `__DATA` 0, other object sections 256); `ph_policy.o` 2,873 bytes (`__TEXT` 2,585, `__DATA` 64, other object sections 224). Total reported object size is 4,813 bytes. **MEASURED on the development Mac host only**; this excludes target ABI/alignment effects, stack, caller-owned `struct ph_rx`/`struct ph_policy`, and final firmware linker layout. It does not predict STM32 flash or RAM use.
 
 ## Limits
 

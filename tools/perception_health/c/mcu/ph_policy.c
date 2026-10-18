@@ -98,13 +98,6 @@ enum ph_downgrade ph_policy_update(struct ph_policy *p, uint32_t now, const stru
     return p->requested;
 }
 
-int ph_policy_rearm(struct ph_policy *p, uint32_t now)
-{
-    if (p==NULL || !p->latched || !p->have_healthy_since || elapsed(now,p->healthy_since_us) >= UINT32_C(0x80000000) ||
-        elapsed(now,p->healthy_since_us) < p->c.rearm_healthy_us) return 0;
-    p->latched=0u; p->have_heartbeat=0u; p->have_health=0u; p->age_valid=0u; p->last_report_fresh=0u;
-    p->have_reset=0u; p->have_healthy_since=0u; transition(p,PH_DOWNGRADE_NONE,PH_REASON_NONE); return 1;
-}
 const char *ph_reason_name(enum ph_reason r)
 {
     static const char *const names[]={"NONE","SOURCE_AGE_HOLD","SOURCE_AGE_TIMEOUT","RESULT_SILENCE","RESULT_TIMEOUT","HEARTBEAT_TIMEOUT","CLOCK_REGRESSION","SESSION_CHANGE"};

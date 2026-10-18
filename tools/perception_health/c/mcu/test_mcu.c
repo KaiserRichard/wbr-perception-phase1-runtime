@@ -26,6 +26,25 @@ static void rx_tests(void)
     assert(rx.stats.queue_drops>0u);
 }
 
+static void sticky_latch_test(void)
+{
+    struct ph_policy_config cfg={100000u,500000u,200000u,500000u,500000u,5000u};
+    struct ph_policy p;
+    struct ph_rx_event ev;
+    assert(ph_policy_init(&p,&cfg));
+    memset(&ev,0,sizeof(ev)); ev.kind=PH_RX_HEALTH; ev.seq=1u;
+    ev.health.tracking_state=5u;
+    assert(ph_policy_update(&p,100u,&ev,100u,1u)==PH_DOWNGRADE_FAILSAFE);
+    assert(p.latched);
+    memset(&ev,0,sizeof(ev)); ev.kind=PH_RX_HEARTBEAT; ev.seq=2u; ev.session_id=42u;
+    assert(ph_policy_update(&p,200u,&ev,200u,1u)==PH_DOWNGRADE_FAILSAFE);
+    memset(&ev,0,sizeof(ev)); ev.kind=PH_RX_HEALTH; ev.seq=3u;
+    ev.health.pose_age_us=1000u; ev.health.tracking_state=3u;
+    ev.health.imu_initialized=1u; ev.health.flags=3u;
+    assert(ph_policy_update(&p,300u,&ev,300u,1u)==PH_DOWNGRADE_FAILSAFE);
+    assert(p.latched && p.reason==PH_REASON_SOURCE_AGE_TIMEOUT);
+}
+
 static enum ph_downgrade action(const char *s)
 {
     if(strcmp(s,"NONE")==0)return PH_DOWNGRADE_NONE;
@@ -41,12 +60,12 @@ static enum ph_reason reason(const char *s)
 static void parity_file(const char *path)
 {
     FILE *f=fopen(path,"r"); char line[512], kind[24], expected_action[24], expected_reason[40];
-    unsigned a,b,c,d,e,g,h, primary; struct ph_policy_config cfg; struct ph_policy p;
+    unsigned a,b,c,d,e,g, primary; struct ph_policy_config cfg; struct ph_policy p;
     assert(f!=NULL);
     while(fgets(line,sizeof(line),f)!=NULL) {
-        if(line[0]=='C') { assert(sscanf(line,"C %u %u %u %u %u %u %u",&a,&b,&c,&d,&e,&g,&h)==7);
+        if(line[0]=='C') { assert(sscanf(line,"C %u %u %u %u %u %u",&a,&b,&c,&d,&e,&g)==6);
             cfg.pose_age_hold_us=a;cfg.pose_age_timeout_us=b;cfg.receipt_silence_hold_us=c;
-            cfg.receipt_silence_timeout_us=d;cfg.heartbeat_timeout_us=e;cfg.transit_bound_us=g;cfg.rearm_healthy_us=h;
+            cfg.receipt_silence_timeout_us=d;cfg.heartbeat_timeout_us=e;cfg.transit_bound_us=g;
         } else if(line[0]=='S') { assert(ph_policy_init(&p,&cfg));
         } else if(line[0]=='V') {
             uint32_t now, session, received, age; unsigned seq, tracking, flags, imu, reset;
@@ -69,5 +88,5 @@ static void parity_file(const char *path)
 }
 int main(int argc,char **argv)
 {
-    assert(argc==2); rx_tests(); parity_file(argv[1]); puts("C receiver and Python policy parity: PASS"); return 0;
+    assert(argc==2); rx_tests(); sticky_latch_test(); parity_file(argv[1]); puts("C receiver and Python policy parity: PASS"); return 0;
 }
