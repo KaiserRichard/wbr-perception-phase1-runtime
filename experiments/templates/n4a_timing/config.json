@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "preflight": {
+    "start_temperature_c": {
+      "value": 70.0,
+      "source": "PROPOSED: leave thermal headroom below the existing profiling validity ceiling before each N4A run"
+    },
+    "cooldown_timeout_s": {
+      "value": 300.0,
+      "source": "PROPOSED: bounded operator wait for the Pi SoC to cool before a controlled experiment"
+    },
+    "cooldown_poll_period_s": {
+      "value": 5.0,
+      "source": "PROPOSED: preflight thermal polling cadence"
+    },
+    "between_run_cooldown_s": {
+      "value": 30.0,
+      "source": "PROPOSED: fixed inter-run cooldown to reduce thermal carry-over"
+    },
+    "process_discovery_timeout_s": {
+      "value": 15.0,
+      "source": "PROPOSED: maximum wait to find the exact ORB executable after the launcher starts"
+    },
+    "process_discovery_poll_period_s": {
+      "value": 0.1,
+      "source": "PROPOSED: ORB process discovery polling cadence"
+    },
+    "sampler_stop_timeout_s": {
+      "value": 10.0,
+      "source": "PROPOSED: bounded wait for the profiling sampler to flush metadata after SIGINT"
+    },
+    "invalid_throttle_bits": {
+      "value": [0, 1, 2, 3, 16, 17, 18, 19],
+      "source": "SOURCE-SUPPORTED: vcgencmd current and historical under-voltage, frequency-cap, throttle and soft-temperature bits"
+    }
+  },
+  "profiling": {
+    "sample_period_s": {
+      "value": 0.1,
+      "source": "SOURCE-SUPPORTED: delegated to tools/eval_pipeline/profile/config.json"
+    },
+    "throttle_period_s": {
+      "value": 1.0,
+      "source": "SOURCE-SUPPORTED: delegated to tools/eval_pipeline/profile/config.json"
+    }
+  }
+}

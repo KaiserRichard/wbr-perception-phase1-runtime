@@ -1,0 +1,13 @@
+test_preflight_refuses_prior_throttle (test_n4a_timing.N4ATimingTests.test_preflight_refuses_prior_throttle) ... ok
+test_real_saved_throttle_fixture_fails_profile_gate (test_n4a_timing.N4ATimingTests.test_real_saved_throttle_fixture_fails_profile_gate) ... ok
+test_throttled_run_is_excluded_from_aggregate (test_n4a_timing.N4ATimingTests.test_throttled_run_is_excluded_from_aggregate) ... ok
+test_valid_stub_capture (test_n4a_timing.N4ATimingTests.test_valid_stub_capture) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.796s
+
+OK
+criterion	status	measured	threshold
+no_throttle_or_undervoltage	FAIL	['throttled_now', 'throttled_occurred', 'undervoltage_now', 'undervoltage_occurred']	<=0 occurrences
+max_temperature	PASS	63.0	<80.0 degC
+overall	FAIL
