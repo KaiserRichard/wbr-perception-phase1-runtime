@@ -1,0 +1,11 @@
+test_injected_imu_reversal_fails (test_n4b_offline.TestN4B.test_injected_imu_reversal_fails) ... ok
+test_missing_camera_is_blocked (test_n4b_offline.TestN4B.test_missing_camera_is_blocked) ... ok
+test_round_trip_qualifies_pass (test_n4b_offline.TestN4B.test_round_trip_qualifies_pass) ... ok
+test_saved_real_evidence_fixture_is_labeled (test_n4b_offline.TestN4B.test_saved_real_evidence_fixture_is_labeled) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.664s
+
+OK
+EuRoC export: 2 stereo pairs, 12 IMU rows; clock=header.stamp; accel policy=UNKNOWN
+EuRoC export: 2 stereo pairs, 12 IMU rows; clock=header.stamp; accel policy=UNKNOWN
