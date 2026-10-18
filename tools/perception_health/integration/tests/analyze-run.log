@@ -1,0 +1,18 @@
+$ python3 -B tools/perception_health/integration/e2e_pty_test.py --analyze-only "$capture_root/full"
+criterion                      status
+no_mapping.transport           PASS
+no_mapping                     PASS
+mapped_ok.transport            PASS
+mapped_ok                      PASS
+lost_latched.transport         PASS
+lost_latched                   PASS
+sender_stops.transport         PASS
+sender_stops                   PASS
+real_replay.transport          PASS
+real_replay                    PASS
+Overall: PASS
+MEASURED no_mapping: 16.39 frames/s, 446.75 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.039 utilization); CALCULATED 921600 baud 92160 bytes/s (0.005 utilization)
+MEASURED mapped_ok: 13.66 frames/s, 366.19 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.032 utilization); CALCULATED 921600 baud 92160 bytes/s (0.004 utilization)
+MEASURED lost_latched: 16.57 frames/s, 451.53 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.039 utilization); CALCULATED 921600 baud 92160 bytes/s (0.005 utilization)
+MEASURED sender_stops: 15.26 frames/s, 415.81 bytes/s; CALCULATED 115200 baud 11520 bytes/s (0.036 utilization); CALCULATED 921600 baud 92160 bytes/s (0.005 utilization)
+MEASURED real_replay: 1267.37 frames/s, 35477.77 bytes/s; CALCULATED 115200 baud 11520 bytes/s (3.080 utilization); CALCULATED 921600 baud 92160 bytes/s (0.385 utilization)

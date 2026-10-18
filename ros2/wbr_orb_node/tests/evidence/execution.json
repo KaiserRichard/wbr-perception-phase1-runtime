@@ -1,0 +1,40 @@
+{
+  "started_utc": "2026-10-18T09:09:27.074842+00:00",
+  "host": {
+    "system": "Darwin",
+    "release": "24.6.0",
+    "machine": "x86_64",
+    "python": "3.11.0rc2"
+  },
+  "runs": [
+    {
+      "name": "all",
+      "command": [
+        "/Users/quockaiser/Desktop/Research/wbr-wt-orbnode/ros2/wbr_orb_node/build/core_test",
+        "all"
+      ],
+      "returncode": 0,
+      "missing": false
+    },
+    {
+      "name": "real",
+      "command": [
+        "/Users/quockaiser/Desktop/Research/wbr-wt-orbnode/ros2/wbr_orb_node/build/core_test",
+        "real",
+        "/Users/quockaiser/Desktop/Research/wbr-wt-orbnode/ros2/wbr_orb_node/tests/fixtures/real_epochs.txt"
+      ],
+      "returncode": 0,
+      "missing": false
+    },
+    {
+      "name": "emit",
+      "command": [
+        "/Users/quockaiser/Desktop/Research/wbr-wt-orbnode/ros2/wbr_orb_node/build/core_test",
+        "emit",
+        "/Users/quockaiser/Desktop/Research/wbr-wt-orbnode/ros2/wbr_orb_node/tests/evidence"
+      ],
+      "returncode": 0,
+      "missing": false
+    }
+  ]
+}

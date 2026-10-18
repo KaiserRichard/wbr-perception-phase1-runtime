@@ -107,6 +107,54 @@ class ModelTests(unittest.TestCase):
         self.m.update(1100+self.m.c["pose_age_timeout_us"])
         self.assertEqual(self.m.state,"FAILSAFE")
 
+    def test_unavailable_age_stays_hold_with_continuous_reports(self):
+        # Exercise all absent-validity combinations, including ticks and heartbeats
+        # after the first report, for longer than the source-age timeout.
+        for flags in (0, FLAG_AGE_VALID, FLAG_MAPPING_VALID):
+            with self.subTest(flags=flags):
+                self.setUp()
+                self.start(age=U32_MAX, flags=flags)
+                step = min(self.m.c["receipt_silence_hold_us"], self.m.c["heartbeat_timeout_us"]) // 4
+                for now in range(1100, 1100 + 2 * self.m.c["pose_age_timeout_us"], step):
+                    self.m.update(now, self.ev("heartbeat", now, session_id=9))
+                    self.m.update(now, self.ev("health", now, age=U32_MAX, state=3, flags=flags))
+                    self.m.update(now + 1)
+                    self.assertEqual((self.m.state, self.m.reason), ("HOLD", "SOURCE_AGE_HOLD"))
+                    self.assertFalse(self.m.latched)
+
+    def test_unavailable_age_keeps_independent_watchdogs(self):
+        self.start(age=U32_MAX, flags=0)
+        now = 1100 + self.m.c["receipt_silence_hold_us"]
+        self.m.update(now, self.ev("heartbeat", now, session_id=9))
+        self.assertEqual((self.m.state, self.m.reason), ("HOLD", "RESULT_SILENCE"))
+        now = 1100 + self.m.c["receipt_silence_timeout_us"]
+        # Keep heartbeat alive until the independent receipt timeout.
+        self.m.update(now - 1, self.ev("heartbeat", now - 1, session_id=9))
+        self.m.update(now)
+        self.assertEqual((self.m.state, self.m.reason), ("FAILSAFE", "RESULT_TIMEOUT"))
+        self.setUp()
+        self.start(age=U32_MAX, flags=0)
+        now = 1000 + self.m.c["heartbeat_timeout_us"]
+        self.m.update(now - 1, self.ev("health", now - 1, age=U32_MAX, state=3, flags=0))
+        self.m.update(now)
+        self.assertEqual((self.m.state, self.m.reason), ("FAILSAFE", "HEARTBEAT_TIMEOUT"))
+
+    def test_unknown_age_recovery_and_lost_still_latches(self):
+        self.start(age=U32_MAX, flags=0)
+        self.m.update(1200, self.ev("health", 1200, age=1000, state=3, flags=3))
+        self.assertEqual(self.m.state, "FRESH")
+        self.m.update(1300, self.ev("health", 1300, age=U32_MAX, state=5, flags=0))
+        self.assertEqual((self.m.state, self.m.reason), ("FAILSAFE", "SOURCE_AGE_TIMEOUT"))
+
+    def test_valid_saturation_and_expired_age_cannot_be_hidden_by_unknown(self):
+        self.start(age=U32_MAX, flags=3)
+        self.assertEqual((self.m.state, self.m.reason), ("FAILSAFE", "SOURCE_AGE_TIMEOUT"))
+        self.setUp()
+        self.start()
+        now = 1100 + self.m.c["pose_age_timeout_us"] - self.m.c["transit_bound_us"] - 1000
+        self.m.update(now, self.ev("health", now, age=U32_MAX, state=3, flags=0))
+        self.assertEqual((self.m.state, self.m.reason), ("FAILSAFE", "SOURCE_AGE_TIMEOUT"))
+
     def test_source_age_timeout_uses_upstream_reason(self):
         self.start(age=self.m.c["pose_age_timeout_us"])
         self.assertEqual((self.m.state,self.m.reason),("FAILSAFE","SOURCE_AGE_TIMEOUT"))
