@@ -1,0 +1,9 @@
+{
+  "evidence_label": "SOURCE-SUPPORTED",
+  "source": "experiments/2026-10-13-orbslam3-pi-build/build_orbslam3.sh",
+  "orb_root": "~/orbslam3/ORB_SLAM3",
+  "ros_prefix": "/opt/ros/jazzy",
+  "build_parallelism": "-j2",
+  "note": "Extracted from the saved Pi ORB build command; this is provenance input, not a new measurement."
+}
+

@@ -1,0 +1,10 @@
+test_fixture_is_derived_from_saved_pi_build_evidence (test_build_on_pi.BuildOnPiTests.test_fixture_is_derived_from_saved_pi_build_evidence) ... ok
+test_missing_ros_is_blocked_and_does_not_create_workspace (test_build_on_pi.BuildOnPiTests.test_missing_ros_is_blocked_and_does_not_create_workspace) ... ok
+test_plan_with_orb_adds_root_only_to_orb_package (test_build_on_pi.BuildOnPiTests.test_plan_with_orb_adds_root_only_to_orb_package) ... ok
+test_plan_without_orb_is_explicitly_off (test_build_on_pi.BuildOnPiTests.test_plan_without_orb_is_explicitly_off) ... ok
+test_stubbed_build_captures_provenance_and_runs_tests (test_build_on_pi.BuildOnPiTests.test_stubbed_build_captures_provenance_and_runs_tests) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.891s
+
+OK
