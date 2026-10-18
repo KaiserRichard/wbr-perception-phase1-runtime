@@ -2,10 +2,14 @@ test_saved_mh01_runs_reproduce_report (test_accuracy.RealEvidenceTests.test_save
 test_aggregate_population_stats (test_accuracy.StatusTests.test_aggregate_population_stats) ... ok
 test_blocked (test_accuracy.StatusTests.test_blocked) ... ok
 test_detects_euroc_nanoseconds_and_seconds (test_accuracy.StatusTests.test_detects_euroc_nanoseconds_and_seconds) ... ok
+test_exit_code_can_be_read_from_legacy_evidence_log (test_accuracy.StatusTests.test_exit_code_can_be_read_from_legacy_evidence_log) ... ok
+test_exit_code_status_blocks_missing_and_fails_nonzero (test_accuracy.StatusTests.test_exit_code_status_blocks_missing_and_fails_nonzero) ... ok
 test_fail (test_accuracy.StatusTests.test_fail) ... ok
 test_pass (test_accuracy.StatusTests.test_pass) ... ok
+test_pose_file_rejects_multiple_supported_outputs (test_accuracy.StatusTests.test_pose_file_rejects_multiple_supported_outputs) ... ok
+test_pose_fraction_rejects_more_rows_than_expected_frames (test_accuracy.StatusTests.test_pose_fraction_rejects_more_rows_than_expected_frames) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 7.362s
+Ran 10 tests in 8.175s
 
 OK

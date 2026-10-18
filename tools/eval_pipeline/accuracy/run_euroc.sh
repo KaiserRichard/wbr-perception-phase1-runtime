@@ -8,8 +8,13 @@ SEQ=$6; RUNS=$7; OUT=$(realpath -m "$8")
 [[ $RUNS =~ ^[1-9][0-9]*$ ]] || usage
 [[ -x $BIN && -f $VOCAB && -f $YAML && -d $DATA && -f $TIMES ]] || { echo "missing/non-executable input" >&2; exit 2; }
 mkdir -p "$OUT"
-exec 9>"$OUT/.run_euroc.lock"
-flock -n 9 || { echo "another EuRoC pipeline run owns $OUT/.run_euroc.lock" >&2; exit 2; }
+LOCK_FILE="${TMPDIR:-/tmp}/wbr-stereo-inertial-euroc.lock"
+exec 9>"$LOCK_FILE"
+flock -n 9 || { echo "another EuRoC pipeline run owns $LOCK_FILE" >&2; exit 2; }
+for ((i=1; i<=RUNS; i++)); do
+  RUN=$(printf '%s/run%02d' "$OUT" "$i")
+  [[ ! -e $RUN ]] || { echo "run output already exists: $RUN" >&2; exit 2; }
+done
 ORB_ROOT=${ORB_ROOT:-$(dirname "$(dirname "$(dirname "$BIN")")")}
 export LD_LIBRARY_PATH="$ORB_ROOT/lib:$ORB_ROOT/Thirdparty/DBoW2/lib:$ORB_ROOT/Thirdparty/g2o/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 for input in "$BIN" "$ORB_ROOT/lib/libORB_SLAM3.so" "$VOCAB" "$YAML" "$TIMES"; do

@@ -10,7 +10,9 @@
 
 - Real saved N4A trajectories and ground truth reproduce SE3 ATE RMSE 0.041461294, 0.036844344 and 0.041603883 m, matching the historical report to its rounding. The result is PASS against proposed 0.046 m ATE and 0.95 pose-fraction thresholds. Historical initialization lines were present in each stdout. Pose fraction uses the saved report's camera count (3,682); the original timestamp file was unavailable in the evidence bundle.
 - Validation artifacts are [report.md](validation/report.md) and [summary.json](validation/summary.json). They refer to saved experiment inputs by absolute path and hash their ground truth and trajectories; no raw data was copied into this worktree.
-- Unit test output: see [last-run.log](tests/last-run.log). Shell syntax checked with `bash -n`.
+- Review fixes reject nonzero/missing engine exit status as FAIL/BLOCKED, use a host-wide lock for the runner, reject ambiguous trajectory files, and fail pose-count ratios above 1.0. Legacy saved runs resolve their exit codes from the bundle's `runs.log`.
+- Unit tests: `python3 -m unittest discover -s tools/eval_pipeline/accuracy/tests -v` — 10 tests passed, including real-data validation; exact output is in [last-run.log](tests/last-run.log).
+- Shell syntax: `bash -n tools/eval_pipeline/accuracy/run_euroc.sh` — passed.
 
 ## Not verified / risks
 

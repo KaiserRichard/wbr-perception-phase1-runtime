@@ -10,6 +10,11 @@
       "value": 0.95,
       "evidence_label": "PROPOSED",
       "source": "PROPOSED: project-selected minimum pose output coverage; not a published ORB-SLAM3 criterion"
+    },
+    "max_pose_fraction": {
+      "value": 1.0,
+      "evidence_label": "CALCULATED",
+      "source": "CALCULATED: a pose-row count divided by the expected frame-row count cannot exceed 1 for a valid coverage fraction"
     }
   },
   "evaluation": {

@@ -16,7 +16,7 @@ bash tools/eval_pipeline/accuracy/run_euroc.sh \
   MH01 3 "$HOME/wbr-evidence/euroc-accuracy/MH01-$(date -u +%Y%m%dT%H%M%SZ)"
 ```
 
-The script takes a nonblocking `flock` in the output directory, refuses unresolved `ldd` libraries, hashes the executable, `libORB_SLAM3.so`, vocabulary, settings and timestamps, and writes one run directory per invocation with command, UTC start/end, exit code, stdout/stderr, library resolution and `vcgencmd get_throttled` before/after. UTC values are from the Pi clock; they are provenance labels and are not used for trajectory time arithmetic. The sequence argument labels output only; it does not validate dataset identity. A run with nonzero engine exit remains available for analysis but is not itself accuracy evidence.
+The script takes a host-wide nonblocking `flock` under `${TMPDIR:-/tmp}`, refusing overlap even when callers select different output directories. It refuses pre-existing run directories, refuses unresolved `ldd` libraries, hashes the executable, `libORB_SLAM3.so`, vocabulary, settings and timestamps, and writes one run directory per invocation with command, UTC start/end, exit code, stdout/stderr, library resolution and `vcgencmd get_throttled` before/after. UTC values are from the Pi clock; they are provenance labels and are not used for trajectory time arithmetic. The sequence argument labels output only; it does not validate dataset identity. A run with nonzero engine exit remains available for analysis but is marked FAIL and is not accuracy evidence. Missing exit status is BLOCKED. For older evidence, a matching `runN end ... rc=N` row in the run bundle's parent `runs.log` can supply the exit status.
 
 ## Evaluation
 

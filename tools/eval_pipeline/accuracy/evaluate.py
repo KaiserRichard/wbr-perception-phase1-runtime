@@ -32,9 +32,24 @@ def sha(path: Path) -> str:
 def pose_file(run: Path) -> Path | None:
     # ORB-SLAM3 stereo-inertial EuRoC output is f_*.txt (all frame poses).
     candidates = sorted(run.glob("f_*.txt"))
-    if not candidates:
-        candidates = [p for p in (run / "CameraTrajectory.txt", run / "KeyFrameTrajectory.txt") if p.is_file()]
+    candidates.extend(p for p in (run / "CameraTrajectory.txt", run / "KeyFrameTrajectory.txt") if p.is_file())
     return candidates[0] if len(candidates) == 1 else None
+
+def run_exit_code(run: Path) -> tuple[int | None, str | None]:
+    """Read this run's exit code, including the legacy saved runs.log format."""
+    code_file = run / "exit_code.txt"
+    if code_file.is_file():
+        try:
+            return int(code_file.read_text(encoding="utf-8").strip()), str(code_file)
+        except ValueError as exc:
+            raise ValueError(f"invalid engine exit code in {code_file}") from exc
+    legacy_log = run.parent / "runs.log"
+    if legacy_log.is_file():
+        match = re.search(rf"(?m)^{re.escape(run.name)} end \S+ rc=(-?\d+)(?:\s|$)",
+                          legacy_log.read_text(encoding="utf-8", errors="replace"))
+        if match:
+            return int(match.group(1)), str(legacy_log)
+    return None, None
 
 def detect_timestamp_format(path: Path, config: dict) -> tuple[str, str]:
     first = None
@@ -85,6 +100,14 @@ def overall_status(criteria: list[dict], runs: list[dict]) -> str:
         return "BLOCKED"
     return "PASS"
 
+def pose_fraction_status(runs: list[dict], minimum: float, maximum: float) -> str:
+    fractions = [r.get("diagnostics", {}).get("pose_fraction") for r in runs]
+    if not runs or any(value is None for value in fractions):
+        return "BLOCKED"
+    if any(value < minimum or value > maximum for value in fractions):
+        return "FAIL"
+    return "PASS"
+
 def evaluator_result(run_name: str, trajectory: Path, gt: Path, out: Path, config: dict, delta: str, unit: str, est_format: str, est_unit: str) -> dict:
     out.parent.mkdir(parents=True, exist_ok=True)
     cmd = [sys.executable, str(EVALUATOR), "single", "--est", str(trajectory), "--ref", str(gt),
@@ -132,12 +155,14 @@ def main() -> int:
                 continue
             est_format, est_unit = detect_timestamp_format(trajectory, config)
             diag = run_diagnostics(run, trajectory, frame_count)
+            exit_code, exit_code_source = run_exit_code(run)
             run_out = args.out / f"run{index:02d}"
             meter = evaluator_result(run.name, trajectory, gt, run_out / "rpe_1m", config,
                                      config["evaluation"]["rpe_delta_m"]["value"], "m", est_format, est_unit)
             frames = evaluator_result(run.name, trajectory, gt, run_out / "rpe_10frames", config,
                                       config["evaluation"]["rpe_delta_frames"]["value"], "frames", est_format, est_unit)
-            status = "PASS" if diag["initialization_success"] else "FAIL"
+            status = ("BLOCKED" if exit_code is None else
+                      ("FAIL" if exit_code != 0 or not diag["initialization_success"] else "PASS"))
             provenance_names = ("start_utc.txt", "end_utc.txt", "exit_code.txt", "throttled_before.txt",
                                 "throttled_after.txt", "ldd.txt", "input.sha256", "stderr.log")
             capture = {name: {"path":str(run / name), "sha256":sha(run / name),
@@ -147,7 +172,7 @@ def main() -> int:
                          "trajectory_sha256": sha(trajectory), "stdout_sha256": sha(run / "stdout.log") if (run / "stdout.log").is_file() else None,
                          "trajectory_format": {"format":est_format,"time_unit":est_unit,"detection":"first non-comment timestamp magnitude; see thresholds.json"},
                          "capture_provenance":capture,
-                         "exit_code": int((run / "exit_code.txt").read_text().strip()) if (run / "exit_code.txt").is_file() else None,
+                         "exit_code": exit_code, "exit_code_evidence": exit_code_source,
                          "diagnostics": diag, "ate_rpe_1m": meter["metrics"], "ate_rpe_10frames": frames["metrics"],
                          "trajectory_evaluator_provenance": {"version": meter["tool"]["version"], "result_path": str(run_out / "rpe_1m/result.json")}})
         valid = [r for r in runs if r.get("status") != "BLOCKED"]
@@ -161,9 +186,11 @@ def main() -> int:
             metric_aggregates[key] = aggregate([r[block[0]]["se3"][block[1]]["rmse"] for r in valid])
         max_ate = config["acceptance"]["ate_rmse_se3_max_m"]["value"]
         min_fraction = config["acceptance"]["min_pose_fraction"]["value"]
-        criteria = [{"id":"all_runs_initialized", "status":"BLOCKED" if not valid else ("PASS" if all(r["diagnostics"]["initialization_success"] for r in valid) else "FAIL"), "measured":sum(bool(r.get("diagnostics",{}).get("initialization_success")) for r in valid), "threshold":"every evaluable run", "threshold_source":"PROPOSED project acceptance; initialization log phrase detector documented in README"},
+        max_fraction = config["acceptance"]["max_pose_fraction"]["value"]
+        criteria = [{"id":"all_engine_runs_exit_zero", "status":"BLOCKED" if not valid or any(r.get("exit_code") is None for r in valid) else ("PASS" if all(r["exit_code"] == 0 for r in valid) else "FAIL"), "measured":[r.get("exit_code") for r in valid], "threshold":"every evaluable run exits 0", "threshold_source":"SOURCE-SUPPORTED: ORB-SLAM3 process exit status; nonzero exits are not accuracy evidence"},
+                    {"id":"all_runs_initialized", "status":"BLOCKED" if not valid else ("PASS" if all(r["diagnostics"]["initialization_success"] for r in valid) else "FAIL"), "measured":sum(bool(r.get("diagnostics",{}).get("initialization_success")) for r in valid), "threshold":"every evaluable run", "threshold_source":"PROPOSED project acceptance; initialization log phrase detector documented in README"},
                     {"id":"se3_ate_rmse_each_run", "status":"BLOCKED" if not vals else ("PASS" if all(v <= max_ate for v in vals) else "FAIL"), "measured":vals, "unit":"m", "threshold":f"<= {max_ate}", "threshold_source":config["acceptance"]["ate_rmse_se3_max_m"]["source"]},
-                    {"id":"pose_fraction_each_run", "status":"BLOCKED" if any(r["diagnostics"].get("pose_fraction") is None for r in valid) else ("PASS" if valid and all(r["diagnostics"]["pose_fraction"] >= min_fraction for r in valid) else "FAIL"), "measured":[r["diagnostics"].get("pose_fraction") for r in valid], "threshold":f">= {min_fraction}", "threshold_source":config["acceptance"]["min_pose_fraction"]["source"]}]
+                    {"id":"pose_fraction_each_run", "status":pose_fraction_status(valid, min_fraction, max_fraction), "measured":[r["diagnostics"].get("pose_fraction") for r in valid], "threshold":f">= {min_fraction} and <= {max_fraction}", "threshold_source":config["acceptance"]["min_pose_fraction"]["source"] + "; " + config["acceptance"]["max_pose_fraction"]["source"]}]
         overall = overall_status(criteria, runs)
         result = {"pipeline":"euroc_accuracy", "version":VERSION, "status":overall, "evidence_label":"CALCULATED from saved run files",
                   "generated_utc":datetime.now(timezone.utc).isoformat(), "sequence":args.sequence,

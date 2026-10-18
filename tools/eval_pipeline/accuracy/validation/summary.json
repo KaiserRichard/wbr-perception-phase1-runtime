@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "status": "PASS",
   "evidence_label": "CALCULATED from saved run files",
-  "generated_utc": "2026-10-18T08:18:12.010193+00:00",
+  "generated_utc": "2026-10-18T08:31:47.992325+00:00",
   "sequence": "MH01",
   "ground_truth": {
     "path": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/eval/gt_data.csv",
@@ -27,9 +27,25 @@
       "value": 0.95,
       "evidence_label": "PROPOSED",
       "source": "PROPOSED: project-selected minimum pose output coverage; not a published ORB-SLAM3 criterion"
+    },
+    "max_pose_fraction": {
+      "value": 1.0,
+      "evidence_label": "CALCULATED",
+      "source": "CALCULATED: a pose-row count divided by the expected frame-row count cannot exceed 1 for a valid coverage fraction"
     }
   },
   "criteria": [
+    {
+      "id": "all_engine_runs_exit_zero",
+      "status": "PASS",
+      "measured": [
+        0,
+        0,
+        0
+      ],
+      "threshold": "every evaluable run exits 0",
+      "threshold_source": "SOURCE-SUPPORTED: ORB-SLAM3 process exit status; nonzero exits are not accuracy evidence"
+    },
     {
       "id": "all_runs_initialized",
       "status": "PASS",
@@ -57,8 +73,8 @@
         0.9989136338946225,
         0.9989136338946225
       ],
-      "threshold": ">= 0.95",
-      "threshold_source": "PROPOSED: project-selected minimum pose output coverage; not a published ORB-SLAM3 criterion"
+      "threshold": ">= 0.95 and <= 1.0",
+      "threshold_source": "PROPOSED: project-selected minimum pose output coverage; not a published ORB-SLAM3 criterion; CALCULATED: a pose-row count divided by the expected frame-row count cannot exceed 1 for a valid coverage fraction"
     }
   ],
   "aggregate_metrics_se3": {
@@ -124,7 +140,8 @@
           "text": null
         }
       },
-      "exit_code": null,
+      "exit_code": 0,
+      "exit_code_evidence": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/runs.log",
       "diagnostics": {
         "initialization_success": true,
         "tracking_loss_log_count": 0,
@@ -433,7 +450,8 @@
           "text": null
         }
       },
-      "exit_code": null,
+      "exit_code": 0,
+      "exit_code_evidence": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/runs.log",
       "diagnostics": {
         "initialization_success": true,
         "tracking_loss_log_count": 0,
@@ -742,7 +760,8 @@
           "text": null
         }
       },
-      "exit_code": null,
+      "exit_code": 0,
+      "exit_code_evidence": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/experiments/2026-10-13-n4a-euroc-mh01/runs.log",
       "diagnostics": {
         "initialization_success": true,
         "tracking_loss_log_count": 0,

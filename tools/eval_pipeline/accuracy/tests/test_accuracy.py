@@ -36,6 +36,40 @@ class StatusTests(unittest.TestCase):
             self.assertEqual(pipeline.detect_timestamp_format(ns, config), ("orbslam3", "ns"))
             self.assertEqual(pipeline.detect_timestamp_format(sec, config), ("tum", "s"))
 
+    def test_exit_code_status_blocks_missing_and_fails_nonzero(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run = root / "run01"
+            run.mkdir()
+            self.assertEqual(pipeline.run_exit_code(run), (None, None))
+            self.assertEqual(pipeline.overall_status([], [{"status":"BLOCKED"}]), "BLOCKED")
+            (run / "exit_code.txt").write_text("7\n")
+            self.assertEqual(pipeline.run_exit_code(run), (7, str(run / "exit_code.txt")))
+            self.assertEqual(pipeline.overall_status([], [{"status":"FAIL"}]), "FAIL")
+
+    def test_exit_code_can_be_read_from_legacy_evidence_log(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            run = root / "run2"
+            run.mkdir()
+            (root / "runs.log").write_text("run1 end 2026-10-13T07:56:10Z rc=0\nrun2 end 2026-10-13T08:00:52Z rc=4 throttled=0x50000\n")
+            self.assertEqual(pipeline.run_exit_code(run), (4, str(root / "runs.log")))
+
+    def test_pose_file_rejects_multiple_supported_outputs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = Path(tmp)
+            (run / "f_run.txt").write_text("")
+            (run / "CameraTrajectory.txt").write_text("")
+            self.assertIsNone(pipeline.pose_file(run))
+
+    def test_pose_fraction_rejects_more_rows_than_expected_frames(self):
+        self.assertEqual(pipeline.pose_fraction_status(
+            [{"diagnostics":{"pose_fraction":1.01}}], 0.95, 1.0), "FAIL")
+        self.assertEqual(pipeline.pose_fraction_status(
+            [{"diagnostics":{"pose_fraction":None}}], 0.95, 1.0), "BLOCKED")
+        self.assertEqual(pipeline.pose_fraction_status(
+            [{"diagnostics":{"pose_fraction":0.99}}], 0.95, 1.0), "PASS")
+
 class RealEvidenceTests(unittest.TestCase):
     @unittest.skipUnless(EVIDENCE.is_dir(), "read-only N4A evidence is not available")
     def test_saved_mh01_runs_reproduce_report(self):
