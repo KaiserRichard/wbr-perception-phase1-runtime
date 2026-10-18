@@ -33,6 +33,7 @@ class StampDriftTests(unittest.TestCase):
         self.assertEqual(report["diagnostic_status"], "PASS")
         self.assertAlmostEqual(stream["drift_ppm"], 35.0, delta=1.0)
         segment = stream["segments"][0]
+        self.assertAlmostEqual(segment["offset_at_reference_ns"], receive_base - source_base, delta=5000)
         self.assertEqual(segment["outlier_count"], 2)
         self.assertLess(segment["residual_abs_ns"]["p95"], 5_000)
         self.assertEqual(segment["lower_envelope_proxy_ns"], min(r.receive_ns - r.header_stamp_ns for r in rows))
@@ -49,6 +50,8 @@ class StampDriftTests(unittest.TestCase):
         self.assertGreaterEqual(len(stream["step_discontinuities"]), 1)
         self.assertGreaterEqual(stream["segment_count"], 2)
         self.assertTrue(any(event["type"] == "residual_step" for event in stream["step_discontinuities"]))
+        for segment in stream["segments"]:
+            self.assertAlmostEqual(segment["drift_ppm"], 0.0, delta=0.1)
 
     def test_header_reversal_splits_and_is_not_stitched(self):
         source_base = 1_700_000_000_000_000_000
@@ -86,7 +89,7 @@ class StampDriftTests(unittest.TestCase):
         report = analyze_path(FIXTURES / "real_saved_evidence.csv", header_clock="D435I_GLOBAL_TIME")
         self.assertEqual(report["input"]["row_count"], 12)
         self.assertEqual(report["clock_domains"]["header_stamp"], "D435I_GLOBAL_TIME")
-        self.assertTrue(report["clock_domains"]["global_time_enabled"])
+        self.assertIsNone(report["clock_domains"]["global_time_enabled"])
         self.assertEqual(report["streams"][0]["sample_count"], 12)
 
     def test_synthetic_db3_cdr_header_reader(self):
@@ -99,10 +102,10 @@ class StampDriftTests(unittest.TestCase):
             path = Path(directory) / "bag_0.db3"
             connection = sqlite3.connect(path)
             connection.executescript(
-                "CREATE TABLE topics(id INTEGER PRIMARY KEY, name TEXT, type TEXT);"
+                "CREATE TABLE topics(id INTEGER PRIMARY KEY, name TEXT, type TEXT, serialization_format TEXT);"
                 "CREATE TABLE messages(id INTEGER PRIMARY KEY, topic_id INTEGER, timestamp INTEGER, data BLOB);"
             )
-            connection.execute("INSERT INTO topics VALUES (1, '/camera/imu', 'sensor_msgs/msg/Imu')")
+            connection.execute("INSERT INTO topics VALUES (1, '/camera/imu', 'sensor_msgs/msg/Imu', 'cdr')")
             for i in range(5):
                 stamp = 1_700_000_000_000_000_000 + i * 10_000_000
                 connection.execute("INSERT INTO messages VALUES (?, 1, ?, ?)",
@@ -119,8 +122,8 @@ class StampDriftTests(unittest.TestCase):
             bad.write_text("topic,header_stamp_ns\n/a,1\n")
             result = subprocess.run([sys.executable, str(ROOT / "tools/stamp_drift/analyze.py"), str(bad)],
                                     cwd=ROOT, capture_output=True, text=True)
-        self.assertEqual(result.returncode, 2)
-        self.assertIn("missing columns", result.stderr)
+            self.assertEqual(result.returncode, 2)
+            self.assertIn("missing columns", (bad.with_suffix(".stamp-drift") / "diagnostic.txt").read_text())
 
 
 if __name__ == "__main__":

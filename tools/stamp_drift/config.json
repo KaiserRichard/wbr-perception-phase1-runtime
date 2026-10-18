@@ -35,7 +35,18 @@
       "value": 16,
       "source": "PROPOSED",
       "rationale": "Bound recursive discontinuity splitting on malformed or highly discontinuous input."
+    },
+    "max_discontinuities": {
+      "value": 0,
+      "source": "PROPOSED",
+      "rationale": "Any detected reversal or residual step makes continuity diagnostics FAIL; this is not a hardware acceptance budget."
     }
   },
-  "percentiles": [0, 50, 95, 99, 100]
+  "percentiles": [
+    0,
+    50,
+    95,
+    99,
+    100
+  ]
 }

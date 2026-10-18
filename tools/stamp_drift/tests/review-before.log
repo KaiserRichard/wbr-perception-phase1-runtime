@@ -1,0 +1,160 @@
+$ PYTHONDONTWRITEBYTECODE=1 python3 - <<'PY'
+import subprocess, sys, types, unittest
+from pathlib import Path
+source=subprocess.run(['git','show','HEAD:tools/stamp_drift/analyze.py'],check=True,capture_output=True,text=True).stdout
+original=types.ModuleType('stamp_drift_before_review')
+original.__file__=str(Path('tools/stamp_drift/analyze.py').resolve())
+sys.modules[original.__name__]=original
+exec(compile(source,'HEAD:tools/stamp_drift/analyze.py','exec'),original.__dict__)
+sys.path.insert(0,str(Path('tools/stamp_drift/tests').resolve()))
+import test_review
+test_review.analyzer=original
+names=[
+'test_residuals_preserve_nanoseconds_at_receive_utc_epoch',
+'test_fail_precedes_blocked_on_short_reversal',
+'test_constant_receive_clock_is_blocked_without_exception',
+'test_empty_rows_blocked',
+'test_header_clock_does_not_imply_option_readback',
+'test_db3_not_read_whole_into_memory',
+'test_config_rejects_nonfinite_short_fit_and_missing_percentiles',
+'test_step_segment_cap_is_enforced']
+suite=unittest.TestSuite(test_review.ReviewTests(name) for name in names)
+result=unittest.TextTestRunner(verbosity=2).run(suite)
+print('EXPECTED before-fix regression failures/errors:',len(result.failures),len(result.errors))
+assert result.testsRun == len(names) and not result.wasSuccessful()
+PY
+test_residuals_preserve_nanoseconds_at_receive_utc_epoch (test_review.ReviewTests.test_residuals_preserve_nanoseconds_at_receive_utc_epoch) ... FAIL
+test_fail_precedes_blocked_on_short_reversal (test_review.ReviewTests.test_fail_precedes_blocked_on_short_reversal) ... FAIL
+test_constant_receive_clock_is_blocked_without_exception (test_review.ReviewTests.test_constant_receive_clock_is_blocked_without_exception) ... ERROR
+test_empty_rows_blocked (test_review.ReviewTests.test_empty_rows_blocked) ... ERROR
+test_header_clock_does_not_imply_option_readback (test_review.ReviewTests.test_header_clock_does_not_imply_option_readback) ... FAIL
+test_db3_not_read_whole_into_memory (test_review.ReviewTests.test_db3_not_read_whole_into_memory) ... FAIL
+test_config_rejects_nonfinite_short_fit_and_missing_percentiles (test_review.ReviewTests.test_config_rejects_nonfinite_short_fit_and_missing_percentiles) ... 
+  test_config_rejects_nonfinite_short_fit_and_missing_percentiles (test_review.ReviewTests.test_config_rejects_nonfinite_short_fit_and_missing_percentiles) (config={'schema_version': 1, 'thresholds': {'minimum_fit_samples': {'value': 3, 'source': 'PROPOSED', 'rationale': 'An affine fit needs at least three ordered observations so a residual check is meaningful.'}, 'outlier_mad_scale': {'value': nan, 'source': 'PROPOSED', 'rationale': 'Iterative least-squares rejection keeps samples within four MADs of the current residual centre.'}, 'minimum_mad_ns': {'value': 1000, 'source': 'PROPOSED', 'rationale': 'Do not treat sub-microsecond numerical/serialization variation as a resolvable outlier scale.'}, 'fit_max_iterations': {'value': 8, 'source': 'PROPOSED', 'rationale': 'Bound robust-fit work while allowing the inlier mask to settle.'}, 'step_window_samples': {'value': 5, 'source': 'PROPOSED', 'rationale': 'Compare five observations on each side of a candidate residual discontinuity.'}, 'step_threshold_ns': {'value': 5000000, 'source': 'PROPOSED', 'rationale': 'A five-millisecond residual jump is reported as a possible transport/clock step; it is not a robot acceptance limit.'}, 'maximum_step_segments': {'value': 16, 'source': 'PROPOSED', 'rationale': 'Bound recursive discontinuity splitting on malformed or highly discontinuous input.'}, 'max_discontinuities': {'value': 0, 'source': 'PROPOSED', 'rationale': 'Any detected reversal or residual step makes continuity diagnostics FAIL; this is not a hardware acceptance budget.'}}, 'percentiles': [0, 50, 95, 99, 100]}) ... FAIL
+  test_config_rejects_nonfinite_short_fit_and_missing_percentiles (test_review.ReviewTests.test_config_rejects_nonfinite_short_fit_and_missing_percentiles) (config={'schema_version': 1, 'thresholds': {'minimum_fit_samples': {'value': 3, 'source': 'PROPOSED', 'rationale': 'An affine fit needs at least three ordered observations so a residual check is meaningful.'}, 'outlier_mad_scale': {'value': inf, 'source': 'PROPOSED', 'rationale': 'Iterative least-squares rejection keeps samples within four MADs of the current residual centre.'}, 'minimum_mad_ns': {'value': 1000, 'source': 'PROPOSED', 'rationale': 'Do not treat sub-microsecond numerical/serialization variation as a resolvable outlier scale.'}, 'fit_max_iterations': {'value': 8, 'source': 'PROPOSED', 'rationale': 'Bound robust-fit work while allowing the inlier mask to settle.'}, 'step_window_samples': {'value': 5, 'source': 'PROPOSED', 'rationale': 'Compare five observations on each side of a candidate residual discontinuity.'}, 'step_threshold_ns': {'value': 5000000, 'source': 'PROPOSED', 'rationale': 'A five-millisecond residual jump is reported as a possible transport/clock step; it is not a robot acceptance limit.'}, 'maximum_step_segments': {'value': 16, 'source': 'PROPOSED', 'rationale': 'Bound recursive discontinuity splitting on malformed or highly discontinuous input.'}, 'max_discontinuities': {'value': 0, 'source': 'PROPOSED', 'rationale': 'Any detected reversal or residual step makes continuity diagnostics FAIL; this is not a hardware acceptance budget.'}}, 'percentiles': [0, 50, 95, 99, 100]}) ... FAIL
+  test_config_rejects_nonfinite_short_fit_and_missing_percentiles (test_review.ReviewTests.test_config_rejects_nonfinite_short_fit_and_missing_percentiles) (config={'schema_version': 1, 'thresholds': {'minimum_fit_samples': {'value': 1, 'source': 'PROPOSED', 'rationale': 'An affine fit needs at least three ordered observations so a residual check is meaningful.'}, 'outlier_mad_scale': {'value': 4.0, 'source': 'PROPOSED', 'rationale': 'Iterative least-squares rejection keeps samples within four MADs of the current residual centre.'}, 'minimum_mad_ns': {'value': 1000, 'source': 'PROPOSED', 'rationale': 'Do not treat sub-microsecond numerical/serialization variation as a resolvable outlier scale.'}, 'fit_max_iterations': {'value': 8, 'source': 'PROPOSED', 'rationale': 'Bound robust-fit work while allowing the inlier mask to settle.'}, 'step_window_samples': {'value': 5, 'source': 'PROPOSED', 'rationale': 'Compare five observations on each side of a candidate residual discontinuity.'}, 'step_threshold_ns': {'value': 5000000, 'source': 'PROPOSED', 'rationale': 'A five-millisecond residual jump is reported as a possible transport/clock step; it is not a robot acceptance limit.'}, 'maximum_step_segments': {'value': 16, 'source': 'PROPOSED', 'rationale': 'Bound recursive discontinuity splitting on malformed or highly discontinuous input.'}, 'max_discontinuities': {'value': 0, 'source': 'PROPOSED', 'rationale': 'Any detected reversal or residual step makes continuity diagnostics FAIL; this is not a hardware acceptance budget.'}}, 'percentiles': [0, 50, 95, 99, 100]}) ... FAIL
+  test_config_rejects_nonfinite_short_fit_and_missing_percentiles (test_review.ReviewTests.test_config_rejects_nonfinite_short_fit_and_missing_percentiles) (config={'schema_version': 1, 'thresholds': {'minimum_fit_samples': {'value': 3, 'source': 'PROPOSED', 'rationale': 'An affine fit needs at least three ordered observations so a residual check is meaningful.'}, 'outlier_mad_scale': {'value': 4.0, 'source': 'PROPOSED', 'rationale': 'Iterative least-squares rejection keeps samples within four MADs of the current residual centre.'}, 'minimum_mad_ns': {'value': 1000, 'source': 'PROPOSED', 'rationale': 'Do not treat sub-microsecond numerical/serialization variation as a resolvable outlier scale.'}, 'fit_max_iterations': {'value': 8, 'source': 'PROPOSED', 'rationale': 'Bound robust-fit work while allowing the inlier mask to settle.'}, 'step_window_samples': {'value': 5, 'source': 'PROPOSED', 'rationale': 'Compare five observations on each side of a candidate residual discontinuity.'}, 'step_threshold_ns': {'value': 5000000, 'source': 'PROPOSED', 'rationale': 'A five-millisecond residual jump is reported as a possible transport/clock step; it is not a robot acceptance limit.'}, 'maximum_step_segments': {'value': 16, 'source': 'PROPOSED', 'rationale': 'Bound recursive discontinuity splitting on malformed or highly discontinuous input.'}, 'max_discontinuities': {'value': 0, 'source': 'PROPOSED', 'rationale': 'Any detected reversal or residual step makes continuity diagnostics FAIL; this is not a hardware acceptance budget.'}}, 'percentiles': [50]}) ... FAIL
+  test_config_rejects_nonfinite_short_fit_and_missing_percentiles (test_review.ReviewTests.test_config_rejects_nonfinite_short_fit_and_missing_percentiles) (config=[]) ... ERROR
+test_step_segment_cap_is_enforced (test_review.ReviewTests.test_step_segment_cap_is_enforced) ... FAIL
+
+======================================================================
+ERROR: test_constant_receive_clock_is_blocked_without_exception (test_review.ReviewTests.test_constant_receive_clock_is_blocked_without_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-stampdrift/tools/stamp_drift/tests/test_review.py", line 56, in test_constant_receive_clock_is_blocked_without_exception
+    report = analyzer.analyze_rows([analyzer.Row('/imu', i, 100, i) for i in range(20)])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "HEAD:tools/stamp_drift/analyze.py", line 332, in analyze_rows
+  File "HEAD:tools/stamp_drift/analyze.py", line 215, in _split_monotonic
+  File "HEAD:tools/stamp_drift/analyze.py", line 192, in _step_candidate
+  File "HEAD:tools/stamp_drift/analyze.py", line 184, in _fit_for_indices
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-stampdrift/tools/clockmap/clockmap.py", line 160, in _fit_affine
+    raise ValueError("clock fit must have a finite positive slope")
+ValueError: clock fit must have a finite positive slope
+
+======================================================================
+ERROR: test_empty_rows_blocked (test_review.ReviewTests.test_empty_rows_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-stampdrift/tools/stamp_drift/tests/test_review.py", line 60, in test_empty_rows_blocked
+    self.assertEqual(analyzer.analyze_rows([])['diagnostic_status'], 'BLOCKED')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "HEAD:tools/stamp_drift/analyze.py", line 296, in analyze_rows
+ValueError: no timestamp rows
+
+======================================================================
+ERROR: test_config_rejects_nonfinite_short_fit_and_missing_percentiles (test_review.ReviewTests.test_config_rejects_nonfinite_short_fit_and_missing_percentiles) (config=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-stampdrift/tools/stamp_drift/tests/test_review.py", line 168, in test_config_rejects_nonfinite_short_fit_and_missing_percentiles
+    analyzer._load_config(path)
+  File "HEAD:tools/stamp_drift/analyze.py", line 60, in _load_config
+AttributeError: 'list' object has no attribute 'get'
+
+======================================================================
+FAIL: test_residuals_preserve_nanoseconds_at_receive_utc_epoch (test_review.ReviewTests.test_residuals_preserve_nanoseconds_at_receive_utc_epoch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-stampdrift/tools/stamp_drift/tests/test_review.py", line 48, in test_residuals_preserve_nanoseconds_at_receive_utc_epoch
+    self.assertGreater(residual['p50'], 0.5)
+AssertionError: 0.0 not greater than 0.5
+
+======================================================================
+FAIL: test_fail_precedes_blocked_on_short_reversal (test_review.ReviewTests.test_fail_precedes_blocked_on_short_reversal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-stampdrift/tools/stamp_drift/tests/test_review.py", line 53, in test_fail_precedes_blocked_on_short_reversal
+    self.assertEqual(report['diagnostic_status'], 'FAIL')
+AssertionError: 'BLOCKED' != 'FAIL'
+- BLOCKED
++ FAIL
+
+
+======================================================================
+FAIL: test_header_clock_does_not_imply_option_readback (test_review.ReviewTests.test_header_clock_does_not_imply_option_readback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-stampdrift/tools/stamp_drift/tests/test_review.py", line 65, in test_header_clock_does_not_imply_option_readback
+    self.assertIsNone(analyzer.analyze_rows(rows, header_clock=domain)['clock_domains']['global_time_enabled'])
+AssertionError: False is not None
+
+======================================================================
+FAIL: test_db3_not_read_whole_into_memory (test_review.ReviewTests.test_db3_not_read_whole_into_memory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-stampdrift/tools/stamp_drift/tests/test_review.py", line 111, in test_db3_not_read_whole_into_memory
+    self.assertEqual(analyzer.analyze_path(path)['diagnostic_status'],'PASS')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "HEAD:tools/stamp_drift/analyze.py", line 414, in analyze_path
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-stampdrift/tools/stamp_drift/tests/test_review.py", line 108, in bounded_read
+    raise AssertionError('must stream hash and SQLite payloads')
+AssertionError: must stream hash and SQLite payloads
+
+======================================================================
+FAIL: test_config_rejects_nonfinite_short_fit_and_missing_percentiles (test_review.ReviewTests.test_config_rejects_nonfinite_short_fit_and_missing_percentiles) (config={'schema_version': 1, 'thresholds': {'minimum_fit_samples': {'value': 3, 'source': 'PROPOSED', 'rationale': 'An affine fit needs at least three ordered observations so a residual check is meaningful.'}, 'outlier_mad_scale': {'value': nan, 'source': 'PROPOSED', 'rationale': 'Iterative least-squares rejection keeps samples within four MADs of the current residual centre.'}, 'minimum_mad_ns': {'value': 1000, 'source': 'PROPOSED', 'rationale': 'Do not treat sub-microsecond numerical/serialization variation as a resolvable outlier scale.'}, 'fit_max_iterations': {'value': 8, 'source': 'PROPOSED', 'rationale': 'Bound robust-fit work while allowing the inlier mask to settle.'}, 'step_window_samples': {'value': 5, 'source': 'PROPOSED', 'rationale': 'Compare five observations on each side of a candidate residual discontinuity.'}, 'step_threshold_ns': {'value': 5000000, 'source': 'PROPOSED', 'rationale': 'A five-millisecond residual jump is reported as a possible transport/clock step; it is not a robot acceptance limit.'}, 'maximum_step_segments': {'value': 16, 'source': 'PROPOSED', 'rationale': 'Bound recursive discontinuity splitting on malformed or highly discontinuous input.'}, 'max_discontinuities': {'value': 0, 'source': 'PROPOSED', 'rationale': 'Any detected reversal or residual step makes continuity diagnostics FAIL; this is not a hardware acceptance budget.'}}, 'percentiles': [0, 50, 95, 99, 100]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-stampdrift/tools/stamp_drift/tests/test_review.py", line 167, in test_config_rejects_nonfinite_short_fit_and_missing_percentiles
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_config_rejects_nonfinite_short_fit_and_missing_percentiles (test_review.ReviewTests.test_config_rejects_nonfinite_short_fit_and_missing_percentiles) (config={'schema_version': 1, 'thresholds': {'minimum_fit_samples': {'value': 3, 'source': 'PROPOSED', 'rationale': 'An affine fit needs at least three ordered observations so a residual check is meaningful.'}, 'outlier_mad_scale': {'value': inf, 'source': 'PROPOSED', 'rationale': 'Iterative least-squares rejection keeps samples within four MADs of the current residual centre.'}, 'minimum_mad_ns': {'value': 1000, 'source': 'PROPOSED', 'rationale': 'Do not treat sub-microsecond numerical/serialization variation as a resolvable outlier scale.'}, 'fit_max_iterations': {'value': 8, 'source': 'PROPOSED', 'rationale': 'Bound robust-fit work while allowing the inlier mask to settle.'}, 'step_window_samples': {'value': 5, 'source': 'PROPOSED', 'rationale': 'Compare five observations on each side of a candidate residual discontinuity.'}, 'step_threshold_ns': {'value': 5000000, 'source': 'PROPOSED', 'rationale': 'A five-millisecond residual jump is reported as a possible transport/clock step; it is not a robot acceptance limit.'}, 'maximum_step_segments': {'value': 16, 'source': 'PROPOSED', 'rationale': 'Bound recursive discontinuity splitting on malformed or highly discontinuous input.'}, 'max_discontinuities': {'value': 0, 'source': 'PROPOSED', 'rationale': 'Any detected reversal or residual step makes continuity diagnostics FAIL; this is not a hardware acceptance budget.'}}, 'percentiles': [0, 50, 95, 99, 100]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-stampdrift/tools/stamp_drift/tests/test_review.py", line 167, in test_config_rejects_nonfinite_short_fit_and_missing_percentiles
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_config_rejects_nonfinite_short_fit_and_missing_percentiles (test_review.ReviewTests.test_config_rejects_nonfinite_short_fit_and_missing_percentiles) (config={'schema_version': 1, 'thresholds': {'minimum_fit_samples': {'value': 1, 'source': 'PROPOSED', 'rationale': 'An affine fit needs at least three ordered observations so a residual check is meaningful.'}, 'outlier_mad_scale': {'value': 4.0, 'source': 'PROPOSED', 'rationale': 'Iterative least-squares rejection keeps samples within four MADs of the current residual centre.'}, 'minimum_mad_ns': {'value': 1000, 'source': 'PROPOSED', 'rationale': 'Do not treat sub-microsecond numerical/serialization variation as a resolvable outlier scale.'}, 'fit_max_iterations': {'value': 8, 'source': 'PROPOSED', 'rationale': 'Bound robust-fit work while allowing the inlier mask to settle.'}, 'step_window_samples': {'value': 5, 'source': 'PROPOSED', 'rationale': 'Compare five observations on each side of a candidate residual discontinuity.'}, 'step_threshold_ns': {'value': 5000000, 'source': 'PROPOSED', 'rationale': 'A five-millisecond residual jump is reported as a possible transport/clock step; it is not a robot acceptance limit.'}, 'maximum_step_segments': {'value': 16, 'source': 'PROPOSED', 'rationale': 'Bound recursive discontinuity splitting on malformed or highly discontinuous input.'}, 'max_discontinuities': {'value': 0, 'source': 'PROPOSED', 'rationale': 'Any detected reversal or residual step makes continuity diagnostics FAIL; this is not a hardware acceptance budget.'}}, 'percentiles': [0, 50, 95, 99, 100]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-stampdrift/tools/stamp_drift/tests/test_review.py", line 167, in test_config_rejects_nonfinite_short_fit_and_missing_percentiles
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_config_rejects_nonfinite_short_fit_and_missing_percentiles (test_review.ReviewTests.test_config_rejects_nonfinite_short_fit_and_missing_percentiles) (config={'schema_version': 1, 'thresholds': {'minimum_fit_samples': {'value': 3, 'source': 'PROPOSED', 'rationale': 'An affine fit needs at least three ordered observations so a residual check is meaningful.'}, 'outlier_mad_scale': {'value': 4.0, 'source': 'PROPOSED', 'rationale': 'Iterative least-squares rejection keeps samples within four MADs of the current residual centre.'}, 'minimum_mad_ns': {'value': 1000, 'source': 'PROPOSED', 'rationale': 'Do not treat sub-microsecond numerical/serialization variation as a resolvable outlier scale.'}, 'fit_max_iterations': {'value': 8, 'source': 'PROPOSED', 'rationale': 'Bound robust-fit work while allowing the inlier mask to settle.'}, 'step_window_samples': {'value': 5, 'source': 'PROPOSED', 'rationale': 'Compare five observations on each side of a candidate residual discontinuity.'}, 'step_threshold_ns': {'value': 5000000, 'source': 'PROPOSED', 'rationale': 'A five-millisecond residual jump is reported as a possible transport/clock step; it is not a robot acceptance limit.'}, 'maximum_step_segments': {'value': 16, 'source': 'PROPOSED', 'rationale': 'Bound recursive discontinuity splitting on malformed or highly discontinuous input.'}, 'max_discontinuities': {'value': 0, 'source': 'PROPOSED', 'rationale': 'Any detected reversal or residual step makes continuity diagnostics FAIL; this is not a hardware acceptance budget.'}}, 'percentiles': [50]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-stampdrift/tools/stamp_drift/tests/test_review.py", line 167, in test_config_rejects_nonfinite_short_fit_and_missing_percentiles
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_step_segment_cap_is_enforced (test_review.ReviewTests.test_step_segment_cap_is_enforced)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-stampdrift/tools/stamp_drift/tests/test_review.py", line 238, in test_step_segment_cap_is_enforced
+    self.assertLessEqual(stream['segment_count'],3)
+AssertionError: 4 not less than or equal to 3
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.063s
+
+FAILED (failures=9, errors=3)
+EXPECTED before-fix regression failures/errors: 9 3
+
+exit_code=0
+
