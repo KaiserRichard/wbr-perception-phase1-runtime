@@ -1,0 +1,41 @@
+test_allan_emitter_readback_unknown_or_on (test_check.TakeCheck.test_allan_emitter_readback_unknown_or_on) ... ok
+test_allan_pass_and_reanalysis_contract (test_check.TakeCheck.test_allan_pass_and_reanalysis_contract) ... ok
+test_allan_stop_counts_and_missing_metadata (test_check.TakeCheck.test_allan_stop_counts_and_missing_metadata) ... ok
+test_allan_timing_failures (test_check.TakeCheck.test_allan_timing_failures) ... ok
+test_bad_policy_and_output_reuse_usage_3 (test_check.TakeCheck.test_bad_policy_and_output_reuse_usage_3) ... calib_record: output directory must be new
+calib_record: output and take must be disjoint
+usage: python3 -m unittest [-h] [--version]
+                           (--take-dir TAKE_DIR | --analyze-only ANALYZE_ONLY)
+                           --kind {camera-imu,allan} --outdir OUTDIR
+                           [--config CONFIG]
+python3 -m unittest: error: the following arguments are required: --kind, --outdir
+ok
+test_camera_callback_bag_disagreement (test_check.TakeCheck.test_camera_callback_bag_disagreement) ... ok
+test_camera_excitation_and_blur_fail (test_check.TakeCheck.test_camera_excitation_and_blur_fail) ... ok
+test_camera_missing_emitter_and_failed_stop (test_check.TakeCheck.test_camera_missing_emitter_and_failed_stop) ... ok
+test_camera_stereo_missing_and_skew (test_check.TakeCheck.test_camera_stereo_missing_and_skew) ... ok
+test_camera_valid_checks_pass_target_blocked (test_check.TakeCheck.test_camera_valid_checks_pass_target_blocked) ... ok
+test_camera_wrapper_layout_original_manifest (test_check.TakeCheck.test_camera_wrapper_layout_original_manifest) ... ok
+test_corrupt_supported_bag_fails (test_check.TakeCheck.test_corrupt_supported_bag_fails) ... ok
+test_default_duration_fails_short_fixture (test_check.TakeCheck.test_default_duration_fails_short_fixture) ... ok
+test_each_excitation_axis_is_required (test_check.TakeCheck.test_each_excitation_axis_is_required) ... ok
+test_identity_profile_and_recorder_failure (test_check.TakeCheck.test_identity_profile_and_recorder_failure) ... ok
+test_known_sharpness (test_check.TakeCheck.test_known_sharpness) ... ok
+test_manifest_tampering_and_traversal (test_check.TakeCheck.test_manifest_tampering_and_traversal) ... ok
+test_missing_dependency_blocked_contract (test_check.TakeCheck.test_missing_dependency_blocked_contract) ... ok
+test_missing_receipts_blocked (test_check.TakeCheck.test_missing_receipts_blocked) ... ok
+test_missing_stream_fail_overrides_blocked (test_check.TakeCheck.test_missing_stream_fail_overrides_blocked) ... ok
+test_no_motion_is_blur_blocked (test_check.TakeCheck.test_no_motion_is_blur_blocked) ... ok
+test_pre_capture_free_space_is_not_post_capture_measurement (test_check.TakeCheck.test_pre_capture_free_space_is_not_post_capture_measurement) ... ok
+test_real_saved_analysis_rates (test_check.TakeCheck.test_real_saved_analysis_rates) ... ok
+test_storage_no_space_or_bandwidth (test_check.TakeCheck.test_storage_no_space_or_bandwidth) ... ok
+test_symlink_evidence_refused (test_check.TakeCheck.test_symlink_evidence_refused) ... calib_record: take must not contain symlinks
+ok
+test_unsupported_bag_blocked (test_check.TakeCheck.test_unsupported_bag_blocked) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 10.496s
+
+OK
+BLOCKED dependencies: missing take_tools
+Overall: BLOCKED

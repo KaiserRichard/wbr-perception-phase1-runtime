@@ -1,0 +1,20 @@
+test_all_python_directories_missing_still_prints_summary (test_ci_runner.RunnerTests.test_all_python_directories_missing_still_prints_summary) ... ok
+test_all_skipped_is_blocked_and_reason_is_visible (test_ci_runner.RunnerTests.test_all_skipped_is_blocked_and_reason_is_visible) ... ok
+test_comments_cannot_skip_reviewed_host_targets (test_ci_runner.RunnerTests.test_comments_cannot_skip_reviewed_host_targets) ... ok
+test_empty_baseline_suite_is_blocked (test_ci_runner.RunnerTests.test_empty_baseline_suite_is_blocked) ... ok
+test_failure_does_not_hide_remaining_suites (test_ci_runner.RunnerTests.test_failure_does_not_hide_remaining_suites) ... ok
+test_import_error_is_failure (test_ci_runner.RunnerTests.test_import_error_is_failure) ... ok
+test_individual_skip_with_executed_tests_is_visible (test_ci_runner.RunnerTests.test_individual_skip_with_executed_tests_is_visible) ... ok
+test_make_failure_is_reported (test_ci_runner.RunnerTests.test_make_failure_is_reported) ... ok
+test_missing_baseline_python_suite_is_blocked (test_ci_runner.RunnerTests.test_missing_baseline_python_suite_is_blocked) ... ok
+test_missing_makefile_is_blocked (test_ci_runner.RunnerTests.test_missing_makefile_is_blocked) ... ok
+test_nested_package_is_discovered (test_ci_runner.RunnerTests.test_nested_package_is_discovered) ... ok
+test_new_empty_suite_is_blocked (test_ci_runner.RunnerTests.test_new_empty_suite_is_blocked) ... ok
+test_optional_orb_environment_cannot_enable_real_engine (test_ci_runner.RunnerTests.test_optional_orb_environment_cannot_enable_real_engine) ... ok
+test_partially_undiscovered_nested_suite_is_blocked (test_ci_runner.RunnerTests.test_partially_undiscovered_nested_suite_is_blocked) ... ok
+test_saved_real_receipt_inventory_and_future_locations (test_ci_runner.RunnerTests.test_saved_real_receipt_inventory_and_future_locations) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 26.457s
+
+OK
