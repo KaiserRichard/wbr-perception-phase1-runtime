@@ -1,0 +1,21 @@
+# observer_loss overwritten=0 contention=0 invalid=0 clock_errors=0
+host_ns,host_domain,host_session,frame_id,event,source_ns,source_domain,source_session,reason,depth
+1464042698766000,host_steady,synthetic-host,1,frame_received,0,global_time,synthetic-session,,
+1464042698768000,host_steady,synthetic-host,1,queued,0,global_time,synthetic-session,,
+1464042698768000,host_steady,synthetic-host,0,queue_depth,,,,,1
+1464042698768000,host_steady,synthetic-host,2,frame_received,20,global_time,synthetic-session,,
+1464042698768000,host_steady,synthetic-host,2,queued,20,global_time,synthetic-session,,
+1464042698768000,host_steady,synthetic-host,0,queue_depth,,,,,2
+1464042698769000,host_steady,synthetic-host,3,frame_received,15,global_time,synthetic-session,,
+1464042698769000,host_steady,synthetic-host,3,queued,15,global_time,synthetic-session,,
+1464042698769000,host_steady,synthetic-host,0,queue_depth,,,,,3
+1464042698769000,host_steady,synthetic-host,4,frame_received,15,global_time,synthetic-session,,
+1464042698769000,host_steady,synthetic-host,4,queued,15,global_time,synthetic-session,,
+1464042698769000,host_steady,synthetic-host,0,queue_depth,,,,,4
+1464042698770000,host_steady,synthetic-host,0,queue_depth,,,,,3
+1464042698776000,host_steady,synthetic-host,0,queue_depth,,,,,2
+1464042698776000,host_steady,synthetic-host,0,queue_depth,,,,,1
+1464042698778000,host_steady,synthetic-host,0,queue_depth,,,,,0
+1464042698806000,host_steady,synthetic-host,3,track_start,15,global_time,synthetic-session,,
+1464042698808000,host_steady,synthetic-host,3,track_end,15,global_time,synthetic-session,,
+1464042698832000,host_steady,synthetic-host,3,snapshot_published,15,global_time,synthetic-session,,
