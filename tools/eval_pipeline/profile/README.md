@@ -22,6 +22,8 @@ python3 tools/eval_pipeline/profile/profile.py report --run /tmp/wbr-profile-run
 Add `--threads` for per-thread CPU deltas. `sampler` writes `samples.csv` and
 `metadata.json` into a new output directory, stops after Ctrl-C when `--samples`
 is omitted, and tolerates absent proc/sysfs/VideoCore fields as `UNKNOWN`.
+The CSV's `throttle_sampled` column distinguishes 1 Hz poll rows from
+intervening 10 Hz rows; failed polls remain `UNKNOWN` and block validity.
 Metadata pairs a UTC anchor with `CLOCK_MONOTONIC`; UTC is descriptive and is
 never subtracted from monotonic timestamps. RSS/PSS are bytes. CPU utilization
 is sampled as per-core percentages; the target's process CPU is percent of one
@@ -39,6 +41,8 @@ end-to-end/realtime factor remain UNKNOWN. Event-file realtime factor is the
 frame-received source timestamp span mapped to host steady time divided by the
 observer host span. It is UNKNOWN unless source epochs are from the same host
 session or a qualified existing ClockMap JSON is supplied with `--clockmap`.
+That map must target the same observer `host_steady` domain and session before
+mapped epochs are compared.
 
 `validity` supports `--analyze-only <run-dir>` and writes `result.json` using
 the shared PASS/FAIL/BLOCKED contract. Any current or historical

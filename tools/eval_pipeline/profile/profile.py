@@ -80,7 +80,9 @@ def rss_pss(pid, proc_root=Path("/proc")):
         match = re.search(r"^Pss:\s+([0-9]+)\s+kB\s*$", rollup, re.M)
         if match:
             pss = int(match[1]) * 1024
-    return status.get("rss_bytes", UNKNOWN), pss if pss is not None else UNKNOWN
+    rss = status.get("rss_bytes", UNKNOWN)
+    return (UNKNOWN if rss in (None, resource_sampler.UNAVAILABLE) else rss,
+            pss if pss is not None else UNKNOWN)
 
 
 def fan_states(sys_root=Path("/sys")):
@@ -99,7 +101,8 @@ def sample_once(pid, old_cpu, old_proc, old_time, *, proc_root=Path("/proc"), sy
     row = {"monotonic_ns": now, "clock_domain": "CLOCK_MONOTONIC", "pid": pid}
     proc_stat = read_optional(proc_root / "stat")
     current_cpu = proc_cpu(proc_stat)
-    row["per_core_cpu_pct_json"] = json.dumps(cpu_percent(old_cpu, current_cpu), sort_keys=True)
+    per_core = cpu_percent(old_cpu, current_cpu)
+    row["per_core_cpu_pct_json"] = json.dumps(per_core or UNKNOWN, sort_keys=True)
     board = resource_sampler.cpu_counters(proc_stat)
     row["cpu_count"] = board[1] if board else UNKNOWN
     process = resource_sampler.process_counters(read_optional(proc_root / str(pid) / "stat"))
@@ -125,20 +128,23 @@ def sample_once(pid, old_cpu, old_proc, old_time, *, proc_root=Path("/proc"), sy
                                  current[1] == previous[1] and current[0] >= previous[0] else UNKNOWN)
             if current:
                 (thread_previous if thread_previous is not None else {})[tid.name] = current
-        row["thread_cpu_pct_json"] = json.dumps(threads, sort_keys=True)
-    row["cpu_freq_khz_json"] = json.dumps({p.parents[1].name: (resource_sampler.nonnegative(read_optional(p))
-        if resource_sampler.nonnegative(read_optional(p)) is not None else UNKNOWN)
-        for p in sorted(sys_root.glob("devices/system/cpu/cpu[0-9]*/cpufreq/scaling_cur_freq"))}, sort_keys=True)
+        row["thread_cpu_pct_json"] = json.dumps(threads or UNKNOWN, sort_keys=True)
+    frequencies = {}
+    for path in sorted(sys_root.glob("devices/system/cpu/cpu[0-9]*/cpufreq/scaling_cur_freq")):
+        value = resource_sampler.nonnegative(read_optional(path))
+        frequencies[path.parents[1].name] = value if value is not None else UNKNOWN
+    row["cpu_freq_khz_json"] = json.dumps(frequencies or UNKNOWN, sort_keys=True)
     thermal = {}
     for p in sorted(sys_root.glob("class/thermal/thermal_zone*")):
         value = resource_sampler.nonnegative(read_optional(p / "temp"))
         zone_type = read_optional(p / "type")
         thermal[p.name] = {"type": zone_type.strip() if zone_type else UNKNOWN,
                            "c": value / 1000 if value is not None else UNKNOWN}
-    row["thermal_c_json"] = json.dumps(thermal, sort_keys=True)
+    row["thermal_c_json"] = json.dumps(thermal or UNKNOWN, sort_keys=True)
     row["fan_state_json"] = json.dumps(fan_states(sys_root), sort_keys=True)
     row.update({name: UNKNOWN for name in THROTTLE_NAMES})
     row["throttled_raw"] = UNKNOWN
+    row["throttle_sampled"] = int(do_throttle)
     if do_throttle:
         raw = resource_sampler.get_throttled()
         import re
@@ -161,7 +167,7 @@ def sampler(args):
     anchor_utc = utc_now()
     fields = ["monotonic_ns", "clock_domain", "pid", "cpu_count", "per_core_cpu_pct_json",
               "target_cpu_pct_one_core", "thread_cpu_pct_json", "process_start_ticks", "rss_bytes",
-              "pss_bytes", "cpu_freq_khz_json", "thermal_c_json", "throttled_raw", *THROTTLE_NAMES,
+              "pss_bytes", "cpu_freq_khz_json", "thermal_c_json", "throttled_raw", "throttle_sampled", *THROTTLE_NAMES,
               "fan_state_json", "sample_duration_ns"]
     proc_root, sys_root = Path(args.proc_root), Path(args.sys_root)
     if not (proc_root / str(args.pid)).exists():
@@ -244,8 +250,11 @@ def latency(args):
                     if args.clockmap:
                         mapping = aggregate.load_clockmap(args.clockmap)
                         from tools.clockmap import Stamp
-                        source_epochs = [mapping.convert(Stamp(source[0], source[1], source[2])).stamp.value_ns
-                                         for source in receive_sources.values()]
+                        mapped = [mapping.convert(Stamp(source[0], source[1], source[2])).stamp
+                                  for source in receive_sources.values()]
+                        if any(stamp.domain != "host_steady" or stamp.session != session for stamp in mapped):
+                            raise ValueError("clockmap must map source stamps to this observer host_steady session")
+                        source_epochs = [stamp.value_ns for stamp in mapped]
             covered_s = ((max(source_epochs) - min(source_epochs)) / span
                          if len(source_epochs) > 1 and span > 0 else None)
             results[session] = {"clock_domain": "host_steady / Linux CLOCK_MONOTONIC", "frame_count": len(per_frame_track),
@@ -281,9 +290,15 @@ def load_samples(directory):
 
 def validity(args):
     c = config()
-    rows = load_samples(args.analyze_only)
+    samples_path = Path(args.analyze_only) / "samples.csv"
+    try:
+        rows = load_samples(args.analyze_only)
+    except OSError:
+        rows = []
     temps, observed_invalid = [], []
     unknown_throttle = False
+    unknown_temperature = False
+    throttle_observation_count = 0
     for row in rows:
         try:
             zones = json.loads(row["thermal_c_json"])
@@ -291,28 +306,38 @@ def validity(args):
         soc = zones.get("thermal_zone0") if isinstance(zones, dict) else None
         if isinstance(soc, dict) and isinstance(soc.get("c"), (float, int)):
             temps.append(float(soc["c"]))
+        else:
+            unknown_temperature = True
         for key in THROTTLE_NAMES:
+            sampled = row.get("throttle_sampled")
+            # Older saved fixtures have no marker: a parsed raw VC value proves
+            # that row was sampled; otherwise telemetry status is unknown.
+            if sampled == "0":
+                continue
             value = row.get(key, UNKNOWN)
             if value in ("0", "1"):
                 if value == "1": observed_invalid.append(key)
             else: unknown_throttle = True
+        if row.get("throttle_sampled") != "0":
+            throttle_observation_count += 1
     max_temp = max(temps) if temps else None
-    missing_temp = max_temp is None
+    missing_temp = max_temp is None or unknown_temperature
     temp_ok = max_temp is not None and max_temp < c["soft_temperature_limit_c"]["value"]
     criteria = []
     criteria.append({"id":"no_throttle_or_undervoltage", "description":"No current or historical under-voltage/frequency-cap/throttle/soft-temperature bit in sampled VC state",
         "measured": sorted(set(observed_invalid)) if not unknown_throttle else (sorted(set(observed_invalid)) or None), "unit":"bit names",
         "threshold":f"<={c['max_invalid_throttle_occurrences']['value']} occurrences",
-        "status":"FAIL" if observed_invalid else "BLOCKED" if unknown_throttle else "PASS",
+        "status":"FAIL" if observed_invalid else "BLOCKED" if unknown_throttle or not throttle_observation_count else "PASS",
         "evidence":"samples.csv", "threshold_source":c["max_invalid_throttle_occurrences"]["source"]})
     criteria.append({"id":"max_temperature", "description":"Maximum sampled SoC temperature remains below configured soft limit",
         "measured":max_temp, "unit":"degC", "threshold":f"<{c['soft_temperature_limit_c']['value']} degC",
-        "status":"BLOCKED" if missing_temp else "PASS" if temp_ok else "FAIL", "evidence":"samples.csv",
+        "status":"FAIL" if max_temp is not None and not temp_ok else "BLOCKED" if missing_temp else "PASS", "evidence":"samples.csv",
         "threshold_source":c["soft_temperature_limit_c"]["source"]})
     status = "FAIL" if any(x["status"] == "FAIL" for x in criteria) else "BLOCKED" if any(x["status"] == "BLOCKED" for x in criteria) else "PASS"
     result = {"check":"profile_validity", "tool_version":"1.0", "status":status,
         "started_utc":utc_now(), "ended_utc":utc_now(), "host":{"system":platform.system(),"machine":platform.machine()},
-        "criteria":criteria, "raw_files":[{"path":"samples.csv","sha256":sha(Path(args.analyze_only)/"samples.csv")}],
+        "criteria":criteria, "raw_files":([{"path":"samples.csv","sha256":sha(samples_path)}]
+                                                if samples_path.is_file() else []),
         "notes":["Latency is VALID only when this gate is PASS.", "Historical throttle flags in vcgencmd invalidate the measured profiling window."]}
     dest=Path(args.out) if args.out else Path(args.analyze_only)
     dest.mkdir(parents=True, exist_ok=True)
