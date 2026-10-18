@@ -95,7 +95,7 @@ for suite_dir in ros2/*/tests; do
   [[ -d "$suite_dir" ]] && add_python_dir "$suite_dir"
 done
 add_python_dir tools/trajectory_eval
-for suite_dir in calibration/*/tests lab/*/tests tools/eval_pipeline/tests tools/eval_pipeline/*/tests tools/perception_health/tests tools/perception_health/integration; do
+for suite_dir in calibration/*/tests lab/*/tests tools/eval_pipeline/tests tools/eval_pipeline/*/tests tools/perception_health/tests tools/perception_health/integration experiments/templates/*/tests; do
   [[ -d "$suite_dir" ]] && add_python_dir "$suite_dir"
 done
 
