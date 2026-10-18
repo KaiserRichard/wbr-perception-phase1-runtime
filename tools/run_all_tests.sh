@@ -98,13 +98,14 @@ add_python_dir tools/trajectory_eval
 for suite_dir in calibration/*/tests lab/*/tests tools/eval_pipeline/tests tools/eval_pipeline/*/tests tools/perception_health/tests tools/perception_health/integration; do
   [[ -d "$suite_dir" ]] && add_python_dir "$suite_dir"
 done
+add_python_dir tests/fuzz
 
 for suite_dir in tools/link_proto tools/link_bench tools/runtime_observer tools/vio_adapter tools/ros2_bridge; do
   run_make_suite "$suite_dir"
 done
 
 # Optional host-only Makefile suites added after the T8 baseline.
-for suite_dir in tools/perception_health/c/mcu; do
+for suite_dir in tools/perception_health/c/mcu tests/fuzz; do
   [[ -d "$suite_dir" && -f "$suite_dir/Makefile" ]] || continue
   run_make_suite "$suite_dir"
 done
