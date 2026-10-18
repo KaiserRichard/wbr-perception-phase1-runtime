@@ -1,0 +1,8 @@
+{
+  "hashes": {
+    "include/LocalMapping.h": "c786993960d52b74a064c2e487f0e450f989b954b17585febb5e6f8d95e1915b",
+    "src/LocalMapping.cc": "6da465cd5b88b6278188935f7b9264d493dd88d3487a75bccf4614bd40c8a30e",
+    "src/System.cc": "935dd45007a75d6750bb8c3b5c41f4edb91b7ef0b0944f655d4348955bbd168a"
+  },
+  "missing": []
+}

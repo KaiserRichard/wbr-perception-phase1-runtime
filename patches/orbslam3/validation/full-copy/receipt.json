@@ -1,0 +1,16 @@
+{
+  "started_utc": "2026-10-18T10:01:09.140364+00:00",
+  "source": "/Users/quockaiser/Desktop/Research/wbr-perception-phase1-runtime/third_party/ORB_SLAM3",
+  "upstream_commit": "4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4",
+  "copied_files": 955,
+  "copied_bytes": 1507554292,
+  "omitted": [
+    ".git",
+    ".DS_Store"
+  ],
+  "label": "MEASURED offline applicability only",
+  "temporary_copy_removed": true,
+  "exit_code": 0,
+  "patch_sha256": "2273145e1482d6d548b42f49fbea2b3acb7984c4241bd7f2de14dd4005e4a85e",
+  "ended_utc": "2026-10-18T10:01:23.372907+00:00"
+}

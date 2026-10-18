@@ -1,0 +1,8 @@
+{
+  "label": "MEASURED (historical report; raw gdb trace unavailable)",
+  "source": "experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md",
+  "line": 9,
+  "source_sha256": "9dae15c3001c6a39366414054f850f41b6c94b9a6d5a3e9b93385607ecd1c36d",
+  "verbatim": "5. **Offline ORB-SLAM3 smoke test crashed (SIGSEGV)** on the first frame (MEASURED, gdb): `main \u2192 System::GetTimeFromIMUInit \u2192 LocalMapping::GetCurrKFTime`. Cause: upstream ORB-SLAM3 never initializes `LocalMapping::mpCurrentKeyFrame`, so the null check reads garbage before the first keyframe (the EuRoC example never calls this function, so N4A was unaffected). Patch 4: `KeyFrame* mpCurrentKeyFrame = nullptr;` in `include/LocalMapping.h` (committed in the Pi build copy). **The rebuild was interrupted by a power loss (3 of ~27 library objects redone) \u2014 must be resumed** (`cmake --build build -j4` in `~/orbslam3/ORB_SLAM3`, preferably on the 8 GB Pi).",
+  "raw_backtrace_available": false
+}
