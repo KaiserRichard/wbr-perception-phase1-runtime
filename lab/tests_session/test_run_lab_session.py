@@ -23,9 +23,10 @@ key = {"check_power_usb.py": "power_usb", "check.py": "d435i_raw",
        "record_check.py": "rosbag_record", "replay_check.py": "rosbag_replay",
        "check_calib_take.py": "calib_record"}[name]
 status = json.loads(os.environ.get("STUB_STATUSES", "{}")).get(key, "PASS")
+evidence = "missing.txt" if os.environ.get("STUB_MISSING_EVIDENCE") == key else "stub.txt"
 criteria = [{"id": key + ":stub", "description": "stub criterion", "measured": 1,
              "unit": "count", "threshold": ">= 1", "status": status,
-             "evidence": "stub.txt", "threshold_source": "test fixture"}]
+             "evidence": evidence, "threshold_source": "test fixture"}]
 (out / "stub.txt").write_text("stub evidence\\n")
 (out / "result.json").write_text(json.dumps({"check": key, "tool_version": "stub",
     "status": status, "criteria": criteria, "raw_files": [], "notes": []}))
@@ -57,12 +58,15 @@ class LabSessionTests(unittest.TestCase):
     def tearDown(self):
         self.temp.cleanup()
 
-    def run_session(self, name, statuses=None, extra=()):
+    def run_session(self, name, statuses=None, extra=(), calib_take=None, missing_evidence=None):
         out = self.base / name
         env = dict(os.environ)
+        env["HOME"] = str(self.base)
         env["STUB_STATUSES"] = json.dumps(statuses or {})
+        if missing_evidence:
+            env["STUB_MISSING_EVIDENCE"] = missing_evidence
         proc = subprocess.run([sys.executable, str(SCRIPT), "--session-dir", str(out),
-                               "--calib-take", str(self.take), "--checks-dir", str(self.checks),
+                               "--calib-take", str(calib_take or self.take), "--checks-dir", str(self.checks),
                                "--yes", *extra], cwd=ROOT, env=env, text=True,
                               stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
         return proc, out
@@ -77,6 +81,22 @@ class LabSessionTests(unittest.TestCase):
         self.assertEqual(len(data["criteria"]), 5)
         self.assertTrue((out / "SESSION.md").is_file())
         self.assertEqual((out / "01_power_usb/orchestrator.stdout").read_text().strip(), "power_usb")
+
+    def test_tilde_calibration_path_is_expanded_for_child_command(self):
+        proc, out = self.run_session("tilde-take", calib_take="~/take")
+        self.assertEqual(proc.returncode, 0, proc.stderr + proc.stdout)
+        data = json.loads((out / "SESSION.json").read_text())
+        command = data["steps"][4]["command"]
+        take_arg = command[command.index("--take-dir") + 1]
+        self.assertEqual(take_arg, str(self.take.resolve()))
+
+    def test_missing_criterion_evidence_is_error_and_session_is_written(self):
+        proc, out = self.run_session("missing-evidence", missing_evidence="power_usb")
+        self.assertEqual(proc.returncode, 3, proc.stderr + proc.stdout)
+        data = json.loads((out / "SESSION.json").read_text())
+        self.assertEqual(data["status"], "ERROR")
+        self.assertEqual(data["steps"][0]["status"], "ERROR")
+        self.assertIn("evidence file is missing", " ".join(data["steps"][0]["notes"]))
 
     def test_early_fail_stops_dependents(self):
         proc, out = self.run_session("early-fail", {"power_usb": "FAIL"})

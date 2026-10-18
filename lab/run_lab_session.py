@@ -50,7 +50,7 @@ def ask(prompt: str, assume_yes: bool) -> bool:
 
 def build_plan(args: argparse.Namespace, session: Path, root: Path) -> list[dict[str, Any]]:
     py = sys.executable
-    check_root = Path(args.checks_dir).resolve() if args.checks_dir else root / "lab"
+    check_root = Path(args.checks_dir).expanduser().resolve() if args.checks_dir else root / "lab"
     power_out = session / "01_power_usb"
     raw_out = session / "02_d435i_raw"
     record_out = session / "03_rosbag_record"
@@ -75,18 +75,18 @@ def build_plan(args: argparse.Namespace, session: Path, root: Path) -> list[dict
                      "--output-dir", str(replay_out), "--live-domain", "42", "--replay-domain", "43"]},
         {"id": "calib_record", "name": "Calibration take", "directory": calib_out,
          "command": [py, str(check_root / "calib_record/check_calib_take.py"), "--take-dir",
-                     str(Path(args.calib_take).resolve()), "--kind", args.calib_kind, "--outdir", str(calib_out)]},
+                     str(Path(args.calib_take).expanduser().resolve()), "--kind", args.calib_kind, "--outdir", str(calib_out)]},
     ]
     if args.power_thresholds:
-        steps[0]["command"] += ["--thresholds", str(Path(args.power_thresholds).resolve())]
+        steps[0]["command"] += ["--thresholds", str(Path(args.power_thresholds).expanduser().resolve())]
     if args.raw_config:
-        steps[1]["command"] += ["--config", str(Path(args.raw_config).resolve())]
+        steps[1]["command"] += ["--config", str(Path(args.raw_config).expanduser().resolve())]
     if args.ros_config:
         for index in (2, 3):
             command = steps[index]["command"]
-            command[command.index(str(check_root / "rosbag_qual/config.json"))] = str(Path(args.ros_config).resolve())
+            command[command.index(str(check_root / "rosbag_qual/config.json"))] = str(Path(args.ros_config).expanduser().resolve())
     if args.calib_config:
-        steps[4]["command"] += ["--config", str(Path(args.calib_config).resolve())]
+        steps[4]["command"] += ["--config", str(Path(args.calib_config).expanduser().resolve())]
     return steps
 
 
@@ -98,6 +98,24 @@ def read_result(directory: Path) -> tuple[dict[str, Any] | None, str | None]:
         value = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         return None, f"invalid result.json: {exc}"
+    if not isinstance(value, dict):
+        return None, "invalid result.json: top level must be an object"
+    if value.get("status") not in ("PASS", "FAIL", "BLOCKED"):
+        return None, "invalid result.json: missing or invalid check status"
+    criteria = value.get("criteria")
+    if not isinstance(criteria, list):
+        return None, "invalid result.json: criteria must be an array"
+    for index, criterion in enumerate(criteria):
+        if not isinstance(criterion, dict):
+            return None, f"invalid result.json: criterion {index} must be an object"
+        if criterion.get("status") not in ("PASS", "FAIL", "BLOCKED"):
+            return None, f"invalid result.json: criterion {index} has invalid status"
+        evidence = criterion.get("evidence")
+        evidence_path = Path(evidence) if isinstance(evidence, str) else Path("/")
+        if not evidence or evidence_path.is_absolute() or ".." in evidence_path.parts:
+            return None, f"invalid result.json: criterion {index} has invalid evidence path"
+        if not (directory / evidence_path).is_file():
+            return None, f"invalid result.json: criterion {index} evidence file is missing: {evidence}"
     return value, None
 
 
