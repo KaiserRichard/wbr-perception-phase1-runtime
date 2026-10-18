@@ -1,0 +1,338 @@
+test_drop_fixture_is_fail (test_qual.QualificationTests.test_drop_fixture_is_fail) ... ok
+test_missing_bag_is_blocked (test_qual.QualificationTests.test_missing_bag_is_blocked) ... ok
+test_pass_fixture_and_analyze_only (test_qual.QualificationTests.test_pass_fixture_and_analyze_only) ... ok
+test_real_saved_evidence_fixture (test_qual.QualificationTests.test_real_saved_evidence_fixture)
+Use the saved 2026-10-14 DB3 as an input fixture, never copy or modify it. ... ok
+test_stamp_reversal_is_fail (test_qual.QualificationTests.test_stamp_reversal_is_fail) ... ok
+test_cdr_alignment_is_relative_to_encapsulation (test_review.ReviewTests.test_cdr_alignment_is_relative_to_encapsulation) ... ERROR
+test_corrupt_saved_replay_is_blocked (test_review.ReviewTests.test_corrupt_saved_replay_is_blocked) ... ERROR
+test_empty_saved_record_does_not_pass (test_review.ReviewTests.test_empty_saved_record_does_not_pass) ... FAIL
+test_explicit_missing_config_is_not_replaced_by_default (test_review.ReviewTests.test_explicit_missing_config_is_not_replaced_by_default) ... FAIL
+test_invalid_ros_nanoseconds_rejected (test_review.ReviewTests.test_invalid_ros_nanoseconds_rejected) ... FAIL
+test_live_camera_in_replay_domain_blocks_player (test_review.ReviewTests.test_live_camera_in_replay_domain_blocks_player) ... FAIL
+test_missing_replay_player_evidence_is_blocked (test_review.ReviewTests.test_missing_replay_player_evidence_is_blocked) ... FAIL
+test_missing_saved_record_is_blocked_without_crashing (test_review.ReviewTests.test_missing_saved_record_is_blocked_without_crashing) ... ERROR
+test_missing_saved_replay_graph_guard_is_blocked (test_review.ReviewTests.test_missing_saved_replay_graph_guard_is_blocked) ... FAIL
+test_receive_rate_outside_band_fails (test_review.ReviewTests.test_receive_rate_outside_band_fails) ... FAIL
+test_record_waits_only_requested_duration_and_saves_recomputable_raw (test_review.ReviewTests.test_record_waits_only_requested_duration_and_saves_recomputable_raw) ... FAIL
+test_repeated_stamp_fails (test_review.ReviewTests.test_repeated_stamp_fails) ... ok
+test_replay_analyze_only_reduces_raw_observations_and_loads_saved_config (test_review.ReviewTests.test_replay_analyze_only_reduces_raw_observations_and_loads_saved_config) ... ok
+test_replay_missing_recorded_topic_is_blocked (test_review.ReviewTests.test_replay_missing_recorded_topic_is_blocked) ... FAIL
+test_replay_stamp_change_is_fail (test_review.ReviewTests.test_replay_stamp_change_is_fail) ... ok
+test_replay_subscription_error_cannot_pass (test_review.ReviewTests.test_replay_subscription_error_cannot_pass) ... FAIL
+test_replay_uses_recorded_receive_rate (test_review.ReviewTests.test_replay_uses_recorded_receive_rate) ... FAIL
+test_saved_offline_missing_order_measurement_is_blocked (test_review.ReviewTests.test_saved_offline_missing_order_measurement_is_blocked) ... FAIL
+test_saved_offline_missing_topic_is_blocked (test_review.ReviewTests.test_saved_offline_missing_topic_is_blocked) ... FAIL
+test_tf_stamps_are_observed (test_review.ReviewTests.test_tf_stamps_are_observed) ... ERROR
+test_usage_exit_code_is_three (test_review.ReviewTests.test_usage_exit_code_is_three) ... usage: python3 -m unittest [-h] [--bag BAG] [--output-dir OUTPUT_DIR]
+                           [--config CONFIG] [--analyze-only ANALYZE_ONLY]
+python3 -m unittest: error: provide exactly one of --output-dir or --analyze-only
+
+  test_usage_exit_code_is_three (test_review.ReviewTests.test_usage_exit_code_is_three) (module='analyze_bag') ... FAIL
+usage: python3 -m unittest [-h] [--output-dir OUTPUT_DIR] [--config CONFIG]
+                           [--seconds SECONDS] [--analyze-only ANALYZE_ONLY]
+python3 -m unittest: error: provide exactly one of --output-dir or --analyze-only
+  test_usage_exit_code_is_three (test_review.ReviewTests.test_usage_exit_code_is_three) (module='record_check') ... FAIL
+usage: python3 -m unittest [-h] [--bag BAG] [--output-dir OUTPUT_DIR]
+                           [--config CONFIG] [--live-domain LIVE_DOMAIN]
+                           [--replay-domain REPLAY_DOMAIN]
+                           [--analyze-only ANALYZE_ONLY]
+python3 -m unittest: error: provide exactly one of --output-dir or --analyze-only
+  test_usage_exit_code_is_three (test_review.ReviewTests.test_usage_exit_code_is_three) (module='replay_check') ... FAIL
+
+======================================================================
+ERROR: test_cdr_alignment_is_relative_to_encapsulation (test_review.ReviewTests.test_cdr_alignment_is_relative_to_encapsulation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 145, in test_cdr_alignment_is_relative_to_encapsulation
+    self.assertEqual(cdr.unpack('d'), 3.25)
+                     ^^^^^^^^^^^^^^^
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/bag_core.py", line 36, in unpack
+    raise ValueError("truncated CDR field")
+ValueError: truncated CDR field
+
+======================================================================
+ERROR: test_corrupt_saved_replay_is_blocked (test_review.ReviewTests.test_corrupt_saved_replay_is_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 80, in test_corrupt_saved_replay_is_blocked
+    self.assertEqual(self.quiet(replay_check.main, ['--analyze-only', str(out)]), 2)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 54, in quiet
+    return function(argv)
+           ^^^^^^^^^^^^^^
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/replay_check.py", line 238, in main
+    return run_replay(args)
+           ^^^^^^^^^^^^^^^^
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/replay_check.py", line 181, in run_replay
+    replay = json.loads(observed_path.read_text())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/json/decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+
+======================================================================
+ERROR: test_missing_saved_record_is_blocked_without_crashing (test_review.ReviewTests.test_missing_saved_record_is_blocked_without_crashing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 70, in test_missing_saved_record_is_blocked_without_crashing
+    self.assertEqual(self.quiet(record_check.main, ['--analyze-only', str(out)]), 2)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 54, in quiet
+    return function(argv)
+           ^^^^^^^^^^^^^^
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/record_check.py", line 197, in main
+    return run_record(args)
+           ^^^^^^^^^^^^^^^^
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/record_check.py", line 85, in run_record
+    return _blocked(output_dir, result, "record --analyze-only requires record_raw.json", [output_dir / "config.json"])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/record_check.py", line 69, in _blocked
+    [file_record(item, output_dir) for item in raw], [message])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/record_check.py", line 69, in <listcomp>
+    [file_record(item, output_dir) for item in raw], [message])
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/qual_common.py", line 83, in file_record
+    record: dict[str, Any] = {"path": str(path), "sha256": sha256(path)}
+                                                           ^^^^^^^^^^^^
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/qual_common.py", line 26, in sha256
+    with path.open("rb") as stream:
+         ^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpfym66yvs/record/config.json'
+
+======================================================================
+ERROR: test_tf_stamps_are_observed (test_review.ReviewTests.test_tf_stamps_are_observed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 163, in test_tf_stamps_are_observed
+    self.assertEqual(replay_check._message_stamps(msg), [1_000_000_002, 3_000_000_004])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'replay_check' has no attribute '_message_stamps'
+
+======================================================================
+FAIL: test_empty_saved_record_does_not_pass (test_review.ReviewTests.test_empty_saved_record_does_not_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 75, in test_empty_saved_record_does_not_pass
+    self.assertEqual(self.quiet(record_check.main, ['--analyze-only', str(out)]), 2)
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_explicit_missing_config_is_not_replaced_by_default (test_review.ReviewTests.test_explicit_missing_config_is_not_replaced_by_default)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 149, in test_explicit_missing_config_is_not_replaced_by_default
+    self.assertEqual(self.quiet(analyze_bag.main, ['--bag', str(self.bag), '--output-dir', str(out),
+AssertionError: 1 != 3
+
+======================================================================
+FAIL: test_invalid_ros_nanoseconds_rejected (test_review.ReviewTests.test_invalid_ros_nanoseconds_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 140, in test_invalid_ros_nanoseconds_rejected
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_live_camera_in_replay_domain_blocks_player (test_review.ReviewTests.test_live_camera_in_replay_domain_blocks_player)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 172, in test_live_camera_in_replay_domain_blocks_player
+    self.assertEqual(code, 2); observe.assert_not_called()
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/unittest/mock.py", line 884, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected '_observe_replay' to not have been called. Called 1 times.
+Calls: [call(PosixPath('/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpmnq_fe9j/test.db3'), {'schema_version': 1, 'topics': [{'name': '/left', 'type': 'sensor_msgs/msg/Image', 'role': 'image_left', 'required': True, 'nominal_hz': 2.0, 'rate_min_hz': 1.5, 'rate_max_hz': 2.5, 'max_gap_s': 0.75, 'drop_gap_factor': 2.0, 'threshold_source': 'PROPOSED: synthetic fixture acceptance band'}, {'name': '/right', 'type': 'sensor_msgs/msg/Image', 'role': 'image_right', 'required': True, 'nominal_hz': 2.0, 'rate_min_hz': 1.5, 'rate_max_hz': 2.5, 'max_gap_s': 0.75, 'drop_gap_factor': 2.0, 'threshold_source': 'PROPOSED: synthetic fixture acceptance band'}, {'name': '/gyro', 'type': 'sensor_msgs/msg/Imu', 'role': 'gyro', 'required': True, 'nominal_hz': 4.0, 'rate_min_hz': 3.0, 'rate_max_hz': 5.0, 'max_gap_s': 0.375, 'drop_gap_factor': 2.0, 'threshold_source': 'PROPOSED: synthetic fixture acceptance band'}, {'name': '/accel', 'type': 'sensor_msgs/msg/Imu', 'role': 'accel', 'required': True, 'nominal_hz': 4.0, 'rate_min_hz': 3.0, 'rate_max_hz': 5.0, 'max_gap_s': 0.375, 'drop_gap_factor': 2.0, 'threshold_source': 'PROPOSED: synthetic fixture acceptance band'}], 'pairing': {'left_role': 'image_left', 'right_role': 'image_right', 'min_fraction': 1.0, 'threshold_source': 'PROPOSED: fixture requires exact pairing'}, 'storage': {'max_write_rate_bps': 1000000000, 'min_duration_s': 0.5, 'threshold_source': 'PROPOSED: synthetic fixture limit', 'storage_id': 'sqlite3'}, 'replay': {'rate_relative_tolerance': 0.1, 'min_count_fraction': 0.99, 'threshold_source': 'PROPOSED: synthetic fixture replay limit'}, 'record': {'duration_s': 2, 'command_timeout_s': 5, 'shutdown_grace_s': 1, 'node_list_timeout_s': 1, 'bag_info_timeout_s': 1, 'parameter_timeout_s': 1, 'topic_info_timeout_s': 1, 'threshold_source': 'PROPOSED: test-only timeout'}, 'camera_node': '/camera/camera', 'qos_overrides_file': '/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/qos_overrides.yaml'}, PosixPath('/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/qos_overrides.yaml'), PosixPath('/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpmnq_fe9j/live'), 43),
+ call().__iter__()].
+
+======================================================================
+FAIL: test_missing_replay_player_evidence_is_blocked (test_review.ReviewTests.test_missing_replay_player_evidence_is_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 90, in test_missing_replay_player_evidence_is_blocked
+    self.assertEqual(next(c['status'] for c in criteria if c['id'] == 'replay:player'), 'BLOCKED')
+AssertionError: 'FAIL' != 'BLOCKED'
+- FAIL
++ BLOCKED
+
+
+======================================================================
+FAIL: test_missing_saved_replay_graph_guard_is_blocked (test_review.ReviewTests.test_missing_saved_replay_graph_guard_is_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 85, in test_missing_saved_replay_graph_guard_is_blocked
+    self.assertEqual(self.quiet(replay_check.main, ['--analyze-only', str(out)]), 2)
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_receive_rate_outside_band_fails (test_review.ReviewTests.test_receive_rate_outside_band_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 129, in test_receive_rate_outside_band_fails
+    self.assertEqual(overall_status(criteria), 'FAIL')
+AssertionError: 'PASS' != 'FAIL'
+- PASS
++ FAIL
+
+
+======================================================================
+FAIL: test_record_waits_only_requested_duration_and_saves_recomputable_raw (test_review.ReviewTests.test_record_waits_only_requested_duration_and_saves_recomputable_raw)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 191, in test_record_waits_only_requested_duration_and_saves_recomputable_raw
+    self.assertEqual(process.timeout, self.config['record']['duration_s'])
+AssertionError: 7.0 != 2
+
+======================================================================
+FAIL: test_replay_missing_recorded_topic_is_blocked (test_review.ReviewTests.test_replay_missing_recorded_topic_is_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 105, in test_replay_missing_recorded_topic_is_blocked
+    self.assertEqual(overall_status(replay_check._criteria(stored, actual, self.config, 'raw.json')), 'BLOCKED')
+AssertionError: 'PASS' != 'BLOCKED'
+- PASS
++ BLOCKED
+
+
+======================================================================
+FAIL: test_replay_subscription_error_cannot_pass (test_review.ReviewTests.test_replay_subscription_error_cannot_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 110, in test_replay_subscription_error_cannot_pass
+    self.assertEqual(overall_status(replay_check._criteria(self.stored, actual, self.config, 'raw.json')), 'BLOCKED')
+AssertionError: 'PASS' != 'BLOCKED'
+- PASS
++ BLOCKED
+
+
+======================================================================
+FAIL: test_replay_uses_recorded_receive_rate (test_review.ReviewTests.test_replay_uses_recorded_receive_rate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 100, in test_replay_uses_recorded_receive_rate
+    self.assertEqual(overall_status(replay_check._criteria(stored, report, self.config, 'raw.json')), 'PASS')
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+======================================================================
+FAIL: test_saved_offline_missing_order_measurement_is_blocked (test_review.ReviewTests.test_saved_offline_missing_order_measurement_is_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 123, in test_saved_offline_missing_order_measurement_is_blocked
+    self.assertEqual(overall_status(evaluate_report(report, self.config)), 'BLOCKED')
+AssertionError: 'PASS' != 'BLOCKED'
+- PASS
++ BLOCKED
+
+
+======================================================================
+FAIL: test_saved_offline_missing_topic_is_blocked (test_review.ReviewTests.test_saved_offline_missing_topic_is_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 119, in test_saved_offline_missing_topic_is_blocked
+    self.assertEqual(overall_status(evaluate_report(report, self.config)), 'BLOCKED')
+AssertionError: 'FAIL' != 'BLOCKED'
+- FAIL
++ BLOCKED
+
+
+======================================================================
+FAIL: test_usage_exit_code_is_three (test_review.ReviewTests.test_usage_exit_code_is_three) (module='analyze_bag')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 157, in test_usage_exit_code_is_three
+    self.assertEqual(error.exception.code, 3)
+AssertionError: 2 != 3
+
+======================================================================
+FAIL: test_usage_exit_code_is_three (test_review.ReviewTests.test_usage_exit_code_is_three) (module='record_check')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 157, in test_usage_exit_code_is_three
+    self.assertEqual(error.exception.code, 3)
+AssertionError: 2 != 3
+
+======================================================================
+FAIL: test_usage_exit_code_is_three (test_review.ReviewTests.test_usage_exit_code_is_three) (module='replay_check')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/Desktop/Research/wbr-wt-bag/lab/rosbag_qual/tests/test_review.py", line 157, in test_usage_exit_code_is_three
+    self.assertEqual(error.exception.code, 3)
+AssertionError: 2 != 3
+
+----------------------------------------------------------------------
+Ran 26 tests in 2.287s
+
+FAILED (failures=16, errors=4)
+BLOCKED  offline_input: null 
+Overall: BLOCKED
+PASS     topic:/left:count: 3 messages
+PASS     topic:/left:header_rate: 2.0 Hz
+PASS     topic:/left:drops: 0 gaps
+PASS     topic:/left:max_gap: 0.5 s
+PASS     topic:/left:stamp_order: 0 reversals
+PASS     topic:/left:bag_receive_order: 0 reversals
+PASS     topic:/right:count: 3 messages
+PASS     topic:/right:header_rate: 2.0 Hz
+PASS     topic:/right:drops: 0 gaps
+PASS     topic:/right:max_gap: 0.5 s
+PASS     topic:/right:stamp_order: 0 reversals
+PASS     topic:/right:bag_receive_order: 0 reversals
+PASS     topic:/gyro:count: 5 messages
+PASS     topic:/gyro:header_rate: 4.0 Hz
+PASS     topic:/gyro:drops: 0 gaps
+PASS     topic:/gyro:max_gap: 0.25 s
+PASS     topic:/gyro:stamp_order: 0 reversals
+PASS     topic:/gyro:bag_receive_order: 0 reversals
+PASS     topic:/accel:count: 5 messages
+PASS     topic:/accel:header_rate: 4.0 Hz
+PASS     topic:/accel:drops: 0 gaps
+PASS     topic:/accel:max_gap: 0.25 s
+PASS     topic:/accel:stamp_order: 0 reversals
+PASS     topic:/accel:bag_receive_order: 0 reversals
+PASS     ir_pairing: 1.0 fraction
+PASS     disk:duration: 1.0 s
+PASS     disk:write_rate: 12288.0 bytes/s
+Overall: PASS
+PASS     topic:/left:count: 3 messages
+PASS     topic:/left:header_rate: 2.0 Hz
+PASS     topic:/left:drops: 0 gaps
+PASS     topic:/left:max_gap: 0.5 s
+PASS     topic:/left:stamp_order: 0 reversals
+PASS     topic:/left:bag_receive_order: 0 reversals
+PASS     topic:/right:count: 3 messages
+PASS     topic:/right:header_rate: 2.0 Hz
+PASS     topic:/right:drops: 0 gaps
+PASS     topic:/right:max_gap: 0.5 s
+PASS     topic:/right:stamp_order: 0 reversals
+PASS     topic:/right:bag_receive_order: 0 reversals
+PASS     topic:/gyro:count: 5 messages
+PASS     topic:/gyro:header_rate: 4.0 Hz
+PASS     topic:/gyro:drops: 0 gaps
+PASS     topic:/gyro:max_gap: 0.25 s
+PASS     topic:/gyro:stamp_order: 0 reversals
+PASS     topic:/gyro:bag_receive_order: 0 reversals
+PASS     topic:/accel:count: 5 messages
+PASS     topic:/accel:header_rate: 4.0 Hz
+PASS     topic:/accel:drops: 0 gaps
+PASS     topic:/accel:max_gap: 0.25 s
+PASS     topic:/accel:stamp_order: 0 reversals
+PASS     topic:/accel:bag_receive_order: 0 reversals
+PASS     ir_pairing: 1.0 fraction
+PASS     disk:duration: 1.0 s
+PASS     disk:write_rate: 12288.0 bytes/s
+Overall: PASS
