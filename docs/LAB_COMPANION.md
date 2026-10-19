@@ -29,9 +29,9 @@ Historical note: `WBR_STUDY_GUIDE.md` Part II and `WBR_LAB_PLAN_v1.md` (project 
 
 | Blocker | Decision needed | Recommended decision |
 |---|---|---|
-| **B1: profile conflict** | Bag policy expects infrared (IR) 15 Hz; raw defaults to 848×480 Y8/30; calibration uses 640×480/30. Audit severity: High. | proposed: n3_640x480_30 (owner decision pending) |
-| **B2: missing launch** | No reviewed `lab/` ROS launch matches the bag contract. | drafted; parameter readback on Pi required |
-| **B3: storage** | Replacement 128 GB card is owner-reported available, qualification UNKNOWN. | draft procedure in docs/STORAGE_QUALIFICATION_DRAFT.md, review required |
+| **B1: profile conflict** | Bag policy expects infrared (IR) 15 Hz; raw defaults to 848×480 Y8/30; calibration uses 640×480/30. Audit severity: High. | **Decided 2026-10-19 by the owner:** one profile `n3_640x480_30` (IR1+IR2 Y8 640×480/30, gyro 200, accel 100, emitter OFF) for N2, N3 and calibration. Files: [raw](../lab/d435i_raw/profiles/n3_640x480_30.yaml), [bag](../lab/rosbag_qual/profiles/n3_640x480_30.json). Defaults stay unchanged. |
+| **B2: missing launch** | No reviewed `lab/` ROS launch matches the bag contract. | Drafted in [lab/camera](../lab/camera/README.md) for installed realsense2_camera 4.58.4. Parameter names, including `depth_module.emitter_enabled`, are confirmed only by the card C readback on the Pi. |
+| **B3: storage** | Replacement 128 GB card is owner-reported available, qualification UNKNOWN. | [Draft procedure](STORAGE_QUALIFICATION_DRAFT.md); owner review required before execution. No benchmark tool exists yet. |
 | **B4: supply** | Owner reports a 27 W supply available; negotiation/stability UNKNOWN. `require_5a` is true. | Use and qualify the declared 5 A supply. A declared 5 V/3 A supply FAILs by design; do not waive the criterion. |
 | **B5: authorization** | Physical capture requires explicit owner **CAMERA AVAILABLE**. | Obtain it before acquisition. The calibration wrapper additionally enforces `WBR_CAMERA_AVAILABLE`; setting it does not create permission. |
 
@@ -175,7 +175,7 @@ python3 lab/power_usb/check_power_usb.py \
 
 **Understand / why:** isolate camera/SDK delivery before ROS discovery, driver parameters or storage complicate diagnosis. This stores sample images and timing rows, not a full-rate image bag.
 
-**Execute — [MAIN, UNTESTED ON HW].** Proposed [raw profile](../lab/d435i_raw/profiles/n3_640x480_30.yaml), owner decision pending; storage qualification remains required before full-rate recording. Only after B5 and prerequisite review; no ROS owner; camera still on rigid support. Source: [raw README](../lab/d435i_raw/README.md).
+**Execute — [MAIN, UNTESTED ON HW].** Uses the chosen [raw profile](../lab/d435i_raw/profiles/n3_640x480_30.yaml); storage qualification remains required before full-rate recording. **Prerequisite UNKNOWN:** this check imports the Python `pyrealsense2` binding, and on 2026-10-13 `import pyrealsense2` failed on the Pi (`experiments/2026-10-13-pi5-env-snapshot/snapshot.txt`; whether ROS was sourced is UNKNOWN). Check `python3 -c "import pyrealsense2"` in a ROS-sourced shell before lab day; if it fails, card B is BLOCKED and must not be fixed by installing packages in the session. Only after B5 and prerequisite review; no ROS owner; camera still on rigid support. Source: [raw README](../lab/d435i_raw/README.md).
 
 ```sh
 python3 lab/d435i_raw/check.py --capture --static \
@@ -183,11 +183,11 @@ python3 lab/d435i_raw/check.py --capture --static \
   --outdir /home/richard/wbr-evidence/d435i-raw-20261018-01
 ```
 
-**Verify / expect:** `capture`, `identity.serial/firmware/usb_type`, `profiles`, `emitter`, `duration`, `csv`, `sample_accounting`, `stereo`, `gyro.static`, `accel.static`, `ir_left.ir_content`, `ir_right.ir_content` and each stream's `samples/rate/receipt_gap/drops/timestamps`. Require the current identity, proposed stereo Y8 640×480/30, emitter OFF, gyro/200, accel/100 (no fallback in this named profile), orderly 60 s window, full accounting and no discontinuities. Default rate tolerance is PROPOSED ±5%; receipt gaps include boundaries: IR ≤0.1 s, motion ≤0.05 s. Stereo pairs use equal frame numbers/common domains, ≤0.01 ms skew, no unpaired frames.
+**Verify / expect:** `capture`, `identity.serial/firmware/usb_type`, `profiles`, `emitter`, `duration`, `csv`, `sample_accounting`, `stereo`, `gyro.static`, `accel.static`, `ir_left.ir_content`, `ir_right.ir_content` and each stream's `samples/rate/receipt_gap/drops/timestamps`. Require the current identity, stereo Y8 640×480/30, emitter OFF, gyro/200, accel/100 (no fallback in this named profile), orderly 60 s window, full accounting and no discontinuities. Default rate tolerance is PROPOSED ±5%; receipt gaps include boundaries: IR ≤0.1 s, motion ≤0.05 s. Stereo pairs use equal frame numbers/common domains, ≤0.01 ms skew, no unpaired frames.
 
 **[MANUAL REVIEW]** Open `result.json`, `capture.json`, SDK/stdout/stderr logs and **every retained Portable Graymap (PGM) image** from both sides. Look for plausible scene structure, saturation or corruption; pixel statistics alone cannot prove good optics. Confirm the static claim and cleanup/emitter restoration. `latency_policy PASS` credits no latency.
 
-**If it fails:** power/USB → selected serial → offered/resolved profiles → counts/clock evidence. Missing binding/device/profile is BLOCKED; do not substitute another camera. Preserve timeout/partial artifacts. This 60 s tool run does not replace the historical N2 15 Hz/300 s soak or attest the different ROS profile; reconcile B1 before promotion.
+**If it fails:** power/USB → selected serial → offered/resolved profiles → counts/clock evidence. Missing binding/device/profile is BLOCKED; do not substitute another camera. Preserve timeout/partial artifacts. A 60 s run is a smoke check. The N2 soak requirement stays at 300 s: after reviewing a clean 60 s run, repeat with `--seconds 300` in a new output directory (the tool allows up to 600 s). Raw-check PASS does not attest the ROS driver path; card C/D do that.
 
 **Keep:** whole output including `samples.csv`, both configs, `request.json`, `capture.json`, `sdk.log`, captured console logs, PGMs, `metrics.json`, `result.json`.
 
@@ -195,14 +195,14 @@ python3 lab/d435i_raw/check.py --capture --static \
 
 **Understand / why:** the launched graph must match the bag contract, not merely display images.
 
-**Execute — [MAIN, UNTESTED ON HW].** Proposed profile; owner decision pending. Remains blocked on owner review, camera authorization, power/USB and storage qualification. Sources: [camera helpers/readback](../lab/camera/README.md), [raw profile](../lab/d435i_raw/profiles/n3_640x480_30.yaml), [bag profile](../lab/rosbag_qual/profiles/n3_640x480_30.json). From repository root, in separate Pi terminals:
+**Execute — [MAIN, UNTESTED ON HW].** Chosen profile `n3_640x480_30`. Remains blocked on owner review, camera authorization, power/USB and storage qualification. Sources: [camera helpers/readback](../lab/camera/README.md), [raw profile](../lab/d435i_raw/profiles/n3_640x480_30.yaml), [bag profile](../lab/rosbag_qual/profiles/n3_640x480_30.json). From repository root, in separate Pi terminals:
 
 ```sh
 bash lab/camera/launch_n3_camera.sh /path/to/evidence/camera-new
 bash lab/camera/readback_n3_camera.sh /path/to/evidence/readback-new
 ```
 
-Both directories must be new, with existing parents. Domain 42, localhost-only; intended node `/camera/camera`, both IR views/camera-info, separate gyro/accel and `/tf_static`. Comparator requires the proposed profile/emitter/unite values; all behavior is UNTESTED ON HARDWARE.
+Both directories must be new, with existing parents. Domain 42, localhost-only; intended node `/camera/camera`, both IR views/camera-info, separate gyro/accel and `/tf_static`. Comparator requires the chosen profile/emitter/unite values; all behavior is UNTESTED ON HARDWARE.
 
 **Verify / expect — [MANUAL REVIEW]:** check actual profile and emitter/global-time settings, exact `/camera/camera/infra{1,2}/image_rect_raw` and camera-info names, and parameter dump against reviewed policy. The recorder later saves a dump too; successful dumping alone does not validate values. No tool PASS substitutes for this checkpoint.
 
@@ -212,7 +212,7 @@ Both directories must be new, with existing parents. Domain 42, localhost-only; 
 
 **Understand / why:** measure bounded delivery and preserve the graph/configuration needed to interpret it. Quality of Service (QoS) compatibility must be observed.
 
-**Execute — [MAIN, UNTESTED ON HW].** BLOCKED until B1–B4 (including storage qualification) and card C launch/readback review are resolved. Source: [bag README](../lab/rosbag_qual/README.md). After review, use the matching proposed [bag profile](../lab/rosbag_qual/profiles/n3_640x480_30.json) and [camera launch/readback](../lab/camera/README.md); set a destination-specific measured storage ceiling after qualification:
+**Execute — [MAIN, UNTESTED ON HW].** BLOCKED until B1–B4 (including storage qualification) and card C launch/readback review are resolved. Source: [bag README](../lab/rosbag_qual/README.md). After review, use the chosen [bag profile](../lab/rosbag_qual/profiles/n3_640x480_30.json) and [camera launch/readback](../lab/camera/README.md); set a destination-specific measured storage ceiling after qualification:
 
 ```sh
 ROS_DOMAIN_ID=42 ROS_LOCALHOST_ONLY=1 python3 lab/rosbag_qual/record_check.py \
@@ -220,7 +220,7 @@ ROS_DOMAIN_ID=42 ROS_LOCALHOST_ONLY=1 python3 lab/rosbag_qual/record_check.py \
   --output-dir /path/to/evidence/record
 ```
 
-**Verify / expect:** `record:bounded/exit/capture_window/bag_exists/bag_info/parameter_dump/topic_qos`; per-topic `present/count/header_rate/bag_receive_rate/stamp_order/stamp_repeats/bag_receive_order/max_gap` and the remaining result criteria. Current config: 20 s request, ≥80% receive-span coverage, proposed IR/info 28.5–31.5 Hz, gyro 190–210, accel 95–105; no reversed/repeated dynamic stamps, parse errors or header gap events; exact stereo pairing ≥0.99. These are configured policies, not new measurements.
+**Verify / expect:** `record:bounded/exit/capture_window/bag_exists/bag_info/parameter_dump/topic_qos`; per-topic `present/count/header_rate/bag_receive_rate/stamp_order/stamp_repeats/bag_receive_order/max_gap` and the remaining result criteria. Current config: 20 s request, ≥80% receive-span coverage, IR/info 28.5–31.5 Hz, gyro 190–210, accel 95–105; no reversed/repeated dynamic stamps, parse errors or header gap events; exact stereo pairing ≥0.99. These are configured policies, not new measurements.
 
 **[MANUAL REVIEW]** Open `result.json`, `record.log`, bag information, `parameter_dump.stdout`, `topic_info.json`, saved config/QoS and analysis. Sensor overrides are best-effort/volatile; static transforms are reliable/transient-local. Verify offered/requested compatibility. Header and receive rates are separate quantities.
 
@@ -238,7 +238,7 @@ ROS_DOMAIN_ID=42 ROS_LOCALHOST_ONLY=1 python3 lab/rosbag_qual/record_check.py \
 
 **Understand / why:** compare saved delivery with an isolated replay, preserving original stamps. Live publishers could make replay counts look healthier than the bag.
 
-**Execute — [MAIN, UNTESTED ON HW].** BLOCKED until storage qualification, accepted recording with the proposed profile, and stopped camera are established. Retain card C [launch/readback](../lab/camera/README.md) evidence and use the same reviewed [bag profile](../lab/rosbag_qual/profiles/n3_640x480_30.json) (including destination storage ceiling) as card D. Source: [bag README](../lab/rosbag_qual/README.md).
+**Execute — [MAIN, UNTESTED ON HW].** BLOCKED until storage qualification, accepted recording with the chosen profile, and stopped camera are established. Retain card C [launch/readback](../lab/camera/README.md) evidence and use the same reviewed [bag profile](../lab/rosbag_qual/profiles/n3_640x480_30.json) (including destination storage ceiling) as card D. Source: [bag README](../lab/rosbag_qual/README.md).
 
 ```sh
 ROS_DOMAIN_ID=42 ROS_LOCALHOST_ONLY=1 python3 lab/rosbag_qual/replay_check.py \

@@ -13,7 +13,7 @@
       "rate_max_hz": 31.5,
       "max_gap_s": 0.1,
       "drop_gap_factor": 2.0,
-      "threshold_source": "PROPOSED n3_640x480_30; owner decision pending; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s). PROPOSED: +/-5% rate band; max_gap_s=0.2*(15/30)=0.1 preserves three nominal periods from config.json; drop_gap_factor=2 unchanged."
+      "threshold_source": "n3_640x480_30, chosen by the owner 2026-10-19 as the single N2/N3/calibration profile; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s). PROPOSED: +/-5% rate band; max_gap_s=0.2*(15/30)=0.1 preserves three nominal periods from config.json; drop_gap_factor=2 unchanged."
     },
     {
       "name": "/camera/camera/infra2/image_rect_raw",
@@ -25,7 +25,7 @@
       "rate_max_hz": 31.5,
       "max_gap_s": 0.1,
       "drop_gap_factor": 2.0,
-      "threshold_source": "PROPOSED n3_640x480_30; owner decision pending; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s). PROPOSED: +/-5% rate band; max_gap_s=0.2*(15/30)=0.1 preserves three nominal periods from config.json; drop_gap_factor=2 unchanged."
+      "threshold_source": "n3_640x480_30, chosen by the owner 2026-10-19 as the single N2/N3/calibration profile; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s). PROPOSED: +/-5% rate band; max_gap_s=0.2*(15/30)=0.1 preserves three nominal periods from config.json; drop_gap_factor=2 unchanged."
     },
     {
       "name": "/camera/camera/infra1/camera_info",
@@ -37,7 +37,7 @@
       "rate_max_hz": 31.5,
       "max_gap_s": 0.1,
       "drop_gap_factor": 2.0,
-      "threshold_source": "PROPOSED n3_640x480_30; owner decision pending; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s). PROPOSED: +/-5% rate band; max_gap_s=0.2*(15/30)=0.1 preserves three nominal periods from config.json; drop_gap_factor=2 unchanged."
+      "threshold_source": "n3_640x480_30, chosen by the owner 2026-10-19 as the single N2/N3/calibration profile; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s). PROPOSED: +/-5% rate band; max_gap_s=0.2*(15/30)=0.1 preserves three nominal periods from config.json; drop_gap_factor=2 unchanged."
     },
     {
       "name": "/camera/camera/infra2/camera_info",
@@ -49,7 +49,7 @@
       "rate_max_hz": 31.5,
       "max_gap_s": 0.1,
       "drop_gap_factor": 2.0,
-      "threshold_source": "PROPOSED n3_640x480_30; owner decision pending; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s). PROPOSED: +/-5% rate band; max_gap_s=0.2*(15/30)=0.1 preserves three nominal periods from config.json; drop_gap_factor=2 unchanged."
+      "threshold_source": "n3_640x480_30, chosen by the owner 2026-10-19 as the single N2/N3/calibration profile; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s). PROPOSED: +/-5% rate band; max_gap_s=0.2*(15/30)=0.1 preserves three nominal periods from config.json; drop_gap_factor=2 unchanged."
     },
     {
       "name": "/camera/camera/gyro/sample",
@@ -126,5 +126,5 @@
     "max_header_drop_count": 0,
     "threshold_source": "PROPOSED: no reversed/repeated dynamic header stamps, receive-time reversals, malformed CDR headers or gaps over the configured nominal-period multiple"
   },
-  "profile_note": "PROPOSED n3_640x480_30; owner decision pending; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s). ROS policy: unite_imu_method=0, enable_sync=false; QoS path adjusted relative to this profiles directory."
+  "profile_note": "n3_640x480_30, chosen by the owner 2026-10-19 as the single N2/N3/calibration profile; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s). ROS policy: unite_imu_method=0, enable_sync=false; QoS path adjusted relative to this profiles directory."
 }

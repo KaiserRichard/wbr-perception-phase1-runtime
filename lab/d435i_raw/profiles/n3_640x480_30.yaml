@@ -17,29 +17,29 @@
   "profile": {
     "width": {
       "value": 640,
-      "source": "PROPOSED n3_640x480_30; owner decision pending; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s)."
+      "source": "n3_640x480_30, chosen by the owner 2026-10-19 as the single N2/N3/calibration profile; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s)."
     },
     "height": {
       "value": 480,
-      "source": "PROPOSED n3_640x480_30; owner decision pending; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s)."
+      "source": "n3_640x480_30, chosen by the owner 2026-10-19 as the single N2/N3/calibration profile; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s)."
     },
     "ir_hz": {
       "value": 30,
-      "source": "PROPOSED n3_640x480_30; owner decision pending; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s)."
+      "source": "n3_640x480_30, chosen by the owner 2026-10-19 as the single N2/N3/calibration profile; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s)."
     },
     "gyro_hz": {
       "value": 200,
-      "source": "PROPOSED n3_640x480_30; owner decision pending; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s)."
+      "source": "n3_640x480_30, chosen by the owner 2026-10-19 as the single N2/N3/calibration profile; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s)."
     },
     "accel_hz_preference": {
       "value": [
         100
       ],
-      "source": "PROPOSED n3_640x480_30; owner decision pending; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s)."
+      "source": "n3_640x480_30, chosen by the owner 2026-10-19 as the single N2/N3/calibration profile; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s)."
     },
     "emitter": {
       "value": 0,
-      "source": "PROPOSED n3_640x480_30; owner decision pending; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s)."
+      "source": "n3_640x480_30, chosen by the owner 2026-10-19 as the single N2/N3/calibration profile; UNTESTED ON HARDWARE. Sources: docs/D435I_CALIBRATION_PLAN.md:94 (640x480 Y8/30, gyro/200 accel/100, emitter OFF); calibration/lab/pi/record_calib_take.sh:33 (same capture contract); tools/n4b_offline/db3_to_euroc.py:21 (640x480), :84-107 (separate IMU topics cannot attest unite method); experiments/2026-10-14-SESSION_FACTS_ADDENDUM.md:7 (18.4 MB/s demand exceeds historical 16.6 MB/s)."
     }
   },
   "capture": {

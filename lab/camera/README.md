@@ -1,8 +1,8 @@
 # Proposed N3 camera helpers
 
-**UNTESTED ON HARDWARE. Owner decision pending.** Profile `n3_640x480_30`
+**UNTESTED ON HARDWARE. Profile chosen by the owner on 2026-10-19.** Profile `n3_640x480_30`
 is additive; no default config or gate state changes. Do not execute these
-ROS scripts until the owner accepts the profile, authorizes CAMERA AVAILABLE,
+ROS scripts until the owner authorizes CAMERA AVAILABLE,
 and power/USB and destination storage qualification prerequisites are satisfied.
 See [storage draft](../../docs/STORAGE_QUALIFICATION_DRAFT.md), which itself needs review.
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# PROPOSED; owner decision pending; UNTESTED ON HARDWARE.
+# Profile n3_640x480_30 (owner decision 2026-10-19); UNTESTED ON HARDWARE.
 set -euo pipefail
 [[ $# == 1 ]] || { echo "Usage: $0 NEW_EVIDENCE_DIR" >&2; exit 2; }
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
