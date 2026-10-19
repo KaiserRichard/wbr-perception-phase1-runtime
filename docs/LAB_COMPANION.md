@@ -6,6 +6,8 @@ Build reviewable **N0 → N3 evidence** with the merged `lab/` tools. N3 is the 
 
 This lab cannot establish calibration accuracy, estimator performance, exposure latency, controller safety or all-day reliability. The D435i inertial measurement unit (IMU), `imu_camera`, is separate from the STM32 body IMU. Every current tool has **Hardware run: NONE** in [GATE_TOOLING.md](GATE_TOOLING.md).
 
+**What you can actually run today:** cards A (power/USB) and B (raw IR + camera IMU) in §3, plus the home rehearsal in §1. Cards C–F (camera node, bag record, replay) stay BLOCKED until blockers B1 and B2 below are resolved and reviewed. Card G also needs B5 and qualified power/storage. If B1–B2 are still open on lab day, the honest goal is clean N0–N2 evidence from A and B, not an N3 attempt.
+
 Four reading labels recur below: **understand** = why; **execute** = an action after prerequisites; **verify** = inspect evidence; **blocked-unknown** = stop until the named evidence/decision exists.
 
 Command tags describe execution provenance:
