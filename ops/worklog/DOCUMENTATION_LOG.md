@@ -183,3 +183,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources:worker4288fb8/a9dd86b, draftPR49, failed run39392656236 and preserved log; committed smoke b02.
 - Validation:conductor27/27 RL tests passed at f12414a; merge conflict markers/whitespace checked. Full training not launched yet; remote dependency fix still pending.
 - Limits/review:smokes are implementation checks, not candidate policies. Training/comparison/Claude review remain pending.
+
+
+### DOC-20261020-19: Durable full-run launch and parallel source audit
+- Time / author:2026-10-20 +07; codex-f conductor.
+- Files:ops/worklog/{CURRENT.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-delay-lag-noise.md}; external source-audit brief referenced in session.
+- Changes: live state marks the existing full job RUNNING and prohibits duplicate launch; records source/command/independent smoke and b idle-to-SolHigh audit dispatch. No source-code change.
+- Sources:source608222b, conductor smoke/checkpoint receipts, full-run progress files, b process/lifecycle check and CLI model header; owner parallel-estimate/priority instructions.
+- Validation:conductor1000-step WBR optimizer/reload smoke exit0 and27/27 RL tests; full5seeds advancing with exact budget configured. Whitespace/diff checked; CI dependency step and generic suites passed at observation.
+- Limits/review:full training/evaluation and parameter audit still running; no RL outcome, physical validity or gate approval claimed. Source remains frozen while only worklogs change.
