@@ -1,6 +1,6 @@
 ---
 name: wbr-claude-handoff
-description: Write the end-of-session handoff for Claude. Use when the user says "handoff", at the end of a lab block, or when a session stops on a problem that needs Claude.
+description: Write the end-of-day handoff for Claude. Use when the user says "handoff", at the end of the lab day, or when a decision belongs to Claude under INSTRUCTIONS.md "Decision authority".
 ---
 
 # Handoff for Claude
@@ -31,8 +31,11 @@ Assistant: <ChatGPT / Codex>   Repo commit on Pi: <hash or UNKNOWN>
 ## Problems
 - <symptom> | first broken layer: <power/USB/raw/...> | what was tried | INFERRED cause
 
+## Decisions I made (and why)
+- <decision>: <one-line reason>
+
 ## Open decisions for Claude or the owner
-1. <one question per line, answerable with one word if possible>
+1. <only items that are Claude's or the owner's per Decision authority>
 
 ## Not done / blocked
 - <item>: <why>
