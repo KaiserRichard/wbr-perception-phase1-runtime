@@ -1,63 +1,55 @@
 # Agent guide (ChatGPT Work, Codex, Claude)
 
-The main working agent for this repository is **ChatGPT Work**. Claude is an
-occasional reviewer. Everything an agent learns or decides goes into files in
-this repository, so any later session (ChatGPT or Claude) can pick up cold.
+**Flow: build first, fix when it breaks.** Get the thing running, then integrate,
+then improve. When something fails, debug from the actual error message, fix it,
+and run again. Do not run qualification checks, gate audits or layer-by-layer
+tests before trying the real thing.
 
-Always reply in English unless the user explicitly asks for Vietnamese.
+The main working agent is **ChatGPT Work**. Claude is only called when ChatGPT is
+truly stuck on an error. Always reply in English unless the owner explicitly asks
+for Vietnamese.
 
-## Read at the start of every session, in this order
+## Start of a session
+Read `ops/worklog/CURRENT.md` (where we are, what's next) and `ops/USER_PROFILE.md`.
+Then start working on the next step.
 
-1. `ops/worklog/CURRENT.md` — live state: what is in progress, blockers, next step.
-2. The last 15 entries of `ops/worklog/DECISIONS.md`.
-3. `ops/RESEARCH_RULES.md` — the research standard every claim must meet, and
-   `ops/USER_PROFILE.md` — who the owner is and how they want to work.
-4. `docs/PROJECT_STATE.md` and `docs/NEXT_GATE.md` — canonical project state
-   (owner-promoted; agents propose changes, they do not promote gates).
-5. Then the mode file below.
+## Current direction
+1. Plug in the camera (currently a D435, no IMU) and get ORB-SLAM3 running on the Pi
+   (stereo or RGB-D). Skill: `ops/lab-assistant/skills/wbr-orbslam3-bringup`.
+2. Get the software running end to end (ROS 2 wrapper, pose output).
+3. Integrate with the robot hardware.
+4. In parallel when useful: MuJoCo simulation and RL vs LQR (`ops/RESEARCH_RULES.md`).
 
-The `wbr-session-start` skill does this for you.
+## How to work
+- Install whatever is missing (apt, pip, build from source) and keep going.
+- Run commands yourself when you can (Mac, or the Pi via `ssh wbr-pi5`).
+- One fix at a time when something breaks; re-run; note what fixed it.
+- End each result with a short **Recommendation** for the next step.
 
-## Modes
+## Notes you keep (short)
+- `ops/worklog/CURRENT.md`: overwrite at session end — current state, what works,
+  what's broken, next step. Keep it under ~40 lines.
+- `ops/worklog/sessions/YYYY-MM-DD-<topic>.md`: what was run, what happened, what
+  was fixed. Bullet points, no essays.
+No per-change documentation log, decision entries or evidence labels required.
 
-| Mode | When | Rules | Skills |
-|---|---|---|---|
-| Lab | Anything touching the Pi, camera, power, storage or evidence | `ops/lab-assistant/INSTRUCTIONS.md` | `ops/lab-assistant/skills/` |
-| Build / research | Code, analysis, docs, experiment design, literature | `ops/RESEARCH_RULES.md` + "Git workflow" below | `ops/skills/` |
-| Simulation / control | MuJoCo models, RL training, LQR baseline comparison | `ops/RESEARCH_RULES.md` "Simulation and learned control" + "Git workflow" | `ops/skills/` |
+## Git
+- Work in `~/Desktop/Research/wbr-lab-ops` on a `chatgpt/<YYYYMMDD>-<topic>` branch
+  from `origin/main`. Never touch the branch of the shared checkout
+  `~/Desktop/Research/wbr-perception-phase1-runtime`.
+- Commit, push, open a PR, and merge it yourself once CI is green.
+- Never push directly to `main`, never force-push.
 
-## Files you write (see `ops/worklog/README.md`)
+## Always ask the owner first (type `CONFIRM <action> <target>`)
+- Formatting or partitioning a disk, writing a disk image (`dd`), deleting data,
+  force-push or history rewrite.
 
-- `ops/worklog/CURRENT.md` — overwrite to reflect the state at session end.
-- `ops/worklog/DECISIONS.md` — append one entry per decision. Never rewrite old entries.
-- `ops/worklog/DOCUMENTATION_LOG.md` — append one entry for every documentation
-  change set, including worklog and agent-instruction changes, so Claude can audit it.
-- `ops/worklog/sessions/YYYY-MM-DD-<topic>.md` — one log per session.
-- `ops/worklog/reviews/YYYY-MM-DD-<topic>.md` — a question for Claude, when needed.
+## Safety boundary
+- The STM32 owns balance and motor safety. Do not send commands to motors or flash
+  the STM32 without the owner explicitly asking for it.
 
-The `wbr-session-end` skill writes these and commits them.
-
-Every document creation or revision must be logged in the same working change
-set. Record the changed files, what changed and why, evidence/source revisions,
-validation performed, remaining uncertainty and review status. Do not describe
-unrun checks as passed or an unreviewed document as approved. See the worklog
-README for the documentation-log format.
-
-## Git workflow
-
-- Work in the worktree `~/Desktop/Research/wbr-lab-ops`. Never touch the branch of
-  `~/Desktop/Research/wbr-perception-phase1-runtime` (shared checkout).
-- Start each task on a fresh branch: `git fetch origin && git switch -c chatgpt/<YYYYMMDD>-<topic> origin/main`.
-- Commit small, clear commits. Push with `git push -u origin <branch>` and open a PR.
-- Never push to `main`, never force-push, never rewrite history.
-- PRs that change only `ops/worklog/` may be merged by you once CI is green.
-  Any PR that changes code, configs, thresholds, profiles or `docs/` needs a Claude
-  review (`wbr-claude-review-request`) and the owner's go-ahead before merging.
-
-## Hard limits (all modes)
-
-- No gate PASS without explicit evidence reviewed by the owner.
-- Never relax a threshold or edit a result to change its status.
-- Destructive actions need the user's typed `CONFIRM <action> <target>`.
-- Keep Pi perception and STM32 control separate; never touch STM32 or motors.
-- Never subtract timestamps across clock domains without a defined mapping.
+## When stuck
+If the same error survives a few real fix attempts, write
+`ops/worklog/reviews/YYYY-MM-DD-<topic>.md` (the error, what you tried, the exact
+log path) and give the owner one line to send to Claude:
+`Help with ops/worklog/reviews/<file> on branch <branch>.`

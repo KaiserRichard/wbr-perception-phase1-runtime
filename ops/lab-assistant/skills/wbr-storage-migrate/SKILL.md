@@ -108,7 +108,7 @@ du -sh ~/wbr-evidence ~/wbr-runtime ~/wbr-perception-phase1-runtime 2>/dev/null
 git -C ~/wbr-perception-phase1-runtime status -sb
 vcgencmd get_throttled
 ```
-Sizes must match step 1. Then continue with `wbr-lab-preflight`.
+Sizes must match step 1. Then continue with `wbr-orbslam3-bringup`.
 
 ## Report
 Image path and SHA-256, both cmp results, 128 GB disk identifier used, before and
