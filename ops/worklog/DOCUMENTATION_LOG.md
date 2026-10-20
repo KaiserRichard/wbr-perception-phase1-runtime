@@ -232,10 +232,20 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - DOC23 follow-through:CURRENT now points directly to pending Claude review rather than stale training/publication work; all local document links resolve, CURRENT25lines. This final publication contains no new simulation trial or code change.
 - DOC23 publication receipt:PR51 opened; archive/publication-269cc3a stores the reviewed result/guide/source-table snapshots (35supplementary hashes total). Session records the two optional learning questions, unanswered at publication. No new simulation or approval claim.
 
-### DOC-20261020-24: PPO v2 execution
+### DOC-20261020-24: Cafe, lab and cloud compute decision review
+- Time / author:2026-10-20 +07; document Q&A chat, isolated cafe-compute-review worktree.
+- Files:ops/worklog/{reviews/2026-10-20-cafe-compute-strategy.md,sessions/2026-10-20-cafe-compute-strategy.md,DOCUMENTATION_LOG.md}.
+- Changes:compare Cho Mo owner screenshots/current cafe data, conditional promotions, Windows/backend compatibility, privacy/reset overhead and cloud/lab alternatives; prepare Claude questions. Final owner scope excludes the other branch. Proposal only, no resource purchase or architectural approval.
+- Sources:6in-scope owner images/staff terms/reset-policy clarification; official Cho Mo page and vendor compatibility/pricing; completed CPU experiment and current CPU-only training source at819659c. External source receipts recorded in session.
+- Validation:independent Decimal recomputation passed all6final Cho Mo economics rows,3setup-overhead rows and cloud examples; local result link resolves; screenshot/configuration conflicts retained and whitespace/scope checks passed. No runtime change or new training; publication CI pending.
+- Limits/review:no cafe Windows/GPU benchmark, confirmed bonus eligibility, staff-admin access or actual room/seat billing. Claude/owner decision pending. CURRENT retained under the active conductor's ownership.
+- DOC24 publication:PR53 is documentation-only and now Cho Mo-only; report formatting and6tariff/3overhead calculations checked. Final CI/merge receipt is retained with external source receipts; substantive Claude approval remains pending.
+
+### DOC-20261020-25: PPO v2 execution
 - Files: imported Claude review; sessions/2026-10-20-ppo-v2.md; related v2 implementation/session/result notes in this change set.
 - Why/source: owner authorized the lean v2 direct/residual experiment; Claude review75a304d. Old v1 evidence and plant/evaluation criteria preserved.
 - Validation/status: actual worker launch recorded; i usage failure retained. v2 build, optimizer smoke and full results pending; no success or Claude approval for v2 claimed.
 
-- DOC24 follow-through: includes CURRENT/DECISIONS, both v2 sessions, new module/config/tests documentation and imported Claude review. Worker97db7f3/conductorf1b5ee7; final44/44tests,real8env optimizer/reload and full5ms zero-residual parity passed. Full3M batch RUNNING outsidegit; no full learned-policy claim.
-- DOC24 continuation: durable supervisor launched09:43:55Z; heartbeat `finish-ppo-v2-comparison` every30min. Initial duplicate-free progress confirmed; source/plant/v1criteria/protected exercise unchanged. Final results and Claude v2 review pending.
+- DOC25 follow-through: includes CURRENT/DECISIONS, both v2 sessions, new module/config/tests documentation and imported Claude review. Worker97db7f3/conductorf1b5ee7; final44/44tests,real8env optimizer/reload and full5ms zero-residual parity passed. Full3M batch RUNNING outsidegit; no full learned-policy claim.
+- DOC25 continuation: durable supervisor launched09:43:55Z; heartbeat `finish-ppo-v2-comparison` every30min. Initial duplicate-free progress confirmed; source/plant/v1criteria/protected exercise unchanged. Final results and Claude v2 review pending.
+- DOC25 integration:main advanced viaPR52–54 while training ran. Preserve finalized cafe DOC24; renumber only this unmerged PPO draft25. Resolve in isolated parameter-source-audit worktree, retaining both histories; no runtime or active-checkout change.
