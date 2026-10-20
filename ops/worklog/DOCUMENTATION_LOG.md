@@ -174,3 +174,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources:read-only protocol/requirements and actuator authorization/archive; worker4288fb8/draftPR49; primary PPO/SB3/Gym docs in README. No physical parameter inference.
 - Validation:worker25/25 tests,1000-step real WBR optimizer/checkpoint smoke and8full LQR parity pairs; conductor expanded27/27 tests, native-vector/reward checks and independent5000-step adapter parity PASS;12 README math expressions rendered.
 - Limits/review:smoke/evaluator fall is not a full PPO result. Full5×150000-step training and800+160 held-out outcomes pending. CI initially failed on missing Gym; dependency fix pending remote check. No frozen protocol, plant, threshold or protected exercise changes; Claude final milestone review pending.
+
+
+### DOC-20261020-18: Preserve worker publication and CI failure receipts
+- Time / author:2026-10-20 +07; codex-f integration of codex-b a9dd86b.
+- Files:ops/worklog/{DOCUMENTATION_LOG.md,sessions/2026-10-20-ppo-training.md,sessions/2026-10-20-delay-lag-noise.md}.
+- Changes: import exact worker source-freeze/second-smoke/failed-CI receipts; resolve session-footer conflict under owner's D27. No runtime change.
+- Sources:worker4288fb8/a9dd86b, draftPR49, failed run39392656236 and preserved log; committed smoke b02.
+- Validation:conductor27/27 RL tests passed at f12414a; merge conflict markers/whitespace checked. Full training not launched yet; remote dependency fix still pending.
+- Limits/review:smokes are implementation checks, not candidate policies. Training/comparison/Claude review remain pending.
