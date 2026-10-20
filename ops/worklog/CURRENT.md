@@ -13,8 +13,8 @@ Updated 2026-10-20 +07; owner switched this chat's conductor from codex-f to cod
 - Parameter source table/guide link and float64 test-oracle repair merged PR50 (31a5d1a), both CI checks green. Current physical values remain ASSUMED or UNKNOWN; runtime/reward unchanged.
 
 ## Next step and ownership
-- Next: Claude final review of the completed comparison. No duplicate training, protocol tuning, reward changes or gate promotion; further experiment design waits for that review.
-- g/Astra Ultra completed read-only audit bbf4908; no actionable defect found in inspected paths. Conductor reran both scripts with identical results. Idle checked before launch; i/k not needed. Never launch conductor b as a worker.
+- ACTIVE: owner authorized Claude-reviewed PPO v2 (review75a304d): direct plus residual,100Hz policy,eight envs,observation VecNormalize,3M policy steps,initial3seeds/arm. Implementation and optimizer checks running; full training not yet launched. v1 result retained.
+- g/AstraUltra implements v2 in isolated ppo-outcome-audit worktree/runner branch after idle check. i launch hit quota; k busy elsewhere. Conductor independently checks; b reserved. Short v2 session/log paths in sessions/2026-10-20-ppo-v2.md.
 - docs/learning/LQR_RL_GUIDE.md explains geometry, energy/dynamics, LQR and the measured RL result. sim/parity/student.py gain_schedule remains the owner's exercise.
 - Model has assumed masses/COM, ideal planar rolling/equivalent rigid leg, known delay/lag and four ideal sensor channels; no full-five-bar/contact or sim-to-real validation.
 
