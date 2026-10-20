@@ -255,3 +255,20 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Files:ops/worklog/{reviews/2026-10-20-cafe-compute-strategy.md,sessions/2026-10-20-cafe-compute-strategy.md,DOCUMENTATION_LOG.md}.
 - Change:owner explicitly requested a short, understandable report; replace the lengthy analysis with a one-page decision/cost/pilot summary. Full prior report/review retained in Git dc1e0fb and external archive; no decision or runtime change.
 - Validation:local word-count/price/approval-boundary and whitespace checks; publication CI pending. No new experiment, installation or spending.
+
+### DOC-20261020-25: PPO v2 execution
+- Files: imported Claude review; sessions/2026-10-20-ppo-v2.md; related v2 implementation/session/result notes in this change set.
+- Why/source: owner authorized the lean v2 direct/residual experiment; Claude review75a304d. Old v1 evidence and plant/evaluation criteria preserved.
+- Validation/status: actual worker launch recorded; i usage failure retained. v2 build, optimizer smoke and full results pending; no success or Claude approval for v2 claimed.
+
+- DOC25 follow-through: includes CURRENT/DECISIONS, both v2 sessions, new module/config/tests documentation and imported Claude review. Worker97db7f3/conductorf1b5ee7; final44/44tests,real8env optimizer/reload and full5ms zero-residual parity passed. Full3M batch RUNNING outsidegit; no full learned-policy claim.
+- DOC25 continuation: durable supervisor launched09:43:55Z; heartbeat `finish-ppo-v2-comparison` every30min. Initial duplicate-free progress confirmed; source/plant/v1criteria/protected exercise unchanged. Final results and Claude v2 review pending.
+- DOC25 integration:main advanced viaPR52–54 while training ran. Preserve finalized cafe DOC24; renumber only this unmerged PPO draft25. Resolve in isolated parameter-source-audit worktree, retaining both histories; no runtime or active-checkout change.
+- DOC25 publication follow-through:PR56 adds only independent cafe records; preserve them alongside v2 records. Publication now uses ppo-outcome-audit worktree; parameter-source-audit is a separate viewer task. Training source unchanged.
+
+### DOC-20261020-VIEWER: Make the simulation watchable
+- Files:.gitignore; sim/{view.py,Open_WBR_Simulation.command,README.md}; ops/worklog/{CURRENT.md,sessions/2026-10-20-sim-viewer.md,DOCUMENTATION_LOG.md}; local Desktop shortcut outsidegit.
+- Why/source: owner asked for visible simulation/instructions. Reuse existing augmented LQR/runtime; MuJoCo3.3.7 passive-viewer API linked in README/session.
+- Validation:12s native GUI exited0; persistent live window launched; full10s headless demo final state matches archivedLQR; corrected framebuffer-size error and visually inspected the640px render. No new physics or trained-policy claim.
+- Limits/status:assumed reduced planar model and unscored interactive demo; no contact/five-bar or sim-to-real claim. PPO process/source unchanged. PublicationCI pending.
+- VIEWER follow-through:push/pause/reset callbacks checked directly; native launcher and Desktop wrapper syntax passed. Keep this additive display in PR55 alongside v2 setup, preserving concurrent PR57 documentation; active training files remain unchanged.

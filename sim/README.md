@@ -4,14 +4,35 @@ This is a running **SIMULATION / ASSUMED** three-coordinate, six-state
 wheel-biped model. MuJoCo integrates the nonlinear dynamics under gravity.
 The controller is a **new matched LQR**. It is not a reproduction of DM-jump,
 an identified robot model, or evidence of sim-to-real performance.
-Gain parity remains pending independent learning work. No gain schedule,
-protected parity exercise, fivebar controller or RL training is implemented here.
+Gain parity remains pending independent learning work. The nominal runner implements LQR only; the separate [PPO pipeline](rl/README.md)
+provides learned-control experiments. Source gain parity and full fivebar VMC
+remain incomplete.
 
 The separate [actuator/noise extension](augmented.md) preserves this nominal path
 and adds exact command-delay events, first-order torque lag and cached body IMU
 noise. Its runner evaluates frozen nominal gains first, then conditionally designs
 an augmented LQR only after an observed failure. The reusable runtime contract is
-documented there for the later RL comparison.
+documented there for the RL comparison.
+
+## Watch the robot balance
+
+On macOS, double-click **Open_WBR_Simulation.command** in this folder, or run
+from the repository root after creating the environment below:
+
+```sh
+.venv/bin/mjpython -m sim.view
+```
+
+The live MuJoCo window runs the existing delay-aware LQR with 5 ms delay,
+5 ms torque lag and body IMU noise. It repeats a 10 s run with a 6 N push at
+3 s. **Space** pauses, **P** adds a push and **R** resets. Drag to rotate the
+camera; scroll to zoom. Close the window to end only the demo; PPO training
+is a separate process. This visual demo is unscored.
+
+Black wheel, blue virtual leg, orange body: the assumed reduced planar model.
+The wheel graphic does not spin. To select another delay, use
+`--delay-ms 2` (also 3, 4 or 5). macOS needs MuJoCo's `mjpython` launcher for
+its [passive viewer](https://mujoco.readthedocs.io/en/3.3.7/python.html#passive-viewer).
 
 ## Run
 
@@ -146,8 +167,8 @@ hardware validation remain future work. Ideal state feedback and simultaneous
 torque updates are assumed. This result does not complete gain parity or a
 hardware milestone.
 
-**Recommendation:** review the reduced mechanics and replace assumed physical
-parameters with CAD/lab evidence before extending to fivebar VMC or comparing RL.
+Physical parameters remain assumptions pending CAD/lab evidence; the reduced
+model does not validate full fivebar mechanics or sim-to-real transfer.
 
 ## Protected learning exercise and milestone boundary
 
@@ -159,7 +180,7 @@ prioritized a running ASSUMED MuJoCo baseline in parallel; this new LQR synthesi
 does not claim the pending gain-parity milestone passed.
 
 A/B and solver code in this run are implementation authorized by the latest
-conducting request. RL reward design/training remain later work. For each next
+conducting request. RL reward/training are documented in [rl/README.md](rl/README.md). For each next
 milestone explain the idea/key equation briefly with a primary source, ask two
 understanding questions, and log actual runs and pending answers. All meaningful
 documentation changes are recorded in ops/worklog/DOCUMENTATION_LOG.md.
