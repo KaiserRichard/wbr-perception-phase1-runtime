@@ -9,7 +9,10 @@ import subprocess
 import numpy as np
 import torch
 
-from .export import load_completed
+from .export import contract, load_completed
+
+
+OUTPUT_NAMES = ("raw", "bounded", "held_Nm", "command_Nm")
 
 
 class HostPolicy:
@@ -40,8 +43,9 @@ def vectors(actor, count=64):
     rng = np.random.default_rng(20261020)
     x = rng.uniform(-3, 3, (count, 15))
     # Explicit fitted clipping boundaries and finite large inputs.
-    x[:5] = np.asarray([np.zeros(15), actor.mean.numpy(),
+    x[:6] = np.asarray([np.zeros(15), actor.mean.numpy(),
                        actor.mean.numpy() + actor.clip_obs * np.sqrt(actor.var.numpy() + actor.epsilon),
+                       actor.mean.numpy() - actor.clip_obs * np.sqrt(actor.var.numpy() + actor.epsilon),
                        np.full(15, 1000.), np.full(15, -1000.)])
     lqr = rng.uniform(-8, 8, (count, 2)).astype(np.float32)
     return x, lqr
@@ -55,31 +59,56 @@ def validate(actor, model, norm, folder):
     mean_before, var_before = norm.obs_rms.mean.copy(), norm.obs_rms.var.copy()
     predicted, _ = model.predict(norm.normalize_obs(x), deterministic=True)
     np.testing.assert_allclose(expected[1], predicted, atol=2e-6, rtol=2e-6)
+    p, config = contract()
+    limits = np.asarray(p["plant"]["torque_limits_Nm"], dtype=np.float32)
+    held_reference = predicted * limits
+    if actor.arm == "residual":
+        held_reference *= config["residual_cap_fraction"]
+    command_reference = np.clip(held_reference + (lqr if actor.arm == "residual" else 0),
+                                -limits, limits)
+    np.testing.assert_allclose(expected[2], held_reference, atol=2e-6, rtol=2e-6)
+    np.testing.assert_allclose(expected[3], command_reference, atol=2e-6, rtol=2e-6)
     np.testing.assert_array_equal(mean_before, norm.obs_rms.mean)
     np.testing.assert_array_equal(var_before, norm.obs_rms.var)
     host = HostPolicy(folder)
     actual = np.asarray([host.predict(a, b) for a, b in zip(x, lqr)]).transpose(1, 0, 2)
     errors = {}
-    for name, c, ref in zip(("raw", "bounded", "held_Nm", "command_Nm"), actual, expected):
+    for name, c, ref in zip(OUTPUT_NAMES, actual, expected):
         np.testing.assert_allclose(c, ref, atol=3e-5, rtol=3e-5, err_msg=name)
         errors[name] = float(np.max(np.abs(c-ref)))
     result = {"c_status": "PASS", "vectors": len(x), "encoded_bound_abs": float(abs(x).max()),
               "lqr_bound_abs_Nm": 8, "atol": 3e-5, "rtol": 3e-5,
-              "max_abs_error": errors, "sb3_vecnormalize_reference": "PASS"}
+              "max_abs_error": errors, "sb3_vecnormalize_reference": "PASS",
+              "sb3_action_composition_reference": "PASS"}
     onnx_path = Path(folder) / "policy.onnx"
     if not onnx_path.exists():
         result["onnx"] = {"status": "PENDING", "reason": "No ONNX artifact; dependency unavailable or export not run"}
-    elif importlib.util.find_spec("onnxruntime") is None:
-        result["onnx"] = {"status": "PENDING", "reason": "onnxruntime unavailable"}
+    elif any(importlib.util.find_spec(name) is None for name in ("onnx", "onnxruntime")):
+        result["onnx"] = {"status": "PENDING", "reason": "onnx or onnxruntime unavailable"}
     else:
+        import onnx
         import onnxruntime as ort
+        onnx.checker.check_model(onnx.load(str(onnx_path)))
         options = ort.SessionOptions()
         options.intra_op_num_threads = options.inter_op_num_threads = 1
         session = ort.InferenceSession(str(onnx_path), options, providers=["CPUExecutionProvider"])
-        outputs = session.run(None, {"encoded": x, "lqr_Nm": lqr})
-        for output, ref in zip(outputs, expected):
-            np.testing.assert_allclose(output, ref, atol=3e-5, rtol=3e-5)
-        result["onnx"] = {"status": "PASS", "vectors": len(x)}
+        if [output.name for output in session.get_outputs()] != list(OUTPUT_NAMES):
+            raise ValueError("Unexpected ONNX output interface")
+        torch_errors, c_errors = {}, {}
+        # Check both batched validation and the one-observation inference ABI.
+        for batch in (len(x), 1):
+            outputs = session.run(list(OUTPUT_NAMES), {"encoded": x[:batch], "lqr_Nm": lqr[:batch]})
+            for name, output, ref, c in zip(OUTPUT_NAMES, outputs, expected, actual):
+                if output.shape != (batch, 2) or output.dtype != np.float32 or not np.isfinite(output).all():
+                    raise ValueError(f"Invalid ONNX output: {name}")
+                np.testing.assert_allclose(output, ref[:batch], atol=3e-5, rtol=3e-5, err_msg=name)
+                np.testing.assert_allclose(output, c[:batch], atol=3e-5, rtol=3e-5, err_msg=name)
+                torch_errors[name] = max(torch_errors.get(name, 0.), float(abs(output-ref[:batch]).max()))
+                c_errors[name] = max(c_errors.get(name, 0.), float(abs(output-c[:batch]).max()))
+        result["onnx"] = {"status": "PASS", "checker": "PASS", "vectors": len(x),
+                          "batch_sizes": [len(x), 1], "providers": session.get_providers(),
+                          "max_abs_error_vs_pytorch": torch_errors,
+                          "max_abs_error_vs_c": c_errors}
     return result
 
 

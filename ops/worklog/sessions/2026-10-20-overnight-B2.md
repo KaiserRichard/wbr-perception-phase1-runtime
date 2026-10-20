@@ -39,3 +39,47 @@
   not loaded (tiny residual fixture used); no closed-loop rollouts, STM32 build,
   hardware cycles, flash/motor commands, purchases, training or live evidence edits.
   Conductor owns central documentation/decision/morning review updates and merge.
+
+## ONNX follow-up (same PR63)
+
+- Continued assigned branch at `de19ccf`, clean status. Original PENDING result
+  above and `direct-export/` retained as historical; new artifacts use
+  `/private/tmp/wbr-overnight-20261020/B2/direct-onnx-export`.
+- Installed only six missing binary wheels into external target; no compilation,
+  Torch/NumPy reinstall, active backend install, training or live evidence write.
+  Exact shell setup and commands (from assigned worktree):
+  ```sh
+  PY=/private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python
+  ONNX_DEPS=/private/tmp/wbr-overnight-20261020/B2/onnx-deps
+  export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MKL_NUM_THREADS=1
+  nice -n 10 "$PY" -m pip install --only-binary=:all: --no-deps --target "$ONNX_DEPS" onnx==1.16.2 onnxruntime==1.19.2 protobuf==5.28.3 coloredlogs==15.0.1 humanfriendly==10.0 flatbuffers==24.3.25
+  CHECKPOINT=/Users/quockaiser/wbr-evidence-archive/sim-ppo-v2-20261020-01/direct/seed-0
+  OUT=/private/tmp/wbr-overnight-20261020/B2/direct-onnx-export
+  PYTHONPATH="$ONNX_DEPS" nice -n 10 "$PY" -m sim.policy_export.export --checkpoint-dir "$CHECKPOINT" --out "$OUT"
+  PYTHONPATH="$ONNX_DEPS" nice -n 10 "$PY" -m sim.policy_export.validate --checkpoint-dir "$CHECKPOINT" --export-dir "$OUT"
+  PYTHONPATH="$ONNX_DEPS" nice -n 10 "$PY" -m unittest discover -s sim/policy_export/tests -v
+  ```
+- All commands exit 0. Legacy Torch 2.2.2 exporter needs no onnxscript. Import
+  paths confirm NumPy1.26.4/Torch2.2.2 reused from backend; ONNX/ORT from target.
+  Existing packaging26.3/sympy1.14.0 reused. Without scoped PYTHONPATH,
+  `find_spec` still returns None for onnx/onnxruntime/onnxscript.
+- Actual `policy.onnx`: 23609 bytes; SHA256
+  `c119b8d7ceae28026c8ab29dc449dddb72abd23a83383a26f60d87a438f8ac5a`.
+  Export and validator both run `onnx.checker.check_model`: PASS. Source
+  checkpoint hash unchanged from initial run; normalization frozen.
+- Extended validator: independent SB3 normalization/action-composition reference,
+  both observation-clipping boundaries, ONNX output shapes/dtypes/finite checks,
+  explicit ONNX/PyTorch and ONNX/C errors, dynamic batches 64 and 1, single-thread
+  CPUExecutionProvider. Real directseed0 bounded parity PASS, atol/rtol3e-5:
+  encoded absolute bound1000, LQR bound8Nm; max ONNX/PyTorch action8.94e-8,
+  torque1.78814e-7Nm; ONNX/C action5.96e-8, torque1.19209e-7Nm;
+  C/PyTorch action8.94e-8, torque1.78814e-7Nm. See new `parity.json`.
+- Updated optional test loads saved tiny direct/residual fixtures and asserts
+  actual graph/checker/runtime/C parity and both batch sizes. Original optional
+  suite ran 5/5 in4.630s; final extended suite 5/5 in4.989s, **zero skips**.
+  No full suite or simulator rollouts. `git diff --check` clean.
+- README now records reproducible isolated commands and actual ONNX evidence;
+  historical no-ONNX result is retained above. H7 estimate remains analytical,
+  not measured. Real residual checkpoint, target compilation, timing and
+  closed-loop/hardware validation remain outside this task; fixture residual
+  inference is tested. No heavy dependency work remains for B2.

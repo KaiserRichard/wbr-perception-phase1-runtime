@@ -111,11 +111,21 @@ class ExportTests(unittest.TestCase):
                          "ONNX dependencies absent; actual ONNX export/runtime parity pending")
     def test_onnx_export_checker_and_runtime(self):
         for arm in ("direct", "residual"):
-            actor = FrozenActor(self.model.policy, self.env, arm)
-            out = self.folder / (arm + "-onnx")
-            export_c(actor, out)
-            self.assertEqual(export_onnx(actor, out)["status"], "EXPORTED_CHECKED")
-            self.assertEqual(validate(actor, self.model, self.env, out)["onnx"]["status"], "PASS")
+            with self.subTest(arm=arm):
+                self.status["arm"] = arm
+                self.write_status()
+                actor, model, norm, _ = load_completed(self.folder)
+                out = self.folder / (arm + "-onnx")
+                export_c(actor, out)
+                self.assertEqual(export_onnx(actor, out)["status"], "EXPORTED_CHECKED")
+                self.assertTrue((out / "policy.onnx").is_file())
+                report = validate(actor, model, norm, out)
+                self.assertEqual(report["sb3_action_composition_reference"], "PASS")
+                self.assertEqual(report["onnx"]["status"], "PASS")
+                self.assertEqual(report["onnx"]["checker"], "PASS")
+                self.assertEqual(report["onnx"]["batch_sizes"], [64, 1])
+                self.assertEqual(set(report["onnx"]["max_abs_error_vs_c"]),
+                                 {"raw", "bounded", "held_Nm", "command_Nm"})
 
 
 if __name__ == "__main__":

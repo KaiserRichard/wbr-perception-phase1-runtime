@@ -80,23 +80,64 @@ C returns `-1` on nonfinite inputs; outputs on error are unspecified and must
 never be consumed. Finite bounded-vector parity does not certify arbitrary
 inputs, closed-loop stability, real hardware, or worst-case execution time.
 
-## ONNX status and isolated dependency work
+## ONNX validation and isolated dependencies
 
-The supplied backend lacks `onnx`, `onnxruntime`, and `onnxscript` as of this run.
-**No ONNX file was produced or validated.** Export records `PENDING`; the optional
-ONNX unit test skips explicitly. C/SB3 tests still execute. No dependency install
-was attempted while PPO was active.
+The first B2 run had no ONNX dependencies and reported PENDING with one test
+skip; that historical result remains in the session log and `direct-export/`.
+The follow-up **produced a real ONNX graph**, passed `onnx.checker`, and passed
+ONNX Runtime CPU parity against PyTorch and compiled C using the read-only
+completed direct seed-0 checkpoint. The active backend remains unchanged:
+only six missing binary-wheel dependencies were installed into an external
+target, reusing its NumPy **1.26.4** and Torch **2.2.2**.
 
-Queued work: create an isolated environment with a compatible CPU PyTorch/SB3,
-NumPy, ONNX and ONNX Runtime stack, then repeat the commands above and run the
-optional test. Never install into the active PPO environment. The exporter uses
-PyTorch 2.2's legacy ONNX exporter (opset 17); other exporter versions require a
-fresh validation. ONNX includes float64 normalization, float32 actor and
+Exact dependency command used (no dependency resolution, source compilation,
+Torch reinstall, or writes into the backend environment):
+
+```sh
+PY=/private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python
+ONNX_DEPS=/private/tmp/wbr-overnight-20261020/B2/onnx-deps
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MKL_NUM_THREADS=1
+nice -n 10 "$PY" -m pip install --only-binary=:all: --no-deps --target "$ONNX_DEPS" \
+  onnx==1.16.2 onnxruntime==1.19.2 protobuf==5.28.3 \
+  coloredlogs==15.0.1 humanfriendly==10.0 flatbuffers==24.3.25
+```
+
+Existing backend `packaging==26.3` and `sympy==1.14.0` satisfy the remaining
+runtime imports. Use a fresh target for a new installation. Scoped `PYTHONPATH`
+makes the dependencies visible only to these commands:
+
+```sh
+CHECKPOINT=/Users/quockaiser/wbr-evidence-archive/sim-ppo-v2-20261020-01/direct/seed-0
+OUT=/private/tmp/wbr-overnight-20261020/B2/direct-onnx-export
+PYTHONPATH="$ONNX_DEPS" nice -n 10 "$PY" -m sim.policy_export.export --checkpoint-dir "$CHECKPOINT" --out "$OUT"
+PYTHONPATH="$ONNX_DEPS" nice -n 10 "$PY" -m sim.policy_export.validate --checkpoint-dir "$CHECKPOINT" --export-dir "$OUT"
+PYTHONPATH="$ONNX_DEPS" nice -n 10 "$PY" -m unittest discover -s sim/policy_export/tests -v
+```
+
+`OUT` above contains the actual artifacts; choose a new output directory to
+repeat export. The final suite ran **5 tests in 4.989 s, all passed, no skips**,
+including saved tiny direct/residual fixtures with nondefault epsilon, zero
+variance, observation/action clipping, correction scaling and LQR composition.
+The optional test still skips explicitly when dependencies are absent.
+
+Real-checkpoint validation uses 64 bounded vectors (encoded absolute values at
+most 1000, supplied LQR within 8 Nm), including both observation-clipping
+boundaries, and checks dynamic batches of 64 and 1. Frozen SB3 VecNormalize and
+action composition independently match the reference. At atol/rtol `3e-5`,
+ONNX/PyTorch max action error is `8.94e-8` and max torque error `1.79e-7 Nm`;
+ONNX/C errors are `5.96e-8` and `1.19e-7 Nm`, respectively. C/PyTorch torque
+error is `1.79e-7 Nm`. Exact per-output errors are in `parity.json`.
+
+The exporter uses PyTorch 2.2's legacy ONNX exporter (opset 17), which does not
+need `onnxscript`; other exporter versions require fresh validation.
+ONNX includes float64 normalization, float32 actor and
 composition; inputs are batched `encoded` float64 and `lqr_Nm` float32. Outputs
 are raw/bounded actions, held correction/torque, and composed torque. Its composed
 output is a convenience for one tick: hold the correction and recompute LQR at
 500 Hz externally. `onnx.checker` validates graph structure; the validator reports
 runtime parity separately and only passes it after ONNX Runtime actually runs.
+Completed real residual weights were not loaded; residual ONNX/C semantics were
+validated with the saved tiny fixture. No rollout or hardware validation ran.
 
 ## Analytical STM32H7 cycle estimate — not measured
 
