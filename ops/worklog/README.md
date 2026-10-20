@@ -1,57 +1,14 @@
-# Worklog conventions
+# Worklog
 
-The worklog is the shared memory between ChatGPT Work, Codex and Claude. Write it so
-that someone who has never seen the conversation can continue the work.
+Short notes so the next session (ChatGPT, Codex or Claude) can continue.
 
-| File | Rule |
-|---|---|
-| `CURRENT.md` | Overwrite at session end. At most ~60 lines. Sections fixed (see file). |
-| `DECISIONS.md` | Append-only, newest at the bottom. Fix a wrong entry by adding a new one that supersedes it (`Supersedes D-YYYYMMDD-N`). |
-| `DOCUMENTATION_LOG.md` | Append-only audit trail for every documentation change set, including this worklog and agent instructions. |
-| `sessions/YYYY-MM-DD-<topic>.md` | One per session. What was done, evidence paths, results, decisions taken. |
-| `reviews/YYYY-MM-DD-<topic>.md` | A request for Claude. Claude answers in the same file under `## Claude review`. |
+- `CURRENT.md`: overwrite at session end. What works, what's broken, next step.
+  Under ~40 lines.
+- `sessions/YYYY-MM-DD-<topic>.md`: bullets — what was run, what happened, what was
+  fixed, where the logs are.
+- `reviews/YYYY-MM-DD-<topic>.md`: only when stuck and asking Claude for help.
+- `DECISIONS.md` and `DOCUMENTATION_LOG.md` are history from before 2026-10-20 12:20;
+  no new entries required.
 
-Rules:
-- Label claims (MEASURED, CALCULATED, INFERRED, ASSUMED, UNKNOWN, SOURCE-SUPPORTED).
-- Give exact paths (Pi, Mac archive, repo), commits and exit codes. Point to logs;
-  do not paste them.
-- Keep secrets out: no passwords, tokens, private keys, Wi-Fi credentials.
-- Evidence data (run folders, bags, images) never goes in git. It lives under
-  `~/wbr-evidence/` on the Pi and `~/wbr-evidence-archive/` on the Mac, with SHA-256
-  manifests; the worklog only references it.
-- Times: local time with offset, e.g. `2026-10-20 08:54 +07`.
-- Keep at most one open worklog PR: merge it before the next session starts, so
-  `CURRENT.md` does not conflict between branches.
-- Whenever any document is created or revised, append a documentation-log entry
-  in the same working change set. One entry may cover related documents; list
-  every changed document, including the log itself. Updating the entry does not
-  require a recursive entry about that entry. Later independent revisions get
-  new entries; do not rewrite earlier records.
-- A documentation-log entry is not Claude approval. State whether changes are
-  local, committed, pushed or in a PR, and whether review is pending or complete.
-- Keep new DOC entries about 15 lines; put detailed reasoning and evidence in
-  the linked session log. Preserve earlier finalized entries as history.
-
-Documentation-log entry format:
-
-```markdown
-### DOC-YYYYMMDD-N: <short title>
-- Time / author: <local time with offset; agent>.
-- Branch / base: <branch, base commit; resulting commit or PR when available>.
-- Files: <all created/revised documentation paths>.
-- Changes and reason: <before -> after, and why>.
-- Sources: <pinned upstream revisions, evidence paths and decision IDs>.
-- Validation: <checks actually run and their outcomes; unrun checks explicitly labeled>.
-- Limitations / review: <uncertainties, local/committed/pushed state and review status>.
-```
-
-Decision entry format (in `DECISIONS.md`):
-
-```markdown
-### D-20261020-1: <short title>
-- Decided by: owner | ChatGPT Work | Claude review | Codex
-- Decision: <one or two sentences>
-- Why: <reason, with evidence labels>
-- Evidence: <paths, PRs, sessions>
-- Revisit when: <condition, or "never">
-```
+No secrets (passwords, tokens, keys) in any file. Large data (bags, videos,
+checkpoints) stays out of git.
