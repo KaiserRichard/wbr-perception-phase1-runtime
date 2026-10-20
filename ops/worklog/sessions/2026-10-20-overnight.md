@@ -20,3 +20,6 @@
 - A4 snapshot:hip agreement<1e-15m;virtualhip input~1e-10error;wheel angular reaction[-.833,-.167] rather than[-1,0] due explicitly assumed distal-link bearing. Massive-link dynamics differ; no replacement of the trained plant.
 - Geometry limit: source proximal/distal links0.075/0.14m and0.08m motor separation imply maximum midpoint-to-axle reach sqrt((.075+.14)^2-(.08/2)^2)≈.211m. A3's.255/.30m cases are hypothetical rigid-leg sensitivity, not reachable configurations of A4's pinned geometry. No requested range silently changed.
 - Morning review remains the single authorized handoff. Deferred heavy jobs and unavailable Pi must appear as partial/blocked, not successful execution.
+
+-23:44follow-through:mergedPR63(export),68(camera prep),69(fivebar),70(HTTP extraction/status fix),71(video framing) only after exact-head greenCI and conductor checks. C3new12testsPASS; B3new11testsPASS1.892s and framedPNG inspected. A1/A3/A4/B3 remain partial for actual Pi/heavy execution.
+- b now runs bounded B2 host-integration follow-up on chatgpt/20261020-c-controller-policy:combine C LQR+exported policy, preserve100/500Hz ordering, sum before clipping and advance total-command history. Existing component APIs/thresholds/source frozen; no plant rollout. This addresses an observed interface-ordering risk, not a new research recipe.

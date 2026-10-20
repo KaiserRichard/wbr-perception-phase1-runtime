@@ -296,3 +296,5 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - A4(sim/fivebar,PR69):geometry/VMC/assumptions/worked example and deferred comparison;14quick tests+pinnedCparity+matrix snapshotPASS;dynamics differ and long comparison unrun.
 - Each worker updated its own overnight session. Conductor checked math/source links and logged localized fixes; all generated media/checkpoints/raw logs remain outsidegit. No running PPO/environment/student exercise change.
 - All listed merges required actual current-head greenCI; pending PRs/results are not approvals. Single morning review remains reviews/2026-10-21-overnight.md.
+
+- OVERNIGHT-PROGRESS follow-through:CURRENT/session refreshed after mergedPR63/68/69/70/71; source/code unchanged in this documentation commit. New C3tests12PASS, B3tests11PASS and closer frame verified. B2 bounded integration follow-up running; all unexecuted Pi/physics/video requirements stay explicit.
