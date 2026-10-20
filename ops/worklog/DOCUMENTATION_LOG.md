@@ -231,3 +231,11 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Limits/review:sampled implementation audit found no actionable bug; it does not prove cause or future RL failure. No new training, runtime/reward/threshold or gate change. Final results PR/CI and Claude response pending.
 - DOC23 follow-through:CURRENT now points directly to pending Claude review rather than stale training/publication work; all local document links resolve, CURRENT25lines. This final publication contains no new simulation trial or code change.
 - DOC23 publication receipt:PR51 opened; archive/publication-269cc3a stores the reviewed result/guide/source-table snapshots (35supplementary hashes total). Session records the two optional learning questions, unanswered at publication. No new simulation or approval claim.
+
+### DOC-20261020-24: Cafe, lab and cloud compute decision review
+- Time / author:2026-10-20 +07; document Q&A chat, isolated cafe-compute-review worktree.
+- Files:ops/worklog/{reviews/2026-10-20-cafe-compute-strategy.md,sessions/2026-10-20-cafe-compute-strategy.md,DOCUMENTATION_LOG.md}.
+- Changes:compare owner screenshots/current cafe data, conditional promotions, Windows/backend compatibility, privacy/reset overhead and cloud/lab alternatives; prepare Claude questions. Proposal only, no resource purchase or architectural approval.
+- Sources:8owner images/staff terms/reset-policy clarification; official OEG pages and vendor compatibility/pricing; completed CPU experiment and current CPU-only training source at819659c. External source receipts recorded in session.
+- Validation:independent Decimal recomputation passed all9economics rows and cloud/overhead examples; local result link resolves; screenshot/configuration conflicts retained and whitespace/scope checks passed. No runtime change or new training; publication CI pending.
+- Limits/review:no cafe Windows/GPU benchmark, confirmed bonus eligibility, staff-admin access or actual room/seat billing. Claude/owner decision pending. CURRENT retained under the active conductor's ownership.

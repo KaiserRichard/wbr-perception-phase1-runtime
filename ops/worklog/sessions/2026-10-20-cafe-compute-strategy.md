@@ -1,0 +1,14 @@
+# Cafe / lab / cloud compute analysis — 2026-10-20
+
+- Owner requested comparison of8 cafe screenshots, promotions, Windows MuJoCo/Isaac, private rooms and alternatives; write a review for Claude. English replies retained.
+- Read root AGENTS, CURRENT/profile, worklog/review guidance, completed PPO result and runtime/dependency paths. Shared checkout819659c had pre-existing untracked generated test binaries; untouched. No nested AGENTS found.
+- Used attached managed worktree `~/.codex/worktrees/cafe-compute-review/wbr-lab-ops`, branch `chatgpt/20261020-cafe-compute-review` from origin/main819659c; no shared branch change.
+- Owner clarified full-morning visits, travel accepted if worthwhile, installs allowed but shutdown resets files; admin/VM access unknown. Initial abstract workspace-preference question was unhelpful; no repeated question.
+- Inspected8 images. Fetched official Cho Mo/TQH advertised card data and checked official Windows/JAX/PyTorch/Isaac/cloud references. TQH Private advertises7800X3D/5060 8GB/32GB. Kept RAM/price/Stream conflicts visible.
+- Python3.11 URL fetch initially failed `CERTIFICATE_VERIFY_FAILED`; curl with normal certificate verification succeeded. TQH page text tool failed, direct curl/decode succeeded. No TLS verification bypass.
+- External receipts: `~/wbr-evidence-archive/cafe-compute-review-20261020-01/`; extracted public JSON and screenshot hashes only. No user images, model artifacts, secrets or large files added to git.
+- Wrote `ops/worklog/reviews/2026-10-20-cafe-compute-strategy.md`: proposal pending owner/Claude, corrected49500/3, scenarios and setup overhead; no simulator migration, spending or new training authorized by report.
+- Reused measured Mac CPU training448–454s/process, not estimated GPU speed. Runtime/experiment/requirements/protected exercise unchanged; no new trial.
+- Documentation log entry added; CURRENT not overwritten because another chat owns active milestone state. New recommendations remain in review file; owner-facing format follows D27.
+- Validation: independent Decimal recomputation passed all9 economics rows,49500/3 and cloud/overhead examples; the relative result link resolves; `git diff --check` passed. Receipt: external `document-validation.json`. No runtime tests needed for this documentation-only set.
+- Publication: pending PR/CI receipts below. Analysis is complete; operational pilot/Claude approval remain pending.

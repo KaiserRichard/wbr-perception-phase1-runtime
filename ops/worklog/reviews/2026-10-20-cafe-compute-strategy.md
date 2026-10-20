@@ -1,0 +1,212 @@
+# Compute strategy: OEG cafes, borrowed computers, lab GPU and cloud
+
+Date: 2026-10-20, Asia/Ho_Chi_Minh. Status: **analysis complete; proposed choices, pending owner/Claude review**.
+Analysis base: `819659c` (merged PR51). Branch: `chatgpt/20261020-cafe-compute-review`.
+This document does not approve a simulator migration, new experiment, purchase, bank-account opening or prepaid deposit.
+
+## 1. Decision in brief
+
+**Recommendation:** keep MuJoCo as the project reference. A cafe is a plausible combination of a morning workspace and an occasional workstation, conditional on a successful native-Windows pilot. Do not treat an hourly gaming seat as a persistent cloud server.
+
+- For private study and existing CPU experiments: investigate **Tran Quoc Hoan Private** first (32 GB system RAM); Cho Mo Private is cheaper but lists 16 GB RAM.
+- For inexpensive nonprivate experimentation: investigate the 12 GB RTX3060 seats, particularly TQH Premium/Net Hub. VRAM capacity can matter more than the GPU generation number.
+- For **full Isaac Sim GUI/RTX work or a justified large GPU batch**: investigate **Cho Mo Stadium, RTX4090 24 GB / 64 GB RAM**. It is the clear hardware match among the supplied options, subject to actual OS, driver, disk and permissions.
+- Infinity Capsule doubles Stadium's advertised hourly rate without increasing the advertised 24 GB VRAM; justify it by confirmed room/privacy benefits, not an assumed doubling of training speed.
+- Prefer the lab machine for unattended campaigns if access, persistence and hardware are suitable; use cloud for a deadline, Linux-only backend or uninterrupted job that the available local resources cannot satisfy.
+- Do not prepay 500,000–1,000,000 VND before testing the installation/restore process and confirming bonus-credit terms.
+
+This is a proposed resource allocation, not a claim that any cafe GPU was benchmarked. Cafe quietness, room isolation and early-morning availability are unmeasured.
+
+## 2. Owner constraints and the actual project workload
+
+Owner wants balance/push recovery versus LQR, about half the work time for simulation/RL and half for ORB-SLAM3. Both cafes require inconvenient travel, accepted if worthwhile; visits would occupy a full morning. Six paid hours is the **calculation scenario**, not a confirmed booking duration. A private room is preferred.
+
+Owner reports OEG allows software installation, but shutting down resets the computer. Permission for admin operations/VM installation is uncertain. Assume no persistent local packages, caches or results until staff identifies a persistent location. Remote/unattended operation is unconfirmed.
+
+Available alternatives: daily Mac; borrowed i7-11800H/32 GB/RTX3060 Laptop 6 GB requiring a Mac swap; potentially stronger lab GPU with exact model/OS/access unknown; first cloud budget below USD50. CAD is in progress, probably SolidWorks; link inertias/export quality remain unknown.
+
+**Important measured update:** [the completed comparison](../../../sim/rl/RESULTS_2026-10-20.md) already trained five seeds ×150,000 steps on the Intel Mac CPU. Each concurrent process took approximately448–454 s; these are not five serial durations to add. LQR succeeded160/160, PPO0/800. This negative result is conditional on the frozen recipe and budget, not an execution failure or proof that RL cannot work. Evaluation/audits take additional time.
+
+The runtime uses CPU MuJoCo plus a Python delay/lag/noise layer, Gymnasium and SB3; `sim/rl/training.py` explicitly selects `device='cpu'`. The pinned stack is MuJoCo3.3.7, Torch2.2.2, SB3 2.3.2, Python3.12. Renting a4090 does not automatically move the physics, Python substeps or trace writing onto that GPU.
+
+The immediate research bottleneck is understanding/experiment design, not demonstrated lack of GPU. Further training/protocol changes remain pending the existing Claude review. No new training was launched for this report.
+
+## 3. Hardware and tariff evidence
+
+Images1–6 are owner-identified as Cho Mo; images7–8 as Tran Quoc Hoan. Owner supplied them in this chat. The current public pages were also fetched with certificate verification on20 October:
+[Cho Mo](https://cyber.oeg.vn/tttm-cho-mo), [TQH](https://cyber.oeg.vn/175-tran-quoc-hoan).
+The TQH route was readable by curl although the web text tool could not render it. The table below uses the pages' decoded server-rendered advertised data; this is not hardware inspection.
+
+| Location / zone | Advertised CPU | GPU / VRAM | RAM | Listed VND/h |
+| --- | --- | --- | ---: | ---: |
+| Cho Mo VIP | i5-12400F | RTX3060 /12 GB |32 GB*|16,500|
+| Cho Mo Private | i5-12400F | RTX4060 /8 GB |16 GB|22,000|
+| Cho Mo Training Station | i7-13700F | RTX3060 /12 GB |32 GB|24,200|
+| Cho Mo Premium | i7-13700F | RTX3060 /12 GB |32 GB|27,500|
+| Cho Mo Stadium | i9-13900F | RTX4090 /24 GB |64 GB|49,500|
+| Cho Mo Infinity | i9-13900F | RTX4090 /24 GB |64 GB|99,000|
+| TQH Net Hub | Ryzen5 5600X | RTX3060 /12 GB |32 GB|14,300|
+| TQH Premium | Ryzen5 7600 | RTX3060 /12 GB |32 GB|18,700|
+| TQH Private | Ryzen7 7800X3D | RTX5060 /8 GB |32 GB|27,500|
+| TQH Couple | Ryzen5 5600X | RTX3060 /12 GB |32 GB|27,500|
+
+Other Cho Mo overview prices: Duo/MOBA16,500; FPS18,700; Couple27,500; Stream38,500 VND/h. These offer no established advantage over the shortlist for this task.
+
+### Conflicts that must remain visible
+
+- Image3 Stadium popup says45,000, whereas image1 and current page data say49,500. Budget at49,500 until the actual account debit is confirmed.
+- Image5 Premium popup says25,000; overview/current data say27,500.
+- Image2 Stream popup says35,000, i7-13700F, RTX4060Ti8 GB; its RAM artwork says32 GB and table64 GB. Current page data instead list38,500, i5-12400F, GTX1660Super6 GB,16 GB. **Do not book Stream for CUDA/Isaac on the popup's promise.**
+- Image6 VIP RAM is16 GB; current page data say32 GB (* above). Check the assigned seat.
+- Some price differences equal10%, but tax or an update is only a hypothesis; no VAT explanation was confirmed.
+- TQH Private/Couple hardware comes from current page data, not the supplied image8 Premium configuration. A room's price may be per seat, per room or subject to a minimum: this is unconfirmed. All calculations assume one billed seat at the stated rate.
+
+Monitor refresh rate, mouse, keyboard and gaming branding do not establish RL throughput. Private room denotes physical separation, not a trusted personal computer. A newer8 GB card is not a VRAM upgrade over a12 GB3060.
+
+## 4. Promotion economics
+
+The x3/newbie terms are **owner-relayed staff statements**, not independently verified. The public Cho Mo page did not expose a matching offer in its text. Keep the staff conversation for the exact account/branch.
+
+Reported: under100k receives x1.5;100k–200k x2; above200k x3, within an account's first30 days, with a seven-day check-in description. A separate first transaction from100k grants50% promotional credit. A bank-account offer mentions50k. Eligibility, repeatability/check-in steps, eligible zones, credit expiry, balance priority, caps, refundability and stacking are unknown. The30-day eligibility window does not establish when credited money expires.
+
+Assume **x3 means total playable balance =3×cash deposited**, fully usable for the selected seat. It does not mean cash plus three extra copies. Do not stack the50% or50k offers into the base calculation.
+
+\[
+p_{\rm effective}=p/3,\qquad C_{6h}=6p/3,\qquad H=3D/p.
+\]
+
+Thus49,500/3 = **16,500**, not18,500 VND/h. If the lower45,000 popup were honored it would be15,000/h.
+
+| Zone | No bonus VND/h | x2 VND/h | x3 VND/h | Six hours at x3 | Hours from500k cash at x3 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Cho Mo VIP |16,500|8,250|5,500|33,000|90.91|
+| Cho Mo Private |22,000|11,000|7,333.33|44,000|68.18|
+| Cho Mo Training |24,200|12,100|8,066.67|48,400|61.98|
+| Cho Mo Premium |27,500|13,750|9,166.67|55,000|54.55|
+| Cho Mo Stadium |49,500|24,750|16,500|99,000|30.30|
+| Cho Mo Infinity |99,000|49,500|33,000|198,000|15.15|
+| TQH Net Hub |14,300|7,150|4,766.67|28,600|104.90|
+| TQH Premium |18,700|9,350|6,233.33|37,400|80.21|
+| TQH Private / Couple |27,500|13,750|9,166.67|55,000|54.55|
+
+One million cash doubles the last column.500k would fund about five6h Stadium visits, but about eleven6h Cho Mo Private visits or nine TQH Private visits. Do not buy more locked credit merely because the theoretical hourly price is low.
+
+If only fraction f of credited balance is ultimately consumed, realized cash cost is p/(3f):50% utilization gives p/1.5; one-third gives p. Food, travel, parking, unconsumed credit and room minimums are additional. At most, a confirmed additional0.5D bonus would make3.5D total under additive stacking; multiplying promotions to4.5D is unjustified without explicit terms.
+
+## 5. Windows: VM is not a universal prerequisite
+
+| Software path | Native Windows possibility | Consequence here |
+| --- | --- | --- |
+| CPU MuJoCo + Python/SB3 | Yes at library level | Lowest-friction candidate; project portability still needs a real smoke run |
+| PyTorch CUDA | Yes | Accelerates supported tensor computation; does not move CPU physics automatically |
+| MJX-JAX NVIDIA | No native Windows CUDA in current JAX support table; WSL2 experimental | Poor assumption for a locked/resetting cafe PC |
+| MuJoCo Warp / GPU framework | Candidate requiring exact version/platform validation | New environment/backend integration, not a switch in the existing CLI |
+| Full Isaac Sim + Isaac Lab | Windows11 supported for compatible releases | No Ubuntu VM required, but OS/driver/storage/system settings still matter |
+| Isaac Lab3 Newton-only | Windows11 supported; full Isaac Sim optional | Potential lean GPU experiment, still a new framework for this project |
+
+Sources: [MuJoCo platforms](https://mujoco.readthedocs.io/en/stable/programming/index.html), [PyTorch Windows](https://pytorch.org/get-started/locally/), [JAX support table](https://docs.jax.dev/en/latest/installation.html), [MuJoCo Warp](https://mujoco.readthedocs.io/en/latest/mjwarp/index.html).
+
+Current [Isaac Sim requirements](https://docs.isaacsim.omniverse.nvidia.com/6.1.0/installation/requirements.html) list Windows11,32 GB RAM,16 GB VRAM,50 GB SSD, with an RTX4080-class minimum GPU. Training/sensors can require more. Stadium/Infinity meet the advertised memory/GPU class; the8/12 GB seats are below that workstation baseline. This is not proof that every tiny headless task fails below16 GB. The requirement is also not a universal minimum for MuJoCo or Newton-only training.
+
+[Isaac Lab3 installation](https://isaac-sim.github.io/IsaacLab/release/3.0.0/source/isaaclab/installation.html) documents Windows11/Python3.12 and Newton without Isaac Sim. Its default CUDA13 stack requires a suitable driver (Windows580.88+); Windows setup includes elevated long-path configuration if not already enabled. Full Sim has its own release-specific tested drivers. Do not mix commands from different release families. Exact compatibility must be pinned before the visit; no blanket downgrade or driver change is proposed.
+
+[Isaac Sim Python installation](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/install_python.html) supports a Python environment on Windows, with long-path considerations. Download permission is not equivalent to permission for driver/system changes. WSL enabling, Docker/virtualization or reboots can require staff administration. Do not bypass cafe restrictions.
+
+**RTX5060 detail:** our Torch2.2.2 pin is not an appropriate Blackwell CUDA deployment. [PyTorch2.7 introduced Blackwell support with CUDA12.8 builds](https://pytorch.org/blog/pytorch-2-7/). A compatible newer stack would be a separately validated environment, not an in-place change to the archived CPU experiment. CPU use does not require using the5060 at all.
+
+The current C parity build explicitly supports macOS/Linux only; it is separate from RL and need not be forced onto Windows for a cafe training session. Existing CLI examples contain Mac paths, authorization/source hashes and strict guards: they are not ready-to-paste Windows launch commands. No Windows project execution was claimed here.
+
+## 6. Reset-on-shutdown changes the economics
+
+An ordinary Python virtual environment from macOS cannot be copied to Windows. Prepare a **Windows-specific** package cache/wheelhouse, source revision, model assets, configs, setup script and checksums on owner-controlled storage. Create/restore the Windows environment at the seat. A whole venv is not assumed relocatable. A VM image does not solve missing admin permission, GPU access or persistence.
+
+For a6h visit, reserve30 minutes for saving/verifying results. Illustrative remaining compute time is:
+
+| Setup/cache restoration | Useful compute time | Stadium seat cost/useful hour | TQH Private seat cost/useful hour |
+| ---: | ---: | ---: | ---: |
+|0.5h|5h|19,800 VND|11,000 VND|
+|1.5h|4h|24,750 VND|13,750 VND|
+|3h|2.5h|39,600 VND|22,000 VND|
+
+These are scenarios, not measured installation durations. Add round-trip travel/parking to the total before dividing by useful time. One-off Isaac package downloads, asset/shader/kernel compilation and cache restoration may dominate a short visit; a staff-maintained persistent installation would materially improve this option.
+
+Copy checkpoints, configs, logs and result manifests to owner storage **before** logout/shutdown; verify destination checksums while the seat is still active. Do not rely on local disk surviving. A source commit, policy checkpoint and normalization state alone may be insufficient for an exact mid-training resume: optimizer state, RNG, environment/progress and algorithm-specific state must also be accounted for. Save full evidence for any formal comparison.
+
+Unattended runs while away need explicit seat/session arrangements; lock, sleep, reboot and account expiry behavior are unknown. Use minimal-access authentication, avoid persistent personal/cloud keys on the shared OS, and clear session authentication afterward. A private room does not make the shared software trusted. An external SSD protects persistence, not host access to mounted files.
+
+## 7. Cafe versus cloud, using the same useful-work denominator
+
+[Runpod's current displayed Pod prices](https://www.runpod.io/pricing), checked20 October: RTX4090 24 GB USD0.89/h, RTX A5000 24 GB USD0.27/h, RTX3090 24 GB USD0.50/h. These are advertised offers, subject to capacity/type; storage/tax and idle billed time are extra. GPU names alone do not establish equal CPU allocation or training throughput. For full Isaac rendering, choose a compatible RTX GPU, not an arbitrary datacenter accelerator.
+
+For arithmetic only use **26,000 VND/USD, an explicit planning assumption, not a fetched exchange rate**. Cloud4090 becomes23,140 VND/h; A5000 becomes7,020/h. A5000 is not assumed equal in performance to4090. USD50 buys about56.18 advertised4090 hours before extras; a budget ceiling is not a mandatory spend.
+
+For6h Stadium, x3 cash-equivalent seat cost99,000 VND. With0.5h restoration and0.5h export,5h useful work costs19,800/useful hour before travel. Five useful cloud4090 hours cost115,700 **if cloud setup/idle overhead is negligible**. The difference is only16,700 VND: greater trip overhead removes the cash saving under these equal-throughput assumptions. At1.5h cafe restoration,4 useful hours cost99,000 versus92,560 cloud before cloud overhead.
+
+General comparison:
+
+\[
+C_{\rm cafe/useful\ hour}=\frac{pT/3+C_{\rm travel}+C_{\rm other}}{T-S-E},
+\qquad
+C_{\rm cloud}=q_{\rm USD/h}X(T_{\rm useful}+S_{\rm cloud})+C_{\rm storage}.
+\]
+
+T is paid cafe duration, S setup, E export, X the chosen exchange-rate assumption. For equal experiment size, also divide each site's productive rate by measured end-to-end transitions/s: cheap hours are not necessarily cheap completed runs. Both cafe and cloud have setup costs.
+
+If the owner studies productively during training, workspace comfort/privacy has real value and the cafe need not beat cloud on pure compute cost. Conversely, attending a seat solely to babysit an overnight job imposes human time costs absent from an unattended remote server. Do not count the same six hours as six hours of uninterrupted study AND six hours of setup-intensive experimentation.
+
+## 8. Ranking by the owner's actual task
+
+| Objective | First candidate | Reason / condition |
+| --- | --- | --- |
+| Learn mechanics, LQR, RL and inspect existing results | Mac; private cafe if workspace itself is valuable | Current model already runs locally |
+| Private cafe morning with CPU research | TQH Private; Cho Mo Private as cheaper fallback | TQH adds16 GB RAM for11,000 extra per6h at x3; no measured CPU speed claim |
+| Need privacy and more than8 GB GPU memory | TQH Couple, if single-user booking allowed and quoted configuration confirmed | Advertised12 GB/32 GB; room billing/noise/privacy unverified |
+| Low-cost nonprivate MuJoCo pilot | TQH Net Hub/Premium or Cho Mo VIP/Training | Select by actual CPU throughput, RAM and comfort, not gaming FPS |
+| Full Isaac learning / visual sensor work | Cho Mo Stadium |24 GB/64 GB; verify Windows11 and compatible driver |
+| Privacy plus24 GB | Investigate Infinity room isolation or ask staff for a suitable private workstation | No evidence Stadium itself is private; Infinity costs198k per6h at x3 |
+| Long scheduled training without giving up Mac | Lab machine | Exact GPU and access/persistence still unknown |
+| Guaranteed long Linux campaign or urgent deadline | Rented cloud instance | Capacity/price not guaranteed until provisioned; use a spend limit |
+
+Training Station and Premium list the same CPU/GPU/RAM but different prices; examine room/seat conditions before paying more. Gaming-oriented X3D branding does not establish physics-simulation superiority. No measured speed ranking across these machines exists.
+
+**Recommendation on scope:** keep the current MuJoCo reference and the50/50 perception/control split. Learning Isaac for a bounded morning is legitimate, but a production backend migration changes physics/environment implementation and needs separate architecture approval and cross-checks. CAD-derived mass/inertia/joint data remain useful to either simulator; CAD completeness does not replace actuator/contact/state-interface validation. Do not use GPU access as the reason to restart the project in another engine.
+
+## 9. One morning pilot, before a large deposit
+
+This is a proposed procedure, not a claim it was executed. No OS install, hardware change or new policy training occurred in this analysis.
+
+Before travel, confirm: x3 total balance and eligible zones/expiry; actual debit and per-seat/room basis; private-room assignment; Windows version, driver, free local SSD; permitted Python/AI install and long-path/admin support; whether external SSD/package caches and result export work. Ask whether staff can retain an Isaac environment. No need for Ubuntu unless the chosen backend requires it.
+
+Choose **one** pilot: (A) private native-Windows MuJoCo study, or (B) Stadium Isaac/GPU compatibility. Do not spend the first morning setting up both frameworks plus WSL. Bring the matching Windows installers/wheels/assets, a public or sanitized source bundle, pinned revision/config, and independent result storage; preparing this kit is separate implementation work.
+
+1. Start the actual application early; debug actual errors. Record hardware/versions and setup time. Read-only checks include `nvidia-smi` and `python -c "import mujoco; print(mujoco.__version__)"`; PyTorch GPU tests only for a matching installed stack.
+2. For MuJoCo, load/render the intended model, reproduce an approved LQR trace, and use a separately authorized short optimizer smoke. For Isaac, launch its compatible example/viewer and a small stock training task before any WBR port.
+3. After it runs, measure a fixed workload. CPU candidate counts1/4/8; a new GPU backend could try64/256/1024 environments only as a memory/throughput sweep, not a promise they fit. Distinguish parallel environments from independent training seeds. Keep the scientific recipe fixed for comparison; batch changes can change learning behavior.
+4. Record total/steady-state transitions/s, setup/compile/update times, CPU/RAM/GPU/VRAM, logging/I/O, warnings/dropped trace records if applicable, and completed work. Retain logs/config/commit/version/hashes. GPU utilization alone is not a benchmark.
+5. Export with at least30 minutes remaining; reload a saved policy/result and verify hashes on the destination. Test reboot persistence only with staff consent after outputs are safe.
+
+Proposed economic acceptance: restoration/export consume at most1.5h of a6h repeated visit, the actual selected workload completes, and its total cost is acceptable relative to lab/cloud. This threshold is a planning choice for owner/Claude review, not an existing experiment gate. If restoration repeatedly consumes much of the morning, use the cafe for workspace only or move campaigns to the lab/cloud.
+
+Failure symptoms: permission prompt requiring unavailable staff access; CUDA architecture/driver mismatch; out-of-memory; missing assets; repeated cache rebuilds; reset erasing local state; CPU-bound job with idle GPU. Preserve the actual error; do not assume a faster GPU fixes it or bypass source/authorization checks.
+
+## 10. Review record, reproducibility and next decision
+
+Evidence labels: **MEASURED** applies only to existing repository experiments; **OWNER-REPORTED** to promotions, preferences and reset policy; **ADVERTISED** to cafe configurations; **CALCULATED** to economics; **PROPOSED/UNKNOWN** to workflow and untested compatibility. No benchmark extrapolation, cafe access guarantee or RL improvement is claimed.
+
+Small source receipts and extracted advertised configurations: `~/wbr-evidence-archive/cafe-compute-review-20261020-01/`. `source-receipts.json` records URLs, retrieval timestamps, raw-page hashes, extraction method and the eight screenshot names/hashes. Original screenshots remain user attachments and were not added to git; raw fetched HTML remains in `/private/tmp/wbr-oeg-{home,chomo,tqh}-20261020.html` and is not durable. Extracted JSON is durable. Formulas/tables above allow arithmetic reproduction without external artifacts.
+
+Screenshot map:1=Cho Mo price overview;2=Stream popup;3=Stadium popup;4=Private popup;5=Premium popup;6=VIP popup;7=TQH overview;8=TQH Premium popup. Conflicts are retained in Section3 rather than silently resolved.
+
+Affected files: this review, one scoped session log and a documentation-log entry. Current runtime, protocol, model, dependencies, protected exercise and the other chat's CURRENT ownership are unchanged. Rollback: revert the documentation commit; no environment migration needs undoing. No new architectural decision is entered before approval.
+
+Validation: inspect all8 attachments; fetch/decode2 official cafe pages; inspect official compatibility/pricing references and existing experiment/code; independently recalculate tariffs,6h overhead and cloud examples; check relative Markdown links and whitespace. Runtime tests are unnecessary for this documentation-only analysis; Windows/Isaac execution remains an explicitly proposed pilot. Publication receipts belong in the scoped session log.
+
+### Claude review questions
+
+1. Does the measured CPU workload justify keeping MuJoCo/Mac as the current baseline while treating cafe GPU use as a conditional pilot?
+2. Are the proposed private/12 GB/Stadium choices and the promotion, tariff-conflict and reset caveats adequately separated?
+3. Is the six-hour pilot and deposit restraint appropriate, and when would a GPU-backend/Isaac migration become justified?
+
+### Recommendation awaiting review
+
+Approve the analysis and a small Windows pilot **in principle**, conditional on staff confirmation and actual pricing. Do not approve a500k–1m deposit, an Isaac migration or another training campaign from this document alone. Owner can choose the private-workspace pilot or the Stadium Isaac pilot after reviewing it. Keep the free lab resource ahead of paid long-running compute when access permits. Claude's response is pending.
