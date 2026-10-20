@@ -1,12 +1,25 @@
 ---
 name: wbr-orbslam3-bringup
-description: Plug in the RealSense camera and get ORB-SLAM3 running live on the Pi 5 (stereo or RGB-D for the D435). Use when starting camera/SLAM work or when it stops working.
+description: Bring up ORB-SLAM3 on the Pi 5 using existing stereo data when no camera is available, or stereo/RGB-D with a connected D435. Use when starting camera/SLAM work or when it stops working.
 ---
 
 # Camera + ORB-SLAM3 bring-up
 
-Goal: live ORB-SLAM3 tracking from the D435 on the Pi, with a viewer showing the
-map. Fix errors as they come.
+Goal: real ORB-SLAM3 tracking on the Pi, then a ROS 2 pose from tracked input.
+Fix errors as they come. Owner update on 2026-10-20: **no camera this afternoon**;
+available Pi is **4 GB RAM with a slow 32 GB microSD**. Live evidence waits for a
+camera. A D435 has no IMU; do not use an inertial example or the STM32 as a
+replacement camera IMU.
+
+Without a camera, follow [offline-stereo.md](offline-stereo.md) for the existing
+EuRoC dataset and the actual ROS wrapper limitations. Make one bounded SSH
+attempt; if unavailable, retain the error, run the host wrapper checks and report
+the Pi/Ethernet/address blocker. Do not repeatedly reconnect. When connected,
+verify hostname, architecture and RAM before building; use **`-j1`** on this Pi.
+Preserve existing installs, checkouts and data. Do not free space by deleting,
+disabling swap or changing storage partitions.
+
+The following live steps apply only after a camera is available:
 
 1. [PHYSICAL] Camera into a blue USB3 port on the Pi; 27 W supply.
 2. Check the camera is seen and see what ORB-SLAM3 already has:
@@ -20,9 +33,10 @@ map. Fix errors as they come.
    ```sh
    cd ~/orbslam3/ORB_SLAM3/build
    cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/opt/ros/jazzy
-   make -j3 stereo_realsense_D435i rgbd_realsense_D435i
+   make -j1 stereo_realsense_D435i rgbd_realsense_D435i
    ```
-   (`-j3` leaves headroom on the Pi's 8 GB; go back to `-j2` if it runs out of memory.)
+   Keep the complete build log; an out-of-memory failure is not permission to
+   change storage or discard existing installs.
 4. Settings file for this camera: copy `Examples/Stereo/RealSense_D435i.yaml` (or the
    RGB-D one) to `~/wbr-configs/`, and put this camera's intrinsics in it from
    `rs-enumerate-devices -c` (fx, fy, cx, cy, width/height; for stereo also the IR
@@ -40,5 +54,7 @@ map. Fix errors as they come.
    because the scene has little texture, camera at USB 2 (480M) from a bad
    cable/port, under-voltage (`vcgencmd get_throttled` not 0x0).
 7. Note in the session log: which example worked, the yaml used, rough frame rate,
-   what you fixed. Next: the ROS 2 wrapper in `third_party/ORB_SLAM3_ROS2` so poses
-   are published for the robot.
+   what you fixed. The pinned `third_party/ORB_SLAM3_ROS2` wrapper currently has
+   no stereo mode; see the offline guide before attempting ROS integration.
+   A topic message alone does not prove tracking, and a camera pose is not a
+   calibrated robot body pose.

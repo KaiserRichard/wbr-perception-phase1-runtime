@@ -12,6 +12,13 @@ states and map changes are **ASSUMED synthetic**, even with real bag input.
 `orb_engine.cpp`; it constructs `IMU_STEREO` with its viewer disabled. This
 package installs no dependencies and changes no upstream tool.
 
+**2026-10-20 bring-up:** this package has no stereo-only mode. A D435 without
+camera IMU, or a stereo-only recording, cannot satisfy its IMU coverage contract.
+Use the [camera-free stereo continuation guide](../../ops/lab-assistant/skills/wbr-orbslam3-bringup/offline-stereo.md)
+for the real native EuRoC executable and the pinned upstream ROS wrapper's
+remaining stereo gap. Passing the host tests does not establish ROS compilation
+or a real tracked pose.
+
 Callbacks validate MONO8 (`mono8` / `8UC1`) images, preserve integer header
 stamps and enqueue owning values with sensor-data QoS. Both rectified and raw
 image topic names are parameters; the pixels must match the ORB calibration
@@ -80,29 +87,35 @@ The runtime node itself is an estimator, not a lab gate check.
 
 ## Build on an already provisioned Pi (not executed here)
 
-Choose the existing checkout and evidence parent on the Pi. No live sensor is
-needed for this build or the following offline replay.
+Choose a dedicated task checkout and evidence parent on the Pi. The path below
+is proposed, not verified. Do not use or switch the shared runtime checkout.
+No live sensor is needed for this build or replay with recorded camera IMU.
 
 ```sh
-export WBR_ROOT=/home/richard/wbr-perception-phase1-runtime
+export WBR_ROOT=/home/richard/wbr-pi-orbslam-pose
 cd "$WBR_ROOT"
 source /opt/ros/jazzy/setup.bash
+export CMAKE_BUILD_PARALLEL_LEVEL=1
+export MAKEFLAGS=-j1
 colcon build --base-paths ros2/wbr_orb_node --packages-select wbr_orb_node \
+  --executor sequential --parallel-workers 1 \
   --cmake-args -DWITH_ORB_SLAM3=OFF
 source install/setup.bash
 ```
 
 For actual ORB, use a separate colcon build/install base to avoid confusing the
 fake and ORB binaries. Replace these paths with the existing qualified build's
-paths and required transitive libraries; do not rebuild/install dependencies
-as part of this ticket:
+paths and required transitive libraries. On the current 4 GB Pi keep compilation
+serial. Fix/install an ordinary missing dependency only after its actual build
+error, preserving existing builds and logs:
 
 ```sh
-export ORB_ROOT=/home/richard/ORB_SLAM3
+export ORB_ROOT=/home/richard/orbslam3/ORB_SLAM3
 colcon --log-base log-orb build --base-paths ros2/wbr_orb_node \
   --packages-select wbr_orb_node --build-base build-orb --install-base install-orb \
+  --executor sequential --parallel-workers 1 \
   --cmake-args -DWITH_ORB_SLAM3=ON -DORB_SLAM3_ROOT="$ORB_ROOT" \
-  '-DORB_EXTRA_INCLUDE_DIRS=/usr/include/eigen3;/home/richard/ORB_SLAM3/Thirdparty/Sophus' \
+  "-DORB_EXTRA_INCLUDE_DIRS=/usr/include/eigen3;$ORB_ROOT/Thirdparty/Sophus" \
   '-DORB_EXTRA_LIBRARIES='
 source install-orb/setup.bash
 ```
