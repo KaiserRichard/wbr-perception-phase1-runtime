@@ -1,1 +1,1 @@
-"""Simulation-only learning tools; no hardware interfaces."""
+"""WBR simulation, numerical source references and protected teaching exercises."""
