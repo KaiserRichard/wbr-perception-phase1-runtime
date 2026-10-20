@@ -239,3 +239,9 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Why: prior short report over-narrowed the question to a cafe pilot and omitted the requested resource alternatives.
 - Evidence:owner clarification; refreshed official cafe/cloud rates on20October; existing hardware evidence and local Mac CPU/RAM read.
 - Limits:comparison is not a payment/deposit authorization, a simulator migration or a benchmark. Preserve existing training ownership and the approved bounded MuJoCo pilot. Actual promotion eligibility/expiry and lab hardware remain unconfirmed.
+
+### D-20261020-30: Run reviewed PPO v2 with a bounded residual arm
+- Decided by: Claude review75a304d, authorized by owner; conductor supplies numeric details once before results.
+- Decision: use the v2 setup recorded in sessions/2026-10-20-ppo-v2.md: reward scale.1/fall penalty1,100Hz policy,eight envs,observation VecNormalize,3M policy steps; residual cap20% with500Hz unchanged LQR. Each arm extends three to five seeds only after a strict balance PASS in the initial panel.
+- Why: test the reviewed survival-reward/horizon/randomization changes and residual correction without changing physical dynamics or acceptance. Keep execution lean; no per-step training provenance.
+- Evidence/status: owner request and imported Claude review. Implementation, tests and runs pending at declaration.
