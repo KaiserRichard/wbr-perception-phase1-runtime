@@ -1,5 +1,9 @@
 # Frozen direct-torque PPO versus delay-aware LQR
 
+The [first complete comparison](RESULTS_2026-10-20.md) measured LQR160/160 and
+PPO0/800 successes after all five full training budgets. Its failures, limitations
+and evidence are retained; implementation smoke checks below are separate.
+
 **SIMULATION / ASSUMED. Implementation and verification do not constitute a full
 training result.** The read-only [protocol](protocol.json) fixes five independent
 PPO seeds, exactly 150,000 steps each, one shared policy across four delays and

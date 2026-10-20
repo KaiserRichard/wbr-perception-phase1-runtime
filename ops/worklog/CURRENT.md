@@ -1,23 +1,25 @@
 # Current state
 
-Updated 2026-10-20 +07 by codex-f conductor.
+Updated 2026-10-20 +07; owner switched this chat's conductor from codex-f to codex-b.
 
-## Simulation / control
-- Claude approved nominal assumed six-state MuJoCo/LQR in PR44. Nominal PR42, parity scaffold PR38, guide PR45 and frozen RL protocol PR46 merged.
-- NEW: causal 2/3/4/5 ms delay, 5 ms motor lag, body-only IMU noise implemented at source0900606. These parameter values are ASSUMED.
-- Conductor completed120 cases: frozen K0/40 controlled successes; delay-aware LQR40/40; all40 expected-fall controls passed. Frozen failures are settling/recovery, no controlled falls. No thresholds or Q/R changed.
-- Conditional recovery1.756–2.762s. Same seeds/noise, limits, initial state and0.9Ns push. Freeze conditional per-delay gains for the PPO comparison; retain nominal failures.
-- Conductor27/27 simulation tests PASS, zero skips;373 artifact hashes and paired noise hashes verified. Raw run /private/tmp/wbr-actuator-conductor-20261020-05; merged in PR47 after both CI checks passed.
-- RL protocol merged: five independent policies,150000 steps each;20 held-out noise seeds ×8 conditions/policy. Compatible Intel Mac backend and PPO pipeline implemented (b commit4288fb8, draftPR49). Conductor fixed Gym reset API and CI dependencies;27/27 expanded RL tests passed. Full experiment RUNNING from code source608222b in the conductor session: /private/tmp/wbr-augmented-20261020/ppo-full-conductor-01. Each of5seeds has150000 steps; evaluation follows automatically. Do not launch a duplicate.
-- Next: monitor existing progress/status files, verify5final policies/checkpoint hashes and960 held-out slots, then report paired results. Full training performance remains UNKNOWN until completed. PR49 implementation CI is pending; dependency install was corrected without skips. Claude reviews completed milestones only.
+## Completed simulation milestone
+- Nominal assumed six-state MuJoCo/LQR approved by Claude in PR44. Actuator delay/lag/IMU extension merged PR47; final actuator review merged PR48.
+- Frozen original K failed 40/40 controlled settling checks. Conditional delay-state LQR passed 40/40; no Q/R, acceptance or physical-limit changes. Source gain parity remains incomplete.
+- PPO implementation merged PR49 (e821212), after both CI checks passed at head781d702. Conductor independently passed 27/27 RL tests and real optimizer/reload smoke.
+- FULL comparison COMPLETE, exit0: five policies ×150000 steps (750000 total), 800 PPO +160 unique LQR evaluation episodes. LQR160/160 successes; PPO0/800, with680 falls and120 displacement exits. No numerical/training failures or retuning.
+- All five seed success differences are−1; prescribed 95%t interval[-1,−1], df4. This is a conditional, degenerate endpoint result, not proof that RL generally fails or that real-world uncertainty is zero.
+- Independent audit:6680 hashes, five budgets/checkpoints,960 episode identities, all800 paired noise prefixes and raw metric spot checks verified. Stable archive: ~/wbr-evidence-archive/sim-ppo-vs-lqr-20261020-01.
+- Read sim/rl/RESULTS_2026-10-20.md. Full panel/secondary metrics: archive/evaluation/aggregate.json. Final Claude review: ops/worklog/reviews/2026-10-20-rl-comparison.md (prepared; Claude response pending).
+- Parameter source table/guide link and float64 test-oracle repair merged PR50 (31a5d1a), both CI checks green. Current physical values remain ASSUMED or UNKNOWN; runtime/reward unchanged.
 
-## Accounts / learning
-- Owner prioritizes codex-b until reported expiry tomorrow. After its unrelated task completed07:52:11Z, b/AstraUltra completed PPO implementation; conductor fixed API/CI and independently verified it. After b exited0 and a new idle check, b/SolHigh now audits parameter sources in its separate worktree; no runtime edits. g/i/k hit usage limits; f remains conductor.
-- Read docs/learning/LQR_RL_GUIDE.md: geometry, energy/dynamics, linearization, LQR, delay/noise and RL comparison. All64 math expressions rendered successfully; analytical A/B checked against MuJoCo.
-- sim/parity/student.py gain_schedule remains owner-only TODO. Source gain/VMC parity incomplete. No sim-to-real or full-five-bar claim.
+## Next step and ownership
+- Next: Claude final review of the completed comparison. No duplicate training, protocol tuning, reward changes or gate promotion; further experiment design waits for that review.
+- g/Astra Ultra completed read-only audit bbf4908; no actionable defect found in inspected paths. Conductor reran both scripts with identical results. Idle checked before launch; i/k not needed. Never launch conductor b as a worker.
+- docs/learning/LQR_RL_GUIDE.md explains geometry, energy/dynamics, LQR and the measured RL result. sim/parity/student.py gain_schedule remains the owner's exercise.
+- Model has assumed masses/COM, ideal planar rolling/equivalent rigid leg, known delay/lag and four ideal sensor channels; no full-five-bar/contact or sim-to-real validation.
 
 ## Hardware
-- Pi track deferred by owner: slow32GB card and no camera this afternoon; camera lab planned tomorrow. No Pi build/live ROS pose/STM32/motor action in this milestone.
-- Last measured cafe SSH: richard@wbr-pi5.local →192.168.111.243. Old alias points to Ethernet192.168.50.2. Addresses can change;128GB migration status UNKNOWN.
-- Prior nominal archive ~/wbr-evidence-archive/sim-lqr-20261020-01. New actuator archive ~/wbr-evidence-archive/sim-actuator-20261020-01; final review reviews/2026-10-20-actuator-noise.md mergedPR48 and pending Claude. No gate promoted.
-- Pre-existing generated host-test files remain untracked and unstaged.
+- Pi/camera track remains deferred until equipment returns; no Pi build/live ROS pose/STM32/motor action in this milestone.
+- Last measured cafe SSH: richard@wbr-pi5.local →192.168.111.243; old alias uses Ethernet192.168.50.2. Addresses can change. 128GB migration completion UNKNOWN.
+- Nominal archive ~/wbr-evidence-archive/sim-lqr-20261020-01; actuator archive ~/wbr-evidence-archive/sim-actuator-20261020-01.
+- Pre-existing host-test generated files remain untracked/unstaged and untouched. Every document change is recorded in DOCUMENTATION_LOG.

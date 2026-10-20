@@ -207,3 +207,18 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Why: make required owner input immediately clear and keep routine work moving.
 - Evidence: owner's communication rule on 2026-10-20; updated AGENTS.md.
 - Revisit when: owner changes this format. Supersedes earlier recommendation-in-message instructions.
+
+
+### D-20261020-28: Transfer conducting role to codex-b after account switch
+- Decided by: owner.
+- Decision: this chat now conducts as codex-b. Do not launch b as a worker; use idle owner-authorized g/i/k when useful. Preserve earlier f-conductor history as historical evidence.
+- Why: owner switched accounts and explicitly asked to continue the existing project.
+- Evidence: owner's latest instruction; project, five final checkpoints and running/completed evaluation remained available. AGENTS updated.
+- Revisit when: owner changes account roles. Check idle status before each worker launch and never interrupt unrelated shared work.
+
+### D-20261020-29: Retain the completed negative PPO comparison without retuning
+- Decided by: conductor under the predeclared experiment and owner workflow.
+- Decision: record LQR160/160 versus PPO0/800 successes after five complete150000-step policies; retain680 falls,120displacement exits and all checkpoints/raw data. No reward, acceptance or budget change, extra training or best-seed selection.
+- Why: completed optimizer execution is distinct from a successful learned controller; this fixed recipe did not solve the task. The prescribed interval is conditional on these seeds and panel.
+- Evidence:source608222b, full-run COMPLETE exit0; independent6680-hash/750000-step/960-slot/noise-pair audit and archived aggregate. sim/rl/RESULTS_2026-10-20.md.
+- Revisit when: Claude reviews the completed milestone and a new experiment is explicitly predeclared; no sim-to-real/general-RL conclusion is drawn.

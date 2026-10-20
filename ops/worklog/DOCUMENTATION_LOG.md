@@ -210,3 +210,24 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources:failedCI39396790590, maxabsolute2.78e-17/maxrelative1.84e-16; same-head companionCI passed. Log retained under /private/tmp/wbr-augmented-20261020/.
 - Validation:complete RL suite27/27 PASS, zero skips, including the targeted trace case; log conductor-rl-trace-fix-tests-01.log. Remote CI pending.
 - Limits/review:test portability correction does not alter archived PPO failure evidence, trained checkpoints or claimed metrics.
+
+### DOC-20261020-22: Completed comparison, account transfer and final review
+- Time / author:2026-10-20 +07; codex-b conductor (earlier training dispatched by this chat as f).
+- Files:AGENTS.md; docs/learning/LQR_RL_GUIDE.md; sim/rl/{README.md,RESULTS_2026-10-20.md}; ops/worklog/{DECISIONS.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-delay-lag-noise.md,reviews/2026-10-20-rl-comparison.md}; external bounded g audit brief referenced in session.
+- Changes:record owner role switch, measured negative full comparison, retained failures/conditional uncertainty, exact receipts and final Claude review; update learning links. No runtime/config/reward/protocol changes.
+- Sources:source608222b, evaluation781d702, mergedPR47/48/49, run COMPLETE, archived aggregate/checkpoints/raw traces, independent audit script and host metadata. g read-only audit in progress.
+- Validation:6680 archived hashes, five exact budgets and checkpoint reloads,960unique outcomes,800paired noise prefixes and four raw metric checks PASS; independent paired CI recomputed. Earlier27/27 tests and real optimizer smoke retained. Figures generated from existing data and visually checked, not new trials.
+- Limits/review:LQR160/160,PPO0/800 only under this frozen assumed recipe; no causal ablation or broad RL/sim-to-real claim. Source-auditPR50 CI/test-portability fix and final Claude review pending; no gate promotion.
+
+- DOC22 follow-through: CURRENT.md now records the completed experiment, b-conductor role, archive, protected exercise and pending publication/review; replaces stale RUNNING text. It does not label the negative result Claude-approved or change a gate.
+
+
+### DOC-20261020-23: Integrate independent outcome audit and final source receipts
+- Time / author:2026-10-20 +07; codex-b conductor, codex-g audit bbf4908.
+- Files:ops/worklog/{CURRENT.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-delay-lag-noise.md,sessions/2026-10-20-ppo-outcome-audit.md,reviews/2026-10-20-rl-comparison.md}; sim/rl/RESULTS_2026-10-20.md.
+- Changes:import scoped audit session, measured training/push exposure, PR50 green/merge receipt, complete archive/replication and strict-source-guard note. Resolve shared-log merge conflicts preserving all prior entries.
+- Sources:g diagnostics/report and bbf4908; PR50head934e846, bothCI SUCCESS, merge31a5d1a; same immutable completed run and original source freeze608222b.
+- Validation:conductor reran both g scripts in a new directory, both exit0 and exact diagnostic JSON matches; earlier6680hash/raw/noise/budget audit retained. Guide64/README12 math expressions rendered; links/whitespace/conflict markers checked before publication.
+- Limits/review:sampled implementation audit found no actionable bug; it does not prove cause or future RL failure. No new training, runtime/reward/threshold or gate change. Final results PR/CI and Claude response pending.
+- DOC23 follow-through:CURRENT now points directly to pending Claude review rather than stale training/publication work; all local document links resolve, CURRENT25lines. This final publication contains no new simulation trial or code change.
+- DOC23 publication receipt:PR51 opened; archive/publication-269cc3a stores the reviewed result/guide/source-table snapshots (35supplementary hashes total). Session records the two optional learning questions, unanswered at publication. No new simulation or approval claim.

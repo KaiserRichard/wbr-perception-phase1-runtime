@@ -212,7 +212,12 @@ A fall terminates an episode; the time limit truncates it. Higher reward alone i
 Use the **same augmented plant, sensor information, control rate, torque caps, pushes and evaluation initial states** for both controllers.
 Keep at least five training seeds and held-out paired noise seeds; report failures, recovery, peak tilt, tracking and effort with uncertainty.
 Training seeds are independent learning runs; many evaluation episodes from one policy do not become many independent training runs.
-PPO is the planned candidate. Training and its exact reward/budget will be recorded separately; no RL result is claimed here.
+The [first completed PPO comparison](../../sim/rl/RESULTS_2026-10-20.md) used five seeds,
+150,000 steps each: delay-aware LQR passed160/160 episodes; PPO passed0/800.
+This is a measured negative result for one fixed recipe on the assumed model.
+At a2ms action period,150,000 steps are300 simulated seconds: step count alone does not establish learning.
+The [implementation notes](../../sim/rl/README.md) explain the fixed reward, policy update,
+recorded failures and why the seed-level interval does not imply universal certainty.
 
 ## Read and try next
 
