@@ -5,8 +5,9 @@ robot, and no model/PPO setting changes here.** Current values below come from
 [assumed_planar.json][plant] and [assumed_actuator_noise.json][noise] at lab
 revision `6cae11df1ad4bfc756752adaf4aeeff72fe3e836`; assembly/axis meanings follow
 [the implemented plant][implementation] and [LQR_RL_GUIDE.md](LQR_RL_GUIDE.md).
-COM means center of mass; pitch is about the model's lateral axis. Masses and
-torques are **pair aggregates**, not per-side quantities.
+COM means center of mass; pitch is about the model's lateral axis. Wheel/leg
+mass and inertia lumps and both torque inputs aggregate the two sides. Body mass
+is the whole body assembly; none of these values is a per-side quantity.
 
 Evidence labels are separate: **ASSUMED** = illustrative current setting;
 **SOURCE CONSTANT** = implemented number, without measurement provenance;

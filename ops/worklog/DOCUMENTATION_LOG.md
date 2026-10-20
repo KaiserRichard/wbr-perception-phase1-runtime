@@ -192,3 +192,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources:source608222b, conductor smoke/checkpoint receipts, full-run progress files, b process/lifecycle check and CLI model header; owner parallel-estimate/priority instructions.
 - Validation:conductor1000-step WBR optimizer/reload smoke exit0 and27/27 RL tests; full5seeds advancing with exact budget configured. Whitespace/diff checked; CI dependency step and generic suites passed at observation.
 - Limits/review:full training/evaluation and parameter audit still running; no RL outcome, physical validity or gate approval claimed. Source remains frozen while only worklogs change.
+
+
+### DOC-20261020-20: Primary parameter sources and applicability limits
+- Time / author:2026-10-20 +07; codex-b source audit, codex-f independent review/integration.
+- Files:docs/learning/{MODEL_PARAMETER_SOURCES.md,LQR_RL_GUIDE.md}; ops/worklog/{DOCUMENTATION_LOG.md,sessions/2026-10-20-parameter-sources.md,sessions/2026-10-20-delay-lag-noise.md}.
+- Changes: compact parameter/provenance table, verified supplier/source-model references and UNKNOWN mappings; clarify aggregate definitions and link from learning guide. Record PR49 merge/full-budget training completion, without claiming completed held-out results.
+- Sources:DM-jump6855ef8; pinned dmBots wheel-legged/Motor manuals; Bosch BMI088 rev1.9; exact URLs/digests in worker session and external fetch receipts. No measured owner mass/COM data.
+- Validation:conductor checked manufacturer MATLAB and all3rendered supplier tables; config hashes match frozen values; links/whitespace checked. No runtime tests repeated for this documentation-only set.
+- Limits/review:component specs/source constants do not identify whole-body/leg properties, actuator lag or fused sensor noise. No model/reward/threshold change; PR50 CI/merge and Claude final review pending.
