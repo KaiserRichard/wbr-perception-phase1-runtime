@@ -222,3 +222,9 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Why: completed optimizer execution is distinct from a successful learned controller; this fixed recipe did not solve the task. The prescribed interval is conditional on these seeds and panel.
 - Evidence:source608222b, full-run COMPLETE exit0; independent6680-hash/750000-step/960-slot/noise-pair audit and archived aggregate. sim/rl/RESULTS_2026-10-20.md.
 - Revisit when: Claude reviews the completed milestone and a new experiment is explicitly predeclared; no sim-to-real/general-RL conclusion is drawn.
+
+### D-20261020-30: Run reviewed PPO v2 with a bounded residual arm
+- Decided by: Claude review75a304d, authorized by owner; conductor supplies numeric details once before results.
+- Decision: use the v2 setup recorded in sessions/2026-10-20-ppo-v2.md: reward scale.1/fall penalty1,100Hz policy,eight envs,observation VecNormalize,3M policy steps; residual cap20% with500Hz unchanged LQR. Each arm extends three to five seeds only after a strict balance PASS in the initial panel.
+- Why: test the reviewed survival-reward/horizon/randomization changes and residual correction without changing physical dynamics or acceptance. Keep execution lean; no per-step training provenance.
+- Evidence/status: owner request and imported Claude review. Implementation, tests and runs pending at declaration.

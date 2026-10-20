@@ -231,3 +231,8 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Limits/review:sampled implementation audit found no actionable bug; it does not prove cause or future RL failure. No new training, runtime/reward/threshold or gate change. Final results PR/CI and Claude response pending.
 - DOC23 follow-through:CURRENT now points directly to pending Claude review rather than stale training/publication work; all local document links resolve, CURRENT25lines. This final publication contains no new simulation trial or code change.
 - DOC23 publication receipt:PR51 opened; archive/publication-269cc3a stores the reviewed result/guide/source-table snapshots (35supplementary hashes total). Session records the two optional learning questions, unanswered at publication. No new simulation or approval claim.
+
+### DOC-20261020-24: PPO v2 execution
+- Files: imported Claude review; sessions/2026-10-20-ppo-v2.md; related v2 implementation/session/result notes in this change set.
+- Why/source: owner authorized the lean v2 direct/residual experiment; Claude review75a304d. Old v1 evidence and plant/evaluation criteria preserved.
+- Validation/status: actual worker launch recorded; i usage failure retained. v2 build, optimizer smoke and full results pending; no success or Claude approval for v2 claimed.
