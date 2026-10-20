@@ -45,13 +45,13 @@ if (status == WBR_LQR_OK)
 ```
 
 Measurements are `[x, absolute leg pitch, absolute body pitch, x velocity,
-leg pitch rate, body pitch rate]` in SI units. For tick \(k\), with
-\(n=\lceil d/\Delta t\rceil\), the pre-update feedback vector is
+leg pitch rate, body pitch rate]` in SI units. For tick $k$, with
+$n=\lceil d/\Delta t\rceil$, the pre-update feedback vector is
 
-\[
+$$
 z_k=[y_k,\hat\tau_k,u_{k-1},\ldots,u_{k-n}],\qquad
 u_k=\operatorname{clip}(-K_d z_k,\;-[2,4],\;[2,4]).
-\]
+$$
 
 `wbr_lqr_step` computes that command first, then advances the torque estimate
 using **old** command history, then stores the newly clipped command at the
@@ -59,19 +59,19 @@ front of history. An integer-delay arrival at the interval end has no effect
 on that interval's torque. For fractional delays the update splits exactly
 at the arrival within the tick.
 
-For delivered command \(v\), the command-only filter is
+For delivered command $v$, the command-only filter is
 
-\[
+$$
 \dot{\hat\tau}=(v-\hat\tau)/T,\qquad
 \hat\tau(t+h)=v+(\hat\tau(t)-v)e^{-h/T},\quad T=0.005\ \mathrm{s}.
-\]
+$$
 
 As a worked 5 ms example, a 1 N m command issued at time zero contributes
 nothing to the estimates at 2 or 4 ms. During the 4–6 ms interval, the
 prehistory command applies for the first 1 ms and the command issued at zero
 applies for the last 1 ms. The 6 ms estimate is therefore
-\(1-e^{-0.001/0.005}=0.1812692469\) N m. At tick \(k\), those two segments use
-\(u_{k-3}\), then \(u_{k-2}\); the command \(u_k\) cannot influence either.
+$1-e^{-0.001/0.005}=0.1812692469$ N m. At tick $k$, those two segments use
+$u_{k-3}$, then $u_{k-2}$; the command $u_k$ cannot influence either.
 
 `wbr_lqr_command` is read-only, so repeated reads do not advance history.
 Call `wbr_lqr_advance` once with the actual issued command if using the split
@@ -98,9 +98,10 @@ fixed-point, or bitwise equivalence is claimed.
 Run the assigned bounded check from the repository root:
 
 ```sh
+PYTHON=${PYTHON:-python3}
 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 \
 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 \
-/private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python \
+"$PYTHON" \
   -m unittest discover -s sim/control_c/tests -v
 ```
 
@@ -108,7 +109,7 @@ Tests use only the Python standard library and a host C compiler. They compile
 the actual library and replay the recorded six-coordinate measurements while
 **C maintains its own torque/history across every tick**. They compare requested
 commands, clipped commands, reconstructed torque and every history entry with
-absolute tolerance \(10^{-6}\), zero relative tolerance.
+absolute tolerance $10^{-6}$, zero relative tolerance.
 
 - 256 archived controller ticks: first 64 ticks of seed-0 balance, each delay.
 - 56 additional Python-runtime ticks with synthetic sensor/action inputs:
@@ -119,15 +120,16 @@ absolute tolerance \(10^{-6}\), zero relative tolerance.
   invalid-input checks and reset isolation.
 
 On the assigned Mac backend, all six tests passed in 0.63 s. Maximum recorded
-parity error was \(1.86\times10^{-15}\); the analytical step-response maximum
-was \(4.44\times10^{-16}\). Builds, compiler logs and measured error summaries
+parity error was $1.86\times10^{-15}$; the analytical step-response maximum
+was $4.44\times10^{-16}$. Builds, compiler logs and measured error summaries
 remain under ignored `.build/parity-*` directories, including any failed runs.
 
 Fixture extraction is explicit and separate from tests:
 
 ```sh
+PYTHON=${PYTHON:-python3}
 PYTHONDONTWRITEBYTECODE=1 \
-/private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python \
+"$PYTHON" \
   -m sim.control_c.record_fixtures \
   --archive "$HOME/wbr-evidence-archive/sim-actuator-20261020-01"
 ```

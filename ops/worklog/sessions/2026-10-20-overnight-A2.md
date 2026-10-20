@@ -33,5 +33,11 @@
 - Limitations: recorded-input controller parity only; no new closed-loop plant
   acceptance, float32/fixed-point validation, STM32 build/deployment, hardware
   timing or motor action. Heavy pending: none for the assigned bounded task.
+- Conductor documentation follow-up: converted README inline/display math to
+  GitHub `$...$` / standalone `$$` syntax and made examples use overrideable
+  `PYTHON` (default `python3`). Retained the actual temporary-backend commands
+  above as historical evidence. Lightweight delimiter, relative-link, and
+  `git diff --check origin/main...HEAD` checks run; controller tests were not
+  rerun because source and tests were unchanged.
 - Publication: task PR to main, no merge; URL and final commit are recorded in
   `/private/tmp/wbr-overnight-20261020/A2/result.json`.
