@@ -87,3 +87,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources: owner conducting instruction/hardware reply; process/session-event metadata; actual SSH timeout; PR38 prior green CI.
 - Validation: g/i launch headers show requested model/effort; no worker-f or occupied-k launch. Worker verification and final results pending.
 - Limitations/review: camera unavailable and Pi unreachable, no live pose; no balance claim yet. Claude review only at actual milestone, not this dispatch.
+
+### DOC-20261020-8: Persist the requested conducting rules
+- Time / author: 2026-10-20 +07; codex-f conductor.
+- Branch: chatgpt/20261020-conducting; parity/main integration 1fe2ae0.
+- Files: AGENTS.md; ops/worklog/sessions/2026-10-20-conducting.md; ops/worklog/DOCUMENTATION_LOG.md.
+- Changes: short Conducting Codex section; aligned old Claude and logging statements with owner's newest rules; scoped accounts/worktrees/briefs/verification/merge/protected learner core.
+- Sources: owner's explicit role, merge, model and documentation instructions; worker launch/model receipts.
+- Validation: whitespace check; account f not launched and g/i worktree isolation confirmed. CI/publication pending.
+- Limitations/review: no milestone claimed; no Claude escalation required for this authorized role update. Hardware/SSH blockers remain.
