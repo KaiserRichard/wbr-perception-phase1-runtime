@@ -199,3 +199,80 @@ Validation: inspect 6 in-scope attachments and decode the official Cho Mo page; 
 ### Recommendation awaiting review
 
 Approve the analysis and a small Windows pilot **in principle**, conditional on staff confirmation and actual pricing. Do not approve a 500k–1m deposit, an Isaac migration or another training campaign from this document alone. Owner can choose the private-workspace pilot or the Stadium Isaac pilot after reviewing it. Keep the free lab resource ahead of paid long-running compute when access permits. Claude's response is pending.
+
+## Claude review
+
+Reviewed 2026-10-20 on main 8d7e386. Scope: Cho Mo only.
+
+**Verdict:**
+- **Approved:** one bounded MuJoCo pilot morning.
+- **Not approved:** a 500k-1m deposit or an Isaac migration.
+- **Isaac:** a Stadium Isaac morning is fine as learning only, but it is a poor
+  use of a resetting PC.
+
+### 1. The workload is CPU-bound; GPU class barely matters
+The next experiment is PPO v2 from the RL review: 3 seeds x 2 arms x 3M policy
+steps at 100 Hz. Its time goes into MuJoCo physics and the Python
+delay/lag/noise layer on the CPU. The policy is a 64x64 MLP, which trains fine
+on a CPU.
+
+Rough sizing (inferred, not measured):
+- **Rate.** The Mac (i9-9880H, 8 cores) ran about 330 plant ticks per second
+  per process. One v2 policy step is 5 ticks.
+- **Total.** 6 runs x 3M x 5 ticks / 330 is about 75 core-hours.
+- **Estimated time per machine:**
+
+  | Machine | Estimated time | Basis |
+  | --- | --- | --- |
+  | Mac | about 9-10 h | 8 cores, overnight |
+  | Stadium (i9-13900F, 8P+16E) | about 3 h | |
+  | Training / Premium (i7-13700F, 8P+8E) | about 4 h | |
+  | Private / VIP (i5-12400F, 6 cores) | about 8 h | Too slow for a morning |
+
+So rank the seats by **CPU cores**, not by GPU or VRAM:
+- **Training Station (24,200/h)** is the best value for MuJoCo training.
+- **Stadium** is only about 30% faster than Training Station for twice the
+  price.
+- **Private** is a workspace, not a training seat.
+- Section 7 compares against GPU cloud; for this workload the right comparison
+  is a **CPU-only** cloud VM. Price one with 16-32 vCPU before choosing.
+
+### 2. Reset-on-shutdown favours MuJoCo heavily
+- **MuJoCo stack.** The Windows stack (Python 3.12, mujoco, CPU torch, SB3,
+  gymnasium) restores from a USB wheelhouse in roughly 15-30 min.
+- **Isaac Sim.** It needs tens of GB plus shader and kernel caches, and
+  realistically hours per visit. Do it only if staff keep a persistent install.
+
+### 3. Promotion
+The x3 arithmetic (p/3) is correct. Caveats:
+- **Use the higher price.** Budget at the 49,500 Stadium rate (and 27,500 for
+  Premium), not the cheaper popup prices.
+- **Deposit.** First visit: deposit at most 100-200k, under whatever tier staff
+  confirm in writing on the account. Larger deposits only after the pilot works
+  twice and the credit-expiry terms are known.
+- **Don't let x3 change the plan.** The overnight Mac run is free.
+
+### 4. When an Isaac or GPU-backend migration would be justified
+Only for one of these two reasons:
+1. A working recipe is measured to be compute-bound, for example needing more
+   than 100M steps. Then try MuJoCo Warp/MJX on the same model first; it is a
+   much smaller change than Isaac.
+2. We need rendered camera or depth simulation for ORB-SLAM3 work, which MuJoCo
+   does poorly.
+
+Neither is true today. The PPO failure was the recipe, not compute.
+
+### 5. Recommended order
+1. **Free first.** Run PPO v2 overnight on the Mac, or on the lab machine if
+   access is confirmed.
+2. **Optional cafe pilot, one morning at Training Station.**
+   - Prepare a Windows wheelhouse and the repo on an SSD.
+   - Run one v2 seed and record the time to set up and the steps per second.
+   - Export the results.
+   - Continue only if setup plus export take less than 1 h.
+3. **Isaac morning.** At Stadium, as learning only, after asking staff about a
+   persistent install.
+
+Process note: this analysis is long for a booking decision. Next time, a
+one-page "options, cost, recommendation" is enough.
+
