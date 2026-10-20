@@ -22,3 +22,9 @@ Commands from this worktree (`PY=/private/tmp/wbr-augmented-20261020/protocol-ba
 ```
 
 **Recommendation:** conductor independently reruns the small checks, launches the frozen full command in a durable session, retains all final-policy/failure slots and secondary tables, then asks Claude for completed-milestone review. PR is for review only; worker must not merge.
+
+## Published implementation and CI limitation
+
+- Implementation freeze `4288fb8bcd46fff7b5ba21d3693bc9bf0843b40e`, pushed; draft [PR49](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/49), not merged. The assigned parent `db7e4af` and current main have two merge bases; GitHub reports MERGEABLE but displays inherited actuator files. My commit changes only allowed files. Conductor handles branch integration.
+- Exact committed revision: tests25/25 PASS, zero skips (`ppo-tests-b-03.log`); second genuine optimizer smoke `ppo-smoke-b-02`, exit0, 1,000 actual/recorded/SB3 steps, 10 epochs, exact checkpoint reload, 4.306s/232.21steps/s. Checkpoint SHA-256 `b871351cf5967b36ea80b7db781a7186f0c87f486ed68335298283b0a2222f84`. Both smoke attempts retained; neither is an experiment seed.
+- Remote CI run39392656236 **FAIL**: `ModuleNotFoundError: gymnasium` / `stable_baselines3` in newly discovered RL tests. Existing workflow installs only `sim/requirements.lock`; it does discover `sim/rl/tests`. Preserved failure log `/private/tmp/wbr-augmented-20261020/ppo-ci-39392656236-failed.log`. The correct dependency-install fix belongs in `.github/workflows/tests.yml`, outside worker scope. No tests hidden/skipped or dependency pins changed to make CI green. Conductor must integrate the pinned RL dependency install before merge; local full-run command uses the already tested backend.
