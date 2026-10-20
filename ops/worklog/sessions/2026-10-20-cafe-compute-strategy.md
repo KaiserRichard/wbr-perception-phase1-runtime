@@ -15,3 +15,4 @@
 
 - Owner narrowed final scope to Cho Mo only after PR53 opened. Removed the other branch from report/rankings/cost tables and its RTX5060-specific note; historical external fetch receipts retained. Six in-scope images and Cho Mo page support the revised analysis. PR updated before merge.
 - Revised validation:6 Cho Mo tariff rows and3overhead rows independently passed; excluded-location scan and local links PASS. External `document-validation-chomo-only.json`/`scope.json` record the revision.
+- PR53 opened/attached; report narrowed to Cho Mo and polished with Markdown math/table spacing. Initial commits10668a9/9f6aa0f/65320a5. Required CI will be checked at final publication head; final receipt retained in the external archive. No substantive Claude approval claimed.
