@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "label": "ASSUMED actuator timing and body IMU noise; illustrative, NOT hardware measurements",
+  "base_config": "assumed_planar.json",
+  "base_sha256": "f6310f9d7ac2c4f44186e43a632d2d75e9a0eecd0766464c28fdee0ab6ad6a99",
+  "runtime": {
+    "delay_s": 0.002,
+    "motor_time_constant_s": [
+      0.005,
+      0.005
+    ],
+    "integration_max_step_s": 0.00025,
+    "body_angle_std_deg": 0.1,
+    "body_gyro_std_rad_s": 0.01
+  },
+  "noise_model": "Independent zero-bias IID Gaussian samples at 500 Hz, body pitch/rate ONLY (state indices 2/5). Other coordinates are explicitly ideal measurements.",
+  "experiment": {
+    "version": "predeclared-actuator-v1",
+    "delays_s": [
+      0.002,
+      0.003,
+      0.004,
+      0.005
+    ],
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "scenarios": [
+      "balance",
+      "push",
+      "open_loop"
+    ],
+    "protocol": "Inherit ALL initial states, 10s duration, pulse, thresholds and Q/R from base_config unchanged.",
+    "gain_selection": "Run frozen nominal K across every case FIRST. Only if any case FAILS, synthesize per-delay augmented DARE on the actual runtime step and repeat ALL cases with identical seeds. No Q/R/noise/threshold tuning.",
+    "augmented_cost": "dt * (six_state.T Q six_state + clipped_command.T R clipped_command); zero extra state penalties; nominal Q/R unchanged.",
+    "completion": "Exit 0 means complete retained experiment; individual FAIL statuses are never promoted to PASS."
+  },
+  "frozen_nominal": {
+    "K": [
+      [
+        -4.529101808672559,
+        -15.78895122670582,
+        -7.401367061245232,
+        -5.582295028290119,
+        -2.6771551733811862,
+        -1.4818706824425143
+      ],
+      [
+        1.191660842634335,
+        -0.43095172940826293,
+        15.023834897879862,
+        1.5488737409882047,
+        -0.036644671755983245,
+        2.899250767801112
+      ]
+    ],
+    "sha256_float64_le": "fd1c16dccb418a4949caffcab67fc8e4c4f16d22ec19e7929bbd04acceda5acf",
+    "archive_reference": "~/wbr-evidence-archive/sim-lqr-20261020-01/conductor/linearization.json",
+    "archive_sha256": "a175dfdc11ee208db8798cfcff94eea2a4d2809fd3e8646de493673fc65c3ca5",
+    "archive_comparison": "K_used exactly equal (array_equal) on original pinned Mac environment",
+    "base_revision": "417c1e2",
+    "synthesis": "sim.lqr.synthesize(Plant(base_config)); solver DARE; 2ms nominal RK4; unchanged Q/R",
+    "portable_verification_rtol": 1e-09,
+    "portable_verification_atol": 1e-10
+  }
+}

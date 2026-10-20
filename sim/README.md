@@ -7,6 +7,12 @@ an identified robot model, or evidence of sim-to-real performance.
 Gain parity remains pending independent learning work. No gain schedule,
 protected parity exercise, fivebar controller or RL training is implemented here.
 
+The separate [actuator/noise extension](augmented.md) preserves this nominal path
+and adds exact command-delay events, first-order torque lag and cached body IMU
+noise. Its runner evaluates frozen nominal gains first, then conditionally designs
+an augmented LQR only after an observed failure. The reusable runtime contract is
+documented there for the later RL comparison.
+
 ## Run
 
 From the repository root, use Python 3.12:
