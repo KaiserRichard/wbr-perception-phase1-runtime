@@ -105,3 +105,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources: owner priority instruction; worker commits38399d0/827c357; conductor rawlogs and simulation folders under /private/tmp/wbr-conducting-20261020.
 - Validation: parity15/15, wrapper19/19 and simulation11/11 PASS; conductor simulation CLI and independentCSV checksPASS. No learneredit. Merge resolution changes docs/package docstring only.
 - Limits/review: assumptions/idealrolling only; no livecamera or source-gain parity. PR42 finalCI/merge and final milestone review file pending.
+
+### DOC-20261020-10: Final LQR MuJoCo milestone review and live state
+- Time / author: 2026-10-20 +07; codex-f conductor.
+- Branch / base: chatgpt/20261020-lqr-milestone-review; base caae6ff (merged PR42).
+- Files: ops/worklog/reviews/2026-10-20-lqr-mujoco.md; ops/worklog/CURRENT.md; ops/worklog/sessions/2026-10-20-conducting.md; ops/worklog/DOCUMENTATION_LOG.md.
+- Changes: one final review listing mergedPR38/40/41/42 and realtests/runs/limits; currentstate marks simulationdone, Pi deferred by owner; stablearchive/hashes and questionspending recorded.
+- Sources: exact PR42head be061d8, bothCIchecksSUCCESS, actualmerge caae6ff; conductor-integrated-01 rawreceipts and 34entry archive manifest.
+- Validation: conductor CLI exit0, simulation11/11 testsPASS, parity15/15 and ROS-core19/19PASS; source-gainTODOdiffempty; copies checksumverified. No codechange in this final docs set.
+- Limitations/review: Claude final answerpending; ASSUMED idealrolling nominalmodel only, not physical/gainparity/RL evidence. Pi/runtime milestone not claimed, no gatepromotion.

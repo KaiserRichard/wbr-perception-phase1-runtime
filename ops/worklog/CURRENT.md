@@ -1,29 +1,25 @@
 # Current state
 
-Last updated: 2026-10-20 13:38 +07 by codex-f conductor.
+Last updated: 2026-10-20 +07 by codex-f conductor; simulation milestone complete, final Claude review pending.
 
 ## Active goal
-- Parallel tracks: stereo ORB-SLAM3 -> ROS 2 pose; ASSUMED reduced six-state MuJoCo -> newly synthesized LQR -> push recovery.
-- Conductor independently runs worker results and merges green PRs; Claude reviews completed milestones only.
-- Gain exercise `sim/parity/student.py` remains owner-only. Parity scaffold compiled; 15 infrastructure tests pass; Python gain/VMC parity remain incomplete.
+- PRIORITY: Mac simulation/control. ASSUMED reduced six-state MuJoCo model + NEW matched LQR + declared push recovery implemented, independently rerun and merged in PR42 (caae6ff).
+- PR38 parity scaffold, PR40 conducting rules and PR41 Pi preparation also merged after green CI. See final review ops/worklog/reviews/2026-10-20-lqr-mujoco.md.
+- Claude only reviews completed milestones. Conductor verifies and merges green PRs; worker accounts checked idle, f reserved for conductor.
 
-## Hardware right now
-- USER-REPORTED this afternoon: no camera available; only a 4 GB Pi, slow 32 GB microSD and STM32. Live-camera milestone cannot run today without a camera.
-- SSH `wbr-pi5` -> richard@192.168.50.2 timed out; current Pi model/network identity UNKNOWN. Owner asked about power/Ethernet/address.
-- Keep STM32 untouched. No disk migration or deletion authorized.
-- Earlier D435 idle power/USB evidence remains historical, not current 4 GB Pi evidence. Archive: ~/wbr-evidence-archive/power-idle-d435-20261020-01 (731/731 hashes verified in prior session).
-- 128 GB migration completion remains UNKNOWN; original 32 GB backup must be preserved.
+## Results
+- Conductor: balance recovery1.732s; 6N*0.15s push recovery2.714s, post-push peak6.095deg; zero-control fall0.182s. Controlled10s runs: caps respected, no saturation/warnings.
+- Simulation11/11 testsPASS, parity infrastructure15/15PASS, ROS-free wrapper19/19PASS. Linux CI green at exact PR42head be061d8, including actual MuJoCo CLI.
+- Stable raw/config/model/source/plot archive: ~/wbr-evidence-archive/sim-lqr-20261020-01, SHA256.json34entries. Commands/hashes in final review/session log.
+- sim/parity/student.py gain_schedule remains owner-only TODO. Gain/VMC parity incomplete; this new LQR does not reproduce source gains.
 
-## Workers
-- codex-g / gpt-6-astra ultra: isolated pi-orbslam-pose worktree, branch chatgpt/20261020-pi-orbslam-pose; bounded SSH and offline wrapper preparation while hardware absent.
-- codex-i / gpt-6-astra ultra: isolated sim-lqr-push worktree, branch chatgpt/20261020-sim-lqr-push; implement and run MuJoCo balance/push and open-loop control.
-- g/i latest sessions completed and no active task children found before launch. k has interactive session; not used. f is conductor only.
+## Hardware and Pi track
+- Owner explicitly deferred Pi work due slow32GB microSD/no camera. No Pi build, SLAM/ROS-pose run, storage migration or STM32/motor commands this session.
+- Cafe SSH works: richard@wbr-pi5.local ->192.168.111.243. Measured Pi5ModelB,4GBRAM,root6.2Gfree; native stereo_euroc/MH01/ROS2/colcon exist. Address may change with network.
+- g worker briefly inventoried read-only, then stopped at owner priority change. Pi stereo/ROS worktree clean and retained; runtime milestone not achieved.
+- Old alias wbr-pi5 still points to Ethernet192.168.50.2; not changed. D435 absent this afternoon; prior power evidence historical only.128GBmigration completionUNKNOWN.
 
-## Known limitations
-- Body/leg masses, COM, inertias, actuator response and real robot LQR generation remain UNKNOWN; sim assumptions must be explicit and replaceable from one config.
-- Parity is still pending, independently of the newly authorized running simulation work. No source-controller reproduction or sim-to-real validation claimed.
-- Local full-suite prior failure: macOS lacks termios 460800 baud in existing link-bench test. Linux CI for parity scaffold bc4aea5 was green.
-- No gate promoted; no hardware control or RL training.
-
-## Next step
-Conductor updates AGENTS conducting rules and integrates parity scaffold, verifies worker commands, merges only after green CI. Await Pi SSH details; no camera needed for Mac simulation. Final milestone review lists actual merged PRs and runs; never label blocked prep as completed pose/balance.
+## Limitations and next step
+- Nominal ASSUMED masses/COM/inertias, ideal planar rolling, fixed equivalent leg, ideal state feedback/instant torque. No contact/slip, fullfivebar, physical validation or RLtraining.
+- Final Claude review: ops/worklog/reviews/2026-10-20-lqr-mujoco.md. Review baseline, then predeclare perturbations/initial states for control comparison; obtain CAD/BOM estimates in parallel.
+- Two understanding questions sent; answers pending. No gate promoted. Pre-existing generated host-test binaries remain untracked and unstaged; no deletion performed.
