@@ -42,7 +42,7 @@ necessary explanation with a rigid line limit or unexplained formulas.
 
 ## Conducting Codex
 - Conductor plans, scopes, launches and independently runs worker results, then merges PRs only after green CI. Claude reviews completed milestones only.
-- Check shared accounts are idle before each launch. Reserve codex-f for conductor. Prioritize codex-b until its owner-reported expiry on 2026-10-21, then available owner-designated Plus g/i/k. Use Astra Ultra for hard work and Sol for simpler tasks; never interrupt unrelated shared work.
+- Check shared accounts are idle before each launch. The owner switched this chat's conductor from codex-f to codex-b on 2026-10-20; reserve b for conducting and use idle owner-designated Plus g/i/k as workers. Use Astra Ultra for hard work and Sol for simpler tasks; never interrupt unrelated shared work. Earlier f-conductor receipts remain historical.
 - One worker per task, each in its own worktree and `chatgpt/<YYYYMMDD>-<topic>` branch. Never use the shared Mac checkout or change its branch.
 - Give a short brief: goal, allowed files and exact command proving done. Build first; install missing dependencies and fix actual errors, preserving logs/failures.
 - Workers never run dd, format/partition/delete, force-push, command motors or flash STM32; only conductor merges. Keep Pi perception separate from hardware control.

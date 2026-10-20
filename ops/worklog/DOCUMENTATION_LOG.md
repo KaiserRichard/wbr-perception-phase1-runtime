@@ -192,3 +192,14 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources:source608222b, conductor smoke/checkpoint receipts, full-run progress files, b process/lifecycle check and CLI model header; owner parallel-estimate/priority instructions.
 - Validation:conductor1000-step WBR optimizer/reload smoke exit0 and27/27 RL tests; full5seeds advancing with exact budget configured. Whitespace/diff checked; CI dependency step and generic suites passed at observation.
 - Limits/review:full training/evaluation and parameter audit still running; no RL outcome, physical validity or gate approval claimed. Source remains frozen while only worklogs change.
+
+
+### DOC-20261020-22: Completed comparison, account transfer and final review
+- Time / author:2026-10-20 +07; codex-b conductor (earlier training dispatched by this chat as f).
+- Files:AGENTS.md; docs/learning/LQR_RL_GUIDE.md; sim/rl/{README.md,RESULTS_2026-10-20.md}; ops/worklog/{DECISIONS.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-delay-lag-noise.md,reviews/2026-10-20-rl-comparison.md}; external bounded g audit brief referenced in session.
+- Changes:record owner role switch, measured negative full comparison, retained failures/conditional uncertainty, exact receipts and final Claude review; update learning links. No runtime/config/reward/protocol changes.
+- Sources:source608222b, evaluation781d702, mergedPR47/48/49, run COMPLETE, archived aggregate/checkpoints/raw traces, independent audit script and host metadata. g read-only audit in progress.
+- Validation:6680 archived hashes, five exact budgets and checkpoint reloads,960unique outcomes,800paired noise prefixes and four raw metric checks PASS; independent paired CI recomputed. Earlier27/27 tests and real optimizer smoke retained. Figures generated from existing data and visually checked, not new trials.
+- Limits/review:LQR160/160,PPO0/800 only under this frozen assumed recipe; no causal ablation or broad RL/sim-to-real claim. Source-auditPR50 CI/test-portability fix and final Claude review pending; no gate promotion.
+
+- DOC22 follow-through: CURRENT.md now records the completed experiment, b-conductor role, archive, protected exercise and pending publication/review; replaces stale RUNNING text. It does not label the negative result Claude-approved or change a gate.
