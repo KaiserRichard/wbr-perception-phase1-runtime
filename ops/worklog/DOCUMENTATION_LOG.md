@@ -69,3 +69,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Validation: push/PR creation exit 0; attached PR to chat; authored-file staged whitespace check exit 0.
 - Review: Claude answer pending, PR remains draft and unmerged. Final full-suite/CI outcomes recorded in session when available.
 - Limits: no learner implementation, Python VMC parity, physical/dynamics result or gate promotion implied.
+
+### DOC-20261020-6: Record final local and CI outcomes without conflating them
+- Time / author: 2026-10-20 +07; codex-f conductor.
+- Branch: chatgpt/20261020-c-python-parity; reviewed CI head bfc84bf59495dfc82388f391e07cbba5d714cbe4.
+- Files: ops/worklog/sessions/2026-10-20-c-python-parity.md; ops/worklog/DOCUMENTATION_LOG.md.
+- Changes: recorded full local exit 1 from existing unsupported 460800-baud link-bench test; new parity suite PASS; Linux CI SUCCESS at exact head.
+- Sources: /private/tmp/wbr-parity-full-tests-20261020.log; PR #38 CI job link in session.
+- Validation: full runner finished, final summary inspected; exact head/CI read from GitHub. No unrelated test patched or threshold changed.
+- Limits / review: local full suite is not green; learner TODO and Python VMC parity remain. PR draft, Claude review pending, no merge.

@@ -111,3 +111,20 @@ https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/38
 Attached PR to this chat. Claude review request prepared at
 `ops/worklog/reviews/2026-10-20-c-python-parity.md`; review and owner merge go-ahead
 remain pending. This is not a request to deploy or alter the approved research plan.
+
+Final validation receipts:
+- Full local `bash tools/run_all_tests.sh` exited 1. Only final summary failures:
+  make and Python variants of existing `tools/link_bench` test_host_simulator.
+  Root diagnostic: `baud 460800 not supported by termios` on macOS; teardown
+  also times out waiting for the host simulator after termination. Local runner
+  selected Python 3.11; targeted parity used Python 3.12. No unrelated code changed.
+- New `python:sim/parity/tests` PASS in full runner, 15 tests, zero skips.
+- Linux CI for exact head `bfc84bf59495dfc82388f391e07cbba5d714cbe4`: SUCCESS,
+  https://github.com/KaiserRichard/wbr-perception-phase1-runtime/actions/runs/39375830118/job/118473629046
+- Draft PR #38 remains unmerged. Publication receipt update only follows this
+  green implementation/review head; do not imply the subsequent log commit was
+  already checked. Review-request commit bfc84bf push exit 0.
+
+Recommendation: no retry of the localized unsupported-baud failure or unrelated
+test edit; use passing Linux CI for repository integration, retain the local
+failure. Owner writes gain_schedule next. No extra physical measurement requested.
