@@ -163,3 +163,17 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Why: owner explicitly redirected effort after cafe Wi-Fi restored SSH; simulation runs independently on the Mac.
 - Evidence: owner messages on 2026-10-20; conducting session records discovery and interrupted worker.
 - Revisit when: owner resumes Pi work with suitable hardware/storage. Cafe SSH endpoint richard@wbr-pi5.local192.168.111.243 was measured, not guaranteed stable across networks.
+
+### D-20261020-22: Approve nominal baseline; add causal actuator and sensor imperfections before RL
+- Decided by: Claude review, relayed and authorized by owner
+- Decision: nominal LQR baseline approved in PR44. Add configurable 2-5ms control delay, first-order torque lag and body IMU noise; rerun unchanged protocol/K first. Re-synthesize with delay state only if a frozen-gain case fails. Then train/evaluate RL on the identical plant/pushes across several seeds.
+- Why: reviewed baseline is correct but delay is a known weak point; avoid comparing RL against an unrealistically instantaneous controller.
+- Evidence: ops/worklog/reviews/2026-10-20-lqr-mujoco.md Claude section, main417c1e2; owner request.
+- Revisit when: real actuator/sensor data replace assumptions. Pi waits for camera; gain_schedule remains owner-only.
+
+### D-20261020-23: Keep this afternoon's learning material concise
+- Decided by: owner
+- Decision: provide one short LQR-to-RL guide with equations, code links and small exercises, not an elaborate document. Camera lab resumes when equipment is available tomorrow.
+- Why: owner wants to study LQR/RL this afternoon and explicitly requested short practical notes now.
+- Evidence: docs/learning/LQR_RL_GUIDE.md; AGENTS.md; owner's latest learning/document instructions.
+- Revisit when: owner requests deeper material. Avoid solving protected gain exercise.

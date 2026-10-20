@@ -33,6 +33,8 @@ Then start working on the next step.
   was fixed. Bullet points, no essays.
 Record documentation changes in `ops/worklog/DOCUMENTATION_LOG.md` and decisions
 in `ops/worklog/DECISIONS.md`, following the owner's current logging instruction.
+Keep owner-facing learning notes short and practical; prefer one ~50-line guide
+with code/source links over long explanations or elaborate document structure.
 
 ## Conducting Codex
 - Conductor plans, scopes, launches and independently runs worker results, then merges PRs only after green CI. Claude reviews completed milestones only.

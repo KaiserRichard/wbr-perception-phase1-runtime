@@ -114,3 +114,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources: exact PR42head be061d8, bothCIchecksSUCCESS, actualmerge caae6ff; conductor-integrated-01 rawreceipts and 34entry archive manifest.
 - Validation: conductor CLI exit0, simulation11/11 testsPASS, parity15/15 and ROS-core19/19PASS; source-gainTODOdiffempty; copies checksumverified. No codechange in this final docs set.
 - Limitations/review: Claude final answerpending; ASSUMED idealrolling nominalmodel only, not physical/gainparity/RL evidence. Pi/runtime milestone not claimed, no gatepromotion.
+
+### DOC-20261020-11: Concise LQR/RL guide and approved next-milestone state
+- Time / author: 2026-10-20 +07; codex-f conductor.
+- Branch / base: chatgpt/20261020-delay-lag-noise; main417c1e2 (PR44 review).
+- Files: docs/learning/LQR_RL_GUIDE.md; AGENTS.md; ops/worklog/{CURRENT.md,DECISIONS.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-delay-lag-noise.md}.
+- Changes: short practical guide now, concise-note rule, review approval and causal delay/lag/noise→frozenK→conditional synthesis→RL sequence; logged owner learning/lab priorities and account checks.
+- Sources: Claude review file/PR44; actual sim code/config; primary SciPy/MuJoCo/Gymnasium/PPO docs; owner's concise-document instruction.
+- Validation: guide relative links, line count and whitespace checked; only existing nominal results referenced. New actuator checks/training not claimed complete.
+- Limits / review: guide is teaching material; physical values remain assumed, gain exercise protected. Code milestone and final Claude review remain pending.
