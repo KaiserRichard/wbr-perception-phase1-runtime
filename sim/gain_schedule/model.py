@@ -1,0 +1,41 @@
+"""Pure configuration transforms; importing this module does not run physics."""
+
+from copy import deepcopy
+import math
+
+
+DOMAIN_M = (0.12, 0.30)
+FAMILY = "assumed-planar-fixed-mass-scaled-leg-v1"
+DEFAULT_LENGTHS = tuple(round(0.12 + i * 0.01, 2) for i in range(19))
+EVALUATION_LENGTHS = (0.12, 0.165, 0.21, 0.255, 0.30)
+DEFAULT_DELAYS = (0.002, 0.003, 0.004, 0.005)
+
+
+def check_length(length):
+    length = float(length)
+    if not math.isfinite(length) or not DOMAIN_M[0] <= length <= DOMAIN_M[1]:
+        raise ValueError(f"Leg length must be finite and within {DOMAIN_M} m")
+    return length
+
+
+def config_at_length(reference, length):
+    """Keep masses fixed; scale leg COM by L/L0 and COM inertia by (L/L0)^2."""
+    length = check_length(length)
+    cfg = deepcopy(reference)
+    p = cfg["physics"]
+    original_length = float(p["leg_length"]["value"])
+    if not math.isfinite(original_length) or original_length <= 0:
+        raise ValueError("Reference leg length must be positive and finite")
+    ratio = length / original_length
+    values = {
+        "leg_length": length,
+        "leg_com": p["leg_com"]["value"] * ratio,
+        "leg_inertia": p["leg_inertia"]["value"] * ratio**2,
+    }
+    for name, value in values.items():
+        if not math.isfinite(value) or value <= 0:
+            raise ValueError(f"Invalid scaled {name}")
+        p[name].update(value=value, evidence="ASSUMED",
+                       source=f"{FAMILY}; see sim/gain_schedule/README.md")
+    cfg["label"] = f"ASSUMED leg-length study: L={length:g} m"
+    return cfg
