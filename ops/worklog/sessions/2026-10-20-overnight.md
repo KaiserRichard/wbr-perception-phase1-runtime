@@ -23,3 +23,6 @@
 
 -23:44follow-through:mergedPR63(export),68(camera prep),69(fivebar),70(HTTP extraction/status fix),71(video framing) only after exact-head greenCI and conductor checks. C3new12testsPASS; B3new11testsPASS1.892s and framedPNG inspected. A1/A3/A4/B3 remain partial for actual Pi/heavy execution.
 - b now runs bounded B2 host-integration follow-up on chatgpt/20261020-c-controller-policy:combine C LQR+exported policy, preserve100/500Hz ordering, sum before clipping and advance total-command history. Existing component APIs/thresholds/source frozen; no plant rollout. This addresses an observed interface-ordering risk, not a new research recipe.
+
+- 00:20local:conductor independently ran PR73 integration:4testsPASS,18.892s,1464recorded ticks,5compiled fixtures; max LQR error7.881462e-7,issued/history4.768372e-7. Confirms100Hz held actor+500Hz LQR,sum before clipping,total issued-command history,and reset; unchanged1e-6/3e-5 tolerances. No plant rollout. Merged exact-head green PR73 at149abd1 (mergecd73b72); progress PR72 also merged.
+- 00:15idle/quota refresh: g/k now2% used (one shared pool),i47%; b/e/d/h/j READY,default busy. All runnable implementations complete; Pi/heavy jobs remain queued. No duplicate worker or make-work dispatch while PPO trains.

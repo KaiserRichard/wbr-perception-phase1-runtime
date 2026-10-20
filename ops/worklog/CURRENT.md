@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-10-20 23:44 +07; codex-f conducts the overnight queue.
+Updated 2026-10-21 00:20 +07; codex-f conducts the overnight queue.
 
 ## Simulation
 - Claude approved the assumed six-state planar LQR (PR44) and delay/lag/noise baseline (PR47–48). Hardware parameters remain ASSUMED/UNKNOWN; source gain parity remains the owner exercise.
@@ -11,11 +11,11 @@ Updated 2026-10-20 23:44 +07; codex-f conducts the overnight queue.
 - sim/parity/student.py::gain_schedule remains owner-only. Separate live LQR viewer uses parameter-source-audit checkout; Desktop launcher remains available.
 
 ## Overnight work
-- f conducts; g/i/k hard,AstraUltra; b/e/default medium,Sol; d/h/j simple. Actual metadata shows g/k share one login/quota; treat them as one pool. Reset reported02:16local. Default app chat reserved/busy.
+- f conducts; g/i/k hard,AstraUltra; b/e/default medium,Sol; d/h/j simple. Actual metadata shows g/k share one login/quota; treat them as one pool. 00:15metadata now reports g/k2%,i47% used; idle pings passed. Default app chat reserved/busy.
 - Idle/quota checks now use documented read-only app-server metadata plus a tiny model ping; no credentials/emails retained. Shared-alias idle checks prevent duplicate use.
 - A2 host C LQR mergedPR66:6testsPASS,recorded maximumerror1.86e-15; no STM32 deployment. B1 reporting mergedPR64:16testsPASS; original v1 table reproduced.
 - C1 six primary-source literature notes mergedPR62; C2 glossary mergedPR60; C3 link tool mergedPR59, localized HTTP parser follow-upPR70 merged;12focused testsPASS.
-- B2 real ONNX/C export and frozen-normalization parity passed5tests,no skips; PR63 merged; bounded C LQR+policy integration follow-up now runs on b. Isolated wheels leave the active PPO environment unchanged; H7 cycles are analytical estimates.
+- B2 real ONNX/C export and frozen-normalization parity passed5tests,no skips; PR63 merged; combined C LQR+policy integration mergedPR73:4testsPASS,1464recorded ticks,maxLQRerror7.88e-7 (limit1e-6). Isolated wheels leave the active PPO environment unchanged; H7 cycles are analytical estimates.
 - A1 D435 wrapper/launch/bag/calibration prep mergedPR68:12fixturetests and shell syntaxPASS. Pi install/C++build/live camera still UNVERIFIED.
 - A3 sweep/fitter mergedPR65:14synthetic testsPASS.76designs/400physics cases NOT RUN. Domain0.12–0.30m is a hypothetical rigid-leg family, not the five-bar workspace.
 - A4 five-bar/VMC mergedPR69:14quick tests including pinned-C VMC parityPASS; kinematic/hip-power agreement measured. Mass matrix and wheel reaction differ from reduced model; heavy dynamics comparison queued.
