@@ -8,3 +8,4 @@
 - Primary viewer API: https://mujoco.readthedocs.io/en/3.3.7/python.html#passive-viewer . macOS requires `mjpython`.
 - Logs/images: /private/tmp/wbr-ppo-v2-20261020/viewer-*. Training supervisor75443/root source remains untouched and progress continued after GUI launch.
 - No physics, gains, thresholds, learning exercise, Pi or STM32 changes. Viewer publication/CI pending; no Claude milestone review required for opening the display.
+- Direct callback check passed push6N,pause toggle and reset. Publication joins PR55 to avoid conflicting simultaneous control-simulation worklog edits; incoming cafe records retained.

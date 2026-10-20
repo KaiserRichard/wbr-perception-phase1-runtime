@@ -250,6 +250,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Validation:review preservation,75.8worker-hour arithmetic,pilot cost/tier,local links and documentation-only scope checked; remote CI pending.
 - Limits:no pilot, dependency install, training launch, spending, new CPU-cloud quote, runtime/protocol or architecture change. CURRENT retained under active conductor ownership.
 
+
+### DOC-20261020-CAFE-SHORT: Shorten the owner-facing report
+- Files:ops/worklog/{reviews/2026-10-20-cafe-compute-strategy.md,sessions/2026-10-20-cafe-compute-strategy.md,DOCUMENTATION_LOG.md}.
+- Change:owner explicitly requested a short, understandable report; replace the lengthy analysis with a one-page decision/cost/pilot summary. Full prior report/review retained in Git dc1e0fb and external archive; no decision or runtime change.
+- Validation:local word-count/price/approval-boundary and whitespace checks; publication CI pending. No new experiment, installation or spending.
+
 ### DOC-20261020-25: PPO v2 execution
 - Files: imported Claude review; sessions/2026-10-20-ppo-v2.md; related v2 implementation/session/result notes in this change set.
 - Why/source: owner authorized the lean v2 direct/residual experiment; Claude review75a304d. Old v1 evidence and plant/evaluation criteria preserved.
@@ -265,3 +271,4 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Why/source: owner asked for visible simulation/instructions. Reuse existing augmented LQR/runtime; MuJoCo3.3.7 passive-viewer API linked in README/session.
 - Validation:12s native GUI exited0; persistent live window launched; full10s headless demo final state matches archivedLQR; corrected framebuffer-size error and visually inspected the640px render. No new physics or trained-policy claim.
 - Limits/status:assumed reduced planar model and unscored interactive demo; no contact/five-bar or sim-to-real claim. PPO process/source unchanged. PublicationCI pending.
+- VIEWER follow-through:push/pause/reset callbacks checked directly; native launcher and Desktop wrapper syntax passed. Keep this additive display in PR55 alongside v2 setup, preserving concurrent PR57 documentation; active training files remain unchanged.
