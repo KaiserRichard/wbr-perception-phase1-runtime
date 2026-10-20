@@ -138,3 +138,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Changes: GitHub-compatible inline math, aligned long equations and explicit Euler-Lagrange step; no model/controller code changed.
 - Validation: KaTeX rendered64expressions without errors; guide analyticalA/B matched actualMuJoCo derivatives to6.28e-10/1.99e-13 maxabsoluteerror; local links/whitespace checked.
 - Limits/review: confirms mathsyntax and nominalmodel derivation only, not new actuator/RL results or physical validity.
+
+
+### DOC-20261020-14: Actuator milestone verification and account priority
+- Time / author: 2026-10-20 +07; codex-f conductor; worker implementations i/g.
+- Files: AGENTS.md; sim/{README.md,augmented.md,augmented*.py,run_augmented.py,configs/assumed_actuator_noise.json,tests/test_augmented.py}; ops/worklog/{CURRENT.md,DECISIONS.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-actuator-noise.md,sessions/2026-10-20-delay-lag-noise.md}.
+- Changes: document causal runtime/API/assumptions, frozen-first conditional design, actual complete matrix, protected exercise, quota interruptions and b priority/idle requirement. Source docstrings/comments included.
+- Sources: owner/Claude sequence; worker commits aad5710/0900606; conductor complete run05 and its source/config/hash receipts; primary MuJoCo/SciPy docs linked in augmented.md.
+- Validation:27/27 simulation tests PASS, full120-case execution COMPLETE,373 artifact hashes verified; all paired noise hashes equal. Frozen FAIL40/40 controlled retained; conditional PASS40/40, expected-fall controls40/40.
+- Limits/review: ASSUMED plant only. No actual PPO training, hardware evidence or gate promotion; CI/merge and completed-milestone Claude review pending. b occupied by unrelated work at check, so not launched.
