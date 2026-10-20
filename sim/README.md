@@ -13,6 +13,26 @@ noise. Its runner evaluates frozen nominal gains first, then conditionally desig
 an augmented LQR only after an observed failure. The reusable runtime contract is
 documented there for the later RL comparison.
 
+## Watch the robot balance
+
+On macOS, double-click **Open_WBR_Simulation.command** in this folder, or run
+from the repository root after creating the environment below:
+
+```sh
+.venv/bin/mjpython -m sim.view
+```
+
+The live MuJoCo window runs the existing delay-aware LQR with 5 ms delay,
+5 ms torque lag and body IMU noise. It repeats a 10 s run with a 6 N push at
+3 s. **Space** pauses, **P** adds a push and **R** resets. Drag to rotate the
+camera; scroll to zoom. Close the window to end only the demo; PPO training
+is a separate process. This visual demo is unscored.
+
+Black wheel, blue virtual leg, orange body: the assumed reduced planar model.
+The wheel graphic does not spin. To select another delay, use
+`--delay-ms 2` (also 3, 4 or 5). macOS needs MuJoCo's `mjpython` launcher for
+its [passive viewer](https://mujoco.readthedocs.io/en/3.3.7/python.html#passive-viewer).
+
 ## Run
 
 From the repository root, use Python 3.12:

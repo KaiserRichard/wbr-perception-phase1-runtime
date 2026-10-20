@@ -18,6 +18,7 @@ Updated 2026-10-20 +07; owner switched this chat's conductor from codex-f to cod
 - Active output: ~/wbr-evidence-archive/sim-ppo-v2-20261020-01; process/console/progress at /private/tmp/wbr-ppo-v2-20261020/. Heartbeat finish-ppo-v2-comparison checks every30min; never duplicate active job.
 - docs/learning/LQR_RL_GUIDE.md explains geometry, energy/dynamics, LQR and the measured RL result. sim/parity/student.py gain_schedule remains the owner's exercise.
 - Model has assumed masses/COM, ideal planar rolling/equivalent rigid leg, known delay/lag and four ideal sensor channels; no full-five-bar/contact or sim-to-real validation.
+- Visual demo: Desktop `WBR Simulation.command`, or `.venv/bin/mjpython -m sim.view` in the viewer checkout. Space pause,P push,R reset. Separate live LQR simulation; closing it leaves PPO running. See sessions/2026-10-20-sim-viewer.md.
 
 ## Hardware
 - Pi/camera track remains deferred until equipment returns; no Pi build/live ROS pose/STM32/motor action in this milestone.

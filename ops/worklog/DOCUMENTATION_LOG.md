@@ -259,3 +259,9 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - DOC25 continuation: durable supervisor launched09:43:55Z; heartbeat `finish-ppo-v2-comparison` every30min. Initial duplicate-free progress confirmed; source/plant/v1criteria/protected exercise unchanged. Final results and Claude v2 review pending.
 - DOC25 integration:main advanced viaPR52–54 while training ran. Preserve finalized cafe DOC24; renumber only this unmerged PPO draft25. Resolve in isolated parameter-source-audit worktree, retaining both histories; no runtime or active-checkout change.
 - DOC25 publication follow-through:PR56 adds only independent cafe records; preserve them alongside v2 records. Publication now uses ppo-outcome-audit worktree; parameter-source-audit is a separate viewer task. Training source unchanged.
+
+### DOC-20261020-VIEWER: Make the simulation watchable
+- Files:.gitignore; sim/{view.py,Open_WBR_Simulation.command,README.md}; ops/worklog/{CURRENT.md,sessions/2026-10-20-sim-viewer.md,DOCUMENTATION_LOG.md}; local Desktop shortcut outsidegit.
+- Why/source: owner asked for visible simulation/instructions. Reuse existing augmented LQR/runtime; MuJoCo3.3.7 passive-viewer API linked in README/session.
+- Validation:12s native GUI exited0; persistent live window launched; full10s headless demo final state matches archivedLQR; corrected framebuffer-size error and visually inspected the640px render. No new physics or trained-policy claim.
+- Limits/status:assumed reduced planar model and unscored interactive demo; no contact/five-bar or sim-to-real claim. PPO process/source unchanged. PublicationCI pending.
