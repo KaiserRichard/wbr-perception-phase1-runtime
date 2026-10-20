@@ -298,3 +298,8 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - All listed merges required actual current-head greenCI; pending PRs/results are not approvals. Single morning review remains reviews/2026-10-21-overnight.md.
 
 - OVERNIGHT-PROGRESS follow-through:CURRENT/session refreshed after mergedPR63/68/69/70/71; source/code unchanged in this documentation commit. New C3tests12PASS, B3tests11PASS and closer frame verified. B2 bounded integration follow-up running; all unexecuted Pi/physics/video requirements stay explicit.
+
+### DOC-20261021-INTEGRATION: Record combined controller verification
+- Files:CURRENT.md,this log,overnight session; source:PR73 host integration and independent recorded-vector run.
+- Actual:4testsPASS in18.892s,1464ticks,5compiled fixtures; maxLQRerror7.88e-7 within unchanged1e-6. PR73 merged at149abd1 after both exact-head checks passed; PR72 progress merged.
+- Limits:controller arithmetic only,no closed-loop/hardware claim. Pi/heavy tasks stay partial; PPO and protected checkouts unchanged. Idle/quota refresh recorded without repeating unchanged tests.
