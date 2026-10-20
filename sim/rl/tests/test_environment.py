@@ -6,6 +6,7 @@ from pathlib import Path
 import unittest
 
 import numpy as np
+from gymnasium.utils.env_checker import check_env
 from stable_baselines3.common.vec_env import DummyVecEnv
 
 from sim.augmented import AugmentedRuntime
@@ -21,6 +22,13 @@ class EnvironmentTests(unittest.TestCase):
 
     def fixed(self, delay=.003, scenario='balance', seed=1000):
         return self.env.reset(options={'delay_s': delay, 'scenario': scenario, 'noise_seed': seed})[0]
+
+    def test_complete_gym_api_including_empty_options(self):
+        check_env(self.env, skip_render_check=True)
+        first, info = self.env.reset(seed=3, options={})
+        second, other = self.env.reset(seed=3)
+        np.testing.assert_array_equal(first, second)
+        self.assertEqual(info, other)
 
     def test_exact_condition_rng_and_disjoint_noise_mapping(self):
         rng = np.random.default_rng(np.random.SeedSequence([2, 3]))

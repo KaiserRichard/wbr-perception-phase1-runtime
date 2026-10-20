@@ -96,7 +96,7 @@ class WbrEnv(gym.Env):
             self.policy_seed = int(seed)
             self._episode_index = 0
             self._conditions = np.random.default_rng(np.random.SeedSequence([2, self.policy_seed]))
-        if options is None:
+        if options is None or options == {}:
             delays = self.protocol["plant"]["fixed_delays_s"]
             self.delay_s = delays[int(self._conditions.integers(len(delays)))]
             self.scenario = self.protocol["scenarios"][int(self._conditions.integers(2))]["name"]

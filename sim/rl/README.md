@@ -85,37 +85,38 @@ window exist. No change was made to the original evaluator or its CSV format.
 
 The primary differences are computed at the **training-seed** level:
 
-\[
-d_s = \frac{1}{8}\sum_{c=1}^{8}\left(\frac{1}{20}\sum_{n=1}^{20}
- I_{\mathrm{PPO},s,c,n} - \frac{1}{20}\sum_{n=1}^{20}I_{\mathrm{LQR},c,n}\right),
-\qquad \bar d \pm t_{0.975,4}\frac{s_d}{\sqrt{5}}.
-\]
+$$
+\begin{aligned}
+d_s &= \frac{1}{8}\sum_{c=1}^{8}\left(\frac{1}{20}\sum_{n=1}^{20}
+ I_{\mathrm{PPO},s,c,n} - \frac{1}{20}\sum_{n=1}^{20}I_{\mathrm{LQR},c,n}\right),\\
+\mathrm{CI}_{95\%} &= \bar d \pm t_{0.975,4}\frac{s_d}{\sqrt{5}}.
+\end{aligned}
+$$
 
-For example, differences \((-0.8,-0.6,-0.4,-0.2,0)\) have mean \(-0.4\),
-sample SD \(\sqrt{0.1}\), and interval about \([-0.793,-0.007]\). Reusing the
+For example, differences $(-0.8,-0.6,-0.4,-0.2,0)$ have mean $-0.4$,
+sample SD $\sqrt{0.1}$, and interval about $[-0.793,-0.007]$. Reusing the
 same LQR panel does not create five LQR replicates. This interval describes
 training-seed uncertainty conditional on this particular noise panel. Missing
 physical data makes the all-slot continuous mean/interval undefined; available
 observations are explicitly labeled diagnostics.
 
 The frozen reward is
-\(r_k=-0.002(x_{k+1}^{T}Qx_{k+1}+u_k^{T}Ru_k)-100I_{\mathrm{failure}}\),
-where \(u_k\) is the bounded command before transport delay. At zero state with
-command \((1,0)\) N m, the nonterminal reward is \(-0.0016\). Termination denotes
+$r_k=-0.002(x_{k+1}^{T}Qx_{k+1}+u_k^{T}Ru_k)-100I_{\mathrm{failure}}$,
+where $u_k$ is the bounded command before transport delay. At zero state with
+command $(1,0)$ N m, the nonterminal reward is $-0.0016$. Termination denotes
 a fall/displacement violation; the 10 s time limit is truncation, so SB3 retains
 the terminal observation for value bootstrapping.
 
 PPO maximizes the clipped surrogate
-\(\mathbb{E}[\min(r_t A_t,\operatorname{clip}(r_t,1-\epsilon,1+\epsilon)A_t)]\),
-where this \(r_t\) is a probability ratio, not the reward. With positive advantage
-2, ratio 1.3 and \(\epsilon=0.2\), the contribution is 2.4 rather than 2.6.
+$\mathbb{E}[\min(r_t A_t,\operatorname{clip}(r_t,1-\epsilon,1+\epsilon)A_t)]$,
+where this $r_t$ is a probability ratio, not the reward. With positive advantage
+2, ratio 1.3 and $\epsilon=0.2$, the contribution is 2.4 rather than 2.6.
 The implementation uses the fixed SB3 parameters from the protocol, including
 separate 64–64 actor/critic networks and a Gaussian direct-torque policy.
 Primary references: [PPO paper](https://arxiv.org/abs/1707.06347),
 [SB3 2.3.2 PPO](https://stable-baselines3.readthedocs.io/en/v2.3.2/modules/ppo.html),
 [Gymnasium Env API](https://gymnasium.farama.org/api/env/).
 
-**Recommendation:** launch the committed command from the conductor's durable
-session, retain all five slots and the full paired report, then request the
-completed-milestone review. No RL superiority or hardware claim follows from
+Launch the committed command from the conductor's durable session, retain all
+five slots and the full paired report, then request the completed-milestone review. No RL superiority or hardware claim follows from
 implementation smoke/parity checks.

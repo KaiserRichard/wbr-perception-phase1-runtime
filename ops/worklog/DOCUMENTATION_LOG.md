@@ -165,3 +165,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources:owner's latest instruction; native evaluator against archived conditional5ms gain with noise1000.
 - Validation:whitespace/diff check; spot-check exit0,PASS,recovery2.760s,impulse0.900Ns. No implementation or threshold change.
 - Limits/review:one spot check does not establish the full held-out comparison. PPO implementation/training remains pending; publication CI pending.
+
+
+### DOC-20261020-17: Frozen PPO implementation and conductor verification
+- Time / author:2026-10-20 +07; codex-b implementation, codex-f integration/verification.
+- Files:sim/rl/{README.md,environment.py,trace.py,training.py,evaluation.py,aggregate.py,metrics.py,provenance.py,run.py,verify.py,tests/*.py}; .github/workflows/tests.yml; ops/worklog/{CURRENT.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-ppo-training.md,sessions/2026-10-20-delay-lag-noise.md}. External brief/report/feedback/command receipts referenced in session.
+- Changes: executable fixed-budget PPO pipeline, causal shared inputs, compact full-substep evidence and failure/seed accounting; explanatory math/CLI docs. Conductor corrected Gym empty-options API and CI install ordering, added actual Gym/backend checks; retained failed check/CI logs.
+- Sources:read-only protocol/requirements and actuator authorization/archive; worker4288fb8/draftPR49; primary PPO/SB3/Gym docs in README. No physical parameter inference.
+- Validation:worker25/25 tests,1000-step real WBR optimizer/checkpoint smoke and8full LQR parity pairs; conductor expanded27/27 tests, native-vector/reward checks and independent5000-step adapter parity PASS;12 README math expressions rendered.
+- Limits/review:smoke/evaluator fall is not a full PPO result. Full5×150000-step training and800+160 held-out outcomes pending. CI initially failed on missing Gym; dependency fix pending remote check. No frozen protocol, plant, threshold or protected exercise changes; Claude final milestone review pending.

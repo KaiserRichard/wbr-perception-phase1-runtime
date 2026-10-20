@@ -21,4 +21,4 @@ Commands from this worktree (`PY=/private/tmp/wbr-augmented-20261020/protocol-ba
 "$PY" -m sim.rl.run run --authorization "$AUTH" --train-jobs 5 --eval-jobs 6 --out /private/tmp/wbr-augmented-20261020/ppo-full-conductor-01
 ```
 
-**Recommendation:** conductor independently reruns the small checks, launches the frozen full command in a durable session, retains all final-policy/failure slots and secondary tables, then asks Claude for completed-milestone review. PR is for review only; worker must not merge.
+Next: conductor independently reruns the small checks, launches the frozen full command in a durable session, retains all final-policy/failure slots and secondary tables, then asks Claude for completed-milestone review. PR is for review only; worker must not merge.
