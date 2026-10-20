@@ -18,7 +18,8 @@
 - Raw install/smoke logs, versions and contract snapshot in its parent directory.
 - Read-only lookup `ci.yml` absent (exit 1); actual `tests.yml` and generic
   `sim/*/tests` discovery read successfully; no workflow edit needed.
-- Doc edits outside git: `protocol-steering.md` and `protocol-report.md` under
-  `/private/tmp/wbr-augmented-20261020/`; exact commands/hashes/PR in report.
+- Doc edits outside git: `protocol-steering.md`, `protocol-pr-body.md`, and
+  `protocol-report.md` / `protocol-audit-report.md` under `/private/tmp/wbr-augmented-20261020/`.
+- PR [46](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/46) opened unmerged; exact commands/hashes in report.
 - This named session log records its own documentation changes; shared logs untouched.
 - Recommendation: conductor verifies plant and PR, then assigns wrapper/full seeds.
