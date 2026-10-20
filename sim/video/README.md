@@ -8,24 +8,29 @@ initial leg/body angles. It does not load policies or training outputs.
 Every frame carries **ASSUMED planar WBR**, **delay-aware LQR**,
 **Illustrative simulation; unscored**, and the ideal rolling/rigid leg/hardware
 limitation. These clips are report/slide illustrations, not acceptance results.
-The black wheel graphic does not spin. Camera settings match the live viewer.
+The black wheel graphic does not spin. The report camera uses a closer side
+view centered on the vehicle above the caption and follows its horizontal
+position. This changes presentation only; the live viewer is unchanged.
 
 The default `push` clip starts with balance recovery, then applies the existing
 6 N body-COM pulse during [3.00, 3.15) s. `--scenario balance` suppresses that
 pulse only in its own demo instance. No source config, plant or controller is
 edited. A PNG always captures the initial state at t=0, without rollout.
 
-## One tiny frame (actual B3 smoke command)
+## Tiny framing preview (actual B3 follow-up command)
 
 ```sh
 env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 \
   nice -n 10 /private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python \
-  -m sim.video --output /private/tmp/wbr-overnight-20261020/B3/preview-01.png \
+  -m sim.video --output /private/tmp/wbr-overnight-20261020/B3/preview-framed.png \
   --width 320 --height 240
 ```
 
-That output is retained; choose a new filename to run again. Only **one real
-frame** was rendered for B3. The tests below use mocked GPU rendering and a
+That output and the earlier `preview-01.png` are retained; choose a new filename
+to run again. The follow-up rendered **one additional real frame**, at t=0,
+320x240, without rollout. Visual inspection shows the whole vehicle about
+104 pixels tall within the 128-pixel scene, above the unchanged captions.
+Full clips remain pending. The tests below use mocked GPU rendering and a
 mocked encoder; they write real temporary PNGs/JSON and check scheduling,
 caption output, overwrite/path guards and failure retention.
 

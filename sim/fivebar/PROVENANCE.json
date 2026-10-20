@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/nguyenbinh-shark/DM-jump",
+  "commit": "6855ef8c6da20246251cfd473467c04112bf800f",
+  "license": "MIT; full source notice retained in LICENSE",
+  "reference_files_sha256": {
+    "parity/vendor/dm_jump/LICENSE": "e530433beec8b250e0b5cc9668b378875fb58ce904b90268e0ea4df86edcf524",
+    "parity/vendor/dm_jump/User/Algorithm/VMC/VMC_calc.c": "9ad28c5289fb2dc9b9b72a4cc3713e228c5e8d184f3aaafd67f523ba75985a3d"
+  },
+  "use": "Source dimensions and conventions; independent circle intersection, implicit Jacobian and new MuJoCo model. No gain implementation, source firmware changes, or physical measurements.",
+  "source_author": "Trần Nguyên Bình (trannguyenbinh.shark@gmail.com), 2024-2026",
+  "geometry_evidence": "SOURCE-SUPPORTED l1=l4=0.075 m, l2=l3=0.14 m, l5=0.08 m; existing source_geometry_inventory_unused read without edits.",
+  "mass_evidence": "ASSUMED: reuse aggregate masses from reduced config; split equivalent-leg mass equally among four uniform rods with 0.006 m radius. CAD and measured inertias unknown."
+}

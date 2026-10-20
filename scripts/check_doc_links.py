@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
+import ipaddress
 from pathlib import Path
 import re
 import subprocess
@@ -34,7 +35,8 @@ ROOT_PATH_RE = re.compile(
     + r")[A-Za-z0-9_./{}<>+*?-]+)"
 )
 URL_RE = re.compile(r"https?://[^\s<>\])]+", re.IGNORECASE)
-URL_TRAILING_PUNCTUATION = ".,;:!?\"'"
+URL_TRAILING_PUNCTUATION = ".,;:!?\"'`"
+HOST_LABEL_RE = re.compile(r"^[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$")
 
 
 @dataclass(frozen=True)
@@ -181,6 +183,9 @@ def _http_status(url: str, timeout: float, backend: str = "python") -> tuple[str
         except ValueError:
             detail = response.stderr.strip() or "curl returned no HTTP status"
             return url, f"UNVERIFIED ({detail})"
+        if not 100 <= code <= 599:
+            detail = response.stderr.strip() or f"curl returned invalid HTTP status {code}"
+            return url, f"UNVERIFIED ({detail})"
     else:
         request = Request(url, method="HEAD", headers={"User-Agent": "doc-link-checker/1.0"})
         try:
@@ -197,12 +202,33 @@ def _http_status(url: str, timeout: float, backend: str = "python") -> tuple[str
     return url, "OK" if 200 <= code < 400 else f"HTTP {code}"
 
 
+def _valid_http_url(url: str) -> bool:
+    """Reject URL-shaped code fragments whose authority is not a hostname."""
+    try:
+        parsed = urlsplit(url)
+        host = parsed.hostname
+        # Accessing port also catches malformed bracket/port authorities.
+        _ = parsed.port
+    except ValueError:
+        return False
+    if parsed.scheme.lower() not in ("http", "https") or not host:
+        return False
+    try:
+        ipaddress.ip_address(host)
+        return True
+    except ValueError:
+        return all(HOST_LABEL_RE.fullmatch(label)
+                   for label in host.rstrip(".").split("."))
+
+
 def scan_http(directories: tuple[str, ...], timeout: float, jobs: int,
               max_urls: int, backend: str = "curl") -> list[tuple[str, str]]:
     urls: set[str] = set()
     for source in markdown_files(directories):
         text = FENCE_RE.sub("", source.read_text(encoding="utf-8", errors="replace"))
-        urls.update(url.rstrip(URL_TRAILING_PUNCTUATION) for url in URL_RE.findall(text))
+        urls.update(cleaned for url in URL_RE.findall(text)
+                    if (cleaned := url.rstrip(URL_TRAILING_PUNCTUATION))
+                    and _valid_http_url(cleaned))
     selected = sorted(urls)[:max_urls]
     with ThreadPoolExecutor(max_workers=jobs) as pool:
         futures = [pool.submit(_http_status, url, timeout, backend) for url in selected]
