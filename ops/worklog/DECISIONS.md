@@ -251,3 +251,8 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Scope: A1–A4,B1–B3,C1–C3 approved; one branch/worktree/PR per task; conductor verifies and merges exact-head green CI. No student solution, motors, flashing or active PPO changes.
 - Resource decision: Mac edits/quick tests only while PPO runs; heavy jobs wait for reachable Pi or completed training. Do not claim unrun Pi builds or simulations.
 - Review: one short morning file reviews/2026-10-21-overnight.md; replaces separate overnight milestone handoffs. Earlier account assignments remain historical.
+
+### D-20261020-OVERNIGHT-FOLLOWTHROUGH: Shared quota and model scope
+- Evidence: read-only app-server metadata identifies g/k as one login with100%used in the same300min window,reset02:16local. Treat aliases as one account for idle/quota checks; preserve work and transfer to i/e. Never buy credits or consume reset credits.
+- Model decision: retain A3's requested hypothetical rigid-leg domain0.12–0.30m; do not present it as the pinned five-bar's reachable domain(upper bound≈.211m). A4 has assumed rod mass distribution/bearing and demonstrated dynamics differences; keep it separate from frozen PPO/LQR.
+- Scope remains implementation plus quick checks overnight; full gain sweeps, dynamics and videos wait for available compute/Pi. No physical/acceptance thresholds or research recipe changed.

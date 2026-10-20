@@ -1,32 +1,29 @@
 # Current state
 
-Updated 2026-10-20 23:10 +07; overnight owner override: codex-f conducts.
+Updated 2026-10-20 23:44 +07; codex-f conducts the overnight queue.
 
-## Completed simulation milestone
-- Nominal assumed six-state MuJoCo/LQR approved by Claude in PR44. Actuator delay/lag/IMU extension merged PR47; final actuator review merged PR48.
-- Frozen original K failed 40/40 controlled settling checks. Conditional delay-state LQR passed 40/40; no Q/R, acceptance or physical-limit changes. Source gain parity remains incomplete.
-- PPO implementation merged PR49 (e821212), after both CI checks passed at head781d702. Conductor independently passed 27/27 RL tests and real optimizer/reload smoke.
-- FULL comparison COMPLETE, exit0: five policies ×150000 steps (750000 total), 800 PPO +160 unique LQR evaluation episodes. LQR160/160 successes; PPO0/800, with680 falls and120 displacement exits. No numerical/training failures or retuning.
-- All five seed success differences are−1; prescribed 95%t interval[-1,−1], df4. This is a conditional, degenerate endpoint result, not proof that RL generally fails or that real-world uncertainty is zero.
-- Independent audit:6680 hashes, five budgets/checkpoints,960 episode identities, all800 paired noise prefixes and raw metric spot checks verified. Stable archive: ~/wbr-evidence-archive/sim-ppo-vs-lqr-20261020-01.
-- Read sim/rl/RESULTS_2026-10-20.md. Full panel/secondary metrics: archive/evaluation/aggregate.json. Claude review75a304d confirms valid execution/limited interpretation and authorizes v2.
-- Parameter source table/guide link and float64 test-oracle repair merged PR50 (31a5d1a), both CI checks green. Current physical values remain ASSUMED or UNKNOWN; runtime/reward unchanged.
+## Simulation
+- Claude approved the assumed six-state planar LQR (PR44) and delay/lag/noise baseline (PR47–48). Hardware parameters remain ASSUMED/UNKNOWN; source gain parity remains the owner exercise.
+- PPO v1 complete: LQR160/160, PPO0/800. See sim/rl/RESULTS_2026-10-20.md; archived evidence retained.
+- PPO v2 RUNNING independently (PR55; frozen source f1b5ee7): eight envs,3M policy transitions/seed,100Hz policy,unchanged500Hz plant/LQR. Supervisor75443; no duplicate or tuning.
+- Seed0 only: direct39/160 strict successes,160/160survival; residual0/160 strict,160/160survival. Both trained3M/reloadPASS. Directseed1 now training; full comparison incomplete. Conditional extension rule unchanged.
+- Evidence ~/wbr-evidence-archive/sim-ppo-v2-20261020-01; process/progress /private/tmp/wbr-ppo-v2-20261020/. Root training checkout stays32c00c4.
+- sim/parity/student.py::gain_schedule remains owner-only. Separate live LQR viewer uses parameter-source-audit checkout; Desktop launcher remains available.
 
-## Next step and ownership
-- RUNNING PPO v2: direct+residual,100Hz policy,eight envs,observation VecNormalize,3M POLICY steps/seed,initial3seeds/arm; extend each arm to5 only after strict balance PASS. Sourcef1b5ee7; prior result retained. Full run started2026-10-20 16:43+07; may run overnight or longer.
-- v2 implementation merged PR55; prior44/44tests,optimizer/reload and zero-residualLQR parity passed. Directseed0:3M transitions,39/160strictPASS,160/160survival; residualseed0 evaluation running. Full experiment incomplete.
-- Active output: ~/wbr-evidence-archive/sim-ppo-v2-20261020-01; process/console/progress at /private/tmp/wbr-ppo-v2-20261020/. Heartbeat finish-ppo-v2-comparison checks every30min; never duplicate active job.
-- docs/learning/LQR_RL_GUIDE.md explains geometry, energy/dynamics, LQR and the measured RL result. sim/parity/student.py gain_schedule remains the owner's exercise.
-- Model has assumed masses/COM, ideal planar rolling/equivalent rigid leg, known delay/lag and four ideal sensor channels; no full-five-bar/contact or sim-to-real validation.
-- Visual demo: Desktop `WBR Simulation.command`, or `.venv/bin/mjpython -m sim.view` in the viewer checkout. Space pause,P push,R reset. Separate live LQR simulation; closing it leaves PPO running. See sessions/2026-10-20-sim-viewer.md.
+## Overnight work
+- f conducts; g/i/k hard,AstraUltra; b/e/default medium,Sol; d/h/j simple. Actual metadata shows g/k share one login/quota; treat them as one pool. Reset reported02:16local. Default app chat reserved/busy.
+- Idle/quota checks now use documented read-only app-server metadata plus a tiny model ping; no credentials/emails retained. Shared-alias idle checks prevent duplicate use.
+- A2 host C LQR mergedPR66:6testsPASS,recorded maximumerror1.86e-15; no STM32 deployment. B1 reporting mergedPR64:16testsPASS; original v1 table reproduced.
+- C1 six primary-source literature notes mergedPR62; C2 glossary mergedPR60; C3 link tool mergedPR59, localized HTTP parser follow-upPR70 merged;12focused testsPASS.
+- B2 real ONNX/C export and frozen-normalization parity passed5tests,no skips; PR63 merged; bounded C LQR+policy integration follow-up now runs on b. Isolated wheels leave the active PPO environment unchanged; H7 cycles are analytical estimates.
+- A1 D435 wrapper/launch/bag/calibration prep mergedPR68:12fixturetests and shell syntaxPASS. Pi install/C++build/live camera still UNVERIFIED.
+- A3 sweep/fitter mergedPR65:14synthetic testsPASS.76designs/400physics cases NOT RUN. Domain0.12–0.30m is a hypothetical rigid-leg family, not the five-bar workspace.
+- A4 five-bar/VMC mergedPR69:14quick tests including pinned-C VMC parityPASS; kinematic/hip-power agreement measured. Mass matrix and wheel reaction differ from reduced model; heavy dynamics comparison queued.
+- B3 renderer mergedPR67;11tests and one tiny framePASS. Framing improvement mergedPR71; one additional tiny frame inspected. Full balance/push clips await compute and FFmpeg; no full video claim.
+- Queue/briefs/process/error receipts: /private/tmp/wbr-overnight-20261020/. Every30min follow-up and06:30refill/resume active; morning report checkpoint08:00local.
+- Mac edits/quick tests only while PPO runs. Heavy jobs use an available Pi or wait. One morning Claude review only: reviews/2026-10-21-overnight.md.
 
 ## Hardware
-- Pi/camera track remains deferred until equipment returns; no Pi build/live ROS pose/STM32/motor action in this milestone.
-- Last measured cafe SSH: richard@wbr-pi5.local →192.168.111.243; old alias uses Ethernet192.168.50.2. Addresses can change. 128GB migration completion UNKNOWN.
-- Nominal archive ~/wbr-evidence-archive/sim-lqr-20261020-01; actuator archive ~/wbr-evidence-archive/sim-actuator-20261020-01.
-- Pre-existing host-test generated files remain untracked/unstaged and untouched. Every document change is recorded in DOCUMENTATION_LOG.
-
-## Overnight queue
-- f conducts eight idle/quota-checked workers: g/A1,i/A2,k/A3,b/B1,e/B2,d/C1,h/C2,j/C3; A4/B3 queued. Session: sessions/2026-10-20-overnight.md; external state: /private/tmp/wbr-overnight-20261020/queue.json.
-- Every30min +06:30 refill wakeups active. Mac code/quick tests only while PPO runs; heavy sweeps/rendering await Pi or completed training. Root checkout and student.py protected.
-- Morning Claude handoff only: reviews/2026-10-21-overnight.md (honest task status/PR); no milestone review stops overnight.
+- Pi alias richard@192.168.50.2 and last cafe address192.168.111.243 timed out tonight. No remote install/build or physical validation performed; no network scan.
+- Camera D435/noIMU, SDKserial048622071151; camera day resumes when hardware/network return.128GB migration completion UNKNOWN.
+- Mac is on AC, charging; caffeinate remains attached to the independent PPO supervisor. STM32/motors untouched. Pre-existing root untracked build artifacts preserved.
