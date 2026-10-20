@@ -199,3 +199,11 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Why: original K failed settling/recovery in all 40 controlled cases; conditional gains passed all 40 across delays 2/3/4/5 ms and seeds 0..4. No controlled fall occurred.
 - Evidence: complete conductor run at /private/tmp/wbr-actuator-conductor-20261020-05, source 0900606; 27/27 tests passed; 373 artifact hashes verified and paired noise hashes matched.
 - Revisit when: the plant or frozen protocol changes. These are assumed-model simulation results, not hardware evidence or gate promotion.
+
+
+### D-20261020-27: Make owner-facing next actions explicit
+- Decided by: owner.
+- Decision: every message ends with exactly one NEED FROM YOU line (one physical action or decision) or NOTHING NEEDED line (next agent action). Recommendations belong only in review files.
+- Why: make required owner input immediately clear and keep routine work moving.
+- Evidence: owner's communication rule on 2026-10-20; updated AGENTS.md.
+- Revisit when: owner changes this format. Supersedes earlier recommendation-in-message instructions.

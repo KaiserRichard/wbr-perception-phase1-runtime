@@ -24,7 +24,10 @@ Then start working on the next step.
 - Install whatever is missing (apt, pip, build from source) and keep going.
 - Run commands yourself when you can (Mac, or the Pi via `ssh wbr-pi5`).
 - One fix at a time when something breaks; re-run; note what fixed it.
-- End each result with a short **Recommendation** for the next step.
+- End every owner-facing message with exactly one final line:
+  `NEED FROM YOU: <one physical action or one decision, in plain words>` or
+  `NOTHING NEEDED: <what you are doing next>`.
+- Put recommendations only inside review files, never in messages to the owner.
 
 ## Notes you keep (short)
 - `ops/worklog/CURRENT.md`: overwrite at session end — current state, what works,

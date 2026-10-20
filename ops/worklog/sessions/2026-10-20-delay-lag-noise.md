@@ -28,3 +28,6 @@
 - b's unrelated task completed07:52:11Z. After idle check, launched b/AstraUltra in existing isolated PPO worktree/branch; raw log /private/tmp/wbr-augmented-20261020/ppo-b-events.log, conductor tool session24465. b owns PPO implementation exclusively; conductor left an editable environment scaffold. No other account started.
 - Full-training authorization written only after independent actuator verification, with frozen protocol/core-source/design hashes and the conditional baseline. b must commit/test code before training and preserve five budgeted seeds. Actual training remains pending.
 - Completed actuator milestone review written at reviews/2026-10-20-actuator-noise.md with mergedPRs, real runs and limitations. Two short understanding questions sent asynchronously; answers pending. Claude final review pending.
+
+- Owner changed communication format: one final NEED FROM YOU or NOTHING NEEDED line; recommendations only in review files. Recorded in AGENTS/D27; applies immediately, independent of pending publication.
+- Additional conductor held-out spot check: conditional5ms push, noise1000, PASS; recovery2.760s, applied impulse0.8999999999995012Ns, no failed checks. Raw /private/tmp/wbr-augmented-20261020/independent-heldout-lqr-5ms-push-01. This is a spot check, not the pending160-episode comparison panel.
