@@ -279,3 +279,9 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Validation:12s native GUI exited0; persistent live window launched; full10s headless demo final state matches archivedLQR; corrected framebuffer-size error and visually inspected the640px render. No new physics or trained-policy claim.
 - Limits/status:assumed reduced planar model and unscored interactive demo; no contact/five-bar or sim-to-real claim. PPO process/source unchanged. PublicationCI pending.
 - VIEWER follow-through:push/pause/reset callbacks checked directly; native launcher and Desktop wrapper syntax passed. Keep this additive display in PR55 alongside v2 setup, preserving concurrent PR57 documentation; active training files remain unchanged.
+
+### DOC-20261020-OVERNIGHT: Record overnight execution and ownership
+- Files: AGENTS.md; CURRENT.md; DECISIONS.md; sessions/2026-10-20-overnight.md; this log.
+- Why/source: owner authorized overnight task queue, account tiers, protected training resources and single morning review.
+- Actual: eight idle/quota pings passed; eight isolated detached workers launched;30min combined monitor and06:30 wakeup scheduled. Pi alias timed out; heavy runs queued. PPO remains independently active.
+- Validation: git diff --check, branch isolation and process/account receipts inspected. Worker outputs and morning results pending; no completion claim.

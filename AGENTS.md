@@ -42,12 +42,14 @@ necessary explanation with a rigid line limit or unexplained formulas.
 
 ## Conducting Codex
 - Conductor plans, scopes, launches and independently runs worker results, then merges PRs only after green CI. Claude reviews completed milestones only.
-- Check shared accounts are idle before each launch. The owner switched this chat's conductor from codex-f to codex-b on 2026-10-20; reserve b for conducting and use idle owner-designated Plus g/i/k as workers. Use Astra Ultra for hard work and Sol for simpler tasks; never interrupt unrelated shared work. Earlier f-conductor receipts remain historical.
+- Overnight owner override (2026-10-20): f conducts; Plus g/i/k take hard tasks (Astra Ultra), b/e/default medium tasks (Sol), d/h/j simple tasks. Check shared-account idle state and quota before dispatch; never interrupt unrelated work. Recheck refills every 30 minutes and at 06:30; move quota-limited partial work to an idle account of the same or lower tier. f implements only after all workers exhaust quota. Earlier b-conductor receipts remain historical.
 - One worker per task, each in its own worktree and `chatgpt/<YYYYMMDD>-<topic>` branch. Never use the shared Mac checkout or change its branch.
 - Give a short brief: goal, allowed files and exact command proving done. Build first; install missing dependencies and fix actual errors, preserving logs/failures.
 - Workers never run dd, format/partition/delete, force-push, command motors or flash STM32; only conductor merges. Keep Pi perception separate from hardware control.
+- While PPO trains on the Mac, workers only edit and run quick targeted unit tests. Heavy simulation, training and rendering use an available Pi or wait; never alter the running experiment, its environment or evidence.
 - `sim/parity/student.py::gain_schedule` is owner-only: review it without writing it or bypassing it with a duplicate solution.
 - Record actual runs and document edits in worklogs. At a completed milestone, write one `ops/worklog/reviews/<date>-<milestone>.md` listing merged PRs, commands/results and limitations; give the owner one line for Claude.
+- Overnight exception: consolidate task outcomes into `ops/worklog/reviews/2026-10-21-overnight.md` (one line per task: done/partial/blocked, PR). Claude reviews that single file in the morning.
 
 ## Git
 - Work in `~/Desktop/Research/wbr-lab-ops` on a `chatgpt/<YYYYMMDD>-<topic>` branch

@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-10-20 +07; owner switched this chat's conductor from codex-f to codex-b.
+Updated 2026-10-20 23:10 +07; overnight owner override: codex-f conducts.
 
 ## Completed simulation milestone
 - Nominal assumed six-state MuJoCo/LQR approved by Claude in PR44. Actuator delay/lag/IMU extension merged PR47; final actuator review merged PR48.
@@ -14,7 +14,7 @@ Updated 2026-10-20 +07; owner switched this chat's conductor from codex-f to cod
 
 ## Next step and ownership
 - RUNNING PPO v2: direct+residual,100Hz policy,eight envs,observation VecNormalize,3M POLICY steps/seed,initial3seeds/arm; extend each arm to5 only after strict balance PASS. Sourcef1b5ee7; prior result retained. Full run started2026-10-20 16:43+07; may run overnight or longer.
-- g implemented/tested v2, then hit quota; conductor committed97db7f3 and independently passed44/44 tests,8env optimizer/reload smoke and archived zero-residual LQR parity (maxstateerror1.33e-15). i quota,k busy; b conducts.
+- v2 implementation merged PR55; prior44/44tests,optimizer/reload and zero-residualLQR parity passed. Directseed0:3M transitions,39/160strictPASS,160/160survival; residualseed0 evaluation running. Full experiment incomplete.
 - Active output: ~/wbr-evidence-archive/sim-ppo-v2-20261020-01; process/console/progress at /private/tmp/wbr-ppo-v2-20261020/. Heartbeat finish-ppo-v2-comparison checks every30min; never duplicate active job.
 - docs/learning/LQR_RL_GUIDE.md explains geometry, energy/dynamics, LQR and the measured RL result. sim/parity/student.py gain_schedule remains the owner's exercise.
 - Model has assumed masses/COM, ideal planar rolling/equivalent rigid leg, known delay/lag and four ideal sensor channels; no full-five-bar/contact or sim-to-real validation.
@@ -25,3 +25,8 @@ Updated 2026-10-20 +07; owner switched this chat's conductor from codex-f to cod
 - Last measured cafe SSH: richard@wbr-pi5.local →192.168.111.243; old alias uses Ethernet192.168.50.2. Addresses can change. 128GB migration completion UNKNOWN.
 - Nominal archive ~/wbr-evidence-archive/sim-lqr-20261020-01; actuator archive ~/wbr-evidence-archive/sim-actuator-20261020-01.
 - Pre-existing host-test generated files remain untracked/unstaged and untouched. Every document change is recorded in DOCUMENTATION_LOG.
+
+## Overnight queue
+- f conducts eight idle/quota-checked workers: g/A1,i/A2,k/A3,b/B1,e/B2,d/C1,h/C2,j/C3; A4/B3 queued. Session: sessions/2026-10-20-overnight.md; external state: /private/tmp/wbr-overnight-20261020/queue.json.
+- Every30min +06:30 refill wakeups active. Mac code/quick tests only while PPO runs; heavy sweeps/rendering await Pi or completed training. Root checkout and student.py protected.
+- Morning Claude handoff only: reviews/2026-10-21-overnight.md (honest task status/PR); no milestone review stops overnight.
