@@ -3,6 +3,8 @@
 This guide explains the **running, reduced planar model** in this repository.
 It is an assumed teaching model: not the full five-bar robot or a validated digital twin.
 Read Sections 1–4 first; Section 5 explains the current delay/noise work, and Section 6 connects it to RL.
+The [parameter source table](MODEL_PARAMETER_SOURCES.md) separates current assumptions,
+firmware constants and supplier specifications; matching assembly masses and COM remain unknown.
 
 ## 1. What moves, and what are the states?
 
