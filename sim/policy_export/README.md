@@ -36,31 +36,31 @@ Right-pad history with zero pairs to length three. Divisors are
 The caller maintains history/torque estimates exactly as in the existing runtime;
 these functions do not implement a sensor or actuator observer.
 
-For this encoded vector \(e\), frozen VecNormalize statistics give
+For this encoded vector $e$, frozen VecNormalize statistics give
 
-\[
+$$
 z_i=\operatorname{float32}\left(\operatorname{clip}\left(
 \frac{e_i-\mu_i}{\sqrt{\sigma_i^2+\epsilon}},-c,c\right)\right).
-\]
+$$
 
 Normalization uses float64 arithmetic then casts to float32, matching saved
 VecNormalize, including epsilon **inside** the square root. Statistics are never
-updated. The network gives raw Gaussian mean \(a\), then
+updated. The network gives raw Gaussian mean $a$, then
 
-\[
+$$
 b=\operatorname{clip}(a,-1,1),\qquad
 h=b\odot[2,4]\times\begin{cases}1&\text{direct}\\0.2&\text{residual}.\end{cases}
-\]
+$$
 
 `wbr_policy` returns raw, bounded and held values. Call it at **100 Hz** on the
 current encoded observation; hold `h` for five 2 ms control ticks. On **every
 500 Hz tick**, call `wbr_compose`:
 
-\[
+$$
 u_k=\operatorname{clip}\left(
 \begin{cases}h&\text{direct}\\-K(d)\hat x_{\mathrm{aug},k}+h&\text{residual},\end{cases}
 -[2,4],[2,4]\right).
-\]
+$$
 
 Supply current **unclipped** causal LQR output as `lqr_Nm`; the caller computes it
 with the existing delay-aware controller each tick. Do not clip the LQR term
@@ -156,10 +156,10 @@ sqrt/division), and 1,000–4,000 cycles for remaining work. These are modeling
 inputs, **not STM32/library measurements or worst-case bounds**; soft double,
 libm implementation, flash/cache misses and interrupt load can exceed them.
 
-\[
+$$
 C=5184c_{\mathrm{MAC}}+128c_{\tanh}+15c_{\mathrm{norm}}+C_{\mathrm{other}}
 =27{,}542\ldots86{,}872\text{ cycles}.
-\]
+$$
 
 At the assumed clock this is **68.9–217.2 µs per 100 Hz policy call**, or
 0.69–2.17% of its 10 ms period. Worked midpoint example: coefficients

@@ -83,3 +83,12 @@
   not measured. Real residual checkpoint, target compilation, timing and
   closed-loop/hardware validation remain outside this task; fixture residual
   inference is tested. No heavy dependency work remains for B2.
+
+## Documentation-only final follow-up
+
+- Converted README inline math delimiters to `$...$` and display delimiters to
+  standalone `$$`; no code/tests or numerical claims changed. No tests rerun,
+  per instruction; the preserved prior ONNX-enabled result is 5/5, zero skips.
+- Checks passed: a Python delimiter assertion found four standalone display
+  pairs and no escaped delimiters; `rg -n '\]\([^)]*\)'` found no README
+  Markdown links to check; `git diff --check` was clean. Tests were not rerun.
