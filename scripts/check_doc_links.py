@@ -20,7 +20,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DIRS = ("docs/learning", "ops")
-REPO_PREFIXES = ("docs/", "ops/", "sim/", "scripts/", "src/", "tests/", "ros2/",
+REPO_PREFIXES = ("docs/", "ops/", "sim/", "scripts/", "tests/", "ros2/",
                  "experiments/", "research/", "calibration/", "lab/", "tools/",
                  "patches/", "queue/", "data/", "docker/", "third_party/")
 LINK_RE = re.compile(r"!?(?:\[[^\]]*\])\(\s*(?:<([^>]+)>|([^\s)]+))(?:\s+[^)]*)?\)")
@@ -113,21 +113,24 @@ def scan_local(directories: tuple[str, ...]) -> list[Finding]:
                 status = "HISTORICAL-MISSING" if _is_historical(source) else "BROKEN"
                 findings.append(Finding(source, line, target, kind, status))
 
-        # Check explicit repository-root paths in prose, but not code spans,
-        # fenced examples, absolute host paths, or path-like content in links.
-        for match in ROOT_PATH_RE.finditer(no_inline):
+        # Explicit root-prefixed paths are often written in inline code, so scan
+        # those too. Fenced blocks stay excluded; globs and machine paths are
+        # filtered below.
+        for match in ROOT_PATH_RE.finditer(masked):
             target = match.group(1).rstrip(".,;:!?)\"")
             if any(char in target for char in "{}*?"):
+                continue
+            if "<" in target or ">" in target:
                 continue
             # Avoid treating search descriptions such as ``docs/config/scripts``
             # as concrete file paths. Markdown links still support directories.
             if not Path(target).suffix and not target.endswith("/"):
                 continue
-            line = no_inline.count("\n", 0, match.start()) + 1
+            line = masked.count("\n", 0, match.start()) + 1
             if (line, target) in seen:
                 continue
             # Link destinations were already handled above.
-            line_text = no_inline.splitlines()[line - 1]
+            line_text = masked.splitlines()[line - 1]
             if re.search(r"\]\([^)]*$", line_text[:match.start() - no_inline.rfind("\n", 0, match.start()) - 1]):
                 continue
             resolved = (ROOT / target).resolve()

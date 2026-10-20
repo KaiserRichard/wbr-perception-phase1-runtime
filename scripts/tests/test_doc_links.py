@@ -37,12 +37,14 @@ class DocLinkCheckerTests(unittest.TestCase):
         self.assertEqual([(f.status, f.target) for f in findings],
                          [("BROKEN", "absent.md")])
 
-    def test_code_examples_and_globs_are_not_repo_path_findings(self):
+    def test_inline_repo_paths_are_checked_but_globs_are_skipped(self):
         findings = self.scan(
             "`sim/not-real.py`\n"
             "Example: `ops/lab-assistant/handoffs/*.md`.\n"
+            "Template: `ops/worklog/sessions/YYYY-MM-DD-<topic>.md`.\n"
         )
-        self.assertEqual(findings, [])
+        self.assertEqual([(f.status, f.target) for f in findings],
+                         [("BROKEN", "sim/not-real.py")])
 
     def test_missing_worklog_link_is_labeled_historical(self):
         path = self.root / "ops/worklog/sessions/old.md"
