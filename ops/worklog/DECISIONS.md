@@ -231,3 +231,11 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Evidence:ops/worklog/reviews/2026-10-20-cafe-compute-strategy.md, owner review and active v2 state at43f7f6f. Cafe speed/restoration figures are estimates, not measurements.
 - Limits:reported100–200k tier is x2, not x3; Training Station cash-equivalent rate12100VND/h, six hours72600, subject to staff terms. Larger deposit needs two successful pilots and known expiry plus later approval. Existing conductor retains v2 ownership; no duplicate launch.
 - Revisit when: measured pilot throughput/restore time, lab access, CPU-cloud quote, or a separately approved simulation requirement changes the decision.
+
+
+### D-20261020-COMPUTE-X3: Compare all available resources under the owner’s ×3 condition
+- Decided by: owner’s latest clarification in the document Q&A chat.
+- Decision: include Mac, brother’s laptop, lab PC, Chợ Mơ at ×3, and rented NVIDIA GPU cloud in a short use-case comparison. If ×3 is unavailable, the owner does not top up; the earlier ×2/100–200k planning scenario no longer represents the owner’s purchasing preference.
+- Why: prior short report over-narrowed the question to a cafe pilot and omitted the requested resource alternatives.
+- Evidence:owner clarification; refreshed official cafe/cloud rates on20October; existing hardware evidence and local Mac CPU/RAM read.
+- Limits:comparison is not a payment/deposit authorization, a simulator migration or a benchmark. Preserve existing training ownership and the approved bounded MuJoCo pilot. Actual promotion eligibility/expiry and lab hardware remain unconfirmed.

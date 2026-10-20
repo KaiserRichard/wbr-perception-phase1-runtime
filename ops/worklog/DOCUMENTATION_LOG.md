@@ -255,3 +255,10 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Files:ops/worklog/{reviews/2026-10-20-cafe-compute-strategy.md,sessions/2026-10-20-cafe-compute-strategy.md,DOCUMENTATION_LOG.md}.
 - Change:owner explicitly requested a short, understandable report; replace the lengthy analysis with a one-page decision/cost/pilot summary. Full prior report/review retained in Git dc1e0fb and external archive; no decision or runtime change.
 - Validation:local word-count/price/approval-boundary and whitespace checks; publication CI pending. No new experiment, installation or spending.
+
+
+### DOC-20261020-COMPUTE-X3: Restore the complete short resource comparison
+- Files:ops/worklog/{reviews/2026-10-20-cafe-compute-strategy.md,DECISIONS.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-cafe-compute-strategy.md}.
+- Change:owner requires ×3 for any cafe top-up and wants all five resource cases compared; replace the cafe-only/×2-focused summary with a short use-case matrix and cafe/NVIDIA-cloud costs. Record this superseding preference without authorizing spending or simulator changes.
+- Sources:owner clarification/hardware evidence; refreshed official OEG/Runpod/Lambda pages; local Mac i9-9880H/16GB read. Report quotes OEG/Runpod only;26kVND/USD is an explicit planning assumption.
+- Validation:independent cafe/cloud hourly and six-hour arithmetic, five-resource coverage, source/history links and whitespace/scope checks; CI pending. No training, dependency or runtime change.
