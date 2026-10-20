@@ -68,3 +68,8 @@
 - Final `git diff --check` and `git diff 6cae11d --check`: PASS; base-to-head
   changed-file list contains only the two authorized Markdown files. Publication
   receipt wording corrected in a second documentation commit; no source changes.
+
+
+- Conductor continuation: PR50 head e291dab had one successful CI job and one failure in the pre-existing reward trace test. Exact failure: vectorized sum versus dot differed by2.77555756e-17 (maxrelative1.83885992e-16), log /private/tmp/wbr-augmented-20261020/parameter-ci-39396790590-failed.log. No runtime discrepancy or source/config change caused it.
+- Test repair: compare stored rewards bit-for-bit with rewards returned live, retaining lossless-capture assertion; compare independently reduced float64 quadratic costs within4machineeps relative, zero absolute tolerance. This concerns floating arithmetic in a unit-test oracle, not a change to reward, gate/acceptance thresholds, recorded results or policy evaluation. No experiment rerun or failure removal.
+- Conductor validation: backend Python `.github/run_unittest.py sim/rl/tests`,27/27 PASS,zero skips; conductor-rl-trace-fix-tests-01.log. Whitespace checked before publication.

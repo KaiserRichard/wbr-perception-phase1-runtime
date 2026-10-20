@@ -133,8 +133,10 @@ class EnvironmentTests(unittest.TestCase):
         recorder = TraceRecorder(out / 'trace', self.env.protocol, chunk_size=3)
         self.env.recorder = recorder
         self.fixed()
+        live_rewards = []
         for _ in range(11):
-            self.env.step([1., -.1])
+            _, reward, *_ = self.env.step([1., -.1])
+            live_rewards.append(reward)
             recorder.attach_raw([2., -.1])
         recorder.close()
         rows, seg = trace_arrays(out / 'trace')
@@ -143,7 +145,11 @@ class EnvironmentTests(unittest.TestCase):
         np.testing.assert_allclose(rows['policy_action_raw'][:, 0], 2.)
         expected = -.002 * (np.sum(rows['truth_after']**2 * [40, 200, 200, 8, 8, 8], axis=1) +
                             np.sum(rows['bounded_command_Nm']**2 * [.8, .6], axis=1))
-        np.testing.assert_array_equal(rows['reward'], expected)
+        # Trace capture itself must be bit-exact. Independently recomputing
+        # the cost with sum rather than dot can change float64 reduction order.
+        np.testing.assert_array_equal(rows['reward'], live_rewards)
+        np.testing.assert_allclose(rows['reward'], expected,
+                                   rtol=4*np.finfo(np.float64).eps, atol=0)
         self.assertAlmostEqual(seg[:, 1].sum(), .022)
         metrics = compute_metrics(out / 'trace', 'balance')
         self.assertEqual(metrics['command_saturation_duration_s'][0], metrics['duration_s'])
