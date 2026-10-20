@@ -240,3 +240,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Validation:independent Decimal recomputation passed all6final Cho Mo economics rows,3setup-overhead rows and cloud examples; local result link resolves; screenshot/configuration conflicts retained and whitespace/scope checks passed. No runtime change or new training; publication CI pending.
 - Limits/review:no cafe Windows/GPU benchmark, confirmed bonus eligibility, staff-admin access or actual room/seat billing. Claude/owner decision pending. CURRENT retained under the active conductor's ownership.
 - DOC24 publication:PR53 is documentation-only and now Cho Mo-only; report formatting and6tariff/3overhead calculations checked. Final CI/merge receipt is retained with external source receipts; substantive Claude approval remains pending.
+
+
+### DOC-20261020-CAFE-REVIEW: Record bounded compute approval
+- Time / author:2026-10-20 +07; document Q&A chat, isolated cafe-approved-plan branch.
+- Files:ops/worklog/{reviews/2026-10-20-cafe-compute-strategy.md,DECISIONS.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-cafe-compute-strategy.md}.
+- Changes:preserve Claude425b682 review; add a one-page current decision card, correct first-deposit x2 pricing, label all speed/setup estimates and preserve existing v2 conductor ownership. Supersede historical booking recommendations without editing the review text.
+- Sources:owner-pasted review/PR54; current shared43f7f6f; original official tariffs/promotion evidence. No new vendor-price or performance claim.
+- Validation:review preservation,75.8worker-hour arithmetic,pilot cost/tier,local links and documentation-only scope checked; remote CI pending.
+- Limits:no pilot, dependency install, training launch, spending, new CPU-cloud quote, runtime/protocol or architecture change. CURRENT retained under active conductor ownership.
