@@ -131,3 +131,10 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources: actual sim/planar.py, sim/lqr.py, test_planar.py Lagrange oracle; config and archived nominalK; primarydocs linked.
 - Validation: local links/equation delimiters/whitespace checked; numericalinitialtorques verified against archivedgain; no new control result claimed.
 - Limits/review: reducedassumedmechanics only, no contact/fivebar or hardware validation. Guide revision is teaching correction, not an algorithm change.
+
+### DOC-20261020-13: Verify readable Markdown mathematics and derived dynamics
+- Time / author: 2026-10-20 +07; codex-f conductor.
+- Files: docs/learning/LQR_RL_GUIDE.md; ops/worklog/{DOCUMENTATION_LOG.md,sessions/2026-10-20-delay-lag-noise.md}.
+- Changes: GitHub-compatible inline math, aligned long equations and explicit Euler-Lagrange step; no model/controller code changed.
+- Validation: KaTeX rendered64expressions without errors; guide analyticalA/B matched actualMuJoCo derivatives to6.28e-10/1.99e-13 maxabsoluteerror; local links/whitespace checked.
+- Limits/review: confirms mathsyntax and nominalmodel derivation only, not new actuator/RL results or physical validity.
