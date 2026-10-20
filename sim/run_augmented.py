@@ -1,7 +1,10 @@
 """Run the predeclared fixed-first actuator/noise experiment, retaining failures."""
 
 import argparse
+from concurrent.futures import ProcessPoolExecutor
+from contextlib import nullcontext
 from dataclasses import replace
+import multiprocessing
 from pathlib import Path
 import sys
 import traceback
@@ -33,31 +36,49 @@ def verify_frozen(base, cfg):
     return frozen.copy(), record
 
 
-def run_phase(base, cfg, runtime_cfg, out, name, gains):
+def run_case(task):
+    """Process entry point: own runtime/RNG/files, with only metrics returned."""
+    base, config, out, name, label, K, seed, scenario = task
+    runtime = AugmentedRuntime(base, config)
+    controller = ((lambda obs: -K @ obs.measurement) if name == "frozen_nominal"
+                  else (lambda obs: -K @ obs.vector()))
+    case_out = out/name/label/f"seed_{seed}"/scenario
+    metrics = evaluate(runtime, controller, scenario, seed, case_out)
+    metrics["artifact_directory"] = str(case_out.relative_to(out))
+    return metrics
+
+
+def run_phase(base, cfg, runtime_cfg, out, name, gains, jobs=1):
+    """Finish one phase before returning; aggregate in declared case order."""
+    if jobs < 1:
+        raise ValueError("jobs must be positive")
     phase = {"controller": name, "regimes": {}}
-    for delay in cfg["experiment"]["delays_s"]:
-        label = f"delay_{round(delay*1000)}ms"
-        config = replace(runtime_cfg, delay_s=delay)
-        K = gains[delay]
-        cases = []
-        for seed in cfg["experiment"]["seeds"]:
-            for scenario in cfg["experiment"]["scenarios"]:
-                runtime = AugmentedRuntime(base, config)
-                controller = ((lambda obs: -K @ obs.measurement) if name == "frozen_nominal"
-                              else (lambda obs: -K @ obs.vector()))
-                case_out = out/name/label/f"seed_{seed}"/scenario
-                metrics = evaluate(runtime, controller, scenario, seed, case_out)
-                metrics["artifact_directory"] = str(case_out.relative_to(out))
+    # Spawn avoids inheriting MuJoCo/BLAS mutable state across platforms.
+    pool = (ProcessPoolExecutor(max_workers=jobs,
+                                mp_context=multiprocessing.get_context("spawn"))
+            if jobs > 1 else nullcontext(None))
+    with pool as executor:
+        for delay in cfg["experiment"]["delays_s"]:
+            label = f"delay_{round(delay*1000)}ms"
+            config = replace(runtime_cfg, delay_s=delay)
+            K = gains[delay]
+            tasks = [(base, config, out, name, label, K, seed, scenario)
+                     for seed in cfg["experiment"]["seeds"]
+                     for scenario in cfg["experiment"]["scenarios"]]
+            results = executor.map(run_case, tasks) if executor else map(run_case, tasks)
+            cases = []
+            for metrics in results:
                 cases.append(metrics)
+                seed, scenario = metrics["seed"], metrics["scenario"]
                 print(f"{name} {label} seed={seed} {scenario}: {metrics['status']} "
                       f"recovery={metrics['recovery_time_after_event_s']} "
                       f"failed={metrics['failed_checks']}", flush=True)
-        phase["regimes"][label] = {
-            "delay_s": delay, "K_sha256": gain_hash(K),
-            "status": "PASS" if all(c["status"] == "PASS" for c in cases) else "FAIL",
-            "cases": cases,
-        }
-        write_json(out/f"{name}_partial.json", phase)
+            phase["regimes"][label] = {
+                "delay_s": delay, "K_sha256": gain_hash(K),
+                "status": "PASS" if all(c["status"] == "PASS" for c in cases) else "FAIL",
+                "cases": cases,
+            }
+            write_json(out/f"{name}_partial.json", phase)
     phase["status"] = "PASS" if all(v["status"] == "PASS" for v in phase["regimes"].values()) else "FAIL"
     write_json(out/f"{name}.json", phase)
     return phase
@@ -83,7 +104,11 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--jobs", type=int, default=4,
+                        help="maximum case processes per phase (default: 4; 1 is serial)")
     args = parser.parse_args(argv)
+    if args.jobs < 1:
+        parser.error("--jobs must be positive")
     out = args.out.resolve()
     if out == ROOT or ROOT in out.parents:
         parser.error("--out must be outside the repository")
@@ -100,7 +125,7 @@ def main(argv=None):
         K, design = verify_frozen(base, cfg)
         write_json(out/"nominal_linearization.json", design)
         fixed = run_phase(base, cfg, runtime_cfg, out, "frozen_nominal",
-                          {d: K for d in cfg["experiment"]["delays_s"]})
+                          {d: K for d in cfg["experiment"]["delays_s"]}, jobs=args.jobs)
         result["phases"]["frozen_nominal"] = fixed
         # Persist the complete failed baseline BEFORE any conditional synthesis.
         write_json(out/"result.json", result)
@@ -113,7 +138,7 @@ def main(argv=None):
                 gains[delay] = gain
                 write_json(out/f"augmented_linearization_{round(delay*1000)}ms.json", record)
             result["phases"]["augmented_lqr"] = run_phase(
-                base, cfg, runtime_cfg, out, "augmented_lqr", gains)
+                base, cfg, runtime_cfg, out, "augmented_lqr", gains, jobs=args.jobs)
         else:
             result["augmented_design_decision"] = "not permitted/needed: all fixed-gain cases passed"
         result["status"] = "COMPLETE"

@@ -107,7 +107,7 @@ nominal MJCF and expose exact causal reconstruction.
 ## Frozen-first experiment and conditional design
 
 ```sh
-.venv/bin/python -m sim.run_augmented --config sim/configs/assumed_actuator_noise.json --out /private/tmp/wbr-actuator-NEW
+.venv/bin/python -m sim.run_augmented --config sim/configs/assumed_actuator_noise.json --out /private/tmp/wbr-actuator-NEW --jobs 4
 .venv/bin/python .github/run_unittest.py sim/tests
 ```
 
@@ -119,6 +119,14 @@ verification permits only the predeclared small numeric tolerance; the used
 matrix/hash remains fixed.
 
 All 60 cases (four delays × five seeds × balance/push/zero-control) run first.
+`--jobs` bounds the number of case processes (default 4; use 1 for serial).
+Each spawned process creates its own runtime and noise streams and writes only
+its assigned case directory. The parent aggregates in declared seed/scenario
+order, preserving the serial CSV/JSON bytes, paths and gain hashes. Regimes
+finish in delay order; the entire frozen phase finishes and is saved before any
+conditional synthesis or rollout. Parallelism does not change substeps or truth/
+interval capture. Short synthetic-fixture tests compare every artifact byte
+between serial and four-process execution; they are not full-protocol results.
 Only an observed FAIL triggers `augmented_lqr.synthesize_augmented`. It
 finite-differences `AugmentedRuntime.transition_for_linearization`, the actual
 same delayed/lagged substep map, using the augmented observation ordering.

@@ -56,3 +56,36 @@
 - Documentation: added the extension link in `sim/README.md`; documented the
   conditional synthesis and behavioral tests through their module docstrings.
   Shared CURRENT/DECISIONS/DOCUMENTATION_LOG and review files remain untouched.
+
+- Continuation by codex-g, assigned by codex-f, starts from clean `aad5710`.
+  Inspected nearest/root and ancestor AGENTS, CURRENT, owner profile, research
+  rules, approved Claude review, original brief and continuation brief.
+  No other workers/accounts launched.
+- Retained prior runs: `fixed-20261020-01` has the serialization traceback;
+  `complete-20261020-02` has 37 completed per-case JSON files, with only the 2/3 ms
+  regimes in the partial phase summary; `committed-20261020-03` is empty.
+  None is a completed matrix, none was overwritten, and no experiment process
+  remained at inspection.
+- Reproduced integer-input `lag_interval` truncation: for initial `[0,0]`,
+  command `[1,-2]`, constants `[.005,0]`, dt `.002`, the first endpoint/mean
+  were `0/0` instead of `0.32967995/0.17580012`. Convert all inputs to float;
+  preserve the exact endpoint, mean and squared-effort equations.
+- Added bounded spawned process execution to `sim/run_augmented.py`, default
+  `--jobs 4`, serial `--jobs 1`. One independent runtime/output per case, ordered
+  parent aggregation, full fixed-phase barrier before conditional design.
+  No config, gain, noise, integration, acceptance or CSV/JSON format changes.
+- Actual short execution: `/usr/bin/time -p .venv/bin/python -m unittest
+  sim.tests.test_augmented.AugmentedTests.test_integer_lag_inputs_preserve_fractional_endpoint_mean_and_effort
+  sim.tests.test_augmented.AugmentedTests.test_serial_and_process_cases_have_identical_artifacts`
+  redirected to `/private/tmp/wbr-actuator-continuation-smoke-20261020-01.log`,
+  exit 0, 2 tests, unittest 5.539 s / wall 8.30 s.
+  Synthetic 40 ms two-delay/two-seed fixture compares every artifact byte in both
+  controller branches at jobs 1 and 4. Its expected acceptance failures are
+  retained and are not reported as ten-second protocol evidence.
+- Documentation edits: appended this continuation record; added process ownership,
+  phase ordering, CLI default and synthetic-test limits in `sim/augmented.md`;
+  documented worker entry point and phase semantics in runner docstrings and
+  synthetic/analytical regression intent in test comments. Refreshed external
+  `/private/tmp/wbr-augmented-20261020/runtime-contract.md` from that API document.
+  Primary references: MuJoCo 3.3.7 stateful actuator computation and Python 3.12
+  `concurrent.futures.ProcessPoolExecutor`; no measured speedup claim.

@@ -75,7 +75,8 @@ def lag_interval(torque, command, constants, dt):
     MuJoCo holds the exact mean over each short mechanical substep. Thus the
     filter/impulse are exact; coupled mechanical integration is an approximation.
     """
-    torque, command, constants = map(np.asarray, (torque, command, constants))
+    torque, command, constants = (np.asarray(value, dtype=float)
+                                  for value in (torque, command, constants))
     endpoint, mean, squared_integral = command.copy(), command.copy(), command**2 * dt
     active = constants > 0
     if np.any(active):

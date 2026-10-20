@@ -1,6 +1,7 @@
 """Behavioral checks; retained temp outputs include any failed integration case."""
 
 from dataclasses import replace
+from copy import deepcopy
 import csv
 from pathlib import Path
 import tempfile
@@ -9,11 +10,11 @@ import unittest
 import mujoco
 import numpy as np
 
-from sim.augmented import AugmentedRuntime, RuntimeConfig, gain_hash, load_experiment
+from sim.augmented import AugmentedRuntime, RuntimeConfig, gain_hash, lag_interval, load_experiment
 from sim.augmented_eval import evaluate
 from sim.augmented_lqr import linearize, synthesize_augmented
 from sim.planar import Plant
-from sim.run_augmented import verify_frozen
+from sim.run_augmented import run_phase, verify_frozen
 from sim.run_planar import evaluate as evaluate_nominal
 
 
@@ -75,6 +76,52 @@ class AugmentedTests(unittest.TestCase):
             np.testing.assert_allclose(impulse, command*(t-T*(1-np.exp(-t/T))), atol=1e-14)
             expected_effort = command**2*(t-2*T*(1-np.exp(-t/T))+T/2*(1-np.exp(-2*t/T)))
             np.testing.assert_allclose(effort, expected_effort, atol=1e-14)
+
+    def test_integer_lag_inputs_preserve_fractional_endpoint_mean_and_effort(self):
+        # Independent step-response oracle, with a zero-T second channel.
+        h, T = .002, .005
+        decay = np.exp(-h/T)
+        expected = (
+            [1-decay, -2.],
+            [1-T/h*(1-decay), -2.],
+            [h-2*T*(1-decay)+T/2*(1-decay**2), 4*h],
+        )
+        for initial, command in (([0, 0], [1, -2]),
+                                 (np.array([0, 0]), np.array([1, -2]))):
+            actual = lag_interval(initial, command, [T, 0], h)
+            for values, oracle in zip(actual, expected):
+                self.assertEqual(values.dtype.kind, "f")
+                np.testing.assert_allclose(values, oracle, rtol=1e-12, atol=1e-15)
+        endpoint, mean, effort = lag_interval([1, -2], [0, 0], [T, T], h)
+        np.testing.assert_allclose(endpoint, np.array([1, -2])*decay, atol=1e-15)
+        np.testing.assert_allclose(mean, np.array([1, -2])*T/h*(1-decay), atol=1e-15)
+        np.testing.assert_allclose(effort, np.array([1, 4])*T/2*(1-decay**2), atol=1e-15)
+
+    def test_serial_and_process_cases_have_identical_artifacts(self):
+        # Independent SHORT synthetic fixture: scheduling equivalence only,
+        # not evidence of acceptance under the committed ten-second protocol.
+        base, cfg = deepcopy(self.base), deepcopy(self.cfg)
+        base["protocol"].update(duration_s=.04, push_start_s=.008,
+                                push_duration_s=.006, settle_window_s=.01)
+        cfg["experiment"].update(delays_s=[.002, .003], seeds=[0, 1])
+        root = Path(tempfile.mkdtemp(prefix="wbr-augmented-parallel-equivalence-"))
+        print(f"Retained synthetic scheduling artifacts: {root}", flush=True)
+        serial, parallel = root/"serial", root/"parallel"
+        serial.mkdir()
+        parallel.mkdir()
+        for name in ("frozen_nominal", "augmented_lqr"):
+            gains = {d: (self.K if name == "frozen_nominal" else synthesize_augmented(
+                base, replace(self.effects, delay_s=d), self.K)[0])
+                for d in cfg["experiment"]["delays_s"]}
+            expected = run_phase(base, cfg, self.effects, serial, name, gains, jobs=1)
+            actual = run_phase(base, cfg, self.effects, parallel, name, gains, jobs=4)
+            self.assertEqual(actual, expected, str(root))
+        serial_files = {p.relative_to(serial) for p in serial.rglob("*") if p.is_file()}
+        parallel_files = {p.relative_to(parallel) for p in parallel.rglob("*") if p.is_file()}
+        self.assertEqual(serial_files, parallel_files)
+        for relative in sorted(serial_files):
+            self.assertEqual((serial/relative).read_bytes(), (parallel/relative).read_bytes(),
+                             f"{relative}; retained {root}")
 
     def test_seeded_cached_noise_statistics_independence_and_no_truth_mutation(self):
         r = self.runtime(delay_s=0, motor_time_constant_s=(0., 0.))
