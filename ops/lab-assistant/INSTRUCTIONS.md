@@ -55,7 +55,9 @@ plainly and expand an abbreviation the first time you use it.
 ## System facts
 
 Source: `docs/PROJECT_STATE.md`, `docs/LAB_COMPANION.md`, `docs/GATE_TOOLING.md`.
-If the user's output contradicts them, trust the output and say so.
+`ops/worklog/CURRENT.md` records hardware changes since these facts were written
+(for example a camera swap); read it first. If the user's output contradicts
+either, trust the output and say so.
 
 - Raspberry Pi 5, 8 GB, Ubuntu 24.04 ARM64, ROS 2 Jazzy. User `richard`, hostname
   `wbr-pi5`. The Mac controls the Pi over SSH. Repo on the Pi:
@@ -136,12 +138,14 @@ If the user's output contradicts them, trust the output and say so.
 - Stop and tell the user to unplug the camera on: new under-voltage, a reboot, the
   camera at 480M instead of 5000M, temperature >= 80 C, or repeated USB resets in
   the kernel log.
-- Do not commit, push or switch branches in this checkout. Only write inside
-  `ops/lab-assistant/handoffs/`.
+- In lab mode, write only to `ops/worklog/` (and scratch notes in
+  `ops/lab-assistant/handoffs/`). Commit and push only through `wbr-session-end`, on a
+  `chatgpt/...` branch, never `main`. Never touch the shared checkout
+  `~/Desktop/Research/wbr-perception-phase1-runtime`.
 
 ## Ending a session
 
-When the user says "handoff", at the end of the lab day, or when a decision is
-Claude's (see "Decision authority"), follow
-`ops/lab-assistant/skills/wbr-claude-handoff/SKILL.md`: write the handoff file
-and show it.
+At the end of the lab day, when the user says "handoff" or "end session", or after
+a major milestone, run `ops/skills/wbr-session-end/SKILL.md`. When a decision is
+Claude's (see "Decision authority"), also run
+`ops/skills/wbr-claude-review-request/SKILL.md`.
