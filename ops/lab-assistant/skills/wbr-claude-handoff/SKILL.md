@@ -1,9 +1,13 @@
 ---
 name: wbr-claude-handoff
-description: Write the end-of-day handoff for Claude. Use when the user says "handoff", at the end of the lab day, or when a decision belongs to Claude under INSTRUCTIONS.md "Decision authority".
+description: Superseded by ops/skills/wbr-session-end and wbr-claude-review-request; kept as the field checklist for a lab session log. Use when the user says "handoff", at the end of the lab day, or when a decision belongs to Claude under INSTRUCTIONS.md "Decision authority".
 ---
 
-# Handoff for Claude
+# Handoff for Claude (superseded)
+
+Use `ops/skills/wbr-session-end` (session log, CURRENT.md, decisions) and
+`ops/skills/wbr-claude-review-request` instead. The template below is still a good
+checklist for the "Done" and "Raw facts" parts of a lab session log.
 
 Goal: give Claude everything it needs in one short file so it does not have to
 re-ask or re-run anything. Facts only, labeled, under 40 lines.

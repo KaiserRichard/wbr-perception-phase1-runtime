@@ -13,9 +13,9 @@ and decisions, through a short handoff file.
 | `skills/wbr-power-check` | Power, throttling, temperature, then card A |
 | `skills/wbr-camera-hw-check` | USB3 link, serial, kernel log, then card B |
 | `skills/wbr-evidence-copy` | Copy a run folder to the Mac with SHA-256 verification |
-| `skills/wbr-claude-handoff` | End-of-session report for Claude |
+| `skills/wbr-claude-handoff` | Superseded by `ops/skills/wbr-session-end`; field checklist |
 | `show_result.py` | Prints any lab tool `result.json` as a short table |
-| `handoffs/` | Where handoff files go (git-ignored) |
+| `handoffs/` | Scratch notes (git-ignored); the real record is `ops/worklog/` |
 | `claude/wbr-lab-handoff-review` | The matching skill for Claude |
 
 ## Setup, option A (recommended): Codex in the Mac repo folder
@@ -62,13 +62,13 @@ Use this when you just want a chat partner and will paste outputs yourself.
 
 ## Daily flow
 
-1. Preflight -> (storage migration, if not done yet) -> power check -> camera
-   hardware check -> card B if authorized -> evidence copy -> handoff.
+1. `ops/skills/wbr-session-start` -> preflight -> (storage migration, if not done
+   yet) -> power check -> camera hardware check -> card B if unblocked -> evidence
+   copy -> `ops/skills/wbr-session-end`.
 2. Every run gets a new output folder. Failures are kept.
-3. When something fails twice, or a decision is needed, stop and hand off to
-   Claude instead of improvising.
-4. In the Claude project chat, send one line:
-   `Review handoff ops/lab-assistant/handoffs/<file> in my Mac repo folder.`
+3. Routine decisions are the assistant's (INSTRUCTIONS.md "Decision authority").
+   Claude-level questions go through `ops/skills/wbr-claude-review-request`.
+4. Setup for ChatGPT Work: `ops/CHATGPT_WORK_SETUP.md`.
 
 ## Boundaries
 
