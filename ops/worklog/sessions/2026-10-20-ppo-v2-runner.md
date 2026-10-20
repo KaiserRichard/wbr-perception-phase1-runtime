@@ -25,3 +25,5 @@
 - Resume check: both complete smoke seeds reused without retraining or changing
   checkpoint/stats/status. No full training, other accounts, push or merge.
 - Logs, final timing, limitations and commit: `/private/tmp/wbr-ppo-v2-20261020/worker-report.md`.
+
+- Conductor follow-through: worker hit quota after the successful fresh smoke, before commit/report; conductor finalized97db7f3 and wrote the external report.

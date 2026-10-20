@@ -236,3 +236,6 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Files: imported Claude review; sessions/2026-10-20-ppo-v2.md; related v2 implementation/session/result notes in this change set.
 - Why/source: owner authorized the lean v2 direct/residual experiment; Claude review75a304d. Old v1 evidence and plant/evaluation criteria preserved.
 - Validation/status: actual worker launch recorded; i usage failure retained. v2 build, optimizer smoke and full results pending; no success or Claude approval for v2 claimed.
+
+- DOC24 follow-through: includes CURRENT/DECISIONS, both v2 sessions, new module/config/tests documentation and imported Claude review. Worker97db7f3/conductorf1b5ee7; final44/44tests,real8env optimizer/reload and full5ms zero-residual parity passed. Full3M batch RUNNING outsidegit; no full learned-policy claim.
+- DOC24 continuation: durable supervisor launched09:43:55Z; heartbeat `finish-ppo-v2-comparison` every30min. Initial duplicate-free progress confirmed; source/plant/v1criteria/protected exercise unchanged. Final results and Claude v2 review pending.

@@ -9,12 +9,13 @@ Updated 2026-10-20 +07; owner switched this chat's conductor from codex-f to cod
 - FULL comparison COMPLETE, exit0: five policies ×150000 steps (750000 total), 800 PPO +160 unique LQR evaluation episodes. LQR160/160 successes; PPO0/800, with680 falls and120 displacement exits. No numerical/training failures or retuning.
 - All five seed success differences are−1; prescribed 95%t interval[-1,−1], df4. This is a conditional, degenerate endpoint result, not proof that RL generally fails or that real-world uncertainty is zero.
 - Independent audit:6680 hashes, five budgets/checkpoints,960 episode identities, all800 paired noise prefixes and raw metric spot checks verified. Stable archive: ~/wbr-evidence-archive/sim-ppo-vs-lqr-20261020-01.
-- Read sim/rl/RESULTS_2026-10-20.md. Full panel/secondary metrics: archive/evaluation/aggregate.json. Final Claude review: ops/worklog/reviews/2026-10-20-rl-comparison.md (prepared; Claude response pending).
+- Read sim/rl/RESULTS_2026-10-20.md. Full panel/secondary metrics: archive/evaluation/aggregate.json. Claude review75a304d confirms valid execution/limited interpretation and authorizes v2.
 - Parameter source table/guide link and float64 test-oracle repair merged PR50 (31a5d1a), both CI checks green. Current physical values remain ASSUMED or UNKNOWN; runtime/reward unchanged.
 
 ## Next step and ownership
-- ACTIVE: owner authorized Claude-reviewed PPO v2 (review75a304d): direct plus residual,100Hz policy,eight envs,observation VecNormalize,3M policy steps,initial3seeds/arm. Implementation and optimizer checks running; full training not yet launched. v1 result retained.
-- g/AstraUltra implements v2 in isolated ppo-outcome-audit worktree/runner branch after idle check. i launch hit quota; k busy elsewhere. Conductor independently checks; b reserved. Short v2 session/log paths in sessions/2026-10-20-ppo-v2.md.
+- RUNNING PPO v2: direct+residual,100Hz policy,eight envs,observation VecNormalize,3M POLICY steps/seed,initial3seeds/arm; extend each arm to5 only after strict balance PASS. Sourcef1b5ee7; prior result retained. Full run started2026-10-20 16:43+07; may run overnight or longer.
+- g implemented/tested v2, then hit quota; conductor committed97db7f3 and independently passed44/44 tests,8env optimizer/reload smoke and archived zero-residual LQR parity (maxstateerror1.33e-15). i quota,k busy; b conducts.
+- Active output: ~/wbr-evidence-archive/sim-ppo-v2-20261020-01; process/console/progress at /private/tmp/wbr-ppo-v2-20261020/. Heartbeat finish-ppo-v2-comparison checks every30min; never duplicate active job.
 - docs/learning/LQR_RL_GUIDE.md explains geometry, energy/dynamics, LQR and the measured RL result. sim/parity/student.py gain_schedule remains the owner's exercise.
 - Model has assumed masses/COM, ideal planar rolling/equivalent rigid leg, known delay/lag and four ideal sensor channels; no full-five-bar/contact or sim-to-real validation.
 
