@@ -1,38 +1,38 @@
-# Which computer should I use?
+# Which compute resource should I use?
 
-20 October 2026. **Café condition: confirmed ×3 credit only. No ×3 → do not top up.** This replaces the earlier ×2 pilot assumption; it does not authorize a payment or simulator migration.
+20 October 2026. **Chợ Mơ only with confirmed ×3 credit. No ×3 → no top-up.** This replaces the earlier ×2 planning assumption.
 
 ## Choose by the job
 
-| Resource | When to use it | Main trade-off |
+| Resource | Cost / constraint | Use when |
 | --- | --- | --- |
-| **Your Mac** — i9-9880H, 16 GB RAM | Daily learning, coding, ORB-SLAM3 analysis and current CPU-based MuJoCo/PPO | No rental fee; long training occupies your daily machine |
-| **Brother’s laptop** — i7-11800H, 32 GB, RTX 3060 Laptop 6 GB | Prepared CUDA experiments or training that fits 6 GB, when lab access is unavailable | No rental fee, but you must lend away the Mac; borrowing is worthwhile only if that trade-off helps |
-| **Lab PC** — stronger GPU reported, exact configuration unknown | First choice for substantial CPU/GPU campaigns if access and persistent storage are available | Free access does not mean weaker than cloud; confirm hardware and borrowing/remote-access terms |
-| **Chợ Mơ at ×3** | A planned morning of study plus experiments: **Private for privacy; Training Station for CPU work; Stadium for a workload that actually benefits from its 4090** | Travel, repeated setup and shutdown resets; bring an SSD and export results |
-| **Rented NVIDIA GPU cloud** | Long/unattended GPU jobs, Linux GPU backends, unavailable lab access, or more GPU memory | Pay for setup/idle time too; preserves your Mac and avoids travel |
+| **Your Mac** — i9, 16 GB RAM | No rental fee | Daily coding, learning, ORB-SLAM3 analysis and current CPU-based MuJoCo/PPO. Long runs occupy your daily machine. |
+| **Brother’s laptop** — i7, 32 GB, RTX 3060 Laptop 6 GB | Free, but you must lend away the Mac | A prepared CUDA experiment fits 6 GB and lab access is unavailable. Borrow for a specific benefit, not simply for the NVIDIA label. |
+| **Lab PC** — exact hardware unknown | Free if access is granted | Preferred free resource for long CPU/GPU runs, provided access and persistent storage work. Verify its configuration first. |
+| **Chợ Mơ at ×3** | Seat, travel and setup costs | A planned morning combining study and experiments: **Private for privacy, Training Station for CPU work, Stadium for useful 4090 work**. Shutdown resets files. |
+| **NVIDIA GPU cloud** | Hourly rental plus extras | Long/unattended GPU or Linux jobs, unavailable lab access, or more VRAM. Keep your Mac and avoid travel. |
 
-## Cash comparison
+## Price comparison
 
-Six hours means **rental time**, not a predicted training duration. Café prices assume all ×3 credit is usable and consumed.
+Six hours means rental time, **not predicted training duration**. Café ×3 credit must be fully usable and consumed.
 
-| Option | Cash-equivalent/hour | Six hours |
+| Option | VND/hour | Six hours |
 | --- | ---: | ---: |
-| Chợ Mơ Private — RTX 4060 8 GB, 16 GB RAM | 7,333 VND | 44,000 VND |
-| Chợ Mơ Training — RTX 3060 12 GB, 32 GB RAM | 8,067 VND | 48,400 VND |
-| Chợ Mơ Stadium — RTX 4090 24 GB, 64 GB RAM | 16,500 VND | 99,000 VND |
-| Cloud RTX A5000 24 GB — advertised $0.27/h | 7,020 VND | 42,120 VND |
-| Cloud RTX 4090 24 GB — advertised $0.89/h | 23,140 VND | 138,840 VND |
-| Cloud L40S 48 GB — advertised $1.09/h | 28,340 VND | 170,040 VND |
+| Chợ Mơ Private — RTX 4060 8 GB / 16 GB RAM | 7,333 | 44,000 |
+| Chợ Mơ Training — RTX 3060 12 GB / 32 GB RAM | 8,067 | 48,400 |
+| Chợ Mơ Stadium — RTX 4090 24 GB / 64 GB RAM | 16,500 | 99,000 |
+| Cloud RTX A5000 24 GB — $0.27/h | 7,020 | 42,120 |
+| Cloud RTX 4090 24 GB — $0.89/h | 23,140 | 138,840 |
+| Cloud L40S 48 GB — $1.09/h | 28,340 | 170,040 |
 
-Cloud conversions use **26,000 VND/USD as a planning assumption**, not a live exchange quote. Storage/tax are extra; availability varies. Café travel/food are extra. Infinity’s advertised 24 GB 4090 costs 33,000 VND/h at ×3: pay that premium only for confirmed room benefits.
+Cloud prices are advertised Runpod rates, converted at an **assumed 26,000 VND/USD**; storage/tax are extra and availability varies. Café travel/food are extra. Different CPUs/GPUs mean equal rental hours are not equal completed work. Infinity’s 24 GB 4090 costs 33,000 VND/h at ×3; room benefits must justify that premium.
 
-**Is ×2 worse than cloud?** Not universally. Stadium at ×2 is 24,750 VND/h, above the advertised cloud 4090 example; Training at ×2 is 12,100/h, below it. Different CPUs/GPUs mean this is not equal-throughput pricing. Nevertheless, **your buying rule is ×3 only**. Confirm qualifying deposit, expiry and eligible seats; no additional bonus stacking is assumed.
+**At ×2:** Stadium becomes 24,750 VND/h, above the cloud 4090 example before extras. That does not make every cloud option better, but your rule remains **×3 only**. Confirm eligibility and expiry; no bonus stacking is assumed.
 
 ## Recommendation
 
-**Keep MuJoCo and develop on the Mac. Use the lab for long runs when available. Borrow the laptop for a specific GPU need, not merely because it has NVIDIA graphics.** Choose the café when the morning workspace plus prepared experiments is worth the trip; choose cloud for uninterrupted GPU access. Current PPO physics is CPU-based: a GPU rental does not automatically accelerate it, and a CPU VM is another valid option.
+**Default: Mac for development/current CPU work; lab for larger runs.** Borrow the laptop only for a specific GPU need. Choose the café when its workspace plus prepared experiments justifies the trip; choose cloud for continuous GPU access. Current CPU physics will not automatically accelerate on a GPU; CPU VMs remain another option.
 
-The approved café test remains one MuJoCo run; setup plus result export must take **under one hour**. Neither training speed nor setup time has been measured across these machines. Keep the active Mac campaign with its conductor; no duplicate run or move to Isaac is implied.
+For the approved café pilot, time one v2 seed and require **setup plus export under one hour**. Preserve results before shutdown. No payment, duplicate training or Isaac migration is authorized by this comparison.
 
-Sources checked 20 October: [OEG Chợ Mơ](https://cyber.oeg.vn/tttm-cho-mo), [Runpod advertised GPU rates](https://www.runpod.io/pricing). Personal/lab hardware and promotion terms are owner-reported; Mac CPU/RAM were read locally. [Earlier analysis and review](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/blob/dc1e0fb2967b546a0aa2b01758575bde27a011fa/ops/worklog/reviews/2026-10-20-cafe-compute-strategy.md).
+Sources: [OEG Chợ Mơ](https://cyber.oeg.vn/tttm-cho-mo), [Runpod rates](https://www.runpod.io/pricing), checked 20 October; personal/lab hardware and promotions are owner-reported, with Mac CPU/RAM checked locally. [Detailed history](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/blob/dc1e0fb2967b546a0aa2b01758575bde27a011fa/ops/worklog/reviews/2026-10-20-cafe-compute-strategy.md).
