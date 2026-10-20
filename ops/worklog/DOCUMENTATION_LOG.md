@@ -147,3 +147,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources: owner/Claude sequence; worker commits aad5710/0900606; conductor complete run05 and its source/config/hash receipts; primary MuJoCo/SciPy docs linked in augmented.md.
 - Validation:27/27 simulation tests PASS, full120-case execution COMPLETE,373 artifact hashes verified; all paired noise hashes equal. Frozen FAIL40/40 controlled retained; conditional PASS40/40, expected-fall controls40/40.
 - Limits/review: ASSUMED plant only. No actual PPO training, hardware evidence or gate promotion; CI/merge and completed-milestone Claude review pending. b occupied by unrelated work at check, so not launched.
+
+
+### DOC-20261020-15: Final actuator milestone review and evidence archive
+- Time / author:2026-10-20 +07; codex-f conductor.
+- Files:ops/worklog/{CURRENT.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-delay-lag-noise.md,reviews/2026-10-20-actuator-noise.md}.
+- Changes: completed-milestone review with mergedPRs, exact execution and failures; archive/CI receipts; b idle-to-launch transition and pending teaching questions.
+- Sources:PR47headbdac630, both CI SUCCESS, merge0c70a32; run05 source0900606 and SHA256 receipts; b lifecycle completed07:52:11Z.
+- Validation:373 archived hashes rechecked;27/27 independent simulation tests and full120-case matrix already verified. Plot generated from existing rawCSV and visually inspected; not new evidence trials.
+- Limits/review:conditional LQR40/40 controlled passes applies only to assumed plant; frozen failures retained. PPO training and Claude final review pending; no gate promotion.
