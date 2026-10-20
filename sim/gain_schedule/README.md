@@ -19,10 +19,10 @@ metadata; that gain is never used as this study's controller or fitting target.
 The domain is $L \in [0.12,0.30]$ m. At each length, a deep copy of the reference
 config changes only leg length, leg center of mass (COM), and COM inertia:
 
-\[
+$$
 s=L/L_0,\qquad c_\ell(L)=s c_{\ell,0},\qquad
 I_\ell(L)=s^2 I_{\ell,0}.
-\]
+$$
 
 Leg mass is fixed. This is a geometrically scaled equivalent rigid leg, since
 $I=\int r^2\,dm$ scales by $s^2$ for fixed mass and scaled mass distribution.
@@ -41,10 +41,10 @@ reference supplied to `sim.augmented_lqr.synthesize_augmented`. The latter
 finite-differences the actual delayed/lagged transition and solves a fresh
 discrete algebraic Riccati equation (DARE):
 
-\[
+$$
 z_{k+1}=A(L,d)z_k+B(L,d)u_k,\quad
 K=(R_d+B^\top P B)^{-1}B^\top P A,\quad u_k=-Kz_k.
-\]
+$$
 
 Here $Q_d=\Delta t\,\mathrm{diag}(Q_6,0,\ldots,0)$ and
 $R_d=\Delta t R$ use the unchanged reference weights. Extra states are two
@@ -66,10 +66,10 @@ incomplete; the fitter refuses incomplete sweeps.
 For every gain entry, use an unweighted least-squares polynomial of degree 3
 by default. Let
 
-\[
+$$
 x=\frac{2L-L_{\min}-L_{\max}}{L_{\max}-L_{\min}},\qquad
 \widehat K_{ab}(L)=\sum_{j=0}^{p}C_{jab}T_j(x),
-\]
+$$
 
 where $T_0=1$, $T_1=x$, and $T_{j+1}=2xT_j-T_{j-1}$.
 `coefficients[j][actuator][state]` stores increasing **Chebyshev** degree,
@@ -100,13 +100,14 @@ command; this package is an offline simulation study.
 
 ## Commands and queued heavy work
 
-From the assigned checkout, use the existing backend on this Mac. Do not install
-into or change that environment. On a Pi, set `WBR_GAIN_PY` to its own prepared
-environment instead. Use a new output root for every attempt; old outputs are
-never overwritten. These commands are **pending**, except the synthetic tests.
+From the assigned checkout, examples default to `python3`; set `WBR_GAIN_PY` to
+an explicit interpreter when needed. Do not install into or change the active Mac
+backend environment. On a Pi, point `WBR_GAIN_PY` to its own prepared environment.
+Use a new output root for every attempt; old outputs are never overwritten. These
+commands are **pending**, except the synthetic tests.
 
 ```sh
-export WBR_GAIN_PY=/private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python
+WBR_GAIN_PY="${WBR_GAIN_PY:-python3}"
 export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
 export VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1
 export WBR_GAIN_OUT=/private/tmp/wbr-A3-gains-NEW

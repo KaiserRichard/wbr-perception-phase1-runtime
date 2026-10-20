@@ -41,3 +41,9 @@
   [PR #65](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/65).
   Not merged; conductor verifies/merges. No attach_artifact tool was exposed;
   PR URL is returned in worker result for conductor attachment.
+
+- Conductor documentation-only follow-up: converted README display equations to
+  standalone `$$` delimiters and made command examples default to `python3` with
+  overrideable `WBR_GAIN_PY`. Historical validation still used the actual backend
+  interpreter recorded above; this docs-only change did not rerun controller/tests
+  or alter queued physics requirements.
