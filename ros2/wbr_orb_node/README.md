@@ -1,7 +1,7 @@
 # wbr_orb_node
 
 **INFERRED implementation; ROS 2 Jazzy / ORB integration UNBUILT.** This
-`ament_cmake` package drives the existing `tools/vio_adapter` boundary from
+`ament_cmake` package's original `orb_node` drives the existing `tools/vio_adapter` boundary from
 recorded or live stereo + combined **D435i camera IMU** messages. The STM32 body
 IMU is a different sensor and must never be substituted. N4B offline comes
 before N4C live. Passing these host fixtures is **not a hardware gate PASS**.
@@ -12,12 +12,14 @@ states and map changes are **ASSUMED synthetic**, even with real bag input.
 `orb_engine.cpp`; it constructs `IMU_STEREO` with its viewer disabled. This
 package installs no dependencies and changes no upstream tool.
 
-**2026-10-20 bring-up:** this package has no stereo-only mode. A D435 without
-camera IMU, or a stereo-only recording, cannot satisfy its IMU coverage contract.
-Use the [camera-free stereo continuation guide](../../ops/lab-assistant/skills/wbr-orbslam3-bringup/offline-stereo.md)
-for the real native EuRoC executable and the pinned upstream ROS wrapper's
-remaining stereo gap. Passing the host tests does not establish ROS compilation
-or a real tracked pose.
+**2026-10-20 camera preparation:** this same package now also provides
+`d435_node` when `WITH_ORB_SLAM3=ON`, with visual-only `STEREO` and `RGBD` input,
+headless ORB, source-stamped tracked optical poses, camera/SLAM launches and SDK
+calibration conversion. See [camera-day commands and limitations](../../scripts/camera_day/README.md).
+This path has no IMU dependency or fake engine. Pi build/install and live camera
+execution remain **BLOCKED** by SSH timeout; fixture tests do not establish ROS
+compilation or tracked poses. The rest of this README documents the original
+stereo-inertial `orb_node`, whose IMU contract remains unchanged.
 
 Callbacks validate MONO8 (`mono8` / `8UC1`) images, preserve integer header
 stamps and enqueue owning values with sensor-data QoS. Both rectified and raw
