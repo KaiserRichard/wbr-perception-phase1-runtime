@@ -34,3 +34,9 @@
   source-stamp pairing and real tracking under load. Diagnostic camera world can
   jump after ORB reset/loop closure; no continuous robot odometry claim.
 - Result remains **partial** until real Pi build/install and live execution.
+- Quota handoff: preserved implementation commit `e006c09`; inspected clean
+  status, branch/history, source and recorded command outputs in A1 `events.jsonl`.
+  Reused the completed 12-test/shell checks; no SSH retry or dependency build.
+  `git diff e006c09^ e006c09 --check`: PASS. No existing remote branch/PR found.
+  Publication receipt (PR URL, final head, pending Pi work) goes in A1 `result.json`;
+  conductor owns verification and merge.
