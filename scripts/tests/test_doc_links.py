@@ -22,12 +22,18 @@ class DocLinkCheckerTests(unittest.TestCase):
         with patch.object(checker, "ROOT", self.root):
             return checker.scan_local(("docs/learning",))
 
-    def test_resolves_relative_and_repo_root_markdown_links(self):
+    def test_markdown_href_is_relative_to_source_even_when_repo_prefixed(self):
         (self.root / "docs/learning/guide.md").touch()
         (self.root / "sim").mkdir()
         (self.root / "sim/plant.py").touch()
         findings = self.scan("[relative](guide.md) [root](sim/plant.py)\n")
-        self.assertEqual(findings, [])
+        self.assertEqual([(f.status, f.target) for f in findings],
+                         [("BROKEN", "sim/plant.py")])
+
+    def test_naked_root_prefixed_path_resolves_from_repository_root(self):
+        (self.root / "sim").mkdir()
+        (self.root / "sim/plant.py").touch()
+        self.assertEqual(self.scan("See `sim/plant.py`.\n"), [])
 
     def test_reports_broken_doc_link_but_ignores_external_and_machine_paths(self):
         findings = self.scan(
@@ -53,6 +59,21 @@ class DocLinkCheckerTests(unittest.TestCase):
             findings = checker.scan_local(("ops",))
         self.assertEqual([(f.status, f.target) for f in findings],
                          [("HISTORICAL-MISSING", "../../../docs/old.md")])
+
+    def test_current_and_worklog_readme_missing_links_are_broken(self):
+        worklog = self.root / "ops/worklog"
+        (worklog / "CURRENT.md").write_text("[missing](../../absent.md)\n", encoding="utf-8")
+        (worklog / "README.md").write_text("[missing](../../absent.md)\n", encoding="utf-8")
+        with patch.object(checker, "ROOT", self.root):
+            findings = checker.scan_local(("ops",))
+        self.assertEqual([(f.file.name, f.status) for f in findings],
+                         [("CURRENT.md", "BROKEN"), ("README.md", "BROKEN")])
+
+    def test_undefined_reference_use_is_reported(self):
+        (self.root / "docs/learning/guide.md").touch()
+        findings = self.scan("[good][present] [bad][absent]\n[present]: guide.md\n")
+        self.assertEqual([(f.status, f.target) for f in findings],
+                         [("BROKEN", "[absent]")])
 
 
 if __name__ == "__main__":

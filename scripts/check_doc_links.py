@@ -24,7 +24,7 @@ REPO_PREFIXES = ("docs/", "ops/", "sim/", "scripts/", "tests/", "ros2/",
                  "experiments/", "research/", "calibration/", "lab/", "tools/",
                  "patches/", "queue/", "data/", "docker/", "third_party/")
 LINK_RE = re.compile(r"!?(?:\[[^\]]*\])\(\s*(?:<([^>]+)>|([^\s)]+))(?:\s+[^)]*)?\)")
-REF_DEF_RE = re.compile(r"^\s*\[[^\]]+\]:\s*(?:<([^>]+)>|(\S+))", re.MULTILINE)
+REF_DEF_RE = re.compile(r"^[ \t]*\[([^\]]+)\]:[ \t]*(?:<([^>]+)>|(\S+))", re.MULTILINE)
 REF_USE_RE = re.compile(r"!?(?:\[[^\]]*\])\[([^\]]*)\]")
 INLINE_CODE_RE = re.compile(r"(`+).*?\1", re.DOTALL)
 FENCE_RE = re.compile(r"^\s*(```+|~~~+).*?^\s*\1\s*$", re.MULTILINE | re.DOTALL)
@@ -69,16 +69,16 @@ def _resolve_local(source: Path, target: str) -> Path | None:
     path_part = parsed.path
     if not path_part:
         return None
-    # Root-prefixed repository paths are common in worklogs. Other links are
-    # interpreted relative to the Markdown file, as GitHub renders them.
-    if path_part.startswith(REPO_PREFIXES):
-        return (ROOT / path_part).resolve()
+    # Markdown destinations are relative to the source document, including
+    # hrefs that happen to begin with a repository directory name.
     return (source.parent / path_part).resolve()
 
 
-def _is_historical(source: Path) -> bool:
+def _is_historical(source: Path, text: str) -> bool:
     relative = source.relative_to(ROOT).as_posix()
-    return relative.startswith("ops/worklog/")
+    return (relative.startswith("ops/worklog/sessions/")
+            or relative.startswith("ops/worklog/reviews/")
+            or "<!-- doc-link-checker: historical -->" in text.lower())
 
 
 def scan_local(directories: tuple[str, ...]) -> list[Finding]:
@@ -93,13 +93,32 @@ def scan_local(directories: tuple[str, ...]) -> list[Finding]:
             dest = match.group(1) or match.group(2)
             destinations.append((no_inline.count("\n", 0, match.start()) + 1,
                                  _clean_destination(dest), "markdown"))
+        link_destination_spans = [
+            match.span(1) if match.group(1) is not None else match.span(2)
+            for match in LINK_RE.finditer(no_inline)
+        ]
         definitions: dict[str, tuple[int, str]] = {}
         for match in REF_DEF_RE.finditer(no_inline):
-            dest = match.group(1) or match.group(2)
-            definitions[match.group(0).split("]:", 1)[0][1:].strip().lower()] = (
+            dest = match.group(2) or match.group(3)
+            definitions[match.group(1).strip().lower()] = (
                 no_inline.count("\n", 0, match.start()) + 1, _clean_destination(dest))
         for label, (line, dest) in definitions.items():
             destinations.append((line, dest, "reference"))
+
+        # Flag used full or collapsed reference labels without a definition.
+        # Shortcut references are ambiguous with ordinary bracketed prose.
+        defined_labels = set(definitions)
+        for match in REF_USE_RE.finditer(no_inline):
+            following = no_inline[match.end():]
+            if following.startswith("("):
+                continue
+            explicit = re.match(r"\[([^\]]*)\]", following)
+            label = (explicit.group(1) if explicit and explicit.group(1)
+                     else match.group(1)) or no_inline[match.start() + 1:match.end() - 1]
+            label = label.strip().lower()
+            if label and label not in defined_labels:
+                line = no_inline.count("\n", 0, match.start()) + 1
+                findings.append(Finding(source, line, f"[{label}]", "reference", "BROKEN"))
 
         seen: set[tuple[int, str]] = set()
         for line, target, kind in destinations:
@@ -110,13 +129,18 @@ def scan_local(directories: tuple[str, ...]) -> list[Finding]:
             if resolved is None:
                 continue
             if not resolved.exists():
-                status = "HISTORICAL-MISSING" if _is_historical(source) else "BROKEN"
+                status = "HISTORICAL-MISSING" if _is_historical(source, text) else "BROKEN"
                 findings.append(Finding(source, line, target, kind, status))
 
         # Explicit root-prefixed paths are often written in inline code, so scan
         # those too. Fenced blocks stay excluded; globs and machine paths are
         # filtered below.
         for match in ROOT_PATH_RE.finditer(masked):
+            # A Markdown href always resolves from source.parent, even when it
+            # starts with a repository directory name. Handle it above.
+            if any(start <= match.start(1) < end
+                   for start, end in link_destination_spans):
+                continue
             target = match.group(1).rstrip(".,;:!?)\"")
             if any(char in target for char in "{}*?"):
                 continue
@@ -130,12 +154,9 @@ def scan_local(directories: tuple[str, ...]) -> list[Finding]:
             if (line, target) in seen:
                 continue
             # Link destinations were already handled above.
-            line_text = masked.splitlines()[line - 1]
-            if re.search(r"\]\([^)]*$", line_text[:match.start() - no_inline.rfind("\n", 0, match.start()) - 1]):
-                continue
             resolved = (ROOT / target).resolve()
             if not resolved.exists():
-                status = "HISTORICAL-MISSING" if _is_historical(source) else "BROKEN"
+                status = "HISTORICAL-MISSING" if _is_historical(source, text) else "BROKEN"
                 findings.append(Finding(source, line, target, "repo-path", status))
     return findings
 
