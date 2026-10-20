@@ -12,19 +12,19 @@ for which values are measured, assumed, or still unknown.
 
 LQR is a feedback controller designed from a linear model near a chosen operating
 point. For the WBR model, the state is
-\(x=[x,\theta,\phi,\dot x,\dot\theta,\dot\phi]^T\): axle position in metres,
+$x=[x,\theta,\phi,\dot x,\dot\theta,\dot\phi]^T$: axle position in metres,
 leg and body pitch in radians, and their rates in metres per second or radians per
-second. The action \(u=[\tau_w,\tau_h]^T\) is the wheel-pair and hip-pair torque
+second. The action $u=[\tau_w,\tau_h]^T$ is the wheel-pair and hip-pair torque
 command in newton-metres (N m). LQR uses
 
 $$
 u_k=-Kx_k
 $$
 
-to trade state error against effort using selected weight matrices \(Q\) and
-\(R\). A, B, Q, and R must use consistent state, input, and time units; their
+to trade state error against effort using selected weight matrices $Q$ and
+$R$. A, B, Q, and R must use consistent state, input, and time units; their
 entries do not all have the same units because the state mixes metres, radians,
-and rates. The gain \(K\) is therefore tied to this state definition, model,
+and rates. The gain $K$ is therefore tied to this state definition, model,
 sample period, and cost. It is a local design: torque clipping, large tilts,
 transport delay, and motor lag can invalidate what the linear model predicts.
 
@@ -38,11 +38,11 @@ example are in the [guide](LQR_RL_GUIDE.md#4-where-a-b-and-the-lqr-gain-come-fro
 ### CARE and DARE — continuous- and discrete-time Riccati equations
 
 The algebraic Riccati equation (ARE) is the matrix equation whose stabilizing
-solution \(P\) gives the optimal infinite-horizon LQR feedback for a specified
+solution $P$ gives the optimal infinite-horizon LQR feedback for a specified
 linear model and quadratic cost. It is not the robot's nonlinear equation of
-motion. CARE is the continuous-time ARE, used with \(\dot x=A_cx+B_cu\); DARE is
-the discrete-time ARE, used with \(x_{k+1}=A_dx_k+B_du_k\). The corresponding
-optimal gains are computed from \(P\). CARE and DARE are related through
+motion. CARE is the continuous-time ARE, used with $\dot x=A_cx+B_cu$; DARE is
+the discrete-time ARE, used with $x_{k+1}=A_dx_k+B_du_k$. The corresponding
+optimal gains are computed from $P$. CARE and DARE are related through
 sampling, but a sampled controller should use a model and cost consistent with
 its actual sample interval; simply copying a continuous-time gain is not
 generally equivalent.
@@ -101,7 +101,7 @@ u=\operatorname{clip}(u_{\mathrm{base}}+\Delta u_{\mathrm{policy}},u_{\min},u_{\
 $$
 
 where the baseline provides a useful starting behavior and the policy learns
-\(\Delta u\). The final behavior still depends on the correction scale, action
+$\Delta u$. The final behavior still depends on the correction scale, action
 limits, observations, training distribution, and baseline quality. A residual
 policy can make performance worse; the baseline is not automatically a safety
 shield.
@@ -112,21 +112,23 @@ design is being evaluated; it is not evidence that the residual improves LQR.
 The research example is Johannink et al., [Residual Reinforcement Learning for
 Robot Control](https://arxiv.org/abs/1812.03201).
 
-### \(\gamma\) and effective horizon
+### $\gamma$ and effective horizon
 
-The discount factor \(\gamma\) (unitless, from 0 to 1) weights future reward in
-the return \(G_t=\sum_{j=0}^{\infty}\gamma^j r_{t+j}\). A reward \(j\) steps
-ahead is weighted by \(\gamma^j\). For \(\gamma\) near 1, a useful rough
-discount horizon is \(1/(1-\gamma)\) steps; it is an interpretation of
-discounting, not a hard episode length. With control interval \(T_s\) seconds,
-the rough horizon in time is \(T_s/(1-\gamma)\). The e-folding time is more
-exactly \(-T_s/\ln\gamma\).
+The discount factor $\gamma$ (unitless, from 0 to 1) weights future reward in
+the return $G_t=\sum_{j=0}^{\infty}\gamma^j r_{t+j}$. A reward $j$ steps
+ahead is weighted by $\gamma^j$. For $\gamma$ near 1, a useful rough
+discount horizon is $1/(1-\gamma)$ steps; it is an interpretation of
+discounting, not a hard episode length. With control interval $T_s$ seconds,
+the rough horizon in time is $T_s/(1-\gamma)$. The e-folding time is more
+exactly $-T_s/\ln\gamma$.
 
-**Worked example:** at 500 Hz, \(T_s=0.002\) s. For \(\gamma=0.9995\), the
-rough horizon is 2,000 steps, or 4 s; for \(\gamma=0.99\), it is 100 steps, or
-0.2 s. These are discount scales, not the 10 s episode limit and not a promise
-that PPO will learn behavior over the whole interval. The first comparison used
-\(\gamma=0.9995\); the separate v2 protocol specifies 0.99.
+**Worked example:** the current v2 policy acts at 100 Hz, so $T_s=0.01$ s.
+With its specified $\gamma=0.99$, the rough horizon is $1/(1-0.99)=100$
+steps, or about 1 s. This is a discount scale, not the 10 s episode limit and
+not a promise that PPO will learn behavior over the whole interval. For
+historical context, the first comparison used $\gamma=0.9995$ at 500 Hz
+($T_s=0.002$ s), giving a rough horizon of 2,000 steps or 4 s; at that same
+500 Hz rate, $\gamma=0.99$ would give 100 steps or 0.2 s.
 
 ### VecNormalize with frozen evaluation statistics
 
@@ -222,7 +224,7 @@ stored as a matrix or quaternion. Translation uses the map's units (metric in
 calibrated stereo/RGB-D operation); orientation is dimensionless but is commonly
 interpreted in radians.
 
-**WBR example:** controller state \(x\) in the planar model is not the same
+**WBR example:** controller state $x$ in the planar model is not the same
 thing as a six-degree-of-freedom SLAM pose. To feed camera motion to robot
 navigation or control, establish the transform chain, timestamp clock, and
 failure behavior. The STM32 remains responsible for balance and motor safety.
