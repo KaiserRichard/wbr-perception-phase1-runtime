@@ -184,3 +184,18 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Why: owner found code-formatted equations and unexplained formulas unreadable and superficial.
 - Evidence: owner feedback; revised docs/learning/LQR_RL_GUIDE.md and AGENTS.
 - Revisit when: owner requests deeper details; this clarifies D23 without rewriting it.
+
+
+### D-20261020-25: Prioritize codex-b while preserving shared-account availability
+- Decided by: owner; conductor availability check.
+- Decision: prioritize codex-b until its owner-reported expiry tomorrow, then other available approved accounts. Reserve f for conductor; use Astra Ultra for hard implementation and Sol for simpler work. Never interrupt another project to free an account.
+- Why: use the owner's remaining account availability without overlapping shared work.
+- Evidence: owner instruction; b lifecycle at 07:45:04Z is task_started in a different worktree, with no completion at 07:50Z. Earlier g/i/k worker runs hit usage limits; no Free fallback was launched.
+- Revisit when: b is idle or the owner changes priorities. Expiry/subscription status is owner-reported.
+
+### D-20261020-26: Freeze conditional delay-aware LQR for the PPO comparison
+- Decided by: conductor, following D-20261020-22 and the predeclared protocol.
+- Decision: use the unchanged-Q/R conditional delay-specific LQR gains for every RL comparison condition. Preserve nominal-gain failures; no per-episode controller selection or retuning.
+- Why: original K failed settling/recovery in all 40 controlled cases; conditional gains passed all 40 across delays 2/3/4/5 ms and seeds 0..4. No controlled fall occurred.
+- Evidence: complete conductor run at /private/tmp/wbr-actuator-conductor-20261020-05, source 0900606; 27/27 tests passed; 373 artifact hashes verified and paired noise hashes matched.
+- Revisit when: the plant or frozen protocol changes. These are assumed-model simulation results, not hardware evidence or gate promotion.

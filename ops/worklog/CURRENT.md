@@ -1,26 +1,23 @@
 # Current state
 
-Last updated: 2026-10-20 +07 by codex-f conductor; nominal simulation baseline approved by Claude (PR44); actuator/noise milestone active.
+Updated 2026-10-20 +07 by codex-f conductor.
 
-## Active goal
-- PRIORITY: delay2-5ms + motorlag + IMUnoise, frozenK first; conditional augmentedLQR then same-plant RL across seeds. Mac simulation/control. ASSUMED reduced six-state MuJoCo model + NEW matched LQR + declared push recovery implemented, independently rerun and merged in PR42 (caae6ff).
-- PR38 parity scaffold, PR40 conducting rules and PR41 Pi preparation also merged after green CI. See final review ops/worklog/reviews/2026-10-20-lqr-mujoco.md.
-- Claude only reviews completed milestones. Conductor verifies and merges green PRs; worker accounts checked idle, f reserved for conductor.
+## Simulation / control
+- Claude approved nominal assumed six-state MuJoCo/LQR in PR44. Nominal PR42, parity scaffold PR38, guide PR45 and frozen RL protocol PR46 merged.
+- NEW: causal 2/3/4/5 ms delay, 5 ms motor lag, body-only IMU noise implemented at source0900606. These parameter values are ASSUMED.
+- Conductor completed120 cases: frozen K0/40 controlled successes; delay-aware LQR40/40; all40 expected-fall controls passed. Frozen failures are settling/recovery, no controlled falls. No thresholds or Q/R changed.
+- Conditional recovery1.756–2.762s. Same seeds/noise, limits, initial state and0.9Ns push. Freeze conditional per-delay gains for the PPO comparison; retain nominal failures.
+- Conductor27/27 simulation tests PASS, zero skips;373 artifact hashes and paired noise hashes verified. Raw run /private/tmp/wbr-actuator-conductor-20261020-05; integration PR/CI pending.
+- RL protocol merged: five independent policies,150000 steps each;20 held-out noise seeds ×8 conditions/policy. Compatible Intel Mac backend verified, but actual WBR PPO code/training NOT complete.
+- Next: publish verified actuator milestone, implement/check PPO adapter/trainer/evaluator, then train and compare on this identical plant. Claude reviews completed milestones only.
 
-## Results
-- Conductor: balance recovery1.732s; 6N*0.15s push recovery2.714s, post-push peak6.095deg; zero-control fall0.182s. Controlled10s runs: caps respected, no saturation/warnings.
-- Simulation11/11 testsPASS, parity infrastructure15/15PASS, ROS-free wrapper19/19PASS. Linux CI green at exact PR42head be061d8, including actual MuJoCo CLI.
-- Stable raw/config/model/source/plot archive: ~/wbr-evidence-archive/sim-lqr-20261020-01, SHA256.json34entries. Commands/hashes in final review/session log.
-- sim/parity/student.py gain_schedule remains owner-only TODO. Gain/VMC parity incomplete; this new LQR does not reproduce source gains.
+## Accounts / learning
+- Owner prioritizes codex-b until reported expiry tomorrow. Latest idle check found b active in another project; do not interrupt. g/i/k hit usage limits; f remains conductor.
+- Read docs/learning/LQR_RL_GUIDE.md: geometry, energy/dynamics, linearization, LQR, delay/noise and RL comparison. All64 math expressions rendered successfully; analytical A/B checked against MuJoCo.
+- sim/parity/student.py gain_schedule remains owner-only TODO. Source gain/VMC parity incomplete. No sim-to-real or full-five-bar claim.
 
-## Hardware and Pi track
-- Owner explicitly deferred Pi work due slow32GB microSD/no camera. No Pi build, SLAM/ROS-pose run, storage migration or STM32/motor commands this session.
-- Cafe SSH works: richard@wbr-pi5.local ->192.168.111.243. Measured Pi5ModelB,4GBRAM,root6.2Gfree; native stereo_euroc/MH01/ROS2/colcon exist. Address may change with network.
-- g worker briefly inventoried read-only, then stopped at owner priority change. Pi stereo/ROS worktree clean and retained; runtime milestone not achieved.
-- Old alias wbr-pi5 still points to Ethernet192.168.50.2; not changed. D435 absent this afternoon; prior power evidence historical only.128GBmigration completionUNKNOWN.
-
-## Limitations and next step
-- Nominal ASSUMED masses/COM/inertias, ideal planar rolling, fixed equivalent leg, ideal state feedback/instant torque. No contact/slip, fullfivebar, physical validation or RLtraining.
-- Claude approved baseline in ops/worklog/reviews/2026-10-20-lqr-mujoco.md (main417c1e2). i/AstraUltra implements actuator/noise; conductor writes short learning guide. RL execution waits for actuator/LQR verification.
-- Read docs/learning/LQR_RL_GUIDE.md (~50lines). Pi remains deferred; owner plans camera lab tomorrow with equipment.
-- Two understanding questions sent; answers pending. No gate promoted. Pre-existing generated host-test binaries remain untracked and unstaged; no deletion performed.
+## Hardware
+- Pi track deferred by owner: slow32GB card and no camera this afternoon; camera lab planned tomorrow. No Pi build/live ROS pose/STM32/motor action in this milestone.
+- Last measured cafe SSH: richard@wbr-pi5.local →192.168.111.243. Old alias points to Ethernet192.168.50.2. Addresses can change;128GB migration status UNKNOWN.
+- Prior nominal archive ~/wbr-evidence-archive/sim-lqr-20261020-01. New actuator evidence archival/publication pending. No gate promoted.
+- Pre-existing generated host-test files remain untracked and unstaged.
