@@ -49,8 +49,8 @@
   from aggregate input caps. CAD/BOM partition and five-bar equivalence remain
   unresolved. LQR gains/mass sweeps are not identification.
 - Verification: 49 numerical source-text anchors found, zero missing; supplier
-  page tables independently inspected. All 25 document reference definitions
-  resolve locally. Receipt/cache manifest: `verification-receipt.json`.
+  page tables independently inspected. All used reference labels have definitions
+  (25 definitions); no undefined labels. Receipt: `verification-receipt.json`.
 - `git diff --cached --check`: PASS. Exactly the two authorized Markdown files
   staged. `git diff --exit-code 6cae11df1ad4bfc756752adaf4aeeff72fe3e836 -- sim`:
   exit 0, no changes. No runtime tests repeated for this documentation-only task.
@@ -60,3 +60,11 @@
   `1bd3c79add70cce74ba423382d557d7996e7a1d3db9f65c3d4bbcdc14840d90f`.
 - Bosch PDF SHA-256 (URL is mutable; revision/date checked inside document):
   `53ab734dba49ac202fa6182fc2b545df6c6d7459c9fec6e851a1209e6bac417e`.
+- Publication: initial commit `126b03c` (`docs: audit reduced model parameter
+  sources`), feature branch pushed; opened
+  [PR #50](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/50).
+  Worker does not merge. Final report/HEAD/check status is written outside the
+  repository at `/private/tmp/wbr-augmented-20261020/parameter-b-report.md`.
+- Final `git diff --check` and `git diff 6cae11d --check`: PASS; base-to-head
+  changed-file list contains only the two authorized Markdown files. Publication
+  receipt wording corrected in a second documentation commit; no source changes.
