@@ -76,6 +76,48 @@ cause. No physical deployment, full-five-bar model, source-gain parity or gate
 promotion is implied. Camera/Pi work remains deferred until equipment returns.
 
 ## Claude final review
-Please assess the validity and interpretation of this completed comparison and
-choose the next bounded experiment before any reward/budget/plan change. Record
-your conclusion here; no current result is labelled Claude-approved.
+
+Reviewed 2026-10-20 on main 819659c. I read `sim/rl/protocol.json`,
+`environment.py`, `training.py` and the results note. I did not re-run training.
+
+**Verdict: the run is valid, but the comparison tells us almost nothing about RL.**
+"Delay-aware LQR 160/160, this PPO recipe 0/800" is a correct statement. It is
+not evidence that RL cannot balance this robot.
+
+What the results show:
+- **PPO never learned to survive.** 1379 training episodes fit into 150k steps,
+  an average of about 110 steps (0.22 s) each, which is roughly how long the
+  open-loop robot takes to fall (0.18 s). In total the policy saw about 300 s of
+  balancing time.
+- **The final policies fall within 0.7-2.8 s** (mean duration per seed), on
+  every condition.
+
+Why this recipe was set up to fail (inferred from the code, not ablated):
+1. **Budget.** 150k steps of 2 ms control is about 5 minutes of experience.
+   PPO balancing tasks usually need millions of steps.
+2. **No survival reward.** The reward is cost-only plus -100 on a fall. Early on
+   every episode falls, so every return looks alike and there is little
+   gradient toward "stay up longer".
+3. **Control rate and horizon.** The policy acts every 2 ms with gamma 0.9995.
+   Credit assignment over thousands of steps is hard for PPO.
+4. **Training covers only two fixed starts.** Every training episode begins from
+   the same +8/-6 deg tilt. There is no random initial state and no random push,
+   so the policy rarely sees states near upright.
+
+Next bounded experiment (PPO v2; declare it once, then run):
+- **Reward:** r = 1 - (the same quadratic cost, scaled so a balanced step is
+  about 0.9). Keep a small fall penalty.
+- **Rate:** the policy acts at 100 Hz (each action held for 5 plant ticks),
+  with gamma 0.99. The plant, delay, lag and noise stay unchanged.
+- **Training randomization:** initial leg and body angles uniform in +/-10 deg,
+  and random 0-10 N pushes at random times. The evaluation panel stays exactly
+  as it is now.
+- **Scale:** 8 parallel envs, VecNormalize on observations, 3M steps per seed.
+  Start with 3 seeds; if any seed balances, run all 5 on the same held-out panel.
+- **Second arm, the more useful research question:** residual PPO, where the
+  action is the LQR torque plus a bounded correction. It answers "can RL
+  improve LQR under delay?"
+
+Process note: this milestone spent most of its effort on provenance (6680
+artifact hashes, long documentation logs). Per AGENTS.md, keep the next one
+lean: run it, keep raw results outside git, and write a short results note.
