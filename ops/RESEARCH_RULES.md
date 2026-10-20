@@ -57,6 +57,31 @@ memory, throttling. Do not attempt every metric at once.
 Adaptive runtime path: static characterization -> rule-based policy -> ablation ->
 contextual/simple learned policy -> RL only if justified.
 
+## Simulation and learned control (MuJoCo, RL vs LQR)
+
+- **Simulation only.** Nothing trained here goes to the STM32, motors or the real
+  robot without a separate reviewed plan. The STM32 LQR/VMC/FSM stays the authority
+  on hardware. Label all results **SIMULATION**.
+- **Baseline first.** Before any RL training, reproduce the LQR baseline in the same
+  MuJoCo model: linearization point, Q/R weights, gains, and its closed-loop
+  behaviour (recovery from push/tilt, steady-state error, effort). Record where the
+  model parameters come from (CAD, measured, guessed = ASSUMED).
+- **Fair comparison.** Same model, same initial-state distribution, same disturbance
+  set (pushes, slopes, sensor noise/delay, parameter perturbations), same control
+  rate and actuator limits, same episode length. Pre-declare the metrics before
+  running: success/fall rate, recovery time, peak tilt, tracking error, control
+  effort/torque peaks, and robustness under model mismatch.
+- **Statistics.** Multiple training seeds (at least 5) and many evaluation episodes
+  per condition; report mean with a confidence interval, and keep failed seeds.
+- **Sim-to-real honesty.** Report what the simulator omits (motor dynamics, backlash,
+  sensor delay, contact model). An RL win in nominal simulation is not evidence of
+  a hardware win; robustness tests under perturbation matter more.
+- **Ladder.** LQR baseline -> LQR with tuned gains / gain scheduling -> RL residual
+  or RL policy, and only claim RL is better where the evidence says so.
+- Code lives in this repository under `sim/` (create it on a `chatgpt/...` branch);
+  training outputs (checkpoints, logs, videos) stay out of git, with paths and
+  hashes recorded in the session log.
+
 ## Sources
 
 Prefer peer-reviewed papers, then standards, manufacturer docs, official project
