@@ -1,9 +1,9 @@
 # Current state
 
-Last updated: 2026-10-20 +07 by codex-f conductor; simulation milestone complete, final Claude review pending.
+Last updated: 2026-10-20 +07 by codex-f conductor; nominal simulation baseline approved by Claude (PR44); actuator/noise milestone active.
 
 ## Active goal
-- PRIORITY: Mac simulation/control. ASSUMED reduced six-state MuJoCo model + NEW matched LQR + declared push recovery implemented, independently rerun and merged in PR42 (caae6ff).
+- PRIORITY: delay2-5ms + motorlag + IMUnoise, frozenK first; conditional augmentedLQR then same-plant RL across seeds. Mac simulation/control. ASSUMED reduced six-state MuJoCo model + NEW matched LQR + declared push recovery implemented, independently rerun and merged in PR42 (caae6ff).
 - PR38 parity scaffold, PR40 conducting rules and PR41 Pi preparation also merged after green CI. See final review ops/worklog/reviews/2026-10-20-lqr-mujoco.md.
 - Claude only reviews completed milestones. Conductor verifies and merges green PRs; worker accounts checked idle, f reserved for conductor.
 
@@ -21,5 +21,6 @@ Last updated: 2026-10-20 +07 by codex-f conductor; simulation milestone complete
 
 ## Limitations and next step
 - Nominal ASSUMED masses/COM/inertias, ideal planar rolling, fixed equivalent leg, ideal state feedback/instant torque. No contact/slip, fullfivebar, physical validation or RLtraining.
-- Final Claude review: ops/worklog/reviews/2026-10-20-lqr-mujoco.md. Review baseline, then predeclare perturbations/initial states for control comparison; obtain CAD/BOM estimates in parallel.
+- Claude approved baseline in ops/worklog/reviews/2026-10-20-lqr-mujoco.md (main417c1e2). i/AstraUltra implements actuator/noise; conductor writes short learning guide. RL execution waits for actuator/LQR verification.
+- Read docs/learning/LQR_RL_GUIDE.md (~50lines). Pi remains deferred; owner plans camera lab tomorrow with equipment.
 - Two understanding questions sent; answers pending. No gate promoted. Pre-existing generated host-test binaries remain untracked and unstaged; no deletion performed.
