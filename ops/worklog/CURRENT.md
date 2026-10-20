@@ -1,29 +1,29 @@
 # Current state
 
-Last updated: 2026-10-20 12:20 +07 by Claude. Flow changed today: build first, fix
-when it breaks (see `AGENTS.md`).
+Last updated: 2026-10-20 13:38 +07 by codex-f conductor.
 
-## Now
-1. **Camera + ORB-SLAM3 on the Pi** (skill `wbr-orbslam3-bringup`): D435 (no IMU),
-   so stereo or RGB-D. ORB-SLAM3 is built at `~/orbslam3/ORB_SLAM3` (it ran EuRoC
-   stereo-inertial earlier); the RealSense examples may need building.
-2. Then the ROS 2 wrapper (`third_party/ORB_SLAM3_ROS2`) and robot integration.
-3. Parallel: MuJoCo sim of the WBR (DM-jump controller as reference,
-   commit 6855ef8, MIT license) -> LQR baseline -> RL comparison.
+## Active goal
+- Parallel tracks: stereo ORB-SLAM3 -> ROS 2 pose; ASSUMED reduced six-state MuJoCo -> newly synthesized LQR -> push recovery.
+- Conductor independently runs worker results and merges green PRs; Claude reviews completed milestones only.
+- Gain exercise `sim/parity/student.py` remains owner-only. Parity scaffold compiled; 15 infrastructure tests pass; Python gain/VMC parity remain incomplete.
 
-## What works
-- SSH: `ssh wbr-pi5` (192.168.50.2, direct Ethernet).
-- Pi power on the 27 W supply: no throttling, 5.08–5.16 V, camera at USB 5000M.
+## Hardware right now
+- USER-REPORTED this afternoon: no camera available; only a 4 GB Pi, slow 32 GB microSD and STM32. Live-camera milestone cannot run today without a camera.
+- SSH `wbr-pi5` -> richard@192.168.50.2 timed out; current Pi model/network identity UNKNOWN. Owner asked about power/Ethernet/address.
+- Keep STM32 untouched. No disk migration or deletion authorized.
+- Earlier D435 idle power/USB evidence remains historical, not current 4 GB Pi evidence. Archive: ~/wbr-evidence-archive/power-idle-d435-20261020-01 (731/731 hashes verified in prior session).
+- 128 GB migration completion remains UNKNOWN; original 32 GB backup must be preserved.
 
-## Known issues
-- `pyrealsense2` not installed on the Pi (install it if a tool needs it).
-- Root disk: 32 GB microSD, ~6 GB free. Move to the 128 GB card
-  (`wbr-storage-migrate`) before recording long bags. A Windows backup image of the
-  32 GB card was being made (`D:\wbr-backup\wbr-pi5-32gb-20261020.img`).
-- Robot hardware not built yet; masses/inertias for the sim are guesses until the
-  lab provides CAD mass properties.
-- D435i (with IMU) is away; return date unknown.
+## Workers
+- codex-g / gpt-6-astra ultra: isolated pi-orbslam-pose worktree, branch chatgpt/20261020-pi-orbslam-pose; bounded SSH and offline wrapper preparation while hardware absent.
+- codex-i / gpt-6-astra ultra: isolated sim-lqr-push worktree, branch chatgpt/20261020-sim-lqr-push; implement and run MuJoCo balance/push and open-loop control.
+- g/i latest sessions completed and no active task children found before launch. k has interactive session; not used. f is conductor only.
+
+## Known limitations
+- Body/leg masses, COM, inertias, actuator response and real robot LQR generation remain UNKNOWN; sim assumptions must be explicit and replaceable from one config.
+- Parity is still pending, independently of the newly authorized running simulation work. No source-controller reproduction or sim-to-real validation claimed.
+- Local full-suite prior failure: macOS lacks termios 460800 baud in existing link-bench test. Linux CI for parity scaffold bc4aea5 was green.
+- No gate promoted; no hardware control or RL training.
 
 ## Next step
-Plug in the camera and get `stereo_realsense_D435i` (or the RGB-D example) running
-on the Pi.
+Conductor updates AGENTS conducting rules and integrates parity scaffold, verifies worker commands, merges only after green CI. Await Pi SSH details; no camera needed for Mac simulation. Final milestone review lists actual merged PRs and runs; never label blocked prep as completed pose/balance.

@@ -46,3 +46,44 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Validation: merge exit 0, no conflicts; exactly six approved Markdown paths in PR delta; doc assertions and whitespace checks exit 0.
 - Review: within DOC-20261020-1 plus approved review decisions/status receipts; no implementation or experimental result added.
 - Limitations: push/PR/CI/remote merge not yet claimed; GitHub PR history will record subsequent publication state.
+
+### DOC-20261020-4: Teaching contract and compiled-C parity checkpoint
+- Time / author: 2026-10-20 +07; codex-f conductor.
+- Branch / base: chatgpt/20261020-c-python-parity; base 0e48cff (merged PR #37).
+- Files: sim/README.md; sim/parity/README.md; ops/worklog/CURRENT.md; ops/worklog/DECISIONS.md; ops/worklog/sessions/2026-10-20-c-python-parity.md; ops/worklog/DOCUMENTATION_LOG.md.
+- Changes: documented learner-owned cores and approved sequence without waiting for hardware; reserved f for conductor, g/i/k preferred as user-reported Plus workers.
+- Changes: new build/exercise commands, source provenance, native VMC checks, TODO status, evidence receipts, limitations and rollback; earlier source/license notices preserved unchanged.
+- Sources: owner teaching/delegation instructions; D-20261020-16/17; DM-jump 6855ef8c6da20246251cfd473467c04112bf800f; MIT provenance manifest.
+- Validation: original C compilation exit 0; 15/15 infrastructure tests PASS; gain checker BLOCKED exit 2; learner exercise expected FAIL exit 1.
+- Validation: codex-g read-only review found guard mismatch/missing independent anchors; fixed with regression checks. Bash syntax/whitespace exit 0.
+- Limits: Python gain TODO and Python VMC parity outstanding; native sanity checks do not complete milestone 1. No physics/LQR/RL or hardware result.
+- Review / publication: implementation checkpoint requires Claude review before merge; commit/PR/CI and full-suite receipts appended to session log as obtained.
+- Understanding check: two questions recorded, answers pending. Prior documentation approval is not approval of this code.
+
+### DOC-20261020-5: Publish parity checkpoint and prepare Claude review
+- Time / author: 2026-10-20 +07; codex-f conductor.
+- Branch / base: chatgpt/20261020-c-python-parity; implementation 28fea56, base 0e48cff.
+- Files: ops/worklog/reviews/2026-10-20-c-python-parity.md; ops/worklog/sessions/2026-10-20-c-python-parity.md; ops/worklog/DOCUMENTATION_LOG.md.
+- Changes: prepared bounded code-review question, recorded commit/push/draft PR #38 and original-source whitespace exception.
+- Sources: build/check receipts and codex-g review in session; owner teaching/account instructions; wbr-claude-review-request skill.
+- Validation: push/PR creation exit 0; attached PR to chat; authored-file staged whitespace check exit 0.
+- Review: Claude answer pending, PR remains draft and unmerged. Final full-suite/CI outcomes recorded in session when available.
+- Limits: no learner implementation, Python VMC parity, physical/dynamics result or gate promotion implied.
+
+### DOC-20261020-6: Record final local and CI outcomes without conflating them
+- Time / author: 2026-10-20 +07; codex-f conductor.
+- Branch: chatgpt/20261020-c-python-parity; reviewed CI head bfc84bf59495dfc82388f391e07cbba5d714cbe4.
+- Files: ops/worklog/sessions/2026-10-20-c-python-parity.md; ops/worklog/DOCUMENTATION_LOG.md.
+- Changes: recorded full local exit 1 from existing unsupported 460800-baud link-bench test; new parity suite PASS; Linux CI SUCCESS at exact head.
+- Sources: /private/tmp/wbr-parity-full-tests-20261020.log; PR #38 CI job link in session.
+- Validation: full runner finished, final summary inspected; exact head/CI read from GitHub. No unrelated test patched or threshold changed.
+- Limits / review: local full suite is not green; learner TODO and Python VMC parity remain. PR draft, Claude review pending, no merge.
+
+### DOC-20261020-7: Conductor dispatch and parity/main state reconciliation
+- Time / author: 2026-10-20 13:38 +07; codex-f conductor.
+- Branch / base: chatgpt/20261020-conducting from 5b6ab4e, integrating prior bc4aea5 parity branch.
+- Files: ops/worklog/CURRENT.md; ops/worklog/DECISIONS.md; ops/worklog/sessions/2026-10-20-conducting.md; ops/worklog/DOCUMENTATION_LOG.md.
+- Changes: resolved CURRENT merge conflict using latest owner hardware/role; appended D18-D20; recorded idle checks, isolated Astra Ultra workers and protection of learning exercise.
+- Sources: owner conducting instruction/hardware reply; process/session-event metadata; actual SSH timeout; PR38 prior green CI.
+- Validation: g/i launch headers show requested model/effort; no worker-f or occupied-k launch. Worker verification and final results pending.
+- Limitations/review: camera unavailable and Pi unreachable, no live pose; no balance claim yet. Claude review only at actual milestone, not this dispatch.

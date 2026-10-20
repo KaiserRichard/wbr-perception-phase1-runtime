@@ -121,3 +121,38 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Why: the earlier weighing request was premature; unavailable measurements must not block source parity or be replaced by invented measured values.
 - Evidence: owner's reply on 2026-10-20 to the mass/COM request; D-20261020-12.
 - Revisit when: physical assemblies become available. This clarifies the applicability/timing of D-20261020-12 without changing its evidence priority.
+
+### D-20261020-16: Proceed without robot hardware using learner-owned control cores
+- Decided by: owner
+- Decision: proceed C/Python parity -> assumed six-state model -> matched LQR -> RL; obtain better physical estimates in parallel. Owner writes gain-schedule Python, A/B matrices, LQR solver call and reward. Agents provide TODOs/tests, review and boilerplate, without completing those cores unless asked.
+- Why: learn by doing without confusing assumed simulation with physical validation or waiting for unavailable assemblies.
+- Evidence: owner's teaching-mode instruction; sim/README.md; sessions/2026-10-20-c-python-parity.md.
+- Revisit when: owner changes teaching ownership or new physical/source evidence requires reviewed model changes. Explain each milestone under ten lines with a primary source, then ask two questions and log the checkpoint.
+
+### D-20261020-17: Reserve codex-f for the conductor
+- Decided by: owner
+- Decision: this session is codex-f; never launch it as a worker. Prefer user-reported Plus aliases codex-g, codex-i and codex-k for explicitly delegated work; check availability first. Do not inspect credentials or change account configuration.
+- Why: avoid assigning a worker to the conductor's own account and preserve ownership of learner exercises.
+- Evidence: owner's account-label clarification and correction; codex-g read-only review receipt in the parity session.
+- Revisit when: owner changes account assignments. Subscription labels are USER-REPORTED, not independently verified.
+
+### D-20261020-18: Conductor owns delegation, independent verification and green-CI merge
+- Decided by: owner
+- Decision: reserve f as conductor; use idle user-reported Plus g/i/k workers, one task per branch/worktree, Astra ultra for hard work and Sol for simpler work. Workers build/fix/install routine dependencies and submit PRs; conductor reproduces results and merges green CI. Claude only reviews completed milestones.
+- Why: run perception and simulation in parallel with explicit ownership and final review rather than intermediate approval round trips.
+- Evidence: owner conductor instruction on 2026-10-20; conducting session; AGENTS.md section requested.
+- Revisit when: owner changes delegation policy. Supersedes intermediate Claude code-merge review in earlier decisions for this authorized workflow; safety and evidence rules remain.
+
+### D-20261020-19: Afternoon hardware availability limits Pi track
+- Decided by: owner (availability); conductor (bounded preparation)
+- Decision: no camera this afternoon; available board has 4 GB RAM and a slow 32 GB card. Current SSH target timed out. Prepare existing stereo/ROS offline path while awaiting connectivity; do not claim live camera output. Leave STM32 alone.
+- Why: unavailable hardware cannot be replaced by fake poses or historical Pi5 evidence.
+- Evidence: owner reply; direct SSH timeout; sessions/2026-10-20-conducting.md.
+- Revisit when: Pi SSH reachable and/or camera returns.
+
+### D-20261020-20: Implement running simulation baseline while preserving gain exercise
+- Decided by: owner
+- Decision: worker implements ASSUMED reduced six-state MuJoCo, new matched LQR and push test now. Protect sim/parity/student.py gain_schedule as learner-only; keep gain/VMC parity explicitly pending rather than treating simulation as source-gain reproduction.
+- Why: newest instruction asks for an operational baseline in parallel; unavailable robot and incomplete learning exercise need not prevent assumed-model runs.
+- Evidence: owner two-track instruction and named exception; sim worker brief.
+- Revisit when: physical data or learner gain port arrives. Supersedes the prior sequencing/ownership restriction only where necessary for this explicit simulation task; no RL or deployment authorized here.
