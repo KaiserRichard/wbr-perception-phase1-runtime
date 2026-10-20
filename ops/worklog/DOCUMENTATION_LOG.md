@@ -59,3 +59,13 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Limits: Python gain TODO and Python VMC parity outstanding; native sanity checks do not complete milestone 1. No physics/LQR/RL or hardware result.
 - Review / publication: implementation checkpoint requires Claude review before merge; commit/PR/CI and full-suite receipts appended to session log as obtained.
 - Understanding check: two questions recorded, answers pending. Prior documentation approval is not approval of this code.
+
+### DOC-20261020-5: Publish parity checkpoint and prepare Claude review
+- Time / author: 2026-10-20 +07; codex-f conductor.
+- Branch / base: chatgpt/20261020-c-python-parity; implementation 28fea56, base 0e48cff.
+- Files: ops/worklog/reviews/2026-10-20-c-python-parity.md; ops/worklog/sessions/2026-10-20-c-python-parity.md; ops/worklog/DOCUMENTATION_LOG.md.
+- Changes: prepared bounded code-review question, recorded commit/push/draft PR #38 and original-source whitespace exception.
+- Sources: build/check receipts and codex-g review in session; owner teaching/account instructions; wbr-claude-review-request skill.
+- Validation: push/PR creation exit 0; attached PR to chat; authored-file staged whitespace check exit 0.
+- Review: Claude answer pending, PR remains draft and unmerged. Final full-suite/CI outcomes recorded in session when available.
+- Limits: no learner implementation, Python VMC parity, physical/dynamics result or gate promotion implied.

@@ -105,3 +105,9 @@ The unrestricted check reports upstream trailing whitespace in unchanged VMC and
 chassis files. Retained bytes intentionally to preserve verified source hashes;
 do not normalize those files. Full repository runner also creates untracked host
 binaries/dSYM and `tools/perception_health/c/mcu/.build/`; these are not staged.
+
+Published implementation commit `28fea56`; push exit 0. Opened draft PR #38:
+https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/38
+Attached PR to this chat. Claude review request prepared at
+`ops/worklog/reviews/2026-10-20-c-python-parity.md`; review and owner merge go-ahead
+remain pending. This is not a request to deploy or alter the approved research plan.
