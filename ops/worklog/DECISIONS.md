@@ -222,3 +222,12 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Why: completed optimizer execution is distinct from a successful learned controller; this fixed recipe did not solve the task. The prescribed interval is conditional on these seeds and panel.
 - Evidence:source608222b, full-run COMPLETE exit0; independent6680-hash/750000-step/960-slot/noise-pair audit and archived aggregate. sim/rl/RESULTS_2026-10-20.md.
 - Revisit when: Claude reviews the completed milestone and a new experiment is explicitly predeclared; no sim-to-real/general-RL conclusion is drawn.
+
+
+### D-20261020-CAFE: Apply the owner-relayed compute review
+- Decided by: owner relaying Claude review of the Cho Mo strategy, commit425b682/PR54.
+- Decision: one bounded Training Station MuJoCo pilot morning, one v2 seed, setup+export<1h; free Mac/lab training first once conductor verification completes. Initial deposit at most100–200k; no500k–1m deposit or Isaac migration. Later Isaac is learning only, conditional on staff/persistence arrangements.
+- Why: current workload uses CPU physics/small policy; shutdown resets local state. CPU-cloud comparison, not GPU rental, is relevant if a measured resource need appears.
+- Evidence:ops/worklog/reviews/2026-10-20-cafe-compute-strategy.md, owner review and active v2 state at43f7f6f. Cafe speed/restoration figures are estimates, not measurements.
+- Limits:reported100–200k tier is x2, not x3; Training Station cash-equivalent rate12100VND/h, six hours72600, subject to staff terms. Larger deposit needs two successful pilots and known expiry plus later approval. Existing conductor retains v2 ownership; no duplicate launch.
+- Revisit when: measured pilot throughput/restore time, lab access, CPU-cloud quote, or a separately approved simulation requirement changes the decision.
