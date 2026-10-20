@@ -12,6 +12,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from pathlib import Path
 import re
+import subprocess
 import sys
 from urllib.error import HTTPError, URLError
 from urllib.parse import unquote, urlsplit
@@ -33,6 +34,7 @@ ROOT_PATH_RE = re.compile(
     + r")[A-Za-z0-9_./{}<>+*?-]+)"
 )
 URL_RE = re.compile(r"https?://[^\s<>\])]+", re.IGNORECASE)
+URL_TRAILING_PUNCTUATION = ".,;:!?\"'"
 
 
 @dataclass(frozen=True)
@@ -161,29 +163,49 @@ def scan_local(directories: tuple[str, ...]) -> list[Finding]:
     return findings
 
 
-def _http_status(url: str, timeout: float) -> tuple[str, str]:
-    request = Request(url, method="HEAD", headers={"User-Agent": "doc-link-checker/1.0"})
-    try:
-        with urlopen(request, timeout=timeout) as response:
-            code = response.status
-    except HTTPError as exc:
-        code = exc.code
-    except (URLError, TimeoutError, OSError) as exc:
-        return url, f"UNVERIFIED ({type(exc).__name__})"
+def _http_status(url: str, timeout: float, backend: str = "python") -> tuple[str, str]:
+    if backend == "curl":
+        try:
+            response = subprocess.run(
+                ["curl", "--head", "--silent", "--show-error", "--location",
+                 "--output", "/dev/null", "--write-out", "%{http_code}",
+                 "--max-time", str(timeout), url],
+                capture_output=True, text=True, timeout=timeout + 1, check=False)
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            return url, f"UNVERIFIED ({type(exc).__name__}: {exc})"
+        if response.returncode and not response.stdout.strip():
+            detail = response.stderr.strip() or f"curl exit {response.returncode}"
+            return url, f"UNVERIFIED ({detail})"
+        try:
+            code = int(response.stdout.strip())
+        except ValueError:
+            detail = response.stderr.strip() or "curl returned no HTTP status"
+            return url, f"UNVERIFIED ({detail})"
+    else:
+        request = Request(url, method="HEAD", headers={"User-Agent": "doc-link-checker/1.0"})
+        try:
+            with urlopen(request, timeout=timeout) as response:
+                code = response.status
+        except HTTPError as exc:
+            code = exc.code
+        except (URLError, TimeoutError, OSError) as exc:
+            reason = getattr(exc, "reason", None)
+            detail = f": {reason}" if reason is not None else f": {exc}"
+            return url, f"UNVERIFIED ({type(exc).__name__}{detail})"
     if code in (403, 429):
         return url, f"UNVERIFIED (HTTP {code})"
     return url, "OK" if 200 <= code < 400 else f"HTTP {code}"
 
 
 def scan_http(directories: tuple[str, ...], timeout: float, jobs: int,
-              max_urls: int) -> list[tuple[str, str]]:
+              max_urls: int, backend: str = "curl") -> list[tuple[str, str]]:
     urls: set[str] = set()
     for source in markdown_files(directories):
         text = FENCE_RE.sub("", source.read_text(encoding="utf-8", errors="replace"))
-        urls.update(URL_RE.findall(text))
+        urls.update(url.rstrip(URL_TRAILING_PUNCTUATION) for url in URL_RE.findall(text))
     selected = sorted(urls)[:max_urls]
     with ThreadPoolExecutor(max_workers=jobs) as pool:
-        futures = [pool.submit(_http_status, url, timeout) for url in selected]
+        futures = [pool.submit(_http_status, url, timeout, backend) for url in selected]
         results = [future.result() for future in as_completed(futures)]
     return sorted(results)
 
@@ -196,6 +218,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--timeout", type=float, default=5.0, help="per-request timeout (max 10s)")
     parser.add_argument("--jobs", type=int, default=4, help="HTTP concurrency (max 8)")
     parser.add_argument("--max-urls", type=int, default=100, help="maximum unique URLs to probe")
+    parser.add_argument("--http-backend", choices=("curl", "python"), default="curl",
+                        help="curl uses the system trust store; python uses urllib's trust store")
     args = parser.parse_args(argv)
     if not 0 < args.timeout <= 10 or not 1 <= args.jobs <= 8 or not 1 <= args.max_urls <= 100:
         parser.error("timeout must be 0–10s, jobs 1–8, and max-urls 1–100")
@@ -209,7 +233,8 @@ def main(argv: list[str] | None = None) -> int:
     print(f"Local scan: {len(findings)} missing reference(s): {broken} broken, "
           f"{historical} historical warning(s).")
     if args.check_http:
-        for url, status in scan_http(directories, args.timeout, args.jobs, args.max_urls):
+        for url, status in scan_http(directories, args.timeout, args.jobs,
+                                     args.max_urls, args.http_backend):
             print(f"HTTP {status}: {url}")
     return 1 if broken else 0
 

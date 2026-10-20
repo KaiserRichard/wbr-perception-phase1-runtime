@@ -22,11 +22,19 @@ class DocLinkCheckerTests(unittest.TestCase):
         with patch.object(checker, "ROOT", self.root):
             return checker.scan_local(("docs/learning",))
 
-    def test_markdown_href_is_relative_to_source_even_when_repo_prefixed(self):
+    def test_markdown_href_resolves_from_source_even_when_repo_prefixed(self):
         (self.root / "docs/learning/guide.md").touch()
         (self.root / "sim").mkdir()
         (self.root / "sim/plant.py").touch()
-        findings = self.scan("[relative](guide.md) [root](sim/plant.py)\n")
+        (self.root / "docs/learning/sim").mkdir()
+        (self.root / "docs/learning/sim/plant.py").touch()
+        findings = self.scan("[relative](guide.md) [nested](sim/plant.py)\n")
+        self.assertEqual(findings, [])
+
+    def test_root_file_does_not_make_repo_prefixed_href_valid(self):
+        (self.root / "sim").mkdir()
+        (self.root / "sim/plant.py").touch()
+        findings = self.scan("[plant](sim/plant.py)\n")
         self.assertEqual([(f.status, f.target) for f in findings],
                          [("BROKEN", "sim/plant.py")])
 
@@ -74,6 +82,23 @@ class DocLinkCheckerTests(unittest.TestCase):
         findings = self.scan("[good][present] [bad][absent]\n[present]: guide.md\n")
         self.assertEqual([(f.status, f.target) for f in findings],
                          [("BROKEN", "[absent]")])
+
+    def test_http_extraction_strips_trailing_prose_semicolon(self):
+        path = self.root / "docs/learning/example.md"
+        path.write_text("Pinned license: https://github.com/example/repo/blob/abc/LICENSE;\n",
+                        encoding="utf-8")
+        with patch.object(checker, "ROOT", self.root), \
+                patch.object(checker, "_http_status", return_value=("", "OK")) as probe:
+            checker.scan_http(("docs/learning",), timeout=3, jobs=4, max_urls=100)
+        self.assertEqual(probe.call_args.args[0],
+                         "https://github.com/example/repo/blob/abc/LICENSE")
+
+    def test_python_tls_error_includes_underlying_reason(self):
+        from urllib.error import URLError
+
+        with patch.object(checker, "urlopen", side_effect=URLError("certificate verify failed")):
+            _, status = checker._http_status("https://example.org", timeout=1)
+        self.assertIn("certificate verify failed", status)
 
 
 if __name__ == "__main__":
