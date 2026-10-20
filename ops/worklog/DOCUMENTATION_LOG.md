@@ -194,6 +194,23 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Limits/review:full training/evaluation and parameter audit still running; no RL outcome, physical validity or gate approval claimed. Source remains frozen while only worklogs change.
 
 
+### DOC-20261020-20: Primary parameter sources and applicability limits
+- Time / author:2026-10-20 +07; codex-b source audit, codex-f independent review/integration.
+- Files:docs/learning/{MODEL_PARAMETER_SOURCES.md,LQR_RL_GUIDE.md}; ops/worklog/{DOCUMENTATION_LOG.md,sessions/2026-10-20-parameter-sources.md,sessions/2026-10-20-delay-lag-noise.md}.
+- Changes: compact parameter/provenance table, verified supplier/source-model references and UNKNOWN mappings; clarify aggregate definitions and link from learning guide. Record PR49 merge/full-budget training completion, without claiming completed held-out results.
+- Sources:DM-jump6855ef8; pinned dmBots wheel-legged/Motor manuals; Bosch BMI088 rev1.9; exact URLs/digests in worker session and external fetch receipts. No measured owner mass/COM data.
+- Validation:conductor checked manufacturer MATLAB and all3rendered supplier tables; config hashes match frozen values; links/whitespace checked. No runtime tests repeated for this documentation-only set.
+- Limits/review:component specs/source constants do not identify whole-body/leg properties, actuator lag or fused sensor noise. No model/reward/threshold change; PR50 CI/merge and Claude final review pending.
+
+
+### DOC-20261020-21: Retain lossless reward check across float64 reductions
+- Time / author:2026-10-20 +07; codex-b conductor after owner account switch.
+- Files:sim/rl/tests/test_environment.py (test comment/oracle); ops/worklog/{DOCUMENTATION_LOG.md,sessions/2026-10-20-parameter-sources.md}.
+- Changes: record actual PR50 CI error; require exact saved/live reward equality and allow only float64 reduction roundoff in independent cost recomputation. No runtime or experiment threshold change.
+- Sources:failedCI39396790590, maxabsolute2.78e-17/maxrelative1.84e-16; same-head companionCI passed. Log retained under /private/tmp/wbr-augmented-20261020/.
+- Validation:complete RL suite27/27 PASS, zero skips, including the targeted trace case; log conductor-rl-trace-fix-tests-01.log. Remote CI pending.
+- Limits/review:test portability correction does not alter archived PPO failure evidence, trained checkpoints or claimed metrics.
+
 ### DOC-20261020-22: Completed comparison, account transfer and final review
 - Time / author:2026-10-20 +07; codex-b conductor (earlier training dispatched by this chat as f).
 - Files:AGENTS.md; docs/learning/LQR_RL_GUIDE.md; sim/rl/{README.md,RESULTS_2026-10-20.md}; ops/worklog/{DECISIONS.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-delay-lag-noise.md,reviews/2026-10-20-rl-comparison.md}; external bounded g audit brief referenced in session.
