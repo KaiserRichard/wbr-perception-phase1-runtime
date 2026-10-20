@@ -22,3 +22,9 @@
 - All75core-hour/machine/setup forecasts retained as estimates; independently calculated75.8worker-hours from review assumptions. No new benchmark, cloud rental, simulator or training change. CURRENT not overwritten.
 
 - Owner requested a genuinely short report. Replaced the long report with a one-page decision/cost/pilot summary; full analysis and verbatim Claude review remain recoverable at dc1e0fb and in the existing external archive. Approval boundaries and x2 pilot pricing retained. No runtime/training change.
+
+- Owner clarified the actual requirement: cafe purchase only at×3, compare Mac/brother/lab/cafe/NVIDIA cloud and say when to use each. Earlier×2 pilot-cost framing superseded for planning, not treated as payment authorization.
+- Refreshed official OEG/Runpod/Lambda prices; report quotes Runpod A5000$.27,4090$.89,L40S$1.09/h;26kVND/USD remains an illustrative assumption. Read Mac CPU/RAM as i9-9880H/16GB. No lab GPU identity or throughput invented.
+- Rewrote short report with five-resource matrix, comparable six-hour rental charges, privacy/borrowing/reset/continuous-access trade-offs and conditional recommendations. Existing Mac v2 campaign/conductor untouched; no duplicated training or simulator change.
+
+- Continue:PR58 checks initially passed but main advanced with independent PPO v2/viewer work. Merged origin/main9cf5548 and resolved append-only DECISIONS/DOCUMENTATION_LOG conflicts by retaining both histories; runtime files match upstream exactly. Re-run CI on the merged publication head; no training launch.
