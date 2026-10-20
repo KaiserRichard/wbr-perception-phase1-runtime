@@ -229,3 +229,4 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources:g diagnostics/report and bbf4908; PR50head934e846, bothCI SUCCESS, merge31a5d1a; same immutable completed run and original source freeze608222b.
 - Validation:conductor reran both g scripts in a new directory, both exit0 and exact diagnostic JSON matches; earlier6680hash/raw/noise/budget audit retained. Guide64/README12 math expressions rendered; links/whitespace/conflict markers checked before publication.
 - Limits/review:sampled implementation audit found no actionable bug; it does not prove cause or future RL failure. No new training, runtime/reward/threshold or gate change. Final results PR/CI and Claude response pending.
+- DOC23 follow-through:CURRENT now points directly to pending Claude review rather than stale training/publication work; all local document links resolve, CURRENT25lines. This final publication contains no new simulation trial or code change.
