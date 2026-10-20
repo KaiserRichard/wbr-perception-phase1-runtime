@@ -1,8 +1,33 @@
 # Compute strategy: OEG Cho Mo, borrowed computers, lab GPU and cloud
 
-Date: 2026-10-20, Asia/Ho_Chi_Minh. Status: **analysis complete; proposed choices, pending owner/Claude review**.
+Date: 2026-10-20, Asia/Ho_Chi_Minh. Status: **Claude review relayed by owner; one bounded MuJoCo pilot approved; large deposit and Isaac migration not approved**.
 Analysis base: `819659c` (merged PR #51). Branch: `chatgpt/20261020-cafe-compute-review`.
 This document does not approve a simulator migration, new experiment, purchase, bank-account opening or prepaid deposit.
+
+## Current decision card — owner-relayed Claude review, 20 October
+
+This card supersedes the booking/migration proposals in the original analysis below. The appended Claude review is preserved verbatim from commit `425b682` / PR54.
+
+| Item | Current decision |
+| --- | --- |
+| Main training resource | Mac overnight or confirmed lab PC, once the conductor finishes PPO v2 verification |
+| Optional cafe pilot | One morning at **Cho Mo Training Station**, one declared v2 seed; measure setup, export and end-to-end throughput |
+| Continuation condition | **Setup plus copying results off must take less than 1 hour**; preserve logs and verify exported results |
+| First deposit | **At most 100–200k VND**, under the tier staff confirms; no 500k–1m deposit |
+| Larger deposit | Reconsider only after two successful pilot visits and known credit-expiry terms; no automatic spending approval |
+| Simulator | Keep MuJoCo; **Isaac migration is not approved** |
+| Isaac learning | Optional later Stadium learning session only, after discussing persistent installation; not the approved training pilot |
+| Cloud comparison | Compare a **CPU-only 16–32-vCPU VM** if local/lab resources prove inadequate; no CPU-cloud quote or rental is approved here |
+
+**Pilot price correction:** the reported promotion gives **x2 for 100–200k**, while x3 requires **more than 200k**. The deposit cap therefore does not entitle the pilot to x3. At the higher Training Station tariff of 24,200 VND/h, x2 gives **12,100 VND/h**, or **72,600 VND of cash-equivalent consumed credit for six hours**. With x1.5 the corresponding figures are 16,133.33/h and 96,800/six hours. A required upfront deposit is distinct from this prorated consumption; terms remain staff-confirmed, not guaranteed.
+
+**Estimates, not benchmarks:** the review's approximate 75 core-hours follows 6 runs × 3M policy transitions × 5 plant ticks / 330 ticks/s / 3600 ≈ **75.8 single-worker hours** if the old rate carries over. The 9–10 h Mac / 3 h Stadium / 4 h Training / 8 h Private figures and 15–30 min restoration estimate are unmeasured. Physical cores, P/E cores, SMT vCPUs, vector-environment count and actual parallel workers are not interchangeable. Training Station's value ranking remains provisional until a fixed-workload timing; the new policy rate, vectorization and tracing may change throughput.
+
+PPO v2 is already owned by the conductor chat (shared checkout `43f7f6f` at this inspection); implementation/optimizer checks were active and full training had not started. This Q&A review records the plan and does not launch a second campaign or alter its protocol. The completed v1 failures did not isolate their cause; they do not establish that a GPU upgrade would solve them.
+
+A working recipe that is measurably too slow, with roughly 100M steps as an illustrative review trigger, warrants reassessing CPU/GPU backends. That number is not a universal threshold or automatic Isaac approval. Any camera/sensor-driven migration also requires a separately justified task and approval. Next booking analysis should fit on one page.
+
+## Original analysis — historical proposals, superseded where noted
 
 ## 1. Decision in brief
 
@@ -196,9 +221,9 @@ Validation: inspect 6 in-scope attachments and decode the official Cho Mo page; 
 2. Are the proposed private/12 GB/Stadium choices and the promotion, tariff-conflict and reset caveats adequately separated?
 3. Is the six-hour pilot and deposit restraint appropriate, and when would a GPU-backend/Isaac migration become justified?
 
-### Recommendation awaiting review
+### Original recommendation submitted for review (historical)
 
-Approve the analysis and a small Windows pilot **in principle**, conditional on staff confirmation and actual pricing. Do not approve a 500k–1m deposit, an Isaac migration or another training campaign from this document alone. Owner can choose the private-workspace pilot or the Stadium Isaac pilot after reviewing it. Keep the free lab resource ahead of paid long-running compute when access permits. Claude's response is pending.
+Approve the analysis and a small Windows pilot **in principle**, conditional on staff confirmation and actual pricing. Do not approve a 500k–1m deposit, an Isaac migration or another training campaign from this document alone. Owner can choose the private-workspace pilot or the Stadium Isaac pilot after reviewing it. Keep the free lab resource ahead of paid long-running compute when access permits. The appended review and current decision card supersede this original proposal.
 
 ## Claude review
 

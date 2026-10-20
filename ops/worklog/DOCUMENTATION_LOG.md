@@ -241,6 +241,15 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Limits/review:no cafe Windows/GPU benchmark, confirmed bonus eligibility, staff-admin access or actual room/seat billing. Claude/owner decision pending. CURRENT retained under the active conductor's ownership.
 - DOC24 publication:PR53 is documentation-only and now Cho Mo-only; report formatting and6tariff/3overhead calculations checked. Final CI/merge receipt is retained with external source receipts; substantive Claude approval remains pending.
 
+
+### DOC-20261020-CAFE-REVIEW: Record bounded compute approval
+- Time / author:2026-10-20 +07; document Q&A chat, isolated cafe-approved-plan branch.
+- Files:ops/worklog/{reviews/2026-10-20-cafe-compute-strategy.md,DECISIONS.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-cafe-compute-strategy.md}.
+- Changes:preserve Claude425b682 review; add a one-page current decision card, correct first-deposit x2 pricing, label all speed/setup estimates and preserve existing v2 conductor ownership. Supersede historical booking recommendations without editing the review text.
+- Sources:owner-pasted review/PR54; current shared43f7f6f; original official tariffs/promotion evidence. No new vendor-price or performance claim.
+- Validation:review preservation,75.8worker-hour arithmetic,pilot cost/tier,local links and documentation-only scope checked; remote CI pending.
+- Limits:no pilot, dependency install, training launch, spending, new CPU-cloud quote, runtime/protocol or architecture change. CURRENT retained under active conductor ownership.
+
 ### DOC-20261020-25: PPO v2 execution
 - Files: imported Claude review; sessions/2026-10-20-ppo-v2.md; related v2 implementation/session/result notes in this change set.
 - Why/source: owner authorized the lean v2 direct/residual experiment; Claude review75a304d. Old v1 evidence and plant/evaluation criteria preserved.
@@ -249,3 +258,4 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - DOC25 follow-through: includes CURRENT/DECISIONS, both v2 sessions, new module/config/tests documentation and imported Claude review. Worker97db7f3/conductorf1b5ee7; final44/44tests,real8env optimizer/reload and full5ms zero-residual parity passed. Full3M batch RUNNING outsidegit; no full learned-policy claim.
 - DOC25 continuation: durable supervisor launched09:43:55Z; heartbeat `finish-ppo-v2-comparison` every30min. Initial duplicate-free progress confirmed; source/plant/v1criteria/protected exercise unchanged. Final results and Claude v2 review pending.
 - DOC25 integration:main advanced viaPR52–54 while training ran. Preserve finalized cafe DOC24; renumber only this unmerged PPO draft25. Resolve in isolated parameter-source-audit worktree, retaining both histories; no runtime or active-checkout change.
+- DOC25 publication follow-through:PR56 adds only independent cafe records; preserve them alongside v2 records. Publication now uses ppo-outcome-audit worktree; parameter-source-audit is a separate viewer task. Training source unchanged.
