@@ -5,8 +5,8 @@ then improve. When something fails, debug from the actual error message, fix it,
 and run again. Do not run qualification checks, gate audits or layer-by-layer
 tests before trying the real thing.
 
-The main working agent is **ChatGPT Work**. Claude is only called when ChatGPT is
-truly stuck on an error. Always reply in English unless the owner explicitly asks
+The main working agent is **ChatGPT Work**, acting as conductor. Claude is the
+final reviewer of completed milestones. Always reply in English unless the owner explicitly asks
 for Vietnamese.
 
 ## Start of a session
@@ -31,7 +31,17 @@ Then start working on the next step.
   what's broken, next step. Keep it under ~40 lines.
 - `ops/worklog/sessions/YYYY-MM-DD-<topic>.md`: what was run, what happened, what
   was fixed. Bullet points, no essays.
-No per-change documentation log, decision entries or evidence labels required.
+Record documentation changes in `ops/worklog/DOCUMENTATION_LOG.md` and decisions
+in `ops/worklog/DECISIONS.md`, following the owner's current logging instruction.
+
+## Conducting Codex
+- Conductor plans, scopes, launches and independently runs worker results, then merges PRs only after green CI. Claude reviews completed milestones only.
+- Check shared accounts are idle before each launch. Reserve codex-f for conductor; prefer owner-designated Plus g/i/k, Astra Ultra for hard work and Sol for simpler tasks.
+- One worker per task, each in its own worktree and `chatgpt/<YYYYMMDD>-<topic>` branch. Never use the shared Mac checkout or change its branch.
+- Give a short brief: goal, allowed files and exact command proving done. Build first; install missing dependencies and fix actual errors, preserving logs/failures.
+- Workers never run dd, format/partition/delete, force-push, command motors or flash STM32; only conductor merges. Keep Pi perception separate from hardware control.
+- `sim/parity/student.py::gain_schedule` is owner-only: review it without writing it or bypassing it with a duplicate solution.
+- Record actual runs and document edits in worklogs. At a completed milestone, write one `ops/worklog/reviews/<date>-<milestone>.md` listing merged PRs, commands/results and limitations; give the owner one line for Claude.
 
 ## Git
 - Work in `~/Desktop/Research/wbr-lab-ops` on a `chatgpt/<YYYYMMDD>-<topic>` branch
@@ -49,7 +59,7 @@ No per-change documentation log, decision entries or evidence labels required.
   the STM32 without the owner explicitly asking for it.
 
 ## When stuck
-If the same error survives a few real fix attempts, write
-`ops/worklog/reviews/YYYY-MM-DD-<topic>.md` (the error, what you tried, the exact
-log path) and give the owner one line to send to Claude:
-`Help with ops/worklog/reviews/<file> on branch <branch>.`
+Workers report the actual error, attempts and log path to the conductor. Continue
+independent work; ask the owner for physical access or missing information. Keep
+blocked work explicit. Ask Claude only after a milestone is complete, using the
+Conducting Codex summary above.

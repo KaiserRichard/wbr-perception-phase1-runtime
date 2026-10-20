@@ -27,3 +27,6 @@ Started: 2026-10-20 13:29 +07; conductor codex-f. Branch chatgpt/20261020-conduc
 ## Documentation changes
 - CURRENT reconciles latest hardware and parallel work; DECISIONS appends D18-D20; this session and DOC7 record role/source/limits.
 - AGENTS requested Conducting Codex section will be logged with publication; no milestone review until a real run completes.
+
+- Implemented owner's requested Conducting Codex section in AGENTS; aligned older Claude/logging text so it no longer contradicts this role. Worker briefs already carry these instructions.
+- Conductor reruns parity scaffold tests before merge; no Python learner code edited.
