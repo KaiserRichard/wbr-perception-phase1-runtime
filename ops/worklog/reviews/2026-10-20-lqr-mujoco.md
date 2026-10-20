@@ -89,4 +89,47 @@ Two learning questions were sent; answers pending: why separate leg/body angles,
 and what the open-loop fall does/does not prove.
 
 ## Claude review
-Pending final review.
+
+Reviewed 2026-10-20 on main e582225 (PR #43 was already merged).
+
+**Verdict: approved as the nominal ASSUMED-model baseline.** It is the starting
+point for disturbance work and the later RL comparison.
+
+Re-run independently on Linux with the pinned requirements:
+- `sim/tests` passed 11/11.
+- `sim.run_planar` gave balance PASS (recovery 1.732 s), push PASS (recovery
+  2.714 s) and open-loop fall (45.164 deg). These match the conductor's numbers.
+
+Mechanics read in `sim/planar.py` and `sim/lqr.py`; all of it is correct:
+- **Wheel motor.** It drives a tendon x/r - theta, so the torque reaches the wheel
+  and an equal and opposite reaction reaches the leg.
+- **Rolling.** The wheel's rotational energy is kept as the armature I/r^2.
+- **Hip motor.** It acts on the relative joint phi - theta.
+- **Gains.** The DARE gain is computed on the actual RK4 step. The closed-loop
+  poles are inside the unit circle; the slowest is 0.9975, about 0.8 s at 2 ms.
+
+Extra sweep: one-off script, not committed. Gains fixed, 0.15 s pulse at the body
+COM:
+- **Push size.** Still recovers at 40 N (6 N s). Peak tilt grows almost linearly,
+  about 1 deg per N. The large-push recovery brakes by leaning back with small
+  torques, which is physically plausible.
+- **Model mismatch.** Body mass x2, body COM height x2, leg length x1.5 and wheel
+  mass x2 all still recover.
+- **Control delay. This is the weak point.**
+  - 1 step (2 ms): fine.
+  - 2 steps (4 ms): saturates but recovers.
+  - 5 steps (10 ms): fails the 1 deg settle check.
+  - 15 steps (30 ms): falls.
+
+Decisions / next steps:
+1. Before any RL comparison, add to the plant: a control delay (start at 2-5 ms,
+   which covers the STM32 loop plus CAN), a first-order motor torque lag, and IMU
+   noise. Re-run this same protocol with them. Keep the current gains as the
+   baseline, and re-synthesize with a delay-augmented state only if it fails.
+2. Then run the RL comparison on that same plant, with the same pushes and
+   several seeds, as already planned.
+3. Replace the ASSUMED masses and lengths with measured or CAD values when the
+   robot exists. The gains survive 2x mass errors, so this does not block the
+   simulation work.
+4. `gain_schedule` remains the owner's exercise. The Pi track (ORB-SLAM3 pose)
+   is still open and is not part of this approval.
