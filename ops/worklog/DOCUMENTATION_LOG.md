@@ -165,3 +165,30 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources:owner's latest instruction; native evaluator against archived conditional5ms gain with noise1000.
 - Validation:whitespace/diff check; spot-check exit0,PASS,recovery2.760s,impulse0.900Ns. No implementation or threshold change.
 - Limits/review:one spot check does not establish the full held-out comparison. PPO implementation/training remains pending; publication CI pending.
+
+
+### DOC-20261020-17: Frozen PPO implementation and conductor verification
+- Time / author:2026-10-20 +07; codex-b implementation, codex-f integration/verification.
+- Files:sim/rl/{README.md,environment.py,trace.py,training.py,evaluation.py,aggregate.py,metrics.py,provenance.py,run.py,verify.py,tests/*.py}; .github/workflows/tests.yml; ops/worklog/{CURRENT.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-ppo-training.md,sessions/2026-10-20-delay-lag-noise.md}. External brief/report/feedback/command receipts referenced in session.
+- Changes: executable fixed-budget PPO pipeline, causal shared inputs, compact full-substep evidence and failure/seed accounting; explanatory math/CLI docs. Conductor corrected Gym empty-options API and CI install ordering, added actual Gym/backend checks; retained failed check/CI logs.
+- Sources:read-only protocol/requirements and actuator authorization/archive; worker4288fb8/draftPR49; primary PPO/SB3/Gym docs in README. No physical parameter inference.
+- Validation:worker25/25 tests,1000-step real WBR optimizer/checkpoint smoke and8full LQR parity pairs; conductor expanded27/27 tests, native-vector/reward checks and independent5000-step adapter parity PASS;12 README math expressions rendered.
+- Limits/review:smoke/evaluator fall is not a full PPO result. Full5×150000-step training and800+160 held-out outcomes pending. CI initially failed on missing Gym; dependency fix pending remote check. No frozen protocol, plant, threshold or protected exercise changes; Claude final milestone review pending.
+
+
+### DOC-20261020-18: Preserve worker publication and CI failure receipts
+- Time / author:2026-10-20 +07; codex-f integration of codex-b a9dd86b.
+- Files:ops/worklog/{DOCUMENTATION_LOG.md,sessions/2026-10-20-ppo-training.md,sessions/2026-10-20-delay-lag-noise.md}.
+- Changes: import exact worker source-freeze/second-smoke/failed-CI receipts; resolve session-footer conflict under owner's D27. No runtime change.
+- Sources:worker4288fb8/a9dd86b, draftPR49, failed run39392656236 and preserved log; committed smoke b02.
+- Validation:conductor27/27 RL tests passed at f12414a; merge conflict markers/whitespace checked. Full training not launched yet; remote dependency fix still pending.
+- Limits/review:smokes are implementation checks, not candidate policies. Training/comparison/Claude review remain pending.
+
+
+### DOC-20261020-19: Durable full-run launch and parallel source audit
+- Time / author:2026-10-20 +07; codex-f conductor.
+- Files:ops/worklog/{CURRENT.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-delay-lag-noise.md}; external source-audit brief referenced in session.
+- Changes: live state marks the existing full job RUNNING and prohibits duplicate launch; records source/command/independent smoke and b idle-to-SolHigh audit dispatch. No source-code change.
+- Sources:source608222b, conductor smoke/checkpoint receipts, full-run progress files, b process/lifecycle check and CLI model header; owner parallel-estimate/priority instructions.
+- Validation:conductor1000-step WBR optimizer/reload smoke exit0 and27/27 RL tests; full5seeds advancing with exact budget configured. Whitespace/diff checked; CI dependency step and generic suites passed at observation.
+- Limits/review:full training/evaluation and parameter audit still running; no RL outcome, physical validity or gate approval claimed. Source remains frozen while only worklogs change.
