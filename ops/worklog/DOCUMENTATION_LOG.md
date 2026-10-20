@@ -46,3 +46,16 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Validation: merge exit 0, no conflicts; exactly six approved Markdown paths in PR delta; doc assertions and whitespace checks exit 0.
 - Review: within DOC-20261020-1 plus approved review decisions/status receipts; no implementation or experimental result added.
 - Limitations: push/PR/CI/remote merge not yet claimed; GitHub PR history will record subsequent publication state.
+
+### DOC-20261020-4: Teaching contract and compiled-C parity checkpoint
+- Time / author: 2026-10-20 +07; codex-f conductor.
+- Branch / base: chatgpt/20261020-c-python-parity; base 0e48cff (merged PR #37).
+- Files: sim/README.md; sim/parity/README.md; ops/worklog/CURRENT.md; ops/worklog/DECISIONS.md; ops/worklog/sessions/2026-10-20-c-python-parity.md; ops/worklog/DOCUMENTATION_LOG.md.
+- Changes: documented learner-owned cores and approved sequence without waiting for hardware; reserved f for conductor, g/i/k preferred as user-reported Plus workers.
+- Changes: new build/exercise commands, source provenance, native VMC checks, TODO status, evidence receipts, limitations and rollback; earlier source/license notices preserved unchanged.
+- Sources: owner teaching/delegation instructions; D-20261020-16/17; DM-jump 6855ef8c6da20246251cfd473467c04112bf800f; MIT provenance manifest.
+- Validation: original C compilation exit 0; 15/15 infrastructure tests PASS; gain checker BLOCKED exit 2; learner exercise expected FAIL exit 1.
+- Validation: codex-g read-only review found guard mismatch/missing independent anchors; fixed with regression checks. Bash syntax/whitespace exit 0.
+- Limits: Python gain TODO and Python VMC parity outstanding; native sanity checks do not complete milestone 1. No physics/LQR/RL or hardware result.
+- Review / publication: implementation checkpoint requires Claude review before merge; commit/PR/CI and full-suite receipts appended to session log as obtained.
+- Understanding check: two questions recorded, answers pending. Prior documentation approval is not approval of this code.

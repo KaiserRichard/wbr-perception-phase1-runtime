@@ -121,3 +121,17 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Why: the earlier weighing request was premature; unavailable measurements must not block source parity or be replaced by invented measured values.
 - Evidence: owner's reply on 2026-10-20 to the mass/COM request; D-20261020-12.
 - Revisit when: physical assemblies become available. This clarifies the applicability/timing of D-20261020-12 without changing its evidence priority.
+
+### D-20261020-16: Proceed without robot hardware using learner-owned control cores
+- Decided by: owner
+- Decision: proceed C/Python parity -> assumed six-state model -> matched LQR -> RL; obtain better physical estimates in parallel. Owner writes gain-schedule Python, A/B matrices, LQR solver call and reward. Agents provide TODOs/tests, review and boilerplate, without completing those cores unless asked.
+- Why: learn by doing without confusing assumed simulation with physical validation or waiting for unavailable assemblies.
+- Evidence: owner's teaching-mode instruction; sim/README.md; sessions/2026-10-20-c-python-parity.md.
+- Revisit when: owner changes teaching ownership or new physical/source evidence requires reviewed model changes. Explain each milestone under ten lines with a primary source, then ask two questions and log the checkpoint.
+
+### D-20261020-17: Reserve codex-f for the conductor
+- Decided by: owner
+- Decision: this session is codex-f; never launch it as a worker. Prefer user-reported Plus aliases codex-g, codex-i and codex-k for explicitly delegated work; check availability first. Do not inspect credentials or change account configuration.
+- Why: avoid assigning a worker to the conductor's own account and preserve ownership of learner exercises.
+- Evidence: owner's account-label clarification and correction; codex-g read-only review receipt in the parity session.
+- Revisit when: owner changes account assignments. Subscription labels are USER-REPORTED, not independently verified.

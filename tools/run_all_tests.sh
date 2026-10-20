@@ -100,6 +100,11 @@ for suite_dir in calibration/*/tests lab/*/tests tools/eval_pipeline/tests tools
 done
 add_python_dir tests/fuzz
 
+# Simulation infrastructure only; learner exercises intentionally remain separate.
+for suite_dir in sim/*/tests; do
+  [[ -d "$suite_dir" ]] && add_python_dir "$suite_dir"
+done
+
 for suite_dir in tools/link_proto tools/link_bench tools/runtime_observer tools/vio_adapter tools/ros2_bridge; do
   run_make_suite "$suite_dir"
 done
