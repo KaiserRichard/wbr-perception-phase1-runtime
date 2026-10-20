@@ -4,14 +4,15 @@ This is a running **SIMULATION / ASSUMED** three-coordinate, six-state
 wheel-biped model. MuJoCo integrates the nonlinear dynamics under gravity.
 The controller is a **new matched LQR**. It is not a reproduction of DM-jump,
 an identified robot model, or evidence of sim-to-real performance.
-Gain parity remains pending independent learning work. No gain schedule,
-protected parity exercise, fivebar controller or RL training is implemented here.
+Gain parity remains pending independent learning work. The nominal runner implements LQR only; the separate [PPO pipeline](rl/README.md)
+provides learned-control experiments. Source gain parity and full fivebar VMC
+remain incomplete.
 
 The separate [actuator/noise extension](augmented.md) preserves this nominal path
 and adds exact command-delay events, first-order torque lag and cached body IMU
 noise. Its runner evaluates frozen nominal gains first, then conditionally designs
 an augmented LQR only after an observed failure. The reusable runtime contract is
-documented there for the later RL comparison.
+documented there for the RL comparison.
 
 ## Watch the robot balance
 
@@ -166,8 +167,8 @@ hardware validation remain future work. Ideal state feedback and simultaneous
 torque updates are assumed. This result does not complete gain parity or a
 hardware milestone.
 
-**Recommendation:** review the reduced mechanics and replace assumed physical
-parameters with CAD/lab evidence before extending to fivebar VMC or comparing RL.
+Physical parameters remain assumptions pending CAD/lab evidence; the reduced
+model does not validate full fivebar mechanics or sim-to-real transfer.
 
 ## Protected learning exercise and milestone boundary
 
@@ -179,7 +180,7 @@ prioritized a running ASSUMED MuJoCo baseline in parallel; this new LQR synthesi
 does not claim the pending gain-parity milestone passed.
 
 A/B and solver code in this run are implementation authorized by the latest
-conducting request. RL reward design/training remain later work. For each next
+conducting request. RL reward/training are documented in [rl/README.md](rl/README.md). For each next
 milestone explain the idea/key equation briefly with a primary source, ask two
 understanding questions, and log actual runs and pending answers. All meaningful
 documentation changes are recorded in ops/worklog/DOCUMENTATION_LOG.md.
