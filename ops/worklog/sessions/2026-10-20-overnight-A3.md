@@ -37,5 +37,7 @@
   partial until real gains and physical evaluations are run. No measured local
   stability, nonlinear acceptance, continuous-length stability, varying-length
   behavior, source-gain parity, or hardware validation claimed.
-- Worker opens PR only; conductor verifies and merges. No attach_artifact tool
-  was exposed; PR URL is returned in worker result for conductor attachment.
+- Feature commit `252fd0d` pushed; opened
+  [PR #65](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/65).
+  Not merged; conductor verifies/merges. No attach_artifact tool was exposed;
+  PR URL is returned in worker result for conductor attachment.
