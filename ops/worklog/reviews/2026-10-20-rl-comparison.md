@@ -8,8 +8,10 @@
 - PR48 merged6cae11d: verified actuator/LQR milestone and final review.
 - PR49 mergede821212: direct-torque PPO pipeline, Gym/API correction and CPU CI
   dependencies. Both test checks SUCCESS at exact head781d702.
-- Parameter/source audit PR50 is pending integration/green CI; final receipt will
-  be updated before this review is published. It changes no physical settings.
+- PR50 merged31a5d1a: verified parameter sources and float64 test-oracle repair,
+  both CI checks SUCCESS at head934e846. Reward/runtime/physical settings unchanged.
+- Read-only g audit receipt bbf4908 is included in this publication; conductor
+  reran both diagnostic scripts in a new folder and matched both JSON results exactly.
 
 Conductor command (not a worker-only claim):
 

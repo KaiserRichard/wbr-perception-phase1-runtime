@@ -10,11 +10,11 @@ Updated 2026-10-20 +07; owner switched this chat's conductor from codex-f to cod
 - All five seed success differences are−1; prescribed 95%t interval[-1,−1], df4. This is a conditional, degenerate endpoint result, not proof that RL generally fails or that real-world uncertainty is zero.
 - Independent audit:6680 hashes, five budgets/checkpoints,960 episode identities, all800 paired noise prefixes and raw metric spot checks verified. Stable archive: ~/wbr-evidence-archive/sim-ppo-vs-lqr-20261020-01.
 - Read sim/rl/RESULTS_2026-10-20.md. Full panel/secondary metrics: archive/evaluation/aggregate.json. Final Claude review: ops/worklog/reviews/2026-10-20-rl-comparison.md (publication pending).
-- Parameter source table/guide link PR50 pending final green CI; current values remain ASSUMED or UNKNOWN for the owner's future robot. One float64 test-oracle issue fixed with exact saved/live equality; runtime/reward unchanged.
+- Parameter source table/guide link and float64 test-oracle repair merged PR50 (31a5d1a), both CI checks green. Current physical values remain ASSUMED or UNKNOWN; runtime/reward unchanged.
 
 ## Next step and ownership
 - Conductor b finishes publication and final review; no duplicate training, protocol tuning, reward changes or gate promotion. Further experiment design waits for the completed-milestone review.
-- g/Astra Ultra is auditing the negative PPO result read-only in its own worktree. Idle status checked before launch; i/k were not needed. Never launch conductor b as a worker.
+- g/Astra Ultra completed read-only audit bbf4908; no actionable defect found in inspected paths. Conductor reran both scripts with identical results. Idle checked before launch; i/k not needed. Never launch conductor b as a worker.
 - docs/learning/LQR_RL_GUIDE.md explains geometry, energy/dynamics, LQR and the measured RL result. sim/parity/student.py gain_schedule remains the owner's exercise.
 - Model has assumed masses/COM, ideal planar rolling/equivalent rigid leg, known delay/lag and four ideal sensor channels; no full-five-bar/contact or sim-to-real validation.
 

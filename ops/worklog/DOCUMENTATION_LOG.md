@@ -220,3 +220,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Limits/review:LQR160/160,PPO0/800 only under this frozen assumed recipe; no causal ablation or broad RL/sim-to-real claim. Source-auditPR50 CI/test-portability fix and final Claude review pending; no gate promotion.
 
 - DOC22 follow-through: CURRENT.md now records the completed experiment, b-conductor role, archive, protected exercise and pending publication/review; replaces stale RUNNING text. It does not label the negative result Claude-approved or change a gate.
+
+
+### DOC-20261020-23: Integrate independent outcome audit and final source receipts
+- Time / author:2026-10-20 +07; codex-b conductor, codex-g audit bbf4908.
+- Files:ops/worklog/{CURRENT.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-delay-lag-noise.md,sessions/2026-10-20-ppo-outcome-audit.md,reviews/2026-10-20-rl-comparison.md}; sim/rl/RESULTS_2026-10-20.md.
+- Changes:import scoped audit session, measured training/push exposure, PR50 green/merge receipt, complete archive/replication and strict-source-guard note. Resolve shared-log merge conflicts preserving all prior entries.
+- Sources:g diagnostics/report and bbf4908; PR50head934e846, bothCI SUCCESS, merge31a5d1a; same immutable completed run and original source freeze608222b.
+- Validation:conductor reran both g scripts in a new directory, both exit0 and exact diagnostic JSON matches; earlier6680hash/raw/noise/budget audit retained. Guide64/README12 math expressions rendered; links/whitespace/conflict markers checked before publication.
+- Limits/review:sampled implementation audit found no actionable bug; it does not prove cause or future RL failure. No new training, runtime/reward/threshold or gate change. Final results PR/CI and Claude response pending.
