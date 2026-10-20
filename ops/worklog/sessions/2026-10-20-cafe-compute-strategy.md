@@ -12,3 +12,6 @@
 - Documentation log entry added; CURRENT not overwritten because another chat owns active milestone state. New recommendations remain in review file; owner-facing format follows D27.
 - Validation: independent Decimal recomputation passed all9 economics rows,49500/3 and cloud/overhead examples; the relative result link resolves; `git diff --check` passed. Receipt: external `document-validation.json`. No runtime tests needed for this documentation-only set.
 - Publication: pending PR/CI receipts below. Analysis is complete; operational pilot/Claude approval remain pending.
+
+- Owner narrowed final scope to Cho Mo only after PR53 opened. Removed the other branch from report/rankings/cost tables and its RTX5060-specific note; historical external fetch receipts retained. Six in-scope images and Cho Mo page support the revised analysis. PR updated before merge.
+- Revised validation:6 Cho Mo tariff rows and3overhead rows independently passed; excluded-location scan and local links PASS. External `document-validation-chomo-only.json`/`scope.json` record the revision.
