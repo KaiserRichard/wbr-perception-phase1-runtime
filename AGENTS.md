@@ -28,10 +28,18 @@ The `wbr-session-start` skill does this for you.
 
 - `ops/worklog/CURRENT.md` — overwrite to reflect the state at session end.
 - `ops/worklog/DECISIONS.md` — append one entry per decision. Never rewrite old entries.
+- `ops/worklog/DOCUMENTATION_LOG.md` — append one entry for every documentation
+  change set, including worklog and agent-instruction changes, so Claude can audit it.
 - `ops/worklog/sessions/YYYY-MM-DD-<topic>.md` — one log per session.
 - `ops/worklog/reviews/YYYY-MM-DD-<topic>.md` — a question for Claude, when needed.
 
 The `wbr-session-end` skill writes these and commits them.
+
+Every document creation or revision must be logged in the same working change
+set. Record the changed files, what changed and why, evidence/source revisions,
+validation performed, remaining uncertainty and review status. Do not describe
+unrun checks as passed or an unreviewed document as approved. See the worklog
+README for the documentation-log format.
 
 ## Git workflow
 

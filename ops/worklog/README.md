@@ -7,6 +7,7 @@ that someone who has never seen the conversation can continue the work.
 |---|---|
 | `CURRENT.md` | Overwrite at session end. At most ~60 lines. Sections fixed (see file). |
 | `DECISIONS.md` | Append-only, newest at the bottom. Fix a wrong entry by adding a new one that supersedes it (`Supersedes D-YYYYMMDD-N`). |
+| `DOCUMENTATION_LOG.md` | Append-only audit trail for every documentation change set, including this worklog and agent instructions. |
 | `sessions/YYYY-MM-DD-<topic>.md` | One per session. What was done, evidence paths, results, decisions taken. |
 | `reviews/YYYY-MM-DD-<topic>.md` | A request for Claude. Claude answers in the same file under `## Claude review`. |
 
@@ -21,6 +22,28 @@ Rules:
 - Times: local time with offset, e.g. `2026-10-20 08:54 +07`.
 - Keep at most one open worklog PR: merge it before the next session starts, so
   `CURRENT.md` does not conflict between branches.
+- Whenever any document is created or revised, append a documentation-log entry
+  in the same working change set. One entry may cover related documents; list
+  every changed document, including the log itself. Updating the entry does not
+  require a recursive entry about that entry. Later independent revisions get
+  new entries; do not rewrite earlier records.
+- A documentation-log entry is not Claude approval. State whether changes are
+  local, committed, pushed or in a PR, and whether review is pending or complete.
+- Keep new DOC entries about 15 lines; put detailed reasoning and evidence in
+  the linked session log. Preserve earlier finalized entries as history.
+
+Documentation-log entry format:
+
+```markdown
+### DOC-YYYYMMDD-N: <short title>
+- Time / author: <local time with offset; agent>.
+- Branch / base: <branch, base commit; resulting commit or PR when available>.
+- Files: <all created/revised documentation paths>.
+- Changes and reason: <before -> after, and why>.
+- Sources: <pinned upstream revisions, evidence paths and decision IDs>.
+- Validation: <checks actually run and their outcomes; unrun checks explicitly labeled>.
+- Limitations / review: <uncertainties, local/committed/pushed state and review status>.
+```
 
 Decision entry format (in `DECISIONS.md`):
 
