@@ -44,4 +44,3 @@ currently controls the assumed simulator policy task directly and is evaluated
 separately; this paper's hierarchy is a different experiment and must not be
 treated as evidence for that result. The hardware-specific Lyapunov and PID
 layers, timing, sensors, and robot model would need their own source audit.
-

@@ -16,18 +16,17 @@ Parallel torsion springs offset weight and reduce hip-motor effort. The reported
 height range is 31–66 cm. For balance control, the paper fixes leg geometry at a
 chosen height and reduces the robot to two wheels plus one equivalent inverted
 pendulum. Rigid-body kinetic and potential energies form the Lagrangian
-\(\mathcal L=T-V\); constrained equations are
-\(\frac{d}{dt}(\partial\mathcal L/\partial\dot q)-\partial\mathcal L/\partial q
-=J^T c\), where \(q\) are generalized coordinates, \(J\) maps generalized
-motion to contact coordinates, and \(c\) contains applied forces/torques.
+$\mathcal L=T-V$; constrained equations are
+$\frac{d}{dt}(\partial\mathcal L/\partial\dot q)-\partial\mathcal L/\partial q =J^T c$, where $q$ are generalized coordinates, $J$ maps generalized
+motion to contact coordinates, and $c$ contains applied forces/torques.
 Parameters are reported as measured component masses plus CAD-derived inertias
 under a constant-density assumption.
 
 ## Control and evidence
 
 Stabilizing/driving uses a discrete linear-quadratic regulator (LQR):
-\(u=-K(\hat h)\hat x\), with \(\hat x=[\theta,\dot\theta,v,\omega]^T\),
-and \(u\) the left/right wheel torques. Position is handled outside the LQR by
+$u=-K(\hat h)\hat x$, with $\hat x=[\theta,\dot\theta,v,\omega]^T$,
+and $u$ the left/right wheel torques. Position is handled outside the LQR by
 velocity setpoints. Ten linearizations at evenly spaced leg heights provide
 gains interpolated by estimated height. The gains' diagonal state/input weights
 were tuned through tests on the prototype; this is a source description, not an
@@ -56,4 +55,3 @@ Its parameters, gains, actuator response, contact behavior, and jump results
 cannot be transferred to the lab robot without identification. The current
 assumed MuJoCo model has neither articulated five-bar legs nor jump/contact
 transitions, so it represents only a narrower balance question.
-

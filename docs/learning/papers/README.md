@@ -17,4 +17,3 @@ hardware.
 - [Blind stair climbing with legged and wheeled-legged robots](rl-blind-stairs.md)
 - [Wheel-legged navigation with deep reinforcement learning](rl-navigation.md)
 - [Hierarchical RL path tracking for a wheeled biped](rl-path-tracking.md)
-

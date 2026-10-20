@@ -24,7 +24,7 @@ state feedback; virtual force/hip moment into a five-bar virtual model control
 For each side, the six feedback errors cover virtual-leg angle/rate, filtered
 position/speed, body pitch, and gyro rate, with mirrored signs on the left.
 Twelve gains are evaluated as cubic functions of each side's leg length:
-\(K_i(L)=a_{i3}L^3+a_{i2}L^2+a_{i1}L+a_{i0}\). Wheel and virtual-hip outputs
+$K_i(L)=a_{i3}L^3+a_{i2}L^2+a_{i1}L+a_{i0}$. Wheel and virtual-hip outputs
 are dot products with those scheduled gains. The coefficients are source facts;
 the plant, weighting matrices, design period, fitting procedure, and valid
 length interval used to generate them are not recovered. Therefore one can
@@ -50,4 +50,3 @@ mass/COM/inertia and actuator dynamics. The owner-only
 `sim/parity/student.py::gain_schedule` exercise is intentionally not solved or
 duplicated here. Use the pinned links to inspect source; this note copies no
 firmware implementation.
-

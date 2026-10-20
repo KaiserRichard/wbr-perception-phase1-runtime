@@ -17,10 +17,10 @@ potentially higher bandwidth. It has a head/body, two wheel-leg assemblies,
 three actuators per side, an onboard inertial measurement unit (IMU), encoders,
 and a complementary-filter state estimator. A 2-D sagittal reduction treats the
 legs as rods and the system as a two-link inverted pendulum on driven wheels.
-The generalized positions are \(q=[\gamma,\theta,x]^T\): head pitch, leg
+The generalized positions are $q=[\gamma,\theta,x]^T$: head pitch, leg
 pendulum angle, and wheel translation. Inputs are hip and wheel torques
-\(u=[\tau_H,\tau_w]^T\). Its linearized model is written
-\(a\ddot q+bq=cu\), then converted to state-space for LQR synthesis. The
+$u=[\tau_H,\tau_w]^T$. Its linearized model is written
+$a\ddot q+bq=cu$, then converted to state-space for LQR synthesis. The
 controller state expands to pitch/leg angle/translation and rates plus integral
 terms for head angle and position. The paper reports using DARE-based feedback
 and separate height, roll, yaw, and leg-split controllers.
@@ -50,5 +50,4 @@ cover all six mechanical degrees of freedom, wheel-ground impacts, or the full
 whole-body controller. Neither its coefficients nor commercial model
 specifications are measurements of the lab hardware. Reproduce only after
 matching actuator semantics, state definitions, and timing; do not equate the
-paper's \(q\), signs, and control limits with local conventions by name alone.
-
+paper's $q$, signs, and control limits with local conventions by name alone.

@@ -42,4 +42,3 @@ the lab's balancing task: no upright balancing claim is made for the reported
 navigation benchmark, and the action abstraction is unlike wheel/hip torque
 control. Use it as a planning/perception reference, not a benchmark for the
 current planar PPO-vs-LQR experiment.
-

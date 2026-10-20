@@ -50,4 +50,3 @@ fixed leg geometry. The task, action interface, simulated plant, and sensor
 access differ materially; its success numbers cannot be compared with local PPO
 or LQR scores. A useful transfer lesson is to measure the real delay/slip and
 declare the deployable observation set before comparing policies.
-
