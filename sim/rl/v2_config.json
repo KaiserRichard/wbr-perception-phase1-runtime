@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "arms": ["direct", "residual"],
+  "policy_hold_ticks": 5,
+  "residual_cap_fraction": 0.2,
+  "reward": {"alive": 1.0, "cost_scale": 0.1, "physical_termination_penalty": 1.0},
+  "training": {
+    "initial_seeds": [0, 1, 2],
+    "extension_seeds": [3, 4],
+    "policy_transitions_per_seed": 3000000,
+    "n_envs": 8,
+    "initial_angle_abs_deg": 10.0,
+    "push_magnitude_range_N": [0.0, 10.0],
+    "push_start_range_s": [1.0, 7.0],
+    "push_duration_s": 0.15,
+    "condition_rng_domain": 20261020,
+    "noise_seed_base": 10000000,
+    "noise_seed_stride": 3000000,
+    "stage_rule": "Independently extend an arm to seeds 3,4 iff any seed 0,1,2 has at least one unchanged-criteria PASS in the balance panel. Evaluate every trained seed on all 160 cases. No retries or evaluation tuning."
+  },
+  "ppo_overrides": {"n_steps": 250, "batch_size": 250, "gamma": 0.99},
+  "vecnormalize": {"norm_obs": true, "norm_reward": false, "clip_obs": 10.0, "epsilon": 1e-8},
+  "smoke": {"rollouts": 1, "evaluation_cases_per_arm": 1, "counts_as_training_seed": false},
+  "inherit_from_v1": "Unchanged plant, 10 s timeout, physical limits, causal observation encoding, Q/R, PPO network/learning rate/epochs and remaining hyperparameters, fixed evaluation panel and every acceptance criterion.",
+  "reward_definition": "1 - 0.1 * mean over completed 2 ms ticks of post-tick truth quadratic Q cost plus clipped TOTAL issued-command quadratic R cost; subtract 1 on physical termination.",
+  "rng_definition": "Condition RNG SeedSequence([condition_rng_domain, reset_seed, env_rank]); independent runtime noise seed = noise_seed_base + (policy_seed*n_envs+env_rank)*noise_seed_stride + episode_index. Arms share streams for pairing. Evaluation uses original 1000..1019 directly.",
+  "logging": "No training trajectories. Optimizer CSV, progress/status JSON, final.zip and vecnormalize.pkl. Evaluation NPZ stores 500 Hz arrays and per-tick sufficient statistics of runtime intervals, never individual integration steps."
+}
