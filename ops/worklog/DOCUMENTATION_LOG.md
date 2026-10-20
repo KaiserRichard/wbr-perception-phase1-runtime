@@ -249,3 +249,9 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources:owner-pasted review/PR54; current shared43f7f6f; original official tariffs/promotion evidence. No new vendor-price or performance claim.
 - Validation:review preservation,75.8worker-hour arithmetic,pilot cost/tier,local links and documentation-only scope checked; remote CI pending.
 - Limits:no pilot, dependency install, training launch, spending, new CPU-cloud quote, runtime/protocol or architecture change. CURRENT retained under active conductor ownership.
+
+
+### DOC-20261020-CAFE-SHORT: Shorten the owner-facing report
+- Files:ops/worklog/{reviews/2026-10-20-cafe-compute-strategy.md,sessions/2026-10-20-cafe-compute-strategy.md,DOCUMENTATION_LOG.md}.
+- Change:owner explicitly requested a short, understandable report; replace the lengthy analysis with a one-page decision/cost/pilot summary. Full prior report/review retained in Git dc1e0fb and external archive; no decision or runtime change.
+- Validation:local word-count/price/approval-boundary and whitespace checks; publication CI pending. No new experiment, installation or spending.
