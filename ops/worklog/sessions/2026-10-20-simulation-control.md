@@ -299,4 +299,12 @@ KTp    = [ 1.737066795,  0.188598879,  1.373700155,  1.112688642,19.371249470, 0
 - No C/Python parity harness, MuJoCo model, closed-loop experiment, RL training or hardware deployment.
 - Body/leg measurements cannot be performed now; estimates stay ASSUMED/CAD-derived as appropriate, and sweeps are sensitivity only.
 - Windows microSD imaging completion/verification remains UNKNOWN; earlier card A evidence was archived and verified 731/731 files.
-- Commit/merge/CI/PR receipts will be appended after execution; no merge success or green CI claimed yet.
+- Publication receipts below supersede the earlier pending/local-only publication state; CI/PR state is recorded separately from completed local checks.
+
+### Publication receipts
+- Documentation assertions exited 0: exactly six approved Markdown paths, no extra files, all paths logged, pre-session decisions preserved, CURRENT.md 38 lines, DOC-20261020-2 12 lines. `git diff --check` exited 0.
+- Checkpoint commit 39cd6ac (`docs: record controller audit and approved simulation plan`) preserved the six reviewed documents before merging overlapping AGENTS.md changes.
+- Merge commit f1a7fa6 brought origin/main 0dc029a into the feature branch without conflicts; git merge exited 0 and the tree was clean. No stash/reset/force operation used.
+- Re-read merged AGENTS.md, RESEARCH_RULES.md and USER_PROFILE.md. PR #36 simulation rules are now present locally; its earlier open-PR status remains historical in the initial session notes.
+- Verified PR delta against origin/main contains only AGENTS.md and the five approved worklog documents. No sim/, firmware, package, threshold or canonical gate-document changes.
+- Owner approved publication and conditional merge for this exact documentation/review scope. Push, PR and CI receipts will be available in GitHub history; no green CI or PR merge claimed before those operations complete.

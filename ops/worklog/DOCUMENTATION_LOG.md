@@ -36,3 +36,13 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Review: DOC-20261020-1 approved with these decisions; owner authorizes commit/push/PR and merge only after green CI and approved-scope verification.
 - Limitations: no model/controller implementation or hardware measurements; actual mass/inertia and original LQR synthesis remain UNKNOWN.
 - Publication: will append commit/merge/check receipts to the session log; PR history is authoritative for eventual merge status.
+
+### DOC-20261020-3: Record upstream merge and pre-publication checks
+- Time / author: 2026-10-20 11:02 +07; Codex; follows the approved publication task.
+- Branch / base: chatgpt/20261020-simulation-control; origin/main 0dc029a.
+- Files: ops/worklog/sessions/2026-10-20-simulation-control.md; ops/worklog/DOCUMENTATION_LOG.md.
+- Changes: appended actual checkpoint/merge receipts and documentation-check results; preserved earlier pending-status entries as history.
+- Sources: checkpoint 39cd6ac; clean merge f1a7fa6; fetched PR #36 rules; owner's authorization in D-20261020-14.
+- Validation: merge exit 0, no conflicts; exactly six approved Markdown paths in PR delta; doc assertions and whitespace checks exit 0.
+- Review: within DOC-20261020-1 plus approved review decisions/status receipts; no implementation or experimental result added.
+- Limitations: push/PR/CI/remote merge not yet claimed; GitHub PR history will record subsequent publication state.
