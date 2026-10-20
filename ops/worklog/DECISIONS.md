@@ -177,3 +177,10 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Why: owner wants to study LQR/RL this afternoon and explicitly requested short practical notes now.
 - Evidence: docs/learning/LQR_RL_GUIDE.md; AGENTS.md; owner's latest learning/document instructions.
 - Revisit when: owner requests deeper material. Avoid solving protected gain exercise.
+
+### D-20261020-24: Concise teaching must still explain the mathematics
+- Decided by: owner
+- Decision: replace the overly skeletal guide with rendered Markdown mathematics, coordinate/energy/force derivations, state linearization/LQR explanation and a worked numerical example. Brevity is not a fixed line limit.
+- Why: owner found code-formatted equations and unexplained formulas unreadable and superficial.
+- Evidence: owner feedback; revised docs/learning/LQR_RL_GUIDE.md and AGENTS.
+- Revisit when: owner requests deeper details; this clarifies D23 without rewriting it.

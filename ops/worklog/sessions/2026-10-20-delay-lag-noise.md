@@ -9,3 +9,7 @@
 - RL must use same augmented plant/observations/rate/limits/pushes/initial states; no training until actuator/LQR checks. At least5seeds and held-out paired evaluation; keep failures and uncertainty. No learner gain edits, Pi/STM32/motor actions.
 - Learning guide links actual plant/config/synthesis/README and primary SciPy/MuJoCo/Gymnasium/PPO docs. No new runtime result is claimed there.
 - Validation: guide length/relative links/whitespace checked before publication; model work in progress, RL not run yet.
+
+- Owner rejected the initial50-line guide as superficial and mathformattingpoor. Rewrote SAME file with renderedmath, coordinategeometry/COM, kinetic/potentialenergy, fullnonlinearM/h/G andpushJacobian, linearization/DARE, initialtorqueexample, causalimperfections andfairRL. Removed rigid50line preference fromAGENTS; D24 clarifies brevity. No studentgain code changed.
+- Independently calculated M00=3.402522764838054 and initialwheel/hiptorques1.429484128538197/1.6334645242268808 fromactualconfig/archivedK. Mathematicalexpressions checked against sim/tests/test_planar.py independentLagrange oracle.
+- k/AstraUltra now running in own managed rl-protocol-audit worktree/branch after idlecheck, preparing5seed150kstep directPPO protocol and compatiblebackend smoke only. Rawlogs protocol-events.log; no actualtraining yet. g stopped after concise-doc change, freeforlatertraining; i ownsactuatorruntime.
