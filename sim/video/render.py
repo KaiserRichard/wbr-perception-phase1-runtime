@@ -164,8 +164,11 @@ def render(args):
             demo.visual.model.vis.global_.offwidth = args.width
             demo.visual.model.vis.global_.offheight = scene_height
             camera = mujoco.MjvCamera()
-            camera.lookat[:] = [0., 0., .20]
-            camera.distance, camera.azimuth, camera.elevation = 1.05, 90, -12
+            # Frame the full vehicle in the scene above the caption. The live
+            # viewer's wider shot leaves it tiny in the shorter report viewport.
+            camera.lookat[:] = [0., 0., .17]
+            camera.distance = .55 * max(1., scene_height / args.width)
+            camera.azimuth, camera.elevation = 90, -12
             metadata.update(
                 control_dt_s=demo.runtime.dt, fps=None if is_png else args.fps,
                 requested_duration_s=0. if is_png else args.duration,
@@ -194,6 +197,7 @@ def render(args):
                         demo.step()
                         tick += 1
                     demo.visual_state()
+                    camera.lookat[0] = demo.runtime.truth()[0]
                     renderer.update_scene(demo.data, camera=camera)
                     frame = caption_frame(renderer.render(), demo, args)
                     if encoder:
