@@ -285,3 +285,14 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Why/source: owner authorized overnight task queue, account tiers, protected training resources and single morning review.
 - Actual: eight idle/quota pings passed; eight isolated detached workers launched;30min combined monitor and06:30 wakeup scheduled. Pi alias timed out; heavy runs queued. PPO remains independently active.
 - Validation: git diff --check, branch isolation and process/account receipts inspected. Worker outputs and morning results pending; no completion claim.
+
+### DOC-20261020-OVERNIGHT-PROGRESS: Record delivered tools and actual limits
+- Why/source: owner overnight A/B/C queue; independently verified worker outputs and actual quota/SSH errors. This update changes CURRENT/session/DECISIONS and this log only.
+- A2(sim/control_c,PR66):plainC controller README/recorded fixtures;6hosttestsPASS,maxerror1.86e-15,no deployment. A3(sim/gain_schedule,PR65):assumed-family derivation/fitter/commands;14synthetic testsPASS,physics pending.
+- B1(sim/rl/reporting,PR64):saved-evidence reader/plots/usage;16tests+v1reportPASS. B2(sim/policy_export,PR63):export/normalization/estimate guide;5ONNX-enabled testsPASS,CI/merge pending at snapshot.
+- C1(docs/learning/papers,PR62):six notes/index,primary links and GitHub math/local-link checksPASS. C2(GLOSSARY,PR60):terms/units/examples/current100Hz horizon,math/linksPASS.
+- C3(scripts/check_doc_links,PR59+70):local/HTTP guide and fixes;10testsPASS;authenticated source URLs exist;tiny parser follow-up pending. Historical warnings preserved.
+- B3(sim/video,PR67+framing follow-up):renderer guide and tiny frame;11testsPASS,full clips/encoder pending. A1(camera_day+existingROSpackage,PR68):fixturetests12PASS;Pi compile/install/live path unverified.
+- A4(sim/fivebar,PR69):geometry/VMC/assumptions/worked example and deferred comparison;14quick tests+pinnedCparity+matrix snapshotPASS;dynamics differ and long comparison unrun.
+- Each worker updated its own overnight session. Conductor checked math/source links and logged localized fixes; all generated media/checkpoints/raw logs remain outsidegit. No running PPO/environment/student exercise change.
+- All listed merges required actual current-head greenCI; pending PRs/results are not approvals. Single morning review remains reviews/2026-10-21-overnight.md.
