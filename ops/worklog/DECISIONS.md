@@ -245,3 +245,9 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Decision: use the v2 setup recorded in sessions/2026-10-20-ppo-v2.md: reward scale.1/fall penalty1,100Hz policy,eight envs,observation VecNormalize,3M policy steps; residual cap20% with500Hz unchanged LQR. Each arm extends three to five seeds only after a strict balance PASS in the initial panel.
 - Why: test the reviewed survival-reward/horizon/randomization changes and residual correction without changing physical dynamics or acceptance. Keep execution lean; no per-step training provenance.
 - Evidence/status: owner request and imported Claude review. Implementation, tests and runs pending at declaration.
+
+### D-20261020-OVERNIGHT: Keep a bounded overnight worker queue
+- Owner: f conducts; g/i/k hard, b/e/default medium, d/h/j simple; check idle and quota, recheck30min and06:30, transfer partials same/lower tier. Default currently busy in this chat.
+- Scope: A1–A4,B1–B3,C1–C3 approved; one branch/worktree/PR per task; conductor verifies and merges exact-head green CI. No student solution, motors, flashing or active PPO changes.
+- Resource decision: Mac edits/quick tests only while PPO runs; heavy jobs wait for reachable Pi or completed training. Do not claim unrun Pi builds or simulations.
+- Review: one short morning file reviews/2026-10-21-overnight.md; replaces separate overnight milestone handoffs. Earlier account assignments remain historical.
