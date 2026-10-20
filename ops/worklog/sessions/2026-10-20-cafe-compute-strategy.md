@@ -20,3 +20,5 @@
 - Follow-up owner relayed Claude review. Found actual review commit425b682/PR54 (append-only report change); attached it. Current shared checkout43f7f6f is implementing approved PPO v2 under its conductor; no duplicate training launched.
 - Prepared isolated cafe-approved-plan branch from main8d7e386 plus exact review commit. Added current one-page decision card and decision/doc logs; original review preserved. Approved pilot only; no large deposit/migration. Initial100–200k tier implies x2, Training12100/h or72600/six hours, conditional on staff terms.
 - All75core-hour/machine/setup forecasts retained as estimates; independently calculated75.8worker-hours from review assumptions. No new benchmark, cloud rental, simulator or training change. CURRENT not overwritten.
+
+- Owner requested a genuinely short report. Replaced the long report with a one-page decision/cost/pilot summary; full analysis and verbatim Claude review remain recoverable at dc1e0fb and in the existing external archive. Approval boundaries and x2 pilot pricing retained. No runtime/training change.
