@@ -100,6 +100,28 @@ class DocLinkCheckerTests(unittest.TestCase):
             _, status = checker._http_status("https://example.org", timeout=1)
         self.assertIn("certificate verify failed", status)
 
+    def test_http_extraction_skips_malformed_hosts_but_keeps_inline_urls(self):
+        path = self.root / "docs/learning/example.md"
+        path.write_text(
+            'Code: `https://","http://` and `https://","http://","#`. '
+            'Real: `https://example.org/path`\n', encoding="utf-8")
+        with patch.object(checker, "ROOT", self.root), \
+                patch.object(checker, "_http_status", return_value=("", "OK")) as probe:
+            checker.scan_http(("docs/learning",), timeout=3, jobs=4, max_urls=100)
+        self.assertEqual([call.args[0] for call in probe.call_args_list],
+                         ["https://example.org/path"])
+
+    def test_curl_zero_status_with_transport_error_is_unverified(self):
+        from subprocess import CompletedProcess
+
+        response = CompletedProcess(
+            args=["curl"], returncode=6, stdout="000", stderr="Could not resolve host")
+        with patch.object(checker.subprocess, "run", return_value=response):
+            _, status = checker._http_status("https://example.org", timeout=1,
+                                             backend="curl")
+        self.assertIn("UNVERIFIED", status)
+        self.assertIn("Could not resolve host", status)
+
 
 if __name__ == "__main__":
     unittest.main()
