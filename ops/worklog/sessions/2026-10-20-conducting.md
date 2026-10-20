@@ -40,3 +40,11 @@ Started: 2026-10-20 13:29 +07; conductor codex-f. Branch chatgpt/20261020-conduc
 - Simulation results: balance1.732s recovery; push6N*0.15s=0.9Ns, recovery2.714s after pulse end, peakpost-push tilt6.095deg; openloop45.164deg fall at0.182s. Controlled10s runs respect2/4Nm limits, no saturation/warnings. Assumed masses/COM/idealrolling only; not source-controller reproduction or sim-to-real validation.
 - Resolved PR42/main add/add conflicts only in sim/README and sim/__init__: keep running-model documentation plus protectedparity link, correct CI discovery statement, preserve gainexercise. No physics/control/threshold edits by conductor.
 - Simulation checkpoint questions sent asynchronously (separate leg/body angles; meaning/limits of uncontrolled fall). Answers pending.
+
+## Completed simulation milestone
+- PR42 exact head be061d8df3121e66a46ea67a5eae6e2f8c862093: both checks SUCCESS (runs39382644952/39382640827), including11tests and actualMuJoCoCLI. Merged as caae6ff6141957a0dcef06ce2e2baaa65710b8b5. Never merged failed/pendingCI.
+- Conductor reran final integrated CLI at be061d8 to conductor-integrated-01, exit0, allthree scenariosPASS. RawresultSHA2569ffecf467e5dff5e1c0fc64abb6e224b68b8f7ecec6c125d6e09562580e53970.
+- Stable archive /Users/quockaiser/wbr-evidence-archive/sim-lqr-20261020-01: copied conductor+worker runs, source snapshot/test logs; byte/hashverified copies, SHA256.json34entries, manifestSHA2565ac9344be387c0fd57e702bcaf2c0358fc2136337eb4f414c95b60756a50c1c1. Originals retained.
+- Wrote ONE final milestone review ops/worklog/reviews/2026-10-20-lqr-mujoco.md with actualmergedPR38/40/41/42, commands/metrics/source/config/raw hashes/limits. No new Pi review: pose milestone deferred, not done. Earlier parity review request is historical and superseded by owner's milestone-only workflow.
+- Updated CURRENT with achieved nominalsimulation and explicit Pi deferral. Questions pending; no understanding assessment fabricated. No RLtraining, fullfivebar, sim-to-real or gatePASS claim.
+- Documentation-only final review/state publication follows on chatgpt/20261020-lqr-milestone-review from maincaae6ff; finalCI/merge tracked by PRhistory. Simulation code unchanged after verified merge.
