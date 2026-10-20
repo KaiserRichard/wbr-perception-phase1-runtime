@@ -92,3 +92,52 @@
 - Checks passed: a Python delimiter assertion found four standalone display
   pairs and no escaped delimiters; `rg -n '\]\([^)]*\)'` found no README
   Markdown links to check; `git diff --check` was clean. Tests were not rerun.
+
+## Integration follow-up — actual C controller plus exported policy
+
+- PR63 is MERGED. Assigned branch `chatgpt/20261020-c-controller-policy` started
+  clean at refreshed-main `ac6ac3a`. Read AGENTS/USER_PROFILE/CURRENT/research
+  rules, A2 C APIs/fixtures, B2 exporter/tests and v2 composition. No shared
+  checkout, live checkpoint/environment, controller API/gain/threshold/plant,
+  owner-only student code, training, hardware or other worker files changed.
+- New host-only harness links actual `sim/control_c/wbr_lqr.c` and generated
+  B2 `policy.c`; C owns torque/history across ticks. Policy runs once per five
+  ticks; LQR every tick; **unclipped** baseline + held correction precedes final
+  clipping; exactly one advance records **total issued** command. Reset clears
+  torque/pending history, held action and policy cadence. Direct also records
+  its total command. No API incompatibility or redesign needed.
+- Tests save/reload five seeded **untrained tiny fixtures**, no optimizer steps
+  or seed selection. Independent Python oracle uses saved SB3 VecNormalize and
+  deterministic mean, archived K and analytical command-only lag. Both Python
+  and C own their history; the oracle never advances from a C-provided state.
+  Reused 64 archived measured vectors/delay for direct/residual/zero residual;
+  bounded constructed inputs expose before/after-clipping differences, both
+  signs/channels. Delays 2/3/4/5 ms, five-tick holds, resets at 1/2/6/9 ticks.
+- Exact assigned done command (from dedicated checkout):
+  ```sh
+  env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 nice -n 10 /private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python -m unittest discover -s sim/policy_export/integration/tests -v
+  ```
+  First run: 4/4 PASS, 7.477s. Final after adding explicit C-vs-float64 reporting:
+  4/4 PASS, 7.700s, zero skips, five real linked C builds, 1464 replay ticks.
+  No failures or dependency installs. Original export/ONNX tests not rerun;
+  earlier five-test success, real directseed0 ONNX/checker/ORT result preserved.
+- Actual C compile per fixture (complete absolute paths in `compile.log`):
+  `cc -std=c99 -O2 -Wall -Wextra -Werror -pedantic -ffp-contract=off -shared -fPIC -I sim/control_c -I FIXTURE sim/policy_export/integration/host.c sim/control_c/wbr_lqr.c FIXTURE/policy.c -lm -o FIXTURE/host.so`.
+  Generated saved checkpoints/sources/libraries/compiler logs and JSON reports
+  retained externally (no artifact cleanup/deletion): initial
+  `/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/wbr-b2-integration-5tvx9n54`;
+  final `/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/wbr-b2-integration-_uciesyd`.
+- Maximum C/oracle absolute error: encoded 2.384185791015625e-7; policy outputs
+  7.152557373046875e-7; LQR requests/clipped 7.88146204300233e-7 Nm; total issued
+  and torque/history 4.76837158203125e-7 Nm. A2 tolerance unchanged: atol1e-6,
+  rtol0; B2 unchanged: atol/rtol3e-5. Zero-residual compares archived original
+  A2 requested/clipped/torque/history explicitly at A2 tolerance.
+- Export float32 vs simulator-style float64 external arithmetic, each with own
+  history and same supplied measurements: max command/history1.4305115048074413e-7
+  Nm; LQR1.165299132743769e-7 Nm. Actual C vs float64 oracle: command/history
+  4.76837158203125e-7 Nm; LQR7.88146204300233e-7 Nm. No bitwise simulator
+  equivalence claim; these are bounded controller arithmetic replays, **not**
+  closed-loop plant results. Full simulation/hardware timing remain queued.
+- README adds usage/ordering/evidence/precision limits with GitHub math.
+  Delimiter/local-link assertions and `git diff --check` passed. Scope remains
+  integration directory, README and this session only; conductor owns merge.

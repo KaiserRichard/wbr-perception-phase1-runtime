@@ -139,6 +139,58 @@ runtime parity separately and only passes it after ONNX Runtime actually runs.
 Completed real residual weights were not loaded; residual ONNX/C semantics were
 validated with the saved tiny fixture. No rollout or hardware validation ran.
 
+## Bounded integration with the C LQR controller
+
+Run from the repository root with the existing backend (no ONNX dependencies
+needed for this integration check):
+
+```sh
+PY=/private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 MKL_NUM_THREADS=1 \
+PYTHONDONTWRITEBYTECODE=1 nice -n 10 "$PY" \
+  -m unittest discover -s sim/policy_export/integration/tests -v
+```
+
+The [host harness](integration/host.c) links actual
+[A2 C LQR](../control_c/wbr_lqr.h) with generated B2 policy C. Each 2 ms tick
+reads the current unclipped LQR request; every fifth tick it evaluates the
+policy from pre-tick measurements and C-owned torque/history. It composes the
+held correction with the **unclipped** request, clips the total, and calls
+`wbr_lqr_advance` exactly once with that total. Direct mode also advances history
+using its total issued command. The harness has one controller instance per
+loaded library and is only a synchronous host replay, without a timing loop.
+
+Tests save/reload five deterministic **untrained tiny fixtures**, freeze saved
+VecNormalize statistics (including nondefault epsilon/clipping and zero variance),
+and compile each with the real controller. They replay 64 archived six-coordinate
+measurement vectors per delay, separately for direct, residual and zero-correction
+cases. Additional bounded sensor inputs distinguish addition before clipping from
+addition after clipping on both channels/signs. Resets after 1/2/6/9 ticks check
+pending commands, nonzero torque, held actions and the five-tick phase. No seed
+selection or policy performance result is involved.
+
+The Python oracle owns its own history, uses archived gains, saved SB3
+normalization/deterministic means, declared float32 export composition, and exact
+analytical command-only lag endpoints. It never imports or runs the plant.
+A2 absolute tolerance remains $10^{-6}$ with zero relative tolerance for LQR,
+torque/history and encoded observations; B2 remains atol/rtol $3\times10^{-5}$
+for policy outputs and composed commands. A separate oracle retains simulator-style
+float64 external scaling/composition and reports its differences explicitly;
+it does not claim bitwise simulator equivalence. Host compilation disables
+floating-point contraction and fast math.
+
+Actual final integration run: four tests, five compiled fixtures and 1,464 replay
+ticks passed in 7.700 s (first run 7.477 s); maximum C/oracle
+errors were `7.88e-7 Nm` for LQR, `7.15e-7` for policy outputs and
+`4.77e-7 Nm` for issued commands/torque/history. Export float32 versus
+simulator-style float64 oracle command/history difference was `1.43e-7 Nm`.
+Actual C versus that float64 oracle differed by at most `4.77e-7 Nm` in issued
+commands/torque/history and `7.88e-7 Nm` in LQR requests on these inputs.
+Tests print a preserved external artifact directory containing generated sources,
+saved fixtures, exact compiler commands/logs and a numerical `report.json`.
+This is **controller arithmetic replay**, with measured vectors reused as inputs;
+full closed-loop simulation, hardware timing and hardware validation remain queued.
+
 ## Analytical STM32H7 cycle estimate — not measured
 
 The completed directseed0 actor is **15 → 64 → 64 → 2**, with two tanh layers:
