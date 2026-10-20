@@ -10,7 +10,8 @@ Always reply in English unless the user explicitly asks for Vietnamese.
 
 1. `ops/worklog/CURRENT.md` — live state: what is in progress, blockers, next step.
 2. The last 15 entries of `ops/worklog/DECISIONS.md`.
-3. `ops/RESEARCH_RULES.md` — the research standard every claim must meet.
+3. `ops/RESEARCH_RULES.md` — the research standard every claim must meet, and
+   `ops/USER_PROFILE.md` — who the owner is and how they want to work.
 4. `docs/PROJECT_STATE.md` and `docs/NEXT_GATE.md` — canonical project state
    (owner-promoted; agents propose changes, they do not promote gates).
 5. Then the mode file below.
@@ -23,6 +24,7 @@ The `wbr-session-start` skill does this for you.
 |---|---|---|---|
 | Lab | Anything touching the Pi, camera, power, storage or evidence | `ops/lab-assistant/INSTRUCTIONS.md` | `ops/lab-assistant/skills/` |
 | Build / research | Code, analysis, docs, experiment design, literature | `ops/RESEARCH_RULES.md` + "Git workflow" below | `ops/skills/` |
+| Simulation / control | MuJoCo models, RL training, LQR baseline comparison | `ops/RESEARCH_RULES.md` "Simulation and learned control" + "Git workflow" | `ops/skills/` |
 
 ## Files you write (see `ops/worklog/README.md`)
 
