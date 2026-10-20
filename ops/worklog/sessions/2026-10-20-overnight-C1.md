@@ -1,0 +1,12 @@
+# Overnight C1: WBR platform and RL research notes
+
+- Read `AGENTS.md`, `ops/USER_PROFILE.md`, `ops/RESEARCH_RULES.md`, `ops/worklog/CURRENT.md`, simulation docs, and the pinned DM-jump source/provenance already present in the repository.
+- Retrieved and read primary sources: Ascento ICRA paper (arXiv/ETH PDF); DIABLO IROS paper (arXiv) and manufacturer ROS 2 SDK docs; DM-jump raw source files and license at commit `6855ef8c6da20246251cfd473467c04112bf800f`; Chamorro et al. ICRA 2024 stair-climbing paper; Chen et al. 2018 navigation paper; Zhu et al. IEEE/SICE SII 2022 paper record, author publication page, and code repository.
+- Independently fetched DM-jump `LICENSE`, `chassisR_task.c`, and `VMC_calc.c` to `/private/tmp/wbr-overnight-20261020/C1/source-retrieval/`. SHA-256 values matched pinned provenance: `e530433b…cf524`, `8865ea4e…b4b51`, and `9ad28c52…85a3d`, respectively.
+- Added six concise evidence-labeled notes plus an index under `docs/learning/papers/`: Ascento, DIABLO, DM-jump, blind stair climbing RL, wheel-legged navigation RL, and hierarchical path-tracking RL.
+- Notes distinguish paper-reported prototype outcomes from simulation, open source availability from claims about complete hardware/firmware release, and code constants from measured physical properties. DM-jump includes the exact pinned commit and MIT license link; no student exercise solution was written or duplicated.
+- Initial link check failed because it incorrectly required HTTPS links in the local-only index. Corrected check passed:
+  `python3 - <<'PY' ...` (checks seven Markdown files, >=10 HTTPS links, and all relative links).
+  Result: `PASS: 7 Markdown files; 18 HTTPS links; all relative links resolve`.
+- No training, simulation, dependency changes, or hardware activity. No heavy work pending. Limits: source papers differ in task/model/protocol; reported results are not matched comparisons or evidence for the lab robot. Ascento's paper does not establish release of complete CAD/firmware; DIABLO's public materials confirm ROS SDK availability only.
+
