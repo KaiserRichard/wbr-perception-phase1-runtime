@@ -19,7 +19,12 @@ jobs:
           python-version: '3.12'
 
       - name: Install pinned Python dependencies
-        run: python -m pip install numpy==1.26.4 PyYAML==6.0.2
+        run: python -m pip install numpy==1.26.4 PyYAML==6.0.2 -r sim/requirements.lock
 
       - name: Run test suites
         run: bash tools/run_all_tests.sh
+
+      - name: Discover simulation tests and run MuJoCo protocol
+        run: |
+          python .github/run_unittest.py sim/tests
+          python -m sim.run_planar --config sim/configs/assumed_planar.json --out "$RUNNER_TEMP/wbr-planar-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"

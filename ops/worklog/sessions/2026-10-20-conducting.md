@@ -30,3 +30,13 @@ Started: 2026-10-20 13:29 +07; conductor codex-f. Branch chatgpt/20261020-conduc
 
 - Implemented owner's requested Conducting Codex section in AGENTS; aligned older Claude/logging text so it no longer contradicts this role. Worker briefs already carry these instructions.
 - Conductor reruns parity scaffold tests before merge; no Python learner code edited.
+
+## Independent verification and owner priority update
+- Conductor reran parity infrastructure: 15/15 PASS; ROS-free wrapper: 19/19 PASS. Original learner gain body unchanged (`git diff bc4aea5 -- sim/parity/student.py` empty).
+- PR38 merged ba36fc3 after both checks SUCCESS at1fe2ae0; PR40 conducting rules merged268d9bd after both checks SUCCESS ate928c0b; PR41 offline prep merged5c6225b after both checks SUCCESS at38399d0. No branch deletion/force push.
+- Cafe Wi-Fi discovery (known hostname only, no network scan): Mac192.168.111.250, Pi wbr-pi5.local192.168.111.243. SSH worked; Pi reports RaspberryPi5ModelB, MemTotal4079576kB, root6.2Gfree. Native stereo_euroc, vocabulary, MH01 CSV and ROS2/colcon exist.
+- After idle recheck, g was briefly relaunched for actual dataset stereo/ROS integration on fresh branch chatgpt/20261020-pi-stereo-runtime in its own worktree. It performed read-only inventory only; before implementation owner explicitly prioritized other work because the card is slow. Sent SIGINT to our exact workerPID48621; worker exited1/interrupted. No remote build, deployment, SLAM run or STM32 use occurred. Retain worktree; no deletion. Pi track deferred by owner, not automatically retried.
+- Sim worker i produced 827c357 and PR42. Conductor independently executed CLI to conductor-sim-01; allthree scenariosPASS. Independently reran11tests, allPASS/no skips. RawCSV finite/impulse/zero-control checksPASS. Runtime model+LQR hashes match committed code; runner later added post-push metric, so conductor repeated finalcode as conductor-sim-02 (exit0) rather than treating old runner as exactfinal.
+- Simulation results: balance1.732s recovery; push6N*0.15s=0.9Ns, recovery2.714s after pulse end, peakpost-push tilt6.095deg; openloop45.164deg fall at0.182s. Controlled10s runs respect2/4Nm limits, no saturation/warnings. Assumed masses/COM/idealrolling only; not source-controller reproduction or sim-to-real validation.
+- Resolved PR42/main add/add conflicts only in sim/README and sim/__init__: keep running-model documentation plus protectedparity link, correct CI discovery statement, preserve gainexercise. No physics/control/threshold edits by conductor.
+- Simulation checkpoint questions sent asynchronously (separate leg/body angles; meaning/limits of uncontrolled fall). Answers pending.

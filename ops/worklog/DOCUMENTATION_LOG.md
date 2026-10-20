@@ -96,3 +96,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Sources: owner's explicit role, merge, model and documentation instructions; worker launch/model receipts.
 - Validation: whitespace check; account f not launched and g/i worktree isolation confirmed. CI/publication pending.
 - Limitations/review: no milestone claimed; no Claude escalation required for this authorized role update. Hardware/SSH blockers remain.
+
+### DOC-20261020-9: Integrate worker outputs and prioritize the verified simulation
+- Time / author: 2026-10-20 +07; codex-f conductor.
+- Branch: chatgpt/20261020-conducting integrating worker sim827c357; prior green PR38/40/41 merged.
+- Files: sim/README.md; ops/worklog/{DECISIONS.md,DOCUMENTATION_LOG.md,sessions/2026-10-20-conducting.md}; imported worker docs ops/worklog/sessions/2026-10-20-sim-lqr-push.md and earlier PR41 skill/offline-stereo.md, skill/SKILL.md, ros2/wbr_orb_node/README.md, sessions/2026-10-20-pi-orbslam-pose.md.
+- Changes: running assumed-model instructions plus parityexercise boundary; documented idle dispatch, cafeSSH recovery, owner deferral of Pi, independent reruns and mergedPRreceipts.
+- Sources: owner priority instruction; worker commits38399d0/827c357; conductor rawlogs and simulation folders under /private/tmp/wbr-conducting-20261020.
+- Validation: parity15/15, wrapper19/19 and simulation11/11 PASS; conductor simulation CLI and independentCSV checksPASS. No learneredit. Merge resolution changes docs/package docstring only.
+- Limits/review: assumptions/idealrolling only; no livecamera or source-gain parity. PR42 finalCI/merge and final milestone review file pending.

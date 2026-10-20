@@ -156,3 +156,10 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Why: newest instruction asks for an operational baseline in parallel; unavailable robot and incomplete learning exercise need not prevent assumed-model runs.
 - Evidence: owner two-track instruction and named exception; sim worker brief.
 - Revisit when: physical data or learner gain port arrives. Supersedes the prior sequencing/ownership restriction only where necessary for this explicit simulation task; no RL or deployment authorized here.
+
+### D-20261020-21: Defer Pi track and prioritize Mac simulation
+- Decided by: owner
+- Decision: prioritize other work while the only available card is slow; conductor stopped Pi worker and continues MuJoCo/LQR/push verification. No camera available; no storage change, Pi build or live-pose claim.
+- Why: owner explicitly redirected effort after cafe Wi-Fi restored SSH; simulation runs independently on the Mac.
+- Evidence: owner messages on 2026-10-20; conducting session records discovery and interrupted worker.
+- Revisit when: owner resumes Pi work with suitable hardware/storage. Cafe SSH endpoint richard@wbr-pi5.local192.168.111.243 was measured, not guaranteed stable across networks.
