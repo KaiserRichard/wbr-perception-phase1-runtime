@@ -13,10 +13,12 @@ import traceback
 import numpy as np
 
 from sim.gain_schedule.fitting import evaluate_polynomial, fit_polynomial
+from sim.gain_schedule.geometry import geometry_evidence
 from sim.gain_schedule.model import (
     DEFAULT_DELAYS, DEFAULT_LENGTHS, DOMAIN_M, EVALUATION_LENGTHS, FAMILY,
-    check_length, config_at_length,
+    check_length, config_at_length, training_midpoints,
 )
+from sim.gain_schedule.poles import check_fitted_poles
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -58,7 +60,7 @@ def sweep(args, out):
 
     lengths = _lengths(args.lengths)
     if lengths[0] != DOMAIN_M[0] or lengths[-1] != DOMAIN_M[1]:
-        raise ValueError("Sweep must span the full 0.12–0.30 m domain")
+        raise ValueError(f"Sweep must span the full {DOMAIN_M} m domain")
     delays = sorted(args.delays)
     if not delays or len(set(delays)) != len(delays) or any(d not in DEFAULT_DELAYS for d in delays):
         raise ValueError("Use unique delays from 0.002, 0.003, 0.004, 0.005 s")
@@ -75,6 +77,8 @@ def sweep(args, out):
         "errors": [],
     }
     write_json(out / "sweep.json", result)
+    write_json(out / "geometry.json", geometry_evidence(
+        reference, [*lengths, *training_midpoints(lengths), *EVALUATION_LENGTHS]))
     for index, length in enumerate(lengths):
         cfg = config_at_length(reference, length)
         length_out = out / f"length_{index:02d}"
@@ -169,20 +173,103 @@ def controller(gain):
     return lambda observation: -gain @ observation.vector()
 
 
+def load_schedule(path):
+    """Refuse legacy wide-domain schedules before importing/executing physics.
+
+    Their saved coefficients retain their original meaning and can still be
+    read by the general polynomial helper; they are not valid for this runner.
+    """
+    schedule = read_json(path)
+    if (schedule.get("schema_version") != 1 or
+            schedule.get("kind") != "assumed_leg_schedule" or
+            schedule.get("family") != FAMILY or schedule.get("status") != "COMPLETE" or
+            not schedule.get("regimes")):
+        raise ValueError("Expected a complete assumed-model polynomial schedule")
+    delays = set()
+    for regime in schedule["regimes"]:
+        fit = regime["fit"]
+        if fit.get("domain_m") != list(DOMAIN_M):
+            raise ValueError("Legacy or incompatible schedule domain; regenerate the restricted "
+                             "sweep and fit without reinterpreting old coefficients")
+        training_midpoints(fit["diagnostics"]["sample_lengths_m"])
+        delay = regime["runtime"]["delay_s"]
+        if delay not in DEFAULT_DELAYS or delay in delays:
+            raise ValueError("Unsupported or duplicate delay regime")
+        delays.add(delay)
+        order, inputs = regime["state_order"], regime["input_order"]
+        gains = evaluate_polynomial(fit, DOMAIN_M)
+        if (len(set(order)) != len(order) or len(set(inputs)) != 2 or
+                gains.shape != (2, 2, len(order))):
+            raise ValueError("Schedule dimensions do not match state/input order")
+    return schedule
+
+
+def linear_check(args, out):
+    """Fresh actual augmented A/B at every training midpoint; no rollouts."""
+    schedule = load_schedule(args.schedule)
+    from sim.augmented import RuntimeConfig
+    from sim.augmented_lqr import synthesize_augmented
+    from sim.lqr import synthesize
+    from sim.planar import Plant
+
+    write_json(out / "schedule.json", schedule)
+    grids = [training_midpoints(r["fit"]["diagnostics"]["sample_lengths_m"])
+             for r in schedule["regimes"]]
+    result = {
+        "status": "INCOMPLETE", "family": FAMILY, "source": source_info(),
+        "domain_m": list(DOMAIN_M), "expected_checks": sum(map(len, grids)),
+        "cases": [], "errors": [], "nonlinear_cases_run": 0,
+        "claim": "Sampled local poles only; no continuous-domain, varying-length, "
+                 "nonlinear, five-bar dynamics or hardware stability claim",
+    }
+    write_json(out / "linear_checks.json", result)
+    for regime_index, (regime, lengths) in enumerate(zip(schedule["regimes"], grids)):
+        for index, length in enumerate(lengths):
+            case_out = out / f"delay_{regime_index:02d}" / f"midpoint_{index:02d}"
+            case_out.mkdir(parents=True)
+            identity = {"length_m": length, "delay_s": regime["runtime"]["delay_s"],
+                        "artifact_directory": str(case_out.relative_to(out))}
+            try:
+                cfg = config_at_length(schedule["reference_config"], length)
+                effects = RuntimeConfig(**regime["runtime"])
+                write_json(case_out / "config.json", cfg)
+                nominal, nominal_record = synthesize(Plant(cfg))
+                write_json(case_out / "nominal_design.json", nominal_record)
+                exact, design = synthesize_augmented(cfg, effects, nominal)
+                write_json(case_out / "exact_design.json", design)
+                check = check_fitted_poles(regime, length, exact, design, cfg)
+                check["actual_matrices_file"] = "exact_design.json"
+                write_json(case_out / "polynomial_check.json", check)
+                result["cases"].append({**identity, **{key: check[key] for key in (
+                    "polynomial_pole_radius", "margin_to_one", "slowest_time_constant_s",
+                    "polynomial_local_status", "exact_pole_radius")}})
+                print(f"L={length:g} delay={effects.delay_s:g}: "
+                      f"{check['polynomial_local_status']} rho={check['polynomial_pole_radius']:.12g}",
+                      flush=True)
+            except Exception:
+                error = traceback.format_exc()
+                (case_out / "error.txt").write_text(error)
+                result["errors"].append({**identity, "error": error})
+            write_json(out / "linear_checks.json", result)
+    result["status"] = "COMPLETE" if not result["errors"] else "INCOMPLETE"
+    result["polynomial_local_acceptance"] = (
+        "PASS" if result["status"] == "COMPLETE" and len(result["cases"]) == result["expected_checks"]
+        and all(c["polynomial_local_status"] == "PASS" for c in result["cases"]) else "FAIL")
+    write_json(out / "linear_checks.json", result)
+    return {**{key: result[key] for key in (
+        "status", "polynomial_local_acceptance", "expected_checks", "errors", "claim")},
+        "checks_completed": len(result["cases"]), "nonlinear_cases_run": 0}
+
+
 def evaluate(args, out):
+    schedule = load_schedule(args.schedule)
+    lengths = _lengths(args.lengths)
     from sim.augmented import AugmentedRuntime, RuntimeConfig
     from sim.augmented_eval import evaluate as evaluate_case
     from sim.augmented_lqr import synthesize_augmented
     from sim.lqr import synthesize
     from sim.planar import Plant
 
-    schedule = read_json(args.schedule)
-    if (schedule.get("schema_version") != 1 or
-            schedule.get("kind") != "assumed_leg_schedule" or
-            schedule.get("family") != FAMILY or schedule.get("status") != "COMPLETE" or
-            not schedule.get("regimes")):
-        raise ValueError("Expected a complete assumed-model polynomial schedule")
-    lengths = _lengths(args.lengths)
     if (not args.seeds or any(s < 0 for s in args.seeds) or
             len(set(args.seeds)) != len(args.seeds)):
         raise ValueError("Seeds must be unique nonnegative integers")
@@ -208,21 +295,8 @@ def evaluate(args, out):
             case_root.mkdir()
             exact, design = synthesize_augmented(cfg, effects, nominal)
             write_json(case_root / "exact_design.json", design)
-            fitted = evaluate_polynomial(regime["fit"], length)
-            if (fitted.shape != exact.shape or regime["state_order"] != design["state_order"] or
-                    regime["input_order"] != cfg["controller"]["input_order"]):
-                raise ValueError("Schedule incompatible with runtime state/input order")
-            A, B = np.asarray(design["A_discrete_actual"]), np.asarray(design["B_discrete_actual"])
-            radius = float(max(abs(np.linalg.eigvals(A - B @ fitted))))
-            check = {
-                "length_m": length, "delay_s": effects.delay_s,
-                "exact_pole_radius": design["max_closed_loop_pole_magnitude"],
-                "polynomial_pole_radius": radius,
-                "polynomial_local_status": "PASS" if radius < 1 else "FAIL",
-                "max_abs_gain_error": float(np.max(abs(fitted - exact))),
-                "relative_frobenius_gain_error": float(np.linalg.norm(fitted - exact) /
-                                                       np.linalg.norm(exact)),
-            }
+            check = check_fitted_poles(regime, length, exact, design, cfg)
+            fitted = np.asarray(check["Kfit"])
             write_json(case_root / "polynomial_check.json", {**check, "K": fitted.tolist()})
             result["local_linear_checks"].append(check)
             write_json(out / "evaluation.json", result)
@@ -269,12 +343,15 @@ def main(argv=None):
     fit_parser.add_argument("--degree", type=int, default=3)
     fit_parser.add_argument("--max-condition", type=float, default=1e8)
     fit_parser.set_defaults(run=fit_sweep)
+    linear_parser = sub.add_parser("linear-check", help="Fresh midpoint A/B and fitted poles; no rollouts")
+    linear_parser.add_argument("--schedule", type=Path, required=True)
+    linear_parser.set_defaults(run=linear_check)
     eval_parser = sub.add_parser("evaluate", help="HEAVY: matched fresh-DARE/polynomial rollouts")
     eval_parser.add_argument("--schedule", type=Path, required=True)
     eval_parser.add_argument("--lengths", type=float, nargs="+", default=EVALUATION_LENGTHS)
     eval_parser.add_argument("--seeds", type=int, nargs="+", default=list(range(5)))
     eval_parser.set_defaults(run=evaluate)
-    for subparser in (sweep_parser, fit_parser, eval_parser):
+    for subparser in (sweep_parser, fit_parser, linear_parser, eval_parser):
         subparser.add_argument("--out", type=Path, required=True,
                                help="NEW output directory outside the repository")
     args = parser.parse_args(argv)
