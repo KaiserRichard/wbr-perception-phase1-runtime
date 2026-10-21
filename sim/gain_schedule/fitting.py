@@ -3,6 +3,8 @@
 import numpy as np
 from numpy.polynomial.chebyshev import chebvander
 
+from sim.gain_schedule.model import DOMAIN_M
+
 
 BASIS = "Chebyshev T_j(x), x=(2*L-L_min-L_max)/(L_max-L_min)"
 
@@ -23,7 +25,7 @@ def _coordinates(lengths, domain):
     return (2 * values - domain[0] - domain[1]) / (domain[1] - domain[0])
 
 
-def fit_polynomial(lengths, gains, *, degree=3, domain=(0.12, 0.30),
+def fit_polynomial(lengths, gains, *, degree=3, domain=DOMAIN_M,
                    max_condition=1e8):
     """Fit each K entry with the same unweighted, scaled design matrix.
 
