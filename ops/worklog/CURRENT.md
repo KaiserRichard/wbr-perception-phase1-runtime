@@ -7,8 +7,8 @@ Updated 2026-10-21 +07; PR93 camera follow-up measured; simulation snapshot belo
 - Claude approved the assumed six-state planar LQR (PR44) and delay/lag/noise baseline (PR47–48). Hardware parameters remain ASSUMED/UNKNOWN; source gain parity remains the owner exercise.
 - PPO v1 complete: LQR160/160, PPO0/800. See sim/rl/RESULTS_2026-10-20.md; archived evidence retained.
 - PPO v2 COMPLETE 2026-10-21 12:13 +07 (PR55; frozen source f1b5ee7): eight exact3M-step seeds,all reloadPASS,1,280 evaluated cases; supervisor exited0.100Hz PPO versus unchanged500Hz LQR; no tuning.
-- Direct seeds0–4 strict[39,20,0,0,0], survival[160,160,120,160,160]:59/800 strict,760/800 survived. Residual seeds0–2:0/480 strict,480/480 survived; no extension. Reused LQR160/160. Legacy episode-length/return curves unavailable. Results: sim/rl/RESULTS_V2_2026-10-20.md; review2026-10-20-ppo-v2.md. Owner requested Mac rest/charging: no further heavy work or workers until resumed.
-- Owner resumed control work13:52 +07, prioritizing j/k; both busy, not dispatched. Final table+7plots generated from saved JSON at ~/wbr-evidence-archive/sim-control-followup-20261021-01/comparison. A4 nine-case single-thread attempt hit120s budget; no completed result, no retry. Review2026-10-21-control-followup.md; v3 remains unlaunched.
+- Direct seeds0–4 strict[39,20,0,0,0], survival[160,160,120,160,160]:59/800 strict,760/800 survived. Residual seeds0–2:0/480 strict,480/480 survived; no extension. Reused LQR160/160. Legacy episode-length/return curves unavailable. Results: sim/rl/RESULTS_V2_2026-10-20.md; review2026-10-20-ppo-v2.md.
+- Owner resumed control13:52 +07, prioritizing j/k after idle/quota checks. Final table+7plots generated; j completed two LQR clips and76designs+four fits; k completed9mechanics cases. Review2026-10-21-control-followup.md.400nonlinear cases remainUNRUN; v3 unlaunched.
 - Evidence ~/wbr-evidence-archive/sim-ppo-v2-20261020-01; process/progress /private/tmp/wbr-ppo-v2-20261020/. Camera lab worktree updated to main; training runtime files unchanged.
 - sim/parity/student.py::gain_schedule remains owner-only. Separate live LQR viewer uses parameter-source-audit checkout; Desktop launcher remains available.
 
@@ -19,11 +19,11 @@ Updated 2026-10-21 +07; PR93 camera follow-up measured; simulation snapshot belo
 - C1 six primary-source literature notes mergedPR62; C2 glossary mergedPR60; C3 link tool mergedPR59, localized HTTP parser follow-upPR70 merged;12focused testsPASS.
 - B2 real ONNX/C export and frozen-normalization parity passed5tests,no skips; PR63 merged; combined C LQR+policy integration mergedPR73:4testsPASS,1464recorded ticks,maxLQRerror7.88e-7 (limit1e-6). Isolated wheels leave the active PPO environment unchanged; H7 cycles are analytical estimates.
 - Camera ROS build/link fixes mergedPR77; conductor independently rebuilt and verified linking/startup. Live visual poses and three cart-bag replays completed; see Hardware below for losses and limitations.
-- A3 sweep/fitter mergedPR65:14synthetic testsPASS.76designs/400physics cases NOT RUN. Domain0.12–0.30m is a hypothetical rigid-leg family, not the five-bar workspace.
-- A4 five-bar/VMC mergedPR69:14quick tests including pinned-C VMC parityPASS; kinematic/hip-power agreement measured. Mass matrix and wheel reaction differ from reduced model; heavy dynamics comparison queued.
-- B3 renderer mergedPR67;11tests and one tiny framePASS. Framing improvement mergedPR71; one additional tiny frame inspected. Full balance/push clips await compute and FFmpeg; no full video claim.
-- Queue/briefs/process/error receipts: /private/tmp/wbr-overnight-20261020/. 06:30wakeup completed/deleted; overnight dispatch ended. PPO completion monitor retires after final report handoff.
-- Mac edits/quick tests only while PPO runs. Heavy jobs use an available Pi or wait. Morning review: reviews/2026-10-21-overnight.md. A1/A3/A4/B3 remain queued for actual execution.
+- A3:76real assumed-model designs+four degree3 Chebyshev fits COMPLETE;400nonlinear balance/push cases UNRUN. Evidence ~/wbr-evidence-archive/sim-gain-sweep-20261021-01. Domain0.12–0.30m is hypothetical rigid-leg family, not five-bar workspace.
+- A4:9fixed-length dynamics cases executed150.709s; all finite, open-loop45°stops~0.296s. One coarsecase independently reproduced. Mass/wheel-reaction differences persist; no full-model balance/transfer claim. Review2026-10-21-fivebar-dynamics.md.
+- B3 COMPLETE,PR97:two640x480 LQR clips,300frames/10s each; full decode+six-frame inspection passed independently. Evidence ~/wbr-evidence-archive/sim-lqr-clips-20261021-01. Illustrative/unscored; no hardware validation.
+- Control worker briefs/receipts: /private/tmp/wbr-overnight-20261020/{B3-FINAL,A4-FINAL,A3-SWEEP}/. PPO completion monitor deleted after final handoff; no recurring dispatch active.
+- PPO stopped normally; resumed control jobs single-threaded and bounded. Remaining control execution:400-case A3 nonlinear study. Camera work belongs to WBR-Perception.
 
 ## Hardware
 - SSH `wbr-pi5` works; Pi5/aarch64/3.9GiB; migrated SG128 boots, expanded113GiB root,80GiBfree.

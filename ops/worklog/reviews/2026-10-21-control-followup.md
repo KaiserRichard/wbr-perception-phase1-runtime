@@ -1,16 +1,21 @@
 # Control follow-up — 21 October 2026
 
-Owner resumed control work and requested account priority j/k. Both were busy in the shared-session checks at 13:52 and 13:53 +07; neither was interrupted, quota-probed or dispatched. No camera task, checkout or file was accessed. The latest owner request permits j for control when idle; d/h remain excluded and g/k still share one pool.
+Owner resumed control work, prioritizing j/k. Both were initially busy; after fresh idle/quota checks, **j completed videos and gain synthesis/fitting; k completed the mechanics study using Astra Ultra**. No unrelated session was interrupted. Owner explicitly allowed j for these control tasks; d/h remain excluded, g/k share one pool. Camera ownership, student gain exercise and training recipe stayed unchanged.
 
-**Completed:** generated the final saved-result table and seven SVG plots (strict success, survival, duration, recovery, penalized recovery, command/applied effort), using the existing reporting tool. Read 3,985,899 JSON bytes; no policy, trajectory replay or training. Independently checked the completed v2 seed totals, 160-case coverage, 100/500 Hz rates, single reused LQR row and SVG XML validity. Counts match PR91: direct strict 59/800, survival 760/800; residual strict 0/480, survival 480/480. Missing legacy training curves remain unavailable. The v1 aggregate reader leaves joint survival unavailable; this does not weaken its separately established strict-success count.
+| Work | Actual result / review |
+|---|---|
+| Saved PPO comparison, PR95 | Table and seven SVGs; counts independently checked: direct strict59/800, survived760/800; residual0/480, survived480/480; one reused LQR reference. Missing legacy learning curves remain unavailable. |
+| B3 videos, j, PR97 | Two 640×480 MP4s, 300frames/10s each. Conductor independently decoded both and inspected six frames. Illustrations, not acceptance tests. [Run note](2026-10-21-lqr-clips.md). |
+| A4 mechanics, k, PR99 | All9 dt/epsilon cases executed in150.709s; finite results, no numerical failures. Open-loop tilt stops at0.29575–0.296s, not5s of balance. Conductor checked identities/accounting and independently reproduced one coarse case exactly in6.96s. [Run note](2026-10-21-fivebar-dynamics.md). |
+| A3 gain schedule, j | All76 assumed-model designs and four degree3 fits completed. Conductor independently checked all matrix shapes/finite values and reconstructed entry-wise fit residuals. **400 nonlinear cases UNRUN.** [Run note](2026-10-21-gain-sweep.md). |
 
-```sh
-python3 -m sim.rl.reporting \
-  --v1-aggregate ~/wbr-evidence-archive/sim-ppo-vs-lqr-20261020-01/evaluation/aggregate.json \
-  --v2-archive ~/wbr-evidence-archive/sim-ppo-v2-20261020-01 \
-  --out ~/wbr-evidence-archive/sim-control-followup-20261021-01/comparison
-```
+The initial A4 attempt hit its120s wall budget and produced no final JSON; retained separately. k's later run used a fresh output and600s cap. Initial A3 command/setup errors were retained before correction. No parameters, numerical thresholds or polynomial degree were tuned. Backend environment unchanged; FFmpeg was installed in an isolated dependency directory.
 
-**Partial:** attempted the queued nine-case five-bar mechanics comparison using the unchanged `sim.fivebar.compare --run-dynamics --duration 5 --timesteps .001 .0005 .00025 --epsilons 1e-5 3e-6 1e-6`. Single-thread BLAS, nice 10, existing backend Python, 120 s wall limit. It hit that resource limit; its own child was terminated. The CLI writes its JSON only after all cases, so no completed result exists and no numerical conclusion is claimed. Log: `~/wbr-evidence-archive/sim-control-followup-20261021-01/fixed-length-dynamics.log`. No retry, environment mutation, training or rendering. Battery was 62%, on AC and charging at the start.
+Evidence roots under `~/wbr-evidence-archive/`:
+- `sim-control-followup-20261021-01/comparison/`: comparison.md/csv, report.json, seven SVGs, generated with `python3 -m sim.rl.reporting --v1-aggregate <v1>/evaluation/aggregate.json --v2-archive <v2> --out <new-directory>`.
+- `sim-lqr-clips-20261021-01/`: balance/push MP4s, metadata and contact sheet; source235550e, existing `sim.video` CLI.
+- `sim-fivebar-dynamics-20261021-01/`: nine-case JSON and run receipt; source140a11b, existing `sim.fivebar.compare` CLI.
+- `sim-gain-sweep-20261021-01/`: sweep/fit manifests and retained attempts; source140a11b, existing `sim.gain_schedule` CLI.
+Exact commands/configs and limitations are in the linked run notes. No media or generated gains entered git.
 
-**Recommendation:** give the still-pending A4 mechanics study to k when idle, with an explicit longer compute budget and a fresh output path. A3's 76 designs/400 cases and full videos remain unrun. Use the saved comparison plots for interpreting v2; effort/recovery do not establish RL superiority. No v3 recipe or training is authorized by this follow-up.
+**Recommendation:** retain the reduced baseline: five-bar mass and wheel-reaction discrepancies persist under the sampled refinements. A3's0.12–0.30m hypothetical rigid-leg family exceeds A4's~0.211m reach; no transfer claim. The400-case nonlinear study remains pending. Future RL requires the reviewed pilot recipe and episode-length/return recording; no v3 training was launched.
