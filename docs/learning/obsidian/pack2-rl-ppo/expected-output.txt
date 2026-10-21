@@ -1,0 +1,9 @@
+TD delta=[ 0.86 -0.22  1.8 ]
+GAE advantage=[1.63472 1.076   1.8    ]
+Value target=[2.13472 1.476   2.     ]
+Clipped contributions=[1.961664 0.7532   1.98    ]
+Negative A example=[-2.6 -1.6]
+Mean clipped objective=1.564955
+Final delta: terminal=1.80, timeout bootstrap=2.43
+Rollout count: 8 envs x 250 steps = 2000 total transitions, not 16000
+PASS: hand GAE, both PPO advantage signs, termination versus truncation

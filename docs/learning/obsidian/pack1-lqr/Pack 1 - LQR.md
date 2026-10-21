@@ -19,17 +19,17 @@ of Linear Quadratic Regulation (LQR). Keep [[Toolkit]] beside you if needed.
 
 ## Reading map
 
-1. [What is being controlled?](#1-what-is-being-controlled)
-2. [From nonlinear dynamics to a sampled model](#2-from-nonlinear-dynamics-to-a-sampled-model)
-3. [Specify the optimization problem](#3-specify-the-optimization-problem)
-4. [Derive feedback using Bellman](#4-derive-feedback-using-bellman)
-5. [Work a scalar example by hand](#5-work-a-scalar-example-by-hand)
-6. [What stability means](#6-what-stability-means)
-7. [Continuous versus discrete LQR](#7-continuous-versus-discrete-lqr)
-8. [Apply DARE to a cart-pole](#8-apply-dare-to-a-cart-pole)
-9. [Read the real WBR simulation gains](#9-read-the-real-wbr-simulation-gains)
-10. [Run the exercise](#10-run-the-exercise)
-11. [Questions, answers and the next experiment](#11-questions-answers-and-the-next-experiment)
+1. [[#1. What is being controlled?|What is being controlled?]]
+2. [[#2. From nonlinear dynamics to a sampled model|From nonlinear dynamics to a sampled model]]
+3. [[#3. Specify the optimization problem|Specify the optimization problem]]
+4. [[#4. Derive feedback using Bellman|Derive feedback using Bellman]]
+5. [[#5. Work a scalar example by hand|Work a scalar example by hand]]
+6. [[#6. What stability means|What stability means]]
+7. [[#7. Continuous versus discrete LQR|Continuous versus discrete LQR]]
+8. [[#8. Apply DARE to a cart-pole|Apply DARE to a cart-pole]]
+9. [[#9. Read the real WBR simulation gains|Read the real WBR simulation gains]]
+10. [[#10. Run the exercise|Run the exercise]]
+11. [[#11. Questions, answers and the next experiment|Questions, answers and the next experiment]]
 
 > [!important] Scope
 > **SIMULATION / ASSUMED.** Our reduced WBR is an illustrative planar model,

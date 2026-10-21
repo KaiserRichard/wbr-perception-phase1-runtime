@@ -3,7 +3,7 @@
 Updated 2026-10-21 +07; camera visual milestone complete with limitations; simulation snapshot below retained.
 
 ## Simulation
-- Obsidian proposal approved with amendments: Pack1 LQR ZIP delivered under docs/learning/obsidian; review2026-10-21-obsidian-pack1.md. Pack2 RL→PPO next, Pack3 residual/experiment after; no fresh training. Skill/profile updated.
+- Obsidian three-pack series delivered under docs/learning/obsidian: LQR, RL→PPO, residual/saved-runs/experiment; reviews2026-10-21-obsidian-pack1.md and2026-10-21-obsidian-packs2-3.md. No fresh training; mismatch study remains proposed.
 - Claude approved the assumed six-state planar LQR (PR44) and delay/lag/noise baseline (PR47–48). Hardware parameters remain ASSUMED/UNKNOWN; source gain parity remains the owner exercise.
 - PPO v1 complete: LQR160/160, PPO0/800. See sim/rl/RESULTS_2026-10-20.md; archived evidence retained.
 - PPO v2 RUNNING independently (PR55; frozen source f1b5ee7): eight envs,3M policy transitions/seed,100Hz policy,unchanged500Hz plant/LQR. Supervisor75443; no duplicate or tuning.
