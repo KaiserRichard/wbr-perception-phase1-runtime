@@ -15,10 +15,14 @@ class TrackBudgetTests(unittest.TestCase):
         # Integer nanoseconds cannot represent 1/15 s exactly. Compare 15*d > 1e9.
         self.assertFalse(track_budget.over_exact_15hz_budget(66_666_666))
         self.assertTrue(track_budget.over_exact_15hz_budget(66_666_667))
-        self.assertEqual(
-            track_budget.over_budget(66_666_667, 1_000_000_000 // 15),
-            15 * 66_666_667 > 1_000_000_000,
+
+    def test_summarize_distinguishes_nominal_and_exact_15_hz_budgets(self):
+        summary = track_budget.summarize(
+            [{"duration_ns": 66_700_000, "pose_published": True}], "boundary"
         )
+        nominal, exact_15hz = summary["thresholds"]
+        self.assertEqual(nominal["overrun_count"], 0)
+        self.assertEqual(exact_15hz["overrun_count"], 1)
 
     def test_rejects_nonserial_track_interval(self):
         with tempfile.TemporaryDirectory() as temp:
