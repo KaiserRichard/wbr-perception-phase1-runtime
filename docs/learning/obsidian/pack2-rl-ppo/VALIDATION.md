@@ -9,11 +9,11 @@
 - Completed v2 summary checked against RESULTS_V2_2026-10-20.md at snapshot
   4f49447: direct 59/800 strict, 760/800 survival; residual 0/480 strict,
   480/480 survival; reused LQR 160/160. No unavailable learning curves invented.
-- Pack 2 lesson: 61 math expressions, 12 displayed.
+- Pack 2 lesson: 62 math expressions, 12 displayed.
 - Fresh ZIP extraction: local Markdown/image paths, YAML, table-of-contents
   anchors and cross-pack wiki destinations checked. Exactly one Python exercise
   per pack; extracted exercise stdout matches the bundled expected output.
-- All 381 mathematical expressions across the three lessons/support notes
+- All 382 mathematical expressions across the three lessons/support notes
   (62 display equations) compiled with MathJax 3.2.2 with zero errors. New
   mechanics, Bellman and residual equations were rendered and visually inspected.
 - PNG copies match the owner's originals byte for byte (11 copies across packs,

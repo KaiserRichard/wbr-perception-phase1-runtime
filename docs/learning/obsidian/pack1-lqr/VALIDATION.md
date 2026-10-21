@@ -16,7 +16,7 @@
 - Fresh ZIP extraction: local Markdown/image paths, YAML, table-of-contents
   anchors and cross-pack wiki destinations checked. Exactly one Python exercise
   per pack; extracted exercise stdout matches the bundled expected output.
-- All 381 mathematical expressions across the three lessons/support notes
+- All 382 mathematical expressions across the three lessons/support notes
   (62 display equations) compiled with MathJax 3.2.2 with zero errors. New
   mechanics, Bellman and residual equations were rendered and visually inspected.
 - PNG copies match the owner's originals byte for byte (11 copies across packs,

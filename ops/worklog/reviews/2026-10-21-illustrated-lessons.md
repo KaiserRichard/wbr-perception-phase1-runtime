@@ -16,7 +16,7 @@
 **Evidence:** three fresh-extracted exercises match expected stdout; saved gain/data
 snapshots unchanged; all11PNG copies equal originals. Scalar/COM/virtual-power,
 cartpole DARE/stability checks PASS. Independent symbolic mechanics check PASS.
-381MathJax expressions/62display compile without error; selected equations visually
+382MathJax expressions/62display compile without error; selected equations visually
 inspected. ZIP/YAML/local paths/TOC/wiki links and skill validation PASS.
 Commands/versions/worker receipt are in session2026-10-21-illustrated-lessons.md.
 
