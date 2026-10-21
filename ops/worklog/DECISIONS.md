@@ -282,3 +282,11 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
   motion with marked start/end;3replays report endpointdrift and closure events.
 - Evidence: owner's2026-10-21review message; camera-day session and raw Pi logs.
 - Limits: no powerbank/physicalmotion verified yet; no groundtruth accuracyclaim.
+
+### D-20261021-CAMERA-LAB-ONLY: Finish physical camera work before cafe analysis
+- Decided by owner: retain4MiB receive buffers, use stereo-only MCAP/reliable
+  depth50+ recording; target<1% observed gaps and equal stereo counts.
+- Morning scope narrowed to drop fix, marked loop and one inertial excitation
+  attempt, then stop camera/ROS processes and archive evidence on the Mac.
+- Camera remains mounted. Heavy robot stays on its wheels; planar excitation is
+  logged as a limitation rather than claiming all-axis excitation.

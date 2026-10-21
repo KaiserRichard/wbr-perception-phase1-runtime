@@ -25,10 +25,11 @@ Updated 2026-10-21 +07; camera visual milestone complete with limitations; simul
 - Mac edits/quick tests only while PPO runs. Heavy jobs use an available Pi or wait. Morning review: reviews/2026-10-21-overnight.md. A1/A3/A4/B3 remain queued for actual execution.
 
 ## Hardware
-- SSH works: `ssh wbr-pi5` -> richard@192.168.50.2; WiFi192.168.0.107 at readback. Actual Pi has3.9GiBRAM. SG128 card boots; expanded root113GiB/82GiB free at final readback.
-- Borrowed D435i317422076650/FW5.17.3.10 atUSB5000M; mount remains on mobile robot. SDK calibration readback unchanged after first native/ROS runs; no calibration writes/firmware/robot config edits.
-- Headless native helpers, metrics and export merged PR79–81; ROS build fixes PR77. Pi evidence: ~/wbr-evidence/camera-day-20261021-01; final Mac archive: ~/wbr-evidence-archive/camera-day-20261021-01-final.
-- Native stereo30Hz/800:29.76trackedFPS,0loss/overwrites;RGBD15Hz/800:14.65FPS;throttle0x0. BothROSvisualmodespublishposes. Inertialtransientlyinitializes thenresets;nouserusabletrajectory.
-- Loop03 saved09:00:30–09:03:00+07 despitechatinterruption;1.9GiB,1318transportlosses. Ownerreportsreturnat120s/hold30s;alignmentnotgroundtruth.
-- COMPLETE: three fresh 0.5x replays, all processes/exports exit0. Endpoints 0.6963/0.6957/0.6927 m; 3.379/3.386/3.339% estimated path; loop detections yes/yes/no; loss episodes15/18/15. Map resets/merges invalidate pure continuous-map drift accuracy.
-- Final calibration readback identical; temporary receive buffers restored; owned camera/replay processes stopped. Next: Claude review reviews/2026-10-21-camera-visual-pose.md, recording-loss fix and sustained inertial motion retry. STM32/motors/protected exercise untouched.
+- SSH `wbr-pi5` works; Pi5/aarch64/3.9GiB; migrated SG128 boots, expanded113GiB root,80GiBfree.
+- Borrowed D435i317422076650/FW5.17.3.10 USB5000M stays mounted on robot. Calibration read-only; no robot/motor/firmware edits.
+- Visual stereo/RGB-D+ROS pose accepted by Claude; review2026-10-21-camera-visual-pose.md. ImplementationPR77/79–81, reportPR84.
+- Recording fix: MCAP+stereo-only+reliable images/history100. rmem max/default4194304 intentionally retained for session; no persistent sysctl file. Stationary895/895 equal headers,zero observed gaps/transportlosses.
+- Fresh marked loop09:53:03–09:55:33+07:147.607s,2215left/2215right/2215CameraInfo each,identical headers,zero observed gaps/transportlosses. Owner confirms returned by120s and held30s; physical alignment not independently measured.
+- Full loop+logs copied to ~/wbr-evidence-archive/camera-recording-20261021-01; loopSHA5749908bb94a6c9a7e5496f3c8b58db3596cf5f53f2542502a1468dcd97703c8 matchesPi. Older lossy loops/replays remain evidence, not new-loop endpoints.
+- Native unified IMU interpolation corrected; isolated compile/link PASS, SDK body-from-camera Tbc/200Hz checks added. Single75s planar excitation exit0:final initialized61.8s,965poses,14.87trackedFPS,4loss transitions; VIBA1/2complete. Initial resets and late STOP/short stationary tail documented.
+- Local50camera-day+7native tests PASS; codePR87. All176archive artifacts SHAverified; finalcalibration unchanged,allcamera/ROS/daemon stopped,PiFREE receipt10:15:21+07. Review2026-10-21-camera-recording-excitation.md;new-loop3replays/endpoint analysis deferred. STM32/PPO/student exercise untouched.

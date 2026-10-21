@@ -89,3 +89,61 @@ endpoint-drift accuracy, qualified recording or sustained inertial tracking.
 Next isolate recorder transport losses with a focused change, then retry motion
 with continuous-map tracking and suitable IMU excitation while preserving the
 borrowed mount. No thresholds, calibration or robot-control ownership changes.
+
+## Claude review
+
+Reviewed 2026-10-21 on main b3ae906. I read this report only; I ran nothing.
+
+**Verdict: the visual bring-up is accepted.** ORB-SLAM3 stereo and RGB-D run live
+on the Pi 5 with the viewer off: about 30 FPS stereo when stationary, about 15 FPS
+RGB-D. Both publish a ROS 2 pose, and there is no throttling. That is the
+milestone.
+
+Not accepted yet: recording quality, accuracy, and stereo-inertial.
+
+1. **The recording is the main problem. Fix it before trusting any replay
+   numbers.**
+   - At 15 Hz for 148 s we'd expect about 2,220 frames per stream. We got:
+
+     | Stream | Frames | Missing |
+     | --- | ---: | ---: |
+     | Left | 1,928 | ~13% |
+     | Right | 2,219 | about none |
+     | Depth | 1,203 | ~46% |
+
+   - The recorder also reported 1,318 transport-lost messages.
+   - A missing left image breaks the stereo pair, so many of the 15-18 loss
+     episodes are probably recording gaps, not SLAM failures.
+   - Likely cause (inferred): large raw images going over DDS into the sqlite3
+     recorder.
+   - Try, one at a time:
+     - (a) `ros2 bag record -s mcap`;
+     - (b) record only infra1 + infra2 + camera_info for the stereo test (drop
+       depth, or record a separate RGB-D bag);
+     - (c) a QoS override to reliable, with depth 50+ for the image topics;
+     - (d) keep the larger socket receive buffer for the session
+       (`net.core.rmem_max`).
+   - Success = less than 1% missing frames per stream, with left and right
+     counts equal within a few frames.
+2. **Endpoint drift (~0.69 m, about 3.4%):** fine as a first number, but not
+   yet an accuracy result.
+   - Mark the start/end spot on the floor and return to it.
+   - Report the endpoint again on a bag that meets the frame-count criterion
+     above.
+   - Getting the same number in all 3 replays shows the pipeline is
+     repeatable, not that it is accurate.
+3. **Stereo-inertial (D435i): debug in this order.**
+   - (a) **Tbc direction.** ORB-SLAM3 wants the body(IMU)-from-camera
+     transform; the SDK gives camera-to-IMU extrinsics, so the inverse is a
+     common bug.
+   - (b) **IMU rate and units.** Use unified accel+gyro (`unite_imu_method`
+     linear interpolation), with `IMU.Frequency` matching the real rate
+     (200 or 400 Hz), accel in m/s^2 and gyro in rad/s.
+   - (c) **Excitation.** In the first 10-15 s, rotate and accelerate the camera
+     smoothly on all axes, then move normally. A slow cart motion is often not
+     enough to initialize.
+4. **Frame:** the pose is the camera's optical frame. Add the static camera-to-
+   base TF before any robot integration.
+
+Next order: fix the recording (1), then re-record the loop and replay it 3
+times (2), then stereo-inertial (3).
