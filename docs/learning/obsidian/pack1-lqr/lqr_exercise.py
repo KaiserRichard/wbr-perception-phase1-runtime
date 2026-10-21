@@ -92,6 +92,8 @@ def figures(folder, x, times, state, force, png=False):
 
     def save(fig, name):
         fig.savefig(folder / f"{name}.svg", bbox_inches="tight", metadata={"Date": None})
+        svg = folder / f"{name}.svg"
+        svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines())+'\n')
         if png:
             fig.savefig(folder / f"{name}.png", dpi=140, bbox_inches="tight")
         plt.close(fig)

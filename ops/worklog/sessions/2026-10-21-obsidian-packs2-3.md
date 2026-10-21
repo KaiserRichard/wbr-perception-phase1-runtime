@@ -17,3 +17,5 @@
   Current v2 untouched. Proposed mismatch study and novelty review remain future work.
 - Checked official Obsidian heading-link syntax; switched all three reading maps
   to exact-heading wiki anchors and rechecked/repacked Pack1 as a portability fix.
+- Staged whitespace check exposed Matplotlib's trailing spaces inside SVG paths;
+  removed them in assets and each figure writer, then rebuilt/rechecked all ZIPs.

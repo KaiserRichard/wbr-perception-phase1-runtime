@@ -64,6 +64,8 @@ def main():
     fig.tight_layout()
     fig.savefig(args.out.with_name('residual-signal-path.svg'),bbox_inches='tight',metadata={'Date':None})
     plt.close(fig)
+    for path in [args.out,args.out.with_name('residual-signal-path.svg')]:
+        path.write_text('\n'.join(line.rstrip() for line in path.read_text().splitlines())+'\n')
 
 
 if __name__ == '__main__':

@@ -61,6 +61,7 @@ def main():
         fig.tight_layout()
         args.figure.parent.mkdir(parents=True, exist_ok=True)
         fig.savefig(args.figure, bbox_inches='tight', metadata={'Date':None})
+        args.figure.write_text('\n'.join(line.rstrip() for line in args.figure.read_text().splitlines())+'\n')
         plt.close(fig)
 
 
