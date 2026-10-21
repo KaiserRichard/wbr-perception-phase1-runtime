@@ -1,0 +1,249 @@
+{
+  "label": "MEASURED IN ASSUMED SIMULATION, not hardware",
+  "case": {
+    "delay_ms": 5,
+    "scenario": "push",
+    "noise_seed": 1000,
+    "residual_training_seed": 0,
+    "push_N": 6,
+    "push_start_s": 3,
+    "push_duration_s": 0.15
+  },
+  "selection": "first held-out noise seed, highest existing delay; not best-seed selection",
+  "paired_checks": "initial truth, full noise arrays and time grid matched",
+  "plot_stride": 5,
+  "original_ticks": 5000,
+  "plot_samples": 1000,
+  "sampling_note": "unfiltered display thinning, not for peak or effort calculation",
+  "lqr": {
+    "logical_source": "ppo-full-conductor-01/evaluation/episodes/lqr-None-d5-push-n1000",
+    "metrics": {
+      "applied_effort_Nm2_s": [
+        0.020199333915529114,
+        0.012327669457961378
+      ],
+      "applied_mean_effort_Nm2_s": [
+        0.020196813572387454,
+        0.012320802370766992
+      ],
+      "checks": {
+        "caps": true,
+        "displacement": true,
+        "full_duration": true,
+        "full_pulse": true,
+        "held_final_window": true,
+        "no_fall": true,
+        "numerics": true,
+        "recovery_deadline": true
+      },
+      "command_effort_Nm2_s": [
+        0.032302670895192766,
+        0.0453081012910195
+      ],
+      "command_saturation_duration_s": [
+        0.002,
+        0.0
+      ],
+      "command_saturation_fraction": [
+        0.00020000000000001307,
+        0.0
+      ],
+      "control_steps": 5000,
+      "controller": "lqr",
+      "delay_s": 0.005,
+      "duration_s": 9.999999999999346,
+      "failure_reasons": [],
+      "fall_count": 0,
+      "fall_observed": false,
+      "fall_time_s": null,
+      "final_error": [
+        0.00021229361433968143,
+        -0.00012551164516817209,
+        -0.00016413977115673135,
+        0.00015594192434775054,
+        -0.00027592380230412973,
+        -0.0005405963929442175
+      ],
+      "final_window_max_abs_error": [
+        0.00022954511025148332,
+        0.0002098148505190681,
+        0.0005749612651890673,
+        0.0020511921033312427,
+        0.003107941879909709,
+        0.015710938153605362
+      ],
+      "integration_steps": 40005,
+      "noise_samples": 5001,
+      "noise_seed": 1000,
+      "noise_stream_sha256_float64_le": "634431a088df6b2b3df407d53efdcd2ca53d1797bcafb9e73d6daeb3a7ff239a",
+      "numerical_failure_count": 0,
+      "other_failure_count": 0,
+      "peak_applied_mean_torque_Nm": [
+        0.8079548862167785,
+        0.9680396623981224
+      ],
+      "peak_applied_torque_Nm": [
+        0.8160542608559302,
+        0.9749861384132683
+      ],
+      "peak_body_tilt_deg": 6.018439171877196,
+      "peak_command_torque_Nm": [
+        2.0,
+        2.549734372223303
+      ],
+      "peak_displacement_m": 0.1680368403003997,
+      "peak_leg_tilt_deg": 8.036300160233598,
+      "peak_tilt_after_push_start_deg": 6.239631285931357,
+      "peak_tilt_deg": 8.036300160233598,
+      "penalized_recovery_s": 2.7600000000000002,
+      "physical_metrics_reason": null,
+      "policy_seed": null,
+      "push_duration_applied_s": 0.14999999999991687,
+      "push_impulse_Ns": 0.8999999999995012,
+      "recovery_time_after_event_s": 2.7600000000000002,
+      "recovery_time_successes_s": 2.7600000000000002,
+      "scenario": "push",
+      "state_rmse": [
+        0.058278396274533344,
+        0.02873338837195139,
+        0.014972228946903586,
+        0.08269589224735323,
+        0.11995812039560508,
+        0.0524779489001379
+      ],
+      "state_squared_error_integral": [
+        0.03396371472331319,
+        0.008256076073333372,
+        0.0022416763963848296,
+        0.06838610594585408,
+        0.14389950648845543,
+        0.027539351207653044
+      ],
+      "status": "PASS",
+      "success": true,
+      "sum_actual_dt_s": 9.999999999999346,
+      "training_failure_count": 0,
+      "unrecovered_count": 0
+    },
+    "source_provenance": {
+      "git_commit": "781d70284435b2d377bdbe7b6c57ceb61e079a96"
+    }
+  },
+  "residual": {
+    "logical_source": "sim-ppo-v2-20261020-01/residual/seed-0/evaluation/d5-push-n1000",
+    "source_commit": "f1b5ee7faa41fdd45af1df7afdbddb8a1c4d66aa",
+    "metrics": {
+      "status": "FAIL",
+      "success": false,
+      "checks": {
+        "numerics": true,
+        "caps": true,
+        "full_duration": true,
+        "no_fall": true,
+        "displacement": true,
+        "full_pulse": true,
+        "held_final_window": false,
+        "recovery_deadline": false
+      },
+      "survived": true,
+      "failure_reasons": [
+        "held_final_window",
+        "recovery_deadline"
+      ],
+      "physical_metrics_reason": null,
+      "duration_s": 9.999999999999346,
+      "sum_actual_dt_s": 9.999999999999346,
+      "control_steps": 5000,
+      "integration_steps": 40005,
+      "final_error": [
+        -0.011764579004397918,
+        0.0016906849841698264,
+        -0.0074354263907146865,
+        0.0032987319334119095,
+        0.08562194458115836,
+        -0.049970378013827935
+      ],
+      "state_squared_error_integral": [
+        0.057626204604360284,
+        0.006443741046635586,
+        0.0033108786423254335,
+        0.06699288214766345,
+        0.1331060222793037,
+        0.045858488184814666
+      ],
+      "state_rmse": [
+        0.07591192567993783,
+        0.02538452490521737,
+        0.018195819965930775,
+        0.08184917968291915,
+        0.11537158327738786,
+        0.06771889557931203
+      ],
+      "final_window_max_abs_error": [
+        0.022910200370021998,
+        0.0028998340501531507,
+        0.007526144563928014,
+        0.029137639341956352,
+        0.12527934657369935,
+        0.12342994438461297
+      ],
+      "peak_leg_tilt_deg": 8.038125741642347,
+      "peak_body_tilt_deg": 6.020066993747413,
+      "peak_tilt_deg": 8.038125741642347,
+      "peak_tilt_after_push_start_deg": 5.155819316748372,
+      "peak_displacement_m": 0.18824152679428321,
+      "fall_count": 0,
+      "fall_observed": false,
+      "fall_time_s": null,
+      "training_failure_count": 0,
+      "numerical_failure_count": 0,
+      "other_failure_count": 1,
+      "recovery_time_after_event_s": null,
+      "recovery_time_successes_s": null,
+      "unrecovered_count": 1,
+      "penalized_recovery_s": 10.0,
+      "push_impulse_Ns": 0.8999999999995012,
+      "push_duration_applied_s": 0.14999999999991687,
+      "command_effort_Nm2_s": [
+        0.09141170045186016,
+        0.20696780953532806
+      ],
+      "applied_effort_Nm2_s": [
+        0.034243577887628336,
+        0.08379408079620525
+      ],
+      "applied_mean_effort_Nm2_s": [
+        0.03423167274702356,
+        0.08376844214097871
+      ],
+      "peak_command_torque_Nm": [
+        2.0,
+        2.025630158508703
+      ],
+      "peak_applied_torque_Nm": [
+        0.7987329864945405,
+        0.7565448828015275
+      ],
+      "peak_applied_mean_torque_Nm": [
+        0.7915289312313563,
+        0.751958247605414
+      ],
+      "command_saturation_duration_s": [
+        0.002,
+        0.0
+      ],
+      "command_saturation_fraction": [
+        0.00020000000000001307,
+        0.0
+      ],
+      "noise_samples": 5001,
+      "controller": "residual",
+      "policy_seed": 0,
+      "delay_s": 0.005,
+      "scenario": "push",
+      "noise_seed": 1000
+    }
+  },
+  "lesson_source_commit": "729920a4e2dfa08f7601cd372107074309138cfa",
+  "command_note": "total clipped issued pair torques, not applied torque or learned delta"
+}

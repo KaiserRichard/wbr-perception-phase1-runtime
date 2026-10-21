@@ -5,11 +5,11 @@ Approved sequence, owner relaying Claude's review on 21 October 2026:
 | Pack | Archive | Content/status |
 | --- | --- | --- |
 | 1 | `pack1-lqr.zip` | LQR derivation, one-page toolkit, scalar/cart-pole script and saved WBR gains |
-| 2 | `pack2-rl-ppo.zip` (not produced yet) | RL→PPO; one tiny GAE/clipping script |
-| 3 | `pack3-residual-experiment.zip` (not produced yet) | Residual control; plot saved torque traces; mismatch experiment design |
+| 2 | `pack2-rl-ppo.zip` | RL→PPO; one tiny GAE/clipping script |
+| 3 | `pack3-residual-experiment.zip` | Residual control; plot saved torque traces; mismatch experiment design |
 
-`pack1-lqr/` is the maintainable source for its ZIP. The archive deliberately
-duplicates those source bytes for easy import; do not edit the ZIP directly.
+Each named directory is the maintainable source for its ZIP. Archives deliberately
+duplicate those source bytes for easy import; do not edit the ZIPs directly.
 Unzip each delivered pack into the same Obsidian vault; keep relative assets.
 Future wiki-links resolve after the corresponding pack arrives. No vault settings
 or community plugins are bundled. Source/figure provenance is inside each pack.

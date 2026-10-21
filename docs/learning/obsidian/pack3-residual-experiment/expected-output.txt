@@ -1,0 +1,6 @@
+Saved samples=1000, time=0.00..9.99s (every fifth 500Hz tick)
+Case: delay=5ms, push, noise seed=1000; residual training seed=0
+lqr: strict=True, survived=True, command effort Nm2s=[0.032303 0.045308]
+residual: strict=False, survived=True, command effort Nm2s=[0.091412 0.206968]
+Effort is copied from full-resolution archived metrics, not this thinned plot.
+PASS: finite data, time order, pair torque caps; one illustration, no superiority claim
