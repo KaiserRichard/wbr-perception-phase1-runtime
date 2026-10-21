@@ -1,11 +1,12 @@
 # Assumed-model leg-length LQR study
 
-**Implementation and synthetic tests only as of 2026-10-20. Real gain synthesis,
-fitting of real gains, pole measurements, and nonlinear evaluations are pending
-heavy jobs. No computed stability result is claimed.** Mac execution of those
-jobs must wait until active PPO v2 ends. A reachable Pi may run them only in its
-own assigned checkout/environment. This runner does not launch jobs remotely or
-modify a job queue.
+**Updated 2026-10-21:** the 76 assumed-model delay-aware gain designs and their
+degree-3 Chebyshev fits have run to `COMPLETE`; synthesis recorded no design
+errors. Local linearized pole radii and Riccati residuals are recorded in the
+artifacts. Nonlinear evaluations have not run, so no balance or push result is
+claimed. The length domain remains a hypothetical rigid-leg family, not the
+five-bar mechanism. Run details and fit diagnostics are in
+`ops/worklog/reviews/2026-10-21-gain-sweep.md`.
 
 This separate experiment recomputes linear quadratic regulator (LQR) gains from
 our assumed six-state planar MuJoCo model plus its causal actuator delay/lag
@@ -98,13 +99,16 @@ closed fitted interval. **No silent clamping or extrapolation is allowed.**
 Endpoints are accepted. An error must not be interpreted as a fallback motor
 command; this package is an offline simulation study.
 
-## Commands and queued heavy work
+## Commands and execution status
 
 From the assigned checkout, examples default to `python3`; set `WBR_GAIN_PY` to
 an explicit interpreter when needed. Do not install into or change the active Mac
 backend environment. On a Pi, point `WBR_GAIN_PY` to its own prepared environment.
-Use a new output root for every attempt; old outputs are never overwritten. These
-commands are **pending**, except the synthetic tests.
+Use a new output root for every attempt; old outputs are never overwritten. The
+sweep and fit below completed on 2026-10-21 with evidence under
+`/Users/quockaiser/wbr-evidence-archive/sim-gain-sweep-20261021-01`; see the
+review linked above. The nonlinear evaluation remains **UNRUN**. The synthetic
+tests completed earlier and are separate from this measured run.
 
 ```sh
 WBR_GAIN_PY="${WBR_GAIN_PY:-python3}"
@@ -112,17 +116,17 @@ export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
 export VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1
 export WBR_GAIN_OUT=/private/tmp/wbr-A3-gains-NEW
 
-# HEAVY: queue until PPO ends on Mac; 19 lengths × 4 delay regimes = 76 designs.
+# Completed: 19 lengths × 4 delay regimes = 76 fresh designs.
 nice -n 10 "$WBR_GAIN_PY" -m sim.gain_schedule sweep \
   --config sim/configs/assumed_actuator_noise.json \
   --delays 0.002 0.003 0.004 0.005 --out "$WBR_GAIN_OUT/sweep"
 
-# Small, but depends on the unrun real sweep; fits one polynomial per delay.
+# Completed after the sweep; fits one polynomial per delay.
 "$WBR_GAIN_PY" -m sim.gain_schedule fit \
   --sweep "$WBR_GAIN_OUT/sweep/sweep.json" --degree 3 \
   --out "$WBR_GAIN_OUT/fit"
 
-# HEAVY: queue; BOTH balance and push at FIVE lengths, with five matched seeds.
+# NOT RUN: nonlinear evaluation remains pending.
 nice -n 10 "$WBR_GAIN_PY" -m sim.gain_schedule evaluate \
   --schedule "$WBR_GAIN_OUT/fit/schedule.json" \
   --lengths 0.12 0.165 0.21 0.255 0.30 --seeds 0 1 2 3 4 \
