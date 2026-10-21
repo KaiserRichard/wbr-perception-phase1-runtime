@@ -14,6 +14,12 @@ from sim.planar import STATE_NAMES
 from sim.run_planar import write_json
 
 
+def _finite_summary(values):
+    """Use JSON null for unavailable components; keep finite values unchanged."""
+    values = np.asarray(values)
+    return np.where(np.isfinite(values), values, None).tolist()
+
+
 def evaluate(runtime, controller, scenario, seed, out):
     """Stream one rollout to a NEW directory; return true-state metrics."""
     out.mkdir(parents=True, exist_ok=False)
@@ -116,15 +122,15 @@ def evaluate(runtime, controller, scenario, seed, out):
         "scenario": scenario, "seed": seed, "runtime": asdict(runtime.config),
         "duration_s": float(times[-1]), "sum_actual_dt_s": total_dt,
         "control_steps": len(times)-1, "integration_steps": interval_count,
-        "initial_state": states[0].tolist(), "final_error": states[-1].tolist(),
-        "final_window_max_abs_error": np.max(abs(states[window]), axis=0).tolist() if np.any(window) else None,
-        "state_squared_error_integral": integrated_error.tolist(),
-        "state_rmse_over_actual_duration": np.sqrt(integrated_error/total_dt).tolist() if total_dt else None,
-        "peak_tilt_deg": peak_tilt,
-        "peak_tilt_after_push_start_deg": float(np.rad2deg(np.max(abs(states[
+        "initial_state": _finite_summary(states[0]), "final_error": _finite_summary(states[-1]),
+        "final_window_max_abs_error": _finite_summary(np.max(abs(states[window]), axis=0)) if np.any(window) else None,
+        "state_squared_error_integral": _finite_summary(integrated_error),
+        "state_rmse_over_actual_duration": _finite_summary(np.sqrt(integrated_error/total_dt)) if total_dt else None,
+        "peak_tilt_deg": _finite_summary(peak_tilt),
+        "peak_tilt_after_push_start_deg": _finite_summary(np.rad2deg(np.max(abs(states[
             times >= p["push_start_s"]-1e-9, 1:3])))) if scenario == "push" and
             np.any(times >= p["push_start_s"]-1e-9) else None,
-        "peak_displacement_m": float(np.max(abs(states[:, 0]))),
+        "peak_displacement_m": _finite_summary(np.max(abs(states[:, 0]))),
         "fallen": fall_time is not None, "fall_time_s": fall_time,
         "recovery_time_after_event_s": recovery, "held_final_window": held,
         "push_impulse_Ns": impulse, "push_duration_applied_s": pulse_duration,
