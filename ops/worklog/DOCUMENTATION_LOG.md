@@ -396,3 +396,14 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   plausible, not proven. No new replay or hardware result.
 - Corrected native README; documented default-zero offset and main-thread fault
   handling. Native rebuild/fault injection deferred; local patch tests only.
+
+### DOC-20261021-CLEAN-LOOP-MAC: Three complete marked-loop replays
+- Added bounded headless Linux/Docker native replay instructions and tools;
+  source commit da905cd, full compatibility/build-error evidence archived.
+- Review/session2026-10-21-clean-loop-mac.md and CURRENT record actual3runs:
+  all2215pairs processed each; endpoints0.018319/0.005408/0.006263m,
+  trackedFPS15.005/15.004/14.578. R3 had63nontracked frames and merged a second map;
+  endpoint percentages are internal consistency, not ground-truth accuracy.
+- 18metric+4MCAP tests/native build/independent copied-evidence checks PASS.
+  Raw data/timing/logs/binaries/hashes remain in Mac archive, outside git.
+  Simulation state retained; no PPO, control, hardware or calibration writes.
