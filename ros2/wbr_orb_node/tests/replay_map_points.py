@@ -81,7 +81,9 @@ def main():
 
     signal.signal(signal.SIGTERM, terminate)
     try:
-        launch('record', ['ros2', 'bag', 'record', '--storage', 'mcap', '--use-sim-time',
+        # Store receive-time on this derived bag; source stamps stay in message
+        # headers. This lets us wait for subscriptions before publishing /clock.
+        launch('record', ['ros2', 'bag', 'record', '--storage', 'mcap',
                          '--output', str(args.output / 'map-bag'), '--topics',
                          '/d435_orb/pose', '/d435_orb/status',
                          '/d435_orb/map_points', '/d435_orb/map_points_info'])
@@ -91,8 +93,7 @@ def main():
                         '-p', 'image_topic:=/wbr_map_test/left',
                         '-p', 'second_topic:=/wbr_map_test/right'])
         ready('slam', ['viewer disabled'], 55)
-        # With simulated time the recorder cannot subscribe until player /clock exists.
-        ready('record', ['Listening for topics'], 10)
+        ready('record', ['All requested topics are subscribed'], 20)
         player = launch('play', ['ros2', 'bag', 'play', str(args.bag), '--rate', '0.3',
                                 '--clock', '40', '--playback-duration', '20',
                                 '--read-ahead-queue-size', '20', '--disable-keyboard-controls',

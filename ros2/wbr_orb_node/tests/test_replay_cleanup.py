@@ -15,7 +15,7 @@ class ReplayCleanupTest(unittest.TestCase):
         harness = Path(__file__).with_name('replay_map_points.py')
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
-            stub = '#!' + sys.executable + '\nimport time\nprint("Listening for topics; viewer disabled", flush=True)\ntime.sleep(60)\n'
+            stub = '#!' + sys.executable + '\nimport time\nprint("Listening for topics; All requested topics are subscribed; viewer disabled", flush=True)\ntime.sleep(60)\n'
             for name in ('ros2', 'node'):
                 path = root / name
                 path.write_text(stub)

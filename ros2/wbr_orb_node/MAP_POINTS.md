@@ -1,7 +1,8 @@
 # D435 sparse ORB map points
 
 `d435_node` publishes `/d435_orb/map_points` (`sensor_msgs/msg/PointCloud2`)
-from the **current active ORB map**, not from RealSense depth or camera motion.
+from the ORB map selected by `Atlas::GetCurrentMap()` at snapshot start, not
+from RealSense depth or camera motion.
 The existing pose and per-frame status contents are unchanged. The camera launch
 still disables the RealSense point cloud. No sensor launch/recording script changes
 are needed. This also compiles for the existing RGB-D mode; that mode has not been
@@ -77,10 +78,17 @@ implementation differences are pre-existing empty-map trajectory-save guards.
   macros. Two additional typed pointers are isolated in `orb_map_snapshot.hpp`
   for the map container and its mutex, because public `GetAllMapPoints()` copies
   the entire unbounded pointer set before a caller could truncate it.
-- After the rate gate: obtain active Map; try-lock `mMutexMapUpdate`; recheck
-  active identity; copy capped candidate pointers under `mMutexMap`; release the
-  container mutex; filter non-bad points still in this map and copy finite
-  `GetWorldPos()` values; release the update lock. Getters lock point state.
+- After the rate gate: obtain the map once through `Atlas::GetCurrentMap()`;
+  try-lock its `mMutexMapUpdate`; copy capped candidate pointers under
+  `mMutexMap`; release the container mutex; filter non-bad points still in this
+  map and copy finite `GetWorldPos()` values; release the update lock. Getters
+  lock point state. Do not re-enter Atlas while holding the update lock: the
+  pinned source has paths that take these locks in the opposite order.
+- At this pinned source, retired `Map` allocations are not deleted by
+  `Atlas::RemoveBadMaps()`. If a background merge switches the active map after
+  selection, the snapshot can therefore represent the just-retired map; the
+  sampled `map_id` and change fields identify the source map but are not a
+  continuity guarantee. Pose and cloud are not an atomic ORB transaction.
   This follows the upstream update→container order. Never hold the Atlas mutex
   while acquiring the update mutex (merge takes those in the opposite order).
 - The audited `Map::EraseMapPoint` only removes pointers. `Map::clear` and
@@ -107,8 +115,11 @@ ros2 bag record --storage mcap --output /absolute/new-map-bag --topics \
   /d435_orb/map_points /d435_orb/map_points_info /d435_orb/pose /d435_orb/status
 ```
 
-For bag replay with `/clock`, add `--use-sim-time` to the recorder; otherwise use
-wall time for live recording. Stop the recorder gracefully with Ctrl-C so its
+For offline replay, the recorder may use wall time while the SLAM node follows
+the replay clock; each cloud still carries its original camera-source stamp in
+the message header. Set `--use-sim-time` only if you intentionally need simulated
+receive timestamps and have arranged `/clock` before starting and synchronizing
+the recorder. Stop the recorder gracefully with Ctrl-C so its
 MCAP index and metadata finish. These clouds remain usable after SLAM exits;
 transient-local DDS alone does not. Abrupt process/power loss can lose queued or
 unflushed data and may require recovery; no shutdown export or atlas checkpoint
@@ -157,7 +168,9 @@ python3 ros2/wbr_orb_node/tests/replay_map_points.py \
 
 The harness uses only the first **20 bag seconds at 0.3×**, private domain 187,
 localhost transport and remapped test image topics; no camera process. It starts
-only its node/player/separate recorder, keeps commands/PIDs/exits/logs, stops its
+the SLAM node and recorder, waits for all requested topics to subscribe, then
+starts the player. The derived bag uses receive-time while cloud headers preserve
+source-time. It keeps commands/PIDs/exits/logs, stops its
 own process groups (also on supervisor SIGTERM), requires clean child exits, then
 reads the closed MCAP with `check_map_points_bag.py`. Work stops by 145 seconds;
 cleanup and validation share the remaining 180-second overall budget.

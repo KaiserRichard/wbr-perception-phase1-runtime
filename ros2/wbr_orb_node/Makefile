@@ -11,7 +11,7 @@ build/core_test: tests/core_test.cpp $(SOURCES) $(HEADERS) build/defaults.hpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -pthread tests/core_test.cpp $(SOURCES) -o $@
 core-test: build/core_test
 	./build/core_test all build
-test: build/core_test
+test: build/core_test map-points-test
 	PYTHONDONTWRITEBYTECODE=1 $(PYTHON) -m unittest discover -s tests -v
 clean:
 	rm -rf build
@@ -22,4 +22,3 @@ build/map_points_test: tests/map_points_test.cpp include/wbr_orb_node/map_points
 	$(CXX) -Iinclude $(CXXFLAGS) tests/map_points_test.cpp -o $@
 map-points-test: build/map_points_test
 	./build/map_points_test
-test: map-points-test
