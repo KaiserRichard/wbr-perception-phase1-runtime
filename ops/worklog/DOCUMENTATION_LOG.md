@@ -421,3 +421,12 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   archive claude-review-followup-01; unknown physical truth and upstream
   disabled-mode source defect documented. Generic CI does not discover new
   focused suites; their explicit commands and independent results are recorded.
+### DOC-20261021-ORB-MAP-POINTS: Visualize and retain ORB sparse landmarks
+- Added bounded `PointCloud2` snapshots and map metadata to the Pi-owned D435
+  node, plus frame/locking/merge caveats, Foxglove instructions and separate
+  MCAP persistence steps. Existing pose/status payloads, camera settings and
+  sensor capture scripts remain unchanged.
+- Host tests, corrected isolated Pi build/CTest and offline stereo replay-04
+  passed. Replay-03 exposed a recorder-discovery race; the harness was fixed and
+  its failed logs retained. Live camera, Foxglove GUI and RGB-D behavior remain
+  unverified. See `ops/worklog/reviews/2026-10-21-orb-map-points.md`.

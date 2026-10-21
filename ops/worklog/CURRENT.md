@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-10-21 +07; PR93 camera follow-up measured; simulation snapshot below retained.
+Updated 2026-10-21 +07; bounded sparse ORB map output passed offline Pi replay; PR93 camera follow-up and simulation snapshot retained.
 
 ## Simulation
 - Upstream firmware learning review: reviews/2026-10-21-team-foundation-reading.md. Three packs cover reduced-model/research foundations; firmware also needs five-bar/VMC, gain scheduling, estimation and hybrid timing. Study estimate20–32focused hours; no runtime change.
@@ -27,8 +27,7 @@ Updated 2026-10-21 +07; PR93 camera follow-up measured; simulation snapshot belo
 - PPO stopped normally; resumed control jobs single-threaded and bounded. Remaining control execution:400-case A3 nonlinear study. Camera work belongs to WBR-Perception.
 
 ## Hardware
-- SSH `wbr-pi5` works; Pi5/aarch64/3.9GiB; migrated SG128 boots, expanded113GiB root,80GiBfree.
-- Borrowed D435i317422076650/FW5.17.3.10 USB5000M stays mounted on robot. Calibration read-only; no robot/motor/firmware edits.
+- Pi5/aarch64/3.9GiB; migrated SG128 boots, expanded113GiB root,80GiBfree. D435i317422076650/FW5.17.3.10 was USB5000M during 2026-10-21 capture. Prior SSH worked; latest bounded probe timed out, so tomorrow must recheck reachability, power, USB and storage before recording.
 - Visual stereo/RGB-D+ROS pose accepted by Claude; review2026-10-21-camera-visual-pose.md. ImplementationPR77/79–81, reportPR84.
 - Recording fix: MCAP+stereo-only+reliable images/history100. rmem max/default4194304 intentionally retained for session; no persistent sysctl file. Stationary895/895 equal headers,zero observed gaps/transportlosses.
 - Fresh marked loop09:53:03–09:55:33+07:147.607s,2215left/2215right/2215CameraInfo each,identical headers,zero observed gaps/transportlosses. Owner confirms returned by120s and held30s; physical alignment not independently measured.
@@ -38,3 +37,4 @@ Updated 2026-10-21 +07; PR93 camera follow-up measured; simulation snapshot belo
 - Original3Mac runs: all2215pairs each; tracked2215/2215/2152,losses0/0/2,new maps afterinitial0/0/1,merges0/0/1,loop detectionsno/yes/no. Claude PR93 accepts only R1 open-loop endpoint0.018319m/14.267m as conditional evidence; R2/R3 endpoints are not drift. Report1of3losttracking, not repeatable tracking. No ground-truth or0.13%accuracy claim.
 - PR93follow-up: one fresh loopClosing0 run exit0,2215/2215tracked,map0,no loss/reset/loop/merge; conditional endpoint0.025485m/14.198601m. Unmeasured physical return/localBA remain limits; disabled-mode upstream pointer issue documented. Original R1/R2 proper SE3/no-scale alignment RMS0.009977m,p950.012041m,max0.113615m across2215exact shared stamps; agreement only.
 - Original runs >66.7ms calls6/135/14 of2215each (0.271/6.095/0.632%); tracked-only6/135/12. Paced15FPS is not capacity; no live-drop/Pi transfer claim. jPR94/kPR96;34focused tests and independent calculations PASS. Review2026-10-21-camera-review-followup.md; archive camera-recording-20261021-01/claude-review-followup-01 holds raw evidence/histograms/merge receipts. Container stopped; old automation paused.
+- Sparse-map feature on branch `chatgpt/20261021-orb-map-points`: `/d435_orb/map_points` publishes finite actual ORB `MapPoint` XYZ at max 1Hz in `slam_world`, with bounded candidate snapshots and metadata. Corrected isolated Pi build/ROS CTest pass; offline replay-04 yielded 20/20 nonempty clouds (max 965 points) and a retained MCAP. Runbook `LAB_DAY_EXECUTION.md` covers sequential 25/75/45s captures and per-run checks. Current SSH timed out. Full-duration map export, live camera/Foxglove GUI, reset/merge stress, RGB-D replay and accuracy remain unverified. See `reviews/2026-10-21-orb-map-points.md`, `ros2/wbr_orb_node/MAP_POINTS.md`, archive `~/wbr-evidence-archive/orb-map-points-20261021-01/`.
