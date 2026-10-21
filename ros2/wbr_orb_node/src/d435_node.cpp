@@ -1,10 +1,12 @@
 // Visual-only entry point in the existing wrapper. No fake engine or body pose.
 #include <System.h>
+#include "wbr_orb_node/orb_map_snapshot.hpp"
 #include <Tracking.h>
 #include <cv_bridge/cv_bridge.hpp>
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/image.hpp>
+#include <sensor_msgs/msg/point_cloud2.hpp>
 #include <std_msgs/msg/string.hpp>
 
 #include <cmath>
@@ -41,6 +43,12 @@ class D435Node : public rclcpp::Node {
         if (stereo_ && max_skew_ns_ != 0)
             throw std::invalid_argument("D435 stereo requires equal source stamps");
 
+        map_rate_ = std::make_unique<MapSnapshotRate>(declare_parameter<double>("map_points_hz", 1.0));
+        const auto point_limit = declare_parameter<int>("map_points_max", 50000);
+        if (point_limit < 1 || point_limit > 200000)
+            throw std::invalid_argument("map_points_max must be 1..200000");
+        map_limit_ = static_cast<size_t>(point_limit);
+
         cv::FileStorage config(settings, cv::FileStorage::READ);
         if (!config.isOpened()) throw std::invalid_argument("cannot read ORB settings");
         width_ = static_cast<int>(config["Camera.width"]);
@@ -58,6 +66,10 @@ class D435Node : public rclcpp::Node {
             false);
         pose_ = create_publisher<geometry_msgs::msg::PoseStamped>("~/pose", 10);
         status_ = create_publisher<std_msgs::msg::String>("~/status", 10);
+        // A late subscriber receives the latest complete snapshot while alive.
+        const auto map_qos = rclcpp::QoS(1).reliable().transient_local();
+        map_points_ = create_publisher<sensor_msgs::msg::PointCloud2>("~/map_points", map_qos);
+        map_info_ = create_publisher<std_msgs::msg::String>("~/map_points_info", map_qos);
         const auto first = declare_parameter<std::string>(
             "image_topic", stereo_ ? "/camera/camera/infra1/image_rect_raw" :
                                     "/camera/camera/color/image_raw");
@@ -90,6 +102,36 @@ class D435Node : public rclcpp::Node {
     rclcpp::Subscription<Image>::SharedPtr first_, second_;
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr pose_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr status_;
+
+    rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr map_points_;
+    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr map_info_;
+    std::unique_ptr<MapSnapshotRate> map_rate_;
+    size_t map_limit_ = 50000;
+    uint64_t map_sequence_ = 0;
+
+    void publish_map(const Image& source, bool tracked) {
+        const auto steady_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(
+            std::chrono::steady_clock::now().time_since_epoch()).count();
+        // This check precedes all map access/copying, including on lost frames.
+        if (!map_rate_->due(stamp(source), steady_ns)) return;
+        MapSnapshot snapshot;
+        if (!snapshot_active_map(*system_, map_limit_, snapshot)) return;
+        if (!tracked) snapshot.points.clear();  // replace stale display on lost tracking
+        auto cloud = map_points_cloud<sensor_msgs::msg::PointCloud2>(
+            snapshot, source.header.stamp.sec, source.header.stamp.nanosec, world_frame_);
+        std::ostringstream record;
+        record << "{\"source_ns\":" << stamp(source) << ",\"sequence\":" << ++map_sequence_
+               << ",\"map_id\":" << snapshot.map_id << ",\"init_kf_id\":" << snapshot.init_kf_id
+               << ",\"big_change\":" << snapshot.big_change
+               << ",\"map_change\":" << snapshot.map_change << ",\"tracked\":"
+               << (tracked ? "true" : "false") << ",\"candidates\":" << snapshot.candidates
+               << ",\"points\":" << cloud.width << ",\"truncated\":"
+               << (snapshot.truncated ? "true" : "false") << "}";
+        std_msgs::msg::String info;
+        info.data = record.str();
+        map_info_->publish(info);
+        map_points_->publish(cloud);
+    }
 
     static int64_t stamp(const Image& msg) {
         if (msg.header.stamp.sec < 0 || msg.header.stamp.nanosec >= 1000000000)
@@ -174,6 +216,7 @@ class D435Node : public rclcpp::Node {
         std_msgs::msg::String status;
         status.data = record.str();
         status_->publish(status);
+        publish_map(*a, published);
     }
 };
 }  // namespace wbr::orb_node

@@ -15,3 +15,11 @@ test: build/core_test
 	PYTHONDONTWRITEBYTECODE=1 $(PYTHON) -m unittest discover -s tests -v
 clean:
 	rm -rf build
+
+.PHONY: map-points-test
+build/map_points_test: tests/map_points_test.cpp include/wbr_orb_node/map_points.hpp
+	mkdir -p build
+	$(CXX) -Iinclude $(CXXFLAGS) tests/map_points_test.cpp -o $@
+map-points-test: build/map_points_test
+	./build/map_points_test
+test: map-points-test
