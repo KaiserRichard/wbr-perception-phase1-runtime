@@ -6,8 +6,8 @@ Updated 2026-10-21 +07; camera visual milestone complete with limitations; simul
 - Obsidian three-pack series delivered under docs/learning/obsidian: LQR, RL→PPO, residual/saved-runs/experiment; reviews2026-10-21-obsidian-pack1.md and2026-10-21-obsidian-packs2-3.md. No fresh training; mismatch study remains proposed.
 - Claude approved the assumed six-state planar LQR (PR44) and delay/lag/noise baseline (PR47–48). Hardware parameters remain ASSUMED/UNKNOWN; source gain parity remains the owner exercise.
 - PPO v1 complete: LQR160/160, PPO0/800. See sim/rl/RESULTS_2026-10-20.md; archived evidence retained.
-- PPO v2 RUNNING independently (PR55; frozen source f1b5ee7): eight envs,3M policy transitions/seed,100Hz policy,unchanged500Hz plant/LQR. Supervisor75443; no duplicate or tuning.
-- Initial seeds0–2 complete: direct strict[39,20,0]/160 each, survival[160,160,120]; residual strict[0,0,0], survival[160,160,160]. All exact3M/reloadPASS. Directseed3 training~0.84M; seed4 follows; residual has no extension. Full comparison incomplete.
+- PPO v2 COMPLETE 2026-10-21 12:13 +07 (PR55; frozen source f1b5ee7): eight exact3M-step seeds,all reloadPASS,1,280 evaluated cases; supervisor exited0.100Hz PPO versus unchanged500Hz LQR; no tuning.
+- Direct seeds0–4 strict[39,20,0,0,0], survival[160,160,120,160,160]:59/800 strict,760/800 survived. Residual seeds0–2:0/480 strict,480/480 survived; no extension. Reused LQR160/160. Legacy episode-length/return curves unavailable. Results: sim/rl/RESULTS_V2_2026-10-20.md; review2026-10-20-ppo-v2.md. Owner requested Mac rest/charging: no further heavy work or workers until resumed.
 - Evidence ~/wbr-evidence-archive/sim-ppo-v2-20261020-01; process/progress /private/tmp/wbr-ppo-v2-20261020/. Camera lab worktree updated to main; training runtime files unchanged.
 - sim/parity/student.py::gain_schedule remains owner-only. Separate live LQR viewer uses parameter-source-audit checkout; Desktop launcher remains available.
 
@@ -21,7 +21,7 @@ Updated 2026-10-21 +07; camera visual milestone complete with limitations; simul
 - A3 sweep/fitter mergedPR65:14synthetic testsPASS.76designs/400physics cases NOT RUN. Domain0.12–0.30m is a hypothetical rigid-leg family, not the five-bar workspace.
 - A4 five-bar/VMC mergedPR69:14quick tests including pinned-C VMC parityPASS; kinematic/hip-power agreement measured. Mass matrix and wheel reaction differ from reduced model; heavy dynamics comparison queued.
 - B3 renderer mergedPR67;11tests and one tiny framePASS. Framing improvement mergedPR71; one additional tiny frame inspected. Full balance/push clips await compute and FFmpeg; no full video claim.
-- Queue/briefs/process/error receipts: /private/tmp/wbr-overnight-20261020/. 06:30wakeup completed/deleted; overnight dispatch ends with handoff. PPO completion monitor remains active.
+- Queue/briefs/process/error receipts: /private/tmp/wbr-overnight-20261020/. 06:30wakeup completed/deleted; overnight dispatch ended. PPO completion monitor retires after final report handoff.
 - Mac edits/quick tests only while PPO runs. Heavy jobs use an available Pi or wait. Morning review: reviews/2026-10-21-overnight.md. A1/A3/A4/B3 remain queued for actual execution.
 
 ## Hardware
