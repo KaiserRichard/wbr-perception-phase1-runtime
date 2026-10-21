@@ -15,5 +15,7 @@
 - ZIP validation: fresh extraction, relative links, anchors, YAML, deliberate
   future wiki-links, source arrays and extracted script output. No caches or envs
   packaged. Matplotlib figures contain calculated teaching responses, no fake data.
+- First extraction check caught a repository-relative skill link in the portable
+  profile; changed it to the bundled sibling SKILL.md before final delivery.
 - No changes to protected student function or runtime/training code. No heavy
   rollout, fresh seed, camera action or hardware command. Pack2/3 remain next.

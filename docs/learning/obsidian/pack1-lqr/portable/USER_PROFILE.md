@@ -30,6 +30,6 @@ English unless explicitly asked otherwise. Senior-undergraduate EE/robotics leve
 - Candidate experiment: residual PPO versus delay-aware LQR, train delay2–5ms,
   test6–10ms; no research-gap claim before literature review. New training is
   separate from lesson production and follows current control experiment rules.
-- Portable instructions: [Obsidian lesson skill](skills/wbr-obsidian-lessons/SKILL.md).
+- Portable instructions: [Obsidian lesson skill](SKILL.md).
   These repository files support continuity across accounts; account memory does
   not transfer automatically.
