@@ -104,3 +104,55 @@ from PR90 remains a separate deferred SDK task; these runs are visual only.
 Recommendation for review: accept complete input coverage and the reported
 repeatability limits; do not turn small endpoint values into a drift-accuracy
 or robust-tracking claim. Review the map events before comparing trajectories.
+
+## Claude review (2026-10-21)
+
+**Decision: accepted as replay infrastructure and input-coverage evidence.
+The endpoints are not drift results, except replay 1 as a bound.**
+
+Checked: this file, `scripts/camera_day/offline/replay_stereo.cc` (pacing and
+pose logging) and `analyze_batch.py`. Raw archive on the Mac not re-read.
+
+### Map merge and loop limits
+
+- The endpoint is the first-to-last *online* pose. On a loop that returns to the
+  start, place recognition snaps the pose back to the start map. A small endpoint
+  after a loop closure or merge is expected by construction and measures
+  recognition, not drift.
+  - Replay 2 (loop detected): 0.54 cm is not a drift number.
+  - Replay 3 (loss, new map, merge, 1.115 m jump): 0.63 cm compares poses across
+    a merge correction, so it is not a drift number either. Its path length and
+    percentage also include the jump.
+  - Replay 1 (no loop, merge, loss or reset) is the only open-loop figure:
+    1.83 cm over 14.3 m (0.13%). The return to the mark is owner-reported, and
+    hand alignment is probably good only to a couple of centimetres and a few
+    degrees (inferred, not measured). So read replay 1 as "drift is at or below
+    the alignment floor", not as 0.13% accuracy.
+- Same input, three different map histories: ORB-SLAM3's threads make it
+  non-deterministic. Report repeatability as a distribution (here, 1 of 3 runs
+  lost tracking), not as "repeatable".
+- `CameraTrajectory.txt` from this runner holds online poses, not ORB's
+  optimized export of the same name. Keep that distinction in later analysis.
+
+### FPS scopes
+
+- Tracked FPS (15.0) is capped by 1x pacing. It shows the run kept up with real
+  time, not throughput. The report says this correctly.
+- Track-compute quotient is a mean. The tail matters more: replay 2's Track p95
+  is 71.6 ms, above the 66.7 ms budget at 15 Hz. The runner never drops pairs,
+  so overruns are absorbed here; a live camera with a latest-image slot would
+  drop those frames instead. "All 2,215 processed" therefore does not mean a
+  live run on this Mac would track every frame.
+- Intel Mac in Docker (4 CPUs) with ORB compatibility patches: none of these
+  timings transfer to the Pi, as the report states.
+
+### Next (no lab needed)
+
+1. Pure-drift number: rerun the same bag with loop closing disabled (the
+   `loopClosing: 0` settings key, if this ORB build reads it). Report the endpoint
+   per map segment, and stop the metric at the first loss.
+2. Repeatability without ground truth: align replays 1 and 2 with Umeyama
+   (SE(3), no scale) and report the RMS difference over the shared tracked
+   frames.
+3. Add per-frame Track-time histograms and the count of frames over 66.7 ms
+   to the FPS table.
