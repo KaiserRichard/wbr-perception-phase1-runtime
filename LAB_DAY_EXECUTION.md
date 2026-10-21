@@ -72,13 +72,14 @@ stop before capture.
 ### [PI] ROS and runner prerequisites — **previously verified; paths must exist**
 
 ```bash
+set -euo pipefail
 source /opt/ros/jazzy/setup.bash
 source /home/richard/wbr-camera-ros-build-20261021-04/install/setup.bash
 printf 'ROS_DISTRO=%s ROS_DOMAIN_ID=%s\n' "$ROS_DISTRO" "${ROS_DOMAIN_ID:-unset}"
 ros2 pkg executables wbr_orb_node
-test -r /home/richard/wbr-evidence/camera-day-20261021-01/capture_loop.py
-test -r /home/richard/wbr-camera-native-20261021/settings/stereo-15fps-800features.yaml
-test -r /home/richard/orbslam3/ORB_SLAM3/Vocabulary/ORBvoc.txt
+test -r /home/richard/wbr-evidence/camera-day-20261021-01/mcap-marked-loop-01/capture_loop.py || { echo "Missing verified capture runner" >&2; exit 1; }
+test -r /home/richard/wbr-camera-native-20261021/settings/stereo-15fps-800features.yaml || { echo "Missing verified stereo settings" >&2; exit 1; }
+test -r /home/richard/orbslam3/ORB_SLAM3/Vocabulary/ORBvoc.txt || { echo "Missing ORB vocabulary" >&2; exit 1; }
 ```
 
 If any `test` fails, **do not build or improvise at the lab**. Preserve the
@@ -95,8 +96,9 @@ The sparse-map install and replay helper were separately verified at:
 Check them without changing anything before relying on the map replay:
 
 ```bash
-test -x /home/richard/wbr-orb-map-points-20261021-01/install/wbr_orb_node/lib/wbr_orb_node/d435_node
-test -r /home/richard/wbr-orb-map-points-20261021-01/source/ros2/wbr_orb_node/tests/replay_map_points.py
+set -euo pipefail
+test -x /home/richard/wbr-orb-map-points-20261021-01/install/wbr_orb_node/lib/wbr_orb_node/d435_node || { echo "Missing verified sparse-map node" >&2; exit 1; }
+test -r /home/richard/wbr-orb-map-points-20261021-01/source/ros2/wbr_orb_node/tests/replay_map_points.py || { echo "Missing verified map replay helper" >&2; exit 1; }
 ```
 
 These files existed for the successful offline replay on 2026-10-21. Their
@@ -105,7 +107,9 @@ continued presence is **UNVERIFIED** until the Pi is reachable.
 ## 3. Capture with the existing runner
 
 The successful capture used the session runner archived on the Pi at
-`/home/richard/wbr-evidence/camera-day-20261021-01/capture_loop.py`. It launches
+`/home/richard/wbr-evidence/camera-day-20261021-01/mcap-marked-loop-01/capture_loop.py`.
+Use this exact verified copy; the retained top-level `capture_loop.py` is an
+older recorder/best-effort configuration. The verified runner launches
 the existing stereo camera and ORB nodes, waits for an actual pose before
 recording, writes a new MCAP, then stops its own recorder/SLAM/camera process
 groups and saves a capture summary. It uses D435i `317422076650`, stereo
@@ -118,12 +122,13 @@ the verified stereo settings into each run as `stereo.yaml`. It creates the fina
 output directory exclusively; the parent must exist and the run path must not.
 
 ```bash
+set -euo pipefail
 source /opt/ros/jazzy/setup.bash
 RUNROOT="$HOME/wbr-evidence/camera-day-20261022-01"
 mkdir "$RUNROOT"
 
 # A — stationary baseline, 25 s
-python3 /home/richard/wbr-evidence/camera-day-20261021-01/capture_loop.py \
+python3 /home/richard/wbr-evidence/camera-day-20261021-01/mcap-marked-loop-01/capture_loop.py \
   "$RUNROOT/A-stationary" 25
 ```
 
@@ -154,8 +159,11 @@ and `slam.log` prove initialization/startup, not uninterrupted tracking for the
 whole capture.
 
 **Safe stop:** let the requested duration finish. If stopping early, press
-Ctrl-C once in the runner terminal and wait for `capture_summary.json` and bag
-metadata to finish. Do not kill ROS processes globally or remove partial runs.
+Ctrl-C once in the runner terminal and wait for `capture_summary.json`. If
+recording had started, also wait for the sensor bag metadata to finish. If the
+runner was still waiting for the first pose, no sensor bag is expected; retain
+the summary/logs and do not wait for bag metadata. Do not kill ROS processes
+globally or remove partial runs.
 
 ## 4. Three short scenarios
 
@@ -173,14 +181,16 @@ motors.
 After A passes Section 5, run B:
 
 ```bash
-python3 /home/richard/wbr-evidence/camera-day-20261021-01/capture_loop.py \
+set -euo pipefail
+python3 /home/richard/wbr-evidence/camera-day-20261021-01/mcap-marked-loop-01/capture_loop.py \
   "$RUNROOT/B-slow-sweep" 75
 ```
 
 After B passes Section 5, run C:
 
 ```bash
-python3 /home/richard/wbr-evidence/camera-day-20261021-01/capture_loop.py \
+set -euo pipefail
+python3 /home/richard/wbr-evidence/camera-day-20261021-01/mcap-marked-loop-01/capture_loop.py \
   "$RUNROOT/C-return-sweep" 45
 ```
 
@@ -239,14 +249,17 @@ matching source stamps/pose/status/metadata, nonempty clouds and the 1 Hz cap.
   `counts_equal: true`; replay validation has `passed: true`, nonempty clouds,
   and `source_stamps_match_input: true`.
 - **REVIEW:** a tool completed but reports unequal/missing frames, estimated
-  gaps, no observed tracking at a cloud timestamp, or the operator saw no scene
-  motion. Retain the run; do not collect the next scenario until understood.
+  gaps, no observed tracking at a cloud timestamp, blank/frozen images, or
+  expected scene motion is absent during B/C. A is intentionally stationary, so
+  no scene motion is expected for that run. Retain the run; do not collect the
+  next scenario until understood.
 - **FAIL/BLOCKED:** process error/nonzero exit, unreadable bag, missing required
   topics, failed map validator, or missing preflight dependency/path. Stop and
   preserve the full run folder and logs; do not repair software during capture.
 
-For B/C, the replay checks only the first 20 seconds. **Tracking continuity,
-pixel content, and map export for the remaining recording duration remain
+For **A, B, and C**, replay checks only the first 20 seconds. This leaves 5 s
+of A, 55 s of B, and 25 s of C outside the verified map replay. **Tracking
+continuity, pixel content, and map export for those remaining durations remain
 UNVERIFIED.** Review scene content before starting the next run: copy the
 sensor MCAP to the Mac using Section 6, open it in Foxglove, and inspect early,
 middle, and late IR frames. A and B/C should show a valid image; B/C should show

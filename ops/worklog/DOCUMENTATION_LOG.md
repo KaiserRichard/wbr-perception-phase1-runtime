@@ -430,3 +430,10 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   passed. Replay-03 exposed a recorder-discovery race; the harness was fixed and
   its failed logs retained. Live camera, Foxglove GUI and RGB-D behavior remain
   unverified. See `ops/worklog/reviews/2026-10-21-orb-map-points.md`.
+- Follow-up read-only codex-k review corrected the runbook to pin the verified
+  marked-loop recorder, fail explicitly on missing prerequisites, distinguish
+  pre-pose interruption from a completed bag, and state that A/B/C map replay
+  validates only the first 20 seconds. No Pi interaction occurred.
+- Follow-up read-only codex-e review found that stationary run A was incorrectly
+  grouped with B/C when interpreting missing scene motion; the REVIEW criterion
+  now requires expected motion only for B/C. No Pi interaction occurred.

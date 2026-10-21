@@ -63,11 +63,15 @@ The Pi build after the lock-order correction and replay-04 use this final harnes
 ## Tomorrow's operator runbook
 
 `LAB_DAY_EXECUTION.md` covers a fresh SSH/power/USB/storage preflight, sequential
-25/75/45-second captures with the archived runner, per-run stereo checks, a
-bounded first-20-second map replay, and Mac copy/Foxglove steps. An independent
-read-only review led to explicit per-run settings checks, an optional domain-201
-diagnostic, fail-fast validation, a 3 GiB free-space reserve, and clearer checksum
-output. All 14 Bash command blocks pass `bash -n`; package tests pass 20/20.
+25/75/45-second captures with the verified marked-loop runner, per-run stereo
+checks, a bounded first-20-second map replay, and Mac copy/Foxglove steps. Three
+independent read-only reviews led to explicit prerequisite failures, domain-201
+diagnostics, fail-fast commands, a 3 GiB free-space reserve, safe handling when
+capture stops before its first pose, precise replay-coverage caveats for A/B/C,
+and a clarification that no motion is expected in stationary run A. The verified
+session-specific runner path is pinned; the older retained top-level copy is
+explicitly excluded. All 14 Bash command blocks pass `bash -n`; package tests
+pass 20/20.
 This is an operator plan, not a live run: latest SSH timed out, and current
 hardware readiness must be checked in the lab. Full-duration export and GUI
 appearance remain unverified.
