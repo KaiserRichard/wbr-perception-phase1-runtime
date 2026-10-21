@@ -264,3 +264,21 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Current scope: LQR/RL/PPO proposal for Claude review before lesson production;
   no new training or hardware action authorized by this documentation.
 - Evidence: reviews/2026-10-21-obsidian-lqr-ppo-plan.md.
+
+### D-20261021-CAMERA-DAY: Resume live camera sequence without duplicating simulation
+- Decided by: owner (sequence and authority); conductor (execution split).
+- Decision: conductor owns native camera work; idle g builds existing visual ROS
+  wrapper in isolated worktree/private Pi source. Preserve ongoing PPO and the
+  owner-only gain exercise. Existing Conducting Codex text needs no duplicate.
+- Evidence: owner camera-day prompt; sessions/2026-10-21-camera-day.md; SSH and
+  account receipts under /private/tmp/wbr-camera-day-20261021/.
+- Revisit when: hardware arrives or an actual runtime/build failure changes work.
+
+### D-20261021-CAMERA-REVIEW: Follow owner-relayed Claude camera changes
+- Decided by: owner, relaying Claude review.
+- Decision: disable native viewers; try15FPS or800features against observed drops;
+  measure trackingFPS/loss events/throttling. Run stereo,RGBD,stereo-inertial using
+  borrowedD435i; calibration remains read-only. Mount-preserving cart/PD-bank
+  motion with marked start/end;3replays report endpointdrift and closure events.
+- Evidence: owner's2026-10-21review message; camera-day session and raw Pi logs.
+- Limits: no powerbank/physicalmotion verified yet; no groundtruth accuracyclaim.

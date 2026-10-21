@@ -319,3 +319,58 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   existing synthesis, augmented LQR, v2 runtime/config and guides at 28f1eb7.
   No new training, lesson ZIP, image generation or hardware action. Validation and
   publication receipts are recorded in the dedicated session note.
+
+### DOC-20261021-CAMERA-DAY: Resume camera work on migrated Pi
+- Files: sessions/2026-10-21-camera-day.md; CURRENT.md; DECISIONS.md; this log.
+- Why/source: owner supplied camera-day sequence and conductor rules; latest
+  origin/main 8195d7f; actual SSH/storage/kernel/package/launch outputs.
+- Actual: storage boot/expansion verified, no camera enumerated; existing native
+  stereo reports missing device. Isolated g ROS build dispatched after idle check.
+- Validation: source and live output inspected; no native tracking, ROS pose,
+  recording/replay or whole-card integrity claim. Worker build pending.
+- Status: session in progress; final milestone/Claude review pending physical input.
+
+- CAMERA-DAY report follow-through (2026-10-21 07:58 +07): added
+  reviews/2026-10-21-camera-day-status.md and session observations at owner request.
+  Sources: live SDK/USB readback, native stereo logs (733 initial map points),
+  worker build logs/diff. Report separates initialization from trajectory evidence;
+  ROS pose/RGB-D/bag/replay pending. No completed-milestone/Claude approval claim.
+
+- CAMERA-DAY build/review follow-through: worker ROS CMake/READMEs and own
+  sessions/2026-10-21-camera-ros-build.md inPR77; conductor repeated native
+  build/link/startupchecks; bothCItestsSUCCESS, merged567c765. Owner relayed
+  headless/inertial/loop-metricchanges; session/DECISIONS updated. Two isolated
+  workers running; native headless results and ROS trackedposes remain pending.
+
+- CAMERA-DAY live follow-through: CURRENT/session now record actual4GBPi, SG128
+  root expansion, borrowedD435i identity, identical SDKcalibration readback and
+  actualheadlessROS trackedpose. Sources:Piros-stereo-01logs, explicittypedCLIecho,
+  calibrationafterbaselineSHA256. Motion/bag/replay/nativeheadlesshelpers pending;
+  existing unrelated overnight/simulation state preserved during main merge.
+
+- CAMERA-DAY headless/export follow-through: session/CURRENT updated from actual
+  native/ROS/record/replaylogs. Relatedworkerfiles:PR79 replaymetrics README/tests
+  +session;PR80 nativehelper README/patches/tests+session;PR81 ROSexportguide/tests
+  +session. Independent18+7+14focusedtests and realPi runs passed; allthreePRs
+  mergedafterbothcurrentheadCIchecksSUCCESS. IMUonlytransient,103transportlosses
+  explicit; higherrecorderhistory remainsunverified. Initial189filearchivehashes
+  verified; rawbagskeptPi. Marked150sloop/3replayspendingphysicalready; noreview
+  approvalorfullcameradaycompletionclaimed.
+
+- CAMERA-DAY loop follow-through: CURRENT/session record3saved150scaptures,
+  exactsupervisor/logresults and usercorrectedendpointlimitations; loop03return
+  at120s/hold30sisUSER-REPORTED. Detached3replaybatchstartedafterquotaresume;
+  sourcebaglossesexplicit. Receivesysctlbefore/after retainedforrollback; result
+  table/Claudehandoffpending. No newgate/fullinertial/performanceclaim.
+
+- CAMERA-DAY final comparison: added reviews/2026-10-21-camera-visual-pose.md;
+  CURRENT/session record actualthreeexports/results,1318inputtransportlosses,
+  user-reportedendpointalignment, map discontinuities andyes/yes/noloopdetections.
+  Sources:Pi loop03+loop03-replays-01, hashedMacarchiveanalysis, actualexitreceipts.
+  Independentmetricsandoutputbaghashchecks passed; all3sourcebaghashesmatch;
+  figureinspected. SDKreadbackidentical;temporarybuffersrestored. Inertialand
+  robustmappingremainunresolved; Claudeapprovalnotclaimed. DocPR/CIpending.
+
+- Final publication preparation: 344 copied small artifacts verified by SHA-256;
+  preserved concurrent Obsidian notes in the merge and corrected stale camera
+  pending/free-space text in CURRENT. No experimental result changed.
