@@ -18,6 +18,9 @@ account rules for control work. Read `../ops/RESEARCH_RULES.md` before RL work.
   percent of the alive reward. Check units and each relevant state term.
 - Every RL result includes episode-length and return learning curves, plus
   final evaluation metrics. Survival and strict balance success are distinct.
+  Report every training seed separately; pooled totals must not hide failed seeds.
+  Any future v3 full comparison uses at least five training seeds per arm, after
+  its one-seed pilot passes. This does not launch v3 or extend frozen v2.
 - Keep evidence lean: config, source commit, seeds, final metrics and required
   curves. Reports fit one page. No mass hashing and no DECISIONS.md or
   DOCUMENTATION_LOG.md entries, including for documentation changes.
