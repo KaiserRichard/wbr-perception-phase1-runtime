@@ -20,7 +20,9 @@ research. Calling them “most of the actual WBR mathematics” was too broad.
 
 - Firmware feedback order is `[leg angle, leg rate, position error, velocity error,
   body pitch, body rate]`, with side-dependent signs; the packs use a different
-  order. Copying gains or a global minus sign without coordinate mapping is invalid.
+  order. Its translational observer also includes leg-motion terms, whereas the
+  lesson defines x at the axle: physical coordinate equivalence needs checking,
+  not merely column reordering. Gains/signs cannot be copied without that mapping.
 - Firmware has changing five-bar legs, per-side virtual outputs and real joint
   torques. Packs use a fixed equivalent leg and aggregate pair inputs. Firmware
   wheel/joint clamps (±2/±7Nm) are not the lesson's aggregate limits.
