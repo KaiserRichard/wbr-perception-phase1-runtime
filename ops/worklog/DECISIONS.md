@@ -290,3 +290,11 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
   attempt, then stop camera/ROS processes and archive evidence on the Mac.
 - Camera remains mounted. Heavy robot stays on its wheels; planar excitation is
   logged as a limitation rather than claiming all-axis excitation.
+
+### D-20261021-REPLAY-AFTER-PPO: Preserve Mac compute isolation
+- Owner explicitly chose to wait for PPO v2 completion. Three new-bag stereo
+  replays are queued; no SLAM/heavy setup while training. Pi use needs a fresh
+  explicit owner release. No PPO/environment/AGENTS change authorized.
+- Start requires terminal supervisor and batch receipts plus no batch workers.
+  Report each endpoint, map/reset context and measured trackedFPS; do not infer
+  throughput from nominal15Hz. Mac replay results must be labelled as Mac.

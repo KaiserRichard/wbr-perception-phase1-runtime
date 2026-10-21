@@ -386,3 +386,13 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   retains initialized61.8s and965poses;176archive artifacts verified; calibration
   unchanged and Pi-free receipt saved. Cue/planar-motion limits documented.
   Large raw data stays outside git; documentation CI pending at this checkpoint.
+
+### DOC-20261021-REPLAY-QUEUE: Wait for PPO, then replay the clean loop
+- Owner chose to retain the no-heavy-Mac-work rule. Added session/review and
+  CURRENT pointer for the conditional three-replay queue; active15-minute thread
+  follow-up and Mac receipt saved. Existing control monitor/AGENTS unchanged.
+- Sources: real process tree/PPO receipts, Docker metadata, acceptedPR88 review,
+  hashed raw IMU CSV and D400 table4-24. One isolated -4g Y rail hit; clipping
+  plausible, not proven. No new replay or hardware result.
+- Corrected native README; documented default-zero offset and main-thread fault
+  handling. Native rebuild/fault injection deferred; local patch tests only.

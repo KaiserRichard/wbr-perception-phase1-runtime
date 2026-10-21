@@ -128,11 +128,12 @@ clones color and converts native Z16 depth using **that frame's read-only SDK
 scale is used. The summary records the last observed depth-unit value. This
 worker has not queried live units. All example sensor-option writes are removed.
 
-IMU startup waits for a real accelerometer sample before accepting gyro/images;
-the unsafe unlocked post-start vector clear is removed. Native XYZ axes and the
-upstream acceleration resampling/hold behavior are retained (the upstream
-`interpolateMeasure` ultimately overwrites its interpolation with current data).
-Synchronization quality and tracking must still be evaluated by a live run.
+IMU startup waits for real accelerometer brackets. Native SDK XYZ axes are
+retained; acceleration is linearly interpolated onto gyro timestamps without
+latest-value padding or extrapolation. Pending samples survive image processing,
+and frames wait for unified IMU coverage through their image time. The original
+unlocked post-start vector clear is removed. See the follow-up below for the
+runtime checks and the measured single-run evidence.
 
 ## Metrics definitions
 
@@ -227,3 +228,10 @@ accelerometer m/s² with source timestamps for measured-rate checks afterward.
 Successful checks are configuration evidence; they do not establish sustained
 inertial tracking. Keep the mount fixed during the initial 10–15 seconds of
 owner-performed excitation and record which axes were physically possible.
+
+The upstream IMU-only `offset` (milliseconds, default0) is applied before
+unification. Raw CSV timestamps therefore include this offset; the recorded
+accepted run used0. Timestamp faults in the SDK callback set an atomic flag and
+wake the main loop; the main thread handles the error, stops the SDK and exits
+nonzero with `stop_reason=processing_error`. The flag is checked again after
+SDK stop, so a fault during the final callback cannot be reported as success.
