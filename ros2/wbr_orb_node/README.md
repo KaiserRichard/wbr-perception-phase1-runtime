@@ -1,6 +1,6 @@
 # wbr_orb_node
 
-**INFERRED implementation; ROS 2 Jazzy / ORB integration UNBUILT.** This
+**ROS 2 Jazzy / native ORB build verified on the Pi, 2026-10-21; tracking unverified.** This
 `ament_cmake` package's original `orb_node` drives the existing `tools/vio_adapter` boundary from
 recorded or live stereo + combined **D435i camera IMU** messages. The STM32 body
 IMU is a different sensor and must never be substituted. N4B offline comes
@@ -16,9 +16,12 @@ package installs no dependencies and changes no upstream tool.
 `d435_node` when `WITH_ORB_SLAM3=ON`, with visual-only `STEREO` and `RGBD` input,
 headless ORB, source-stamped tracked optical poses, camera/SLAM launches and SDK
 calibration conversion. See [camera-day commands and limitations](../../scripts/camera_day/README.md).
-This path has no IMU dependency or fake engine. Pi build/install and live camera
-execution remain **BLOCKED** by SSH timeout; fixture tests do not establish ROS
-compilation or tracked poses. The rest of this README documents the original
+This path has no IMU dependency or fake engine. Native Pi build/install and
+camera-free `d435_node` startup now pass; startup intentionally stops at the
+missing-vocabulary/settings error, before ORB construction. No live camera
+execution or tracked pose is claimed. See the
+[build session](../../ops/worklog/sessions/2026-10-21-camera-ros-build.md).
+The rest of this README documents the original
 stereo-inertial `orb_node`, whose IMU contract remains unchanged.
 
 Callbacks validate MONO8 (`mono8` / `8UC1`) images, preserve integer header
@@ -87,7 +90,7 @@ failure is FAIL; bad arguments/raw metadata are error exit 3. Exit codes are
 command results; it cannot establish that a ROS package built or a Pi gate passed.
 The runtime node itself is an estimator, not a lab gate check.
 
-## Build on an already provisioned Pi (not executed here)
+## Build on an already provisioned Pi
 
 Choose a dedicated task checkout and evidence parent on the Pi. The path below
 is proposed, not verified. Do not use or switch the shared runtime checkout.
@@ -124,8 +127,10 @@ source install-orb/setup.bash
 
 `ORB_EXTRA_INCLUDE_DIRS` and `ORB_EXTRA_LIBRARIES` are CMake lists. Existing
 OpenCV/Eigen, ROS rclcpp/sensor_msgs/nav_msgs and yaml_cpp_vendor development
-packages must be available. Build/link compatibility is **UNKNOWN** until this
-command runs on the Pi. Record source revision, patch hashes, library/executable
+packages and the Pangolin CMake package must be available. The native camera-day
+build and installed `d435_node` linking were verified on 2026-10-21 using
+`scripts/camera_day/build_pi.sh`; stereo-inertial runtime remains unverified.
+Record source revision, patch hashes, library/executable
 hashes and the selected ORB settings/vocabulary using the existing run harness.
 
 ## Offline first: rosbag replay
