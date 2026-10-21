@@ -23,3 +23,24 @@ Build first, fix when it breaks. These are the few rules that still apply.
 - Get the LQR baseline working in MuJoCo first, then train RL and compare on the
   same model and the same pushes/disturbances. Use a few random seeds.
 - Code under `sim/`; checkpoints, logs and videos stay out of git.
+- WBR-Control owns control work; WBR-Perception owns camera work. Control must
+  not touch perception branches/files or the d/h/j accounts, even for pings.
+- Before a new full training experiment, run one 10–20 minute pilot seed,
+  targeting ~200k policy steps; report actual duration/steps. Print episode
+  length, return and reward-term magnitudes. Plot episode length and return
+  against steps; proceed only when the learning curve clearly improves.
+- First sanity-check reward scale at the actual evaluation tolerances: a
+  tolerance-sized error must cost a visible few percent of the alive reward.
+  For a state term, $c_x = s Q_{xx} x_{\mathrm{tol}}^2$. With alive reward 1,
+  $Q_{xx}=40$ and $x_{\mathrm{tol}}=0.02$ m, scale 0.1 costs 0.0016 (0.16%);
+  scale 2 costs 0.032 (3.2%). This illustrates the check, not a v3 config change.
+- Every RL result includes episode-length and return learning curves versus
+  policy steps. Keep evidence to config, commit, seeds, final metrics and
+  those curves. Reports fit one page; no mass hashing or DECISIONS.md /
+  DOCUMENTATION_LOG.md entries. Existing historical records remain intact.
+- Claude explicitly requested that already-running PPO v2 seeds 3/4 finish
+  unchanged. These pilot/reward requirements gate future experiments; they
+  do not authorize v3 or modify the active batch.
+- Legacy PPO v2 saved optimizer statistics but no episode-length/return
+  histories. Mark those curves unavailable; do not fabricate them or relabel
+  optimizer losses as returns. New pilots must record both histories.
