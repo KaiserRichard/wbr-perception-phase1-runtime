@@ -158,7 +158,7 @@ These establish fixed-length **kinematic and virtual-hip mapping agreement**,
 and demonstrate why full dynamics equality is not established. They do not
 justify replacing the reduced model or evaluating trained policies here.
 
-## Commands and deferred work
+## Commands and fixed-length study
 
 Quick checks, with single-thread BLAS and no dependency changes:
 
@@ -176,8 +176,8 @@ Without the optional prebuilt C path, the C test explicitly skips. There is no
 compiler/dependency installation or modification of that prior build. The XML
 test includes just one physical integration step, not a stability experiment.
 
-**Queued, not run during active training:** the following fixed-length dynamics
-comparison uses the actual link mass matrix and bias from MuJoCo, with analytic
+**Executed on 2026-10-21 after owner resumption:** the fixed-length dynamics
+comparison uses the assumed link mass matrix and bias from MuJoCo, with analytic
 loop/length elimination and local finite-difference coordinate derivatives.
 For $q_{\rm tree}=f(q)$, $T=\partial f/\partial q$, it integrates
 
@@ -188,20 +188,52 @@ $$
 An ideal length reaction does no allowed virtual work and is eliminated. This
 is a constrained comparison, not a physical length servo or soft-XML simulation.
 The unit test checks nonzero-velocity energy rate against actuator power,
-including the passive-joint curvature term. The queued study runs all nine
+including the passive-joint curvature term. The executed study ran all nine
 combinations of timestep and projection epsilon, preserving physical
 parameters and pulse inputs; output reports differences without a parity PASS.
 It stops explicitly on 45-degree tilt, workspace exit or numeric failure.
 
 ```sh
-# Only after PPO ends, or on a separately provisioned Pi with MuJoCo.
-# Use a new output path; the command refuses to overwrite evidence.
-nice -n 10 "$PY" -m sim.fivebar.compare --run-dynamics \
+# Recorded child command; the external wrapper set nice=10, the single-thread
+# environment above, and Popen.wait(timeout=600). This output now exists.
+"$PY" -m sim.fivebar.compare --run-dynamics \
   --duration 5 --timesteps .001 .0005 .00025 --epsilons 1e-5 3e-6 1e-6 \
-  --output /private/tmp/wbr-overnight-20261020/A4/fixed-length-dynamics.json
+  --output /Users/quockaiser/wbr-evidence-archive/sim-fivebar-dynamics-20261021-01/fixed-length-dynamics.json
 ```
+
+At source commit `140a11b45e035190d89f4af0905b70975dce9f7c`, the one study
+exited 0 in **150.709 wall seconds**. Independent parsing confirmed nine unique
+timestep/epsilon pairs, finite saved numeric values, and consistent status,
+step count and simulated time. Every case reported `45_degree_stop`, with no
+failure message: the **reduced model's leg angle** crossed the threshold first.
+The 1 ms and 0.5 ms cases stopped at 0.296 s; the 0.25 ms cases at 0.29575 s.
+These are short open-loop falls, **not five seconds of valid dynamics or
+balance tests**. Inputs were the existing 0.1 s wheel/hip pulse
+`[0.02, -0.05]` N m followed by zero, from
+`[x, theta, phi, xdot, thetadot, phidot] = [0, 0.02, -0.015, 0, 0, 0]`.
+
+At 0.25 ms and epsilon $10^{-6}$, maximum absolute five-bar/reduced differences
+over the sampled interval were
+`[0.00341824 m, 0.0625922 rad, 0.0297757 rad, 0.0315746 m/s,
+0.479236 rad/s, 0.298670 rad/s]`. Across epsilon choices at any fixed timestep,
+the largest five-bar terminal leg-angle spread was $5.66\times10^{-8}$ rad
+and leg-rate spread $1.13\times10^{-6}$ rad/s. Halving 1 ms to 0.5 ms compared
+the same 0.296 s endpoint; terminal leg-angle changes across both models and
+all epsilons were at most $6.19\times10^{-10}$ rad. Halving again changed the
+stop time by 0.25 ms, so those endpoint differences also contain time offset.
+No common-time trajectories were saved, convergence order estimated, tolerance
+invented, or dynamics-equivalence PASS assigned.
+
+The differences persist under these refinements and are consistent with the
+unmatched **ASSUMED link mass distribution and distal-link wheel reaction**
+described above; this run does not isolate their separate contributions.
+Kinematic and virtual-hip mapping agreement does not establish matched
+dynamics. The earlier 120 s attempt was resource-limited with no final JSON,
+not an established numerical failure. Per-case facts, exact execution receipts
+and limitations are in the [one-page review](../../ops/worklog/reviews/2026-10-21-fivebar-dynamics.md).
 
 Long free-length XML simulations, closure/solver refinement, length-servo
 behavior, full dynamics equivalence analysis, matched mass identification,
 contacts and physical validation remain unrun. The fixed-length projected
-study does not replace those experiments. Pi execution is also unverified.
+study does not validate full five-bar closed-loop control, contact/jumping or
+policy transfer. Pi execution is also unverified.
