@@ -208,3 +208,22 @@ Tests cover metric counts/loss/recovery, transform direction with nonidentity
 rotation, source provenance, exclusive output, compiler/linker output isolation,
 and applying all patches while preserving notices. One tiny host C++ metric test
 uses only the standard library. No test starts ORB or RealSense.
+
+## Stereo-inertial interpolation follow-up
+
+`prepare` now applies `stereo_inertial_unified.patch` after the headless patch.
+The upstream example's interpolation result was overwritten by the current
+acceleration, and image callbacks padded unpaired gyro samples with the latest
+acceleration. The follow-up waits for two bracketing accelerometer samples and
+linearly interpolates acceleration at each gyro timestamp; pending gyro samples
+survive image processing. This is native SDK unification, not a ROS
+`unite_imu_method` parameter. Frames wait for unified IMU coverage through the
+image time. No noise assumption or ORB initialization threshold is changed.
+
+The native run verifies configured `IMU.T_b_c1` against SDK IR1→Gyro extrinsics
+(body-from-camera, metres) and requires `IMU.Frequency=200` alongside active
+200 Hz gyro/accelerometer profiles. Raw `imu_raw.csv` stores SDK gyro rad/s and
+accelerometer m/s² with source timestamps for measured-rate checks afterward.
+Successful checks are configuration evidence; they do not establish sustained
+inertial tracking. Keep the mount fixed during the initial 10–15 seconds of
+owner-performed excitation and record which axes were physically possible.
