@@ -298,3 +298,14 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Start requires terminal supervisor and batch receipts plus no batch workers.
   Report each endpoint, map/reset context and measured trackedFPS; do not infer
   throughput from nominal15Hz. Mac replay results must be labelled as Mac.
+
+### D-20261021-CLEAN-LOOP-MAC: Execute the owner-authorized post-PPO queue
+- Terminal PPO supervisor/batch receipts and absent workers released the Mac;
+  no fresh Pi authorization, so all3replays used isolated Linux x86_64 Docker.
+- Keep each successful run, including R3 tracking loss/new-map/merge. Report
+  online endpoints with map context, measured steady paced FPS and separate
+  Track-compute quotients. No frame dropping, run selection or accuracy claim.
+- Retain the upstream compatibility diff, initial pre-frame failure, exact
+  commands/hashes and raw results in the Mac archive; publish only small tools
+  and notes. Current-head CI must be green before merge; retire this follow-up
+  after publication/handoff, with no changes to the separate control monitor.

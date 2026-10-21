@@ -231,6 +231,11 @@ or backward seek within one estimator session. ROS header epochs are preserved;
 their relationship to camera hardware time and fresh Pi monotonic time remains
 unqualified.
 
+For finalized stereo MCAP replay on an Intel Mac after PPO finishes, see the
+[headless Docker replay path](offline/README.md). It preserves every exact-header
+pair and measures native tracking calls without ROS playback transport. Mac
+measurements and source compatibility differences must be labelled explicitly.
+
 ## Actual offline validation
 
 ```bash
@@ -243,8 +248,10 @@ bash -n scripts/camera_day/record.sh scripts/camera_day/build_pi.sh
 parsing/rejections, exclusive output creation, pure launch parameter selection
 and recording arguments with a stub `ros2`. They do not import ROS or compile
 the C++ node. The native Pi build and installed camera-free startup passed on
-2026-10-21. Installed driver launch, rosbag write/replay, image pairing behavior
-under DDS load and live tracked poses remain pending.
+2026-10-21. These were initial implementation checks; subsequent live visual
+pose, recording and replay results are recorded in `ops/worklog/CURRENT.md` and
+the dated camera reviews. The three clean-loop Mac replays and their tracking/map
+limits are in `ops/worklog/reviews/2026-10-21-clean-loop-mac.md`.
 
 Source contracts inspected:
 [ORB stereo settings](https://github.com/UZ-SLAMLab/ORB_SLAM3/blob/4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4/Examples/Stereo/RealSense_D435i.yaml),
