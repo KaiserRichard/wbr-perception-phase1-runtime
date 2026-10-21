@@ -16,7 +16,11 @@ description: Create mathematics-first WBR robotics and control lesson packs for 
   Do not confuse a request for concise reporting with a request to omit teaching.
 - Use WBR examples: balance and push recovery, LQR versus PPO, then residual PPO.
   End lessons with implementation, simulation, tests, measurements and interpretation.
-- Prefer restrained mechanical/engineering visuals, monochrome where practical.
+- Prefer polished mechanical/engineering plates: coherent robot geometry, clear
+  joints/axes, COM markers, dimensions, reaction arrows, legible annotations and
+  restrained monochrome drafting. A crude stick schematic is insufficient as the
+  principal mechanical explanation. Embed plates beside a worked walkthrough;
+  explain what to look at and connect each arrow/coordinate to the equations.
 
 ## Scope and research
 
@@ -59,10 +63,16 @@ Use Obsidian MathJax `$...$` and `$$...$$`, with clean multiline equations and
 defined symbols. Prefer normal relative Markdown image embeds for portability.
 Keep one main reading path; use linked notes only when they improve navigation.
 
-Technical figures use Matplotlib/SVG or another deterministic diagram tool. AI
-images, if requested, are labelled decoration only; they do not carry exact
-geometry, equations or measured results. Include sources/reuse rights for
-third-party figures. Never invent plots, CAD dimensions or hardware parameters.
+Use deterministic plotting for computed curves, exact timing and data. The owner's
+later illustrated-revision request supersedes the earlier “AI decoration only”
+restriction: supplied or generated mechanical teaching plates may explain concepts,
+provided labels/math are checked, assumptions are explicit and they are never
+presented as validated CAD or measured evidence. Prefer supplied plates when the
+owner authorizes reuse; preserve originals and qualify misleading labels beside
+the embed. If more generated art is needed, provide self-contained English prompts
+including the intended filename so the owner can generate it. Do not wait for
+optional art to finish an otherwise usable lesson. Include attribution/reuse
+provenance; never invent plots, dimensions or hardware parameters.
 
 ## Approved three-pack sequence (owner relayed Claude review, 2026-10-21)
 

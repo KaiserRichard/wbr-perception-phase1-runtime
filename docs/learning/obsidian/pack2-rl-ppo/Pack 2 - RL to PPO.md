@@ -24,6 +24,56 @@ the neural network changes how we choose them.
 
 ## 1. The shared idea: future value
 
+### Read the mechanical loop first
+
+> [!warning] Historical protocol plate — read this qualification first
+> Plate 09 is a **prospective v1-style comparison sketch**, with a shared 2 ms
+> clock and an empty results table. It is useful for following information flow.
+> It does not describe the completed v2 schedule or its results: v2 uses a
+> 100 Hz PPO policy, 500 Hz plant/LQR, five direct-PPO seeds and three residual
+> seeds. The table in Section 6 gives the completed results.
+
+![Historical fair-comparison mechanical and learning loop](assets/09_fair_lqr_rl_comparison.png)
+
+Read the upper two paths as alternative ways to choose torques for the **same
+assumed mechanical plant**. A command changes wheel and hip motion, which changes
+position and angles, which changes the next observation. In the lower band,
+reward and the next observation become learning data. A dashed parameter-update
+arrow changes the controller for future rollouts; it is not another torque
+acting on the robot. Frozen evaluation must not send such updates back.
+
+| Follow this part of the plate | Physical or mathematical meaning in our WBR |
+| --- | --- |
+| Observation entering the controller | What is causally available now, not a photograph of the robot or privileged true state |
+| Two bounded commands | Aggregate wheel torque and virtual hip torque; neither is a direct command to one physical motor |
+| Augmented plant | Command queue, motor lag, nonlinear coupled mechanics and assumed sensor proxies/noise |
+| Returning observation | New motion caused by both torques and the disturbance; the body and leg cannot be treated independently |
+| Reward/next-state branch | Score the transition, then estimate whether its sampled action helped future performance |
+| Policy update | Change network weights after collecting data; no Riccati solve and no differentiation through the mechanics |
+
+**Mechanical bridge to Pack 1.** The force mapping remains
+$\mathcal Q_{\mathrm{mot}}=Gu$, with
+$u=[\tau_w,\tau_h]^T$. The network does not replace the masses, COM geometry or
+reaction torques. It replaces the rule producing $u$. A hip torque still acts
+with opposite signs on body and leg even if a neural network chose it.
+
+**One concrete policy transition.** At 100 Hz, direct PPO chooses a wheel/hip
+command at time $t$, holds it for five 2 ms plant ticks, then stores
+$(o_j,a_j,r_j,o_{j+1},\mathrm{done}_j)$. The transition reward is an alive bonus minus a scaled **mean of the
+physics-tick costs**, plus any termination penalty in our v2 implementation;
+it is not the sum of five alive bonuses. Within those 10 ms the
+robot keeps moving, queued commands can arrive, and motor torque evolves.
+One stored transition therefore does not mean one physics integration step.
+In residual mode only the learned addition is held: LQR is recomputed each tick.
+
+**Read the critic correctly.** $V_\phi(o_j)$ predicts return from the available
+observation. It neither commands a torque nor measures physical energy.
+During training the actor samples torques; the critic judges expected future
+score. Both use the same causal observation representation here. Truth-derived
+reward is a training target, not permission to feed truth to the critic.
+
+
+
 In LQR, known linear dynamics and quadratic costs let us solve the optimal value
 function analytically. In reinforcement learning we use sampled transitions to
 estimate future value and improve a policy. A **Markov decision process (MDP)**
@@ -34,7 +84,8 @@ G_t=\sum_{j=0}^{\infty}\gamma^j r_{t+j},
 \qquad J(\theta)=\mathbb E_{\tau\sim\pi_\theta}[G_0].
 $$
 
-Here $\theta$ denotes network parameters, not the WBR leg angle. We use $s$ for
+Here $\theta$ denotes actor parameters and $\phi$ later denotes critic
+parameters; they are not the WBR leg/body angles in Pack 1. We use $s$ for
 RL state, $o$ for its observation, $a$ for a sampled action, and $r$ for reward.
 The WBR policy receives a 15-component **causal observation**, not perfect state:
 six measured coordinates, two torque estimates, three pairs of command history
@@ -243,7 +294,11 @@ entropy bonus; a Gaussian policy still samples exploration noise.
 For a two-dimensional diagonal Gaussian, means depend on observations and the
 joint log-probability is the **sum** of the two component log-probabilities.
 Initial `log_std=-1` means $\sigma=e^{-1}\approx0.368$ in normalized action
-units, not N m. The environment clips action components to[-1,1], then scales
+units, not N m. The rollout stores the **raw Gaussian sample and its
+log-probability** for the PPO ratio. The environment receives a clipped command;
+that does not make the Gaussian a probability distribution supported only on
+[-1,1]. Do not recompute the old Gaussian log-probability at a different,
+clipped action and call it the stored sample's ratio. The environment clips action components to[-1,1], then scales
 them by torque limits. This is not a tanh-squashed Gaussian. For deterministic
 evaluation, use the mean with the same clipping, scaling and saved normalization.
 
@@ -254,6 +309,27 @@ transitions means 1500 such rollouts per seed, not 24M because 8 robots run in p
 The plant/LQR ticks at 500 Hz while policy commands are held for 5 ticks (100 Hz).
 
 ## 6. Inspect the reward before believing a curve
+
+The completed v2 panel is a useful counterexample to “stays upright = solved”:
+
+| Frozen controller | Independent training seeds | Strict settling | Survived |
+| --- | ---: | ---: | ---: |
+| Delay-aware LQR, reused baseline | Not trained | 160/160 | 160/160 |
+| Direct PPO v2 | 5 | 59/800 | 760/800 |
+| LQR + residual PPO v2 | 3 | 0/480 | 480/480 |
+
+Direct strict counts by seed were $[39,20,0,0,0]/160$. Each PPO seed had **3M
+transitions total across eight environments**. Residual did not trigger the
+predeclared extension beyond three seeds. These are existing assumed-simulation
+results, not measurements made for this lesson. Different evaluation counts
+must not be disguised as independent baseline training replicates.
+
+Read the “tracking error” column in Plate 09 as a reminder to measure settling,
+then compare it with this table. Residual v2 survived every case and passed no
+strict case. That outcome motivates diagnosis; it does not identify the failed
+mechanism or establish that a different reward/initialization will fix it.
+
+
 
 V2 uses an alive bonus minus a scaled quadratic state/total-command cost, with
 a termination penalty. Reward depends on simulator truth for scoring; the policy
@@ -297,5 +373,12 @@ bounded correction to LQR. Sources: [PPO](https://arxiv.org/abs/1707.06347),
 and Hugging Face [policy gradient](https://huggingface.co/learn/deep-rl-course/en/unit4/introduction),
 [actor–critic](https://huggingface.co/learn/deep-rl-course/en/unit6/introduction),
 [PPO](https://huggingface.co/learn/deep-rl-course/en/unit8/introduction).
-Project mapping is pinned to the same source snapshot as Pack1; the tiny rollout
+Core mapping uses the Pack 1 source snapshot; the final v2 result summary is
+from `sim/rl/RESULTS_V2_2026-10-20.md` at repository snapshot
+`4f49447f6b494ad3dc7aaa68e5f52256f03bd7fc`, with frozen training source
+`f1b5ee7faa41fdd45af1df7afdbddb8a1c4d66aa`. The tiny rollout
 is newly authored illustrative data. No measured WBR result is inferred from it.
+
+The owner supplied Plate 09 for reuse. Its historical labels are qualified above;
+no image is a measured CAD model. Additional English illustration prompts with
+exact filenames are in [Figure prompts](FIGURE_REVIEW_AND_PROMPTS.md).

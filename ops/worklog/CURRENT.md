@@ -3,7 +3,7 @@
 Updated 2026-10-21 +07; PR93 camera follow-up measured; simulation snapshot below retained.
 
 ## Simulation
-- Obsidian three-pack series delivered under docs/learning/obsidian: LQR, RL→PPO, residual/saved-runs/experiment; reviews2026-10-21-obsidian-pack1.md and2026-10-21-obsidian-packs2-3.md. No fresh training; mismatch study remains proposed.
+- Obsidian three-pack illustrated revision under docs/learning/obsidian: supplied mechanical plates + worked dynamics/LQR, RL→PPO, residual/saved-runs/experiment. Review2026-10-21-illustrated-lessons.md; five filename-specific image prompts. Three extracted exercises/382MathJax expressions PASS; no new training.
 - Claude approved the assumed six-state planar LQR (PR44) and delay/lag/noise baseline (PR47–48). Hardware parameters remain ASSUMED/UNKNOWN; source gain parity remains the owner exercise.
 - PPO v1 complete: LQR160/160, PPO0/800. See sim/rl/RESULTS_2026-10-20.md; archived evidence retained.
 - PPO v2 COMPLETE 2026-10-21 12:13 +07 (PR55; frozen source f1b5ee7): eight exact3M-step seeds,all reloadPASS,1,280 evaluated cases; supervisor exited0.100Hz PPO versus unchanged500Hz LQR; no tuning.

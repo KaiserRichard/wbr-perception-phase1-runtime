@@ -21,6 +21,40 @@ It does not train a model or claim a research gap.
 
 ## 1. Define the command precisely
 
+### Put the correction back onto the mechanism
+
+![Aggregate motor actions, reaction torques and push](assets/04_motor_reactions_and_push.png)
+
+*Owner-supplied Plate 04: the assumed planar surrogate, not the full CAD robot.
+The printed generalized-force $Q$ is $\mathcal Q$ here, not the LQR cost matrix.*
+
+Read the **wheel** panel first: adding wheel torque also reacts on the equivalent
+leg. Read the **hip** panel next: its torque helps rotate the body but applies an
+opposite torque to the leg. A learned correction has the same reaction effects
+as the baseline command. It is not an independent “stabilizing force” acting
+only on body pitch.
+
+Before total-command saturation, its generalized-force contribution is
+
+$$
+\mathcal Q_{\mathrm{res}}=G\Delta u=
+\begin{bmatrix}
+\Delta\tau_w/r\\-\Delta\tau_w-\Delta\tau_h\\\Delta\tau_h
+\end{bmatrix}.
+$$
+
+For a proposed $\Delta u=[0.1,-0.2]^T$ N m and $r=0.0603$ m, this is
+approximately $[1.6584\,\mathrm N,\ 0.1\,\mathrm{N\,m},\ -0.2\,\mathrm{N\,m}]^T$.
+The three entries belong to the translation, leg-pitch and body-pitch equations;
+they are not three actuator commands. At saturation, use the **effective command
+increment** instead of the proposed $\Delta u$ when interpreting its effect.
+
+The right-hand panel supplies the external push, a different input channel:
+$F=6$ N at the body COM from 3.00 to 3.15 s, world $+x$, no separate applied
+couple. A fair comparison changes the controller, keeping that disturbance fixed.
+
+
+
 Let $u_b$ be the delay-aware LQR command using the causal controller state $z$.
 Our existing v2 residual implementation is
 
@@ -39,7 +73,8 @@ clip acts on the **sum**. Realized motor torque then depends on delay and lag.
 
 ![Residual command signal path](assets/residual-signal-path.svg)
 
-*Deterministic signal diagram of the current schedule. No AI illustration.*
+*Calculated layout of the current signal schedule. The mechanical meaning of
+the two channels is given by Plate 04 above.*
 
 The baseline makes a useful initial policy available. Learning can focus on
 corrections, but it may also damage a good controller. A20% residual cap limits
@@ -51,18 +86,50 @@ the correction, not the closed-loop state or the total input to 20%.
 > on the saturated command was 0.1 Nm. Log proposed residual, baseline command,
 > total requested/clipped command and realized torque separately in a future run.
 
+### Follow issued command → delayed command → realized torque
+
+![Transport, actuator and measurement paths](assets/08_delay_lag_and_noise.png)
+
+*Owner-supplied Plate 08, with two qualifications: its six displayed mechanical
+channels are only part of the current 15-value policy observation (causal torque
+estimates, command history and delay are also present). Its “evaluation metrics
+only” label must also include training reward and termination; simulator truth
+is excluded from both actor and critic inputs.*
+
+Follow the arrows in order. Total saturation limits the command **before** it
+enters the transport queue. The queue preserves command arrival times. The motor
+then follows the arrived command with first-order lag, and the mechanical model
+converts those realized torques into motion. Body-angle/rate noise changes what
+the controller believes happened; it does not directly change the physical
+angle. Other mechanical state channels are ideal proxies in this model.
+
+At a 2 ms LQR tick, three different quantities can coexist: the new total
+command, an older command currently arriving, and a motor torque still catching
+up. The policy's 10 ms hold is a fourth timing mechanism. None may silently be
+substituted for another. With a 3 ms transport delay, a command issued at 0 ms
+arrives at 3 ms even though LQR updates at 0, 2 and 4 ms.
+
+> [!question] Explain the two paths without looking
+> Which arrows carry actual actuator input, and which carry information? Why
+> does a residual still affect future motion after its current output becomes zero?
+
+> [!success]- Answer
+> The forward clipped-command/queue/motor path drives the plant. The returning
+> sensor/estimate path informs controllers. Commands may remain queued and motor
+> torque may still be nonzero because of lag, even after the current addition is zero.
+
 ## 2. Why a small residual can cause drift
 
 For intuition, consider a linear sampled plant and constant correction $d$:
 
 $$
-x_{k+1}=(A-BK)x_k+Bd.
+s_{k+1}=(A-BK)s_k+Bd.
 $$
 
 If $A-BK$ is stable, the new equilibrium is
 
 $$
-x_\infty=(I-A+BK)^{-1}Bd.
+s_\infty=(I-A+BK)^{-1}Bd.
 $$
 
 It need not be zero. A controller can remain upright while sitting off-target
@@ -71,12 +138,12 @@ explanation of a possible mechanism, not a diagnosis of our trained network.
 For an actual drifting trajectory, distinguish constant bias, noisy feedback,
 periodic corrections, saturation and estimator error using logs.
 
-With ideal unsaturated LQR value $V=x^TPx$, define $A_{cl}=A-BK$.
+With ideal unsaturated LQR value $V=s^TPs$, define $A_{cl}=A-BK$.
 Adding a residual changes its one-step decrement by
 
 $$
-\Delta V=-x^T(Q+K^TRK)x
-+2x^TA_{cl}^TPB\Delta u
+\Delta V=-s^T(Q+K^TRK)s
++2s^TA_{cl}^TPB\Delta u
 +\Delta u^TB^TPB\Delta u.
 $$
 
@@ -99,6 +166,18 @@ the appropriate analysis needs the augmented model as well.
 These are hypotheses for a later version, not changes to the frozen v2 run.
 
 ## 3. Read a saved comparison honestly
+
+The completed v2 campaign gives **0/480 strict settling and 480/480 survival**
+for three residual seeds, versus the reused LQR panel's 160/160 strict passes.
+Direct PPO had 59/800 strict and 760/800 survival across five seeds. All eight
+PPO seeds used exactly 3M total transitions each. This lesson's single selected
+trace below illustrates one case; it does not replace those full campaign counts.
+Source: `sim/rl/RESULTS_V2_2026-10-20.md` at repository snapshot
+`4f49447f6b494ad3dc7aaa68e5f52256f03bd7fc` (frozen training source `f1b5ee7`).
+Episode-length/return learning curves were not saved in the legacy campaign and
+remain unavailable; no curve is inferred from a finished torque trace.
+
+
 
 ![Archived LQR and residual issued torque](assets/saved-torque.svg)
 
@@ -256,3 +335,6 @@ not evidence for a technical claim. No research gap is asserted in this pack.
 **Next practical step:** review the experiment specification and the current
 environment's delay assumptions before implementing a v3 pilot. This lesson
 provides understanding and saved-data plots; no new training has been started.
+
+Read [Figure prompts](FIGURE_REVIEW_AND_PROMPTS.md) for a replacement multirate
+mechanical plate and causal actor–critic loop, each with its intended filename.

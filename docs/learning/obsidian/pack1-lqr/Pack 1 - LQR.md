@@ -9,7 +9,9 @@ next: "[[Pack 2 - RL to PPO]]"
 
 # LQR — from Bellman to our WBR
 
-**What you should be able to explain afterwards:** where $u=-Kx$ comes from,
+**Illustrated revision — 21 October 2026.** Read the plates and their mathematical walkthroughs together.
+
+**What you should be able to explain afterwards:** how geometry becomes dynamics, where $u=-Ks$ comes from,
 what the Riccati equation solves, what a stability check does and does not prove,
 and which gain matrix our robot simulation actually uses.
 
@@ -45,9 +47,9 @@ travelling away from its desired position. We want **balance and settling**.
 Our reduced model uses
 
 $$
-x=
+s=
 \begin{bmatrix}
-p & \theta & \phi & \dot p & \dot\theta & \dot\phi
+x & \theta & \phi & \dot x & \dot\theta & \dot\phi
 \end{bmatrix}^{T},
 \qquad
 u=\begin{bmatrix}\tau_w & \tau_h\end{bmatrix}^{T}.
@@ -55,10 +57,10 @@ $$
 
 | Symbol | Meaning | Unit |
 | --- | --- | --- |
-| $p$ | Horizontal axle displacement from target | m |
+| $x$ | Horizontal axle displacement from target | m |
 | $\theta$ | Equivalent leg pitch from upright, absolute | rad |
 | $\phi$ | Body pitch from upright, absolute | rad |
-| $\dot p,\dot\theta,\dot\phi$ | Corresponding velocities | m/s, rad/s, rad/s |
+| $\dot x,\dot\theta,\dot\phi$ | Corresponding velocities | m/s, rad/s, rad/s |
 | $\tau_w$ | Aggregate wheel-pair torque | N m |
 | $\tau_h$ | Aggregate virtual hip-pair torque | N m |
 
@@ -66,12 +68,12 @@ The simulator's hip joint angle is $\phi-\theta$, although the controller state
 contains **absolute** body pitch $\phi$. Confusing those coordinates changes the
 meaning of the gain columns. Aggregate pair torques are not per-motor commands.
 
-![Reduced WBR coordinate schematic](assets/wbr-coordinates.svg)
+![Coordinates, independent pitch angles and relative hip rotation](assets/01_coordinates_and_angles.png)
 
-*Figure 1. A coordinate schematic, not a CAD drawing. Leader arrows identify torque inputs; they do not define a motor wiring/sign convention. The two pitch angles are referenced to world vertical.*
+*Plate 01, supplied by the owner. Read panels A and C for the independent absolute angles. Panel B needs a caution: the relative arc is between the leg and body axes, although the nearby vertical ray can be mistaken for its starting ray. The text equation $q_h=\phi-\theta$ defines the angle; do not measure the pixel arc.*
 
-For a stationary upright target, $x^\star=0$ and the ideal model has
-$u^\star=0$. More generally use errors $e=x-x^\star$ and $v=u-u^\star$.
+For a stationary upright target, $s^\star=0$ and the ideal model has
+$u^\star=0$. More generally use errors $e=s-s^\star$ and $v=u-u^\star$.
 The feedback law then becomes $u=u^\star-Ke$.
 
 > [!note] Must Know
@@ -79,26 +81,302 @@ The feedback law then becomes $u=u^\star-Ke$.
 > ideal derivation the state is available exactly. Actual controllers use noisy
 > measurements or estimates; that extra problem is not solved by calculating $K$.
 
+For the mechanical foundation, follow Sections 1.1–1.6 in order: coordinates →
+COM geometry → velocities → energy → motor work → dynamics. Each plate is
+embedded at the step it explains; enlarge it in Obsidian to read the details.
+
+### 1.1 Read the drawing before reading a matrix
+
+Use **$x$ for the scalar axle displacement** and **$s$ for the full state vector**.
+This matches the supplied plates. A textbook may call its whole vector $x$;
+that is another notation, not another physical coordinate. In this lesson
+$q=[x,\theta,\phi]^T$ and $s=[q^T,\dot q^T]^T$.
+
+In Plate 01, start at the ground contact, go to axle centre $O$, then hip $H$,
+then the body. The rolling constraint keeps $O$ at height $r$. The rod between
+$O$ and $H$ represents the **combined equivalent legs**, not a literal one-legged
+machine. The wheel disk represents the wheel pair. This sagittal reduction
+cannot display left/right articulation, five-bar closure, yaw, hopping or slip.
+
+Read panel C: keeping $\theta$ fixed does not keep $\phi$ fixed. The independent
+coordinates are the axle translation and two absolute pitches. A hip encoder
+instead measures a relative joint angle. For example,
+$\theta=8^\circ$, $\phi=-6^\circ$ gives $q_h=-14^\circ$.
+If the leg moves to $10^\circ$ while the body stays at $-6^\circ$, the hip angle
+becomes $-16^\circ$. Treating hip angle as body pitch would create a fictitious
+body motion in the controller.
+
+> [!example] Read the same robot in two coordinate systems
+> Physical coordinates: $[x,\theta,\phi]$. MuJoCo joints:
+> $[x,\theta,\phi-\theta]$. Recover $\phi$ by adding the two joint angles.
+> No extra degree of freedom is created by changing coordinates.
+
+### 1.2 Geometry: where are the masses?
+
+![Dimensions and centres of mass](assets/02_geometry_and_com.png)
+
+*Plate 02. Follow $O\to C_l$, $O\to H$, then $H\to C_b$. The geometry is
+illustrative. $r$ is source-code-supported, while $L,a,b$ are assumptions, not CAD measurements.*
+
+Here $L$ is axle-to-hip length, $a$ the axle-to-leg-COM distance, and $b$ the
+hip-to-body-COM distance. The centre of mass (COM) locates translational mass;
+rotational inertia still matters and is not determined just by that point.
+Angles measured from vertical give a **sine horizontal component** and a
+**cosine vertical component**:
+
+$$
+p_l(q)=\begin{bmatrix}x+a\sin\theta\\r+a\cos\theta\end{bmatrix},
+\qquad
+p_b(q)=\begin{bmatrix}x+L\sin\theta+b\sin\phi\\r+L\cos\theta+b\cos\phi\end{bmatrix}.
+$$
+
+Build the body position by adding vectors rather than guessing a drawing angle.
+At upright, $p_l=[x,r+a]^T$ and $p_b=[x,r+L+b]^T$. At zero leg tilt but nonzero
+body tilt, the hip remains above the axle while the body COM moves relative to it.
+
+| Parameter | Teaching-model value | Meaning |
+| --- | ---: | --- |
+| $r,L,a,b$ | 0.0603, 0.16, 0.08, 0.06 m | Rolling radius; axle–hip; leg COM offset; body COM offset |
+| $m_w,m_l,m_b$ | 0.6, 0.5, 2.0 kg | Aggregate equivalent masses |
+| $I_w,I_l,I_b$ | 0.0011, 0.0012, 0.018 kg m² | Respective COM pitch/rolling-axis inertias |
+
+These are the existing assumed simulation parameters. They do not identify
+your team's future CAD assembly. For the illustrated $8^\circ/-6^\circ$ state
+with $x=0$, substituting numbers gives approximately
+$p_l=[0.01113,0.13952]^T$ m and $p_b=[0.01600,0.27841]^T$ m.
+
+**Checkpoint:** if an equation gives $z_l=r+a\sin\theta$, it predicts the wrong
+upright COM height. Use the drawing to catch the algebraic mistake.
+
+### 1.3 Differentiate the geometry to obtain velocities
+
+Differentiation must include every moving link:
+
+$$
+v_l=\begin{bmatrix}
+\dot x+a\cos\theta\dot\theta\\-a\sin\theta\dot\theta
+\end{bmatrix},
+\quad
+v_b=\begin{bmatrix}
+\dot x+L\cos\theta\dot\theta+b\cos\phi\dot\phi\\
+-L\sin\theta\dot\theta-b\sin\phi\dot\phi
+\end{bmatrix}.
+$$
+
+The body can move because the axle translates, the leg rotates, **and** the
+body rotates. Those three contributions create coupling when we square speed.
+For instance,
+
+$$
+\|v_l\|^2=\dot x^2+2a\cos\theta\dot x\dot\theta+a^2\dot\theta^2.
+$$
+
+The middle term is why the cart and the upright structure cannot be analysed
+as unrelated masses. Equivalently $v_l=J_{p_l}(q)\dot q$,
+$v_b=J_{p_b}(q)\dot q$; each Jacobian is the derivative of the corresponding COM
+position with respect to the three coordinates.
+
+### 1.4 Energy: keep both translation and rotation
+
+![Kinetic and gravitational energy](assets/03_energy_terms.png)
+
+*Plate 03. The separated component panels explain energy terms. Their lower
+pivots/ground strokes are illustration references: the real leg root moves
+with $O$ and the body pivot moves with $H$; neither is anchored to the floor.*
+
+Add each component's translational and rotational kinetic energy:
+
+$$
+\begin{aligned}
+T={}&\frac12\left(m_w+\frac{I_w}{r^2}\right)\dot x^2
++\frac12m_l\|v_l\|^2+\frac12I_l\dot\theta^2\\
+&+\frac12m_b\|v_b\|^2+\frac12I_b\dot\phi^2.
+\end{aligned}
+$$
+
+Ideal rolling gives wheel angle $\beta=x/r$, so its rotational term is
+$\tfrac12 I_w(\dot x/r)^2$. Removing $\beta$ from the independent coordinates
+does not remove that energy. Numerically $I_w/r^2\approx0.30253$ kg:
+the effective horizontal inertia is larger than $m_w+m_l+m_b=3.1$ kg.
+
+Take $I_l,I_b$ about each COM. Using inertia already shifted to a pivot **and**
+adding the same COM translational term would double-count part of the energy.
+This distinction will matter when importing CAD inertia tensors later.
+
+Ignoring constant height terms, physical potential energy is $V_{\mathrm{mech}}$
+(the plates shorten this to $V$; later $V_k$ means optimal remaining cost):
+
+$$
+V_{\mathrm{mech}}=g(m_la+m_bL)\cos\theta+gm_bb\cos\phi.
+$$
+
+Near upright, $\cos\theta\approx1-\theta^2/2$. Thus a small tilt lowers
+potential energy: upright is a local maximum in the two pitch directions.
+Horizontal translation changes no height, so it is a flat direction in $V_{\mathrm{mech}}$.
+The open-loop instability is a property to control, not a simulation defect.
+
+> [!note] Energy versus design cost
+> $T,V_{\mathrm{mech}}$ have physical units of joules. The LQR objective $J$ is a chosen weighted
+> error/effort measure; it is not necessarily energy. Likewise $\int\tau^2dt$
+> is not electrical energy consumption.
+
+### 1.5 Motor reactions: obtain generalized force from virtual work
+
+![Motor reaction torques and external push](assets/04_motor_reactions_and_push.png)
+
+*Plate 04. Read the equal-and-opposite motor reactions, not just the forward
+wheel drive. Its printed generalized-force symbol $Q$ is renamed $\mathcal Q$
+below to avoid confusing it with the LQR state-weight matrix.*
+
+A motor acts **between two bodies**. Relative wheel-motor rotation is
+$\beta-\theta=x/r-\theta$. Relative hip rotation is $\phi-\theta$.
+The virtual work is
+
+$$
+\delta W=\tau_w\left(\frac{\delta x}{r}-\delta\theta\right)
++\tau_h(\delta\phi-\delta\theta)
+=\mathcal Q_{\mathrm{mot}}^T\delta q.
+$$
+
+Collect coefficients of each virtual displacement:
+
+$$
+\mathcal Q_{\mathrm{mot}}=
+\begin{bmatrix}\tau_w/r\\-\tau_w-\tau_h\\\tau_h\end{bmatrix}
+=Gu,\qquad
+G=\begin{bmatrix}1/r&0\\-1&-1\\0&1\end{bmatrix}.
+$$
+
+The first entry is a generalized horizontal force (N); the last two are
+generalized torques (N m). They are not three motor outputs. In particular,
+$\tau_w/r$ is not an extra contact force to add again in this reduced model.
+Deleting the negative leg reactions changes the plant and the required $K$.
+
+A horizontal force $F$ at the body COM performs work
+$F\,\delta(p_b)_x$. Hence
+
+$$
+\mathcal Q_F=j_F(q)F,\qquad
+j_F(q)=\begin{bmatrix}1\\L\cos\theta\\b\cos\phi\end{bmatrix}.
+$$
+
+The force has no separate applied couple at the COM, yet contributes generalized
+pitch moments because that point moves when the coordinates rotate.
+A 6 N pulse lasting 0.15 s has impulse 0.9 N s. It is neither 6 N m nor a
+constant force over the entire episode.
+
+### 1.6 From energy to nonlinear equations of motion
+
+![Mechanical derivation into first-order state dynamics](assets/05_mechanics_to_state_space.png)
+
+*Plate 05. Read left to right: geometry → position/velocity → energy →
+Euler–Lagrange → first-order dynamics. The footnote in the plate agrees with our
+notation: $s$ is six-dimensional; $x$ alone is axle displacement.*
+
+Form the Lagrangian $\mathscr L=T-V_{\mathrm{mech}}$ and use
+
+$$
+\frac{d}{dt}\frac{\partial\mathscr L}{\partial\dot q}
+-\frac{\partial\mathscr L}{\partial q}=Gu+j_FF.
+$$
+
+This is Newton's law expressed in the chosen coordinates. Define compact
+coefficients, with new names to avoid overloading the state $s$:
+
+$$
+\begin{aligned}
+\mu&=m_w+m_l+m_b+I_w/r^2,&
+\alpha&=m_la+m_bL,&\sigma&=m_bb,\\
+\kappa&=m_bLb,&
+J_l&=I_l+m_la^2+m_bL^2,&J_b&=I_b+m_bb^2.
+\end{aligned}
+$$
+
+Collect acceleration coefficients in $M$ and the remaining velocity/gravity
+terms in $h$:
+
+$$
+M(q)=\begin{bmatrix}
+\mu&\alpha\cos\theta&\sigma\cos\phi\\
+\alpha\cos\theta&J_l&\kappa\cos(\theta-\phi)\\
+\sigma\cos\phi&\kappa\cos(\theta-\phi)&J_b
+\end{bmatrix},
+$$
+
+$$
+h(q,\dot q)=\begin{bmatrix}
+-\alpha\sin\theta\dot\theta^2-\sigma\sin\phi\dot\phi^2\\
+\kappa\sin(\theta-\phi)\dot\phi^2-\alpha g\sin\theta\\
+-\kappa\sin(\theta-\phi)\dot\theta^2-\sigma g\sin\phi
+\end{bmatrix}.
+$$
+
+Thus $M(q)\ddot q+h=Gu+j_FF$. Off-diagonal inertia terms express coupling;
+the sine/rate-squared terms arise from changing geometry; the negative gravity
+terms reflect the upright energy maximum. These are equations for the assumed
+rigid-leg surrogate, not a full five-bar multibody model.
+
+To see one derivation rather than just receive a matrix, the translation row is
+
+$$
+\mu\ddot x+\alpha\cos\theta\ddot\theta+\sigma\cos\phi\ddot\phi
+-\alpha\sin\theta\dot\theta^2-\sigma\sin\phi\dot\phi^2
+=\tau_w/r+F.
+$$
+
+It follows by differentiating
+$\partial T/\partial\dot x=\mu\dot x+\alpha\cos\theta\dot\theta+
+\sigma\cos\phi\dot\phi$. There is no $\partial V_{\mathrm{mech}}/\partial x$ term:
+translation does not change the heights.
+
+Finally, first-order state dynamics mean stacking velocity and acceleration:
+
+$$
+\dot s=f(s,u,F)=
+\begin{bmatrix}\dot q\\M(q)^{-1}[Gu+j_F(q)F-h(q,\dot q)]\end{bmatrix}.
+$$
+
+In numerical code, solve the linear system in $M$ instead of forming its inverse.
+This equation is the nonlinear plant. **LQR is the next step**, not a substitute
+for deriving the plant in the first place.
+
 ## 2. From nonlinear dynamics to a sampled model
+
+![Local linearization and sampled held commands](assets/06_linearization_and_sampling.png)
+
+*Plate 06. The curves are a teaching sketch, not recorded robot traces. The
+2 ms timing is the nominal plant/LQR tick; the later PPO v2 policy is 100 Hz.*
 
 Write the nonlinear dynamics as
 
 $$
-\dot x=f(x,u).
+\dot s=f(s,u).
 $$
 
-At an equilibrium, $f(x^\star,u^\star)=0$. A first-order Taylor expansion gives
+At an equilibrium, $f(s^\star,u^\star)=0$. A first-order Taylor expansion gives
 
 $$
 \dot e\approx A_c e+B_c v,
 \qquad
-A_c=\left.\frac{\partial f}{\partial x}\right|_\star,
+A_c=\left.\frac{\partial f}{\partial s}\right|_\star,
 \quad B_c=\left.\frac{\partial f}{\partial u}\right|_\star.
 $$
 
 The subscript $c$ means continuous time. Terms quadratic and higher in the
 deviations are omitted. That is why a controller derived near upright cannot
 automatically swing up a fallen robot.
+
+For the mechanical model just derived, $M_0=M(0)$ and
+$D=\operatorname{diag}(0,\alpha g,\sigma g)$ give
+
+$$
+A_c=\begin{bmatrix}0_{3\times3}&I_3\\M_0^{-1}D&0_{3\times3}\end{bmatrix},
+\qquad B_c=\begin{bmatrix}0_{3\times2}\\M_0^{-1}G\end{bmatrix}.
+$$
+
+The upper rows say that derivatives of coordinates are velocities. The lower
+rows follow from moving the first-order gravity terms to the right-hand side.
+Do not put the nominal torque into $A_c$: input sensitivity belongs in $B_c$.
 
 For a digital controller with sample period $h$ and constant command within
 each interval, the exact sampled **linear** dynamics are
@@ -115,12 +393,12 @@ This is zero-order hold (ZOH). It is not the same as assuming
 $A_d=I+hA_c$, $B_d=hB_c$; those are first-order approximations.
 
 Our nominal WBR synthesis also differentiates the simulator's actual held-input
-transition $F_h(x,u)$ to obtain $A_d,B_d$. It compares those matrices with ZOH.
+transition $F_h(s,u)$ to obtain $A_d,B_d$. It compares those matrices with ZOH.
 Differentiating the actual transition matches the numerical dynamics being
 controlled, including its integration method. We **read** existing gains here;
 we do not launch another synthesis or simulation campaign.
 
-From now on, write $A=A_d$, $B=B_d$, and $x=e$ to simplify notation.
+From now on, write $A=A_d$, $B=B_d$, and $s=e$ to simplify notation.
 
 ## 3. Specify the optimization problem
 
@@ -128,8 +406,8 @@ Choose a finite horizon $N$ and minimize
 
 $$
 J=\sum_{k=0}^{N-1}
-\left(x_k^TQx_k+u_k^TRu_k\right)+x_N^TP_Nx_N,
-\qquad x_{k+1}=Ax_k+Bu_k.
+\left(s_k^TQs_k+u_k^TRu_k\right)+s_N^TP_Ns_N,
+\qquad s_{k+1}=As_k+Bu_k.
 $$
 
 Assume $Q=Q^T\succeq0$, $R=R^T\succ0$ and terminal weight
@@ -137,7 +415,7 @@ $P_N=P_N^T\succeq0$. The input is unconstrained in this derivation.
 
 | Quantity | Shape | Meaning |
 | --- | --- | --- |
-| $x,u$ | $n\times1$, $m\times1$ | State and action |
+| $s,u$ | $n\times1$, $m\times1$ | State and action |
 | $A,B$ | $n\times n$, $n\times m$ | Sampled dynamics |
 | $Q,R$ | $n\times n$, $m\times m$ | Immediate state/action cost weights |
 | $P_k$ | $n\times n$ | Optimal remaining-cost matrix |
@@ -170,17 +448,27 @@ identically because its optimizer and critic introduce additional effects.
 
 ## 4. Derive feedback using Bellman
 
+![Offline LQR synthesis and online feedback](assets/07_lqr_feedback_loop.png)
+
+*Plate 07. Follow the top row to find where $K$ is computed; follow the middle
+loop to find where it is used. This plate is the **nominal six-state** loop.
+Delay-aware LQR later has extra actuator/history states and more gain columns.*
+
+The controller is calculated offline, then repeatedly reads a state, multiplies
+by $-K$, clips the pair commands and sends them to the nonlinear plant. This is
+feedback, not a precomputed movie. The derivation below explains the offline box.
+
 ### 4.1 The value function
 
-Define $V_k(x)$ as the minimum cost still to come when we start at state $x$
-at sample $k$. Terminal condition: $V_N(x)=x^TP_Nx$.
+Define $V_k(s)$ as the minimum cost still to come when we start at state $s$
+at sample $k$. Terminal condition: $V_N(s)=s^TP_Ns$.
 
 The principle of optimality says: choose today's action, pay today's cost,
 then act optimally from tomorrow's resulting state:
 
 $$
-V_k(x)=\min_u\left[
-x^TQx+u^TRu+V_{k+1}(Ax+Bu)
+V_k(s)=\min_u\left[
+s^TQs+u^TRu+V_{k+1}(As+Bu)
 \right].
 $$
 
@@ -189,29 +477,29 @@ future value exists before a neural network is involved.
 
 ### 4.2 Substitute a quadratic future value
 
-Suppose $V_{k+1}(x)=x^TP_{k+1}x$. Let $P=P_{k+1}$ temporarily.
+Suppose $V_{k+1}(s)=s^TP_{k+1}s$. Let $P=P_{k+1}$ temporarily.
 Expanding the expression inside the minimum gives
 
 $$
 \begin{aligned}
-&x^TQx+u^TRu+(Ax+Bu)^TP(Ax+Bu)\\
-&=x^T(Q+A^TPA)x
-  +2u^TB^TPAx
+&s^TQs+u^TRu+(As+Bu)^TP(As+Bu)\\
+&=s^T(Q+A^TPA)s
+  +2u^TB^TPAs
   +u^T(R+B^TPB)u.
 \end{aligned}
 $$
 
-For fixed $x$, this is a quadratic function of $u$. Its Hessian is
+For fixed $s$, this is a quadratic function of $u$. Its Hessian is
 $2(R+B^TPB)\succ0$, so setting the gradient to zero gives the unique minimum:
 
 $$
-2(R+B^TPB)u+2B^TPAx=0.
+2(R+B^TPB)u+2B^TPAs=0.
 $$
 
 Therefore
 
 $$
-\boxed{u_k^\star=-K_kx_k},
+\boxed{u_k^\star=-K_ks_k},
 \qquad
 \boxed{K_k=(R+B^TP_{k+1}B)^{-1}B^TP_{k+1}A}.
 $$
@@ -222,7 +510,7 @@ the state's natural evolution. The feedback gain balances those effects.
 
 ### 4.3 Substitute the minimum back
 
-Putting $u=-K_kx$ into Bellman gives a quadratic value again:
+Putting $u=-K_ks$ into Bellman gives a quadratic value again:
 
 $$
 \boxed{
@@ -248,11 +536,11 @@ P=Q+A^TPA-A^TPB(R+B^TPB)^{-1}B^TPA
 $$
 
 Then $K=(R+B^TPB)^{-1}B^TPA$ is constant. **Offline**: solve for $P,K$.
-**At each control tick**: compute $-Kx$. You do not solve an optimization
+**At each control tick**: compute $-Ks$. You do not solve an optimization
 problem again at every tick of a fixed-gain LQR controller.
 
 > [!tip] A way to test your understanding
-> Cover the boxed equations. Starting with Bellman and $V(x)=x^TPx$, recover
+> Cover the boxed equations. Starting with Bellman and $V(s)=s^TPs$, recover
 > the coefficient of $u^Tu$, differentiate with respect to $u$, and derive $K$.
 > If you can do this, DARE is no longer a mysterious library call.
 
@@ -296,12 +584,12 @@ unstable closed-loop pole. Merely satisfying a polynomial equation is insufficie
 
 ![Scalar value and feedback response](assets/scalar-value-feedback.svg)
 
-*Figure 2. Computed from the scalar example by the included script. The parabola
+*Calculated plot A. Computed from the scalar example by the included script. The parabola
 is remaining optimal cost, not a learned reward curve. The right panel uses samples, not seconds.*
 
 ## 6. What stability means
 
-With feedback, $x_{k+1}=(A-BK)x_k$. Discrete asymptotic stability requires
+With feedback, $s_{k+1}=(A-BK)s_k$. Discrete asymptotic stability requires
 
 $$
 \rho(A-BK)=\max_i|\lambda_i(A-BK)|<1.
@@ -327,7 +615,7 @@ $$
 Thus along the ideal closed loop,
 
 $$
-V(x_{k+1})-V(x_k)=-x_k^TQx_k-u_k^TRu_k\le0.
+V(s_{k+1})-V(s_k)=-s_k^TQs_k-u_k^TRu_k\le0.
 $$
 
 The optimal remaining cost decreases by exactly the cost just paid. When $P$
@@ -345,19 +633,19 @@ detectability/invariance reasoning; nonincrease alone is not always enough.
 For the continuous-time problem,
 
 $$
-\dot x=A_cx+B_cu,
-\qquad J_c=\int_0^\infty(x^TQ_cx+u^TR_cu)\,dt,
+\dot s=A_cs+B_cu,
+\qquad J_c=\int_0^\infty(s^TQ_cs+u^TR_cu)\,dt,
 $$
 
 the Hamilton–Jacobi–Bellman equation is
 
 $$
-0=\min_u\left[x^TQ_cx+u^TR_cu+
-(\nabla_xV)^T(A_cx+B_cu)\right].
+0=\min_u\left[s^TQ_cs+u^TR_cu+
+(\nabla_sV)^T(A_cs+B_cu)\right].
 $$
 
-With $V=x^TP_cx$, differentiating with respect to $u$ gives
-$u=-R_c^{-1}B_c^TP_cx$. Substitution gives the continuous algebraic Riccati
+With $V=s^TP_cs$, differentiating with respect to $u$ gives
+$u=-R_c^{-1}B_c^TP_cs$. Substitution gives the continuous algebraic Riccati
 equation (**CARE**):
 
 $$
@@ -380,26 +668,26 @@ explicitly chooses this approximate sampled cost, matching our nominal WBR conve
 To see a real matrix without WBR complexity, use a cart of mass $M$, a point
 mass $m$ at the end of a massless rod of length $l$, and horizontal force $F$.
 Choose $\alpha=0$ upright, positive when the pole leans **right**. The tip has
-horizontal coordinate $p+l\sin\alpha$.
+horizontal coordinate $x+l\sin\alpha$.
 
 Near upright, the coupled equations are
 
 $$
-(M+m)\ddot p+ml\ddot\alpha=F,
-\qquad ml\ddot p+ml^2\ddot\alpha-mgl\alpha=0.
+(M+m)\ddot x+ml\ddot\alpha=F,
+\qquad ml\ddot x+ml^2\ddot\alpha-mgl\alpha=0.
 $$
 
 Solving them gives
 
 $$
-\ddot p=\frac{F}{M}-\frac{mg}{M}\alpha,
+\ddot x=\frac{F}{M}-\frac{mg}{M}\alpha,
 \qquad
 \ddot\alpha=-\frac{F}{Ml}+\frac{(M+m)g}{Ml}\alpha.
 $$
 
 Notice the unstable gravitational term and the negative force-to-angle sign:
 moving the support right can reduce a rightward lean.
-With $x=[p,\dot p,\alpha,\dot\alpha]^T$,
+With $s=[x,\dot x,\alpha,\dot\alpha]^T$,
 
 $$
 A_c=\begin{bmatrix}
@@ -420,7 +708,7 @@ then propagates only 400 linear steps from a $5^\circ$ tilt.
 
 ![Linear cart-pole calculation](assets/cartpole-response.svg)
 
-*Figure 3. The actual calculated response of the included linear toy model.
+*Calculated plot B. The actual calculated response of the included linear toy model.
 There is no force limit, contact model, delay or sensor noise. These are not
 experimental WBR traces or a nonlinear swing-up demonstration.*
 
@@ -459,6 +747,13 @@ The issued command is also clipped to the assumed pair limits $[2,4]\,\mathrm{N\
 
 ### Delay-aware LQR is a different state-space controller
 
+![Transport delay, actuator lag and measurement noise](assets/08_delay_lag_and_noise.png)
+
+*Plate 08. The mechanical state stays six-dimensional, but the controller can
+also receive estimates/history. Its “evaluation metrics only” label is limited:
+in RL training, true state also supplies the reward/termination calculation;
+neither actor nor critic receives that privileged truth as an observation.*
+
 The robot does not instantly receive a newly issued command. With transport
 delay and motor lag, six mechanical coordinates are insufficient to predict
 the future: queued commands and current motor torque matter.
@@ -467,14 +762,30 @@ The augmented state has the structure
 
 $$
 z_k=\begin{bmatrix}
-\hat x_k\\\hat\tau_k\\u_{k-1}\\\vdots\\u_{k-H}
+\hat s_k\\\hat\tau_k\\u_{k-1}\\\vdots\\u_{k-H}
 \end{bmatrix},
 \qquad \dim z=6+2+2H.
 $$
 
-Here $\hat x$ is measured, $\hat\tau$ is reconstructed causally from commands
+Here $\hat s$ is measured, $\hat\tau$ is reconstructed causally from commands
 using the assumed actuator model, and command history is clipped issued history.
 It is not a torque sensor or privileged simulator truth.
+
+Read the lower timing panels separately. A command issued at 0 ms with 3 ms
+transport delay arrives at 3 ms, between the 2 ms and 4 ms controller updates.
+After arrival, first-order motor lag starts changing realized torque:
+
+$$
+T_m\dot\tau+\tau=u(t-d),\qquad
+\tau(t)=u_0[1-\exp(-(t-d)/T_m)]\quad(t\ge d)
+$$
+
+for a held step from zero; before arrival, torque stays zero. At $t=d+T_m$ it
+reaches 63.2% of the step. Transport delay shifts the response onset; lag changes
+its rise. Adding their numerical values and calling the sum “delay” loses that
+distinction. Sensor noise is a third mechanism, acting on feedback rather than
+the motor input. Noise here affects only body angle and body rate, not all six
+coordinates equally.
 For 2/3/4/5 ms transport delays and a 2 ms control tick, saved matrices have
 respectively 10/12/12/14 columns. The runtime represents fractional-tick arrivals;
 it does not round a 3 ms delay to 2 or 4 ms.
@@ -512,7 +823,7 @@ python lqr_exercise.py
 
 Python 3.11 or 3.12 is suitable for these pinned dependencies. There is no need
 for PyTorch, MuJoCo, CUDA, ROS or a GPU. Default execution uses only NumPy/SciPy;
-Matplotlib is used only when regenerating figures:
+Matplotlib is used only when regenerating the two numerical plots:
 
 ```sh
 python lqr_exercise.py --figures assets
@@ -530,6 +841,12 @@ checks decay of the toy trajectory, and checks the dimensions of the saved WBR
 matrices. It does **not** verify the WBR's nonlinear stability, hardware parameters
 or delay robustness. The tiny CPU work has no training loop or rendering window.
 
+It also evaluates the COM geometry and checks virtual-work/power consistency:
+$(Gu)^T\dot q=\tau_w(\dot x/r-\dot\theta)+
+\tau_h(\dot\phi-\dot\theta)$. Predict the leg reaction signs before running it.
+The supplied mechanical plates are preserved image files; the `--figures` option
+regenerates only the two computed scalar/cart-pole plots, not those plates.
+
 > [!example] Learn by changing one thing
 > On a personal copy, increase only cart-pole $R$ tenfold and rerun. Compare
 > peak force and settling with the original. Then multiply both $Q$ and $R$
@@ -540,7 +857,7 @@ or delay robustness. The tiny CPU work has no training loop or rendering window.
 
 ### Self-check
 
-1. Which equation tells you why $u=-Kx$ is optimal?
+1. Which equation tells you why $u=-Ks$ is optimal?
 2. What is the distinction between $Q$ and $P$?
 3. Why does a stable $A-BK$ not prove recovery from a $60^\circ$ tilt?
 4. Would a $2\times6$ gain multiply our 14-element augmented state correctly?
@@ -569,7 +886,7 @@ delay-specific gain is used outside the training range. Retuning an oracle LQR
 for every test delay changes the question. The current frozen v2 panel does not
 by itself test this new mismatch design.
 
-The later pack will specify paired disturbances, seeds, strict settling versus
+Pack 3 specifies paired disturbances, seeds, strict settling versus
 survival, recovery time, tracking RMSE, commanded/applied torque effort, saturation
 and compute. New training must follow the current project pilot rule; this pack
 does not launch it. Saved legacy v2 optimizer losses are not return/episode-length
@@ -584,3 +901,5 @@ curves, and unavailable learning curves must remain labelled unavailable.
 Read [[Sources]] for primary references, figure provenance and the exact source
 snapshot. The lesson's mathematical derivations are educational explanations;
 the saved WBR gains remain facts about an assumed simulation, not measured hardware.
+
+Optional further mechanical plates: [English prompts and figure review](FIGURE_REVIEW_AND_PROMPTS.md), including each intended filename.
