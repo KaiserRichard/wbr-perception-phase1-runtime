@@ -9,12 +9,12 @@ hypothetical and is not the five-bar mechanism (maximum reach about 0.211 m).
 
 ## Run receipt
 
-- Source checkout: `140a11b45e035190d89f4af0905b70975dce9f7c`; `sim/gain_schedule/run.py` SHA-256 `35ada62da374d75ee0420be3a0d3437af1e968c29cc798e11e4b3b010265a691`.
-- Config: `sim/configs/assumed_actuator_noise.json`, SHA-256 `1bd3c79add70cce74ba423382d557d7996e7a1d3db9f65c3d4bbcdc14840d90f`.
+- Source commit: `140a11b45e035190d89f4af0905b70975dce9f7c`.
+- Config: `sim/configs/assumed_actuator_noise.json`.
 - Interpreter: read-only `/private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python`; BLAS/thread variables set to 1; sweep ran at nice 10. Perl alarm capped sweep at 120 s and fit at 30 s.
 - Sweep command: `python -m sim.gain_schedule sweep --config sim/configs/assumed_actuator_noise.json --delays .002 .003 .004 .005 --out /Users/quockaiser/wbr-evidence-archive/sim-gain-sweep-20261021-01/sweep` (exit 0, `COMPLETE`, 9.86 s).
 - Fit command: `python -m sim.gain_schedule fit --sweep /Users/quockaiser/wbr-evidence-archive/sim-gain-sweep-20261021-01/sweep/sweep.json --degree 3 --out /Users/quockaiser/wbr-evidence-archive/sim-gain-sweep-20261021-01/fit` (exit 0, `COMPLETE`, 0.31 s).
-- Manifests: `sweep/sweep.json` SHA-256 `a757ec9b026e997eeb4a2088d554d627542c54fd61b2f148fb2a8bf567260eac`; `fit/schedule.json` SHA-256 `ab6f6a237f8e4a3864308e816d35f5a7c295ad74c1e69e671d1da91b65bd4e74`. Initial command/setup errors are preserved under `attempts/` in that evidence root.
+- Artifacts: `sweep/sweep.json`, `fit/schedule.json`; initial command/setup errors retained under `attempts/`.
 
 ## Fit diagnostics
 
@@ -23,7 +23,7 @@ condition number 1.924 (raw metre power-basis comparison: 9,569.95). Coefficient
 are finite, shaped `[degree=0..3, actuator, state]`; each regime keeps its own
 state matrix and fit. Across the four fits, whole-matrix relative Frobenius error
 is 0.000515–0.000531; largest individual entry RMSE is 0.01035–0.01085 and
-largest absolute entry error is 0.02084–0.02215.
+largest absolute entry error is 0.02084–0.02215. These summaries mix gain-entry units; they are numerical fit diagnostics, not torque-error bounds.
 
 Gain units are actuator torque per state unit. Input order is wheel-pair torque,
 virtual-hip-pair torque (N·m). State order starts `x (m), leg angle (rad), body
@@ -37,8 +37,10 @@ DARE residuals are 1.77e-13–3.55e-12 across designs. These are assumed-model
 linear design diagnostics only. They do not establish a good fit for control,
 nonlinear balance, or stability between samples.
 
+Conductor independently checked all 76 shapes/finite matrices, local-design records and every entry-wise fitted maximum error against direct Chebyshev reconstruction. No additional rollout.
+
 **Limitations:** all 400 nonlinear balance/push cases remain **UNRUN**. No
-simulation or hardware validation was performed; no thresholds or polynomial
+nonlinear rollout or hardware validation was performed; no thresholds or polynomial
 degree were tuned. The separate owner DM-jump polynomial exercise remains
 untouched.
 
