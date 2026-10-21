@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="418.962162pt" height="279.909937pt" viewBox="0 0 418.962162 279.909937" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.3, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M -0 279.909937 
+L 418.962162 279.909937 
+L 418.962162 0 
+L -0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 142.054054 238.996424 
+C 147.418611 238.996424 152.564172 236.865063 156.357486 233.071748 
+C 160.150801 229.278434 162.282162 224.132873 162.282162 218.768316 
+C 162.282162 213.403759 160.150801 208.258198 156.357486 204.464883 
+C 152.564172 200.671569 147.418611 198.540208 142.054054 198.540208 
+C 136.689497 198.540208 131.543936 200.671569 127.750622 204.464883 
+C 123.957307 208.258198 121.825946 213.403759 121.825946 218.768316 
+C 121.825946 224.132873 123.957307 229.278434 127.750622 233.071748 
+C 131.543936 236.865063 136.689497 238.996424 142.054054 238.996424 
+L 142.054054 238.996424 
+z
+" clip-path="url(#p1939f59363)" style="fill: none; stroke: #000000; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 156.322914 177.328537 
+C 154.031278 176.539463 151.678132 175.94184 149.287689 175.541817 
+C 146.897247 175.141794 144.477736 174.940748 142.054054 174.940748 
+" clip-path="url(#p1939f59363)" style="fill: none; stroke: #000000; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 179.813189 70.428856 
+C 178.047324 70.428856 176.283351 70.544473 174.532593 70.774965 
+C 172.781835 71.005457 171.048045 71.350329 169.34235 71.807369 
+" clip-path="url(#p1939f59363)" style="fill: none; stroke: #000000; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 7.2 238.996424 
+L 411.762162 238.996424 
+" clip-path="url(#p1939f59363)" style="fill: none; stroke: #808080; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 142.054054 218.768316 
+L 179.813189 110.885073 
+" clip-path="url(#p1939f59363)" style="fill: none; stroke: #000000; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 179.813189 110.885073 
+L 164.979243 56.943451 
+" clip-path="url(#p1939f59363)" style="fill: none; stroke: #000000; stroke-width: 7; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 142.054054 218.768316 
+L 142.054054 56.943451 
+" clip-path="url(#p1939f59363)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #000000"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 179.813189 110.885073 
+L 179.813189 43.458046 
+" clip-path="url(#p1939f59363)" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #999999; stroke-width: 1.5"/>
+   </g>
+   <g id="text_1">
+    <!-- $\theta$ -->
+    <g transform="translate(148.122486 163.478154)">
+     <text>
+      <tspan x="0" y="-0.484375" style="font-style: oblique; font-size: 15px; font-family: 'DejaVu Sans'">θ</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_2">
+    <!-- $\phi$ -->
+    <g transform="translate(193.298595 67.731775)">
+     <text>
+      <tspan x="0" y="-0.609375" style="font-style: oblique; font-size: 15px; font-family: 'DejaVu Sans'">ϕ</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_5">
+    <path d="M 208.979076 232.519973 
+Q 231.829461 233.684424 253.56326 234.791974 
+" style="fill: none; stroke: #000000; stroke-linecap: round"/>
+    <path d="M 249.280929 232.370892 
+L 253.56326 234.791974 
+L 249.056996 236.76519 
+" style="fill: none; stroke: #000000; stroke-linecap: round"/>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="189.252973" y="234.950802" transform="rotate(-0 189.252973 234.950802)">+x</text>
+   </g>
+   <g id="patch_6">
+    <path d="M 77.212557 157.124671 
+Q 100.878287 183.826219 123.802445 209.691065 
+" style="fill: none; stroke: #000000; stroke-linecap: round"/>
+    <path d="M 122.530409 204.939021 
+L 123.802445 209.691065 
+L 119.237588 207.857467 
+" style="fill: none; stroke: #000000; stroke-linecap: round"/>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="20.685405" y="151.341289" transform="rotate(-0 20.685405 151.341289)">wheel-pair torque</text>
+   </g>
+   <g id="patch_7">
+    <path d="M 257.958926 95.334858 
+Q 219.866218 102.914924 182.870045 110.276789 
+" style="fill: none; stroke: #000000; stroke-linecap: round"/>
+    <path d="M 187.614796 111.575765 
+L 182.870045 110.276789 
+L 186.756077 107.260374 
+" style="fill: none; stroke: #000000; stroke-linecap: round"/>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="236.451892" y="90.656965" transform="rotate(-0 236.451892 90.656965)">virtual hip-pair torque</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: start" x="20.685405" y="264.618694" transform="rotate(-0 20.685405 264.618694)">Schematic only: ideal rolling, fixed equivalent leg; no CAD dimensions</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 13.2px; font-family: 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="209.481081" y="17.229937" transform="rotate(-0 209.481081 17.229937)">Reduced WBR coordinates: both pitch angles are absolute</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p1939f59363">
+   <rect x="7.2" y="23.229937" width="404.562162" height="249.48"/>
+  </clipPath>
+ </defs>
+</svg>

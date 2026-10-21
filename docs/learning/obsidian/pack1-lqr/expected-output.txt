@@ -1,0 +1,13 @@
+Scalar P=1.618034, K=0.618034, pole=0.381966
+Cart-pole K=[ -8.366177  -9.813084 -63.145058 -12.98034 ]
+Cart-pole controllability rank=4, spectral radius=0.973677
+Cart-pole relative DARE residual=4.40e-14 (expected <1e-9)
+WBR nominal K shape=(2, 6); SIMULATION / ASSUMED
+[[ -4.529102 -15.788951  -7.401367  -5.582295  -2.677155  -1.481871]
+ [  1.191661  -0.430952  15.023835   1.548874  -0.036645   2.899251]]
+WBR nominal command at leg +5 deg (Nm)=[1.377846 0.037608]
+WBR archived delay 2 ms: K shape=(2, 10)
+WBR archived delay 3 ms: K shape=(2, 12)
+WBR archived delay 4 ms: K shape=(2, 12)
+WBR archived delay 5 ms: K shape=(2, 14)
+PASS: scalar identity, cart-pole DARE/stability, WBR matrix dimensions

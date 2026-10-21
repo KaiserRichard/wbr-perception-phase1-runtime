@@ -59,9 +59,15 @@ How to work with the owner of this project. Agents read this with `AGENTS.md`.
 - Connect learning to implementation, MuJoCo simulation, fair comparisons,
   reproducible tests and measurements. Do not present an interesting idea as a
   confirmed research gap without checking the literature.
-- For the current lesson request, submit the research/production proposal for
-  Claude review **before** generating the full lesson, images or ZIP. Keep that
-  proposal and chat concise; do not shorten necessary lesson derivations.
+- Claude approved the proposal with changes (owner relayed, 2026-10-21): deliver
+  three ZIPs in order under `docs/learning/obsidian/`: LQR first (send immediately),
+  RL→PPO second, residual/experiment third. One-page toolkit inside Pack 1;
+  one CPU-light script with expected output per pack. Technical figures use
+  Matplotlib/SVG, AI images only labelled decoration. Use YAML tags, MathJax,
+  relative assets, wiki-links and callouts. Do not request the same review again.
+- Candidate experiment: residual PPO versus delay-aware LQR, train delay2–5ms,
+  test6–10ms; no research-gap claim before literature review. New training is
+  separate from lesson production and follows current control experiment rules.
 - Portable instructions: [Obsidian lesson skill](skills/wbr-obsidian-lessons/SKILL.md).
   These repository files support continuity across accounts; account memory does
   not transfer automatically.

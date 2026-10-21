@@ -24,9 +24,9 @@ description: Create mathematics-first WBR robotics and control lesson packs for 
    relevant source/config before explaining project behaviour. Preserve concurrent
    changes and ongoing experiments. Do not write or duplicate the owner's protected
    `sim/parity/student.py::gain_schedule` solution.
-2. When the owner requests a proposal first, produce a concise review file and
-   wait for that review before the dependent lesson, ZIP, image generation or new
-   experiments. Do not impose this review gate on unrelated requests.
+2. Respect a requested proposal review before dependent production. For the current
+   LQR/RL/PPO series, Claude's approval has arrived with the amendments below;
+   do not ask for that approval again. New experiments still need their own scope.
 3. Verify external readings and use primary papers/official documentation for
    technical claims. Suggested anchors are Roboticsbook, MIT Underactuated Robotics,
    Hugging Face Deep RL theory, original PPO/GAE/residual papers and the project's
@@ -49,7 +49,7 @@ description: Create mathematics-first WBR robotics and control lesson packs for 
 
 ## Deliverable
 
-Provide one ZIP containing a main `.md` lesson with table of contents and YAML
+Provide a ZIP containing a main `.md` lesson with table of contents and YAML
 tags, local `assets/`, source/provenance notes, exercises/answers and minimal
 opening instructions. Supporting notes/code are optional when useful. Preserve
 relative paths so extraction into an existing vault works offline; avoid required
@@ -59,12 +59,25 @@ Use Obsidian MathJax `$...$` and `$$...$$`, with clean multiline equations and
 defined symbols. Prefer normal relative Markdown image embeds for portability.
 Keep one main reading path; use linked notes only when they improve navigation.
 
-Use the image-generation tool for requested AI mechanical illustrations, with
-inspection of geometry, axes, force/torque directions and captions. Use plotting
-or diagram tools for exact graphs, signal paths and equations. Label generated
-illustrations; include sources/reuse rights for third-party figures. Never invent
-measured plots, CAD dimensions or hardware parameters. Follow applicable image
-tool/skill instructions when actually producing images.
+Technical figures use Matplotlib/SVG or another deterministic diagram tool. AI
+images, if requested, are labelled decoration only; they do not carry exact
+geometry, equations or measured results. Include sources/reuse rights for
+third-party figures. Never invent plots, CAD dimensions or hardware parameters.
+
+## Approved three-pack sequence (owner relayed Claude review, 2026-10-21)
+
+- Pack 1 LQR first, delivered immediately when ready; its toolkit is a one-page
+  refresher. One CPU-light Python script checks scalar LQR by hand, solves DARE
+  on a cart-pole, and reads saved WBR gains without touching the protected exercise.
+- Pack 2 RL to PPO: one small script computes GAE and PPO clipping on a tiny rollout.
+- Pack 3 residual + experiment: one script plots LQR/residual torque from saved
+  runs; do not fabricate unavailable data. Candidate question: residual PPO versus
+  delay-aware LQR, training delays 2–5 ms and held-out testing 6–10 ms. Check the
+  literature before any gap claim; specify the controller's delay knowledge.
+- Store each ZIP under `docs/learning/obsidian/`, retaining maintainable sources.
+  Each pack needs expected script output, YAML tags, MathJax, relative `assets/`,
+  Obsidian callouts and wiki-links between packs. Label future links pending until
+  their destination pack is delivered. Do not delay Pack 1 to finish later packs.
 
 Before delivery, extract the ZIP to a fresh folder; check local links and assets;
 inspect Obsidian math and figures; run included examples. Retain unresolved limits
