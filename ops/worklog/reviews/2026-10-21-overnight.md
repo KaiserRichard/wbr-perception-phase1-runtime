@@ -36,3 +36,37 @@ Evidence: `~/wbr-evidence-archive/sim-ppo-v2-20261020-01`; frozen source `f1b5ee
 06:30 all-idle-account pass completed: a/b/c exhausted; d/e/g/h/i/j/k ready, default busy; g/k share one quota. The extra wakeup was deleted. One local quota-helper cleanup timeout was fixed and its retry/mock checks passed; PPO was unaffected. All runnable implementations finished; blocked heavy jobs were retained instead of rerunning tests.
 
 **Recommendation:** finish the authorized direct seeds3/4 before final comparison; retain failed outcomes. Resume camera work when Pi/network/camera return, and run A3/A4/B3 heavy commands once compute is free. Keep the five-bar model separate until its dynamics are measured.
+
+## Claude review
+
+Reviewed 2026-10-21 on main. I read this file and `sim/rl/v2_config.json` /
+`sim/rl/v2.py`. I re-ran nothing.
+
+**Overnight work: accepted.**
+- Done: A2, B1, B2, C1-C3.
+- Partial: A3, A4, B3. Their code is merged; the heavy runs wait for free CPU.
+- A1 is blocked only because the Pi was off. Run it first today, with the Pi on.
+- Keep the five-bar model separate until its dynamics match the planar model.
+
+**PPO v2 interim: real progress, plus one clear design issue.**
+1. **Direct PPO now survives** 440/480 runs and passes the strict test 59/480,
+   against 0/800 in v1. The survival reward and randomization worked.
+2. **Strict passes are rare, and residual PPO is 0/480 even though LQR alone is
+   160/160.**
+   - Likely cause (inferred, not measured): `cost_scale` 0.1 makes precision
+     almost free.
+   - At the strict tolerance (x = 0.02 m), the per-step penalty is
+     0.1 x 40 x 0.02^2, about 0.0016 against +1 for being alive. So the policies
+     learn to stay up, not to settle exactly.
+   - The residual output has no penalty and no zero start, so a small constant
+     bias can push LQR off its exact equilibrium. That fails the final-window
+     test while the robot still survives.
+   - **Check:** use the B1 tool to look at final-window errors per state. A
+     steady x or xdot offset would confirm this.
+3. **Next experiment (v3), after seeds 3 and 4 finish; don't stop them:**
+   - `cost_scale` about 2-5, so a tolerance-sized error costs about 1-5% of
+     the alive reward;
+   - for residual: zero-initialize the output layer, and add a penalty on the
+     residual action (for example 0.5 x (a / cap)^2 per step);
+   - keep everything else and the same evaluation panel.
+   Run 3 seeds per arm.
