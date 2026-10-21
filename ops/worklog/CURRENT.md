@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-10-21 +07; camera day active; independent PPO continues.
+Updated 2026-10-21 +07; camera visual milestone complete with limitations; simulation snapshot below retained.
 
 ## Simulation
 - Claude approved the assumed six-state planar LQR (PR44) and delay/lag/noise baseline (PR47–48). Hardware parameters remain ASSUMED/UNKNOWN; source gain parity remains the owner exercise.
@@ -26,6 +26,8 @@ Updated 2026-10-21 +07; camera day active; independent PPO continues.
 ## Hardware
 - SSH works: `ssh wbr-pi5` -> richard@192.168.50.2; WiFi192.168.0.107 at readback. Actual Pi has3.9GiBRAM. SG128 card boots; expandedroot113GiB/88GiBfree.
 - Borrowed D435i317422076650/FW5.17.3.10 atUSB5000M; mount remains on mobile robot. SDK calibration readback unchanged after first native/ROS runs; no calibration writes/firmware/robot config edits.
-- Owner confirmed manualcart motion with camera mount preserved. Wait to move until recording starts. Headless3modes/metrics/exporthelpers mergedPR79–81; conductor owns camera. Evidence: Pi~/wbr-evidence/camera-day-20261021-01; Mac/private/tmp/wbr-camera-day-20261021.
+- Headless native helpers, metrics and export merged PR79–81; ROS build fixes PR77. Pi evidence: ~/wbr-evidence/camera-day-20261021-01; final Mac archive: ~/wbr-evidence-archive/camera-day-20261021-01-final.
 - Native stereo30Hz/800:29.76trackedFPS,0loss/overwrites;RGBD15Hz/800:14.65FPS;throttle0x0. BothROSvisualmodespublishposes. Inertialtransientlyinitializes thenresets;nouserusabletrajectory.
-- Shortsensorbagrecords103transportlosses;0.5xreplayexports170poses. Queue100retryready. Next:owner marksstart/heading and saysready for150sloop(returnby120s),then3replays/drift/closure. STM32/motors/protectedexercise untouched.
+- Loop03 saved09:00:30–09:03:00+07 despitechatinterruption;1.9GiB,1318transportlosses. Ownerreportsreturnat120s/hold30s;alignmentnotgroundtruth.
+- COMPLETE: three fresh 0.5x replays, all processes/exports exit0. Endpoints 0.6963/0.6957/0.6927 m; 3.379/3.386/3.339% estimated path; loop detections yes/yes/no; loss episodes15/18/15. Map resets/merges invalidate pure continuous-map drift accuracy.
+- Final calibration readback identical; temporary receive buffers restored; owned camera/replay processes stopped. Next: Claude review reviews/2026-10-21-camera-visual-pose.md, recording-loss fix and sustained inertial motion retry. STM32/motors/protected exercise untouched.

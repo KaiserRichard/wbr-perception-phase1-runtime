@@ -87,3 +87,35 @@
   privateprocessgroups,150sbound,profile15Hz/800,source/configsnapshots andnewpaths.
   Syntaxchecked only; actualmarkedcaptureawaitsownerready. Cartloopinstruction:
   markposition+heading,returnby120s,standstilllast30s. No exact3replayclaimyet.
+
+- Marked cart captures retained outsidegit: loop01/02/03, each150s supervised.
+  Loop01 endpoint slightly displaced; loop02 owner clarified return occurred
+  only at recordingend. Neither used as a pureclosed-loopdrift measurement.
+- Loop03: started09:00:30+07, stopped09:03:00; supervisor/camera/SLAM/recorder
+  exited0 despitechatquota interruption. Bag148.18s/1.9GiB,1928left/2219right/
+  1203depthimages,2022poses/2127statuses;1318transportlostmessages;throttle0x0.
+  Ownerreports returnedat~120s and heldfinal30s. AlignmentisUSER-REPORTED,
+  no externalgroundtruth/independentheading measurement. Savedseparatereceipt.
+- Afterloop01queue100retry, socketreceivecap/default changed212992->4194304
+  temporarily, old/newvalues savedoutsidegit; loop02still1400transportlosses.
+  No provenfix/performanceclaim. Reverttemporarybuffer settingsafterreplays.
+- ThreefreshROSstereo replaybatch nowdetachedPiPID66148,0.5x, no livecamera.
+  Script/progress/eachprocess+exportlogs:camera-day-20261021-01/loop03-replays-01.
+  Exactsource/script snapshotretained; 420splaybackbound perrun,smalloutputbags.
+  Onlysensor topicsreplayed; recordedoldposesexcluded. Results pending.
+
+- Three detached0.5xreplays completed09:32:54+07; allplayer/recorder/SLAM/export
+  exits0. Statuses1924each; trackedposes1723/1819/1690; loss episodes15/18/15;
+  explicitloopdetectionsyes/yes/no; maps4/2/4 and merges3/1/2. Full sourcefirst/
+  lastleftstamps matched;4recordedleftframeswithoutstatus each. No missingstatus
+  counterrows; inputcamera/transportlosses remain and mapchangeslimitinterpretation.
+- Endpointdistances0.6962888/0.6956853/0.6927015m; percentages3.37924/3.38618/
+  3.33861 ofestimatedpath20.60488/20.54487/20.74822m. Notpurecontinuousmapdrift.
+- Finalanalysis script/JSON/table/figure savedoutsidegit in finalMacarchive;
+  figurevisuallyinspected. Sameinputbaghash verifiedacross3exports and copied
+  outputbag hashes verified. Smallartifacts+logs copied; rawsensorbagsremainPi.
+- FullSDKcalibrationreadback stillidentical(exit0). Temporaryrmemmax/default
+  restored212992. No ownedcamera/replayprocess remains; throttle0x0.
+- Addedreview2026-10-21-camera-visual-pose.md withmergedPRs,actualcommands/results,
+  limitationsandClaude recommendation; updatedCURRENT. Documentationpublication
+  pendingCI atthischeckpoint. No fullcameraday/inertial/accuracy/gatePASSclaim.

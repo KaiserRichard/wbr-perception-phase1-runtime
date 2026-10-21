@@ -346,3 +346,17 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   explicit; higherrecorderhistory remainsunverified. Initial189filearchivehashes
   verified; rawbagskeptPi. Marked150sloop/3replayspendingphysicalready; noreview
   approvalorfullcameradaycompletionclaimed.
+
+- CAMERA-DAY loop follow-through: CURRENT/session record3saved150scaptures,
+  exactsupervisor/logresults and usercorrectedendpointlimitations; loop03return
+  at120s/hold30sisUSER-REPORTED. Detached3replaybatchstartedafterquotaresume;
+  sourcebaglossesexplicit. Receivesysctlbefore/after retainedforrollback; result
+  table/Claudehandoffpending. No newgate/fullinertial/performanceclaim.
+
+- CAMERA-DAY final comparison: added reviews/2026-10-21-camera-visual-pose.md;
+  CURRENT/session record actualthreeexports/results,1318inputtransportlosses,
+  user-reportedendpointalignment, map discontinuities andyes/yes/noloopdetections.
+  Sources:Pi loop03+loop03-replays-01, hashedMacarchiveanalysis, actualexitreceipts.
+  Independentmetricsandoutputbaghashchecks passed; all3sourcebaghashesmatch;
+  figureinspected. SDKreadbackidentical;temporarybuffersrestored. Inertialand
+  robustmappingremainunresolved; Claudeapprovalnotclaimed. DocPR/CIpending.
