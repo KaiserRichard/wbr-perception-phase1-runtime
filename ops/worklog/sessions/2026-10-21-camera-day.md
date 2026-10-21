@@ -48,3 +48,42 @@
   copies/metrics/inertial config; g/Sol prepares replay analysis. Separate
   worktrees/branches, no concurrentcamera ownership; conductor runs live tests.
 - Requested owner prepare cart/powerbank and a marked loop; motion pending.
+
+- Owner confirms manual cart/whole-mobile-robot motion; camera stays on mount.
+- SDKcalibration readback after native baseline matches original fulloutput SHA256
+  `567c08f57953aef175577550314cfe37ff0b704c54a0a641c6eabdc8dd57baef`.
+- Live headlessROS stereo01: initialized614points; statusstate2/pose_publishedtrue.
+  First CLIecho failed before type discovery; explicitgeometry_msgs/PoseStamped
+  echo returned actualslam_world pose. Throttling before/after0x0. Driver/node
+  bounded55s and stopped; no concurrentnativecamera process. Initial livepose
+  success is not a movingloop, bodypose or performance result.
+- Main merged into camera branch preserving concurrent overnight documentation;
+  CURRENT hardware updated without rewriting old results. Native3mode and replay
+  helpers pending; no further milestone approval claimed.
+
+- Headless native viewer=false runs (30s each): stereo30Hz/1250features
+  27.96state-OKFPS,0loss transitions,45callbackoverwrites; clean stereo30Hz/800
+  repeat29.76FPS/0loss/0overwrites; stereo15Hz/80014.90FPS/0loss/0overwrites;
+  RGBD15Hz/80014.65FPS/0loss/0overwrites. Allthrottlingbefore/after0x0;
+  native trajectories finite. Initial800trial overlappedrebuild, retained separately.
+- Inertial trials90s/60s: both transiently setIMU-initialized(25/17frames), then
+  bad-IMU/motion resets; finalTUMempty. Motion retry userreported and timedwith
+  cartmountpreserved. SourceTracking.cc2347checks averageacceldifference<0.5;
+  LocalMapping reportsinsufficientmotion. No sustainedinertialsuccess claim.
+- ROSRGBD15Hz/800 actualPoseStamped+state2; CLIposeHz14.79(shortwindow), not
+  internaltrackinglatency. Saved193poses/193statuses; realexportexit0 exactmatches.
+- Sensorbag smoke14.24s/159.8MiB: left171,right183,depth94; recorderreports103
+  transportlostmessages. Preservefailure. Nextloopchangesonlyimagehistory10->100
+  in sessioncopiedQoS; no threshold/calibration/systemkernel changes.
+- One functionalvisualreplay0.5x: freshORBmap,170poses/170statuses exported and
+  matched originalinput. Inputbagalreadyhaslosses; not the requestedmarkedloop
+  or3repeatabilityruns. Sourcebagand3smallrawbagsstayPi; metadata/TUM/logs archived
+  to~/wbr-evidence-archive/camera-day-20261021-01-initial,189/189SHA256verified.
+- Calibrationreadback afterheadless/ROS/inertial matches originalfullSDKhash.
+- PR79/e9e6828 metrics:independent18testsPASS;PR80/98f5819 native:independent7tests
+  PASS+liveexecution;PR81/0885bba exporter:independent14testsPASS+real193poseexport.
+  AllmergedonlyafterbothCIchecksSUCCESS. PR80mainb046191,PR81main28f1eb7.
+- Capture-supervisorsource storedPiunder camera-day-20261021-01/capture_loop.py;
+  privateprocessgroups,150sbound,profile15Hz/800,source/configsnapshots andnewpaths.
+  Syntaxchecked only; actualmarkedcaptureawaitsownerready. Cartloopinstruction:
+  markposition+heading,returnby120s,standstilllast30s. No exact3replayclaimyet.

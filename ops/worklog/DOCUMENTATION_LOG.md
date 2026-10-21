@@ -331,3 +331,18 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   build/link/startupchecks; bothCItestsSUCCESS, merged567c765. Owner relayed
   headless/inertial/loop-metricchanges; session/DECISIONS updated. Two isolated
   workers running; native headless results and ROS trackedposes remain pending.
+
+- CAMERA-DAY live follow-through: CURRENT/session now record actual4GBPi, SG128
+  root expansion, borrowedD435i identity, identical SDKcalibration readback and
+  actualheadlessROS trackedpose. Sources:Piros-stereo-01logs, explicittypedCLIecho,
+  calibrationafterbaselineSHA256. Motion/bag/replay/nativeheadlesshelpers pending;
+  existing unrelated overnight/simulation state preserved during main merge.
+
+- CAMERA-DAY headless/export follow-through: session/CURRENT updated from actual
+  native/ROS/record/replaylogs. Relatedworkerfiles:PR79 replaymetrics README/tests
+  +session;PR80 nativehelper README/patches/tests+session;PR81 ROSexportguide/tests
+  +session. Independent18+7+14focusedtests and realPi runs passed; allthreePRs
+  mergedafterbothcurrentheadCIchecksSUCCESS. IMUonlytransient,103transportlosses
+  explicit; higherrecorderhistory remainsunverified. Initial189filearchivehashes
+  verified; rawbagskeptPi. Marked150sloop/3replayspendingphysicalready; noreview
+  approvalorfullcameradaycompletionclaimed.
