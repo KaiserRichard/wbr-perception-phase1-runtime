@@ -8,6 +8,7 @@ Updated 2026-10-21 +07; clean-loop Mac replays complete with tracking/map limita
 - PPO v1 complete: LQR160/160, PPO0/800. See sim/rl/RESULTS_2026-10-20.md; archived evidence retained.
 - PPO v2 COMPLETE 2026-10-21 12:13 +07 (PR55; frozen source f1b5ee7): eight exact3M-step seeds,all reloadPASS,1,280 evaluated cases; supervisor exited0.100Hz PPO versus unchanged500Hz LQR; no tuning.
 - Direct seeds0–4 strict[39,20,0,0,0], survival[160,160,120,160,160]:59/800 strict,760/800 survived. Residual seeds0–2:0/480 strict,480/480 survived; no extension. Reused LQR160/160. Legacy episode-length/return curves unavailable. Results: sim/rl/RESULTS_V2_2026-10-20.md; review2026-10-20-ppo-v2.md. Owner requested Mac rest/charging: no further heavy work or workers until resumed.
+- Owner resumed control work13:52 +07, prioritizing j/k; both busy, not dispatched. Final table+7plots generated from saved JSON at ~/wbr-evidence-archive/sim-control-followup-20261021-01/comparison. A4 nine-case single-thread attempt hit120s budget; no completed result, no retry. Review2026-10-21-control-followup.md; v3 remains unlaunched.
 - Evidence ~/wbr-evidence-archive/sim-ppo-v2-20261020-01; process/progress /private/tmp/wbr-ppo-v2-20261020/. Camera lab worktree updated to main; training runtime files unchanged.
 - sim/parity/student.py::gain_schedule remains owner-only. Separate live LQR viewer uses parameter-source-audit checkout; Desktop launcher remains available.
 
