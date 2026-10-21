@@ -35,7 +35,9 @@ Build first, fix when it breaks. These are the few rules that still apply.
   $Q_{xx}=40$ and $x_{\mathrm{tol}}=0.02$ m, scale 0.1 costs 0.0016 (0.16%);
   scale 2 costs 0.032 (3.2%). This illustrates the check, not a v3 config change.
 - Every RL result includes episode-length and return learning curves versus
-  policy steps. Keep evidence to config, commit, seeds, final metrics and
+  policy steps and a per-seed result table. Any future v3 full comparison uses
+  at least five training seeds per arm after its one-seed pilot passes; no v3
+  launch or frozen-v2 extension is implied. Keep evidence to config, commit, seeds, final metrics and
   those curves. Reports fit one page; no mass hashing or DECISIONS.md /
   DOCUMENTATION_LOG.md entries. Existing historical records remain intact.
 - Claude explicitly requested that already-running PPO v2 seeds 3/4 finish
