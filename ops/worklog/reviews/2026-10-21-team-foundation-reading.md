@@ -1,66 +1,58 @@
-# DM-jump foundation review and study estimate
+# DM-jump foundations and study time
 
-Reviewed 21 October 2026. Upstream `main` resolved through GitHub to
-`6855ef8c6da20246251cfd473467c04112bf800f`. Static source review, not a firmware
-build, hardware test, safety certification or claim about who authored the code.
+21 October 2026 · [Publication PR105](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/105)
+Upstream main: `6855ef8c6da20246251cfd473467c04112bf800f`.
+Static review; no firmware build, hardware test or authorship judgment.
 
-**Assessment:** the three packs are a sound entry to our reduced simulation and
-LQR/PPO research. Calling them “most of the mathematics behind the actual WBR”
-was too broad. The firmware contains further mechanics, estimation and hybrid
-control. AI assistance does not remove the need to understand these interfaces.
+**Assessment:** the three packs support reduced-model simulation and LQR/PPO
+research. Calling them “most of the actual WBR mathematics” was too broad.
 
-## What the actual code does
+## What the source actually does
 
-| Layer and pinned source | Finding / implication for learning |
+| Pinned source | Finding and missing foundation |
 | --- | --- |
-| [Controller helpers](https://github.com/nguyenbinh-shark/DM-jump/blob/6855ef8c6da20246251cfd473467c04112bf800f/User/Controller/controller.c) | Advanced PID/fuzzy tuning, feedforward, linear disturbance observer and tracking differentiator are implemented. Searching all 41 User C/H files finds no calls to their public calculation/initialization entry points outside this helper library. The balancing tasks instead call `PID_Calc` from `User/Algorithm/PID/pid.c`. Presence in a folder does not establish use in balancing. |
-| [Right chassis](https://github.com/nguyenbinh-shark/DM-jump/blob/6855ef8c6da20246251cfd473467c04112bf800f/User/APP/chassisR_task.c#L180) and [left chassis](https://github.com/nguyenbinh-shark/DM-jump/blob/6855ef8c6da20246251cfd473467c04112bf800f/User/APP/chassisL_task.c#L130) | Twelve feedback coefficients produce wheel torque and virtual leg torque, recomputed from a cubic table versus measured leg length. Added yaw/anti-splay/roll compensation, leg-force PID, contact/recovery branches and jump logic mean the whole controller is not simply one fixed LQR. |
-| [Five-bar/VMC](https://github.com/nguyenbinh-shark/DM-jump/blob/6855ef8c6da20246251cfd473467c04112bf800f/User/Algorithm/VMC/VMC_calc.c#L36) | Joint encoders determine closed-chain geometry, virtual leg length/angle and their rates. `VMC_calc_2` maps virtual axial force and pitch torque into the two real joint torques. The virtual-work foundation becomes the Jacobian-transpose mapping here. Denominators involving leg length and linkage angles motivate workspace/singularity knowledge. |
-| [State observer](https://github.com/nguyenbinh-shark/DM-jump/blob/6855ef8c6da20246251cfd473467c04112bf800f/User/APP/observe_task.c#L70) and [INS](https://github.com/nguyenbinh-shark/DM-jump/blob/6855ef8c6da20246251cfd473467c04112bf800f/User/APP/INS_task.c#L57) | Wheel/leg kinematics combine with inertial acceleration in a Kalman filter; position is integrated from filtered velocity. The active attitude loop calls Mahony; including the quaternion-EKF header is not evidence that the EKF supplies attitude in this loop. Noise and coordinate transforms cannot be replaced by perfect simulator state when transferring a policy. |
+| [Controller helpers](https://github.com/nguyenbinh-shark/DM-jump/blob/6855ef8c6da20246251cfd473467c04112bf800f/User/Controller/controller.c) | Advanced PID/fuzzy, feedforward, disturbance-observer and tracking-differentiator helpers exist. Across all41User C/H files, their public initialization/calculation functions have no external call sites. Balance instead calls `Algorithm/PID/pid.c::PID_Calc`. Library presence does not establish use. |
+| [Right chassis](https://github.com/nguyenbinh-shark/DM-jump/blob/6855ef8c6da20246251cfd473467c04112bf800f/User/APP/chassisR_task.c#L180), [left chassis](https://github.com/nguyenbinh-shark/DM-jump/blob/6855ef8c6da20246251cfd473467c04112bf800f/User/APP/chassisL_task.c#L130) | Twelve feedback gains vary with leg length through cubic polynomials. Wheel/virtual-leg feedback combines with yaw, anti-splay, roll, leg-force PID and contact/jump branches. This requires gain scheduling and hybrid-control foundations. |
+| [VMC](https://github.com/nguyenbinh-shark/DM-jump/blob/6855ef8c6da20246251cfd473467c04112bf800f/User/Algorithm/VMC/VMC_calc.c#L36) | Encoder angles determine five-bar geometry and leg length/angle/rates. `VMC_calc_2` maps axial force and virtual pitch torque to real joint torques. This extends the packs' virtual-work idea into Jacobian-transpose force mapping, workspace and singularities. |
+| [Observer](https://github.com/nguyenbinh-shark/DM-jump/blob/6855ef8c6da20246251cfd473467c04112bf800f/User/APP/observe_task.c#L70), [INS](https://github.com/nguyenbinh-shark/DM-jump/blob/6855ef8c6da20246251cfd473467c04112bf800f/User/APP/INS_task.c#L57) | Wheel/leg kinematics and inertial acceleration feed a Kalman filter; position integrates filtered velocity. Active attitude updates call Mahony. Including an EKF header does not establish its use here. Coordinate transforms, estimation and noise need further study. |
 
-## Transfer limits worth knowing now
+## Transfer limits
 
 - Firmware feedback order is `[leg angle, leg rate, position error, velocity error,
-  body pitch, body rate]`, with side-dependent error/sign conventions. The packs
-  use `[x, theta, phi, xdot, thetadot, phidot]`. Neither column order nor an overall
-  minus sign can be copied without mapping conventions.
-- The firmware uses a changing five-bar leg, per-side wheel and virtual-leg
-  outputs, then individual joint torques. Our planar lesson uses a fixed equivalent
-  leg and aggregate pair inputs. Firmware wheel clamps are ±2 Nm per side and
-  joint clamps ±7 Nm; those are not the lesson's aggregate input definitions.
-- Firmware calls VMC with a nominal 3 ms interval and has three 1-tick delays in
-  each chassis iteration. The observer uses a 3 ms constant. This is not evidence
-  of an exact 500 Hz hardware loop; actual periods/jitter need measurement. The
-  lesson's 2 ms plant/LQR tick is a separate simulation choice.
-- I found the saved gain values/polynomial table, but no MATLAB/Python gain-design
-  script or recoverable A/B/Q/R derivation in the upstream tree. This does not
-  prove those design artifacts do not exist elsewhere. The table alone cannot
-  establish optimality, stability over leg length, or parity with our new gains.
-- Our delay-aware augmented LQR is a simulation comparator, not a demonstrated
-  implementation of the upstream STM32 controller. No learned policy integration
-  was found in the reviewed application path. Static code and README claims do
-  not validate balancing, jumping or sim-to-real behaviour.
+  body pitch, body rate]`, with side-dependent signs; the packs use a different
+  order. Copying gains or a global minus sign without coordinate mapping is invalid.
+- Firmware has changing five-bar legs, per-side virtual outputs and real joint
+  torques. Packs use a fixed equivalent leg and aggregate pair inputs. Firmware
+  wheel/joint clamps (±2/±7Nm) are not the lesson's aggregate limits.
+- VMC uses nominal3ms; chassis iterations include three1-tick delays; observer
+  uses3ms. These constants do not prove actual loop frequency/jitter. The lesson's
+  2ms plant/LQR tick and delay-aware augmentation are separate simulation choices.
+- Saved gains/polynomials are present; no MATLAB/Python gain-design script or
+  recoverable A/B/Q/R derivation was found in the upstream tree. Artifacts may
+  exist elsewhere. Optimality/stability cannot be verified from a gain table alone.
+- No learned-policy integration was found in the reviewed application path.
+  Static code/README claims do not establish balancing, jumping or sim-to-real success.
 
-## Study time — personalized estimates, not measurements
+## Personalized estimate
 
-These estimates assume the owner's EE/embedded background, prior RL exposure,
-and current need to unpack virtual work. They cover derivation, worked examples,
-script execution and explaining the result back, rather than passive reading.
+Active study means derivations, worked examples, running scripts and explaining
+results back—not passive reading. Estimates reflect the owner's EE background,
+previous RL exposure and current questions about mechanics.
 
-| Pack | Focused study | Completion check |
+| Pack | Focused hours | Completion check |
 | --- | ---: | --- |
-| 1: mechanics/LQR | 10–16 h | Derive motor work and Bellman feedback; explain state order, gain units and local stability limits |
-| 2: RL→PPO | 6–10 h | Calculate tiny-rollout GAE/clipping without looking; distinguish actor/critic, observations and rewards |
-| 3: residual/experiment | 4–6 h | Explain effective correction after saturation, drift mechanism and a fair delay-mismatch comparison |
-| Total | **20–32 h** | Approximately 2–3 weeks at 2 focused hours per study day, allowing rest/review |
+| 1: mechanics/LQR | 10–16 | Derive virtual work/Bellman feedback; explain gain units and local stability |
+| 2: RL→PPO | 6–10 | Compute GAE/clipping; distinguish actor, critic, observation and reward |
+| 3: residual/experiment | 4–6 | Explain saturation, drift and fair delay-mismatch evaluation |
+| **Total** | **20–32** | Roughly2–3weeks at2hours per study day, allowing review/rest |
 
-A first orienting read may take 4–6 hours total; that is not derivation fluency.
-Allow another 5–8 hours of spaced recall/code tracing if the goal is to retain the
-material and work independently. Debugging a research implementation is extra.
+First orientation:4–6hours. Optional spaced recall/code tracing: another5–8hours.
+Research implementation/debugging is extra; these are estimates, not measurements.
 
-**Recommendation:** retain the three packs as the first foundation. The next
-bridge to this firmware should cover (1) five-bar geometry, Jacobians and VMC;
-(2) length-dependent LQR gains and coordinates; (3) IMU/Kalman estimation; and
-(4) contact/jump modes, saturation and actual timing. Fuzzy PID/LDOB/TD are lower
-priority until a concrete experiment needs them. This review does not authorize
-new lesson production, training, firmware changes or hardware deployment.
+**Recommendation:** retain the packs as the first foundation; bridge next to
+five-bar/VMC, length-dependent gains/coordinates, estimation, and contact/timing.
+Fuzzy PID/LDOB/TD can wait until an experiment actually needs them. No new lesson,
+training, firmware change or hardware deployment is authorized by this review.
+
+**Verification:** pinned source/task/call-site inspection; `git diff --check`.
+Reproduction notes and limitations: session2026-10-21-team-foundation-reading.md.
