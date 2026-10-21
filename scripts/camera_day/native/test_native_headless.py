@@ -133,6 +133,10 @@ int main() {
                 copied = root / name
                 copied.write_text(original.rstrip("\n") + "\n")
                 subprocess.run(["patch", "--batch", "--fuzz=0", str(copied), str(ASSETS / f"{mode}.patch")], check=True, capture_output=True)
+                if mode == "stereo_inertial":
+                    subprocess.run(["patch", "--batch", "--fuzz=0", str(copied),
+                                    str(ASSETS / "stereo_inertial_unified.patch")],
+                                   check=True, capture_output=True)
                 patched = copied.read_text()
                 self.assertTrue(patched.startswith(original.split("#include", 1)[0]))
                 self.assertIn(", false, 0, file_name)", patched)

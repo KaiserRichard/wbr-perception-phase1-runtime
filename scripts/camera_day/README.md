@@ -151,6 +151,50 @@ alignment, covariance, body calibration or motor-ready output is claimed.
 No TF is broadcast by the estimator. The RealSense driver may broadcast its
 own sensor geometry.
 
+## Stereo-only MCAP recording (2026-10-21 follow-up)
+
+Use the focused recorder for the marked stereo loop:
+
+```bash
+# Session settings on Pi, explicitly requested by the owner; retained until reboot.
+sudo sysctl -w net.core.rmem_max=4194304 net.core.rmem_default=4194304
+bash scripts/camera_day/record_stereo.sh "$CAMERA_RUN/stereo-mcap"
+# Ctrl-C finalizes metadata before inspection.
+python3 scripts/camera_day/stereo_bag_quality.py "$CAMERA_RUN/stereo-mcap" \
+  "$CAMERA_RUN/stereo-quality.json" --fps 15
+```
+
+It records only IR1/IR2 images and their CameraInfo to MCAP, with reliable readers
+and depth 100. The existing broad `record.sh` remains available for separate
+RGB-D/diagnostic recording. Keep the stereo camera at 640×480/15 Hz; its depth
+stream may stay enabled, but depth, TF and old SLAM outputs are excluded from
+this bag. Publishers must offer reliable QoS: verify live endpoints or the bag's
+`offered_qos_profiles`; a reliable reader cannot receive a best-effort writer.
+The helper never changes publisher QoS or kernel settings itself.
+
+Quality output compares exact stereo image headers, images against CameraInfo,
+and a labelled nominal-rate gap estimate. Pass means identical left/right
+headers and fewer than 1% observed missing frames per stream under those checks.
+It cannot establish missing hardware frames before/after the recorded span;
+CameraInfo is another recorded DDS stream, not independent ground truth.
+No sorting, deduplication, trimming or replacement of existing evidence occurs.
+Failure symptoms include unequal counts, timestamp gaps, reliability mismatch,
+transport-loss warnings, or missing CameraInfo. Keep every failed trial.
+
+Actual stationary sequence: MCAP/broad topics 412/424 images (12 missing left,
+112 transport losses); stereo-only best-effort 408/407 (one startup right frame);
+reliable depth100 445/445; reliable+4MiB buffers 895/895. The final marked loop
+saved 2215/2215 with equal headers and zero observed gaps/transport losses.
+These runs change factors sequentially, but do not establish a unique root cause
+or a general performance bound. Logs and the complete new loop are archived at
+`~/wbr-evidence-archive/camera-recording-20261021-01/`.
+
+Validation: `python3 -m unittest discover -s scripts/camera_day/tests -v`;
+`bash -n scripts/camera_day/record_stereo.sh`. Hardware validation is a bounded
+capture, clean shutdown, recorded QoS inspection and the quality command above.
+Revert by using the prior broad recorder and restoring the saved session sysctl
+values; retained data and the camera calibration are unaffected.
+
 ## Record and replay
 
 In another terminal, record foreground into a new path (Ctrl-C finalizes the bag):

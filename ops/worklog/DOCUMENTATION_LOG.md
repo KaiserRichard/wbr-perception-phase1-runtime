@@ -374,3 +374,15 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Final publication preparation: 344 copied small artifacts verified by SHA-256;
   preserved concurrent Obsidian notes in the merge and corrected stale camera
   pending/free-space text in CURRENT. No experimental result changed.
+
+### DOC-20261021-CAMERA-RECORDING: Reliable stereo MCAP follow-up
+- Owner relayed Claude acceptance; preserved Claude's appended review from
+  origin/claude/project-thread-2pff7j in the visual milestone report.
+- Added focused stereo recorder/QoS/header-quality tooling and tests; documented
+  sequential live trials, marked loop, calibration boundary and archive paths.
+- Corrected native IMU interpolation in an isolated copy; retained real-source
+  patch/build evidence and documented frame direction/rate checks.
+- Session/review: 2026-10-21-camera-recording-excitation.md. Final75s run exits0,
+  retains initialized61.8s and965poses;176archive artifacts verified; calibration
+  unchanged and Pi-free receipt saved. Cue/planar-motion limits documented.
+  Large raw data stays outside git; documentation CI pending at this checkpoint.

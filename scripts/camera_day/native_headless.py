@@ -105,6 +105,10 @@ def prepare(orb: Path, destination: Path, evidence: Path) -> None:
         with log.open("x") as output:
             subprocess.run(["patch", "--batch", "--fuzz=0", str(copied), str(ASSETS / f"{mode}.patch")],
                            stdout=output, stderr=subprocess.STDOUT, check=True)
+            if mode == "stereo_inertial":
+                subprocess.run(["patch", "--batch", "--fuzz=0", str(copied),
+                                str(ASSETS / "stereo_inertial_unified.patch")],
+                               stdout=output, stderr=subprocess.STDOUT, check=True)
         for name in ("flags.make", "link.txt"):
             metadata = orb / "build/CMakeFiles" / f"{target}.dir" / name
             shutil.copy2(metadata, destination / "metadata" / f"{mode}-{name}")
