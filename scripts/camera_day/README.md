@@ -1,8 +1,11 @@
 # D435 camera day: existing `wbr_orb_node` package
 
-**2026-10-20: offline preparation only. Pi build/install and live ROS/camera
-execution BLOCKED.** One authorized SSH attempt to `richard@192.168.111.243`
-timed out after 8 seconds. No second attempt, network scan or Mac ROS build.
+**2026-10-21: native Pi build/install and camera-free linking verified.**
+Serial `WITH_ORB_SLAM3=ON` colcon build exited 0; installed `d435_node` reached
+its expected missing-settings error with immediate symbol binding enabled.
+Camera absent: no live launch, tracking, pose or throughput claim.
+See the [build session and preserved failures](../../ops/worklog/sessions/2026-10-21-camera-ros-build.md).
+The initial 2026-10-20 preparation was offline because SSH timed out.
 
 `d435_node` is a visual-only executable in the existing `ros2/wbr_orb_node`
 package. It uses native ORB-SLAM3 `STEREO` or `RGBD`, disables the viewer and
@@ -10,15 +13,16 @@ never subscribes to an IMU. The original `orb_node` stereo-inertial path is
 unchanged. The pinned `third_party/ORB_SLAM3_ROS2` package is not modified.
 No third wrapper package is introduced.
 
-## Private Pi build (pending)
+## Private Pi build
 
-Run these commands **on the Pi in its dedicated task checkout** after access
-returns. Do not use the shared runtime checkout. The existing ORB library root
-below is historical and must exist; no rebuild of that shared ORB tree is
-performed by this script. Use a separate private native build if it needs fixes.
+Run these commands **on the Pi in its dedicated task source directory**.
+Do not use the shared runtime checkout. The existing ORB library root below
+was verified on 2026-10-21; this script does not rebuild that shared ORB tree.
+The native wrapper imports the installed Pangolin CMake targets and retains
+external library paths in the installed executables' runtime search path.
 
 ```bash
-cd /home/richard/wbr-pi-camera-prep  # conductor-provisioned private task checkout
+cd /home/richard/wbr-pi-camera-day-20261021
 source /opt/ros/jazzy/setup.bash
 bash scripts/camera_day/build_pi.sh \
   /home/richard/orbslam3/ORB_SLAM3 \
@@ -37,9 +41,15 @@ sudo apt-get install ros-jazzy-librealsense2 ros-jazzy-realsense2-camera \
 ```
 
 `rosdep install --from-paths ros2/wbr_orb_node --ignore-src -r -y` can resolve
-remaining declared ROS dependencies from this private checkout. No installation
-has been attempted remotely in A1. `WITH_ORB_SLAM3=OFF` intentionally does **not**
+remaining declared ROS dependencies from this private checkout. The 2026-10-21
+build needed no new apt/pip packages. `WITH_ORB_SLAM3=OFF` intentionally does **not**
 install `d435_node`: there is no fake camera-day estimator.
+
+Verified install: `/home/richard/wbr-camera-ros-build-20261021-04/install`.
+After sourcing its `setup.bash`, `ros2 pkg executables wbr_orb_node` lists both
+nodes. Camera-free startup with `timeout 15s env LD_BIND_NOW=1` and the installed
+`d435_node` exits 1 with `existing orb_vocabulary and orb_settings files required`;
+no timeout or missing library. This stops before constructing the ORB system.
 
 ## Save SDK intrinsics and generate device-specific YAML
 
@@ -188,8 +198,9 @@ bash -n scripts/camera_day/record.sh scripts/camera_day/build_pi.sh
 12 fixture tests passed in 0.54 s at initial implementation. Tests exercise SDK
 parsing/rejections, exclusive output creation, pure launch parameter selection
 and recording arguments with a stub `ros2`. They do not import ROS or compile
-the C++ node. Real Pi build, installed driver launch, rosbag write/replay, image
-pairing behavior under DDS load and live tracked poses are all pending.
+the C++ node. The native Pi build and installed camera-free startup passed on
+2026-10-21. Installed driver launch, rosbag write/replay, image pairing behavior
+under DDS load and live tracked poses remain pending.
 
 Source contracts inspected:
 [ORB stereo settings](https://github.com/UZ-SLAMLab/ORB_SLAM3/blob/4452a3c4ab75b1cde34e5505a36ec3f9edcdc4c4/Examples/Stereo/RealSense_D435i.yaml),
@@ -197,5 +208,5 @@ Source contracts inspected:
 [SDK enumeration format](https://github.com/realsenseai/librealsense/blob/master/tools/enumerate-devices/rs-enumerate-devices.cpp),
 [ROS depth scaling and aligned frames](https://github.com/realsenseai/realsense-ros/blob/ros2-master/realsense2_camera/src/base_realsense_node.cpp),
 [ROS camera parameters](https://github.com/realsenseai/realsense-ros/blob/ros2-master/realsense2_camera/launch/rs_launch.py).
-RealSense branch sources were inspected on 2026-10-20; compatibility with the
-unreachable Pi's installed package version has not been established.
+RealSense branch sources were inspected on 2026-10-20; live launch compatibility
+with the Pi's installed driver version has not been established.

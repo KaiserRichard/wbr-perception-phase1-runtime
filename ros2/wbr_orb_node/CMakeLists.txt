@@ -31,6 +31,9 @@ if(WITH_ORB_SLAM3)
     set(ORB_EXTRA_LIBRARIES "" CACHE STRING "Additional transitive native libraries")
     find_package(OpenCV REQUIRED COMPONENTS core)
     find_package(Eigen3 REQUIRED)
+    # ORB public headers include Pangolin even when its viewer is disabled.
+    # Import its usage requirements (including HAVE_GLEW), not just the ORB .so.
+    find_package(Pangolin REQUIRED)
     find_library(ORB_SLAM3_LIBRARY ORB_SLAM3 PATHS "${ORB_SLAM3_ROOT}/lib" NO_DEFAULT_PATH REQUIRED)
     if(NOT EXISTS "${ORB_SLAM3_ROOT}/include/System.h")
         message(FATAL_ERROR "ORB_SLAM3_ROOT must identify an existing qualified build")
@@ -38,8 +41,10 @@ if(WITH_ORB_SLAM3)
     target_sources(wbr_orb_core PRIVATE "${WBR_TOOLS}/vio_adapter/orb_engine.cpp")
     target_compile_definitions(wbr_orb_core PUBLIC WBR_WITH_ORBSLAM3)
     target_include_directories(wbr_orb_core PUBLIC "${ORB_SLAM3_ROOT}/include"
-        "${ORB_SLAM3_ROOT}/include/CameraModels" "${ORB_SLAM3_ROOT}" ${OpenCV_INCLUDE_DIRS} ${ORB_EXTRA_INCLUDE_DIRS})
-    target_link_libraries(wbr_orb_core PUBLIC "${ORB_SLAM3_LIBRARY}" Eigen3::Eigen ${OpenCV_LIBS} ${ORB_EXTRA_LIBRARIES})
+        "${ORB_SLAM3_ROOT}/include/CameraModels" "${ORB_SLAM3_ROOT}" ${OpenCV_INCLUDE_DIRS}
+        ${Pangolin_INCLUDE_DIRS} ${ORB_EXTRA_INCLUDE_DIRS})
+    target_link_libraries(wbr_orb_core PUBLIC "${ORB_SLAM3_LIBRARY}" Eigen3::Eigen
+        ${OpenCV_LIBS} ${Pangolin_LIBRARIES} ${ORB_EXTRA_LIBRARIES})
     find_package(cv_bridge REQUIRED)
     find_package(geometry_msgs REQUIRED)
     find_package(std_msgs REQUIRED)
@@ -48,6 +53,9 @@ if(WITH_ORB_SLAM3)
     target_compile_options(d435_node PRIVATE -Wall -Wextra -Wpedantic)
     ament_target_dependencies(d435_node rclcpp sensor_msgs geometry_msgs std_msgs cv_bridge)
     target_link_libraries(d435_node wbr_orb_core)
+    # Keep the existing native library locations after colcon installs the nodes.
+    # Otherwise CMake strips the build RPATH and libORB_SLAM3.so is not found.
+    set_target_properties(orb_node d435_node PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
     install(TARGETS d435_node DESTINATION lib/${PROJECT_NAME})
 endif()
 install(TARGETS orb_node DESTINATION lib/${PROJECT_NAME})
