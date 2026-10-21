@@ -303,3 +303,9 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Files:CURRENT.md,this log,overnight session; source:PR73 host integration and independent recorded-vector run.
 - Actual:4testsPASS in18.892s,1464ticks,5compiled fixtures; maxLQRerror7.88e-7 within unchanged1e-6. PR73 merged at149abd1 after both exact-head checks passed; PR72 progress merged.
 - Limits:controller arithmetic only,no closed-loop/hardware claim. Pi/heavy tasks stay partial; PPO and protected checkouts unchanged. Idle/quota refresh recorded without repeating unchanged tests.
+
+### DOC-20261021-OVERNIGHT-HANDOFF: Publish the morning state
+- Files:reviews/2026-10-21-overnight.md,CURRENT.md,overnight session,this log. Source:owner asks for report; mergedPR59–74 and existing conductor receipts.
+- Actual:ten task implementations merged; six done and A1/A3/A4/B3 partial/blocked. Six saved PPO outcomes files read (160each); no new simulation. Direct59/480strict,residual0/480strict; seed3 active,full comparison unfinished.
+- Validation:table arithmetic,10-task coverage,relative links,CURRENT under40lines,documentation-only diff and whitespace. Exact-head CI required for publication merge.
+- Limits:Pi builds/live pose,76designs/400cases,five-bar dynamics and full videos remain unrun; H7 analytical only. Single Claude handoff; PPO monitor continues,extra06:30wakeup removed.
