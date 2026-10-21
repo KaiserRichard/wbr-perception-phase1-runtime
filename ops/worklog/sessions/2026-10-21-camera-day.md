@@ -119,3 +119,7 @@
 - Addedreview2026-10-21-camera-visual-pose.md withmergedPRs,actualcommands/results,
   limitationsandClaude recommendation; updatedCURRENT. Documentationpublication
   pendingCI atthischeckpoint. No fullcameraday/inertial/accuracy/gatePASSclaim.
+
+- Final Mac archive: 344 small artifacts passed SHA-256 copy verification.
+  Preserved concurrent Obsidian proposal/profile updates while merging origin/main;
+  both append-only decision/documentation log entries retained.

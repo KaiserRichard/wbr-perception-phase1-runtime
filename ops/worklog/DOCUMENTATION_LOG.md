@@ -310,6 +310,16 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Validation:table arithmetic,10-task coverage,relative links,CURRENT under40lines,documentation-only diff and whitespace. Exact-head CI required for publication merge.
 - Limits:Pi builds/live pose,76designs/400cases,five-bar dynamics and full videos remain unrun; H7 analytical only. Single Claude handoff; PPO monitor continues,extra06:30wakeup removed.
 
+### DOC-20261021-OBSIDIAN: Save the lesson proposal and learning preferences
+- Owner requested a researched LQR/RL/PPO lesson proposal
+  before production, plus portable learning preferences. Added the review file,
+  Obsidian lesson skill, profile section and decision/session/current-state notes.
+  Primary readings checked: Roboticsbook 3.5/3.6/6.6/7.5, MIT LQR, Hugging Face
+  course/4/6/8, PPO/GAE/residual papers, pinned SB3 and Obsidian docs. Inspected
+  existing synthesis, augmented LQR, v2 runtime/config and guides at 28f1eb7.
+  No new training, lesson ZIP, image generation or hardware action. Validation and
+  publication receipts are recorded in the dedicated session note.
+
 ### DOC-20261021-CAMERA-DAY: Resume camera work on migrated Pi
 - Files: sessions/2026-10-21-camera-day.md; CURRENT.md; DECISIONS.md; this log.
 - Why/source: owner supplied camera-day sequence and conductor rules; latest
@@ -360,3 +370,7 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   Independentmetricsandoutputbaghashchecks passed; all3sourcebaghashesmatch;
   figureinspected. SDKreadbackidentical;temporarybuffersrestored. Inertialand
   robustmappingremainunresolved; Claudeapprovalnotclaimed. DocPR/CIpending.
+
+- Final publication preparation: 344 copied small artifacts verified by SHA-256;
+  preserved concurrent Obsidian notes in the merge and corrected stale camera
+  pending/free-space text in CURRENT. No experimental result changed.
