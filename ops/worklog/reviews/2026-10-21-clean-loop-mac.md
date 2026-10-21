@@ -25,7 +25,8 @@ replay 3 lost tracking and merged a second map, despite its small endpoint.
 - Merged prerequisites: [PR87](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/87),
   accepted review [PR88](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/88),
   follow-ups/queue [PR90](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/90).
-  This milestone publication/CI/merge receipt is saved in the archive.
+  Milestone publication: [PR92](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/92);
+  final current-head CI/merge receipt is saved in the archive.
 
 ## Results
 
