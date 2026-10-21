@@ -117,3 +117,35 @@ python3 -m unittest discover -s /repo/scripts/camera_day/offline \
 Tests cover stride-aware pixel preservation and integer source stamps, duplicate
 and mismatched header rejection, wrong type/count rejection, and exclusive output
 creation. They do not establish native tracking or endpoint accuracy.
+
+## Archived TrackStereo frame budget
+
+Analyze the three already completed runs without starting a replay or Docker
+workload. The input directory must contain `replay-1/frames.csv` through
+`replay-3/frames.csv`; output is exclusive-created:
+
+```bash
+python3 scripts/camera_day/offline/track_budget.py \
+  /path/to/three-replays-02 /path/to/new-j-budget-output
+```
+
+The reader rejects a changed header, malformed rows, non-increasing source
+stamps, non-contiguous processed counters, and non-positive or overlapping
+serial Track intervals. It counts all calls strictly above 66.7 ms using
+integer nanoseconds and also reports the exact 1/15 s test
+`15 * duration_ns > 1,000,000,000`. Each run's directory contains a JSON
+summary plus a histogram CSV and SVG. Histogram bins are shared across runs,
+lower-inclusive/upper-exclusive milliseconds, and account for every call.
+Percentiles use nearest rank; tracked-only counts select
+`pose_published=true` as logged by the replay runner.
+
+These no-drop 1× offline replays absorb compute overruns. Counts are budget
+misses, not observed live camera drops or a direct forecast of latest-image
+queue drops. Measurements are from Intel Mac x86_64 Docker and do not transfer
+to the Pi.
+
+Focused tests:
+
+```bash
+python3 -m unittest discover -s scripts/camera_day/offline -p test_track_budget.py -v
+```
