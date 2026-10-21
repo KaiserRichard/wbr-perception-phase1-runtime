@@ -303,3 +303,25 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Files:CURRENT.md,this log,overnight session; source:PR73 host integration and independent recorded-vector run.
 - Actual:4testsPASS in18.892s,1464ticks,5compiled fixtures; maxLQRerror7.88e-7 within unchanged1e-6. PR73 merged at149abd1 after both exact-head checks passed; PR72 progress merged.
 - Limits:controller arithmetic only,no closed-loop/hardware claim. Pi/heavy tasks stay partial; PPO and protected checkouts unchanged. Idle/quota refresh recorded without repeating unchanged tests.
+
+### DOC-20261021-CAMERA-DAY: Resume camera work on migrated Pi
+- Files: sessions/2026-10-21-camera-day.md; CURRENT.md; DECISIONS.md; this log.
+- Why/source: owner supplied camera-day sequence and conductor rules; latest
+  origin/main 8195d7f; actual SSH/storage/kernel/package/launch outputs.
+- Actual: storage boot/expansion verified, no camera enumerated; existing native
+  stereo reports missing device. Isolated g ROS build dispatched after idle check.
+- Validation: source and live output inspected; no native tracking, ROS pose,
+  recording/replay or whole-card integrity claim. Worker build pending.
+- Status: session in progress; final milestone/Claude review pending physical input.
+
+- CAMERA-DAY report follow-through (2026-10-21 07:58 +07): added
+  reviews/2026-10-21-camera-day-status.md and session observations at owner request.
+  Sources: live SDK/USB readback, native stereo logs (733 initial map points),
+  worker build logs/diff. Report separates initialization from trajectory evidence;
+  ROS pose/RGB-D/bag/replay pending. No completed-milestone/Claude approval claim.
+
+- CAMERA-DAY build/review follow-through: worker ROS CMake/READMEs and own
+  sessions/2026-10-21-camera-ros-build.md inPR77; conductor repeated native
+  build/link/startupchecks; bothCItestsSUCCESS, merged567c765. Owner relayed
+  headless/inertial/loop-metricchanges; session/DECISIONS updated. Two isolated
+  workers running; native headless results and ROS trackedposes remain pending.

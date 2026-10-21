@@ -256,3 +256,21 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Evidence: read-only app-server metadata identifies g/k as one login with100%used in the same300min window,reset02:16local. Treat aliases as one account for idle/quota checks; preserve work and transfer to i/e. Never buy credits or consume reset credits.
 - Model decision: retain A3's requested hypothetical rigid-leg domain0.12–0.30m; do not present it as the pinned five-bar's reachable domain(upper bound≈.211m). A4 has assumed rod mass distribution/bearing and demonstrated dynamics differences; keep it separate from frozen PPO/LQR.
 - Scope remains implementation plus quick checks overnight; full gain sweeps, dynamics and videos wait for available compute/Pi. No physical/acceptance thresholds or research recipe changed.
+
+### D-20261021-CAMERA-DAY: Resume live camera sequence without duplicating simulation
+- Decided by: owner (sequence and authority); conductor (execution split).
+- Decision: conductor owns native camera work; idle g builds existing visual ROS
+  wrapper in isolated worktree/private Pi source. Preserve ongoing PPO and the
+  owner-only gain exercise. Existing Conducting Codex text needs no duplicate.
+- Evidence: owner camera-day prompt; sessions/2026-10-21-camera-day.md; SSH and
+  account receipts under /private/tmp/wbr-camera-day-20261021/.
+- Revisit when: hardware arrives or an actual runtime/build failure changes work.
+
+### D-20261021-CAMERA-REVIEW: Follow owner-relayed Claude camera changes
+- Decided by: owner, relaying Claude review.
+- Decision: disable native viewers; try15FPS or800features against observed drops;
+  measure trackingFPS/loss events/throttling. Run stereo,RGBD,stereo-inertial using
+  borrowedD435i; calibration remains read-only. Mount-preserving cart/PD-bank
+  motion with marked start/end;3replays report endpointdrift and closure events.
+- Evidence: owner's2026-10-21review message; camera-day session and raw Pi logs.
+- Limits: no powerbank/physicalmotion verified yet; no groundtruth accuracyclaim.
