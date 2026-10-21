@@ -52,3 +52,7 @@
   training or other-worker source writes. Only synthetic sqlite3 tested; live data
   and MCAP not tested. Source bags must be finalized; capture tail remains unknown.
 - Worker opens PR and does not merge; conductor owns real replay and integration.
+- Implementation commit `0712839`; `git push -u origin chatgpt/20261021-camera-replay-export`
+  succeeded. Opened [PR81](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/81)
+  with `gh pr create --base main --head chatgpt/20261021-camera-replay-export --title "Export recorded ROS replay poses and per-frame status" --body-file /tmp/wbr-camera-replay-export-pr-body-20261021.md`.
+  GitHub CI pending at handoff; not merged.
