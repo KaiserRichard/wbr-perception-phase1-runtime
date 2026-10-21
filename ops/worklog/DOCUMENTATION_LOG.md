@@ -407,3 +407,17 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - 18metric+4MCAP tests/native build/independent copied-evidence checks PASS.
   Raw data/timing/logs/binaries/hashes remain in Mac archive, outside git.
   Simulation state retained; no PPO, control, hardware or calibration writes.
+
+### DOC-20261021-CAMERA-REVIEW-FOLLOWUP: Drift scope, agreement and timing tails
+- Applied Claude PR93 interpretation in CURRENT and new review/session. Original
+  R2/R3 endpoints are not drift;1of3original runs lost tracking. No repeatability
+  or0.13%accuracy claim. Mac/Pi and pacing/compute scopes remain separate.
+- Owner-prioritized codex-j/k implemented timing histograms/counts and rigid
+  alignment/segment tools in dedicated worktrees (PR94/96). Conductor ran them
+  independently and one new loopClosing0 replay; no native rebuild/Pi access.
+- All2215pairs tracked in one map; conditional endpoint0.025485m/14.198601m.
+  Original R1/R2 aligned RMS0.009977m; >66.7ms counts6/135/14.34focused tests PASS.
+- Full timings/poses/settings/hashes/figures/commands outside git under Mac
+  archive claude-review-followup-01; unknown physical truth and upstream
+  disabled-mode source defect documented. Generic CI does not discover new
+  focused suites; their explicit commands and independent results are recorded.

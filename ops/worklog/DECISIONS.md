@@ -309,3 +309,16 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
   commands/hashes and raw results in the Mac archive; publish only small tools
   and notes. Current-head CI must be green before merge; retire this follow-up
   after publication/handoff, with no changes to the separate control monitor.
+
+### D-20261021-CAMERA-PR93: Execute owner-authorized analysis corrections
+- Owner accepted Claude review and requested all3no-lab follow-ups, prioritizing
+  codex-j/k. Resumed Mac only; Pi consent remains absent. Check idle/quota and
+  respect shared-account races; wait for j's unrelated task rather than interrupt.
+- Execute exactly1fresh loopClosing0 run with unchanged binary/original pair
+  schedule; preserve all outcomes. Source gates both loops/merges; localBA stays.
+- Compare R1/R2 by exact-stamp proper SE3 with fixed scale, and count strictly
+  >66.7ms / exact15Hz call durations. Position agreement is not GT accuracy;
+  compute-budget misses are not observed live drops. Report1of3original losses.
+- Preserve source limitation of upstream disabled-mode pointer handling without
+  speculative patching/rerunning. This successful single execution is not a
+  general runtime-safety proof. Archive raw evidence; merge only exact-head green.
