@@ -237,3 +237,29 @@ behavior, full dynamics equivalence analysis, matched mass identification,
 contacts and physical validation remain unrun. The fixed-length projected
 study does not validate full five-bar closed-loop control, contact/jumping or
 policy transfer. Pi execution is also unverified.
+
+## Local linear comparison (21 October 2026)
+
+`python -m sim.fivebar.linearize --out <fresh-directory>` compares upright
+continuous derivatives at L=0.12, 0.16, 0.20, 0.21 m, then applies each fresh
+**reduced-model** `sim.lqr.synthesize` DARE gain with `u=-Kx`. Both continuous
+plants use matched zero-order hold at 2 ms; the reduced actual held-control
+MuJoCo RK4 step/DARE record stays separate. No fivebar gains or rollouts are
+generated. Use the single-thread environment and interpreter above, with
+`nice -n 10`; the same interpreter runs `-m unittest sim.fivebar.tests.test_linearize -v`.
+
+`config_at_length` preserves masses and scales only the equivalent rigid-leg
+COM and inertia. Fivebar link geometry and four equal rod masses/inertias retain
+their existing assumptions. The output separates generalized torque map G,
+mass M, and actual acceleration input Jacobian `B[3:]=solve(M,G)`; the earlier
+17% wheel-reaction observation is **not** a 17% full B-matrix discrepancy.
+
+The executed comparison accepts all four lengths: fivebar pole radii are
+0.997674099, 0.997549295, 0.997490806, 0.997663634 (local sampled stability only).
+JSON retains all matrices, six poles per model, radial margin, decay time,
+equilibrium residuals and separate projection/state/input epsilon refinements.
+Geometry or equilibrium failures remain explicit; no bias is subtracted.
+Raw relative/max matrix norms mix units and depend on coordinate scaling.
+`report.md`, `metrics.csv` and `acceleration-inputs.csv` accompany the JSON.
+See the [worker run note](../../ops/worklog/sessions/2026-10-21-fivebar-linear-worker.md)
+for exact commands, source and evidence paths. No nonlinear/hardware transfer claim.
