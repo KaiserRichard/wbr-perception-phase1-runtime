@@ -40,34 +40,27 @@ env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_TH
   -m unittest discover -s sim/video/tests -v
 ```
 
-## Queued full clips (not run while PPO is active)
+## Completed full clips (21 Oct 2026)
 
-The active backend already provides MuJoCo, NumPy, SciPy and Pillow. **FFmpeg
-with libx264 is also required for MP4; it is absent on this Mac.** No package
-was installed and the backend environment was not changed. Full simulation,
-rendering and actual MP4 encoding remain pending for after training or a
-separate Pi render host with the dependencies available.
+Both requested 640x480 MP4s were rendered from the backend Python after PPO v2
+completed. FFmpeg with libx264 was installed into the isolated
+`/private/tmp/wbr-lqr-ffmpeg-deps-20261021` target; the backend virtualenv was
+not changed. Each clip reports 300 frames, 10.0 s playback, and a final
+simulated sample at 9.966 s. FFmpeg decoded both files to null without errors.
+Initial, 3.10 s, and final frames from each clip were extracted and visually
+inspected; the whole vehicle and all captions are readable.
 
-After training, from this checkout, with FFmpeg available:
+Media, metadata, encoder logs, and extracted frames are outside git at
+`/Users/quockaiser/wbr-evidence-archive/sim-lqr-clips-20261021-01/`. The push
+clip includes the existing 6 N pulse during [3.00, 3.15) s; the balance clip
+sets pulse force to zero. These are illustrative and unscored, not acceptance
+tests or hardware validation. See
+`ops/worklog/reviews/2026-10-21-lqr-clips.md` for exact invocations and run
+results.
 
-```sh
-env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 \
-  nice -n 10 /private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python \
-  -m sim.video --output /private/tmp/wbr-overnight-20261020/B3/lqr-push-10s.mp4 \
-  --scenario push --duration 10 --fps 30 --width 640 --height 480 --delay-ms 5 --seed 1000
-
-env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 \
-  nice -n 10 /private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python \
-  -m sim.video --output /private/tmp/wbr-overnight-20261020/B3/lqr-balance-10s.mp4 \
-  --scenario balance --duration 10 --fps 30 --width 640 --height 480 --delay-ms 5 --seed 1000
-```
-
-On a Pi, use its own MuJoCo-capable Python instead of the Mac backend path,
-and a new output path such as `/tmp/wbr-video-B3/lqr-push-10s.mp4`. The headless
-Linux GL backend is selected **before** Python starts, e.g. `MUJOCO_GL=egl` on
-a host with functioning EGL support. Pi offscreen GL and encoding have not
-been tried. Normal Python sufficed for the actual macOS offscreen frame; this
-CLI does not open the passive viewer or require its `mjpython` launcher.
+Normal Python sufficed for this actual macOS offscreen run; the CLI does not
+open the passive viewer or require its `mjpython` launcher. Pi offscreen GL and
+encoding have not been tried.
 
 ## Output contract
 
