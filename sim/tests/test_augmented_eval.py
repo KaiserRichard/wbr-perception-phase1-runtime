@@ -15,7 +15,8 @@ import numpy as np
 from sim.augmented import Interval, Observation, RuntimeConfig, StepResult
 from sim.augmented_eval import evaluate
 from sim.gain_schedule import run
-from sim.gain_schedule.model import FAMILY
+from sim.gain_schedule.fitting import fit_polynomial
+from sim.gain_schedule.model import DOMAIN_M, FAMILY, STUDY
 from sim.planar import STATE_NAMES
 
 
@@ -207,15 +208,19 @@ class AugmentedEvaluationTests(unittest.TestCase):
                     ([terminal], [FINITE*2]*3, [FINITE]*3, [FINITE]*3)]
         cfg = deepcopy(runtimes[0].plant.cfg)
         gain = np.full((2, 10), .01)
-        design = {"state_order": [f"z{i}" for i in range(10)],
+        # Real saved fit and pole verification; gains/matrices remain synthetic, no physics.
+        fit = fit_polynomial(DOMAIN_M, np.stack([gain, gain]), degree=0, domain=DOMAIN_M)
+        design = {"synthetic": True, "state_order": [f"z{i}" for i in range(10)],
+                  "dt_s": cfg["simulation"]["dt_s"],
                   "max_closed_loop_pole_magnitude": .5,
                   "A_discrete_actual": (.5*np.eye(10)).tolist(),
                   "B_discrete_actual": np.zeros((10, 2)).tolist()}
         schedule = {"schema_version": 1, "kind": "assumed_leg_schedule", "family": FAMILY,
+                    "study": STUDY, "synthetic": True, "physics_acceptance": "NOT_EVALUATED",
                     "status": "COMPLETE", "reference_config": cfg,
                     "regimes": [{"runtime": asdict(RuntimeConfig()),
                                  "state_order": design["state_order"],
-                                 "input_order": cfg["controller"]["input_order"], "fit": {}}]}
+                                 "input_order": cfg["controller"]["input_order"], "fit": fit}]}
         schedule_path = self.root/"synthetic_schedule.json"
         schedule_path.write_text(json.dumps(schedule, allow_nan=False))
         out = self.root/"caller"
@@ -224,17 +229,23 @@ class AugmentedEvaluationTests(unittest.TestCase):
                 patch("sim.planar.Plant", return_value=SimpleNamespace(cfg=cfg)), \
                 patch("sim.lqr.synthesize", return_value=(np.zeros((2, 6)), {})), \
                 patch("sim.augmented_lqr.synthesize_augmented", return_value=(gain, design)), \
-                patch.object(run, "evaluate_polynomial", return_value=gain), \
                 patch.object(run, "source_info", return_value={"synthetic": True}):
             result = run.evaluate(SimpleNamespace(schedule=schedule_path, lengths=[.16], seeds=[0]), out)
         self.assertEqual(result["status"], "COMPLETE")
         self.assertEqual(result["acceptance"], {"fresh_dare": "FAIL", "polynomial": "PASS"})
         manifest = self.read_metrics(out/"evaluation.json")
+        self.assertEqual(result["polynomial_local_acceptance"], "PASS")
+        self.assertEqual(len(manifest["local_linear_checks"]), 1)
+        check = manifest["local_linear_checks"][0]
+        np.testing.assert_allclose(check["Kfit"], gain)
+        self.assertEqual(check["polynomial_pole_radius"], .5)
         self.assertEqual([case["status"] for case in manifest["cases"]], ["FAIL", "FAIL", "PASS", "PASS"])
-        for case in manifest["cases"]:
+        for index, case in enumerate(manifest["cases"]):
             saved = self.read_metrics(out/case["artifact_directory"]/"metrics.json")
             self.assertEqual(case["status"], saved["status"])
             self.assertEqual(case["failed_checks"], saved["failed_checks"])
+            self.assertEqual(saved["numerical_failure"], index == 0)
+            self.assertEqual(saved["checks"]["numerics"], index != 0)
         self.assertEqual([r.steps for r in runtimes], [0, 2, 2, 2])
 
 

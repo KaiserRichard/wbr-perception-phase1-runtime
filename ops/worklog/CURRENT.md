@@ -3,6 +3,7 @@
 Updated 2026-10-21 +07; PR93 camera follow-up measured; simulation snapshot below retained.
 
 ## Simulation
+- Upstream firmware learning review: reviews/2026-10-21-team-foundation-reading.md. Three packs cover reduced-model/research foundations; firmware also needs five-bar/VMC, gain scheduling, estimation and hybrid timing. Study estimate20–32focused hours; no runtime change.
 - Obsidian three-pack illustrated revision under docs/learning/obsidian: supplied mechanical plates + worked dynamics/LQR, RL→PPO, residual/saved-runs/experiment. Review2026-10-21-illustrated-lessons.md; five filename-specific image prompts. Three extracted exercises/382MathJax expressions PASS; no new training.
 - Claude approved the assumed six-state planar LQR (PR44) and delay/lag/noise baseline (PR47–48). Hardware parameters remain ASSUMED/UNKNOWN; source gain parity remains the owner exercise.
 - PPO v1 complete: LQR160/160, PPO0/800. See sim/rl/RESULTS_2026-10-20.md; archived evidence retained.
