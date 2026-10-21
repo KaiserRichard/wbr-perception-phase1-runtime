@@ -39,3 +39,29 @@ How to work with the owner of this project. Agents read this with `AGENTS.md`.
 - Keep everything in files (`ops/worklog/`), so another agent (Claude) can pick up
   cold. Claude is an occasional reviewer with limited quota.
 - Codex accounts are shared across tasks; check one is idle before using it.
+
+## Learning materials (owner request, 2026-10-21)
+
+- Uses **Obsidian**. Substantial lessons should arrive as one ZIP containing a
+  main Markdown lesson with YAML tags, local linked/embedded images, sources,
+  exercises/answers and minimal opening instructions. Assets must remain usable
+  after extraction into an existing vault; use Obsidian MathJax for equations.
+- Wants mathematical understanding before algorithm research: intuition,
+  assumptions, notation/dimensions, derivations, worked examples and tests of
+  understanding. Knows RL mathematical language but needs refreshing; has not
+  studied LQR deeply. Tie LQR, RL, PPO and residual control to the actual WBR code.
+- Has studied much of Roboticsbook, partly read Chapter 6, not Chapter 7;
+  previously studied RL including the Hugging Face course. Avoid assuming either
+  complete mastery or no prior knowledge.
+- Prefers clear mechanical/technical illustrations over decorative colour.
+  Generated images are welcome; exact equations and measured plots need verified
+  mathematics/data. Reused images need attribution and appropriate reuse rights.
+- Connect learning to implementation, MuJoCo simulation, fair comparisons,
+  reproducible tests and measurements. Do not present an interesting idea as a
+  confirmed research gap without checking the literature.
+- For the current lesson request, submit the research/production proposal for
+  Claude review **before** generating the full lesson, images or ZIP. Keep that
+  proposal and chat concise; do not shorten necessary lesson derivations.
+- Portable instructions: [Obsidian lesson skill](skills/wbr-obsidian-lessons/SKILL.md).
+  These repository files support continuity across accounts; account memory does
+  not transfer automatically.

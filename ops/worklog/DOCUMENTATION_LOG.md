@@ -309,3 +309,13 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Actual:ten task implementations merged; six done and A1/A3/A4/B3 partial/blocked. Six saved PPO outcomes files read (160each); no new simulation. Direct59/480strict,residual0/480strict; seed3 active,full comparison unfinished.
 - Validation:table arithmetic,10-task coverage,relative links,CURRENT under40lines,documentation-only diff and whitespace. Exact-head CI required for publication merge.
 - Limits:Pi builds/live pose,76designs/400cases,five-bar dynamics and full videos remain unrun; H7 analytical only. Single Claude handoff; PPO monitor continues,extra06:30wakeup removed.
+
+### DOC-20261021-OBSIDIAN: Save the lesson proposal and learning preferences
+- Owner requested a researched LQR/RL/PPO lesson proposal
+  before production, plus portable learning preferences. Added the review file,
+  Obsidian lesson skill, profile section and decision/session/current-state notes.
+  Primary readings checked: Roboticsbook 3.5/3.6/6.6/7.5, MIT LQR, Hugging Face
+  course/4/6/8, PPO/GAE/residual papers, pinned SB3 and Obsidian docs. Inspected
+  existing synthesis, augmented LQR, v2 runtime/config and guides at 28f1eb7.
+  No new training, lesson ZIP, image generation or hardware action. Validation and
+  publication receipts are recorded in the dedicated session note.
