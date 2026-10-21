@@ -30,7 +30,7 @@ That output and the earlier `preview-01.png` are retained; choose a new filename
 to run again. The follow-up rendered **one additional real frame**, at t=0,
 320x240, without rollout. Visual inspection shows the whole vehicle about
 104 pixels tall within the 128-pixel scene, above the unchanged captions.
-Full clips remain pending. The tests below use mocked GPU rendering and a
+These initial preview checks preceded the full clips documented below. The tests below use mocked GPU rendering and a
 mocked encoder; they write real temporary PNGs/JSON and check scheduling,
 caption output, overwrite/path guards and failure retention.
 
