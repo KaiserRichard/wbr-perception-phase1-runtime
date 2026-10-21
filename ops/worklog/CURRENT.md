@@ -3,6 +3,7 @@
 Updated 2026-10-21 07:48 +07; overnight handoff prepared; PPO continues.
 
 ## Simulation
+- Obsidian LQR/RL/PPO lesson proposal: reviews/2026-10-21-obsidian-lqr-ppo-plan.md; owner requested Claude review before lesson/images/ZIP. Preferences saved in USER_PROFILE and portable skill; no experiment changes.
 - Claude approved the assumed six-state planar LQR (PR44) and delay/lag/noise baseline (PR47–48). Hardware parameters remain ASSUMED/UNKNOWN; source gain parity remains the owner exercise.
 - PPO v1 complete: LQR160/160, PPO0/800. See sim/rl/RESULTS_2026-10-20.md; archived evidence retained.
 - PPO v2 RUNNING independently (PR55; frozen source f1b5ee7): eight envs,3M policy transitions/seed,100Hz policy,unchanged500Hz plant/LQR. Supervisor75443; no duplicate or tuning.

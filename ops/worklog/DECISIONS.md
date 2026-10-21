@@ -256,3 +256,11 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Evidence: read-only app-server metadata identifies g/k as one login with100%used in the same300min window,reset02:16local. Treat aliases as one account for idle/quota checks; preserve work and transfer to i/e. Never buy credits or consume reset credits.
 - Model decision: retain A3's requested hypothetical rigid-leg domain0.12–0.30m; do not present it as the pinned five-bar's reachable domain(upper bound≈.211m). A4 has assumed rod mass distribution/bearing and demonstrated dynamics differences; keep it separate from frozen PPO/LQR.
 - Scope remains implementation plus quick checks overnight; full gain sweeps, dynamics and videos wait for available compute/Pi. No physical/acceptance thresholds or research recipe changed.
+
+### D-20261021-OBSIDIAN: Portable mathematics-first lessons
+- Decided by: owner, this chat, 2026-10-21.
+- Decision: English Obsidian Markdown/asset ZIPs for substantial WBR lessons;
+  save learning preferences in USER_PROFILE and the portable lesson skill.
+- Current scope: LQR/RL/PPO proposal for Claude review before lesson production;
+  no new training or hardware action authorized by this documentation.
+- Evidence: reviews/2026-10-21-obsidian-lqr-ppo-plan.md.
