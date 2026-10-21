@@ -16,8 +16,13 @@ Return to [[Pack 1 - LQR]]. Sources checked 21 October 2026.
 - [Roboticsbook §3.5](https://www.roboticsbook.org/S35_vacuum_decision.html): reconnect value/policy reasoning with your earlier reading. §6.6 becomes relevant in Pack2; Chapter7 is optional.
 - [Obsidian embeds](https://obsidian.md/help/embeds) and [math formatting](https://obsidian.md/help/Editing+and+formatting/Advanced+formatting+syntax): built-in note links, embeds and MathJax support.
 
-All explanations and figures are newly authored for this pack. No external
-figure is copied; references are for further study and mathematical verification.
+The mathematical walkthrough is authored for this pack. The owner supplied nine
+WBR mechanical PNG plates and explicitly authorized reuse; eight are embedded here.
+Their original authoring/generation history is not established. They are conceptual
+teaching illustrations, not measured CAD or validation data. Original image bytes
+are preserved. Captions qualify ambiguous angles, moving pivots, nominal versus
+augmented feedback, and truth-state scoring. See
+[Figure review and prompts](FIGURE_REVIEW_AND_PROMPTS.md) for all nine reviews.
 
 ## Project snapshot
 
@@ -42,20 +47,30 @@ augmented gains model additional timing/lag. Neither is firmware gain parity or
 an identified full five-bar robot. `sim/parity/student.py::gain_schedule` is not
 read for its solution, implemented, changed or bypassed.
 
+## Mechanical revision provenance
+
+Mechanical walkthrough values come from `sim/configs/assumed_planar.json` at
+`4f49447f6b494ad3dc7aaa68e5f52256f03bd7fc`; the four geometry values used by the
+exercise are bundled in `data/mechanics.json`. All masses, COM offsets and
+inertias are assumptions; the radius is a source constant, not a measurement.
+The analytical mass/bias matrices are derived from the stated energies for that
+surrogate. They are not a new numerical validation of the MuJoCo implementation.
+The earlier gain-snapshot commit above remains unchanged.
+
 ## Figure reproduction
 
-Run `python lqr_exercise.py --figures assets` in the extracted pack.
+`python lqr_exercise.py --figures assets` regenerates only two numerical SVG plots.
 
-| Asset | Origin | Meaning/limits |
+| Assets | Origin | Meaning/limits |
 | --- | --- | --- |
-| `assets/wbr-coordinates.svg` | Original deterministic schematic | Coordinate definitions only; no CAD dimensions or motor wiring convention |
-| `assets/scalar-value-feedback.svg` | Computed scalar DARE example | Value parabola and exact scalar sample response |
-| `assets/cartpole-response.svg` | 400 computed linear state transitions | Linear cart-pole, stated parameters/weights, 5deg start; no saturation/noise/delay |
+| `01_coordinates_and_angles.png` through `08_delay_lag_and_noise.png` | Owner-supplied plates, copied unchanged | Assumed planar coordinates, COM, energy, motor work, dynamics and control; captions explain limitations |
+| `scalar-value-feedback.svg` | Computed scalar DARE example | Value parabola and exact scalar sample response |
+| `cartpole-response.svg` | 400 computed linear transitions | Stated linear cart-pole; no saturation, noise or delay |
+| `wbr-coordinates.svg` | Retained earlier schematic | Legacy asset, unused by the illustrated lesson |
 
-No AI-generated image or measured WBR plot is included. SVGs preserve selectable
-text; Obsidian can embed them directly. Numerical self-checks are in the one
-learning script. Script runs, dependency versions and preview limits are recorded
-in [VALIDATION.md](VALIDATION.md).
+Numerical plots remain distinct from conceptual plates. The image prompts name
+future optional files; those files are not referenced as if they already exist.
+Script runs and preview limits are in [VALIDATION.md](VALIDATION.md).
 
 ## Portability
 

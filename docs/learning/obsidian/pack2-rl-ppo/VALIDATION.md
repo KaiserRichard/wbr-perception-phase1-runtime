@@ -1,17 +1,27 @@
-# Validation and provenance
+# Illustrated Pack 2 validation — 21 October 2026
 
-- Python3.12/NumPy1.26.4/Matplotlib3.10.3, CPU only. Script plus SVG generation
-  ran in1.013s in the shared workload (one observation, not a benchmark claim).
-- Hand-checked TD residuals, backward GAE, value targets, all clipped surrogate
-  contributions and both advantage signs. True terminal versus timeout example
-  checked separately. Assertions passed; expected console output is bundled.
-- Figure is an exact plot of mathematical functions, newly authored, not sampled
-  robot data. Regenerate with the same learning script and inspect both signs.
-- Pack2/3 together:72math expressions/16display compiled using MathJax3.2.2 with
-  no errors. SVG previews visually inspected. YAML, local paths and extraction
-  checked; wiki-links resolve when the three packs share one vault.
-- Obsidian's live UI was unavailable. Direct MathJax/SVG checks do not claim an
-  actual Obsidian session/theme check. No community plugin is required.
-- Project explanations read at source6b022c0/Pack1; primary links appear in the
-  main lesson. Original PPO/GAE equations are distinguished from SB3 details.
-- No training, environment changes, policy selection or real robot control.
+- Python 3.12/NumPy 1.26.4; exercise asserts TD residuals, GAE, value targets,
+  PPO clipping for both signs and terminal/timeout arithmetic. Expected output
+  remains unchanged; the included exact clipping plot remains unchanged.
+- Historical Plate 09 qualified before the image: shared 2 ms clock and five-seed
+  sketch are not the v2 schedule. New walkthrough follows mechanics, torque,
+  observation, reward, critic and optimizer paths instead of presenting a gallery.
+- Completed v2 summary checked against RESULTS_V2_2026-10-20.md at snapshot
+  4f49447: direct 59/800 strict, 760/800 survival; residual 0/480 strict,
+  480/480 survival; reused LQR 160/160. No unavailable learning curves invented.
+- Pack 2 lesson: 61 math expressions, 12 displayed.
+- Fresh ZIP extraction: local Markdown/image paths, YAML, table-of-contents
+  anchors and cross-pack wiki destinations checked. Exactly one Python exercise
+  per pack; extracted exercise stdout matches the bundled expected output.
+- All 381 mathematical expressions across the three lessons/support notes
+  (62 display equations) compiled with MathJax 3.2.2 with zero errors. New
+  mechanics, Bellman and residual equations were rendered and visually inspected.
+- PNG copies match the owner's originals byte for byte (11 copies across packs,
+  nine distinct supplied images). They were reused under the owner's explicit
+  permission; original generation/authorship history is unestablished. Caveats
+  are adjacent to the embeds and in FIGURE_REVIEW_AND_PROMPTS.md.
+- Live Obsidian/vault theme inspection was unavailable. Direct MathJax/asset
+  checks are not a claim of a live Obsidian preview. All syntax uses built-in
+  Obsidian features; no community plugin or network is needed for reading.
+- No new MuJoCo rollout, training, gain synthesis, active-environment change,
+  firmware/motor command or hardware test. Saved gain and torque evidence retained.

@@ -1,4 +1,6 @@
 Scalar P=1.618034, K=0.618034, pole=0.381966
+Mechanical COM leg/body (m)=[0.011134 0.139521 0.015996 0.278414]
+Motor virtual-work power check=0.975025 W; PASS
 Cart-pole K=[ -8.366177  -9.813084 -63.145058 -12.98034 ]
 Cart-pole controllability rank=4, spectral radius=0.973677
 Cart-pole relative DARE residual=4.40e-14 (expected <1e-9)

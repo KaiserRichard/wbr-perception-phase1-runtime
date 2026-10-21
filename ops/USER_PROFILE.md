@@ -63,7 +63,8 @@ How to work with the owner of this project. Agents read this with `AGENTS.md`.
   three ZIPs in order under `docs/learning/obsidian/`: LQR first (send immediately),
   RL→PPO second, residual/experiment third. One-page toolkit inside Pack 1;
   one CPU-light script with expected output per pack. Technical figures use
-  Matplotlib/SVG, AI images only labelled decoration. Use YAML tags, MathJax,
+  deterministic plots. The later illustrated-revision request below supersedes
+  the original restriction to decorative AI images. Use YAML tags, MathJax,
   relative assets, wiki-links and callouts. Do not request the same review again.
 - Candidate experiment: residual PPO versus delay-aware LQR, train delay2–5ms,
   test6–10ms; no research-gap claim before literature review. New training is
@@ -71,3 +72,11 @@ How to work with the owner of this project. Agents read this with `AGENTS.md`.
 - Portable instructions: [Obsidian lesson skill](skills/wbr-obsidian-lessons/SKILL.md).
   These repository files support continuity across accounts; account memory does
   not transfer automatically.
+
+- Illustrated revision (2026-10-21): mechanical teaching must use polished technical
+  plates at least comparable to the owner's nine supplied WBR figures. Explain
+  geometry, COM, reactions and derivations beside the plate; a crude stick figure
+  or a detached gallery is insufficient. Reuse supplied plates with captions
+  qualifying assumptions/errors. Provide English prompts with exact output filenames
+  for additional generated illustrations; verify conceptual art against the maths,
+  and keep measured plots reproducible. Do not claim generated art is validated CAD.

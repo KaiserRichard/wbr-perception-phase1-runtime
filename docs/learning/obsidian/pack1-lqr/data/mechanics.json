@@ -1,0 +1,9 @@
+{
+  "source_commit": "4f49447f6b494ad3dc7aaa68e5f52256f03bd7fc",
+  "source": "sim/configs/assumed_planar.json",
+  "evidence": "ASSUMED; r source-code-supported, not measured",
+  "r": 0.0603,
+  "L": 0.16,
+  "a": 0.08,
+  "b": 0.06
+}

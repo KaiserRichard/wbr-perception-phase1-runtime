@@ -42,6 +42,26 @@ def scalar():
     return x
 
 
+def mechanics(path):
+    """Check drawing geometry and motor work without a physics rollout."""
+    p = json.loads(path.read_text())
+    r, length, a, b = [p[k] for k in ('r', 'L', 'a', 'b')]
+    theta, phi = np.deg2rad([8., -6.])
+    leg = np.array([a*np.sin(theta), r+a*np.cos(theta)])
+    body = np.array([length*np.sin(theta)+b*np.sin(phi),
+                     r+length*np.cos(theta)+b*np.cos(phi)])
+    g = np.array([[1/r, 0.], [-1., -1.], [0., 1.]])
+    u = np.array([.2, -.1])
+    speed = np.array([.3, -.2, .4])
+    mechanical_power = (g@u)@speed
+    motor_power = u[0]*(speed[0]/r-speed[1])+u[1]*(speed[2]-speed[1])
+    np.testing.assert_allclose(mechanical_power, motor_power, atol=1e-14)
+    assert np.linalg.norm(leg-[.011133848, .139521445]) < 1e-7
+    assert np.linalg.norm(body-[.015995988, .278414252]) < 1e-7
+    print('Mechanical COM leg/body (m)=' + np.array2string(np.r_[leg, body], precision=6))
+    print(f'Motor virtual-work power check={motor_power:.6f} W; PASS')
+
+
 def cartpole():
     # Point mass on a massless rod. theta=0 upright, positive leans RIGHT.
     # State [cart x, cart velocity, theta, theta velocity]; force is +right.
@@ -85,7 +105,6 @@ def figures(folder, x, times, state, force, png=False):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    from matplotlib.patches import Circle, Arc
     folder.mkdir(parents=True, exist_ok=True)
     plt.rcParams.update({"font.size": 11, "axes.spines.top": False,
                          "axes.spines.right": False, "svg.fonttype": "none"})
@@ -97,28 +116,6 @@ def figures(folder, x, times, state, force, png=False):
         if png:
             fig.savefig(folder / f"{name}.png", dpi=140, bbox_inches="tight")
         plt.close(fig)
-
-    fig, ax = plt.subplots(figsize=(9, 4.5))
-    ax.axhline(0, color="0.5", lw=1)
-    ax.add_patch(Circle((0, 0.15), .15, fill=False, lw=2))
-    ax.plot([0, .28], [.15, .95], "k-", lw=3)
-    ax.plot([.28, .17], [.95, 1.35], "k-", lw=7)
-    ax.plot([0, 0], [.15, 1.35], "k--", lw=1)
-    ax.plot([.28, .28], [.95, 1.45], color=".6", ls="--")
-    ax.add_patch(Arc((0, .15), .65, .65, theta1=71, theta2=90, lw=1.5))
-    ax.text(.045, .56, r"$\theta$", fontsize=15)
-    ax.add_patch(Arc((.28, .95), .6, .6, theta1=90, theta2=105, lw=1.5))
-    ax.text(.38, 1.27, r"$\phi$", fontsize=15)
-    ax.annotate("+x", (.85, .03), (.35, .03), arrowprops={"arrowstyle": "->"})
-    ax.annotate("wheel-pair torque", xy=(-.12, .2), xytext=(-.9, .65),
-                arrowprops={"arrowstyle": "->"})
-    ax.annotate("virtual hip-pair torque", xy=(.28, .95), xytext=(.7, 1.1),
-                arrowprops={"arrowstyle": "->"})
-    ax.text(-.9, -.19, "Schematic only: ideal rolling, fixed equivalent leg; no CAD dimensions", fontsize=10)
-    ax.set(xlim=(-1, 2), ylim=(-.25, 1.6), aspect="equal")
-    ax.axis("off")
-    ax.set_title("Reduced WBR coordinates: both pitch angles are absolute")
-    save(fig, "wbr-coordinates")
 
     fig, axes = plt.subplots(1, 2, figsize=(9, 3.8))
     p = (1 + np.sqrt(5))/2
@@ -146,11 +143,12 @@ def figures(folder, x, times, state, force, png=False):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--wbr", type=Path, default=Path(__file__).with_name("data")/"wbr_gains.json")
-    parser.add_argument("--figures", type=Path, help="Optionally regenerate the three SVG assets")
+    parser.add_argument("--figures", type=Path, help="Optionally regenerate the two numerical SVG plots")
     parser.add_argument("--png", action="store_true", help="Also render PNG previews with --figures")
     args = parser.parse_args()
     np.set_printoptions(suppress=True)
     x = scalar()
+    mechanics(Path(__file__).with_name('data')/'mechanics.json')
     times, states, force = cartpole()
     read_wbr(args.wbr)
     if args.figures:

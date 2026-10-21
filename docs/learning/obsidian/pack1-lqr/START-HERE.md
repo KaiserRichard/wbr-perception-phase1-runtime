@@ -1,17 +1,25 @@
 ---
-title: "Start here — WBR LQR learning pack"
+title: "Start here — illustrated WBR LQR pack"
 tags: [wbr, learning, obsidian]
 ---
 
 # Pack 1 — start here
 
-1. Extract this ZIP into your Obsidian vault, keeping the `pack1-lqr/` folder intact.
-2. Open [[Pack 1 - LQR]]. Read [[Toolkit]] only as needed.
-3. Run the single script using the instructions near the end of the main lesson.
-4. Continue to [[Pack 2 - RL to PPO]], then [[Pack 3 - Residual and experiment]] when delivered. These two future links are intentionally unresolved until those packs are installed in the same vault. No placeholder lesson is included.
+1. Replace the previous `pack1-lqr/` folder with this illustrated revision in your Obsidian vault. Keep the folder and its assets together.
+2. Open [[Pack 1 - LQR]]. Follow the mechanical plates in Sections 1–2 before the Bellman derivation. [[Toolkit]] is the one-page refresher.
+3. Run the one Python exercise using Section 10; compare with `expected-output.txt`.
+4. Extract Packs 2 and 3 alongside it to resolve [[Pack 2 - RL to PPO]] and [[Pack 3 - Residual and experiment]].
 
-Math uses Obsidian's built-in MathJax. Figures are local SVGs in `assets/`; no internet or community plugin is required for reading. Internet is needed only for first-time Python dependency installation or external references. Figures are technical drawings and calculated toy-model responses, not WBR experimental results.
+The pack includes eight owner-supplied PNG mechanical plates, two computed SVG
+plots, the main lesson, toolkit, one script, tiny geometry/gain JSON snapshots,
+provenance and portable preferences. `assets/wbr-coordinates.svg` is retained as
+an unused legacy asset; the new mechanical reading path uses the supplied plates.
 
-Contents: one main lesson, one-page toolkit, one Python exercise, expected console output, small saved WBR gain snapshot, three SVGs, source/provenance notes and portable learning preferences. No checkpoints, datasets, training or robot commands.
+No internet or community plugin is required for reading. Use built-in MathJax,
+tags, callouts and wiki-links. Dependency installation and external readings need
+internet. Run code in a separate Python environment; no GPU, training or robot access.
 
-For another account, provide `portable/USER_PROFILE.md` and `portable/SKILL.md`; ask the agent to read them. Account memory does not transfer automatically.
+[English image prompts](FIGURE_REVIEW_AND_PROMPTS.md) include exact filenames for
+optional further plates. They are not required for this revision. See [[Sources]]
+for assumptions and figure caveats. For another account, provide the two files in
+`portable/`; account memory does not transfer automatically.

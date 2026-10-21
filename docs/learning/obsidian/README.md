@@ -14,8 +14,18 @@ Unzip each delivered pack into the same Obsidian vault; keep relative assets.
 Future wiki-links resolve after the corresponding pack arrives. No vault settings
 or community plugins are bundled. Source/figure provenance is inside each pack.
 
-Each pack has exactly one learning script plus expected console output. Technical
-figures use Matplotlib/SVG; no AI illustrations are necessary. This series does
+**Illustrated revision, 21 October 2026:** Pack 1 now develops the mechanics from
+the owner's supplied plates before deriving LQR; Packs 2 and 3 connect those
+mechanics to learning and residual timing. Eight plates are local to Pack 1,
+Plate 09 is local to Pack 2, and Plates 04/08 are also local to Pack 3. Deliberate
+asset duplication keeps each pack readable offline. Replace old pack folders
+when importing this revision.
+
+Each pack has exactly one learning script plus expected console output. Computed
+plots remain deterministic SVGs; owner-supplied technical PNG plates are preserved
+unchanged and qualified beside their embeds. All nine are reviewed in
+[FIGURE_REVIEW_AND_PROMPTS.md](FIGURE_REVIEW_AND_PROMPTS.md), which includes five
+standalone English prompts with exact output filenames. This series does
 not change a training protocol or run hardware. The candidate later study uses
 training delays2–5ms, held-out6–10ms, and delay-aware LQR as baseline; novelty is
 unproven. Current control pilot rules apply to any future training.
