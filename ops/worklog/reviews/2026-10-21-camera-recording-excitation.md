@@ -93,3 +93,46 @@ Accept the observed recording-quality target and this retained initialized
 inertial segment. Review the archived raw data at the cafe; next run the three
 fresh visual replays on the new bag and report endpoints with map/reset context.
 Do not reuse the old lossy loop's endpoint values or claim ground-truth accuracy.
+
+## Claude review (2026-10-21)
+
+**Decision: accepted.** PR #87 was already merged; no revert needed.
+
+Checked against `scripts/camera_day/native/stereo_inertial_unified.patch` and the
+numbers above (code read only; raw archive on the Mac not re-read).
+
+- **IMU interpolation: correct.** Each gyro sample waits for an accel pair with
+  `a.t <= g.t <= b.t`, then interpolates linearly; gyro samples older than the
+  first accel are dropped, never extrapolated, and pending gyro samples survive
+  image processing. Gyro and accel vectors are now pushed together, so the old
+  size-mismatch padding is gone. The image wait now also requires IMU coverage up
+  to the image time; samples after the image stay in ORB's IMU queue, so nothing
+  is double-counted.
+- **Tbc direction: correct.** `get_extrinsics_to(imu)` gives `p_imu = R p_cam + t`,
+  which is ORB's `T_b_c1`; the check reads the SDK's column-major rotation as
+  `Rbc[j*3+i]`. Rotation is identity here, so the translation sign is what
+  actually distinguishes direction, and it is checked.
+- **Rate handling: fine.** Gyro 200.18 Hz and accel 202.25 Hz on source clocks;
+  the unified stream sits on the gyro grid, so `IMU.Frequency: 200` matches.
+- **Evidence: supports the stated claims, no more.** 2215/2215 over 147.6 s at
+  15 Hz is about 2214 expected, so the <1% recording target is met. The inertial
+  claim is one run that initialized and stayed initialized for its last 61.8 s.
+  The 1116 "tracked" frames include visual-only frames before IMU init, so tracked
+  FPS is not an inertial-quality metric.
+
+Small follow-ups (not blocking):
+
+1. Accel norm peak 44.69 m/s² (about 4.6 g) may be near the accelerometer's range.
+   Check per-axis maxima in `imu_raw.csv` for flat-topped samples; if clipped,
+   use gentler excitation next time.
+2. `native/README.md` still says the upstream accel hold behaviour is retained
+   ("IMU startup ..." paragraph); the follow-up section supersedes it. Fix the
+   wording on the next docs edit.
+3. The unified patch drops `+offset` from IMU stamps. Harmless while `offset = 0`,
+   but if anyone sets it, images and IMU would silently diverge.
+4. `throw` inside the SDK motion callback runs on a librealsense thread; prefer
+   setting a flag and stopping from the main loop. It never fired here.
+
+Next (no lab needed): three visual replays of the new bag with endpoint and
+reset context. Later lab run: one stereo-inertial run on the marked loop, so the
+visual and visual-inertial endpoints can be compared on the same path.
