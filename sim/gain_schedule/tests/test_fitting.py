@@ -11,7 +11,7 @@ import numpy as np
 from numpy.polynomial.chebyshev import chebvander
 
 from sim.gain_schedule.fitting import evaluate_polynomial, fit_polynomial
-from sim.gain_schedule.model import DEFAULT_LENGTHS, DOMAIN_M, FAMILY, config_at_length
+from sim.gain_schedule.model import DEFAULT_LENGTHS, DOMAIN_M, FAMILY, check_length, config_at_length
 from sim.gain_schedule.run import controller, fit_sweep
 
 
@@ -170,7 +170,15 @@ class ModelFamilyTests(unittest.TestCase):
             self.assertEqual(cfg[name], base[name])
         for endpoint in DOMAIN_M:
             config_at_length(base, endpoint)
-        for bad in (np.nextafter(0.12, 0), np.nextafter(0.20, 1), 0.21, 0.30, np.inf, np.nan):
+        # Shared transform remains usable by fivebar's .21 m comparison and
+        # its geometry rejection tests; it never clamps hypothetical lengths.
+        for length in (0.11, 0.21, 0.22, 0.30):
+            scaled = config_at_length(base, length)
+            self.assertEqual(scaled["physics"]["leg_length"]["value"], length)
+            self.assertAlmostEqual(scaled["physics"]["leg_com"]["value"], length / 2)
+            with self.assertRaises(ValueError):
+                check_length(length)
+        for bad in (0, -0.1, np.inf, np.nan):
             with self.subTest(length=bad), self.assertRaises(ValueError):
                 config_at_length(base, bad)
 

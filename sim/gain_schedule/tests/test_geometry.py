@@ -30,6 +30,7 @@ class GeometryTests(unittest.TestCase):
         for posture, beta_deg in zip(evidence["postures"], (90, 104)):
             self.assertAlmostEqual(math.degrees(posture["beta_rad"]), beta_deg)
             self.assertTrue(posture["interval_reachable_and_nonsingular"])
+            self.assertGreater(posture["length_margin_to_extension_m"], 0)
             self.assertEqual(len(posture["samples"]), 17)
             lower, upper = posture["distal_angle_separation_bounds_rad"]
             self.assertGreater(lower, 0)
@@ -44,6 +45,7 @@ class GeometryTests(unittest.TestCase):
                                            for dq in eps*np.eye(2)])
                 np.testing.assert_allclose(sample["virtual_jacobian"], numeric, rtol=1e-7, atol=1e-9)
                 self.assertGreater(abs(sample["virtual_determinant"]), 1e-9)
+                self.assertGreater(min(sample["cartesian_singular_values"]), 1e-9)
             for rlo, rhi in posture["serial_radius_bounds_m"]:
                 self.assertGreater(rlo, .065)
                 self.assertLess(rhi, .215)
@@ -62,6 +64,24 @@ class GeometryTests(unittest.TestCase):
         for invalid in ([.12, .19], [.13, .20], [.12, .12, .20], [.12, .30], []):
             with self.subTest(grid=invalid), self.assertRaises(ValueError):
                 training_midpoints(invalid)
+
+    def test_tilted_start_rejects_upright_only_extension(self):
+        geometry = Geometry.from_inventory(self.base)
+        beta = math.radians(104)
+        evidence = geometry_evidence(self.base, [])
+        upright, tilted = evidence["postures"]
+        # Independently solve the farther-pin extension quadratic.
+        roots = np.roots([1, 2*.04*abs(math.cos(beta)), .04**2 - .215**2])
+        limit = float(max(roots))
+        self.assertAlmostEqual(tilted["serial_extension_ray_limit_m"], limit)
+        self.assertGreater(limit, .20)
+        self.assertLess(limit, .21)
+        self.assertGreater(upright["serial_extension_ray_limit_m"], .21)
+        geometry.inverse(.21, math.pi / 2)
+        geometry.inverse(.20, beta)
+        for length in (.21, limit):
+            with self.subTest(length=length), self.assertRaises(GeometryError):
+                geometry.inverse(length, beta)
 
 
 if __name__ == "__main__":

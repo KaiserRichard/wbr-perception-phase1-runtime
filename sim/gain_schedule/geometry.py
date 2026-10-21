@@ -38,6 +38,8 @@ def geometry_evidence(reference, lengths):
         radii = [[float(np.linalg.norm(v)) for v in vectors] for vectors in pin_vectors]
         alphas = [[math.atan2(v[1], v[0]) for v in vectors] for vectors in pin_vectors]
         gamma_max = math.asin(a / b)
+        ray_limit = (math.sqrt((a+b)**2 - (h*math.sin(beta))**2)
+                     - h*abs(math.cos(beta)))
         separation = [min(alphas[1]) - max(alphas[0]),
                       max(alphas[1]) - min(alphas[0]) + 2 * gamma_max]
         # These conditions justify endpoint bounds and the fixed outward branch.
@@ -56,11 +58,17 @@ def geometry_evidence(reference, lengths):
                 "virtual_jacobian": virtual.tolist(),
                 "cartesian_determinant": float(np.linalg.det(cartesian)),
                 "virtual_determinant": float(np.linalg.det(virtual)),
+                "cartesian_singular_values": np.linalg.svd(cartesian, compute_uv=False).tolist(),
+                "virtual_singular_values": np.linalg.svd(virtual, compute_uv=False).tolist(),
             })
         postures.append({
             "name": name, "theta_rad": theta, "body_phi_rad": phi, "beta_rad": beta,
             "serial_radius_bounds_m": radii,
             "strict_serial_radius_limits_m": [b-a, b+a],
+            "serial_extension_ray_limit_m": ray_limit,
+            "length_margin_to_extension_m": ray_limit - hi,
+            "minimum_radius_margin_to_fold_m": min(r[0] - (b-a) for r in radii),
+            "minimum_radius_margin_to_extension_m": min(a+b - r[1] for r in radii),
             "distal_angle_separation_bounds_rad": separation,
             "interval_reachable_and_nonsingular": True, "samples": samples,
         })
@@ -69,6 +77,7 @@ def geometry_evidence(reference, lengths):
         "source_geometry": deepcopy(reference["source_geometry_inventory_unused"]),
         "max_upright_reach_m": math.sqrt((a+b)**2 - h**2),
         "max_upright_reach_formula": "sqrt((l1+l2)^2-(l5/2)^2); singular boundary",
+        "serial_extension_ray_limit_formula": "sqrt((a+b)^2-h^2*sin(beta)^2)-h*abs(cos(beta))",
         "assembly": {"elbows": [1, -1], "branch": 1},
         "postures": postures,
         "limitation": "Source-supported dimensions, not a measured robot range. Hardware "

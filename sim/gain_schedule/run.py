@@ -15,7 +15,7 @@ import numpy as np
 from sim.gain_schedule.fitting import evaluate_polynomial, fit_polynomial
 from sim.gain_schedule.geometry import geometry_evidence
 from sim.gain_schedule.model import (
-    DEFAULT_DELAYS, DEFAULT_LENGTHS, DOMAIN_M, EVALUATION_LENGTHS, FAMILY,
+    DEFAULT_DELAYS, DEFAULT_LENGTHS, DOMAIN_M, EVALUATION_LENGTHS, FAMILY, STUDY,
     check_length, config_at_length, training_midpoints,
 )
 from sim.gain_schedule.poles import check_fitted_poles
@@ -33,11 +33,20 @@ def read_json(path):
     return json.loads(Path(path).read_text())
 
 
-def source_info():
-    """Small run receipt; no account/environment or evidence-tree mutation."""
+def code_source():
+    """Lean source receipt, also usable by the NumPy-only fitter."""
     return {
         "git_commit": subprocess.check_output(
             ["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip(),
+        "git_dirty": bool(subprocess.check_output(
+            ["git", "-C", str(ROOT), "status", "--porcelain"], text=True).strip()),
+    }
+
+
+def source_info():
+    """Small run receipt; no account/environment or evidence-tree mutation."""
+    return {
+        **code_source(),
         "python": sys.version,
         "packages": {name: importlib.metadata.version(name)
                      for name in ("numpy", "scipy", "mujoco")},
@@ -66,7 +75,7 @@ def sweep(args, out):
         raise ValueError("Use unique delays from 0.002, 0.003, 0.004, 0.005 s")
     reference, experiment, effects = load_experiment(args.config)
     result = {
-        "schema_version": 1, "kind": "assumed_leg_sweep", "family": FAMILY,
+        "schema_version": 1, "kind": "assumed_leg_sweep", "family": FAMILY, "study": STUDY,
         "status": "INCOMPLETE", "physics_acceptance": "NOT_EVALUATED",
         "domain_m": list(DOMAIN_M), "lengths_m": lengths,
         "reference_config": reference,
@@ -134,12 +143,12 @@ def fit_sweep(args, out):
             source.get("domain_m") != list(DOMAIN_M) or not source.get("regimes")):
         raise ValueError("Fit requires a complete matching assumed-model sweep")
     fitted = {
-        "schema_version": 1, "kind": "assumed_leg_schedule", "family": FAMILY,
+        "schema_version": 1, "kind": "assumed_leg_schedule", "family": FAMILY, "study": STUDY,
         "status": "COMPLETE", "physics_acceptance": "NOT_EVALUATED",
         "sweep_sha256": hashlib.sha256(args.sweep.read_bytes()).hexdigest(),
         "reference_config": source["reference_config"],
         "experiment_config": source["experiment_config"],
-        "source": source.get("source"), "regimes": [],
+        "source": source.get("source"), "fit_source": code_source(), "regimes": [],
     }
     seen_delays = set()
     for regime in source["regimes"]:
@@ -216,7 +225,7 @@ def linear_check(args, out):
     grids = [training_midpoints(r["fit"]["diagnostics"]["sample_lengths_m"])
              for r in schedule["regimes"]]
     result = {
-        "status": "INCOMPLETE", "family": FAMILY, "source": source_info(),
+        "status": "INCOMPLETE", "family": FAMILY, "study": STUDY, "source": source_info(),
         "domain_m": list(DOMAIN_M), "expected_checks": sum(map(len, grids)),
         "cases": [], "errors": [], "nonlinear_cases_run": 0,
         "claim": "Sampled local poles only; no continuous-domain, varying-length, "
@@ -275,7 +284,7 @@ def evaluate(args, out):
         raise ValueError("Seeds must be unique nonnegative integers")
     write_json(out / "schedule.json", schedule)
     result = {
-        "status": "INCOMPLETE", "family": FAMILY, "source": source_info(),
+        "status": "INCOMPLETE", "family": FAMILY, "study": STUDY, "source": source_info(),
         "schedule_sha256": hashlib.sha256(args.schedule.read_bytes()).hexdigest(),
         "lengths_m": lengths, "seeds": args.seeds, "scenarios": ["balance", "push"],
         "cases": [], "local_linear_checks": [],

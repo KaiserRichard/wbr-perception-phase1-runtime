@@ -23,8 +23,8 @@ def check_fitted_poles(regime, length, exact, design, cfg):
             not all(np.all(np.isfinite(v)) for v in (A, B, exact)) or
             not np.isfinite(dt) or dt <= 0 or dt != cfg["simulation"]["dt_s"]):
         raise ValueError("Invalid actual runtime linearization or control period")
-    poles = np.linalg.eigvals(A - B @ fitted)
-    if not np.all(np.isfinite(poles)):
+    poles, vectors = np.linalg.eig(A - B @ fitted)
+    if not all(np.all(np.isfinite(v)) for v in (poles, vectors)):
         raise ValueError("Nonfinite closed-loop poles")
     radius = float(np.max(np.abs(poles)))
     return {
@@ -34,6 +34,10 @@ def check_fitted_poles(regime, length, exact, design, cfg):
         "exact_pole_radius": design["max_closed_loop_pole_magnitude"],
         "Kfit": fitted.tolist(),
         "polynomial_closed_loop_eigenvalues": [[float(p.real), float(p.imag)] for p in poles],
+        "right_eigenvectors_by_mode_real_imag": [
+            [[float(v.real), float(v.imag)] for v in vector] for vector in vectors.T],
+        "eigenpair_note": "Eigenvalue i pairs with vector i in state_order; mixed-unit "
+                          "vector entries do not establish a physical mode identity.",
         "polynomial_pole_radius": radius, "margin_to_one": 1 - radius,
         "slowest_time_constant_s": float(-dt / np.log(radius)) if 0 < radius < 1 else None,
         "polynomial_local_status": "PASS" if radius < 1 else "FAIL",
