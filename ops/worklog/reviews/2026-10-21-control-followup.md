@@ -19,3 +19,43 @@ Evidence roots under `~/wbr-evidence-archive/`:
 Exact commands/configs and limitations are in the linked run notes. No media or generated gains entered git.
 
 **Recommendation:** retain the reduced baseline: five-bar mass and wheel-reaction discrepancies persist under the sampled refinements. A3's0.12–0.30m hypothetical rigid-leg family exceeds A4's~0.211m reach; no transfer claim. The400-case nonlinear study remains pending. Future RL requires the reviewed pilot recipe and episode-length/return recording; no v3 training was launched.
+
+## Claude review (2026-10-21)
+
+**Decision: accepted.** The claims stay within the evidence, and the UNRUN 400
+nonlinear cases are labelled honestly. Read: this file, `2026-10-21-gain-sweep.md`,
+`2026-10-21-fivebar-dynamics.md`, and the PPO v2 results/CURRENT counts. Archives
+not re-read.
+
+### Findings
+
+1. **PPO v2 is strongly seed-dependent.** Direct strict passes per seed are
+   [39, 20, 0, 0, 0]: all 59 come from two of five seeds. Report v2 per seed. The
+   pooled 59/800 makes it look like a weak but reliable recipe; it is not one yet.
+   Any v3 needs at least 5 seeds and a per-seed table.
+2. **A3 sweeps lengths the robot cannot reach.** 0.12–0.30 m versus about 0.211 m
+   five-bar reach means roughly half of the 19 samples (0.22–0.30 m) design gains
+   for infeasible geometry. Before the 400-case run, restrict the sweep to the
+   five-bar's real length range so those cases test reachable lengths.
+3. **Judge the fit by control, not by entry error.** Relative Frobenius error 5e-4
+   is small, but mixed-unit entry errors (max 0.022) say nothing about stability.
+   Cheap linear check, no rollout: evaluate the fitted K at midpoints between sample
+   lengths and report the closed-loop pole radius (all < 1, with the margin to 1).
+   Pole radii 0.9972–0.9977 at 2 ms mean the slowest mode has a time constant of
+   about 0.7–0.9 s (likely the x-position mode). Fine for balance, but say so.
+4. **A4: open-loop falls are a weak equivalence test.** Both models are unstable,
+   so trajectory differences grow exponentially, mostly reflecting the unstable
+   pole rather than the model mismatch. The stronger evidence is already in the
+   note: wheel input map `[16.58, -0.833, -0.167]` versus `[16.58, -1, 0]` is a
+   ~17% difference in how wheel reaction torque reaches the leg/body. That is a
+   B-matrix error, which matters directly for LQR. Next, compare linearized (A, B)
+   at equilibrium, and the closed-loop poles of the reduced-model K applied to the
+   five-bar linearization, for a few lengths.
+5. Timestep and epsilon convergence are clean (1 → 0.5 ms changes ≤ 6.2e-10 rad).
+   No action.
+
+### Order for next control work (CPU-light, no lab)
+
+(4) linearization and closed-loop pole check, then (2) and (3) the restricted
+sweep with the midpoint pole check, then the 400 nonlinear cases on the restricted
+range. Per-seed reporting (1) applies to any future RL run.
