@@ -322,3 +322,11 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Preserve source limitation of upstream disabled-mode pointer handling without
   speculative patching/rerunning. This successful single execution is not a
   general runtime-safety proof. Archive raw evidence; merge only exact-head green.
+### D-20261021-ORB-MAP-POINTS: Publish bounded map-world snapshots on Pi
+- Keep SLAM computation on Raspberry Pi; publish actual finite ORB `MapPoint`
+  world coordinates as sparse XYZ clouds at no more than 1Hz, with capped
+  candidate traversal and sampled map metadata. Do not enable RealSense's dense
+  depth cloud or alter pose/status, camera configuration or capture scripts.
+- Preserve visualization geometry in an optional separate MCAP; it is not an
+  ORB atlas checkpoint. Offline stereo replay is the current verification
+  boundary. Live camera/Foxglove and reset/merge behavior remain unverified.

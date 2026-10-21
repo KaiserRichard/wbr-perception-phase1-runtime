@@ -21,6 +21,10 @@ camera-free `d435_node` startup now pass; startup intentionally stops at the
 missing-vocabulary/settings error, before ORB construction. No live camera
 execution or tracked pose is claimed. See the
 [build session](../../ops/worklog/sessions/2026-10-21-camera-ros-build.md).
+**Sparse active-map output:** `d435_node` now also exposes bounded, source-stamped
+`PointCloud2` snapshots at at most 1 Hz, with companion map metadata. See
+[map frames, Foxglove, separate MCAP persistence, build and bounded replay](MAP_POINTS.md).
+
 The rest of this README documents the original
 stereo-inertial `orb_node`, whose IMU contract remains unchanged.
 
