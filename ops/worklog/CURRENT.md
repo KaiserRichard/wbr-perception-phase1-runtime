@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-10-21 +07; clean-loop Mac replays complete with tracking/map limitations; simulation snapshot below retained.
+Updated 2026-10-21 +07; PR93 camera follow-up measured; simulation snapshot below retained.
 
 ## Simulation
 - Obsidian three-pack series delivered under docs/learning/obsidian: LQR, RL→PPO, residual/saved-runs/experiment; reviews2026-10-21-obsidian-pack1.md and2026-10-21-obsidian-packs2-3.md. No fresh training; mismatch study remains proposed.
@@ -33,5 +33,6 @@ Updated 2026-10-21 +07; clean-loop Mac replays complete with tracking/map limita
 - Full loop+logs copied to ~/wbr-evidence-archive/camera-recording-20261021-01; loopSHA5749908bb94a6c9a7e5496f3c8b58db3596cf5f53f2542502a1468dcd97703c8 matchesPi. Older lossy loops/replays remain evidence, not new-loop endpoints.
 - Native unified IMU interpolation corrected; isolated compile/link PASS, SDK body-from-camera Tbc/200Hz checks added. Single75s planar excitation exit0:final initialized61.8s,965poses,14.87trackedFPS,4loss transitions; VIBA1/2complete. Initial resets and late STOP/short stationary tail documented.
 - Local50camera-day+7native tests PASS; codePR87 accepted inPR88. All176morning archive artifacts SHAverified; calibration unchanged,allcamera/ROS/daemon stopped,PiFREE receipt10:15:21+07. PR90 follow-ups retained; native IMU callback fault injection remains deferred. Pi onlywithnewownerrelease; noPi access for Mac analysis.
-- After PPO EXITED0/COMPLETE/no workers: exactly3fresh Mac Docker stereo replays exit0,all2215pairs processed each. Endpoints0.018319/0.005408/0.006263m (0.128/0.038/0.039% estimated path); paced trackedFPS15.005/15.004/14.578. Reset markers0/0/0; new maps afterinitial0/0/1; merges0/0/1; losses0/0/2; loop detectionsno/yes/no. R3tracks2152/2215 and has1.115m maximum online step; small endpoint is not accuracy evidence.
-- Code da905cd; 18metric+4MCAP tests/native build/independent evidence validation PASS. Review2026-10-21-clean-loop-mac.md; archive camera-recording-20261021-01/clean-loop-mac-01 contains logs/timing/poses/hashes/commands/CI-publication receipt. Mac/source variant differs from Pi. Follow-up retires with publication; STM32/PPO/student exercise untouched.
+- Original3Mac runs: all2215pairs each; tracked2215/2215/2152,losses0/0/2,new maps afterinitial0/0/1,merges0/0/1,loop detectionsno/yes/no. Claude PR93 accepts only R1 open-loop endpoint0.018319m/14.267m as conditional evidence; R2/R3 endpoints are not drift. Report1of3losttracking, not repeatable tracking. No ground-truth or0.13%accuracy claim.
+- PR93follow-up: one fresh loopClosing0 run exit0,2215/2215tracked,map0,no loss/reset/loop/merge; conditional endpoint0.025485m/14.198601m. Unmeasured physical return/localBA remain limits; disabled-mode upstream pointer issue documented. Original R1/R2 proper SE3/no-scale alignment RMS0.009977m,p950.012041m,max0.113615m across2215exact shared stamps; agreement only.
+- Original runs >66.7ms calls6/135/14 of2215each (0.271/6.095/0.632%); tracked-only6/135/12. Paced15FPS is not capacity; no live-drop/Pi transfer claim. jPR94/kPR96;34focused tests and independent calculations PASS. Review2026-10-21-camera-review-followup.md; archive camera-recording-20261021-01/claude-review-followup-01 holds raw evidence/histograms/merge receipts. Container stopped; old automation paused.
