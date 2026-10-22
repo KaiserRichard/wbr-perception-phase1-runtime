@@ -8,7 +8,8 @@ import numpy as np
 from sim.fivebar.compare import FixedLength
 from sim.fivebar.model import Plant
 from sim.fivebar.ramp import (
-    Controller, PrescribedLength, Sensor, length_profile, mechanical_step,
+    Controller, PrescribedLength, Sensor, full_duration_reached, length_profile,
+    mechanical_step,
 )
 from sim.planar import load_config
 
@@ -30,6 +31,12 @@ class RampMechanicsTests(unittest.TestCase):
         for time in (-1., math.nan, math.inf):
             with self.subTest(time=time), self.assertRaises(ValueError):
                 length_profile(time)
+
+    def test_duration_acceptance_converts_numpy_scalar_to_json_safe_bool(self):
+        result = full_duration_reached(np.float64(15.))
+        self.assertIs(result, True)
+        self.assertIsInstance(result, bool)
+        self.assertIs(full_duration_reached(np.float64(14.999)), False)
 
     def test_constant_length_matches_existing_fixed_length_derivative(self):
         state = np.array([.003, .075, -.045, .012, -.08, .06])

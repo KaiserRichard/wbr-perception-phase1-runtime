@@ -49,6 +49,11 @@ def length_profile(t):
             .08/64 * (60*s - 180*s**2 + 120*s**3))
 
 
+def full_duration_reached(time_s):
+    """Return a JSON-safe scalar acceptance flag for the requested protocol."""
+    return bool(abs(float(time_s) - DURATION) < 1e-9)
+
+
 class PrescribedLength:
     """Full 8x4 tangent and native unconstrained tree mass/bias/actuator force.
 
@@ -276,7 +281,7 @@ def run(schedule, regime, out, *, mechanics_step=.001, epsilon=1e-6, duration=DU
     settled = np.logical_and.accumulate(inside[::-1])[::-1]
     candidates = np.flatnonzero(settled & (times >= RAMP_END-1e-10))
     recovery = float(times[candidates[0]]-RAMP_END) if len(candidates) else None
-    full = abs(times[-1]-DURATION) < 1e-9
+    full = full_duration_reached(times[-1])
     window = times >= DURATION-p['settle_window_s']-1e-10
     checks = {'full_duration': full, 'no_fall': fall_time is None,
               'displacement': bool(np.max(abs(states[:, 0])) <= p['max_displacement_m']),
