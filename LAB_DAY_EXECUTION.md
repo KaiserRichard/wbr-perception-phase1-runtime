@@ -4,28 +4,30 @@
 and retain an offline ORB sparse-map sample for Foxglove. This is an operator
 checklist, not a software-build plan.
 
-Status labels describe saved evidence as of 2026-10-21. They do not replace the
-read-only checks on arrival. **Do not rebuild, install packages, change camera
-calibration, or touch motors/STM32 during this session.**
+Status labels include today's read-only Pi preflight (2026-10-22); recorded
+capture and replay results remain dated to the runs that produced them. Recheck
+before capture if power, USB, storage, or networking changes. **Do not rebuild,
+install packages, change camera calibration, or touch motors/STM32 during this
+session.**
 
 ## 1. Readiness before leaving
 
 | Item | Evidence/status |
 |---|---|
-| Pi, ROS 2 Jazzy, D435i visual stereo, tracked pose, stereo MCAP recording | **VERIFIED 2026-10-21** on the Pi. The last bounded SSH probe from this Mac timed out; reconnect and recheck in the lab. |
-| Camera | **VERIFIED 2026-10-21:** D435i serial `317422076650`, firmware `5.17.3.10`, USB `5000M`; re-enumerate tomorrow. |
+| Pi and SSH | **VERIFIED 2026-10-22:** Mac `en7=192.168.50.1`, `wbr-pi5=192.168.50.2`; bounded SSH succeeded. Pi identity is `wbr-pi5`, `aarch64`, Ubuntu 24.04.4, 3.9 GiB RAM. |
+| Camera and software prerequisites | **VERIFIED 2026-10-22:** D435i serial `317422076650`, firmware `5.17.3.10`, enumerated at USB `5000M`; ROS executables and expected runner/settings/vocabulary/map replay paths are present. Enumeration does not establish an active camera stream or current ORB tracking. |
 | Sensor recording | **VERIFIED:** 150.1 s, 1.3 GiB, 2,215 left/right image pairs and CameraInfo each; headers matched and the existing quality checker reported zero estimated gaps. One successful run is not a general storage qualification. |
 | Sparse ORB landmarks from a recorded stereo MCAP | **VERIFIED for first 20 source seconds only:** Pi replay produced a separate MCAP with 20/20 nonempty actual `PointCloud2` snapshots, up to 965 landmarks, finite float32 XYZ in `slam_world`. Full-duration replay/export is **UNVERIFIED**. |
 | PLY export | **BLOCKED/not implemented.** The verified artifact is ROS `PointCloud2` in a separate MCAP. |
 | Foxglove | Local MCAP is a supported data source ([official instructions](https://docs.foxglove.dev/docs/visualization/connecting/local-data)); this feature's cloud was validated from MCAP data, but its appearance in the GUI has not yet been checked. |
 
-The Pi SSH check currently times out from the Mac. If it is still unreachable on
-arrival, stop at preflight and fix power/network physically; do not start with
-unverified launch commands.
+The direct Ethernet SSH path worked during today's check. If it becomes
+unreachable before capture, stop at preflight and fix power/network physically;
+do not start with unverified launch commands.
 
-## 2. Preflight — run on arrival
+## 2. Preflight — check before capture
 
-### [MAC] Confirm SSH and inspect the Pi — **UNVERIFIED now** (previously reachable; latest probe timed out)
+### [MAC] Confirm SSH and inspect the Pi — **VERIFIED 2026-10-22; rerun before capture if the connection changes**
 
 ```bash
 ssh -o BatchMode=yes -o ConnectTimeout=8 -o ConnectionAttempts=1 \
@@ -34,11 +36,13 @@ ssh -o BatchMode=yes -o ConnectTimeout=8 -o ConnectionAttempts=1 \
 ```
 
 Expected identity: `wbr-pi5`, `aarch64`, Ubuntu 24.04, Pi 5 with about 4 GiB
-RAM. These were previously measured, not measured by the timed-out probe.
+RAM. Today's bounded SSH check returned `wbr-pi5`, `aarch64`, Ubuntu 24.04.4,
+3.9 GiB RAM, and 80 GiB free on `/`.
 
-### [PI] Power, temperature and USB — **read-only; values must be rechecked**
+### [PI] Power, temperature and USB — **read-only; last checked 2026-10-22**
 
 ```bash
+set +u # ROS setup scripts expect some environment variables to be unset.
 vcgencmd pmic_read_adc EXT5V
 vcgencmd get_throttled
 vcgencmd measure_temp
@@ -47,13 +51,15 @@ source /opt/ros/jazzy/setup.bash
 rs-enumerate-devices -s
 ```
 
-Use the Pi's 27 W supply and a blue USB 3 port. Confirm D435i serial
-`317422076650` and `5000M` in `lsusb -t`. **Stop/reseat power or cable and
+Today's values: `EXT5V_V=5.16704000V`, `throttled=0x0`, temperature `51.0'C`;
+D435i serial `317422076650` enumerated on a `5000M` link. Recheck if the supply,
+USB cable, or port changes. Use the Pi's 27 W supply and a blue USB 3 port.
+Confirm D435i serial `317422076650` and `5000M` in `lsusb -t`. **Stop/reseat power or cable and
 repeat preflight** if the camera is missing, USB is below `5000M`, or the Pi
 reports current throttling/undervoltage. A latched historical throttle bit is a
 review signal; retain its raw value rather than clearing it.
 
-### [PI] Storage — **read-only**
+### [PI] Storage — **read-only; verified 2026-10-22**
 
 ```bash
 df -h / /home/richard/wbr-evidence
@@ -61,20 +67,21 @@ findmnt -T /home/richard/wbr-evidence
 lsblk -o NAME,SIZE,FSTYPE,LABEL,MOUNTPOINT
 ```
 
-The latest saved inventory was the migrated SG128 card, 113 GiB root with about
+The current check found the evidence path on `/dev/mmcblk0p2`, 113 GiB root with
 80 GiB free. A prior 150 s run wrote 1.3 GiB; the planned captures total 145 s,
-so use **3 GiB free** as tomorrow's conservative space reserve for sensor data,
-derived map bags, and logs. This is a planning margin, not a sustained-write
+so use **3 GiB free** as a conservative space reserve for today's planned sensor
+data, derived map bags, and logs. This is a planning margin, not a sustained-write
 qualification or a guarantee. Do **not** run `dd`, `fio`, or a write benchmark.
 If the evidence path is not on the expected root or less than 3 GiB is free,
 stop before capture.
 
-### [PI] ROS and runner prerequisites — **previously verified; paths must exist**
+### [PI] ROS and runner prerequisites — **verified 2026-10-22; recheck before capture**
 
 ```bash
-set -euo pipefail
+set +u # ROS setup scripts expect some environment variables to be unset.
 source /opt/ros/jazzy/setup.bash
 source /home/richard/wbr-camera-ros-build-20261021-04/install/setup.bash
+set -eo pipefail
 printf 'ROS_DISTRO=%s ROS_DOMAIN_ID=%s\n' "$ROS_DISTRO" "${ROS_DOMAIN_ID:-unset}"
 ros2 pkg executables wbr_orb_node
 test -r /home/richard/wbr-evidence/camera-day-20261021-01/mcap-marked-loop-01/capture_loop.py || { echo "Missing verified capture runner" >&2; exit 1; }
@@ -83,8 +90,10 @@ test -r /home/richard/orbslam3/ORB_SLAM3/Vocabulary/ORBvoc.txt || { echo "Missin
 ```
 
 If any `test` fails, **do not build or improvise at the lab**. Preserve the
-output and stop. The Pi-side paths were present during the previous capture;
-they were not checked during this session's timed-out SSH probe.
+output and stop. Today's check found both ROS executables and all listed files.
+This does not mean a camera node or SLAM process is currently running. Do not
+enable Bash `nounset` (`set -u`) before sourcing ROS setup; its setup script
+expects some variables to be unset.
 
 The sparse-map install and replay helper were separately verified at:
 
@@ -96,13 +105,12 @@ The sparse-map install and replay helper were separately verified at:
 Check them without changing anything before relying on the map replay:
 
 ```bash
-set -euo pipefail
 test -x /home/richard/wbr-orb-map-points-20261021-01/install/wbr_orb_node/lib/wbr_orb_node/d435_node || { echo "Missing verified sparse-map node" >&2; exit 1; }
 test -r /home/richard/wbr-orb-map-points-20261021-01/source/ros2/wbr_orb_node/tests/replay_map_points.py || { echo "Missing verified map replay helper" >&2; exit 1; }
 ```
 
-These files existed for the successful offline replay on 2026-10-21. Their
-continued presence is **UNVERIFIED** until the Pi is reachable.
+These files were rechecked on 2026-10-22. No camera stream, new capture, or
+offline replay was started during today's preflight.
 
 ## 3. Capture with the existing runner
 
@@ -122,8 +130,9 @@ the verified stereo settings into each run as `stereo.yaml`. It creates the fina
 output directory exclusively; the parent must exist and the run path must not.
 
 ```bash
-set -euo pipefail
+set +u # ROS setup scripts expect some environment variables to be unset.
 source /opt/ros/jazzy/setup.bash
+set -eo pipefail
 RUNROOT="$HOME/wbr-evidence/camera-day-20261022-01"
 mkdir "$RUNROOT"
 
@@ -137,6 +146,7 @@ Do not paste all three commands as a batch. For live CLI inspection from a
 second Pi terminal, use the same isolated ROS domain as the runner:
 
 ```bash
+set +u # ROS setup scripts expect some environment variables to be unset.
 source /opt/ros/jazzy/setup.bash
 export ROS_DOMAIN_ID=201 ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
 ros2 topic list
@@ -146,7 +156,7 @@ ros2 topic echo /d435_orb/pose geometry_msgs/msg/PoseStamped --once
 
 The runner's archived source sets the child-process environment to domain 201.
 The second-terminal topic-list/echo sequence is an **optional, UNVERIFIED**
-diagnostic for tomorrow; skip it if discovery does not work rather than changing
+diagnostic for today; skip it if discovery does not work rather than changing
 the runner. An optional live rate check is also **UNVERIFIED**:
 
 ```bash
@@ -181,7 +191,7 @@ motors.
 After A passes Section 5, run B:
 
 ```bash
-set -euo pipefail
+set -eo pipefail
 python3 /home/richard/wbr-evidence/camera-day-20261021-01/mcap-marked-loop-01/capture_loop.py \
   "$RUNROOT/B-slow-sweep" 75
 ```
@@ -189,7 +199,7 @@ python3 /home/richard/wbr-evidence/camera-day-20261021-01/mcap-marked-loop-01/ca
 After B passes Section 5, run C:
 
 ```bash
-set -euo pipefail
+set -eo pipefail
 python3 /home/richard/wbr-evidence/camera-day-20261021-01/mcap-marked-loop-01/capture_loop.py \
   "$RUNROOT/C-return-sweep" 45
 ```
@@ -205,7 +215,7 @@ Run on the **Pi**, with ROS Jazzy sourced. Set `RUN` to the just-completed path:
 
 ```bash
 RUN="$HOME/wbr-evidence/camera-day-20261022-01/A-stationary"
-set -euo pipefail
+set -eo pipefail
 ros2 bag info "$RUN/sensor-bag" | tee "$RUN/bag-info-after.txt"
 python3 /home/richard/wbr-pi-camera-day-20261021/scripts/camera_day/stereo_bag_quality.py \
   "$RUN/sensor-bag" "$RUN/stereo-quality.json" --fps 15
@@ -224,7 +234,9 @@ It is bounded to the first 20 source seconds at 0.3×; do not edit its duration 
 rate during this lab session.
 
 ```bash
+set +u # ROS setup scripts expect some environment variables to be unset.
 source /opt/ros/jazzy/setup.bash
+set -eo pipefail
 RUN="$HOME/wbr-evidence/camera-day-20261022-01/A-stationary"
 test -r "$RUN/stereo.yaml" || { echo "Runner did not preserve stereo.yaml; stop and keep this run" >&2; exit 1; }
 python3 /home/richard/wbr-orb-map-points-20261021-01/source/ros2/wbr_orb_node/tests/replay_map_points.py \
@@ -264,7 +276,7 @@ UNVERIFIED.** Review scene content before starting the next run: copy the
 sensor MCAP to the Mac using Section 6, open it in Foxglove, and inspect early,
 middle, and late IR frames. A and B/C should show a valid image; B/C should show
 the expected scene change. Until observed, record **REVIEW**, not PASS. This
-visual gate has not been executed for tomorrow's new datasets.
+visual gate has not been executed for today's new datasets.
 
 ## 6. Preserve data and view landmarks on the Mac
 
@@ -323,7 +335,9 @@ Stop immediately on a hot/unsteady power condition, a loose camera mount, an
 unsafe cart path, or any need to alter calibration, firmware, storage layout,
 software installation, motors, or STM32. Keep every failed run.
 
-## First command on arrival
+## First command before capture
 
-Run the **[MAC] SSH/read-only identity check** at the top of Section 2. The most
-recent check timed out, so current reachability is the first unresolved condition.
+Run the **[MAC] SSH/read-only identity check** at the top of Section 2, then
+repeat the power/USB/storage checks if anything has changed since today's
+preflight. SSH and current device enumeration passed; active image streaming,
+tracking, a new capture, and MapPoint replay remain to be tested.

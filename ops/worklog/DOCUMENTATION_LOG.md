@@ -437,3 +437,14 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Follow-up read-only codex-e review found that stationary run A was incorrectly
   grouped with B/C when interpreting missing scene motion; the REVIEW criterion
   now requires expected motion only for B/C. No Pi interaction occurred.
+
+### DOC-20261022-PI-PREFLIGHT: Verify setup and refresh lab runbook
+- Bounded read-only SSH preflight passed from Mac over `en7` direct Ethernet.
+  Pi identity/OS/RAM/storage, power/throttling/temperature, D435i USB enumeration,
+  ROS executables and capture/map prerequisites were checked. No camera stream,
+  capture, replay, install or hardware-control command was run.
+- Initial `source /opt/ros/jazzy/setup.bash` failed because `set -u` was enabled
+  before ROS setup; retry without nounset succeeded. Updated runbook command order
+  to source first and use `set -eo pipefail`, and replaced stale SSH-timeout and
+  “tomorrow” statuses with today's measured preflight. See session
+  `ops/worklog/sessions/2026-10-22-pi-preflight.md`.
