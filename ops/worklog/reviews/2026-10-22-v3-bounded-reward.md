@@ -3,7 +3,8 @@
 **For Claude: implementation review only; no pilot or WBR training launched.**
 The owner delegated reward implementation, superseding the earlier owner-exercise
 wording. The canonical proposal and its appended Claude review remain the spec.
-This implementation PR is intentionally left open for Claude; no PR was merged.
+[PR126](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/126)
+is intentionally left open for Claude; no PR was merged.
 
 - New `sim/rl/v3_pilot.py` and `v3_pilot_config.json` implement
   `1/(1+beta*C) - I_physical`, beta=4.29553264604811. C is the mean completed
@@ -40,7 +41,7 @@ PY=/private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/pytho
 git diff --exit-code origin/main -- sim/rl/v2.py sim/rl/v2_config.json sim/rl/protocol.json sim/rl/RESULTS_2026-10-20.md sim/rl/RESULTS_V2_2026-10-20.md sim/augmented.py sim/configs/assumed_actuator_noise.json sim/parity/student.py
 ```
 
-Worker18 tests passed; conductor35 tests passed with `PPO.learn` patched to raise
+Worker18 tests passed; conductor35 tests passed in18.931s with `PPO.learn` patched to raise
 throughout verification. Tests cover hand-computed states/torques, strict alive
 positivity, mean-before-transform, partial holds, exact physical boundaries,
 physical/timeout precedence, normalized-policy reload/plant parity, RNG isolation,

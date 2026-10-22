@@ -16,12 +16,13 @@
 - Conductor v2 regression:17PASS/14.466s. First combined guarded run failed only
   because multiprocessing spawn cannot open a `<stdin>` wrapper. Retained log;
   saved a guarded script and reran35tests PASS/18.689s. After RNG isolation,
-  reran final35tests with PPO.learn patched to raise (final log03).
+  reran final35tests PASS/18.931s with PPO.learn patched to raise (final log03).
 - Verified CLI help and zero diff in v2/config/protocol/frozen result reports,
   plant/config and owner-only gain source; git diff --check passed.
 - No pilot, saved-v2 diagnostic, optimizer smoke or WBR training command launched.
   Existing CI backend64-step CartPole smoke remains unchanged.
 - GitHub connector returned404; used configured GitHub CLI for publication/CI.
 - Review handoff: `ops/worklog/reviews/2026-10-22-v3-bounded-reward.md`;
-  PR stays open for Claude, no merge. Logs:
+  [PR126](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/126)
+  stays open for Claude, no merge. Logs:
   `/private/tmp/wbr-v3-bounded-reward-20261022-01/`.
