@@ -345,3 +345,23 @@ The summary, one-page report and supervisor receipt are in
 `/Users/quockaiser/wbr-evidence-archive/sim-control-margins-20261022-01/stress/`.
 PR #115 merged source `2390fcaf` at `8f8cd947`; both exact-head CI checks
 passed. No PPO run was changed, and this is not a PPO v2 result.
+
+### Combined endpoint corners (PR118 follow-up)
+
+`python -m sim.gain_schedule.combined --out <freshdir>` declares 30 cases before
+measurement: L=0.12/0.20 m × seeds 0–4 × nominal (2 ms, 1×, delta 0, 6 N),
+combined target (6 ms, 1.5×, delta .167, 30 N), stronger sample
+(8 ms, 2×, delta .5, 36 N). Exactly two fresh nominal 2 ms augmented DARE
+(discrete algebraic Riccati equation) designs use `config_at_length`; each is
+frozen across that length's 15 cases. Actual body mass and COM inertia scale
+together at fixed geometry. The reaction map is [1/r, -1+delta, -delta].
+
+This isolated module reuses the accepted stress observer/plant and unchanged
+10 s evaluator (+8/-6 degrees, push at 3 s for .15 s, noise, caps, thresholds).
+The observer reads only measured six-state and its own 2 ms/5 ms command
+reconstruction. Saved per-case metrics include every strict failure, recovery,
+saturation and effort; noise is compared at common timestamps even after stops.
+These are sampled combined cases, not bounds or the old 0.16 m stress gains.
+A matching existing `--out` resumes completed PASS/FAIL/ERROR receipts without
+rerunning them; interrupted traces remain under numbered attempts. A different
+source/config needs a fresh output. NumPy diagnostics serialize to ordinary JSON.
