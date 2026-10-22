@@ -3,9 +3,6 @@
 **FAIL — seed 42.** One or more pre-declared engineering screens failed. Simulation on the assumed plant; one pilot attempt.
 Archive: [sim-v3-pilot-20261022-01](/Users/quockaiser/wbr-evidence-archive/sim-v3-pilot-20261022-01); source `14df6df271d411c90461fa7cd19938153de2deff`. Implementation [PR126](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/126); Claude approval [PR127](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/127).
 
-**Run:** `COMPLETE`, exit 0; stop `target_transitions_and_minimum_duration`; 260,000 aggregate transitions / 130 completed updates / 256 completed episodes (8 environments, 2,000 transitions/update; target 200,000). Train / evaluation / budget / recorded wall seconds: 460.1012/420.7304/603.4633/890.6843; supervisor wall including startup/cleanup 899.2273 s. Minimum-duration overshoot / maximum-budget overrun seconds: 3.463328/0.
-Budget starts after snapshot-0 preparation, includes the 100k evaluation and update overhead, excludes final evaluation; stop at the first complete update reaching both 200k/600 s or reaching 1,200 s. Initialization parity: PASS; checkpoint reload: PASS.
-
 **Saved-v2 diagnostic:** signed residual/cap pairs (axis 0/1) at physical upright; LQR columns are signed mean and mean absolute residual/cap on saved inputs.
 
 | V2 seed | Upright 2 ms | 3 ms | 4 ms | 5 ms | LQR mean | LQR mean abs |
@@ -14,6 +11,9 @@ Budget starts after snapshot-0 preparation, includes the 100k evaluation and upd
 | 1 | -0.3866981/0.02069759 | -0.008605269/-0.02820325 | 0.4225276/-0.08593278 | 0.7023451/-0.03248987 | -0.07560007/0.02296402 | 0.2715093/0.1197333 |
 | 2 | -0.02597606/0.1489505 | 0.2091306/0.1333448 | 0.3232159/0.1417201 | 0.3163522/0.2083799 | 0.2337602/-0.01349543 | 0.4104114/0.1308245 |
 Saved LQR input counts, seeds 0/1/2: 1000/1000/1000. Frozen normalization; offline queries, not residual-controller rollouts.
+
+**Run:** `COMPLETE`, exit 0; stop `target_transitions_and_minimum_duration`; 260,000 aggregate transitions / 130 completed updates / 256 completed episodes (8 environments, 2,000 transitions/update; target 200,000). Train / evaluation / budget / recorded wall seconds: 460.1012/420.7304/603.4633/890.6843; supervisor wall including startup/cleanup 899.2273 s. Minimum-duration overshoot / maximum-budget overrun seconds: 3.463328/0.
+Budget starts after snapshot-0 preparation, includes the 100k evaluation and update overhead, excludes final evaluation; stop at the first complete update reaching both 200k/600 s or reaching 1,200 s. Initialization parity: PASS; checkpoint reload: PASS.
 
 **Development snapshots:** fixed seeds 2000/2001 × delays 2/3/4/5 ms × balance/push; frozen statistics. $E=\operatorname{mean}_{cases}\max_{i,t\in[9,10]}|e_i(t)|/t_i$.
 
