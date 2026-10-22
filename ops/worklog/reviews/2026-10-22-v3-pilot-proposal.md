@@ -72,3 +72,50 @@ Sources: [residual initialization, §IV-A](https://arxiv.org/html/1812.06298#S4.
 (manipulation/DDPG, no WBR/PPO guarantee);
 [SB3 evaluation/wrappers](https://stable-baselines3.readthedocs.io/en/v2.3.2/guide/rl_tips.html);
 [Gaussian SD](https://stable-baselines3.readthedocs.io/en/v2.3.2/_modules/stable_baselines3/common/distributions.html#DiagGaussianDistribution).
+
+## Claude review (2026-10-22)
+
+**Decision: approved for implementation, with the additions below.** Read: this
+file, `sim/rl/v2.py` (reward, termination, truncation, evaluation) and
+`sim/rl/v2_config.json`. Arithmetic re-derived; no runs.
+
+### Bounded reward
+
+- Correct, and it fixes the real problem. With `alive - s*C`, any state with
+  `C > 1/s` has negative reward, so ending the episode early raises return. That
+  already holds in v2 at ±10° (`1 - 0.1*12.18 ≈ -0.22`) and would be much worse at
+  `s = 2`. With `r = 1/(1+βC) ∈ (0, 1]` plus a −1 fall penalty, every surviving step
+  is worth more than falling, so there is no termination incentive. ✓
+- Slope check: `dr/dC = -β/(1+βC)²` is 4.3 at equilibrium (v2: 0.1, about 43×
+  more precision signal) but about 0.0015 at ±10°. That suits the **residual arm
+  only**, because LQR already does the large-angle recovery. Do not reuse this
+  reward for a direct arm without re-checking.
+- Truncation at 10 s is flagged `truncated`, not `terminated` (v2.py:227), so SB3
+  bootstraps it. ✓ Keep it that way.
+
+### Termination and evaluation
+
+- Evaluation uses `deterministic=True` (v2.py:520), so exploration noise did not
+  cause v2's 480/480 leg-rate violations. The mean output did.
+- **Add before the pilot, about 1 min with no training:** load the saved v2
+  residual models and record the deterministic residual at the normalized
+  equilibrium observation and along one LQR trajectory. A clearly non-zero mean
+  confirms the bias hypothesis, so the pilot then tests reward on a known cause.
+
+### Pilot criteria: sound, with three additions
+
+1. **Leg-rate screen:** leg-rate violations at end must be ≤ snapshot 0 (zero
+   residual = LQR) on the 16 cases. This was v2's failure mode and is not covered
+   by E.
+2. **Make "no strict regression" explicit:** snapshot 0 should be 16/16 strict,
+   so the end must be 16/16.
+3. **Log the policy log-std and mean |residual|/cap per update.** With zero-init,
+   early returns are depressed by exploration noise (initial SD 37% of cap).
+   "Last 50k beats first 50k" can then come from the SD shrinking rather than a
+   better mean, so treat the return screen as weak and E/leg-rate as the real
+   screens. If training is too noisy, lower the initial log-std; that is a
+   separate, reviewed change.
+
+Everything else stands: seed 42, fixed 200k/10–20 min boundary, no stopping on a
+good score, no checkpoint selection, held-out 1000–1019 untouched, ≥5 seeds for
+any later full arm, and causal claims only with a matched reward-only control.
