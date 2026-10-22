@@ -352,3 +352,16 @@ outside this reusable module; its external supervisor preserves that receipt
 and executes committed source. The CLI records source status without imposing
 machine-specific orchestration. Exact commands and results are recorded in the
 [worker session](../../ops/worklog/sessions/2026-10-22-fivebar-delayed-worker.md).
+
+**Executed result:** all 16 conditions and all epsilon refinements are locally
+stable using source `8ccd6268667c6942446a635882f0e7b3938492de`, exit 0,
+8.889 s external process time (6.435 s calculation before serialization).
+Fivebar rho spans `0.997442684–0.997688181`, radial margin
+`0.002311819–0.002557316`, decay time `0.781070–0.864119 s`.
+Maximum actual-runtime versus reduced exact-lift entry difference is
+`4.29576e-7` for A; B is identical because new input affects only history
+for these delays. Maximum rho discrepancy is `8.8514e-10`. The two measured
+substep-refinement A-error ratios are `0.250022` and `0.250013`; this is
+numerical refinement evidence, not identical maps or nonlinear equivalence.
+The final focused suite passes 10 tests. Full report/matrices are under
+`/Users/quockaiser/wbr-evidence-archive/sim-control-margins-20261022-01/fivebar-delay/run-01/`.
