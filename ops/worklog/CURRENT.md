@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-10-22 +07; PR119 control-corners/ramp evidence complete (30+12 strict PASS; review awaiting conductor); today's Pi preflight and saved A capture/20s sparse-map replay passed; PR93 camera follow-up and simulation snapshot retained.
+Updated 2026-10-22 +07; PR119 control-corners/ramp results validated (30+12 strict PASS); [review](reviews/2026-10-22-control-corners-ramp.md); today's Pi preflight and saved A capture/20s sparse-map replay passed; PR93 camera follow-up and simulation snapshot retained.
 ## Simulation
 - PR110 a/b/c code milestone complete: #114/#115/#116 merged green (both exact-head CI checks SUCCESS each); stress #115: 56 cases, 40 PASS/16 FAIL/0 ERROR; delayed five-bar local linear #114: 16/16 locally stable; prescribed-extension ramp #116: one 15 s run, 8/8 saved checks PASS. Review: `reviews/2026-10-22-control-margins.md`; assumed models only, no hardware/general robustness claim.
 - 2026-10-22 control research: k/i specialists + b arithmetic audited v3; canonical review `reviews/2026-10-22-v3-pilot-proposal.md`. Bounded-reward residual pilot is a proposal only; no v3 code/training. Reward remains owner exercise.
