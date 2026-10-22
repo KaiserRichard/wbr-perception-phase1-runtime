@@ -327,3 +327,21 @@ fresh output path. Source/version/command/exit receipts accompany the results.
 Focused fixtures: `python -m unittest sim.gain_schedule.tests.test_stress -v`.
 Set `WBR_STRESS_TEST_OUT` to an existing evidence fixture directory to retain
 their small outputs there. These fixtures are not ten-second production cases.
+
+**Executed 22 October 2026:** source `2390fcaf2de4cad3071557a52627d1ddd03e7245`,
+fixed assumed-model L=0.16 m / nominal 2 ms augmented DARE gain, 56 unique
+cases, 40 PASS / 16 FAIL / 0 ERROR, supervisor exit 0 after 538.5955 s.
+This is COMPLETE execution with recorded strict failures, not universal
+robustness. Seed confirmations: push 42 N passed 5/5 and 45 N passed 0/5;
+delay 9 ms passed 5/5 and 10 ms passed 0/5 (the 10 ms cases remained
+upright); body mass and inertia scaled together at 4× passed 5/5 and 8× passed
+0/5; wheel-map deltas 1 and 2 each passed 5/5, with no failure on the finite
+tested grid. The exact tested grid is not a continuous bound or hardware range.
+
+The run used `sim/configs/assumed_actuator_noise.json` and the command recorded
+in `stress/study-01/run.json`:
+`nice -n 10 <read-only-venv>/bin/python -m sim.gain_schedule.stress --out <archive>/stress/study-01`.
+The summary, one-page report and supervisor receipt are in
+`/Users/quockaiser/wbr-evidence-archive/sim-control-margins-20261022-01/stress/`.
+PR #115 merged source `2390fcaf` at `8f8cd947`; both exact-head CI checks
+passed. No PPO run was changed, and this is not a PPO v2 result.

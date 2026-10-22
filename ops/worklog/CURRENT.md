@@ -1,8 +1,8 @@
 # Current state
 
 Updated 2026-10-22 +07; control validation closed out; today's Pi preflight and saved A capture/20s sparse-map replay passed; PR93 camera follow-up and simulation snapshot retained.
-
 ## Simulation
+- PR110 a/b/c code milestone complete: #114/#115/#116 merged green (both exact-head CI checks SUCCESS each); stress #115: 56 cases, 40 PASS/16 FAIL/0 ERROR; delayed five-bar local linear #114: 16/16 locally stable; prescribed-extension ramp #116: one 15 s run, 8/8 saved checks PASS. Review: `reviews/2026-10-22-control-margins.md`; assumed models only, no hardware/general robustness claim.
 - 2026-10-22 control research: k/i specialists + b arithmetic audited v3; canonical review `reviews/2026-10-22-v3-pilot-proposal.md`. Bounded-reward residual pilot is a proposal only; no v3 code/training. Reward remains owner exercise.
 - Upstream firmware learning review (merged PR105): reviews/2026-10-21-team-foundation-reading.md. Three packs cover reduced-model/research foundations; firmware also needs five-bar/VMC, gain scheduling, estimation and hybrid timing. Study estimate20–32focused hours; no runtime change.
 - Obsidian three-pack illustrated revision under docs/learning/obsidian: supplied mechanical plates + worked dynamics/LQR, RL→PPO, residual/saved-runs/experiment. Review2026-10-21-illustrated-lessons.md; five filename-specific image prompts. Three extracted exercises/382MathJax expressions PASS; no new training.

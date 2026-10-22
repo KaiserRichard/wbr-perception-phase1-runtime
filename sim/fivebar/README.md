@@ -269,8 +269,10 @@ norm), mean extension reaction by $5.10\times10^{-7}$ N, and extension work by
 $4.07\times10^{-11}$ J; maximum closure was below $1.6\times10^{-16}$ m.
 Changing projection epsilon from $10^{-6}$ to $3\times10^{-6}$ at 1 ms changed
 state by $1.30\times10^{-11}$, mean reaction by $1.21\times10^{-9}$ N, and work
-by $9.09\times10^{-14}$ J. Projected mass eigenvalues remained positive
-(minimum 0.01277 kg). Exact lag endpoints agreed within $3\times10^{-16}$ N m.
+by $9.09\times10^{-14}$ J. The projected mass matrix remained positive in
+the chosen mixed coordinates (minimum eigenvalue 0.01277; translation, angle
+and length coordinates are mixed, so this raw eigenvalue has no kg unit).
+Exact lag endpoints agreed within $3\times10^{-16}$ N m.
 The focused run and refinement metrics are preserved in
 `/Users/quockaiser/wbr-evidence-archive/sim-control-margins-20261022-01/fivebar-ramp/conductor-targeted-tests.log`.
 Run outputs and exact receipts are stored outside Git under the dated
