@@ -4,7 +4,19 @@
 (clean implementation) completed **36 fresh designs, four degree-3 fits and all
 32 midpoint pole checks PASS**. Fitted pole radii 0.997434974361–0.997676790315,
 margin 0.002323209685–0.002565025639, slowest decay time 0.778719–0.859878 s.
-**400 nonlinear cases remain UNRUN by this worker**, pending conductor verification.
+**400 nonlinear cases COMPLETED and independently verified** (21 October;
+documentation closeout 22 October): fresh DARE **200/200 PASS, 0 FAIL**; fitted
+polynomial **200/200 PASS, 0 FAIL**. Within each controller, seeds 0–4 each
+passed **40/40**. Completion and acceptance are separate checks. All cases ran
+10 s/5,000 steps/5,001 noise samples; all 200 paired noise hashes matched and
+all 200 pushes delivered 0.9 N·s over 0.15 s. No falls, numerical failures or
+cap violations occurred. The evaluation's 20 local checks also passed.
+Original execution stopped after 271 completed cases with unknown cause,
+exit time/code and total duration. Recovery reused those 271, evaluated only
+129 new cases under unchanged clean source `d4b4249`, and exited 0 after
+2022.950900 s including 20 local design checks; original partial CSVs remain.
+See the [final milestone report](../../ops/worklog/reviews/2026-10-21-reachable-control-validation.md)
+and [verified summary](/Users/quockaiser/wbr-evidence-archive/sim-linear-review-20261021-01/reachable-study/evaluation-resume-01/conductor-summary.json).
 Preparation commit `2d37726` (adopted as `9c03426`) contained no executed restricted
 study. The original 76-design, 0.12–0.30 m run remains unchanged in
 `~/wbr-evidence-archive/sim-gain-sweep-20261021-01`; its historical report is
@@ -178,10 +190,14 @@ are secondary diagnostics. Exceptions and unstable checks are retained without
 degree/Q/R retuning; an unstable fitted case does not abort the remaining checks.
 These are sampled local results, not continuum or nonlinear stability proofs.
 
-The exact executed commands follow. Interpreter used read-only, one CPU thread;
-no dependency installation. **First three paths already exist**; use new
-exclusive paths to repeat them. The last command is the fixed 400-case handoff
-for the conductor after independent verification, **not executed by this worker**.
+The recorded stage commands follow. Interpreter used read-only, one CPU thread;
+no dependency installation. **All output paths already exist.** The original
+evaluation command completed 271 cases before interruption; the conductor then
+completed the remaining 129 through the archived recovery script. These are
+execution records, not instructions to rerun this completed milestone. The
+[session notes](../../ops/worklog/sessions/2026-10-21-control-linear-review.md)
+link exact working directories, source commits, commands and exit receipts;
+the evaluation ran in the separately locked nonlinear worktree.
 
 ```sh
 cd /Users/quockaiser/.codex/worktrees/reachable-gain-study/wbr-lab-ops
@@ -206,7 +222,8 @@ nice -n 10 "$WBR_GAIN_PY" -m sim.gain_schedule linear-check \
   --schedule "$WBR_GAIN_OUT/fit-01/schedule.json" \
   --out "$WBR_GAIN_OUT/midpoints-01"
 
-# NOT RUN: only conductor launches after independent verification.
+# EXECUTED by conductor in locked nonlinear worktree: 271 cases, then interrupted.
+# Remaining 129 completed by archived recovery; original exit/time UNKNOWN.
 nice -n 10 "$WBR_GAIN_PY" -m sim.gain_schedule evaluate \
   --schedule "$WBR_GAIN_OUT/fit-01/schedule.json" \
   --lengths .12 .135 .16 .185 .20 --seeds 0 1 2 3 4 \
@@ -215,6 +232,14 @@ nice -n 10 "$WBR_GAIN_PY" -m sim.gain_schedule evaluate \
 # Targeted tests (fixtures/geometry, no rollouts).
 "$WBR_GAIN_PY" -m unittest discover -s sim/gain_schedule/tests -v
 ```
+
+The archived [recovery command and exit receipt](/Users/quockaiser/wbr-evidence-archive/sim-linear-review-20261021-01/reachable-study/receipts/nonlinear-resume-01.json)
+invoke [resume_remaining.py](/Users/quockaiser/wbr-evidence-archive/sim-linear-review-20261021-01/reachable-study/receipts/resume_remaining.py)
+from clean `d4b4249`. It imports the unchanged runner/evaluator/runtime, verifies
+completed identities and metrics, skips all 271 saved cases, and writes only
+new cases plus a combined manifest under `evaluation-resume-01`. Reused rows
+point to `../evaluation-01/...`; no old raw artifacts were copied or rewritten.
+This was an archive-specific recovery, not a new runner CLI or data format.
 
 Evaluation keeps **400 identities**: five lengths × four delays × two controllers
 (fresh DARE and fitted polynomial) × five seeds × balance/push. The endpoints
