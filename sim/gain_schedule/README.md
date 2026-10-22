@@ -276,3 +276,54 @@ exit 1 and `error.txt`, with earlier partial results retained. Check both
 completion and acceptance. Low fitting residuals, synthetic tests, sampled
 stable poles, or even successful fixed-length cases do not establish stability
 for every length, a changing-length robot, or the real hardware.
+
+## Fixed-design reduced-model stress study (22 October 2026)
+
+`python -m sim.gain_schedule.stress --out <fresh-directory>` executes a separate
+candidate baseline: **one** fresh augmented discrete algebraic Riccati equation
+(DARE) design at nominal L=0.16 m and assumed 2 ms delay, with unchanged Q/R.
+The same frozen 2×10 gain and nominal observer are used in every case. This does
+not revise PPO v2 or the preceding 400-case study. Run serially with the existing
+read-only environment and one numerical-library thread; no training is involved.
+
+Feedback is `[measured six-state, own estimated torque, own previous clipped
+command]`. Each tick requests `-K @ feedback`, updates its estimate using
+`lag_interval(tau_hat, previous_clipped, (.005,.005), .002).endpoint`, and only
+then stores the newly clipped command. Actual delay, physical torque/truth and
+runtime history/estimate never enter the controller. The observer remains at
+2 ms delay / 5 ms lag even when the actual runtime grows to a larger state.
+`observer.csv` records actual controller inputs; runtime observation columns in
+the unchanged evaluator's CSV are diagnostic only. Focused tests check matched
+nominal parity, clipping, one-tick timing and hidden-state/metadata causality.
+
+The nominal 6 N / seed-0 case runs first. Push doubles through 6/12/24/48/96 N
+until the first strict failure, with at most three conditional bisections.
+Other seed-0 grids are actual delay 2/5/6/7/8/9/10 ms, body mass **and** inertia
+scales .5/1/1.5/2/3 (then 4/8 only while all preceding scales pass), and wheel
+reaction deltas -.5/0/.167/.5/1/2. Each axis confirms the first adjacent sampled
+PASS/FAIL pair, or its largest sampled endpoints if none, with seeds 1–4;
+existing seed-0 and shared nominal records are reused. At most 57 unique cases
+are scheduled; the hard budget is 60. No unbounded sweep or monotonicity proof.
+
+Mass changes hold body COM/shape fixed. The instance-local wheel tendon retains
+`leg_pitch=-1` and adds `hip_pitch=-delta`. Since joint coordinates are
+`[x,theta,phi-theta]`, virtual wheel reaction is `[1/r,-1+delta,-delta]`, preserving
+total reaction -1; the hip map remains `[0,-1,1]`. Finite Jacobian, acceleration
+and virtual-work fixtures verify this map. Delta .167 is generalized-reaction
+context, **not** 17% of the full B matrix. The synthetic tested window is not a
+plausible hardware uncertainty range. No global model/module is replaced.
+
+Every rollout uses `sim.augmented_eval.evaluate`: full 10 s or declared physical/
+numerical early stop, original initial tilts, 0.15 s pulse at 3 s, 2/4 Nm caps,
+5 ms lag, original body-IMU noise and strict settling/recovery thresholds. Fresh
+exclusive outputs retain all condition/config/MJCF identities, strict metrics,
+observer/control/interval traces, failures and partial exceptions incrementally.
+`summary.json`, `cases.json` and the one-page `report.md` distinguish completion
+from PASS/FAIL; exit 0 means a complete study, including measured failures.
+Exceptions stay ERROR, cause exit 1 and never become physical FAIL or PASS.
+`--case <saved-condition.json>` reproduces one boundary independently into a
+fresh output path. Source/version/command/exit receipts accompany the results.
+
+Focused fixtures: `python -m unittest sim.gain_schedule.tests.test_stress -v`.
+Set `WBR_STRESS_TEST_OUT` to an existing evidence fixture directory to retain
+their small outputs there. These fixtures are not ten-second production cases.
