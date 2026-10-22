@@ -1,0 +1,47 @@
+# V3 residual pilot result — 2026-10-22
+
+**FAIL — seed 42.** One or more pre-declared engineering screens failed. Simulation on the assumed plant; one pilot attempt.
+Archive: [sim-v3-pilot-20261022-01](/Users/quockaiser/wbr-evidence-archive/sim-v3-pilot-20261022-01); source `14df6df271d411c90461fa7cd19938153de2deff`. Implementation [PR126](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/126); Claude approval [PR127](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/127).
+
+**Saved-v2 diagnostic:** signed residual/cap pairs (axis 0/1) at physical upright; LQR columns are signed mean and mean absolute residual/cap on saved inputs.
+
+| V2 seed | Upright 2 ms | 3 ms | 4 ms | 5 ms | LQR mean | LQR mean abs |
+|---|---:|---:|---:|---:|---:|---:|
+| 0 | 0.2940184/0.09846598 | 0.3351827/0.03234971 | 0.1629317/0.01777953 | -0.003447663/0.06333885 | 0.1543501/-0.05364602 | 0.4724166/0.1497702 |
+| 1 | -0.3866981/0.02069759 | -0.008605269/-0.02820325 | 0.4225276/-0.08593278 | 0.7023451/-0.03248987 | -0.07560007/0.02296402 | 0.2715093/0.1197333 |
+| 2 | -0.02597606/0.1489505 | 0.2091306/0.1333448 | 0.3232159/0.1417201 | 0.3163522/0.2083799 | 0.2337602/-0.01349543 | 0.4104114/0.1308245 |
+Saved LQR input counts, seeds 0/1/2: 1000/1000/1000. Frozen normalization; offline queries, not residual-controller rollouts.
+
+**Run:** `COMPLETE`, exit 0; stop `target_transitions_and_minimum_duration`; 260,000 aggregate transitions / 130 completed updates / 256 completed episodes (8 environments, 2,000 transitions/update; target 200,000). Train / evaluation / budget / recorded wall seconds: 460.1012/420.7304/603.4633/890.6843; supervisor wall including startup/cleanup 899.2273 s. Minimum-duration overshoot / maximum-budget overrun seconds: 3.463328/0.
+Budget starts after snapshot-0 preparation, includes the 100k evaluation and update overhead, excludes final evaluation; stop at the first complete update reaching both 200k/600 s or reaching 1,200 s. Initialization parity: PASS; checkpoint reload: PASS.
+
+**Development snapshots:** fixed seeds 2000/2001 × delays 2/3/4/5 ms × balance/push; frozen statistics. $E=\operatorname{mean}_{cases}\max_{i,t\in[9,10]}|e_i(t)|/t_i$.
+
+| Snapshot | Rows / unique / full 10 s (each /16) | Strict /16 | Survival /16 | Leg-rate violations /16 | E |
+|---|---:|---:|---:|---:|---:|
+| snapshot-0 | 16/16/16 | 16 | 16 | 0 | 0.2924333 |
+| snapshot-100k | 16/16/16 | 16 | 16 | 0 | 0.4472931 |
+| final | 16/16/16 | 11 | 16 | 0 | 0.8260701 |
+
+**Screens:** complete/nonduplicate/full panels PASS; initial strict=16 PASS; final strict=16 FAIL; final survival=16 PASS; leg-rate 0 ≤ 0 PASS. E-end 0.8260701 ≤ 0.9E-100k=0.4025638 FAIL; E-end ≤ E-zero=0.2924333 FAIL.
+
+| Completed-episode window | Episodes | Mean raw return | Mean length (policy actions) | Mean alive / precision loss / fall |
+|---|---:|---:|---:|---:|
+| First: end step ≤ 50,000 | 48 | 583.6263 | 1000 | 1000/416.3737/0 |
+| Last: end step > 210,000 | 48 | 659.8651 | 1000 | 1000/340.1349/0 |
+Return last > first: **PASS**; length last ≥ first: **PASS**; ≥100k transitions and both windows nonempty: PASS. Window membership uses episode-end aggregate transitions; raw returns precede normalization and timeout bootstrap.
+Mean allocated episode losses, first→last: x 81.87387→158.3967, leg 49.12975→31.15524, body 18.46165→31.25473, xdot 24.83746→20.54127, legdot 83.03804→41.39258, bodydot 72.6599→27.9479, command 86.37299→29.44646. No residual penalty.
+Return / precision-loss reconstruction maximum absolute errors: 1.932676e-12/1.080025e-12.
+
+**Exploration:** axis 0/1 pairs; residual caps 0.4/0.8 Nm.
+
+| Point | log-std | Gaussian SD/cap | Sampled mean abs residual/cap | Deterministic mean abs residual/cap |
+|---|---:|---:|---:|---:|
+| Initial theory | -1/-1 | 0.3678794/0.3678794 | expectation 0.2927907/0.2927907 | 0/0 |
+| First update (2000) | -1.013713/-1.014751 | 0.3628691/0.3624927 | 0.297929/0.2960772 | 0/0 |
+| Last update (260000) | -1.734443/-2.04759 | 0.1764985/0.1290455 | 0.3496092/0.1701051 | 0.3169334/0.1330655 |
+Initial Gaussian SD=0.1471518/0.2943036 Nm; initial sampled expectation includes action clipping. Log-std/SD are post-update; residual magnitudes summarize the preceding rollout. First-update values are not timestep-zero measurements.
+
+Curves: [episode return/length versus transitions](/Users/quockaiser/wbr-evidence-archive/sim-v3-pilot-20261022-01/pilot/learning-curves.svg).
+Verification: recorded 35 tests PASS in 20.545 s; diagnostic/pilot exit 0 ([test/diagnostic receipt](/Users/quockaiser/wbr-evidence-archive/sim-v3-pilot-20261022-01/session-context.json), [pilot command/receipt](/Users/quockaiser/wbr-evidence-archive/sim-v3-pilot-20261022-01/pilot-execution.json)). Stdlib recomputation of saved panels/windows agrees with recorded summaries/screens; recorded screens.pass=false. Return is a weak screen; these outcomes provide no causal, significance, PPO/LQR superiority, or hardware result. Held-out 1000–1019 untouched; no checkpoint/seed selection or full-run launch.
+**For Claude:** review this one-seed pilot and its external evidence against the declared screens before any further experiment.
