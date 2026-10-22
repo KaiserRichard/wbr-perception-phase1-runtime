@@ -124,3 +124,86 @@ Primary references: [PPO paper](https://arxiv.org/abs/1707.06347),
 Launch the committed command from the conductor's durable session, retain all
 five slots and the full paired report, then request the completed-milestone review. No RL superiority or hardware claim follows from
 implementation smoke/parity checks.
+
+
+## V3 bounded residual reward (awaiting Claude review; no pilot launched)
+
+[V3](v3_pilot.py) and its [config](v3_pilot_config.json) implement the
+[approved proposal and Claude additions](../../ops/worklog/reviews/2026-10-22-v3-pilot-proposal.md).
+V2 source, config, protocol and frozen results remain unchanged. V3 retains the
+same plant, causal observations, Q/R, gamma 0.99, delay/lag/noise, torque caps,
+500 Hz LQR, 100 Hz held residual and observation-only VecNormalize. It is
+residual-only: there is no direct arm or full comparison launcher.
+
+For the mean cost $C_k$ over the up to five **completed** 2 ms ticks,
+
+$$
+C_k=\operatorname{mean}_j(e_j^T Qe_j+u_j^T Ru_j),\qquad
+r_k=\frac{1}{1+\beta C_k}-I_{\mathrm{physical}},\qquad
+\beta=\frac{0.03}{0.97\min_i(Q_{ii}t_i^2)}=4.295532646\ldots
+$$
+
+Here $e_j$ is post-tick truth and $u_j$ the clipped **total issued command**,
+before delay/lag. There is no extra residual penalty. Alive rewards are in
+$(0,1]$. A physical violation (either angle ≥45° in magnitude or $|x|>1.5$ m)
+subtracts exactly 1 and sets `terminated=True, truncated=False`. The 10 s limit
+sets `terminated=False, truncated=True`, preserving terminal observations for
+value bootstrapping; a simultaneous physical violation takes precedence.
+Numerical failures abort and retain errors rather than becoming reward samples.
+
+Unit verification performs no training:
+
+```sh
+PY=/private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python
+"$PY" -m unittest sim.rl.tests.test_v3_pilot sim.rl.tests.test_v2 -v
+```
+
+The following commands are recorded for **separate authorization after Claude's
+implementation review**. They have not been run for this change. First inspect
+the saved v2 residual means at normalized physical equilibrium and along a
+saved LQR trajectory; this performs inference only, using frozen statistics:
+
+```sh
+"$PY" -m sim.rl.v3_pilot diagnostic \
+  --archive "$HOME/wbr-evidence-archive/sim-ppo-v2-20261020-01" \
+  --lqr-trace /private/tmp/wbr-augmented-20261020/ppo-parity-b-01/3ms-push/adapter/trace \
+  --out "$HOME/wbr-evidence-archive/sim-v3-bias-diagnostic-NEW"
+# Pilot only after separate authorization; never execute as a unit test.
+"$PY" -m sim.rl.v3_pilot run \
+  --out "$HOME/wbr-evidence-archive/sim-v3-residual-pilot-NEW"
+```
+
+Use new external output directories; retained failures cannot be overwritten.
+The pilot zeroes only actor-output mean weights/bias, retaining log-std −1
+(initial Gaussian residual SD ≈0.147/0.294 Nm, 36.8% of the caps). Before learning,
+it checks constructed-policy/save-reload deterministic zero output with saved
+normalization and LQR parity. Literal zero-action tests alone are insufficient.
+Seed 42, eight environments and 250 steps per environment make each update
+2,000 **aggregate transitions**. Stop at the first complete update reaching both
+200,000 transitions and 600 elapsed seconds, or reaching 1,200 elapsed seconds.
+The clock starts after snapshot-0 preparation and includes the 100k evaluation
+pause. Record active training time, evaluation time, total duration, transitions
+and update-boundary overrun separately. Never stop on a good score or select a checkpoint/seed.
+
+Pre-declared pass/fail criteria (all must pass):
+
+- Snapshots 0/100k/end use frozen evaluation statistics on exactly the same
+  16 development cases: seeds 2000/2001 × four delays × balance/push. Missing,
+  duplicate or partial cases fail; not reaching 100k is insufficient evidence.
+- Snapshot 0 must have 16/16 strict passes; end must retain 16/16 strict passes
+  and 16/16 survival, with leg-rate violations ≤ snapshot 0.
+- $E=\operatorname{mean}_{cases}\max_{i,t\in[9,10]}|e_i(t)|/t_i$ must satisfy
+  $E_{end}\le0.9E_{100k}$ and $E_{end}\le E_0$.
+- Mean raw episode return in the last 50k transitions must exceed the first
+  50k, with no decrease in mean episode length. Both windows need completed
+  episodes. This is a weak screen: shrinking exploration can raise return;
+  deterministic E and leg-rate checks are the substantive screens.
+
+VecMonitor precedes VecNormalize and records raw episode lengths/returns,
+decomposed reward terms whose sum is verified, and learning curves against
+aggregate transitions. Every update records policy log-std and mean
+|residual|/cap, separating sampled residuals from deterministic means. Preserve
+held-out 1000–1019, the primary endpoint and the unchanged acceptance criteria.
+These are engineering screens, not significance tests or evidence that PPO beats
+LQR. A later full arm requires its own successful pilot and ≥5 training seeds;
+causal reward claims require a separately approved matched reward-only control.
