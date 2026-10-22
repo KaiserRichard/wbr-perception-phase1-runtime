@@ -18,7 +18,7 @@
 | Retract / 2 s | .00552/.02934 | .00590/.02933 | .1583/.1635 |
 | Retract / 1 s | .00481/.02944 | .00537/.02935 | .0912/.0955 |
 
-The 20 ms moving/nonzero-torque refinement is a local numerical check, not full-trajectory accuracy. Required motor A/E torque includes same-stage ideal extension reaction plus balance moment; peaks were 1.233/1.239 Nm. **Real motor, gear and current limits and feasibility remain UNKNOWN.** The virtual hip-pair 4 Nm cap is not an individual-motor limit; ramp results use one seed.
+The 20 ms moving/nonzero-torque refinement is a local numerical check, not full-trajectory accuracy. Required motor A/E torque includes same-stage ideal extension reaction plus balance moment; peaks were 1.233/1.239 Nm. **Real motor, gear and current limits and feasibility remain UNKNOWN.** The virtual hip-pair 4 Nm cap is not an individual-motor limit.
 
 ## Evidence and commands
 
