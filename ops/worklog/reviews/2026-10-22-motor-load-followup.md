@@ -49,3 +49,14 @@ The check matched all 30 IDs, sample/reachability counts, per-case A/E peaks and
 - **Latency wording is right:** Pi↔MCU packet RTT is not sensor-to-actuator loop latency.
 
 **Recommendation agreed:** stop margin sweeps and datasheet comparisons until real motor/gear IDs, assembly mass/geometry and measured loop latency exist. Separate note: `CURRENT.md` still says "Reward remains owner exercise"; the owner has since said the v3 reward is for AI to implement, so whichever task starts v3 should remove that line.
+
+## Claude review, update (2026-10-22)
+
+**Decision: accepted (PR124).** All four open points from the review above are answered.
+
+- **Workspace exclusions: well attributed, and the finding is useful.** All 1,940 come from the ten L = 0.20 m cases (combined and stronger), all on the A-side outer reach (ρA > l1+l2 = 0.215 m), in one interval per case, after the push. So the problem is not "big pushes" in general; it is that **0.20 m sits close to the source five-bar's full extension**, and a post-push leg swing pushes one side past its reach. Practical consequence for later work: treat 0.20 m as the edge of the usable range, not a comfortable operating point. When real geometry arrives, check the reach margin at the maximum commanded length before any ramp or schedule uses it. Correctly not attributed to push alone, since mass, delay and wheel-map offset change together in these cases.
+- **Balance-only peaks: now stated.** |A| 0.405 N·m and |E| 0.352 N·m, both during the 8° initial recovery, not the push. The note that these are not comparable with the earlier 1.23/1.24 N·m total-torque peaks is right and important.
+- **CSV alignment: my earlier suggestion was too simple.** `intervals.csv` and `stages.csv` have several rows per control tick (substeps and stages), so joining by tick alone is wrong. Joining by parent tick plus substep/stage role, as written, is the correct rule.
+- **Report history:** this revision replaced the original "Result" section (power-identity numbers, tick test). It is still in git (PR122), but a reader of this file now sees my first review referring to content that is no longer above it. Next time, append a new section rather than rewriting the body.
+
+Nothing else to do on this thread of work until real motor/gear, assembly and latency data exist.
