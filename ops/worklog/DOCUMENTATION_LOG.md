@@ -448,3 +448,9 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   to source first and use `set -eo pipefail`, and replaced stale SSH-timeout and
   “tomorrow” statuses with today's measured preflight. See session
   `ops/worklog/sessions/2026-10-22-pi-preflight.md`.
+
+- Owner correction: inspected today's completed A and existing map replay.
+  Runbook/CURRENT/review now record 362 matched stereo pairs, ORB initialization,
+  and a passing first-20-second replay (300 poses, 20 clouds, max214 landmarks).
+  Added existing-output protection and marked A complete; Codex handles review,
+  owner/execution chat owns lab execution and experiment decisions.

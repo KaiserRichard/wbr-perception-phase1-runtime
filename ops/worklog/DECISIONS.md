@@ -330,3 +330,11 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Preserve visualization geometry in an optional separate MCAP; it is not an
   ORB atlas checkpoint. Offline stereo replay is the current verification
   boundary. Live camera/Foxglove and reset/merge behavior remain unverified.
+
+### D-20261022-LAB-EXECUTION-SPLIT: Owner executes, Codex reviews
+- Owner accepted the split: Codex fixes runbook paths and reviews software;
+  owner plus the execution chat run validated lab commands, inspect results
+  and make experiment decisions. Do not duplicate their capture/replay runs.
+- Incorporate saved Scenario A evidence into the current report: 362 paired
+  frames and passing first-20-second map replay. Keep GUI/continuous-live
+  tracking/moving-capture claims separate from these observed results.

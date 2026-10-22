@@ -4,9 +4,8 @@
 and retain an offline ORB sparse-map sample for Foxglove. This is an operator
 checklist, not a software-build plan.
 
-Status labels include today's read-only Pi preflight (2026-10-22); recorded
-capture and replay results remain dated to the runs that produced them. Recheck
-before capture if power, USB, storage, or networking changes. **Do not rebuild,
+Status labels include today's read-only Pi preflight and inspection of saved
+Scenario A capture/replay evidence (2026-10-22). Recheck before capture if power, USB, storage, or networking changes. **Do not rebuild,
 install packages, change camera calibration, or touch motors/STM32 during this
 session.**
 
@@ -16,8 +15,8 @@ session.**
 |---|---|
 | Pi and SSH | **VERIFIED 2026-10-22:** Mac `en7=192.168.50.1`, `wbr-pi5=192.168.50.2`; bounded SSH succeeded. Pi identity is `wbr-pi5`, `aarch64`, Ubuntu 24.04.4, 3.9 GiB RAM. |
 | Camera and software prerequisites | **VERIFIED 2026-10-22:** D435i serial `317422076650`, firmware `5.17.3.10`, enumerated at USB `5000M`; ROS executables and expected runner/settings/vocabulary/map replay paths are present. Enumeration does not establish an active camera stream or current ORB tracking. |
-| Sensor recording | **VERIFIED:** 150.1 s, 1.3 GiB, 2,215 left/right image pairs and CameraInfo each; headers matched and the existing quality checker reported zero estimated gaps. One successful run is not a general storage qualification. |
-| Sparse ORB landmarks from a recorded stereo MCAP | **VERIFIED for first 20 source seconds only:** Pi replay produced a separate MCAP with 20/20 nonempty actual `PointCloud2` snapshots, up to 965 landmarks, finite float32 XYZ in `slam_world`. Full-duration replay/export is **UNVERIFIED**. |
+| Scenario A sensor recording | **VERIFIED 2026-10-22, 08:24–08:25 +07:** 25.015 s measured recording window; 24.070 s MCAP span, 212.6 MiB; 362 images and CameraInfo per side, identical stereo headers, observed header rate 14.999 Hz, zero estimated internal gaps. Camera/SLAM/recorder exit 0. This does not prove pixel quality or uninterrupted live tracking. |
+| Scenario A sparse ORB landmarks from MCAP | **VERIFIED 2026-10-22, 08:36–08:37 +07, first 20 source seconds only:** existing Pi replay validation passed; 300 poses/statuses, 20/20 nonempty actual `PointCloud2` snapshots, up to 214 landmarks, finite float32 XYZ in `slam_world`, source stamps match input. Separate 176.5 KiB map MCAP retained. Full-duration replay/export is **UNVERIFIED**. |
 | PLY export | **BLOCKED/not implemented.** The verified artifact is ROS `PointCloud2` in a separate MCAP. |
 | Foxglove | Local MCAP is a supported data source ([official instructions](https://docs.foxglove.dev/docs/visualization/connecting/local-data)); this feature's cloud was validated from MCAP data, but its appearance in the GUI has not yet been checked. |
 
@@ -123,8 +122,8 @@ recording, writes a new MCAP, then stops its own recorder/SLAM/camera process
 groups and saves a capture summary. It uses D435i `317422076650`, stereo
 640×480 at 15 Hz and the saved 800-feature settings. The script supports 1–180 s.
 
-**[PI] Runner behavior VERIFIED; exact shell invocation reconstructed from its
-saved argument interface (the command line itself was not retained).** The
+**[PI] Runner behavior VERIFIED, including today's completed A capture; the
+example below describes a fresh capture, not a command to repeat completed A.** The
 archived script sets its child processes to ROS domain 201 / localhost and copies
 the verified stereo settings into each run as `stereo.yaml`. It creates the final
 output directory exclusively; the parent must exist and the run path must not.
@@ -134,12 +133,17 @@ set +u # ROS setup scripts expect some environment variables to be unset.
 source /opt/ros/jazzy/setup.bash
 set -eo pipefail
 RUNROOT="$HOME/wbr-evidence/camera-day-20261022-01"
-mkdir "$RUNROOT"
+mkdir -p "$RUNROOT"
+test ! -e "$RUNROOT/A-stationary" || { echo "A already exists; inspect its saved results, do not repeat it" >&2; exit 1; }
 
 # A — stationary baseline, 25 s
 python3 /home/richard/wbr-evidence/camera-day-20261021-01/mcap-marked-loop-01/capture_loop.py \
   "$RUNROOT/A-stationary" 25
 ```
+
+**Current progress:** A and its 20-second map replay already exist. Inspect
+those results; do not rerun either command into the same output directory.
+The owner and execution chat decide whether to proceed to B.
 
 Run one scenario, validate it in Section 5, then decide whether to continue.
 Do not paste all three commands as a batch. For live CLI inspection from a
@@ -223,13 +227,15 @@ cat "$RUN/capture_summary.json"
 cat "$RUN/stereo-quality.json"
 ```
 
-The quality checker was run on the prior 150 s MCAP. It checks MCAP readability,
+The quality checker was run on the prior 150 s MCAP and today's A MCAP. It checks
+MCAP readability,
 required image/CameraInfo topics, strict timestamp order, stereo header pairing,
 CameraInfo matches and nominal 15 Hz gap estimates. It does **not** verify pixel
 content, physical camera motion or hardware frames lost before ROS.
 
-Then run the tested 20-second offline MapPoint replay on the Pi. This also
-reprocesses images through ORB and preserves fresh poses/status with the cloud.
+For a new capture, run the tested 20-second offline MapPoint replay on the Pi.
+For today's A, inspect its existing `map-replay-20s/validation.json` instead. The
+helper reprocesses images through ORB and preserves fresh poses/status with the cloud.
 It is bounded to the first 20 source seconds at 0.3×; do not edit its duration or
 rate during this lab session.
 
@@ -339,5 +345,8 @@ software installation, motors, or STM32. Keep every failed run.
 
 Run the **[MAC] SSH/read-only identity check** at the top of Section 2, then
 repeat the power/USB/storage checks if anything has changed since today's
-preflight. SSH and current device enumeration passed; active image streaming,
-tracking, a new capture, and MapPoint replay remain to be tested.
+preflight. Today's saved A proves stereo streaming/recording and ORB
+initialization; its first-20-second offline replay preserves valid sparse clouds
+and poses. Live tracking continuity, moving B/C captures and Foxglove rendering
+remain unverified. Codex reviews software/evidence; the owner and execution chat
+run lab commands and decide the next experiment.
