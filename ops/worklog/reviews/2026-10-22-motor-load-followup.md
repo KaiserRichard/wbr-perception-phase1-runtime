@@ -2,7 +2,7 @@
 
 ## Saved-state workspace attribution
 
-Read-only projection of the 30 saved, reduced-model PASS trajectories through the source-inventory five-bar geometry (`l1=l4=0.075 m`, `l2=l3=0.14 m`, `l5=0.08 m`) finds 1,940/150,030 samples outside serial-chain reach. Every excluded sample violates the A-side outer inequality, `ρA > l1+l2 = 0.215 m`; no B-side or branch-only exclusions occurred. Each affected case has one contiguous interval. The other 20 cases have zero exclusions.
+Read-only projection of the 30 saved, reduced-model PASS trajectories through the source-inventory five-bar geometry (`l1=l4=0.075 m`, `l2=l3=0.14 m`, `l5=0.08 m`) finds 1,940/150,030 samples outside serial-chain reach. Every excluded sample violates the A-side outer inequality, `ρA > l1+l2 = 0.215 m`; no E-side or branch-only exclusions occurred. Each affected case has one contiguous interval. The other 20 cases have zero exclusions.
 
 | L=0.20 m scenario; seeds | Per case | Group total | First → last excluded control sample |
 |---|---:|---:|---|
@@ -18,11 +18,11 @@ Across the 148,090 reachable samples, the separate global extrema are:
 - `|A| = 0.40542578868132084 N·m`, `L20_stronger_sample_seed1`, tick 10 (0.020 s).
 - `|E| = 0.35224760632453234 N·m`, `L12_stronger_sample_seed1`, tick 9 (0.018 s).
 
-These are instantaneous balance-only virtual-hip mappings; they are not simultaneous extrema or total motor loads. They exclude the unrecorded radial reaction. The earlier 1.233/1.239 N·m peaks are total A/E torques for separate upright, no-push ramps with ideal extension reaction and must not be compared as the same load quantity.
+Both maxima occur during initial-condition recovery, before the 3 s push. These are instantaneous balance-only virtual-hip mappings; they are not simultaneous extrema or total motor loads. They exclude the unrecorded radial reaction. The earlier 1.233/1.239 N·m peaks are total A/E torques for separate upright, no-push ramps with ideal extension reaction and must not be compared as the same load quantity.
 
 ## CSV alignment and limits
 
-`control.csv` reports canonical control time `tick*DT`. `segments.csv`/`stages.csv` retain accumulated float `t` at mechanical substeps and Runge–Kutta stages, with multiple rows per control tick. Associate each segment/stage with its parent control tick **and** substep/stage index; do not join every row one-to-one by a single integer tick. If matching timestamps, the existing tolerance is 1 ns. No output-format change is made here.
+`control.csv` reports canonical control time `tick*DT`. `intervals.csv` (writer variable `segments`) and `stages.csv` retain mechanical substep and Runge–Kutta stage times, with multiple rows per control tick and repeated midpoint/boundary times. Associate each interval/stage with its parent control tick **and** substep/stage role, preserving row order and endpoint ownership; do not join every row one-to-one by a single integer tick. If matching timestamps, the existing tolerance is 1 ns. Do not replace stage times with control ticks. No output-format change is made here.
 
 Provenance: saved study `/Users/quockaiser/wbr-evidence-archive/sim-control-corners-20261022-01/combined-01/study` (simulation source `92d925ba7be174284d72ab9d7ad499d28bd8a733`); projection source geometry `f4b1a5bf15ac7f3b7803feb7119b237c402bd0f6`; prior analysis `combined-analysis-01/report-01`. Saved analysis CSV: `/Users/quockaiser/wbr-evidence-archive/sim-motor-load-followup-20261022-01/all30_balance_only.csv`. Attribution source, exact per-case data, receipt and log are in `/Users/quockaiser/wbr-evidence-archive/sim-motor-load-followup-20261022-01/review123-followup-01/`.
 
