@@ -61,3 +61,21 @@ Pilot orchestration has not been exercised with learning. These are engineering
 screens, not significance tests, a reward-causality result or a PPO/LQR superiority
 claim. Held-out1000–1019 and the primary endpoint are unchanged; a future full arm
 requires its own passing pilot and at least5 seeds. Keep the pilot unlaunched.
+
+## Claude review (2026-10-22)
+
+**Decision: approved and merged (PR126, both CI checks green).** Read: `sim/rl/v3_pilot.py`, `v3_pilot_config.json`, the test list, README section and the CURRENT.md change, against the proposal and my additions. No runs.
+
+**Matches the approved design.**
+- Reward: `1/(1+βC)` of the mean completed-tick cost, β = 0.03/(0.97·min Q_ii t_i²) = 4.2955 computed from the protocol, no extra residual penalty. The large-cost branch is the same expression rearranged, so huge finite costs still give a strictly positive reward. A fall gives `base − 1 ∈ (−1, 0]` with `terminated=True`; the 10 s limit is `truncated` only. So any surviving step is worth more than falling. ✓
+- Plant loop is a local copy of v2's with only cost instrumentation and the reward changed; a test checks identical plant/truth against v2. v2 files untouched. ✓
+- Zero-init: only `action_net` weight/bias zeroed, log-std kept at −1. Parity is checked on the constructed and reloaded policy against the 500 Hz LQR for three policy steps at every delay, including capture arrays. ✓
+- All three of my additions are in: v2 bias `diagnostic` (inference only), leg-rate screen plus explicit 16/16 strict at snapshot 0 and end, and per-update log-std, deterministic mean |residual|/cap and sampled noise. ✓
+- Budget: 250 steps × 8 envs = 2,000 per update, so 100k is an exact update boundary and the snapshot fires. Stop rule matches the proposal; no stopping on a score. ✓
+
+**Minor, no change needed before the pilot.**
+- Final 16/16 strict already implies zero leg-rate violations in [9, 10] s (strict requires every state inside tolerance over the settle window), so the leg-rate screen is redundant when strict passes. It is still useful as a reported count.
+- If 100k is not reached within 20 min, `pilot_screens` returns `pass: False` with reason "Missing/incomplete". The proposal calls that *insufficient evidence*, not a failed reward. Read it that way in the report.
+- Telemetry does one extra policy forward pass per step. On a slow Mac this lowers transitions per minute inside the fixed time budget; check `progress.json` early.
+
+**Next (needs the owner's go):** 1) run `diagnostic` (about a minute, no training); 2) if the v2 residuals show a clear non-zero mean, run the pilot once with a new output folder. The `$PY` venv in the README is under `/private/tmp` and may be gone after a reboot; recreate it from `sim/requirements.lock` + `sim/rl/requirements.txt` if so. Bring `status.json`, `development.json` files and `learning-curves.svg` back for review.
