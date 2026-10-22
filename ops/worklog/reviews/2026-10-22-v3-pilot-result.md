@@ -23,6 +23,33 @@ Budget starts after snapshot-0 preparation, includes the 100k evaluation and upd
 | snapshot-100k | 16/16/16 | 16 | 16 | 0 | 0.4472931 |
 | final | 16/16/16 | 11 | 16 | 0 | 0.8260701 |
 
+**Saved-metric failure attribution (closeout):** compare `final/development.json`'s
+`final_window_max_abs_error` against `sim/rl/protocol.json` tolerances; no rerun.
+Only the two 2 ms balance cases breach a final-window tolerance, both position
+(limit 20 mm). The remaining three failures hold all six tolerances over the
+final second but exceed the separate 5 s recovery deadline.
+
+| Delay / scenario / noise seed | Final-window position maximum | Failure / recovery after event |
+|---|---:|---|
+| 2 ms / balance / 2000 | 21.800625 mm | Position; no qualifying recovery |
+| 2 ms / balance / 2001 | 20.869877 mm | Position; no qualifying recovery |
+| 5 ms / balance / 2000 | 5.521203 mm | Recovery 5.288 s > 5 s |
+| 5 ms / balance / 2001 | 7.165076 mm | Recovery 8.988 s > 5 s |
+| 5 ms / push / 2001 | 8.553488 mm | Recovery 5.838 s > 5 s after pulse end |
+
+Thus position explains two of five strict failures; saved summaries do not
+identify which state delayed recovery in the other three. Final-panel maxima
+for the other five states are all below tolerance. The reported 0.126773 Nm
+wheel value (`0.3169334 × 0.4`) is the last rollout's deterministic **mean
+absolute** residual, not a signed stationary torque measurement. The constant
+bias mechanism is Claude's interpretation, not an additional measured result.
+
+**Owner disposition:** FAIL accepted; result PR128 merged. Stop this v3 line;
+no reward tuning, retry, full training or new RL experiment. Claude review
+PR129 remains the owner's merge. Recommendation: prioritize hardware data;
+any future RL proposal should use cases where the LQR baseline fails (the
+review mentions 45 N push / 10 ms delay), with separate authorization.
+
 **Screens:** complete/nonduplicate/full panels PASS; initial strict=16 PASS; final strict=16 FAIL; final survival=16 PASS; leg-rate 0 ≤ 0 PASS. E-end 0.8260701 ≤ 0.9E-100k=0.4025638 FAIL; E-end ≤ E-zero=0.2924333 FAIL.
 
 | Completed-episode window | Episodes | Mean raw return | Mean length (policy actions) | Mean alive / precision loss / fall |
