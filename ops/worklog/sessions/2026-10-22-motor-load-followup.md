@@ -3,3 +3,6 @@
 - Ran `sim.fivebar.tests.test_ramp_panel`: 6/6 passed, including combined power/sign and reporting tick tests.
 - Ran offline saved-data projection over 30 cases / 150,030 control rows: 148,090 geometrically reachable, 1,940 unreachable; all radial reaction and total five-bar loads remain UNKNOWN.
 - Wrote archive script/CSV/summary/logs and one-page review. No rollouts, training or hardware access.
+- Conductor independently ran the two focused new checks (PASS), verified all30 IDs/150030 rows and1940 geometry exclusions analytically, and checked90 finite-difference inverse-Jacobian mappings (max difference1.51e-11 N·m).
+- Owner confirmed actual motor/gear IDs, measured assembly properties and STM32-link results are unavailable. No substitute physical values introduced.
+- Worker k exhausted quota after two source/test edits; free account b completed the preserved task and opened PR122. No simulation rollout rerun.
