@@ -1,6 +1,6 @@
 # Current state
 
-Updated 2026-10-22 +07; PR121 review merged; PR122 motor-load follow-up validated, CI pending; [review](reviews/2026-10-22-control-corners-ramp.md); today's Pi preflight and saved A capture/20s sparse-map replay passed; PR93 camera follow-up and simulation snapshot retained.
+Updated 2026-10-22 +07; PR121 review merged; PR122 motor-load follow-up independently validated; [review](reviews/2026-10-22-control-corners-ramp.md); today's Pi preflight and saved A capture/20s sparse-map replay passed; PR93 camera follow-up and simulation snapshot retained.
 ## Simulation
 - PR122: full motor-power/sign and integer reporting-tick checks pass (suite6/6); all30 saved cases/150030 samples assessed,1940 outside reference five-bar workspace. Balance-only projection; total pushed motor loads UNKNOWN (radial reaction absent). Independent90 finite-difference checks PASS. Owner has no actual motor/gear, mass/geometry or link-delay evidence; hardware feasibility blocked. Review: `reviews/2026-10-22-motor-load-followup.md`; archive `~/wbr-evidence-archive/sim-motor-load-followup-20261022-01`.
 - PR110 a/b/c code milestone complete: #114/#115/#116 merged green (both exact-head CI checks SUCCESS each); stress #115: 56 cases, 40 PASS/16 FAIL/0 ERROR; delayed five-bar local linear #114: 16/16 locally stable; prescribed-extension ramp #116: one 15 s run, 8/8 saved checks PASS. Review: `reviews/2026-10-22-control-margins.md`; assumed models only, no hardware/general robustness claim.
