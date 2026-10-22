@@ -263,3 +263,105 @@ Raw relative/max matrix norms mix units and depend on coordinate scaling.
 `report.md`, `metrics.csv` and `acceleration-inputs.csv` accompany the JSON.
 See the [worker run note](../../ops/worklog/sessions/2026-10-21-fivebar-linear-worker.md)
 for exact commands, source and evidence paths. No nonlinear/hardware transfer claim.
+
+## Exact transport and actuator-lag local comparison (22 October 2026)
+
+`python -m sim.fivebar.delayed_linear --out <fresh-directory>` adds a **separate
+local linear experiment** at upright L=0.12/0.16/0.20/0.21 m, transport
+2/3/4/5 ms, control period 2 ms, and first-order actuator time constant 5 ms.
+The 0.21 m case is upright only: it is excluded from the earlier nonlinear
+104° starting configuration. This module does not run nonlinear fivebar
+balance, change length, add contact, or establish hardware/policy transfer.
+
+Each of the 16 conditions uses a fresh `synthesize_augmented` gain from the
+**actual reduced MuJoCo RK4 runtime**, with the existing physical-state Q and
+input R unchanged, `Qd=dt*Q`, `Rd=dt*R`, and zero added-state penalties.
+The same gain is applied to both exact lifted continuous plants using `u=-Kz`.
+The state order matches the runtime and gain exactly:
+
+$$
+z_k=[x,\theta,\phi,\dot x,\dot\theta,\dot\phi,
+\tau_w,\tau_h,u_{k-1}^T,\ldots,u_{k-h}^T]^T,
+\qquad h=\lceil d/\Delta t\rceil.
+$$
+
+Commands are newest first; dimensions for 2/3/4/5 ms are 10/12/12/14.
+SI units and aggregate wheel/virtual-hip torque signs are inherited from the
+existing model. Exact known matched delay, lag, initial torque and command
+history are assumed. With noiseless physical states, command-only reconstructed
+torques equal physical torques; estimator uncertainty is not being tested.
+
+Continuous physical A/B come from fresh unchanged `compare_length` calls.
+For both reduced and projected fixed-length fivebar mechanics, set
+
+$$
+y=[x_{\rm physical}^T,\tau^T]^T,\quad
+A_{c,\rm aug}=\begin{bmatrix}A_c&B_c\\0&-I/T\end{bmatrix},\quad
+B_{c,\rm aug}=\begin{bmatrix}0\\I/T\end{bmatrix}.
+$$
+
+Each interval between command arrivals uses the block-matrix exponential
+ZOH of this eight-state system. Its maps are composed before appending the
+history shift and new input. This retains full continuous coupling between
+mechanics and changing torque. An arrival at the tick end has no effect on
+that tick's physical or filter endpoint. For 3 ms transport, `u[k-2]` acts for
+the first 1 ms, then `u[k-1]` for the next 1 ms; for 5 ms the sequence is
+`u[k-3]`, then `u[k-2]`. Neither delay is rounded to a control tick.
+
+Worked analytical fixture: for `xdot=tau`, a command `v` held for duration
+`s` gives `tau1=v+(tau0-v)*exp(-s/T)` and
+`x1=x0+v*s+(tau0-v)*T*(1-exp(-s/T))`. Compose this twice for the 3/5 ms
+cases. A separate fixture with `xdot=a*x+tau` checks continuous coupling,
+which differs from holding mean torque over the whole interval.
+
+The actual reduced runtime instead holds the exact **mean torque** during
+each mechanical substep. Its filter endpoint/impulse are exact, but the
+coupled mechanical step is an RK4 approximation. Its A/B, DARE gain and
+closed-loop spectrum remain separate from both continuous lifts. Entrywise
+and Frobenius discrepancies are reported without an invented equivalence
+tolerance. Two local checks, (L=.12 m, delay3 ms) and (L=.21 m, delay5 ms),
+halve 0.25 ms mechanical substeps to 0.125 ms with the same gain; these are
+finite-difference one-tick maps, not nonlinear trajectories.
+
+All three projection epsilons (`1e-5,3e-6,1e-6`) and three paired physical
+state/input epsilons (`1e-4,1e-5,1e-6`) are retained per length, with the last
+combination selected. Every refinement is propagated through each delay
+using the selected actual-runtime gain. Nested finite-difference spread is
+reported without asserting monotonic convergence. The old six-state nominal
+comparison is retained as a **different experiment**, with different gains
+and no lag/delay.
+
+`comparison.json` retains configurations, continuous sources, matrices,
+state order, all eigenpairs, numerical settings and actual-runtime differences.
+`metrics.csv` has all 16 rows and all poles for the three maps; `report.md`
+is the concise report and `execution.json` records source, command, versions,
+environment and exit. `rho<1` is local sampled stability; `1-rho` is radial
+distance to the unit circle, not gain/phase margin. The slowest envelope time
+is `-dt/log(rho)` for `0<rho<1`; unstable cases retain `UNSTABLE` with no
+gain retuning or stable decay-time claim.
+
+Use the read-only interpreter and single-thread environment above:
+
+```sh
+nice -n 10 "$PY" -m unittest sim.fivebar.tests.test_delayed_linear -v
+nice -n 10 "$PY" -m sim.fivebar.delayed_linear --out <fresh-directory>
+```
+
+The 22 October production run waits for the conductor's stress-first receipt
+outside this reusable module; its external supervisor preserves that receipt
+and executes committed source. The CLI records source status without imposing
+machine-specific orchestration. Exact commands and results are recorded in the
+[worker session](../../ops/worklog/sessions/2026-10-22-fivebar-delayed-worker.md).
+
+**Executed result:** all 16 conditions and all epsilon refinements are locally
+stable using source `8ccd6268667c6942446a635882f0e7b3938492de`, exit 0,
+8.889 s external process time (6.435 s calculation before serialization).
+Fivebar rho spans `0.997442684–0.997688181`, radial margin
+`0.002311819–0.002557316`, decay time `0.781070–0.864119 s`.
+Maximum actual-runtime versus reduced exact-lift entry difference is
+`4.29576e-7` for A; B is identical because new input affects only history
+for these delays. Maximum rho discrepancy is `8.8514e-10`. The two measured
+substep-refinement A-error ratios are `0.250022` and `0.250013`; this is
+numerical refinement evidence, not identical maps or nonlinear equivalence.
+The final focused suite passes 10 tests. Full report/matrices are under
+`/Users/quockaiser/wbr-evidence-archive/sim-control-margins-20261022-01/fivebar-delay/run-01/`.
