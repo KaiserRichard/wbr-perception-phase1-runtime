@@ -1,18 +1,18 @@
 # Current state
 
-Updated 2026-10-22 +07; bounded sparse ORB map output passed offline Pi replay; today's Pi preflight and saved A capture/20s map replay passed; PR93 camera follow-up and simulation snapshot retained.
+Updated 2026-10-22 +07; control validation closed out; today's Pi preflight and saved A capture/20s sparse-map replay passed; PR93 camera follow-up and simulation snapshot retained.
 
 ## Simulation
-- Upstream firmware learning review: reviews/2026-10-21-team-foundation-reading.md. Three packs cover reduced-model/research foundations; firmware also needs five-bar/VMC, gain scheduling, estimation and hybrid timing. Study estimate20–32focused hours; no runtime change.
+- 2026-10-22 control research: k/i specialists + b arithmetic audited v3; canonical review `reviews/2026-10-22-v3-pilot-proposal.md`. Bounded-reward residual pilot is a proposal only; no v3 code/training. Reward remains owner exercise.
+- Upstream firmware learning review (merged PR105): reviews/2026-10-21-team-foundation-reading.md. Three packs cover reduced-model/research foundations; firmware also needs five-bar/VMC, gain scheduling, estimation and hybrid timing. Study estimate20–32focused hours; no runtime change.
 - Obsidian three-pack illustrated revision under docs/learning/obsidian: supplied mechanical plates + worked dynamics/LQR, RL→PPO, residual/saved-runs/experiment. Review2026-10-21-illustrated-lessons.md; five filename-specific image prompts. Three extracted exercises/382MathJax expressions PASS; no new training.
 - Claude approved the assumed six-state planar LQR (PR44) and delay/lag/noise baseline (PR47–48). Hardware parameters remain ASSUMED/UNKNOWN; source gain parity remains the owner exercise.
 - PPO v1 complete: LQR160/160, PPO0/800. See sim/rl/RESULTS_2026-10-20.md; archived evidence retained.
 - PPO v2 COMPLETE 2026-10-21 12:13 +07 (PR55; frozen source f1b5ee7): eight exact3M-step seeds,all reloadPASS,1,280 evaluated cases; supervisor exited0.100Hz PPO versus unchanged500Hz LQR; no tuning.
 - Direct seeds0–4 strict[39,20,0,0,0], survival[160,160,120,160,160]:59/800 strict,760/800 survived. Residual seeds0–2:0/480 strict,480/480 survived; no extension. Reused LQR160/160. Legacy episode-length/return curves unavailable. Results: sim/rl/RESULTS_V2_2026-10-20.md; review2026-10-20-ppo-v2.md.
-- Owner resumed control13:52 +07, prioritizing j/k after idle/quota checks. Final table+7plots generated; j completed two LQR clips and76designs+four fits; k completed9mechanics cases. Review2026-10-21-control-followup.md.400nonlinear cases remainUNRUN; v3 unlaunched.
+- Owner resumed control13:52 +07, prioritizing j/k after idle/quota checks. Final table+7plots generated; j completed two LQR clips and76designs+four fits; k completed9mechanics cases. Review2026-10-21-control-followup.md. Restricted nonlinear follow-up now COMPLETE/PASS; v3 unlaunched.
 - Evidence ~/wbr-evidence-archive/sim-ppo-v2-20261020-01; process/progress /private/tmp/wbr-ppo-v2-20261020/. Camera lab worktree updated to main; training runtime files unchanged.
 - sim/parity/student.py::gain_schedule remains owner-only. Separate live LQR viewer uses parameter-source-audit checkout; Desktop launcher remains available.
-
 ## Overnight work
 - f conducts; g/i/k hard,AstraUltra; b/e/default medium,Sol; d/h/j simple. Actual metadata shows g/k share one login/quota; treat them as one pool. 06:30pass completed; a/b/c exhausted,other authorized workers ready; default busy. No runnable worker task remains.
 - Idle/quota checks now use documented read-only app-server metadata plus a tiny model ping; no credentials/emails retained. Shared-alias idle checks prevent duplicate use.
@@ -20,11 +20,11 @@ Updated 2026-10-22 +07; bounded sparse ORB map output passed offline Pi replay; 
 - C1 six primary-source literature notes mergedPR62; C2 glossary mergedPR60; C3 link tool mergedPR59, localized HTTP parser follow-upPR70 merged;12focused testsPASS.
 - B2 real ONNX/C export and frozen-normalization parity passed5tests,no skips; PR63 merged; combined C LQR+policy integration mergedPR73:4testsPASS,1464recorded ticks,maxLQRerror7.88e-7 (limit1e-6). Isolated wheels leave the active PPO environment unchanged; H7 cycles are analytical estimates.
 - Camera ROS build/link fixes mergedPR77; conductor independently rebuilt and verified linking/startup. Live visual poses and three cart-bag replays completed; see Hardware below for losses and limitations.
-- A3:76real assumed-model designs+four degree3 Chebyshev fits COMPLETE;400nonlinear balance/push cases UNRUN. Evidence ~/wbr-evidence-archive/sim-gain-sweep-20261021-01. Domain0.12–0.30m is hypothetical rigid-leg family, not five-bar workspace.
+- A3 historical:76designs/four cubic fits at0.12–0.30m remain in ~/wbr-evidence-archive/sim-gain-sweep-20261021-01; hypothetical rigid-leg family, not five-bar workspace. Restricted follow-up (PR103/104/106/107):36fresh designs/four fits/32midpoints PASS; 400nonlinear cases COMPLETE, fresh DARE200/200 and fitted200/200 PASS, seeds0–4 each40/40/controller. Review: [reachable control validation](reviews/2026-10-21-reachable-control-validation.md).
 - A4:9fixed-length dynamics cases executed150.709s; all finite, open-loop45°stops~0.296s. One coarsecase independently reproduced. Mass/wheel-reaction differences persist; no full-model balance/transfer claim. Review2026-10-21-fivebar-dynamics.md.
 - B3 COMPLETE,PR97:two640x480 LQR clips,300frames/10s each; full decode+six-frame inspection passed independently. Evidence ~/wbr-evidence-archive/sim-lqr-clips-20261021-01. Illustrative/unscored; no hardware validation.
 - Control worker briefs/receipts: /private/tmp/wbr-overnight-20261020/{B3-FINAL,A4-FINAL,A3-SWEEP}/. PPO completion monitor deleted after final handoff; no recurring dispatch active.
-- PPO stopped normally; resumed control jobs single-threaded and bounded. Remaining control execution:400-case A3 nonlinear study. Camera work belongs to WBR-Perception.
+- Control recovery:271completed cases reused+129new, unchanged d4b4249; exit0,2022.950900s recovery only, original exit/time UNKNOWN. Final evidence ~/wbr-evidence-archive/sim-linear-review-20261021-01/reachable-study/evaluation-resume-01; no five-bar/hardware/continuum claim. Next:Claude audit; no new experiment. PPO stopped normally; camera work belongs to WBR-Perception.
 
 ## Hardware
 - Pi5/aarch64/3.9GiB; migrated SG128 boots, 113GiB root/80GiBfree. Read-only Mac preflight 2026-10-22: SSH `wbr-pi5` at192.168.50.2 passed; EXT5V5.167V,throttled0x0,temp51C; D435i317422076650/FW5.17.3.10 enumerated USB5000M; ROS/package/runner/map paths exist. Saved A now verifies stereo capture (362 paired frames) and ORB initialization; first20s replay validates300poses/20clouds/max214points. Live continuity, B/C and Foxglove GUI remain unverified.
