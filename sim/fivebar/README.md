@@ -260,10 +260,21 @@ unknown. The run is an assumed-model transfer experiment, not a hardware claim.
 
 Focused checks: `python -m unittest sim.fivebar.tests.test_ramp -v` covers the
 profile and derivatives, constant-length equality with `FixedLength`, ideal
-four-coordinate force balance, equal-duration timestep refinement, closure,
-cached sensor noise and causal clipped-command feedback. Run outputs and exact
-receipts are stored outside Git under the dated `sim-control-margins` evidence
-archive. At source `7aeb34b`, seed 0 exited 0 after 235.449 s and completed
+four-coordinate force balance, equal-duration refinements, closure, cached
+sensor noise, clipped-command feedback and an independent lag-endpoint oracle.
+The short refinement at $t=6$ s uses the actual varying profile, nonzero state,
+incoming actuator torque and held delayed command. Over equal 4 ms trajectories,
+1 ms versus 0.5 ms steps changed the state by $5.10\times10^{-6}$ (infinity
+norm), mean extension reaction by $5.10\times10^{-7}$ N, and extension work by
+$4.07\times10^{-11}$ J; maximum closure was below $1.6\times10^{-16}$ m.
+Changing projection epsilon from $10^{-6}$ to $3\times10^{-6}$ at 1 ms changed
+state by $1.30\times10^{-11}$, mean reaction by $1.21\times10^{-9}$ N, and work
+by $9.09\times10^{-14}$ J. Projected mass eigenvalues remained positive
+(minimum 0.01277 kg). Exact lag endpoints agreed within $3\times10^{-16}$ N m.
+The focused run and refinement metrics are preserved in
+`/Users/quockaiser/wbr-evidence-archive/sim-control-margins-20261022-01/fivebar-ramp/conductor-targeted-tests.log`.
+Run outputs and exact receipts are stored outside Git under the dated
+`sim-control-margins` evidence archive. At source `7aeb34b`, seed 0 exited 0 after 235.449 s and completed
 15,000 mechanics steps; all eight acceptance checks passed. Peak displacement
 was 0.029149 m, peak tilt 8.00734°, sampled closure error $2.30\times10^{-16}$ m,
 peak ideal extension reaction 28.639 N and signed/absolute work 1.762 J. Peak
