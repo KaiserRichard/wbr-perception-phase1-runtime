@@ -238,6 +238,46 @@ contacts and physical validation remain unrun. The fixed-length projected
 study does not validate full five-bar closed-loop control, contact/jumping or
 policy transfer. Pi execution is also unverified.
 
+## Prescribed-length ramp (22 October 2026)
+
+`python -m sim.fivebar.ramp --schedule <accepted-schedule.json> --out <new-directory>`
+uses the accepted fitted 2 ms reduced-model gain schedule while prescribing
+$L(t)$ from 0.12 m to 0.20 m: hold for 2 s, use an 8 s C2 quintic ramp, then
+hold 5 s. Initial state, noise, 5 ms lag, 2 ms command delay, and 2/4 N m caps
+come from the unchanged reference config. Feedback is noisy body pitch/rate,
+ideal other six-state entries, exact prescribed $L$, and the controller's own
+causal nominal command-only torque observer. The schedule is transferred from
+the reduced fitted family to different **ASSUMED** nonlinear five-bar mechanics.
+
+The tree is built once. At each RK4 stage the four-coordinate projection uses
+the native MuJoCo mass, bias and actuator forces. The ideal extension reaction
+balances the fourth generalized equation and its work is recorded; this is a
+prescribed coordinate, **not a physical extension servo**. Link properties and
+gains are not changed. The default mechanics step is 1 ms (two substeps per
+2 ms controller tick); saved stage closures, extension force/work, states,
+commands, torques and length derivatives support review. Motor feasibility is
+unknown. The run is an assumed-model transfer experiment, not a hardware claim.
+
+Focused checks: `python -m unittest sim.fivebar.tests.test_ramp -v` covers the
+profile and derivatives, constant-length equality with `FixedLength`, ideal
+four-coordinate force balance, equal-duration timestep refinement, closure,
+cached sensor noise and causal clipped-command feedback. Run outputs and exact
+receipts are stored outside Git under the dated `sim-control-margins` evidence
+archive. At source `7aeb34b`, seed 0 exited 0 after 235.449 s and completed
+15,000 mechanics steps; all eight acceptance checks passed. Peak displacement
+was 0.029149 m, peak tilt 8.00734°, sampled closure error $2.30\times10^{-16}$ m,
+peak ideal extension reaction 28.639 N and signed/absolute work 1.762 J. Peak
+physical wheel/hip torque was 0.577/0.847 N m, peak clipped command 1.750/2.337
+N m, with no saturation. Recovery was already inside tolerance at ramp end
+(reported $-1.8\times10^{-15}$ s from floating-point subtraction). The full
+trace and supervisor receipts are in
+`/Users/quockaiser/wbr-evidence-archive/sim-control-margins-20261022-01/fivebar-ramp/run-03/`
+and its sibling `run-03-supervisor.json`. Run-02 retains the completed mechanics
+trace whose metrics initially failed serialization; the native-boolean fix and
+7/7 rerun suite are documented in the session note. This single seed and
+assumed-model result do not establish a physical extension actuator, motor
+feasibility, five-bar hardware performance or general stability.
+
 ## Local linear comparison (21 October 2026)
 
 `python -m sim.fivebar.linearize --out <fresh-directory>` compares upright
