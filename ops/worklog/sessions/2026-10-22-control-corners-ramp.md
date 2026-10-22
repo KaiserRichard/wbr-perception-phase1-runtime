@@ -6,3 +6,5 @@
 - Early receipt `/private/tmp/wbr-control-combined-20261022/i-ready.md` saved after extraction.
 - Combined matrix declared in module/README: 2 lengths ×3 conditions ×5 seeds; exactly two fresh nominal 2ms designs, actual errors only after design. Source committed before production; run receipts to follow.
 - Documentation scope: append two module READMEs, this session/review, relevant CURRENT control line only; no DOCUMENTATION_LOG/DECISIONS.
+- Combined production launched from source `92d925b`, detached supervisor PID28717; declared config/exact commands and serial process exit receipts in archive `combined-01/plan.json`, `supervisor.json`; numerical child nice10/one thread. First measured nominal and target cases PASS, retained full evaluator metrics. Focused unit suite queued after grid.
+- Added isolated ramp panel: zero initial state, exact accepted fit,12 declared runs; full four-coordinate projection reused. Required motor A/E torque evaluated using same-stage force and balance moment; hardware limits UNKNOWN. Source committed before ramp production; no API changes.

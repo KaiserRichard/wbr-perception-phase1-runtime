@@ -418,3 +418,38 @@ substep-refinement A-error ratios are `0.250022` and `0.250013`; this is
 numerical refinement evidence, not identical maps or nonlinear equivalence.
 The final focused suite passes 10 tests. Full report/matrices are under
 `/Users/quockaiser/wbr-evidence-archive/sim-control-margins-20261022-01/fivebar-delay/run-01/`.
+
+### Upright faster/reverse ramp panel (PR118 follow-up)
+
+`python -m sim.fivebar.ramp_panel --schedule <accepted schedule.json> --out <freshdir>`
+predeclares at most 12 full runs: .12→.20 and .20→.12 m, C2 quintic durations
+8/2/1 s, scheduled versus gain frozen at the direction's initial length. All
+start at six-state zero, hold 2 s before moving and 5 s afterward (total15/9/8 s).
+Maximum absolute extension rates are .01875/.075/.15 m/s. There is no fitting,
+retuning or extra push. Seed0, original noise, 2 ms period/delay, 5 ms lag and
+2/4 Nm aggregate caps are unchanged. This is a paired sample, not statistics.
+
+`Controller.tick` receives actual prescribed L for scheduling or fixed initial L
+for the comparator; traces record both actual and gain-evaluation length. The
+accepted `Sensor`, `PrescribedLength`, `mechanical_step` and `lag_interval` own
+noise, mechanics and lag. A single fixed XML retains all Ldot/Lddot/curvature
+terms in the four-coordinate projection. Inclusive before/moving/after windows
+report separate leg/body peaks and x changes from each window's start. Final
+1 s and post-ramp recovery use the accepted thresholds. Every early stop remains
+FAIL; unexpected execution exceptions are ERROR. Completed receipts resume,
+while interrupted attempts are retained separately; no successful grid is rerun.
+
+At each existing Runge–Kutta stage, `Plant.controls(q4,Tw,Th,extension_N=Fext)`
+converts the required ideal extension reaction together with the same-stage
+balance moment into motor_A/motor_E torque. Peak records retain that stage's
+length, angles, force and torque components; independently timed maxima are
+never added. These are **ASSUMED-model required joint torques**. Real motor,
+gear and current limits and feasibility remain **UNKNOWN**; the virtual hip-pair
+4 Nm cap is not an individual motor limit. `stages.csv` retains aligned loads,
+`intervals.csv` endpoints/reaction/work/caps, and `control.csv` noisy feedback and
+both lengths. Matched sensor timestamps verify comparator noise pairing.
+
+One 20 ms nonzero-torque segment on the fastest moving profile compares
+1/.5/.25 ms substeps and projection epsilon1e-6 versus5e-7. Its per-state
+sensitivity has mixed units; it is not full-trajectory accuracy. All new study
+code is isolated from the accepted reduced and projected runners.
