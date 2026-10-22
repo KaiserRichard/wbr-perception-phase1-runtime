@@ -8,6 +8,7 @@ import tempfile
 import threading
 import time
 from pathlib import Path
+import random
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
@@ -24,7 +25,7 @@ from sim.rl.v2 import V2Env, lqr_gains, single_thread
 from sim.rl.v3_pilot import (PilotEnv, PreciseVecMonitor, Telemetry, beta_for_tolerances, bounded_reward,
                              development_panel, physical_upright, pilot_screens,
                              save_snapshot, settings, stop_boundary, summarize_panel,
-                             zero_actor_mean, close_vector, verify_zero_initialization)
+                             zero_actor_mean, close_vector, verify_zero_initialization, evaluate_snapshot)
 
 
 CASE = {"delay_s": .003, "scenario": "balance", "noise_seed": 2000}
@@ -244,6 +245,19 @@ class RewardTests(unittest.TestCase):
 
 
 class PolicyTests(unittest.TestCase):
+    def assert_rng_unchanged(self, operation):
+        python_state = random.getstate()
+        numpy_state = deepcopy(np.random.get_state())
+        torch_state = torch.random.get_rng_state().clone()
+        result = operation()
+        self.assertEqual(python_state, random.getstate())
+        actual_numpy = np.random.get_state()
+        self.assertEqual(numpy_state[0], actual_numpy[0])
+        np.testing.assert_array_equal(numpy_state[1], actual_numpy[1])
+        self.assertEqual(numpy_state[2:], actual_numpy[2:])
+        torch.testing.assert_close(torch_state, torch.random.get_rng_state(), rtol=0, atol=0)
+        return result
+
     def test_actor_zero_mean_reload_preserves_noise_and_normalizer(self):
         single_thread()
         vec = VecNormalize(DummyVecEnv([lambda: PilotEnv()]), norm_reward=False)
@@ -260,8 +274,11 @@ class PolicyTests(unittest.TestCase):
         normalized = vec.normalize_obs(probes)
         self.assertFalse(np.array_equal(normalized, probes))
         with tempfile.TemporaryDirectory() as folder:
-            snapshot = save_snapshot(Path(folder)/"zero", model, vec)
-            parity = verify_zero_initialization(model, vec, snapshot, lqr_gains())
+            snapshot = self.assert_rng_unchanged(lambda: save_snapshot(Path(folder)/"zero", model, vec))
+            parity = self.assert_rng_unchanged(lambda: verify_zero_initialization(model, vec, snapshot, lqr_gains()))
+            # Check actual checkpoint/evaluator setup without a development run.
+            with patch("sim.rl.v3_pilot.development_panel", return_value=[]):
+                self.assertFalse(self.assert_rng_unchanged(lambda: evaluate_snapshot(snapshot, lqr_gains()))["complete"])
             self.assertEqual(parity["status"], "PASS")
             self.assertEqual(len(parity["cases"]), 4)
             self.assertEqual(sum(row["plant_ticks"] for row in parity["cases"]), 60)

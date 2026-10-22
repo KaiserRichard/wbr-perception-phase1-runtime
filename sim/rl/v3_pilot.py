@@ -7,11 +7,13 @@ Artifacts are small and external: config/source, episodes, updates, snapshots,
 """
 
 import argparse
+from contextlib import contextmanager
 from copy import deepcopy
 from functools import partial
 import math
 import json
 from pathlib import Path
+import random
 import subprocess
 import time
 import traceback
@@ -198,6 +200,22 @@ def physical_upright(delay):
     return obs
 
 
+
+@contextmanager
+def preserve_training_rng():
+    """SB3 checkpoint loading reseeds global RNGs; isolate evidence operations."""
+    python_state = random.getstate()
+    numpy_state = deepcopy(np.random.get_state())
+    torch_state = torch.random.get_rng_state().clone()
+    try:
+        yield
+    finally:
+        random.setstate(python_state)
+        np.random.set_state(numpy_state)
+        torch.random.set_rng_state(torch_state)
+
+
+@preserve_training_rng()
 def save_snapshot(folder, model, norm):
     folder.mkdir()
     model.save(folder / "final.zip")
@@ -214,6 +232,7 @@ def save_snapshot(folder, model, norm):
 
 
 
+@preserve_training_rng()
 def verify_zero_initialization(model, norm, snapshot, gains):
     """Prove actual normalized actor/reloaded actor match 500 Hz LQR exactly.
 
@@ -270,6 +289,7 @@ def case_key(row):
     return v2.episode_key(row)
 
 
+@preserve_training_rng()
 def evaluate_snapshot(folder, gains):
     """Fresh fixed 16-case development panel; no held-out panel or tuning."""
     model, norm = v2.load_frozen(folder, "residual", gains=gains)
@@ -533,7 +553,10 @@ def run_pilot(out):
         status["evaluation_seconds"] += time.monotonic() - t
         status["screens"] = pilot_screens(status["panels"], callback.episode_rows, model.num_timesteps)
         status.update(status="COMPLETE", optimizer_updated=True, checkpoint_reload="PASS",
-                      boundary_overrun_s=max(0., status["budget_elapsed_s"] - c["maximum_training_seconds"]))
+                      stop_reason=("maximum_duration" if status["budget_elapsed_s"] >= c["maximum_training_seconds"]
+                                   else "target_transitions_and_minimum_duration"),
+                      minimum_duration_overshoot_s=max(0., status["budget_elapsed_s"] - c["minimum_training_seconds"]),
+                      maximum_budget_overrun_s=max(0., status["budget_elapsed_s"] - c["maximum_training_seconds"]))
         plot_curves(out, callback.episode_rows, callback.update_rows)
     except BaseException as exc:
         status.update(status="FAILED", error=f"{type(exc).__name__}: {exc}")
