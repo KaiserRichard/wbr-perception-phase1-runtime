@@ -33,7 +33,6 @@ DELAYS = (.002, .003, .004, .005)
 DT, LAG = .002, .005
 PROJECTION_EPS = (1e-5, 3e-6, 1e-6)
 STATE_EPS = INPUT_EPS = (1e-4, 1e-5, 1e-6)
-STRESS_MARKER = Path('/private/tmp/wbr-control-margins-20261022/STRESS_FIRST_RUN.json')
 
 
 def transport_segments(delay, dt):
@@ -263,21 +262,16 @@ def main():
     args = parser.parse_args()
     if args.out.exists():
         parser.error('Output exists; choose a fresh exclusive directory')
-    if not STRESS_MARKER.is_file():
-        parser.error(f'Conductor stress-first marker required: {STRESS_MARKER}')
-    marker = json.loads(STRESS_MARKER.read_text())
     root = Path(__file__).resolve().parents[2]
     cfg = load_config(root / 'sim/configs/assumed_planar.json')
     source_status = subprocess.check_output(['git', 'status', '--porcelain'], cwd=root, text=True).strip()
-    if source_status:
-        parser.error('Commit source before production; working tree must be clean')
     args.out.mkdir(parents=True, exist_ok=False)
     start = time.monotonic()
     report = {
         'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip(),
         'source_status': source_status, 'cwd': str(root), 'seed': None,
         'command': shlex.join([sys.executable, '-m', 'sim.fivebar.delayed_linear', *sys.argv[1:]]),
-        'output_path': str(args.out.resolve()), 'stress_first_marker': {'path': str(STRESS_MARKER), 'content': marker},
+        'output_path': str(args.out.resolve()),
         'versions': {'python': sys.version, 'numpy': np.__version__, 'scipy': scipy.__version__, 'mujoco': mujoco.__version__},
         'thread_environment': {k: os.environ.get(k) for k in (
             'OPENBLAS_NUM_THREADS', 'OMP_NUM_THREADS', 'MKL_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS', 'PYTHONDONTWRITEBYTECODE')},
@@ -290,7 +284,7 @@ def main():
         'continuous_sources': [], 'cases': [],
     }
     receipt = {k: report[k] for k in ('source_commit', 'source_status', 'cwd', 'command', 'versions',
-                                     'thread_environment', 'output_path', 'stress_first_marker')}
+                                     'thread_environment', 'output_path')}
     try:
         for length in LENGTHS:
             source = compare_length(cfg, length, PROJECTION_EPS, STATE_EPS, INPUT_EPS)

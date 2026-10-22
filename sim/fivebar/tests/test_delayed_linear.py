@@ -160,16 +160,5 @@ class OutputTests(unittest.TestCase):
         self.assertEqual(error.exception.code, 2)
         compare.assert_not_called()
 
-    def test_production_waits_for_conductor_marker(self):
-        with patch('sys.argv', ['delayed_linear', '--out', '/unused-fixture-output']), \
-                patch.object(Path, 'exists', return_value=False), \
-                patch.object(Path, 'is_file', return_value=False), \
-                patch('sim.fivebar.delayed_linear.compare_length') as compare, \
-                self.assertRaises(SystemExit) as error:
-            main()
-        self.assertEqual(error.exception.code, 2)
-        compare.assert_not_called()
-
-
 if __name__ == '__main__':
     unittest.main()

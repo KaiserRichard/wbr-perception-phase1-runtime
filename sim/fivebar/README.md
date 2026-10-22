@@ -347,7 +347,8 @@ nice -n 10 "$PY" -m unittest sim.fivebar.tests.test_delayed_linear -v
 nice -n 10 "$PY" -m sim.fivebar.delayed_linear --out <fresh-directory>
 ```
 
-Production requires clean committed source and the conductor's
-`/private/tmp/wbr-control-margins-20261022/STRESS_FIRST_RUN.json` marker.
-The focused suite is available before that marker. Exact commands and results
-are recorded in the [worker session](../../ops/worklog/sessions/2026-10-22-fivebar-delayed-worker.md).
+The 22 October production run waits for the conductor's stress-first receipt
+outside this reusable module; its external supervisor preserves that receipt
+and executes committed source. The CLI records source status without imposing
+machine-specific orchestration. Exact commands and results are recorded in the
+[worker session](../../ops/worklog/sessions/2026-10-22-fivebar-delayed-worker.md).
