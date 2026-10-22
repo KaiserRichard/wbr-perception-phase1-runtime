@@ -453,3 +453,11 @@ One 20 ms nonzero-torque segment on the fastest moving profile compares
 1/.5/.25 ms substeps and projection epsilon1e-6 versus5e-7. Its per-state
 sensitivity has mixed units; it is not full-trajectory accuracy. All new study
 code is isolated from the accepted reduced and projected runners.
+
+The 2026-10-22 upright paired panel completed 12/12 strict PASS across both
+length directions, 8/2/1 s ramps and scheduled/frozen gains. It uses seed 0 and
+is not evidence of statistical generalization or scheduling benefit. The local
+moving/nonzero-torque timestep/projection refinement and aligned required motor
+torque report are archived under `sim-control-corners-20261022-01`; real motor,
+gear and current feasibility remains UNKNOWN. See
+`ops/worklog/reviews/2026-10-22-control-corners-ramp.md`.

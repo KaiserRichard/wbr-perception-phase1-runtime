@@ -371,3 +371,10 @@ a fresh `--out`: it reads the original matrix/receipts/traces and runs no physic
 Noise must match exactly by control tick; timestamps use the unchanged evaluator's
 1 ns tolerance because delay-event splits can change MuJoCo time's last bit.
 The original nonzero exit and all measured artifacts remain untouched.
+
+The 2026-10-22 measured panel completed 30/30 strict PASS at the two configured
+endpoint lengths (source `92d925b`). The original report-only exit 1 was timestamp
+bit noise; the fresh recovery used the committed tick-pairing fix and produced
+30/30 PASS with zero new rollouts. See
+`ops/worklog/reviews/2026-10-22-control-corners-ramp.md` for the sampled matrix,
+noise pairing, archive index and limitations.
