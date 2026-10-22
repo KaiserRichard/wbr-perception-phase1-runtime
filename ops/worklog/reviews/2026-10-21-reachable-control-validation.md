@@ -91,9 +91,9 @@ the session notes and the README diff. Archives not re-read.
 - Both phases used the same clean source `d4b4249`, fit and configs. The 271
   reused cases were validated by identity and metrics, not replayed. Only the
   129 missing cases ran. The interrupted partial CSVs were kept, not reused.
-- All 200 DARE/fitted noise-hash pairs match, including pairs split across the
-  two phases. That is good evidence the noise stream is reproducible across
-  processes.
+- All 200 DARE/fitted noise-hash pairs match. If any pair was split across the
+  two phases (likely, since 271 is odd), that is good evidence the noise stream
+  is reproducible across processes; worth confirming in the manifest.
 - The case after #271 completed normally in recovery, so the interruption was
   not a deterministic crash in that case. The cause stays UNKNOWN, as reported.
 - Gap (optional, about 1 min): noise hashes do not prove the *dynamics* output is
