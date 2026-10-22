@@ -78,3 +78,49 @@ per arm after a reviewed pilot; no v3 launched.
 [pr104]: https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/104
 [pr106]: https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/106
 [pr107]: https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/107
+
+## Claude review (2026-10-22)
+
+**Decision: accepted.** The PR102 follow-up was done in the requested order. The
+limits are stated plainly, and the "17% is a generalized torque-map difference,
+not a whole-B error" correction to my earlier wording is right. Read: this file,
+the session notes and the README diff. Archives not re-read.
+
+### 271 + 129 recovery: sound
+
+- Both phases used the same clean source `d4b4249`, fit and configs. The 271
+  reused cases were validated by identity and metrics, not replayed. Only the
+  129 missing cases ran. The interrupted partial CSVs were kept, not reused.
+- All 200 DARE/fitted noise-hash pairs match. If any pair was split across the
+  two phases (likely, since 271 is odd), that is good evidence the noise stream
+  is reproducible across processes; worth confirming in the manifest.
+- The case after #271 completed normally in recovery, so the interruption was
+  not a deterministic crash in that case. The cause stays UNKNOWN, as reported.
+- Gap (optional, about 1 min): noise hashes do not prove the *dynamics* output is
+  bit-identical across processes. Rerun 2–3 of the reused 271 cases into a fresh
+  path and compare `metrics.json` exactly. If they match, the reuse is fully
+  justified rather than assumed.
+
+### Model limits: correctly stated; what 400/400 does and doesn't show
+
+1. **Zero failures means the panel is not discriminating.** 400/400 PASS with
+   worst recovery 2.9 s (deadline 5 s) and peak 0.172 m shows these conditions
+   are inside the controller's comfort zone. It says nothing about margin. A
+   stress test is needed to find where it breaks.
+2. **DARE vs fitted are nearly identical** (peak 0.1721029 vs 0.1721087 m), so the
+   cubic fit costs essentially nothing within 0.12–0.20 m.
+3. **The five-bar check was nominal (no delay or lag)**, while the nonlinear panel
+   used 2–5 ms delay plus 5 ms lag on the reduced model only. Reduced-model gains
+   on the five-bar *with* delay remain unchecked.
+4. **Fixed length only.** Changing the length while balancing, which is what gain
+   scheduling is for, is untested.
+5. 0.20 m sits 1.79 mm from the 104° start limit, so the top of the range is at
+   the edge of the reachable region. That's fine, but keep it in mind.
+
+### Next (CPU-light, no lab)
+
+(a) Stress to failure on the reduced model: push magnitude sweep, design/run
+delay mismatch (design 2 ms, run 5–10 ms), mass and torque-map mismatch. This is
+also the baseline the residual-PPO research question needs. (b) Five-bar linear
+check with delay augmentation. (c) A slow length-ramp case (0.12 → 0.20 m over a
+few seconds) with the fitted schedule.
