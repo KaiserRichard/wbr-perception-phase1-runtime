@@ -365,3 +365,9 @@ These are sampled combined cases, not bounds or the old 0.16 m stress gains.
 A matching existing `--out` resumes completed PASS/FAIL/ERROR receipts without
 rerunning them; interrupted traces remain under numbered attempts. A different
 source/config needs a fresh output. NumPy diagnostics serialize to ordinary JSON.
+
+For reporting-only recovery, add `--summarize-existing <completed-study>` with
+a fresh `--out`: it reads the original matrix/receipts/traces and runs no physics.
+Noise must match exactly by control tick; timestamps use the unchanged evaluator's
+1 ns tolerance because delay-event splits can change MuJoCo time's last bit.
+The original nonzero exit and all measured artifacts remain untouched.

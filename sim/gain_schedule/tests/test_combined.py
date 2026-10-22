@@ -17,6 +17,22 @@ from sim.gain_schedule.stress import CONFIG, Condition, actual_config
 
 
 class CombinedTests(unittest.TestCase):
+    def test_noise_pairing_tolerates_time_roundoff_but_rejects_changed_noise(self):
+        root = Path(tempfile.mkdtemp(dir=os.environ.get('WBR_TEST_OUT')))
+        rows = []
+        for seed in range(5):
+            for variant in range(2):
+                path = root/f'{seed}-{variant}'/'rollout'
+                path.mkdir(parents=True)
+                (path/'control.csv').write_text('time_s,body_angle_noise_rad,body_gyro_noise_rad_s\n'
+                    f'0,0,0\n{.002+variant*1e-17},0.001,0.01\n')
+                rows.append({'id': path.parent.name, 'condition': {'seed': seed}, 'status': 'PASS',
+                             'artifact_directory': path.parent.name})
+        self.assertTrue(all(r['matched_timestamp_noise_prefix'] for r in c.noise_pairing(rows, root)))
+        (root/'0-1/rollout/control.csv').write_text('time_s,body_angle_noise_rad,body_gyro_noise_rad_s\n'
+                                                '0,0,0\n.002,.001,.02\n')
+        self.assertFalse(c.noise_pairing(rows, root)[0]['matched_timestamp_noise_prefix'])
+
     def test_declared_matrix_and_nominal_family_separate_from_actual_errors(self):
         base, _, _ = load_experiment(CONFIG)
         rows = c.matrix()

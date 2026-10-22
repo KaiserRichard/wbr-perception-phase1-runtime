@@ -94,7 +94,11 @@ def attempt_directory(case):
 
 
 def noise_pairing(rows, out):
-    """Compare exact timestamp/noise bytes over common observed ticks after stops."""
+    """Pair by control tick; exact noise, evaluator's 1ns timestamp tolerance.
+
+    Delay-event interval splits can change the last bit of MuJoCo time. This
+    cannot change the cached sensor sample identity at a 2ms control tick.
+    """
     groups = []
     for seed in range(5):
         members = [r for r in rows if r['condition']['seed'] == seed and r['status'] != 'ERROR']
@@ -105,12 +109,19 @@ def noise_pairing(rows, out):
             arrays.append(np.column_stack([data[n] for n in
                 ('time_s', 'body_angle_noise_rad', 'body_gyro_noise_rad_s')]))
         count = min((len(a) for a in arrays), default=0)
+        nominal_times = np.arange(count)*.002
+        timestamp_error = max((float(np.max(abs(a[:count, 0]-nominal_times)))
+                               for a in arrays), default=0.) if count else None
+        noise_equal = bool(count and all(np.array_equal(a[:count, 1:], arrays[0][:count, 1:])
+                                       for a in arrays))
         groups.append({'seed': seed, 'case_ids': [r['id'] for r in members],
                        'common_samples': count,
-                       'matched_timestamp_noise_prefix': bool(count and all(
-                           np.array_equal(a[:count], arrays[0][:count]) for a in arrays)),
-                       'prefix_sha256_float64_le': hashlib.sha256(
-                           np.asarray(arrays[0][:count], dtype='<f8').tobytes()).hexdigest() if count else None})
+                       'timestamp_tolerance_s': 1e-9,
+                       'max_timestamp_error_from_control_tick_s': timestamp_error,
+                       'identical_noise_at_matched_ticks': noise_equal,
+                       'matched_timestamp_noise_prefix': bool(noise_equal and timestamp_error <= 1e-9),
+                       'noise_prefix_sha256_float64_le': hashlib.sha256(
+                           np.asarray(arrays[0][:count, 1:], dtype='<f8').tobytes()).hexdigest() if count else None})
     return groups
 
 
@@ -162,10 +173,34 @@ def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', required=True, type=Path)
+    parser.add_argument('--summarize-existing', type=Path,
+                        help='Read-only reanalysis of completed case receipts; never runs physics')
     args = parser.parse_args(argv)
     out = args.out.expanduser().resolve()
     out.mkdir(parents=True, exist_ok=True)
     source = source_receipt('sim.gain_schedule.combined', argv)
+    if args.summarize_existing is not None:
+        if list(out.iterdir()):
+            raise ValueError('Reanalysis requires a fresh empty output')
+        original = args.summarize_existing.resolve()
+        manifest = json.loads((original/'manifest.json').read_text())
+        rows = json.loads((original/'cases.json').read_text())
+        if [r['specification'] for r in rows] != manifest['declaration']['matrix']:
+            raise ValueError('Original completed receipts must cover the declared matrix')
+        receipt = {'status': 'RUNNING', 'source': source, 'started_utc': utc_now(),
+                   'original_study': str(original), 'measured_source': manifest['source']}
+        write_json(out/'run.json', receipt)
+        counts = {s: sum(r['status'] == s for r in rows) for s in ('PASS', 'FAIL', 'ERROR')}
+        pairing = noise_pairing(rows, original)
+        complete = not counts['ERROR'] and all(r['matched_timestamp_noise_prefix'] for r in pairing)
+        write_json(out/'summary.json', {'status': 'COMPLETE' if complete else 'INCOMPLETE',
+                   'counts': counts, 'noise_pairing': pairing, 'source': source,
+                   'original_study': str(original), 'measured_source': manifest['source'],
+                   'cases': rows, 'case_paths_relative_to': str(original), 'new_rollouts': 0})
+        code = 0 if complete else 1
+        receipt.update(status='EXITED', exit_code=code, ended_utc=utc_now())
+        write_json(out/'run.json', receipt)
+        return code
     manifest_path = out / 'manifest.json'
     nominal, experiment, effects = load_experiment(CONFIG)
     declaration = {'matrix': matrix(), 'reference_config': nominal, 'effects': asdict(effects),
