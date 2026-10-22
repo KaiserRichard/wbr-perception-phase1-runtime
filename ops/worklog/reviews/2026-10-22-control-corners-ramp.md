@@ -37,3 +37,56 @@ These bounded assumed-model samples are not robustness bounds or hardware valida
 **Recommendation:** Keep the sample and model boundaries explicit: the paired ramp does not establish a scheduling benefit, and motor feasibility remains UNKNOWN.
 
 **Claude:** PR119 results validated; PR120 checked 30/12/36 windows, exact replay and motor conversion. Both PRs OPEN; hardware feasibility UNKNOWN.
+
+## Claude review (2026-10-22)
+
+**Decision: accepted (PR119 and PR120).** Read: this file, the independent review,
+the session log, both README additions and `Plant.controls`
+(`sim/fivebar/model.py:156`). Archives not re-read.
+
+### Timestamp recovery: sound
+
+- The exit 1 was a reporting false alarm. Different delays split integration
+  intervals at different points, so accumulated MuJoCo time differs in the last
+  bit (`.028` vs `.027999999999999997`). Pairing by control-tick index, with
+  bit-identical noise and the evaluator's existing 1 ns tolerance, is the right
+  test. The recovery ran no physics and kept the original exit and artifacts.
+- Suggestion (non-blocking): derive reported time as `tick * dt` from an integer
+  counter, rather than accumulating floats, so this class of mismatch cannot
+  recur.
+
+### Assumed motor-load mapping: consistent, one check to add
+
+- `τ = Jᵀ[F_ext, −T_h]` with `β = θ − φ + π/2` matches the documented convention
+  (hip moment does work `T_h(φ̇ − θ̇)`). The extension part is verified by the
+  power identity (residual ≤ 9.45e−10 W), and an independent geometry rebuild
+  matches all 512,000 stage records.
+- Add (one-line test): check the **full** power identity
+  `τᵀȧ = F_ext·L̇ + T_h·(φ̇ − θ̇)`, so the hip term's sign is covered by the same
+  check, not only by convention.
+- Peaks of 1.23/1.24 N·m per motor (|A|+|E| ≤ 2.45 N·m) are for **upright ramps
+  with no push**. The push and combined-corner cases will need more torque.
+  Compute the same motor A/E torques for the 30 corner cases before comparing
+  with any motor datasheet. Feasibility stays UNKNOWN, as stated.
+
+### What the ramp panel actually shows
+
+- Starting upright removes the old confound. Peaks are 0.005–0.010° (leg) and
+  ≤ 0.23 mm (x) for all ramp speeds up to 0.15 m/s, and the faster ramps have
+  *smaller* moving-window peaks. That pattern means the windows are dominated by
+  sensor noise: the ramp disturbance is below the noise floor.
+- Scheduled versus frozen differ by < 0.0006°. In this model, over 0.12–0.20 m,
+  one fixed gain is enough. That is a useful, model-bounded finding. The report
+  correctly says scheduling *benefit* is not shown; it is fair to also say no
+  *need* for scheduling was observed here.
+
+### Combined corners
+
+30/30 strict PASS, including the stronger sample (8 ms, 2× mass, δ 0.5, 36 N) at
+both endpoint lengths, with two frozen nominal designs. Again no failure, so the
+combined margin is still not located. That is fine for now; there is no reason
+to push this axis further before hardware numbers exist.
+
+**Next useful step is not more simulation margin** but real parameters: motor
+and gear datasheet limits, measured mass and leg geometry, and measured loop
+delay from the STM32 link test.
