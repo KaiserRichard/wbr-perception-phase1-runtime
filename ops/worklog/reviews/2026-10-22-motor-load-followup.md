@@ -1,33 +1,41 @@
-# Motor-load follow-up (2026-10-22)
+# Motor-load follow-up: PR123 omissions (2026-10-22)
 
-## Result
+## Saved-state workspace attribution
 
-- Added a full combined virtual-work identity check with nonzero extension and hip power. The direct targeted suite passed 6/6. Independent conductor arithmetic: motor power `2.8753884503122746 W`, extension plus hip `2.8753884502912475 W`, residual `2.10e-11 W`; reversed hip sign residual `-0.14 W`.
-- Control CSV timestamps now use canonical `tick*DT` for reporting. A stubbed 15-tick regression confirms reported timestamps and unchanged mechanical substep times; it includes float-sensitive sums that differ from canonical ticks. No physical stepping changed; old saved evidence untouched.
-- Offline analysis covers all 30 saved reduced-model cases and 150,030 control samples. Under the source-inventory five-bar geometry, 148,090 samples project and 1,940 are unreachable. Per-case unreachable counts, contiguous-interval counts and longest sampled gaps are retained in the CSV; no state is clamped or dropped from counts.
-- The computed A/E values are the instantaneous balance-only virtual-hip mapping at reachable samples, using each saved reduced-model virtual hip torque. This is a cross-model diagnostic, not five-bar rollout evidence or a total hardware load. The source geometry inventory is not owner CAD/BOM evidence.
-- Extension radial reaction is absent from the saved trajectories (150,030/150,030 samples); total required five-bar motor load is **UNKNOWN**. No reconstruction, gravity-only force, feasibility claim, or radial reaction model was introduced. Sampled control states also do not resolve within-interval reaction peaks.
+Read-only projection of the 30 saved, reduced-model PASS trajectories through the source-inventory five-bar geometry (`l1=l4=0.075 m`, `l2=l3=0.14 m`, `l5=0.08 m`) finds 1,940/150,030 samples outside serial-chain reach. Every excluded sample violates the A-side outer inequality, `ρA > l1+l2 = 0.215 m`; no B-side or branch-only exclusions occurred. Each affected case has one contiguous interval. The other 20 cases have zero exclusions.
 
-## Provenance and limitations
+| L=0.20 m scenario; seeds | Per case | Group total | First → last excluded control sample |
+|---|---:|---:|---|
+| `combined_target`, seeds 0–4 | 151/5,001 (3.019%) each | 755/25,005 (3.019%) | ticks 1652–1802; 3.304–3.604 s |
+| `stronger_sample`, seeds 0–4 | 237/5,001 (4.739%) each | 1,185/25,005 (4.739%) | ticks 1642–1643 through 1878–1879; 3.284–3.286 through 3.756–3.758 s (seed 2 is one tick later) |
 
-Inputs: `/Users/quockaiser/wbr-evidence-archive/sim-control-corners-20261022-01/combined-01/study`, source commit `92d925ba7be174284d72ab9d7ad499d28bd8a733`, analysis `combined-analysis-01`, report `report-01`. The trajectories are the reduced planar model and record no five-bar extension reaction. Source geometry is the listed inventory `l1=l4=0.075 m`, `l2=l3=0.14 m`, `l5=0.08 m`; dimensions are not verified against the owner's assembly. Conductor independently matched all 30 IDs/150,030 rows and the 1,940 exclusions using serial-chain reach inequalities; 90 finite-difference inverse-Jacobian checks agreed within 1.51e-11 N·m. The separate link-bench RTT measures Pi↔MCU packet round trip and does not establish sensor-to-actuator loop latency.
+These are source-geometry workspace hits in trajectories that passed the reduced-model criteria. They do not establish the owner's physical reachability or a controller failure bound. All first/last exclusions are after the 3.000–3.150 s push pulse, not during initial recovery. Push-only causality is not supported: push amplitude, mass scale, delay and wheel-map offset co-vary (combined: 30 N, 1.5×, 6 ms, +0.167; stronger: 36 N, 2×, 8 ms, +0.5).
 
-Owner confirmed these inputs are unavailable. Still missing for a physical load or feasibility assessment: identified motor and gear model/revision for each A/E joint and wheel drive; owner assembly BOM/CAD with part masses, geometry, COM and inertia; measured end-to-end sensor-sample-to-actuator-torque latency/jitter evidence. Supplier examples in the parameter-source audit do not identify the owner's BOM.
+## Balance-only torque extrema
 
-Evidence outputs and reproduction source: `/Users/quockaiser/wbr-evidence-archive/sim-motor-load-followup-20261022-01/` (`analyze_saved.py`, `all30_balance_only.csv`, `summary.json`, logs). Reproduce from the repository root:
+Across the 148,090 reachable samples, the separate global extrema are:
+
+- `|A| = 0.40542578868132084 N·m`, `L20_stronger_sample_seed1`, tick 10 (0.020 s).
+- `|E| = 0.35224760632453234 N·m`, `L12_stronger_sample_seed1`, tick 9 (0.018 s).
+
+These are instantaneous balance-only virtual-hip mappings; they are not simultaneous extrema or total motor loads. They exclude the unrecorded radial reaction. The earlier 1.233/1.239 N·m peaks are total A/E torques for separate upright, no-push ramps with ideal extension reaction and must not be compared as the same load quantity.
+
+## CSV alignment and limits
+
+`control.csv` reports canonical control time `tick*DT`. `segments.csv`/`stages.csv` retain accumulated float `t` at mechanical substeps and Runge–Kutta stages, with multiple rows per control tick. Associate each segment/stage with its parent control tick **and** substep/stage index; do not join every row one-to-one by a single integer tick. If matching timestamps, the existing tolerance is 1 ns. No output-format change is made here.
+
+Provenance: saved study `/Users/quockaiser/wbr-evidence-archive/sim-control-corners-20261022-01/combined-01/study` (simulation source `92d925ba7be174284d72ab9d7ad499d28bd8a733`); projection source geometry `f4b1a5bf15ac7f3b7803feb7119b237c402bd0f6`; prior analysis `combined-analysis-01/report-01`. Saved analysis CSV: `/Users/quockaiser/wbr-evidence-archive/sim-motor-load-followup-20261022-01/all30_balance_only.csv`. Attribution source, exact per-case data, receipt and log are in `/Users/quockaiser/wbr-evidence-archive/sim-motor-load-followup-20261022-01/review123-followup-01/`.
+
+Reproduce the retained check from the repository root:
 
 ```sh
 export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH="$PWD"
-nice -n 10 /private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python /Users/quockaiser/wbr-evidence-archive/sim-motor-load-followup-20261022-01/analyze_saved.py
+nice -n 10 /private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python /Users/quockaiser/wbr-evidence-archive/sim-motor-load-followup-20261022-01/review123-followup-01/verify_saved.py
 ```
 
-Targeted test command:
+The check matched all 30 IDs, sample/reachability counts, per-case A/E peaks and 1,940 total exclusions against the saved analysis CSV; control-row times map to integer ticks within 1 ns. No radial reaction is saved, so total five-bar load remains **UNKNOWN**; source dimensions are not owner-verified geometry, masses, or CAD. Do not infer physical motor feasibility from this projection.
 
-```sh
-PYTHONPATH="$PWD" /private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/.venv/bin/python -m unittest sim.fivebar.tests.test_ramp_panel -v
-```
-
-**Recommendation:** defer further margin sweeps and datasheet comparisons until the actual assembly and timing inputs exist. PR122 contains this software follow-up; physical-load assessment remains blocked. No rollout, training or hardware access occurred.
+**Recommendation:** stop margin sweeps and datasheet comparisons until actual motor/gear IDs, assembly mass/geometry, and measured sensor-to-actuator latency are available. No new rollout, training, hardware access, model/runtime changes, or tests were performed for this documentation follow-up.
 
 ## Claude review (2026-10-22)
 
