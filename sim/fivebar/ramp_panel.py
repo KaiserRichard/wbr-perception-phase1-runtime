@@ -165,7 +165,8 @@ def run(schedule, regime, spec, out, *, h=.001, epsilon=1e-6):
                 actual_length = profile(t)[0]
                 gain_length = actual_length if mode == 'scheduled' else profile.initial_m
                 obs, raw, clipped = controller.tick(measured, gain_length)
-                controls.writerow([t, *state, *obs, *sensor.noise, *raw, *clipped, *torque,
+                # Reporting only: preserve profile/controller/physics times above.
+                controls.writerow([tick*DT, *state, *obs, *sensor.noise, *raw, *clipped, *torque,
                                    *profile(t), gain_length])
                 if tick == round(profile.duration_s/DT):
                     break
