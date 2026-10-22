@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import PropertyMock, patch
 
 import numpy as np
 
@@ -53,10 +53,40 @@ class PanelTests(unittest.TestCase):
         extension_power = (b[3]-a[3])[1:] @ motor_velocity
         self.assertAlmostEqual(extension_power, a[1]*velocity4[3], places=8)
         self.assertAlmostEqual(a[3][1:] @ motor_velocity, torque[1]*(state[5]-state[4]), places=9)
+        hip_power = torque[1]*(state[5]-state[4])
+        self.assertGreater(abs(a[1]*velocity4[3]), 1e-3)
+        self.assertGreater(abs(hip_power), 1e-3)
+        self.assertAlmostEqual(b[3][1:] @ motor_velocity,
+                               a[1]*velocity4[3] + hip_power, places=8)
+        # A reversed hip sign must fail at this nondegenerate state.
+        self.assertGreater(abs(b[3][1:] @ motor_velocity -
+                               (a[1]*velocity4[3] - hip_power)), .1)
         record = diagnostic.peaks[0]
         np.testing.assert_allclose(np.array(record['balance_only_A_E_Nm'])+record['extension_only_A_E_Nm'],
                                    record['required_A_E_Nm'], atol=1e-15)
         self.assertEqual(record['time_s'], t)
+
+    def test_reported_ticks_do_not_change_mechanical_stage_times(self):
+        info = dict.fromkeys(('extension_mean_N', 'extension_peak_abs_N',
+                              'extension_work_J', 'extension_absolute_work_J',
+                              'closure_max_m'), 0.)
+        info['native_motor_peak_abs_Nm'] = np.zeros(3)
+        # Exercise the real reporting loop with stub mechanics, not a rollout.
+        with tempfile.TemporaryDirectory() as directory, \
+                patch.object(panel.Profile, 'duration_s', new_callable=PropertyMock,
+                             return_value=.03), \
+                patch.object(panel, 'mechanical_step',
+                             side_effect=lambda m, t, s, u, h: (s.copy(), info)) as step, \
+                patch.object(panel.Controller, 'tick',
+                             return_value=(np.zeros(10), np.zeros(2), np.zeros(2))):
+            out = Path(directory)
+            panel.run({'reference_config': self.cfg}, {'fit': None}, panel.matrix()[0], out)
+            controls = np.genfromtxt(out/'control.csv', delimiter=',', names=True)
+            np.testing.assert_array_equal(controls['time_s'], np.arange(16)*panel.DT)
+            expected = [tick*panel.DT+sub*.001 for tick in range(15) for sub in range(2)]
+            self.assertEqual([call.args[1] for call in step.call_args_list], expected)
+            # The old last-substep sum is not bit-identical to canonical ticks.
+            self.assertTrue(any(expected[2*k-1]+.001 != k*panel.DT for k in range(1, 16)))
 
     def test_required_peaks_keep_same_stage_loads(self):
         mechanics = panel.RequiredTorque(Plant(self.cfg), profile=panel.Profile(.12, .20, 1.))

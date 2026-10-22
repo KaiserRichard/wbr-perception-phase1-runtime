@@ -1,0 +1,5 @@
+- Resumed branch `chatgpt/20261022-motor-load-followup` at `c124b21`; preserved existing uncommitted ramp-panel timestamp and combined-power changes.
+- Read the checkpoint, sim instructions, parameter-source audit, link-bench README and saved study archive; confirmed new evidence archive contained only an empty logs directory.
+- Ran `sim.fivebar.tests.test_ramp_panel`: 6/6 passed, including combined power/sign and reporting tick tests.
+- Ran offline saved-data projection over 30 cases / 150,030 control rows: 148,090 geometrically reachable, 1,940 unreachable; all radial reaction and total five-bar loads remain UNKNOWN.
+- Wrote archive script/CSV/summary/logs and one-page review. No rollouts, training or hardware access.
