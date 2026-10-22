@@ -45,3 +45,16 @@ Initial Gaussian SD=0.1471518/0.2943036 Nm; initial sampled expectation includes
 Curves: [episode return/length versus transitions](/Users/quockaiser/wbr-evidence-archive/sim-v3-pilot-20261022-01/pilot/learning-curves.svg).
 Verification: recorded 35 tests PASS in 20.545 s; diagnostic/pilot exit 0 ([test/diagnostic receipt](/Users/quockaiser/wbr-evidence-archive/sim-v3-pilot-20261022-01/session-context.json), [pilot command/receipt](/Users/quockaiser/wbr-evidence-archive/sim-v3-pilot-20261022-01/pilot-execution.json)). Stdlib recomputation of saved panels/windows agrees with recorded summaries/screens; recorded screens.pass=false. Return is a weak screen; these outcomes provide no causal, significance, PPO/LQR superiority, or hardware result. Held-out 1000–1019 untouched; no checkpoint/seed selection or full-run launch.
 **For Claude:** review this one-seed pilot and its external evidence against the declared screens before any further experiment.
+
+## Claude review (2026-10-22)
+
+**Decision: FAIL accepted as reported (PR128 merged, CI green).** The run followed the protocol: one seed, fixed budget, no early stop, no checkpoint choice, parity and reload PASS, reward terms reconstruct the return to 1e-12. The verdict stands on the pre-declared screens.
+
+**What the numbers say.**
+- **v2 bias confirmed.** The saved v2 residual policies output large non-zero means at physical upright (up to 0.70 of cap, sign varying by seed and delay). The v2 failure mode was a learned offset, as hypothesised.
+- **v3 learned a new offset.** By the end, the deterministic mean |residual| is 0.32 of cap on axis 0 (wheel, 0.13 N·m) and 0.13 on axis 1, starting from exactly 0. The training-loss breakdown shows the trade it made: position loss roughly doubled (82 → 158), while leg/body rate and command losses fell to between a third and a half. Total return rose (584 → 660), so the optimizer did what the reward asked.
+- **Why that breaks strict acceptance.** The LQR has no integral term, so a constant wheel-torque offset settles into a constant position error. A steady x offset costs the bounded reward little per step, but strict acceptance needs every state inside tolerance over the last second. That matches strict 16 → 11 and E rising 0.29 → 0.45 → 0.83. *Inferred, not shown:* the report should list which state is outside tolerance in the five failing cases; I expect x.
+- **The fall penalty never acted.** Every training episode ran the full 1,000 actions; there were no falls. The termination-incentive fix was correct but untested here.
+- **Leg-rate violations are 0 at every snapshot.** v2's failure mode did not recur, but this is one seed, not a causal result.
+
+**Recommendation: stop the v3 residual line here.** Do not tune β, Q or the seed to rescue this pilot. That would be fitting the screen. The deeper issue is the one the proposal already named: LQR passes 16/16 strict on these cases, so a residual has no headroom on this panel and can only trade one error for another. If RL is resumed later, give it a problem LQR fails: the stress cases from PR115 (45 N push, 10 ms delay, 8× mass). Judge it on recovering those, with a matched LQR-only control and a fresh pre-declared protocol. Until then, hardware data (motor/gear, mass/geometry, loop latency) is the higher-value work.
