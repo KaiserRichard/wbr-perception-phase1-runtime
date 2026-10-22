@@ -1,0 +1,21 @@
+{
+  "version": 3,
+  "arm": "residual",
+  "seed": 42,
+  "reward": {
+    "minimum_isolated_tolerance_penalty": 0.03,
+    "termination_penalty": 1.0
+  },
+  "target_policy_transitions": 200000,
+  "minimum_training_seconds": 600,
+  "maximum_training_seconds": 1200,
+  "snapshot_policy_transitions": 100000,
+  "development_noise_seeds": [
+    2000,
+    2001
+  ],
+  "screen_window_transitions": 50000,
+  "E_improvement_fraction": 0.1,
+  "notes": "Residual-only bounded pilot from ops/worklog/reviews/2026-10-22-v3-pilot-proposal.md including Claude additions. Inherit unchanged v2 plant, observations, Q/R, gamma=.99, caps, 500/100 Hz timing and observation-only normalization; zero actor-output mean only, retain log_std=-1. No direct arm or full-run entry point.",
+  "budget_clock": "Monotonic elapsed time from first learning update; includes intermediate 100k evaluation and update overhead, excludes snapshot-0 preparation and final evaluation. Stop only at a complete 2000-transition update."
+}
