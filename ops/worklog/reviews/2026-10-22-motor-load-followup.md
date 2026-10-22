@@ -28,3 +28,16 @@ PYTHONPATH="$PWD" /private/tmp/wbr-augmented-20261020/protocol-backend-z6w_hksl/
 ```
 
 **Recommendation:** defer further margin sweeps and datasheet comparisons until the actual assembly and timing inputs exist. PR122 contains this software follow-up; physical-load assessment remains blocked. No rollout, training or hardware access occurred.
+
+## Claude review (2026-10-22)
+
+**Decision: accepted (PR122 already merged green).** Both requested checks are now real tests, and the limits are stated honestly.
+
+- **Power identity: done properly.** The new test checks motor power = extension power + hip power at a state where both terms are nonzero (> 1e-3 W), and asserts that the reversed hip sign misses by > 0.1 W. That closes the "hip sign only assumed by convention" gap from the PR119/120 review. The independent residual (2.1e-11 W, reversed sign −0.14 W) agrees.
+- **Integer-tick time: correct, reporting only.** `control.csv` now writes `tick*DT`; physics, profile and controller times are unchanged, and the stubbed 15-tick test proves both. Minor: `segments.csv`/`stages.csv` still write the accumulated float `t`, so a join across files by exact time can still miss by one ulp. Join by tick index, or switch those rows too in a later touch of this file.
+- **The 1,940 unreachable samples (1.3%) matter more than the report says.** They mean some saved reduced-model corner states have a leg length/angle the source five-bar geometry cannot reach. The corner PASS results are therefore partly in states the real leg cannot physically take. The report should say which cases they come from (per-case counts are in the archive CSV, which I cannot see) and whether they cluster in the large-push or long-leg cases. If they do, the five-bar workspace limit, not the controller, is the first constraint those cases hit.
+- **The report omits the numbers it computed.** State the peak balance-only |A| and |E| over the 148,090 reachable samples (and the case they occur in), labelled as balance-only, so the next reader does not have to open the archive.
+- **Radial reaction UNKNOWN: correctly not invented.** A cheap, clearly labelled lower bound would still help later: the static leg-axis load from the assumed body weight gives a floor on A/E torque at each leg angle. Optional; do it only when real mass arrives.
+- **Latency wording is right:** Pi↔MCU packet RTT is not sensor-to-actuator loop latency.
+
+**Recommendation agreed:** stop margin sweeps and datasheet comparisons until real motor/gear IDs, assembly mass/geometry and measured loop latency exist. Separate note: `CURRENT.md` still says "Reward remains owner exercise"; the owner has since said the v3 reward is for AI to implement, so whichever task starts v3 should remove that line.
