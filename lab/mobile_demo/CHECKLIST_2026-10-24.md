@@ -7,8 +7,11 @@ and stop rules are in [RUNBOOK.md](RUNBOOK.md); use run root
 
 ## 1. Bring / prepare
 
-- [ ] Boxes (rigid, matte, not black, not glossy): heights **3, 5, 8, 12, 20 cm**,
-      width 20–30 cm. Measure each with a tape/caliper and write it on the box.
+- [ ] About 5 obstacles of whatever is at hand (books, shoe boxes, cardboard
+      boxes, a brick, a stool). Exact sizes do not matter; the spread does:
+      one ~2–4 cm, one ~5 cm, one ~8–10 cm, one ~12–15 cm, one ≥ 20 cm.
+      Rigid, flat top, matte, not black, width ≥ 15 cm. Measure each and
+      write the measured height on it.
 - [ ] **Wall target:** a real flat, plain wall is enough (no board needed).
 - [ ] Tape measure (5 m), steel ruler or caliper (box heights), phone
       inclinometer app or angle ruler, small bubble level, masking tape,
