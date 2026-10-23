@@ -46,6 +46,17 @@ and stop rules are in [RUNBOOK.md](RUNBOOK.md); use run root
 Run B1–B8 as one static camera pose (move only the box). Do the stereo map runs
 after the static runs so a USB problem does not cost the controlled data.
 
+## 3b. Frame rate (decided 2026-10-23)
+
+Use **RGB-D at 15 Hz**, not the RUNBOOK's 30 Hz: pass `fps:=15` to
+`d435_camera.launch.py` and `--fps 15` to `sdk_to_yaml.py`. CALCULATED,
+uncompressed: colour 921.6 kB + raw depth 614.4 kB + aligned depth 614.4 kB
+per frame → 32 MB/s at 15 Hz vs 64 MB/s at 30 Hz. The card is rated 50 MB/s
+write (manufacturer, peak sequential), so 30 Hz cannot fit. Morning check: a
+1 GB write test with sync on the evidence disk. If sustained write is below
+~45 MB/s, drop the raw depth topic (aligned only: 23 MB/s). Stereo map runs
+stay at 15 Hz (8.8 MB/s measured).
+
 ## 4. Topics and metadata per run
 
 - RGB-D (RUNBOOK §3 `record.sh rgbd`): `/camera/camera/color/image_raw`,
