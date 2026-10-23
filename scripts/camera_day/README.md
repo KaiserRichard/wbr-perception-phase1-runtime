@@ -195,6 +195,53 @@ capture, clean shutdown, recorded QoS inspection and the quality command above.
 Revert by using the prior broad recorder and restoring the saved session sysctl
 values; retained data and the camera calibration are unaffected.
 
+### Longer stereo IR capture
+
+For a session longer than the Pi capture runner's 180-second cap, start the
+existing camera launch and foreground MCAP recorder directly; do not use the
+runner. In each terminal, source ROS Jazzy and the verified camera build. In
+Terminal 1, create a new session directory and launch the stereo camera at the
+recorder profile of 640×480/15 Hz:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+source /home/richard/wbr-camera-ros-build-20261021-04/install/setup.bash
+export CAMERA_RUN="$HOME/wbr-camera-long-$(date -u +%Y%m%dT%H%M%SZ)"
+mkdir "$CAMERA_RUN"
+ros2 launch wbr_orb_node d435_camera.launch.py \
+  mode:=stereo serial:="$CAMERA_SERIAL" width:=640 height:=480 fps:=15
+```
+
+In Terminal 2, set `CAMERA_RUN` to the exact directory created in Terminal 1.
+The recorder runs until Ctrl-C; wait for it to exit cleanly so rosbag writes
+`metadata.yaml` and finalizes the MCAP:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+source /home/richard/wbr-camera-ros-build-20261021-04/install/setup.bash
+export CAMERA_RUN="$HOME/wbr-camera-long-YYYYMMDDTHHMMSSZ"  # substitute Terminal 1's timestamp
+bash scripts/camera_day/record_stereo.sh "$CAMERA_RUN/stereo-long-mcap"
+# After the desired several-minute capture, press Ctrl-C in this terminal.
+python3 scripts/camera_day/stereo_bag_quality.py \
+  "$CAMERA_RUN/stereo-long-mcap" "$CAMERA_RUN/stereo-long-quality.json" --fps 15
+```
+
+This records IR1, IR2 and both CameraInfo topics with the existing reliable
+reader overrides (`stereo_record_qos.yaml`). It does not invoke `capture_loop.py`
+or add depth, SLAM, TF or metadata topics. Confirm the active camera profile and
+offered publisher QoS before relying on the capture; the recorder cannot make a
+best-effort publisher reliable. Keep the camera running until the recorder has
+finished finalizing the bag.
+
+Storage planning uses the measured **212.6 MiB per 24.07 s** for the two IR
+image streams and their CameraInfo topics at this profile: about **530 MiB/minute**,
+**2.59 GiB for five minutes**, or **5.18 GiB for ten minutes**. These are linear estimates; reserve
+additional free space for filesystem overhead and any other recorded data.
+**UNVERIFIED:** this direct, several-minute Pi capture path, sustained storage
+rate, free-space headroom, publisher QoS at the time of capture and clean
+long-duration finalization have not been exercised on the Pi. The rate is an
+estimate extrapolated from the measured short capture, not a long-run bound.
+
 ## Record and replay
 
 In another terminal, record foreground into a new path (Ctrl-C finalizes the bag):

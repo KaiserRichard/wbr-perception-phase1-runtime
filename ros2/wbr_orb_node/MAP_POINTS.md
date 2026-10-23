@@ -166,19 +166,36 @@ python3 ros2/wbr_orb_node/tests/replay_map_points.py \
   --vocabulary "$orb/Vocabulary/ORBvoc.txt" --output /absolute/NEW-replay-evidence --domain 187
 ```
 
-The harness uses only the first **20 bag seconds at 0.3×**, private domain 187,
-localhost transport and remapped test image topics; no camera process. It starts
+The harness defaults to the first **20 bag seconds at 0.3×**, private domain 187,
+localhost transport and remapped test image topics; no camera process. Select a
+different prefix and playback rate with `--seconds N --rate R`. `--seconds 0`
+reads the full recording duration from its `metadata.yaml` and replays that
+duration. The receipt and successful validation JSON record requested seconds,
+resolved bag seconds, rate and the computed playback deadline. The deadline is
+`ceil(bag_seconds / rate + 30)` seconds; the harness extends its work and overall
+windows to accommodate the requested playback while retaining the original
+default windows. For example:
+
+```bash
+python3 ros2/wbr_orb_node/tests/replay_map_points.py \
+  --node /path/to/d435_node --bag /path/to/stereo-bag \
+  --settings /path/to/stereo.yaml --vocabulary /path/to/ORBvoc.txt \
+  --output /path/to/new-full-map-replay --seconds 0 --rate 0.3
+```
+
+It starts
 the SLAM node and recorder, waits for all requested topics to subscribe, then
 starts the player. The derived bag uses receive-time while cloud headers preserve
 source-time. It keeps commands/PIDs/exits/logs, stops its
 own process groups (also on supervisor SIGTERM), requires clean child exits, then
-reads the closed MCAP with `check_map_points_bag.py`. Work stops by 145 seconds;
-cleanup and validation share the remaining 180-second overall budget.
+reads the closed MCAP with `check_map_points_bag.py`. Startup and cleanup
+allowances remain bounded, and playback receives its computed duration-based
+deadline.
 The check requires nonempty real map points, exact XYZ layout, finite coordinates,
 matching pose/status/metadata stamps, source rate ≤1 Hz and timestamps present in
 the input bag. It is not a trajectory accuracy, live throughput, reset/merge
-stress, cap-overflow or Foxglove GUI test. Do not extend to a full replay without
-conductor authorization.
+stress, cap-overflow or Foxglove GUI test. Full-bag map replay itself remains
+unverified until run against a complete recording.
 
 The validator can be repeated without running SLAM:
 
