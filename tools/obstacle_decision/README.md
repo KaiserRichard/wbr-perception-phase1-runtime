@@ -47,3 +47,41 @@ are assumptions, not robot clearance/jump capabilities. Synthetic geometry
 does not model reflective surfaces, multipath, motion distortion, camera
 extrinsic error, floor irregularity, or real depth holes. Advisory names are
 candidates only and must never be interpreted as permission to jump.
+
+## Replay recorded RGB-D bags and evaluate box runs
+
+`replay_bag.py` reads ROS 2 MCAP messages without ROS runtime dependencies. It
+uses the aligned color-depth topic with color camera calibration when present;
+otherwise it selects the depth image and depth camera info pair. `16UC1` depth
+is converted from millimetres to metres; `32FC1` is treated as metres. The
+`--stride` option processes every Nth depth frame. Output contains one CSV row
+per processed frame and a summary JSON. The summary treats the full bag as the
+static segment because the expected stationary box captures do not carry a
+separate segment annotation; trim bags to the static interval before evaluation
+if they include motion or setup.
+
+```sh
+~/Desktop/Research/wbr-venvs/perception/bin/python tools/obstacle_decision/replay_bag.py capture.mcap --out results/capture
+~/Desktop/Research/wbr-venvs/perception/bin/python tools/obstacle_decision/replay_bag.py capture.mcap --depth-topic /camera/camera/depth/image_rect_raw --info-topic /camera/camera/depth/camera_info --stride 2 --out results/depth
+```
+
+`eval_runs.py` expects a UTF-8 CSV with this header (the mobile-demo run sheet
+was not present when this evaluator was added):
+
+```csv
+run_id,bag_path,box_height_m,box_front_distance_m,box_width_m,lateral_offset_m,camera_height_m,camera_tilt_deg,floor_type,notes
+```
+
+Distances and dimensions are metres; `camera_tilt_deg` is degrees. A relative
+`bag_path` is resolved from the run-sheet directory. Evaluation writes
+`evaluation.md`, `evaluation.json`, one replay subdirectory per run, and plots
+for estimated versus measured height and distance error versus measured
+distance. Advisory correctness uses the current `DecisionParams` defaults
+(jump height 0.03–0.12 m); these are assumed informational thresholds, not
+hardware clearance criteria.
+
+```sh
+MPLCONFIGDIR=/private/tmp/wbr-mpl-cache MPLBACKEND=Agg \
+  ~/Desktop/Research/wbr-venvs/perception/bin/python tools/obstacle_decision/eval_runs.py \
+  lab/mobile_demo/run_sheet.csv --out results/mobile_demo
+```
