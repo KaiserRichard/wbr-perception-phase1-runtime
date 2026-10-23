@@ -41,29 +41,28 @@ and stop rules are in [RUNBOOK.md](RUNBOOK.md); use run root
 - [ ] Stability: press/tap the camera; it must not move. Re-measure height and
       tilt at the end of the session.
 
-## 3. Runs (in this order; ~2.5 h)
+## 3. Runs — build first: 7 core runs (~1 h), the rest only if time is left
 
-| ID | Mode | What | Needs ORB | Ground truth to record |
+The camera is portable (borrowed power bank); no robot. Static runs: camera on
+a stool/box stack at a measured height. Moving runs: carried or on a wheeled
+chair, slow and steady, ending on the start mark.
+
+| Order | ID | Mode | What | Ground truth |
 |---|---|---|---|---|
-| P0 | — | Preflight (RUNBOOK §1), `dmesg -w` running all session | – | serial, FW, 5000M, power |
-| S1 | RGB-D | Static 10 s, empty floor | no | camera height/tilt (tape) |
-| W1 | RGB-D | Static 5 s, facing a flat wall perpendicularly at **1.00 m** | no | tape distance lens→wall |
-| W2 | RGB-D | Same at **2.00 m** | no | tape distance |
-| B1–B5 | RGB-D | Static 5 s, box 3/5/8/12/20 cm, front face at **1.00 m**, centred | no | box h/w, distance, lateral offset |
-| B6–B8 | RGB-D | Static 5 s, **5 cm** box at 0.5 / 1.5 / 2.0 m | no | same |
-| A1 | RGB-D | Slow hand-pushed approach (~0.2 m/s) from 3 m to 0.5 m toward 5 cm box | optional | start/stop floor marks |
-| A2 | RGB-D | Same toward 20 cm box | optional | same |
-| M0 | Stereo | 30 s motion check (RUNBOOK §2) | yes | – |
-| M1 | Stereo | Lab map, 180 s, hand-pushed: tape-marked start, slow loop within the extension-cord reach, return to the start mark | yes | start mark, return offset (tape) |
-| M2 | RGB-D | 60–120 s hand-pushed drive with 2–3 boxes placed on the path (local-map demo data) | yes | box positions on floor (tape from start mark) |
-| L1 | Stereo or RGB-D | Straight **3.00 m** hand push between two tape marks, stop, return | yes | 3.00 m (tape) |
+| 0 | P0 | – | Preflight + `dmesg -w` all session; Claude 2 builds `claude2/20261024-demo` on the Pi meanwhile | serial, 5000M, throttle 0x0 |
+| 1 | LIVE | RGB-D | Run `wbr_obstacle_node` live, view `/advisory` + markers in Foxglove, put a box in front. Record the run. | – |
+| 2 | S1 | RGB-D | Static 10 s, empty floor | camera height + tilt |
+| 3 | W1 | RGB-D | Static 5 s facing a flat wall at 1.00 m | tape distance |
+| 4 | B | RGB-D | Static 5 s each: low (~5 cm), mid (~12 cm), tall (≥ 20 cm) box at 1.00 m | box heights |
+| 5 | A1 | RGB-D | Slow approach from 3 m to the ~5 cm box | start mark |
+| 6 | M1 | Stereo | Lab map 180 s, carried slowly, back to the start mark | return offset |
+| 7 | L1 | Stereo | Straight 3.00 m between tape marks | 3.00 m |
 
-No robot needed (decided 2026-10-23): static runs S1/W/B use the camera on a stool or box stack at a measured height; M1 and L1 may be carried by hand (slow, steady height, no fast turns, overlapping views, end on the start mark); A1/A2/M2 use the camera fixed to an office chair with casters or a trolley at a fixed height. Pi and camera move together on the 27 W supply via the extension cord.
+Optional if time is left: more box heights/distances, W at 2.00 m, M2 (walk
+past 2–3 boxes with RGB-D for the local map).
 
-All moving runs are **pushed by hand**; no robot driving is needed. Our Pi rides on the rig on the 27 W supply via an extension cord; keep the cord behind the rig and clear of the wheels. Plan B only for a route longer than the cord: record on the lab robot's Pi (lab owner's permission; camera driver + `ros2 bag record` only, into a new folder; ORB-SLAM3 runs offline later). Do not swap microSD cards.
-
-Run B1–B8 as one static camera pose (move only the box). Do the stereo map runs
-after the static runs so a USB problem does not cost the controlled data.
+If the live node fails, do not debug in the lab: record runs 2–7 anyway and
+the team fixes it offline from the bags.
 
 ## 3b. Frame rate (decided 2026-10-23)
 
