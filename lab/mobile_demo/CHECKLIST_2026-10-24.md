@@ -84,7 +84,7 @@ stay at 15 Hz (8.8 MB/s measured).
 |---|---|---|
 | Capture validity | after each run (Pi) | all topics present, image count ≥ 95% of rate × duration, no USB reset in `dmesg` |
 | Camera stability | S1 offline | fitted floor height std ≤ 5 mm, pitch std ≤ 0.3° over 10 s; start/end tape height differ ≤ 5 mm |
-| Depth accuracy | W1/W2 offline | board depth within **2%** of tape (D435 datasheet class) at 1 m and 2 m |
+| Depth accuracy | W1/W2 offline | wall depth within **2%** of tape (D435 datasheet class) at 1 m and 2 m |
 | Box measurement | B1–B8 offline | height error ≤ 1.5 cm and distance error ≤ 5 cm up to 1.5 m |
 | Advisory | B, A offline | 3–12 cm → JUMP_CANDIDATE, 20 cm → STOP_CANDIDATE, empty → NONE (current assumed thresholds) |
 | ORB tracking | M1, M2, L1 | tracking OK ≥ 95% of frames, no reset/new map |
