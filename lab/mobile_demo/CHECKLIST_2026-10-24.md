@@ -18,7 +18,11 @@ and stop rules are in [RUNBOOK.md](RUNBOOK.md); use run root
       marker pen, printed run sheet.
 - [ ] Screwdriver / hex keys for the mount, zip ties or velcro for cable strain
       relief, short known-good USB 3 cable (+ a spare).
-- [ ] Power for a moving rig: the 27 W Pi supply plus an extension cord long
+- [ ] Borrowed portable power (2026-10-23): check its label says USB-C PD
+      **5 V / 5 A** (27 W class). A 5 V / 3 A source makes the Pi 5 limit USB
+      current, a likely cause of camera disconnects. Preflight must show
+      `vcgencmd get_throttled` = 0x0 on it; otherwise use the wall supply.
+- [ ] Fallback power for a moving rig: the 27 W Pi supply plus an extension cord long
       enough for the push route (or a power bank that supplies 5 V / 5 A).
 - [ ] Camera mount rigid on the mobile robot; cable strain relief and slack.
       The robot is **pushed by hand** (no motors): push slowly and smoothly,
