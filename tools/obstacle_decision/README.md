@@ -48,40 +48,56 @@ does not model reflective surfaces, multipath, motion distortion, camera
 extrinsic error, floor irregularity, or real depth holes. Advisory names are
 candidates only and must never be interpreted as permission to jump.
 
-## Replay recorded RGB-D bags and evaluate box runs
+## Replay recorded RGB-D bags and evaluate mobile-demo runs
 
-`replay_bag.py` reads ROS 2 MCAP messages without ROS runtime dependencies. It
-uses the aligned color-depth topic with color camera calibration when present;
-otherwise it selects the depth image and depth camera info pair. `16UC1` depth
-is converted from millimetres to metres; `32FC1` is treated as metres. The
-`--stride` option processes every Nth depth frame. Output contains one CSV row
-per processed frame and a summary JSON. The summary treats the full bag as the
-static segment because the expected stationary box captures do not carry a
-separate segment annotation; trim bags to the static interval before evaluation
-if they include motion or setup.
+`replay_bag.py` uses `rosbags.highlevel.AnyReader` with the ROS 2 Jazzy typestore.
+It accepts a rosbag2 directory containing `metadata.yaml` and `.db3` or `.mcap`
+storage, or a single `.db3`/`.mcap` file. Topic auto-resolution prefers aligned
+color-depth with color camera calibration, otherwise depth with depth camera
+info. `16UC1` is converted from millimetres to metres; `32FC1` is treated as
+metres. `--stride` processes every Nth depth frame. Output contains per-frame
+CSV and summary JSON, including a configurable central square ROI depth (used
+for wall runs). It treats all replayed frames as the evaluation interval; trim
+bags to the intended stationary segment if they include setup or motion.
 
 ```sh
-~/Desktop/Research/wbr-venvs/perception/bin/python tools/obstacle_decision/replay_bag.py capture.mcap --out results/capture
-~/Desktop/Research/wbr-venvs/perception/bin/python tools/obstacle_decision/replay_bag.py capture.mcap --depth-topic /camera/camera/depth/image_rect_raw --info-topic /camera/camera/depth/camera_info --stride 2 --out results/depth
+~/Desktop/Research/wbr-venvs/perception/bin/python tools/obstacle_decision/replay_bag.py capture/ --wall-roi-size 80 --out results/capture
+~/Desktop/Research/wbr-venvs/perception/bin/python tools/obstacle_decision/replay_bag.py capture.db3 --depth-topic /camera/camera/depth/image_rect_raw --info-topic /camera/camera/depth/camera_info --stride 2 --out results/depth
 ```
 
-`eval_runs.py` expects a UTF-8 CSV with this header (the mobile-demo run sheet
-was not present when this evaluator was added):
+`eval_runs.py` accepts the mobile-demo run sheet. Only `run_id` and `bag_path`
+are mandatory; numeric cells can be blank and any additional input columns are
+preserved in `evaluation.json`. A relative `bag_path` is resolved from the
+run-sheet file's directory. The evaluator classifies rows as:
 
 ```csv
-run_id,bag_path,box_height_m,box_front_distance_m,box_width_m,lateral_offset_m,camera_height_m,camera_tilt_deg,floor_type,notes
+run_id,bag_path,capture_type,mode,box_height_m,box_front_distance_m,box_width_m,lateral_offset_m,camera_height_m,camera_tilt_deg,wall_distance_m,floor_type,lighting,usb_disconnects,notes
 ```
 
-Distances and dimensions are metres; `camera_tilt_deg` is degrees. A relative
-`bag_path` is resolved from the run-sheet directory. Evaluation writes
-`evaluation.md`, `evaluation.json`, one replay subdirectory per run, and plots
-for estimated versus measured height and distance error versus measured
-distance. Advisory correctness uses the current `DecisionParams` defaults
-(jump height 0.03–0.12 m); these are assumed informational thresholds, not
-hardware clearance criteria.
+- A wall row has `wall_distance_m` set. It reports the median valid depth in a
+  centered 80×80 px ROI per frame and the median across frames, plus tape error
+  and relative error. `--wall-roi-size N` changes the square ROI width/height;
+  PASS is absolute relative error ≤ 2%.
+- An empty-floor row has empty `box_height_m` and `wall_distance_m`. It reports
+  false-detection rate (frames containing a detector obstacle candidate divided
+  by processed frames), camera-height error when a measured camera height is
+  supplied, and plane-height/pitch standard deviations. Stability PASS limits
+  are 5 mm and 0.3°.
+- Other rows are box runs. PASS is defined only when measured box height and
+  front distance are supplied and distance is ≤ 1.5 m; it requires absolute
+  height error ≤ 0.015 m and distance error ≤ 0.05 m. Beyond 1.5 m the estimates
+  remain reported without PASS/FAIL. Advisory correctness is reported when
+  measured box height is supplied, using assumed 0.03–0.12 m jump thresholds.
+
+Evaluation writes separate box, empty-floor, and wall tables in `evaluation.md`,
+full run-sheet fields and metrics in `evaluation.json`, a replay subdirectory
+per run, and box-only plots for height and distance error.
 
 ```sh
 MPLCONFIGDIR=/private/tmp/wbr-mpl-cache MPLBACKEND=Agg \
   ~/Desktop/Research/wbr-venvs/perception/bin/python tools/obstacle_decision/eval_runs.py \
   lab/mobile_demo/run_sheet.csv --out results/mobile_demo
 ```
+
+Use the exact run sheet header above. All geometric distances and dimensions
+are metres; `camera_tilt_deg` is degrees. Wall ROI size is in pixels.

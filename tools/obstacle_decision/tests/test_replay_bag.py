@@ -6,6 +6,9 @@ from pathlib import Path
 
 import numpy as np
 from mcap_ros2.writer import Writer
+from rosbags.highlevel import AnyReader
+from rosbags.rosbag2 import Writer as RosbagWriter, StoragePlugin
+from rosbags.typesys import Stores, get_typestore
 
 from tools.ground_plane.synth import Box, render
 from tools.obstacle_decision.replay_bag import replay_bag
@@ -56,10 +59,13 @@ bool do_rectify
 '''
 
 
-def make_bag(path):
+def make_bag(path, *, scene="box"):
     fx, fy, cx, cy = 386.953, 386.953, 321.034, 241.040
-    depth, _, _ = render(height=.30, boxes=(Box((0., 1.06, .025), (.30, .12, .05)),),
+    boxes = (Box((0., 1.06, .025), (.30, .12, .05)),) if scene == "box" else ()
+    depth, _, _ = render(height=.30, boxes=boxes,
                          width=640, height_px=480, fx=fx, fy=fy, cx=cx, cy=cy)
+    if scene == "wall":
+        depth[:] = 1.0
     with open(path, 'wb') as f:
         w = Writer(f, compression=0)
         image_s = w.register_msgdef('sensor_msgs/msg/Image', IMAGE_DEF)
@@ -80,6 +86,25 @@ def make_bag(path):
         w.finish()
 
 
+def make_rosbag_directory(source_mcap, target, storage_plugin):
+    """Copy CDR records into a rosbag2 directory using the requested storage."""
+    typestore = get_typestore(Stores.ROS2_JAZZY)
+    with AnyReader([source_mcap], default_typestore=typestore) as reader:
+        with RosbagWriter(target, version=9, storage_plugin=storage_plugin) as writer:
+            conns = {}
+            for c in reader.connections:
+                conns[c.id] = writer.add_connection(c.topic, c.msgtype, typestore=typestore)
+            for conn, timestamp, rawdata in reader.messages():
+                writer.write(conns[conn.id], timestamp, rawdata)
+
+
+def make_db3_file(source_mcap, target):
+    """Make a standalone .db3 from the rosbag2 writer's sqlite file."""
+    tempdir = target.parent / "db3-source"
+    make_rosbag_directory(source_mcap, tempdir, StoragePlugin.SQLITE3)
+    next(tempdir.glob("*.db3")).replace(target)
+
+
 class ReplayBagTests(unittest.TestCase):
     def test_synthetic_mcap_replay(self):
         with tempfile.TemporaryDirectory() as td:
@@ -96,6 +121,17 @@ class ReplayBagTests(unittest.TestCase):
             self.assertEqual(rows[0]['advisory'], 'UNCERTAIN')
             self.assertTrue((out / 'box_summary.json').is_file())
             self.assertEqual(json.loads((out / 'box_summary.json').read_text())['frame_count'], 6)
+
+    def test_rosbag2_sqlite_and_mcap_directories_and_db3_file(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); source = root / 'source.mcap'; make_bag(source)
+            for name, plugin in (("sqlite", StoragePlugin.SQLITE3), ("mcap", StoragePlugin.MCAP)):
+                bagdir = root / name; make_rosbag_directory(source, bagdir, plugin)
+                summary = replay_bag(bagdir, out=root / f"out-{name}")
+                self.assertEqual(summary["frame_count"], 6)
+                self.assertAlmostEqual(summary["obstacle_distance_m"]["median"], 1.0, delta=.07)
+            db3 = root / "single.db3"; make_db3_file(source, db3)
+            self.assertEqual(replay_bag(db3, out=root / "out-db3")["frame_count"], 6)
 
     def test_eval_runs_end_to_end(self):
         with tempfile.TemporaryDirectory() as td:
@@ -114,11 +150,40 @@ class ReplayBagTests(unittest.TestCase):
             self.assertTrue((out / 'height_estimated_vs_measured.png').is_file())
             self.assertTrue((out / 'distance_error_vs_distance.png').is_file())
 
-    def test_run_sheet_columns_validated(self):
+    def test_box_empty_floor_and_wall_sections(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            for name, scene in (("box", "box"), ("empty", "empty"), ("wall", "wall")):
+                make_bag(root / f"{name}.mcap", scene=scene)
+            sheet = root / "runs.csv"
+            sheet.write_text(
+                'run_id,bag_path,capture_type,mode,box_height_m,box_front_distance_m,box_width_m,lateral_offset_m,camera_height_m,camera_tilt_deg,wall_distance_m,floor_type,lighting,usb_disconnects,notes,extra\n'
+                'box,box.mcap,static,box,0.05,1.0,0.30,0,0.30,0,,vinyl,bright,0,box,kept\n'
+                'empty,empty.mcap,static,empty,,,,,0.30,0,,vinyl,bright,0,floor,extra-value\n'
+                'wall,wall.mcap,static,wall,,,,,0.30,0,1.0,vinyl,bright,0,wall,kept-too\n')
+            rows = evaluate_runs(sheet, root / "eval")
+            by_id = {r["run_id"]: r for r in rows}
+            self.assertEqual({r["run_type"] for r in rows}, {"box", "empty_floor", "wall"})
+            self.assertTrue(by_id["box"]["pass"])
+            self.assertEqual(by_id["empty"]["estimated_advisory"], "NONE")
+            self.assertEqual(by_id["empty"]["false_detection_rate"], 0.0)
+            self.assertLessEqual(by_id["empty"]["plane_height_std_m"], .005)
+            self.assertLessEqual(by_id["empty"]["plane_pitch_std_deg"], .3)
+            self.assertAlmostEqual(by_id["wall"]["estimated_wall_distance_m"], 1.0, delta=.001)
+            self.assertAlmostEqual(by_id["wall"]["wall_error_m"], 0.0, delta=.001)
+            self.assertTrue(by_id["wall"]["pass"])
+            report = (root / "eval" / "evaluation.md").read_text()
+            self.assertIn("## Box runs", report)
+            self.assertIn("## Empty-floor runs", report)
+            self.assertIn("## Wall-target runs", report)
+            self.assertEqual(by_id["empty"]["run_sheet"]["extra"], "extra-value")
+
+    def test_run_sheet_only_requires_identifiers(self):
         with tempfile.TemporaryDirectory() as td:
             p = Path(td) / 'bad.csv'; p.write_text('run_id,bag_path\na,b.mcap\n')
-            with self.assertRaisesRegex(ValueError, 'missing required columns'):
-                read_run_sheet(p)
+            rows = read_run_sheet(p)
+            self.assertEqual(rows[0]["run_id"], "a")
+            self.assertIsNone(rows[0]["box_height_m"])
 
     def test_missing_topic_error_lists_available(self):
         with tempfile.TemporaryDirectory() as td:

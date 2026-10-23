@@ -1,4 +1,4 @@
-"""Stream RGB-D messages from a ROS 2 MCAP through the offline obstacle detector."""
+"""Stream RGB-D messages from ROS 2 MCAP or rosbag2 recordings."""
 from __future__ import annotations
 
 import argparse
@@ -10,8 +10,8 @@ import sys
 from collections import Counter, deque
 
 import numpy as np
-from mcap_ros2.reader import read_ros2_messages
-from mcap.reader import make_reader
+from rosbags.highlevel import AnyReader
+from rosbags.typesys import Stores, get_typestore
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(_REPO_ROOT) not in sys.path:
@@ -71,16 +71,27 @@ def _quantiles(vals):
     return {"median": float(med), "iqr": float(q3 - q1)}
 
 
-def _resolve_topics(path, depth_topic=None, info_topic=None):
+def _reader_paths(path):
+    """Return paths accepted by AnyReader for a bag directory or one bag file."""
+    path = Path(path)
+    if not path.exists():
+        raise FileNotFoundError(f"bag not found: {path}")
+    if path.is_dir():
+        if not (path / "metadata.yaml").is_file():
+            raise ValueError(f"bag directory has no metadata.yaml: {path}")
+        files = sorted((*path.glob("*.db3"), *path.glob("*.mcap")))
+        if not files:
+            raise ValueError(f"bag directory contains no .db3 or .mcap files: {path}")
+        return files
+    if path.suffix.lower() not in (".mcap", ".db3"):
+        raise ValueError(f"unsupported bag file {path}; expected .mcap, .db3, or a rosbag2 directory")
+    return [path]
+
+
+def _resolve_topics(reader, path, depth_topic=None, info_topic=None):
     found = {}
-    with Path(path).open("rb") as stream:
-        summary = make_reader(stream).get_summary()
-    if summary is not None:
-        schemas = summary.schemas
-        for channel in summary.channels.values():
-            schema = schemas.get(channel.schema_id)
-            if schema is not None:
-                found[channel.topic] = schema.name
+    for connection in reader.connections:
+        found[connection.topic] = connection.msgtype
     depths = [t for t in DEPTH_TOPICS if t in found]
     infos = [t for t in INFO_TOPICS if t in found]
     dt = depth_topic or (depths[0] if depths else None)
@@ -96,13 +107,22 @@ def _resolve_topics(path, depth_topic=None, info_topic=None):
     return dt, it
 
 
-def replay_bag(bag, *, depth_topic=None, info_topic=None, stride=1, out="."):
+def replay_bag(bag, *, depth_topic=None, info_topic=None, stride=1, out=".", wall_roi_size=80):
     bag = Path(bag)
-    if not bag.is_file():
-        raise FileNotFoundError(f"bag file not found: {bag}")
     if stride < 1:
         raise ValueError("stride must be >= 1")
-    dt, it = _resolve_topics(bag, depth_topic, info_topic)
+    if wall_roi_size < 1:
+        raise ValueError("wall_roi_size must be >= 1")
+    paths = _reader_paths(bag)
+    typestore = get_typestore(Stores.ROS2_JAZZY)
+    reader = AnyReader(paths, default_typestore=typestore)
+    reader.open()
+    try:
+        dt, it = _resolve_topics(reader, bag, depth_topic, info_topic)
+    except Exception:
+        reader.close()
+        raise
+    selected = [c for c in reader.connections if c.topic in (dt, it)]
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     stem = bag.stem
@@ -111,7 +131,8 @@ def replay_bag(bag, *, depth_topic=None, info_topic=None, stride=1, out="."):
     decision_params = DecisionParams()
     plane_state, decision_state = {}, {}
     counts, depths_valid = Counter(), []
-    plane_h, obs_d, obs_h, obs_w = [], [], [], []
+    plane_h, plane_pitch, obs_d, obs_h, obs_w, wall_depths = [], [], [], [], [], []
+    obstacle_frames = 0
     pending = deque()
     latest_k = None
     written = 0
@@ -119,11 +140,10 @@ def replay_bag(bag, *, depth_topic=None, info_topic=None, stride=1, out="."):
 
     fields = ["stamp", "plane_valid", "plane_height_m", "plane_pitch_deg", "plane_roll_deg",
               "nearest_obstacle_distance_m", "nearest_obstacle_height_m", "nearest_obstacle_width_m",
-              "advisory", "ms", "depth_valid_fraction"]
+              "advisory", "ms", "depth_valid_fraction", "any_corridor_obstacle", "central_roi_depth_m"]
 
-    def process_depth(item, k, writer):
-        nonlocal written, plane_state, decision_state
-        msg = item.ros_msg
+    def process_depth(msg, k, writer):
+        nonlocal written, plane_state, decision_state, obstacle_frames
         depth = decode_depth(msg)
         valid = np.isfinite(depth) & (depth > 0)
         frac = float(valid.mean()) if depth.size else 0.0
@@ -131,10 +151,20 @@ def replay_bag(bag, *, depth_topic=None, info_topic=None, stride=1, out="."):
         fr, plane_state = process_frame(depth, k, params, plane_state)
         decision, decision_state = update(fr, decision_state, decision_params)
         counts[decision.advisory.name] += 1
+        if fr.nearest is not None:
+            obstacle_frames += 1
         if fr.plane_valid:
             plane_h.append(fr.plane_height_m)
+            plane_pitch.append(float(np.rad2deg(fr.plane_pitch_rad)))
         if fr.nearest is not None:
             obs_d.append(fr.nearest.distance_m); obs_h.append(fr.nearest.height_m); obs_w.append(fr.nearest.width_m)
+        y0 = max(0, depth.shape[0] // 2 - wall_roi_size // 2)
+        x0 = max(0, depth.shape[1] // 2 - wall_roi_size // 2)
+        roi = depth[y0:min(depth.shape[0], y0 + wall_roi_size), x0:min(depth.shape[1], x0 + wall_roi_size)]
+        roi = roi[np.isfinite(roi) & (roi > 0)]
+        roi_med = float(np.median(roi)) if roi.size else math.nan
+        if math.isfinite(roi_med):
+            wall_depths.append(roi_med)
         writer.writerow({
             "stamp": f"{_stamp_ns(msg) / 1e9:.9f}", "plane_valid": int(fr.plane_valid),
             "plane_height_m": _finite(fr.plane_height_m), "plane_pitch_deg": _finite(np.rad2deg(fr.plane_pitch_rad)),
@@ -143,33 +173,42 @@ def replay_bag(bag, *, depth_topic=None, info_topic=None, stride=1, out="."):
             "nearest_obstacle_height_m": _finite(fr.nearest.height_m if fr.nearest else math.nan),
             "nearest_obstacle_width_m": _finite(fr.nearest.width_m if fr.nearest else math.nan),
             "advisory": decision.advisory.name, "ms": f"{fr.timing_ms:.6f}", "depth_valid_fraction": f"{frac:.8f}",
+            "any_corridor_obstacle": int(fr.nearest is not None), "central_roi_depth_m": _finite(roi_med),
         })
         written += 1
 
-    with csv_path.open("w", newline="") as fcsv:
-        writer = csv.DictWriter(fcsv, fieldnames=fields); writer.writeheader()
-        for item in read_ros2_messages(bag, topics=[dt, it]):
-            if item.channel.topic == it:
-                latest_k = _intrinsics(item.ros_msg)
-                # CameraInfo is often emitted once before image messages. Flush frames
-                # now that calibration is available; latest calibration is static/valid.
-                while pending:
-                    process_depth(pending.popleft(), latest_k, writer)
-            elif item.channel.topic == dt:
-                depth_seen += 1
-                if (depth_seen - 1) % stride:
-                    continue
-                if latest_k is None:
-                    pending.append(item)
-                else:
-                    process_depth(item, latest_k, writer)
-    if pending:
-        raise ValueError(f"no {it} message available to decode {len(pending)} depth frame(s)")
+    try:
+        with csv_path.open("w", newline="") as fcsv:
+            writer = csv.DictWriter(fcsv, fieldnames=fields); writer.writeheader()
+            for connection, _, rawdata in reader.messages(connections=selected):
+                msg = typestore.deserialize_cdr(rawdata, connection.msgtype)
+                if connection.topic == it:
+                    latest_k = _intrinsics(msg)
+                    # CameraInfo may precede images; apply its static calibration to queued frames.
+                    while pending:
+                        process_depth(pending.popleft(), latest_k, writer)
+                elif connection.topic == dt:
+                    depth_seen += 1
+                    if (depth_seen - 1) % stride:
+                        continue
+                    if latest_k is None:
+                        pending.append(msg)
+                    else:
+                        process_depth(msg, latest_k, writer)
+        if pending:
+            raise ValueError(f"no {it} message available to decode {len(pending)} depth frame(s)")
+    finally:
+        reader.close()
     summary = {
         "bag_path": str(bag), "depth_topic": dt, "info_topic": it,
         "frame_count": written, "plane_valid_rate": float(len(plane_h) / written) if written else 0.0,
         "static_segment": "all replayed frames (no motion/static metadata in bag)",
-        "camera_height_m": _quantiles(plane_h), "obstacle_distance_m": _quantiles(obs_d),
+        "camera_height_m": _quantiles(plane_h), "plane_pitch_deg": _quantiles(plane_pitch),
+        "plane_height_std_m": float(np.std(plane_h)) if plane_h else None,
+        "plane_pitch_std_deg": float(np.std(plane_pitch)) if plane_pitch else None,
+        "false_detection_rate": float(obstacle_frames / written) if written else None,
+        "central_roi_depth_m": _quantiles(wall_depths), "wall_roi_size_px": wall_roi_size,
+        "obstacle_distance_m": _quantiles(obs_d),
         "obstacle_height_m": _quantiles(obs_h), "obstacle_width_m": _quantiles(obs_w),
         "advisory_histogram": dict(sorted(counts.items())),
         "depth_valid_fraction": float(np.mean(depths_valid)) if depths_valid else 0.0,
@@ -187,9 +226,11 @@ def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("bag"); p.add_argument("--depth-topic"); p.add_argument("--info-topic")
     p.add_argument("--stride", type=int, default=1); p.add_argument("--out", default=".")
+    p.add_argument("--wall-roi-size", type=int, default=80)
     a = p.parse_args(argv)
     try:
-        result = replay_bag(a.bag, depth_topic=a.depth_topic, info_topic=a.info_topic, stride=a.stride, out=a.out)
+        result = replay_bag(a.bag, depth_topic=a.depth_topic, info_topic=a.info_topic, stride=a.stride,
+                            out=a.out, wall_roi_size=a.wall_roi_size)
     except (ValueError, FileNotFoundError) as exc:
         p.error(str(exc))
     print(json.dumps(result, indent=2))
