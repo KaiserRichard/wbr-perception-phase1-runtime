@@ -81,3 +81,7 @@ FAIL is still evidence: keep every run, never overwrite.
 3. On the Mac: `check_capture.py` on each RGB-D bag (RUNBOOK §3).
 4. Tell Claude 2 the archive path; offline evaluation (`tools/obstacle_decision/eval_runs.py`,
    map export, local map) starts from there.
+
+Run sheet: `run_sheet.csv` uses metres and the column names read by
+`tools/obstacle_decision/eval_runs.py` (`bag_path` relative to the run root;
+`wall_distance_m` only for W1/W2; leave unused cells empty).
