@@ -18,6 +18,17 @@ workspace, services, `~/.bashrc` or network settings.
    (agents never enter passwords); ideally they run the install line below.
 5. Who drives or pushes the robot, and is the robot battery fine with ~2 W extra.
 
+## Access (decided 2026-10-23)
+
+- Preferred: leave the team's microSD in the robot's Pi, power the robot, and
+  SSH over the lab Wi-Fi with the Mac on the same network. No card swapping.
+- If the card must go into our Pi: inspect it first **read-only** through a
+  USB card reader while our Pi boots from its own card; boot from their card
+  only for installing/recording, then put it back in the robot.
+- Login: the owner or team runs `ssh-copy-id <user>@<ip>` and types the
+  password themselves; Claude 2 then uses key login. That adds one line to
+  their `~/.ssh/authorized_keys`; remove it at cleanup if the team wants.
+
 ## Install (team runs, once; leave installed for later sessions)
 
 ```bash
