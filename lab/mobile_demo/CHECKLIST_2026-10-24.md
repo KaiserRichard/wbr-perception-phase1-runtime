@@ -9,13 +9,21 @@ and stop rules are in [RUNBOOK.md](RUNBOOK.md); use run root
 
 - [ ] Boxes (rigid, matte, not black, not glossy): heights **3, 5, 8, 12, 20 cm**,
       width 20–30 cm. Measure each with a tape/caliper and write it on the box.
-- [ ] Flat board ≥ 60×60 cm (cardboard/plywood) as a **wall target**, plus a
-      stand to hold it vertical.
-- [ ] Tape measure (5 m), masking tape for floor marks, phone inclinometer app
-      (or protractor), marker pen, printed run sheet.
+- [ ] **Wall target:** a real flat, plain wall is enough (no board needed).
+- [ ] Tape measure (5 m), steel ruler or caliper (box heights), phone
+      inclinometer app or angle ruler, small bubble level, masking tape,
+      marker pen, printed run sheet.
+- [ ] Screwdriver / hex keys for the mount, zip ties or velcro for cable strain
+      relief, short known-good USB 3 cable (+ a spare).
+- [ ] Power for a moving rig: the 27 W Pi supply plus an extension cord long
+      enough for the push route (or a power bank that supplies 5 V / 5 A).
 - [ ] Camera mount rigid on the mobile robot; cable strain relief and slack.
-- [ ] Pick a floor area that is **matte** if possible (the 21 Oct glossy tiles
-      mirrored objects). If only glossy floor exists, note it per run.
+      The robot is **pushed by hand** (no motors): push slowly and smoothly,
+      about walking-slow (~0.2–0.3 m/s), no jerks or lifting.
+- [ ] Stay on the **floor**, not a table (the robot drives on the floor; table
+      edges and height change the geometry). If the floor is glossy, lay a
+      matte area (cardboard sheets, carpet, a mat, about 1 x 3 m) for S1/B runs,
+      and repeat B2 (5 cm at 1 m) once on the bare glossy floor as a hard case.
 
 ## 2. Rig geometry (fix once, never change during the session)
 
@@ -32,7 +40,7 @@ and stop rules are in [RUNBOOK.md](RUNBOOK.md); use run root
 |---|---|---|---|---|
 | P0 | — | Preflight (RUNBOOK §1), `dmesg -w` running all session | – | serial, FW, 5000M, power |
 | S1 | RGB-D | Static 10 s, empty floor | no | camera height/tilt (tape) |
-| W1 | RGB-D | Static 5 s, wall target perpendicular at **1.00 m** | no | tape distance lens→board |
+| W1 | RGB-D | Static 5 s, facing a flat wall perpendicularly at **1.00 m** | no | tape distance lens→wall |
 | W2 | RGB-D | Same at **2.00 m** | no | tape distance |
 | B1–B5 | RGB-D | Static 5 s, box 3/5/8/12/20 cm, front face at **1.00 m**, centred | no | box h/w, distance, lateral offset |
 | B6–B8 | RGB-D | Static 5 s, **5 cm** box at 0.5 / 1.5 / 2.0 m | no | same |
