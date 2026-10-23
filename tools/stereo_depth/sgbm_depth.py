@@ -79,7 +79,10 @@ def colorize_depth(depth: np.ndarray, max_depth_m: float) -> np.ndarray:
     valid = depth > 0
     gray = np.zeros(depth.shape, dtype=np.uint8)
     gray[valid] = np.clip(depth[valid] / max_depth_m * 255.0, 0, 255).astype(np.uint8)
-    return cv2.applyColorMap(gray, cv2.COLORMAP_TURBO)
+    colored = cv2.applyColorMap(gray, cv2.COLORMAP_TURBO)
+    # Invalid pixels are black; otherwise they share the colour of near depth.
+    colored[~valid] = 0
+    return colored
 
 
 def _save_contact_sheet(items: list[tuple[int, np.ndarray, np.ndarray]], path: Path,
@@ -228,7 +231,7 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--every", type=int, default=15, help="process every Nth paired image")
     parser.add_argument("--frames", type=int, help="limit processed frames (still scans the whole bag)")
-    parser.add_argument("--max-depth", type=float, default=8.0, help="preview color scale in metres")
+    parser.add_argument("--max-depth", type=float, default=4.0, help="preview color scale in metres")
     args = parser.parse_args()
     if args.every < 1 or (args.frames is not None and args.frames < 1):
         parser.error("--every and --frames must be positive")
