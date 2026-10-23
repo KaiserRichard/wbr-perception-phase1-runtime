@@ -54,6 +54,8 @@ and stop rules are in [RUNBOOK.md](RUNBOOK.md); use run root
 | M2 | RGB-D | 60–120 s hand-pushed drive with 2–3 boxes placed on the path (local-map demo data) | yes | box positions on floor (tape from start mark) |
 | L1 | Stereo or RGB-D | Straight **3.00 m** hand push between two tape marks, stop, return | yes | 3.00 m (tape) |
 
+No robot needed (decided 2026-10-23): static runs S1/W/B use the camera on a stool or box stack at a measured height; M1 and L1 may be carried by hand (slow, steady height, no fast turns, overlapping views, end on the start mark); A1/A2/M2 use the camera fixed to an office chair with casters or a trolley at a fixed height. Pi and camera move together on the 27 W supply via the extension cord.
+
 All moving runs are **pushed by hand**; no robot driving is needed. Our Pi rides on the rig on the 27 W supply via an extension cord; keep the cord behind the rig and clear of the wheels. Plan B only for a route longer than the cord: record on the lab robot's Pi (lab owner's permission; camera driver + `ros2 bag record` only, into a new folder; ORB-SLAM3 runs offline later). Do not swap microSD cards.
 
 Run B1–B8 as one static camera pose (move only the box). Do the stereo map runs
