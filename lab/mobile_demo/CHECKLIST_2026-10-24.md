@@ -47,12 +47,14 @@ and stop rules are in [RUNBOOK.md](RUNBOOK.md); use run root
 | W2 | RGB-D | Same at **2.00 m** | no | tape distance |
 | B1–B5 | RGB-D | Static 5 s, box 3/5/8/12/20 cm, front face at **1.00 m**, centred | no | box h/w, distance, lateral offset |
 | B6–B8 | RGB-D | Static 5 s, **5 cm** box at 0.5 / 1.5 / 2.0 m | no | same |
-| A1 | RGB-D | Slow approach (operator drives, ~0.2 m/s) from 3 m to 0.5 m toward 5 cm box | optional | start/stop floor marks |
+| A1 | RGB-D | Slow hand-pushed approach (~0.2 m/s) from 3 m to 0.5 m toward 5 cm box | optional | start/stop floor marks |
 | A2 | RGB-D | Same toward 20 cm box | optional | same |
 | M0 | Stereo | 30 s motion check (RUNBOOK §2) | yes | – |
-| M1 | Stereo | Lab map, 180 s: tape-marked start, slow loop through the lab, return to the start mark | yes | start mark, return offset (tape) |
-| M2 | RGB-D | 60–120 s corridor drive with 2–3 boxes placed on the path (local-map demo data) | yes | box positions on floor (tape from start mark) |
-| L1 | Stereo or RGB-D | Straight **3.00 m** drive between two tape marks, stop, return | yes | 3.00 m (tape) |
+| M1 | Stereo | Lab map, 180 s, hand-pushed: tape-marked start, slow loop within the extension-cord reach, return to the start mark | yes | start mark, return offset (tape) |
+| M2 | RGB-D | 60–120 s hand-pushed drive with 2–3 boxes placed on the path (local-map demo data) | yes | box positions on floor (tape from start mark) |
+| L1 | Stereo or RGB-D | Straight **3.00 m** hand push between two tape marks, stop, return | yes | 3.00 m (tape) |
+
+All moving runs are **pushed by hand**; no robot driving is needed. Our Pi rides on the rig on the 27 W supply via an extension cord; keep the cord behind the rig and clear of the wheels. Plan B only for a route longer than the cord: record on the lab robot's Pi (lab owner's permission; camera driver + `ros2 bag record` only, into a new folder; ORB-SLAM3 runs offline later). Do not swap microSD cards.
 
 Run B1–B8 as one static camera pose (move only the box). Do the stereo map runs
 after the static runs so a USB problem does not cost the controlled data.
