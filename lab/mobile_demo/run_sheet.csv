@@ -1,0 +1,2 @@
+run_id,date_local,capture_type,mode,box_height_cm,target_distance_m,camera_height_floor_cm,camera_tilt_deg,profile_width_px,profile_height_px,profile_fps,lighting,scene_or_route,mount_check,tracking_notes,depth_notes,usb_disconnects,operator_notes
+,,,,,,,,,,,,,,,,,
