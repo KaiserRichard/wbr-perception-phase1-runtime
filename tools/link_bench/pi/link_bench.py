@@ -100,6 +100,13 @@ def decode(frame):
     if kind == lp.HEALTH and length == 80:  # loopback mode reads its own records
         rec['pi_send_ns'] = struct.unpack_from('<Q', raw, 16 + 48)[0]
         return rec
+    if kind in (lp.TERRAIN_ADVISORY, lp.ADVISORY_ECHO):
+        try:
+            header, body = lp.unpack(frame + b'\0')
+        except ValueError:
+            return None
+        rec.update(body)
+        return rec
     return None
 
 
@@ -170,6 +177,10 @@ class GpioMarker:
 class Link:
     def __init__(self, port, baud):
         speed = getattr(termios, 'B%d' % baud, None)
+        # macOS omits high-speed constants in Python's termios module. PTYs do
+        # not serialize at a physical baud rate; use the nearest exposed speed.
+        if speed is None and platform.system() == 'Darwin' and baud == 460800:
+            speed = getattr(termios, 'B230400', None)
         if speed is None:
             raise SystemExit('baud %d not supported by termios' % baud)
         self.fd = os.open(port, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)

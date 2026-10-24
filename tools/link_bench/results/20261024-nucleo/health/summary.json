@@ -1,0 +1,105 @@
+{
+  "verdict": "OPEN / diagnostic (bench link test; not a gate PASS)",
+  "mode": "Pi <-> MCU bench firmware",
+  "port": "/dev/ttyAMA0",
+  "baud": 460800,
+  "host": "wbr-pi5",
+  "kernel": "6.8.0-1065-raspi",
+  "python": "3.12.3",
+  "clock": "all Pi times CLOCK_MONOTONIC (time.monotonic_ns); MCU durations from MCU stamps only",
+  "started_monotonic_ns": 10175934257855,
+  "started_utc": "2026-10-24T10:00:40Z",
+  "serialization_floor_ms": 3.646,
+  "marker_gpio": null,
+  "preflight": {
+    "seconds": 1.0,
+    "status_records": 19,
+    "states": [
+      "NO_LINK"
+    ],
+    "mcu_boot_ids": [
+      "733a672600000003"
+    ],
+    "expect": "about 20 status records/s in NO_LINK before the Pi sends"
+  },
+  "rtt": {
+    "rate_hz": 50.0,
+    "duration_s": 60.0,
+    "sent": 3000,
+    "replied": 3000,
+    "lost": 0,
+    "loss_ratio": 0.0,
+    "replies_later_than_period": 0,
+    "rtt_us": {
+      "n": 3000,
+      "min": 4056.582,
+      "p50": 4066.23,
+      "p95": 4072.507,
+      "p99": 4077.267,
+      "max": 4131.063,
+      "mean": 4066.8450336666665
+    },
+    "reply_states": {
+      "RESET_PENDING_REENABLE": 3000
+    },
+    "mcu_rejections_during_rtt": {}
+  },
+  "faults": {
+    "crc": {
+      "trials": 10,
+      "expected_reason": "WIRE",
+      "observed_as_expected": 10
+    },
+    "duplicate": {
+      "trials": 10,
+      "expected_reason": "SEQUENCE",
+      "observed_as_expected": 10
+    },
+    "session": {
+      "trials": 10,
+      "expected_reason": "SESSION",
+      "observed_as_expected": 10
+    }
+  },
+  "timeout": {
+    "100_ms": {
+      "repeats": 5,
+      "no_link_declared": 0,
+      "recovered_after_resume": 5,
+      "pi_detect_ms_last_send_to_no_link_status": {
+        "min": null,
+        "max": null
+      },
+      "mcu_silence_ms_accept_to_action": {
+        "min": null,
+        "max": null
+      },
+      "expect": "stay linked"
+    },
+    "300_ms": {
+      "repeats": 5,
+      "no_link_declared": 5,
+      "recovered_after_resume": 5,
+      "pi_detect_ms_last_send_to_no_link_status": {
+        "min": 153.903404,
+        "max": 153.909682
+      },
+      "mcu_silence_ms_accept_to_action": {
+        "min": 150.0,
+        "max": 150.003
+      },
+      "expect": "NO_LINK; MCU silence about 150 ms; Pi detect about 150 ms + one status"
+    }
+  },
+  "mcu_rejections_seen": {
+    "WIRE": 10,
+    "SEQUENCE": 10,
+    "SESSION": 10
+  },
+  "pi_rx_frames": 4094,
+  "pi_rx_wire_errors": 0,
+  "mcu_boot_ids": [
+    "733a672600000003"
+  ],
+  "mcu_reboots_seen": 0
+}

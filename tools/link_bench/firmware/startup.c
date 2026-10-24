@@ -20,6 +20,13 @@ static void (*const vectors[16 + IRQS])(void) = {
  [16 + 39 ... 16 + IRQS - 1] = default_handler,
 };
 void Reset_Handler(void) {
+#ifndef BENCH_EMU
+ /* The ROM bootloader's GO command does not relocate the vector table. Set
+  * VTOR before C initialization or any peripheral can enable an interrupt. */
+ *(volatile uint32_t *)0xE000ED08u = 0x08000000u;
+ __asm volatile ("dsb" ::: "memory");
+ __asm volatile ("isb" ::: "memory");
+#endif
  uint32_t *s = &_sidata, *d = &_sdata;
  while (d < &_edata) *d++ = *s++;
  for (d = &_sbss; d < &_ebss; ) *d++ = 0;

@@ -11,6 +11,8 @@
 #define LP_HEALTH_SIZE 80u
 #define LP_REF_SIZE 44u
 #define LP_STATUS_SIZE 44u
+#define LP_ADVISORY_SIZE 42u
+#define LP_ADVISORY_ECHO_SIZE 27u
 #define LP_LINK_US 150000u
 #define LP_AGE_US 150000u
 #define LP_LEASE_US 100000u
@@ -23,7 +25,7 @@
 /* flags: initialized, tracking, finite pose, finite velocity, reviewed frame,
  * reviewed calibration, clock map valid, resource fault, uncertainty available.
  * These are assertions only; this health-only format carries no pose/covariance. */
-typedef enum { LP_HEALTH=1, LP_BODY_REF=2, LP_MCU_STATUS=3 } lp_type;
+typedef enum { LP_HEALTH=1, LP_BODY_REF=2, LP_MCU_STATUS=3, LP_TERRAIN_ADVISORY=4, LP_ADVISORY_ECHO=5 } lp_type;
 typedef enum { LP_STARTING, LP_INITIALIZING, LP_TRACKING, LP_LOST, LP_FAULT } lp_tracking;
 typedef enum { LP_NO_LINK, LP_LINK_OK_NO_ESTIMATE, LP_ESTIMATE_VALID,
  LP_STALE, LP_REJECTED, LP_RESET_PENDING_REENABLE } lp_state;
@@ -55,11 +57,13 @@ typedef struct {
  uint16_t battery_mv;
  uint8_t fsm, armed, operator_enable, state, reason, battery_valid;
 } lp_status;
+typedef struct { uint64_t pi_monotonic_ns, frame_stamp_ns; uint8_t advisory, plane_valid; float confidence, distance_m, height_m, width_m, plane_pitch_rad, plane_height_m; } lp_advisory;
+typedef struct { uint64_t sample_mcu_ns; uint32_t advisory_seq; uint8_t advisory, result; uint32_t accepted_count, rejected_count; uint8_t stale; uint32_t ms_since_accepted; } lp_advisory_echo;
 typedef struct {
  uint8_t type;
  uint64_t session;
  uint32_t seq;
- union { lp_health health; lp_body_ref ref; lp_status status; } data;
+ union { lp_health health; lp_body_ref ref; lp_status status; lp_advisory advisory; lp_advisory_echo echo; } data;
 } lp_message;
 uint32_t lp_crc32c(const uint8_t *data, size_t n);
 size_t lp_cobs_encode(const uint8_t *src, size_t n, uint8_t *dst, size_t cap);
@@ -70,7 +74,8 @@ int lp_unpack(const uint8_t *raw, size_t n, lp_message *m);
 typedef void (*lp_packet_fn)(void *context, const lp_message *m);
 typedef void (*lp_error_fn)(void *context);
 typedef struct { uint8_t encoded[LP_MAX_ENCODED]; size_t used;
- int dropping; uint32_t errors, packets; } lp_stream;
+ int dropping; uint32_t errors, packets, last_seq; lp_reason last_reason;
+ uint8_t last_type, last_advisory; } lp_stream;
 void lp_stream_init(lp_stream *s);
 void lp_stream_feed(lp_stream *s, const uint8_t *data, size_t n,
  lp_packet_fn packet, lp_error_fn error, void *context);

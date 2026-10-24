@@ -28,6 +28,17 @@ static lp_message status(void) {
  s->action_mcu_ns=2000000; s->battery_mv=24000; s->fsm=2; s->armed=1; s->operator_enable=1;
  s->state=LP_ESTIMATE_VALID; s->battery_valid=1; return m;
 }
+static lp_message advisory(void) {
+ lp_message m; lp_advisory *a; memset(&m,0,sizeof(m)); m.type=LP_TERRAIN_ADVISORY;
+ m.session=0x0102030405060708ULL; m.seq=11; a=&m.data.advisory;
+ a->pi_monotonic_ns=10002000000ULL; a->frame_stamp_ns=2000000000ULL; a->advisory=1; a->plane_valid=1;
+ a->confidence=.75f; a->distance_m=1.25f; a->height_m=.08f; a->width_m=.3f; a->plane_pitch_rad=-.1f; a->plane_height_m=.42f; return m;
+}
+static lp_message echo(void) {
+ lp_message m; lp_advisory_echo *e; memset(&m,0,sizeof(m)); m.type=LP_ADVISORY_ECHO;
+ m.session=42; m.seq=12; e=&m.data.echo; e->sample_mcu_ns=3000000; e->advisory_seq=11;
+ e->advisory=1; e->result=0; e->accepted_count=9; e->rejected_count=2; e->ms_since_accepted=15; return m;
+}
 static void bind(lp_receiver *r) { lp_receiver_bind(r,0x0102030405060708ULL,5,4); }
 static void ready(lp_receiver *r) { lp_message h=health(8,7,1000); bind(r); assert(lp_receiver_accept(r,2000,&h)); assert(lp_receiver_enable(r,2000)); }
 static void golden(void) {
@@ -37,7 +48,7 @@ static void golden(void) {
   uint8_t expected[LP_MAX_WIRE],wire[LP_MAX_WIRE],raw[LP_MAX_RAW]; size_t i,n,len; lp_message m,decoded;
   if(line[0]=='#' || line[0]=='\n') continue;
   assert(sscanf(line,"%79s %999s",name,hex)==2);
-  m=strcmp(name,"health")==0?health(8,7,1000):strcmp(name,"ref")==0?reference():status();
+  m=strcmp(name,"health")==0?health(8,7,1000):strcmp(name,"ref")==0?reference():strcmp(name,"status")==0?status():strcmp(name,"advisory")==0?advisory():echo();
   n=strlen(hex)/2; assert(n<=sizeof(expected));
   for(i=0;i<n;i++) { char byte[3]={hex[2*i],hex[2*i+1],0}; expected[i]=(uint8_t)strtoul(byte,NULL,16); }
   len=lp_pack(&m,wire,sizeof(wire)); assert(len==n); assert(memcmp(expected,wire,n)==0);
@@ -45,7 +56,7 @@ static void golden(void) {
   assert(lp_pack(&decoded,wire,sizeof(wire))==n); assert(memcmp(wire,expected,n)==0);
   count++;
  }
- assert(count==3); fclose(f);
+ assert(count==5); fclose(f);
 }
 static void cobs(void) {
  uint8_t src[600],enc[610],out[600]; size_t n,len; unsigned kind;
@@ -178,6 +189,27 @@ static void nonfinite(void) {
  }
 }
 
+static void advisory_validation(void) {
+ uint8_t wire[LP_MAX_WIRE],raw[LP_MAX_RAW]; lp_message m=advisory(),out; size_t n,len; uint32_t nanbits=0x7fc00000u;
+ m.data.advisory.advisory=4; assert(lp_pack(&m,wire,sizeof(wire))==0);
+ m=advisory(); m.data.advisory.plane_valid=2; assert(lp_pack(&m,wire,sizeof(wire))==0);
+ m=advisory(); memcpy(&m.data.advisory.confidence,&nanbits,4); assert(lp_pack(&m,wire,sizeof(wire))==0);
+ m=advisory();
+ n=lp_pack(&m,wire,sizeof(wire)); len=lp_cobs_decode(wire,n-1,raw,sizeof(raw));
+ raw[32]=4; /* payload advisory offset 16 */
+ { uint32_t crc=lp_crc32c(raw,len-4); memcpy(raw+len-4,&crc,4); }
+ assert(!lp_unpack(raw,len,&out));
+ len=lp_cobs_decode(wire,n-1,raw,sizeof(raw)); raw[33]=2; /* plane_valid */
+ { uint32_t crc=lp_crc32c(raw,len-4); memcpy(raw+len-4,&crc,4); }
+ assert(!lp_unpack(raw,len,&out));
+ len=lp_cobs_decode(wire,n-1,raw,sizeof(raw)); memcpy(raw+34,&nanbits,4); /* first float */
+ { uint32_t crc=lp_crc32c(raw,len-4); memcpy(raw+len-4,&crc,4); }
+ assert(!lp_unpack(raw,len,&out));
+ len=lp_cobs_decode(wire,n-1,raw,sizeof(raw)); raw[2]=41; raw[3]=0;
+ { uint32_t crc=lp_crc32c(raw,len-4); memcpy(raw+len-4,&crc,4); }
+ assert(!lp_unpack(raw,len,&out));
+}
+
 static void boundaries(void) {
  lp_receiver r; lp_message h,v,out; uint8_t raw[LP_MAX_RAW],wire[LP_MAX_WIRE],tiny[1]; size_t n,len;
  uint32_t before; unsigned i;
@@ -242,6 +274,6 @@ static void boundaries(void) {
 }
 
 int main(void) {
- golden(); cobs(); streaming(); policy(); wrap(); nonfinite(); boundaries();
+ golden(); cobs(); streaming(); policy(); wrap(); nonfinite(); advisory_validation(); boundaries();
  puts("CANDIDATE: C codec, golden vectors and synthetic receiver faults PASS"); return 0;
 }
