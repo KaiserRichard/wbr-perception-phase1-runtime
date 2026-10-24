@@ -454,3 +454,22 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   and a passing first-20-second replay (300 poses, 20 clouds, max214 landmarks).
   Added existing-output protection and marked A complete; Codex handles review,
   owner/execution chat owns lab execution and experiment decisions.
+
+### DOC-20261024-FOXGLOVE-DEMO: Recompute obstacle overlay in MCAP for offline viewing
+- Time / author: 2026-10-24 +07; Codex.
+- Branch / base: `claude2/20261024-foxglove-demo`; `origin/main` at session start.
+- Files: `tools/bag_tools/foxglove_demo.py`, `foxglove_demo_layout.json`,
+  `README.md`, `tests/test_foxglove_demo.py`, and worklog session/review/CURRENT.
+- Changes and reason: create six Foxglove-viewable outputs with the current
+  `AdvisoryCore` output stamped per aligned depth frame, retaining source color,
+  aligned depth, camera-info and static TF while skipping RealSense Metadata.
+- Evidence: exact run counts and advisory histograms are in
+  `ops/worklog/sessions/2026-10-24-foxglove-demo.md`; MCAPs are in
+  `foxglove-demo-out/`. The requested external archive path is outside this
+  workspace's write sandbox.
+- Validation: six MCAPs read back with all output schemas deserialized; detector
+  marker stamps/frame IDs match aligned depth; no Metadata topics; TF present.
+  `python -m pytest -q tools/bag_tools/tests/test_foxglove_demo.py`: 1 passed.
+- Limitations / review: Foxglove GUI import/render is unverified; current default
+  detector parameters are used. Review file:
+  `ops/worklog/reviews/2026-10-24-foxglove-demo.md`.
