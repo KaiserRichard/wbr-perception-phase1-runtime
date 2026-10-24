@@ -17,6 +17,10 @@ class Params:
     min_cells: int = 3
     plane_max_age: int = 3
     plane_gate_deg: float = 30.0
+    edge_rel_jump: float = 0.03   # drop pixels next to a depth step > 3% of range (flying pixels)
+    top_normal_deg: float = 25.0  # local normal within this angle of the floor normal = top surface
+    top_min_points: int = 15
+    top_band_m: float = 0.015
 
 
 @dataclass
@@ -51,12 +55,31 @@ def _components(x, y, z, h, cell):
         seed=unseen.pop(); stack=[seed]; cells=[seed]
         while stack:
             a,b=stack.pop()
-            for q in ((a-1,b),(a+1,b),(a,b-1),(a,b+1)):
+            # Cells up to two apart are connected: bridges one-cell gaps left by
+            # the edge filter and sparse far returns, which otherwise split a box
+            # into fragments and let a 5-point fragment become the "nearest".
+            for q in ((a+i,b+j) for i in range(-2,3) for j in range(-2,3)):
                 if q in unseen:
                     unseen.remove(q); stack.append(q); cells.append(q)
         ids=np.array([i for k in cells for i in groups[k]])
         comps.append(ids)
     return comps
+
+
+def ground_coords(depth_m, K, plane, stride=1):
+    """Subsampled depth, camera points and ground-frame (height, forward, lateral).
+
+    Ground frame from the fitted plane: up = n, forward = optical Z projected on
+    the plane, lateral = n x forward (left). Using optical Z as "forward" made
+    the front-face distance read long by (H-h)*sin(pitch), ~+3 cm at 10 deg.
+    """
+    fx,fy,cx,cy=K[0,0],K[1,1],K[0,2],K[1,2]; s=max(1,int(stride))
+    dep=np.asarray(depth_m,dtype=float)[::s,::s]
+    rows,cols=np.mgrid[0:depth_m.shape[0]:s,0:depth_m.shape[1]:s]
+    dep=np.where(np.isfinite(dep)&(dep>0),dep,np.nan)
+    P=np.stack(((cols-cx)*dep/fx,(rows-cy)*dep/fy,dep),-1)
+    n=np.asarray(plane.normal,dtype=float); fw=np.array([0.,0.,1.])-n[2]*n; fw/=np.linalg.norm(fw); lt=np.cross(n,fw)
+    return dep,P,P@n+plane.camera_height,P@fw,P@lt
 
 
 def process_frame(depth_m, K, params=None, state=None):
@@ -82,17 +105,39 @@ def process_frame(depth_m, K, params=None, state=None):
     if plane is None:
         result=FrameResult(False,False,age,float('nan'),float('nan'),float('nan'),None,[],(time.perf_counter()-t0)*1000)
         return result,state
-    h=go.height_image(depth_m,plane.normal,plane.camera_height,fx=fx,fy=fy,cx=cx,cy=cy)
-    rows,cols=np.indices(depth_m.shape); dep=np.asarray(depth_m)
-    forward=dep; lateral=-(cols-cx)*dep/fx
-    mask=np.isfinite(h)&(h>p.min_obstacle_height)&(np.abs(lateral)<=p.corridor_half_width)&(forward>=p.min_forward)&(forward<=p.max_forward)
-    rr,cc=np.nonzero(mask); x=forward[mask]; y=lateral[mask]; hh=h[mask]
+    s=max(1,p.stride)
+    dep,P,h,forward,lateral=ground_coords(depth_m,K,plane,s); n=np.asarray(plane.normal,dtype=float)
+    # Edge filter: a pixel more than edge_rel_jump*range BEHIND its left or right
+    # neighbour sits just outside a side edge, where stereo produces mixed-depth
+    # flying pixels that widen clusters. The nearer (true) edge pixel is kept.
+    # Only the row direction is checked: down a column, a far floor or box top
+    # seen at a grazing angle has large depth steps without being an edge.
+    pad=np.pad(dep,((0,0),(1,1)),constant_values=np.nan)
+    jump=dep-np.fmin(pad[:,:-2],pad[:,2:])
+    edge=jump>p.edge_rel_jump*dep
+    # Local surface normal from central differences; near-vertical normal = top surface.
+    du=np.zeros_like(P); dv=np.zeros_like(P)
+    du[:,1:-1]=P[:,2:]-P[:,:-2]; dv[1:-1]=P[2:]-P[:-2]
+    ln=np.cross(du,dv); ln_norm=np.linalg.norm(ln,axis=-1)
+    with np.errstate(invalid='ignore',divide='ignore'):
+        horiz=np.abs((ln@n)/ln_norm)>=np.cos(np.deg2rad(p.top_normal_deg))
+    mask=np.isfinite(h)&~edge&(h>p.min_obstacle_height)&(np.abs(lateral)<=p.corridor_half_width)&(forward>=p.min_forward)&(forward<=p.max_forward)
+    x=forward[mask]; y=lateral[mask]; hh=h[mask]; hz=horiz[mask]
     clusters=[]
     if len(x):
-        for ids in _components(x,y,dep[mask],hh,p.cell_size):
+        for ids in _components(x,y,None,hh,p.cell_size):
             if len(ids)<p.min_cells: continue
-            clusters.append(Cluster(float(np.percentile(x[ids],5)),float(np.percentile(hh[ids],95)),
-                float(np.ptp(y[ids])),float(np.ptp(x[ids])),int(len(ids))))
+            top=hh[ids][hz[ids]]
+            if len(top)>=p.top_min_points:
+                # Median of the upper horizontal band: the top face, not its noise tail.
+                height=float(np.median(top[top>=np.percentile(top,95)-p.top_band_m]))
+            else:
+                height=float(np.percentile(hh[ids],95))
+            # Nearest face: k-th smallest forward value, so a small object in front of a
+            # large one it touches (books against a lamp pole) sets the distance.
+            k=min(len(ids)-1,max(10,len(ids)//100))
+            clusters.append(Cluster(float(np.partition(x[ids],k)[k]),height,
+                float(np.percentile(y[ids],99.5)-np.percentile(y[ids],0.5)),float(np.ptp(x[ids])),int(len(ids))))
     nearest=min(clusters,key=lambda c:c.distance_m) if clusters else None
     result=FrameResult(bool(est.valid),reused,age,plane.camera_height,plane.pitch,plane.roll,nearest,clusters,(time.perf_counter()-t0)*1000)
     return result,state

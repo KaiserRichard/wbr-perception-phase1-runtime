@@ -125,12 +125,13 @@ def evaluate_runs(sheet, out=".", *, stride=1, depth_topic=None, info_topic=None
                            "pass": passed})
         else:
             measured = row["wall_distance_m"]
-            estimate = summary["central_roi_depth_m"]["median"]
+            estimate = summary["wall_forward_m"]["median"]
             error = _err(estimate, measured)
             relative = None if error is None else error / measured
             passed = relative is not None and abs(relative) <= WALL_RELATIVE_ERROR_LIMIT
             result.update({"measured_wall_distance_m": measured, "estimated_wall_distance_m": estimate,
                            "wall_error_m": error, "wall_relative_error": relative, "pass": passed,
+                           "central_roi_depth_m": summary["central_roi_depth_m"]["median"],
                            "wall_roi_size_px": wall_roi_size})
         results.append(result)
     thresholds = {"box_height_error_m": 0.015, "box_distance_error_m": 0.05,
@@ -153,19 +154,19 @@ def _write_markdown(path, rows, policy, thresholds):
              "Relative bag paths are resolved from the run-sheet directory. All reported statistics use processed frames.",
              "", "## Box runs", "",
              "PASS requires height error ≤ 0.015 m and distance error ≤ 0.05 m when measured distance is ≤ 1.5 m; farther runs have no PASS/FAIL.", "",
-             "| run_id | height measured/estimated (m) | height error (m) | distance measured/estimated (m) | distance error (m) | advisory expected/estimated | PASS |",
-             "|---|---:|---:|---:|---:|---|---|"]
+             "| run_id | height measured/estimated (m) | height error (m) | distance measured/estimated (m) | distance error (m) | width measured/estimated (m) | width error (m) | advisory expected/estimated | PASS |",
+             "|---|---:|---:|---:|---:|---:|---:|---|---|"]
     for r in (x for x in rows if x["run_type"] == "box"):
-        lines.append(f"| {r['run_id']} | {_pair(r['measured_height_m'], r['estimated_height_m'])} | {_fmt(r['height_error_m'])} | {_pair(r['measured_distance_m'], r['estimated_distance_m'])} | {_fmt(r['distance_error_m'])} | {r['expected_advisory'] or 'n/a'} / {r['estimated_advisory']} | {_pass(r['pass'])} |")
+        lines.append(f"| {r['run_id']} | {_pair(r['measured_height_m'], r['estimated_height_m'])} | {_fmt(r['height_error_m'])} | {_pair(r['measured_distance_m'], r['estimated_distance_m'])} | {_fmt(r['distance_error_m'])} | {_pair(r['measured_width_m'], r['estimated_width_m'])} | {_fmt(r['width_error_m'])} | {r['expected_advisory'] or 'n/a'} / {r['estimated_advisory']} | {_pass(r['pass'])} |")
     lines += ["", "## Empty-floor runs", "", "PASS requires plane height std ≤ 5 mm and plane pitch std ≤ 0.3°.", "",
               "| run_id | false-detection rate | camera-height error (m) | plane height std (m) | plane pitch std (°) | expected/estimated advisory | PASS |",
               "|---|---:|---:|---:|---:|---|---|"]
     for r in (x for x in rows if x["run_type"] == "empty_floor"):
         lines.append(f"| {r['run_id']} | {_fmt(r['false_detection_rate'])} | {_fmt(r['camera_height_error_m'])} | {_fmt(r['plane_height_std_m'])} | {_fmt(r['plane_pitch_std_deg'])} | NONE / {r['estimated_advisory']} | {_pass(r['pass'])} |")
-    lines += ["", "## Wall-target runs", "", f"Central ROI: {thresholds['wall_roi_size_px']}×{thresholds['wall_roi_size_px']} px. PASS requires absolute relative error ≤ 2%.", "",
-              "| run_id | tape distance (m) | ROI median (m) | error (m) | relative error | PASS |", "|---|---:|---:|---:|---:|---|"]
+    lines += ["", "## Wall-target runs", "", "Wall forward = horizontal ground-frame distance (mode of corridor points ≥ 10 cm above the plane). The central-ROI axial depth is shown for reference only. PASS requires absolute relative error ≤ 2%.", "",
+              "| run_id | tape distance (m) | wall forward (m) | error (m) | relative error | central ROI axial (m) | PASS |", "|---|---:|---:|---:|---:|---:|---|"]
     for r in (x for x in rows if x["run_type"] == "wall"):
-        lines.append(f"| {r['run_id']} | {_fmt(r['measured_wall_distance_m'])} | {_fmt(r['estimated_wall_distance_m'])} | {_fmt(r['wall_error_m'])} | {_fmt(r['wall_relative_error'])} | {_pass(r['pass'])} |")
+        lines.append(f"| {r['run_id']} | {_fmt(r['measured_wall_distance_m'])} | {_fmt(r['estimated_wall_distance_m'])} | {_fmt(r['wall_error_m'])} | {_fmt(r['wall_relative_error'])} | {_fmt(r['central_roi_depth_m'])} | {_pass(r['pass'])} |")
     path.write_text("\n".join(lines) + "\n")
 
 

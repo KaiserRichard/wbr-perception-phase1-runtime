@@ -61,11 +61,11 @@ bool do_rectify
 
 def make_bag(path, *, scene="box"):
     fx, fy, cx, cy = 386.953, 386.953, 321.034, 241.040
-    boxes = (Box((0., 1.06, .025), (.30, .12, .05)),) if scene == "box" else ()
+    boxes = {"box": (Box((0., 1.06, .025), (.30, .12, .05)),),
+             # Wall: a 3 m wide, 1 m tall face at 1.00 m with the floor still visible below it.
+             "wall": (Box((0., 1.05, .5), (3.0, .10, 1.0)),)}.get(scene, ())
     depth, _, _ = render(height=.30, boxes=boxes,
                          width=640, height_px=480, fx=fx, fy=fy, cx=cx, cy=cy)
-    if scene == "wall":
-        depth[:] = 1.0
     with open(path, 'wb') as f:
         w = Writer(f, compression=0)
         image_s = w.register_msgdef('sensor_msgs/msg/Image', IMAGE_DEF)

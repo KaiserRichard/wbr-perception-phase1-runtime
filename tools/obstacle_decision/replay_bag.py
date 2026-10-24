@@ -18,7 +18,7 @@ _REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
-from tools.obstacle_decision.detect import Params, process_frame
+from tools.obstacle_decision.detect import Params, ground_coords, process_frame
 from tools.obstacle_decision.decide import DecisionParams, update
 
 DEPTH_TOPICS = (
@@ -136,7 +136,7 @@ def replay_bag(bag, *, depth_topic=None, info_topic=None, stride=1, out=".", wal
     decision_params = DecisionParams()
     plane_state, decision_state = {}, {}
     counts, depths_valid = Counter(), []
-    plane_h, plane_pitch, obs_d, obs_h, obs_w, wall_depths = [], [], [], [], [], []
+    plane_h, plane_pitch, obs_d, obs_h, obs_w, wall_depths, wall_fwd = [], [], [], [], [], [], []
     obstacle_frames = 0
     pending = deque()
     latest_k = None
@@ -145,7 +145,7 @@ def replay_bag(bag, *, depth_topic=None, info_topic=None, stride=1, out=".", wal
 
     fields = ["stamp", "plane_valid", "plane_height_m", "plane_pitch_deg", "plane_roll_deg",
               "nearest_obstacle_distance_m", "nearest_obstacle_height_m", "nearest_obstacle_width_m",
-              "advisory", "ms", "depth_valid_fraction", "any_corridor_obstacle", "central_roi_depth_m"]
+              "advisory", "ms", "depth_valid_fraction", "any_corridor_obstacle", "central_roi_depth_m", "wall_forward_m"]
 
     def process_depth(msg, k, writer):
         nonlocal written, plane_state, decision_state, obstacle_frames
@@ -170,6 +170,9 @@ def replay_bag(bag, *, depth_topic=None, info_topic=None, stride=1, out=".", wal
         roi_med = float(np.median(roi)) if roi.size else math.nan
         if math.isfinite(roi_med):
             wall_depths.append(roi_med)
+        wall_m = _wall_forward(depth, k, plane_state.get("plane"), params)
+        if math.isfinite(wall_m):
+            wall_fwd.append(wall_m)
         writer.writerow({
             "stamp": f"{_stamp_ns(msg) / 1e9:.9f}", "plane_valid": int(fr.plane_valid),
             "plane_height_m": _finite(fr.plane_height_m), "plane_pitch_deg": _finite(np.rad2deg(fr.plane_pitch_rad)),
@@ -179,6 +182,7 @@ def replay_bag(bag, *, depth_topic=None, info_topic=None, stride=1, out=".", wal
             "nearest_obstacle_width_m": _finite(fr.nearest.width_m if fr.nearest else math.nan),
             "advisory": decision.advisory.name, "ms": f"{fr.timing_ms:.6f}", "depth_valid_fraction": f"{frac:.8f}",
             "any_corridor_obstacle": int(fr.nearest is not None), "central_roi_depth_m": _finite(roi_med),
+            "wall_forward_m": _finite(wall_m),
         })
         written += 1
 
@@ -213,6 +217,7 @@ def replay_bag(bag, *, depth_topic=None, info_topic=None, stride=1, out=".", wal
         "plane_pitch_std_deg": float(np.std(plane_pitch)) if plane_pitch else None,
         "false_detection_rate": float(obstacle_frames / written) if written else None,
         "central_roi_depth_m": _quantiles(wall_depths), "wall_roi_size_px": wall_roi_size,
+        "wall_forward_m": _quantiles(wall_fwd),
         "obstacle_distance_m": _quantiles(obs_d),
         "obstacle_height_m": _quantiles(obs_h), "obstacle_width_m": _quantiles(obs_w),
         "advisory_histogram": dict(sorted(counts.items())),
@@ -221,6 +226,27 @@ def replay_bag(bag, *, depth_topic=None, info_topic=None, stride=1, out=".", wal
     }
     json_path.write_text(json.dumps(summary, indent=2) + "\n")
     return summary
+
+
+def _wall_forward(depth, k, plane, params):
+    """Horizontal distance to the dominant vertical surface ahead.
+
+    Mode (1 cm bins) of the ground-frame forward coordinate of corridor points
+    10 cm or more above the plane: a wall contributes many points at one
+    forward distance, while a thin pole in front contributes few. The central
+    ROI depth is axial range along a pitched optical axis and can land on the
+    floor, so it is not a horizontal wall distance.
+    """
+    if plane is None:
+        return math.nan
+    _, _, h, fwd, lat = ground_coords(depth, k, plane, max(1, params.stride))
+    m = np.isfinite(h) & (h >= 0.10) & (np.abs(lat) <= params.corridor_half_width) & (fwd > params.min_forward)
+    if m.sum() < 50:
+        return math.nan
+    hist, edges = np.histogram(fwd[m], bins=np.arange(params.min_forward, params.max_forward + 0.01, 0.01))
+    i = int(np.argmax(hist))
+    sel = fwd[m][(fwd[m] >= edges[i] - 0.01) & (fwd[m] < edges[i + 1] + 0.01)]
+    return float(np.median(sel))
 
 
 def _finite(x):
