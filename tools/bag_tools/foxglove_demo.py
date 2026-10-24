@@ -109,17 +109,24 @@ def _height_pointcloud(depth_m, K, plane, header, m, stride=4):
                             np.frombuffer(data, dtype=np.uint8).copy(), True)
 
 
-def _ground_transform(plane, stamp, m):
-    """Return TFMessage for wbr_ground -> camera_depth_optical_frame."""
-    n = np.asarray(plane.normal, dtype=np.float64).copy()
-    n /= np.linalg.norm(n)
-    forward = np.array([0.0, 0.0, 1.0]) - n[2] * n
-    forward /= np.linalg.norm(forward)
-    left = np.cross(n, forward)
-    # Columns are ground axes expressed in camera coordinates. TF needs the
-    # inverse rotation: camera orientation expressed in the ground frame.
-    ground_in_camera = np.column_stack((forward, left, n))
-    rotation = ground_in_camera.T
+def _quaternion_matrix(q):
+    x, y, z, w = map(float, q)
+    return np.array([
+        [1 - 2 * (y*y + z*z), 2 * (x*y - z*w), 2 * (x*z + y*w)],
+        [2 * (x*y + z*w), 1 - 2 * (x*x + z*z), 2 * (y*z - x*w)],
+        [2 * (x*z - y*w), 2 * (y*z + x*w), 1 - 2 * (x*x + y*y)],
+    ], dtype=np.float64)
+
+
+def _transform_matrix(transform):
+    result = np.eye(4, dtype=np.float64)
+    result[:3, :3] = _quaternion_matrix((transform.rotation.x, transform.rotation.y,
+                                        transform.rotation.z, transform.rotation.w))
+    result[:3, 3] = (transform.translation.x, transform.translation.y, transform.translation.z)
+    return result
+
+
+def _matrix_quaternion(rotation):
     trace = float(np.trace(rotation))
     if trace > 0:
         s = np.sqrt(trace + 1.0) * 2.0
@@ -143,10 +150,50 @@ def _ground_transform(plane, stamp, m):
             q = ((rotation[0, 2] + rotation[2, 0]) / s,
                  (rotation[1, 2] + rotation[2, 1]) / s, 0.25 * s,
                  (rotation[1, 0] - rotation[0, 1]) / s)
-    t = m['Transform'](m['Vector3'](0.0, 0.0, float(plane.camera_height)),
+    return q
+
+
+def _static_transform_to_root(transforms, root, child):
+    """Compose T(root<-child) from the bag's static TF tree."""
+    parents = {}
+    for stamped in transforms:
+        parent, frame = stamped.header.frame_id, stamped.child_frame_id
+        if frame in parents and parents[frame][0] != parent:
+            raise ValueError(f'static TF child {frame} has multiple parents')
+        parents[frame] = (parent, _transform_matrix(stamped.transform))
+    matrix = np.eye(4, dtype=np.float64)
+    frame = child
+    visited = set()
+    while frame != root:
+        if frame in visited or frame not in parents:
+            raise ValueError(f'no static TF path from {root} to {child}')
+        visited.add(frame)
+        parent, parent_from_frame = parents[frame]
+        matrix = parent_from_frame @ matrix
+        frame = parent
+    return matrix
+
+
+def _ground_transform(plane, stamp, m, camera_link_from_depth):
+    """Return TFMessage for wbr_ground -> camera_link, preserving static camera TF."""
+    n = np.asarray(plane.normal, dtype=np.float64).copy()
+    n /= np.linalg.norm(n)
+    forward = np.array([0.0, 0.0, 1.0]) - n[2] * n
+    forward /= np.linalg.norm(forward)
+    left = np.cross(n, forward)
+    # Columns are ground axes expressed in camera coordinates. TF needs the
+    # inverse rotation: camera orientation expressed in the ground frame.
+    ground_in_camera = np.column_stack((forward, left, n))
+    rotation = ground_in_camera.T
+    ground_from_depth = np.eye(4, dtype=np.float64)
+    ground_from_depth[:3, :3] = rotation
+    ground_from_depth[:3, 3] = (0.0, 0.0, float(plane.camera_height))
+    ground_from_link = ground_from_depth @ np.linalg.inv(camera_link_from_depth)
+    q = _matrix_quaternion(ground_from_link[:3, :3])
+    t = m['Transform'](m['Vector3'](*map(float, ground_from_link[:3, 3])),
                       m['Quaternion'](*map(float, q)))
     stamped = m['TransformStamped'](
-        m['Header'](stamp, 'wbr_ground'), 'camera_depth_optical_frame', t)
+        m['Header'](stamp, 'wbr_ground'), 'camera_link', t)
     return m['TFMessage']([stamped])
 
 
@@ -206,6 +253,11 @@ def convert(bag_dir: str | Path, output: str | Path):
             if conn.msgtype not in ts.types:
                 raise ValueError(f'unsupported type for required topic {topic}: {conn.msgtype}')
             register(topic, conn.msgtype)
+        static_transforms = []
+        for tf_conn, _, tf_raw in reader.messages(connections=[conns[TF_STATIC]]):
+            static_transforms.extend(ts.deserialize_cdr(tf_raw, tf_conn.msgtype).transforms)
+        camera_link_from_depth = _static_transform_to_root(
+            static_transforms, 'camera_link', 'camera_depth_optical_frame')
         register(OUT_TOPICS['markers'], 'visualization_msgs/msg/MarkerArray')
         register(OUT_TOPICS['advisory'], 'std_msgs/msg/String')
         register(OUT_TOPICS['points'], 'sensor_msgs/msg/PointCloud2')
@@ -249,7 +301,7 @@ def convert(bag_dir: str | Path, output: str | Path):
                     last_plane = plane
                 marker_array = _marker_array(
                     out['markers'] + _demo_obstacle_markers(out['advisory'], out['frame_result']), header, m)
-                tf_message = _ground_transform(last_plane, header.stamp, m)
+                tf_message = _ground_transform(last_plane, header.stamp, m, camera_link_from_depth)
                 advisory = {key: out['advisory'][key] for key in (
                     'advisory', 'height_m', 'distance_m', 'width_m', 'confidence', 'plane_valid')}
                 generated = (

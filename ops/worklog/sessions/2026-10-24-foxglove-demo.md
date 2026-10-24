@@ -37,33 +37,46 @@
 
 ## Frame and layout follow-up
 
-- Updated the converter to publish one `/tf` per aligned depth frame, parent
-  `wbr_ground` to child `camera_depth_optical_frame`. Ground axes follow
-  `detect.ground_coords`: forward, left, up; origin is the floor below the
-  camera. The last plane is retained if plane fitting stops yielding one.
+- Corrected the converter to publish one `/tf` per aligned depth frame, parent
+  `wbr_ground` to child `camera_link`. It composes
+  `T(ground<-depth_optical) * inverse(T(camera_link<-depth_optical))`, where
+  the latter is built from the bag's `/tf_static` chain. The depth and color
+  branches therefore retain their single static parent chain below camera_link.
+  Ground axes follow `detect.ground_coords`: forward, left, up; origin is the
+  floor below the camera. The last plane is retained if plane fitting stops
+  yielding one.
 - Kept core markers in their optical frame. Added a ground-frame solid obstacle
   cube (longitudinal depth × lateral width × height) and a status/height/range
   label. Added `/wbr_obstacle_node/depth_points`, stride 4, fields `x,y,z,height`.
-- Layout now fixes the 3D panel to `wbr_ground`, disables following, shows both
-  point clouds and markers, uses the color Image panel, and leaves advisory
-  height/distance visible in Raw Messages.
+- Layout fixes the 3D panel to `wbr_ground`, disables following, hides transform
+  labels and sets axis scale to 0.1; both point clouds and markers, the color
+  Image panel, and advisory height/distance in Raw Messages remain visible.
 - Re-ran with the requested Python at
   `/private/tmp/claude-501/-Users-quockaiser-Desktop-Research-wbr-wt-claude2/86f1e3fb-27f1-4b36-ad4d-133cc09819f7/scratchpad/venv/bin/python`.
-  Focused pytest: 1 passed. Six outputs are in `foxglove-demo-out/`.
+  `python -m pytest tools/bag_tools/tests -q`: 1 passed. Six outputs are in
+  `foxglove-demo-out/` (regenerated sizes in bytes: B-H02 93,620,522; B-H05
+  75,261,264; B-H08 94,822,050; B-H13 74,621,313; B-H26b 75,013,840;
+  S1-empty 72,884,364).
 - Follow-up counts (each generated topic has one message per aligned depth
   frame; `/tf_static` retained):
 
   | Run | Color | Depth | Color info | Depth info | `/tf` | Generated each | Bytes |
   |---|---:|---:|---:|---:|---:|---:|---:|
-  | B-H02 | 134 | 138 | 139 | 139 | 138 | 138 | 93,626,419 |
-  | B-H05 | 110 | 110 | 111 | 111 | 110 | 110 | 75,257,483 |
-  | B-H08 | 137 | 139 | 139 | 140 | 139 | 139 | 94,823,676 |
-  | B-H13 | 109 | 110 | 111 | 111 | 110 | 110 | 74,621,094 |
-  | B-H26b | 108 | 109 | 110 | 110 | 109 | 109 | 75,011,442 |
-  | S1-empty | 108 | 110 | 106 | 111 | 110 | 110 | 72,880,838 |
+  | B-H02 | 134 | 138 | 139 | 139 | 138 | 138 | 93,620,522 |
+  | B-H05 | 110 | 110 | 111 | 111 | 110 | 110 | 75,261,264 |
+  | B-H08 | 137 | 139 | 139 | 140 | 139 | 139 | 94,822,050 |
+  | B-H13 | 109 | 110 | 111 | 111 | 110 | 110 | 74,621,313 |
+  | B-H26b | 108 | 109 | 110 | 110 | 109 | 109 | 75,013,840 |
+  | S1-empty | 108 | 110 | 106 | 111 | 110 | 110 | 72,884,364 |
 - Generated each = advisory, markers, obstacle_points, depth_points, and `/tf`.
   Histogram remains B-H02 UNCERTAIN 138; B-H05 JUMP_CANDIDATE 108 / UNCERTAIN
   2; B-H08 JUMP_CANDIDATE 137 / UNCERTAIN 2; B-H13 STOP_CANDIDATE 108 /
   UNCERTAIN 2; B-H26b STOP_CANDIDATE 107 / UNCERTAIN 2; S1-empty
   STOP_CANDIDATE 108 / UNCERTAIN 2.
+- Audited every regenerated MCAP: five child frames in each graph, no child
+  parent conflict, and all marker/pointcloud frame IDs (plus depth and color
+  optical frames) resolve to `wbr_ground`. The regression test composes the
+  static camera chain and emitted `/tf`; a floor point in depth optical
+  coordinates maps to ground z=0 within 1e-6 m. Generated `.mcap` files are
+  ignored by git as intended.
 - GUI import/render and visual color-field styling remain unverified.

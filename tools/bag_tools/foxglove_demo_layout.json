@@ -47,7 +47,7 @@
       "followMode": "follow-none",
       "fixedFrame": "wbr_ground",
       "scene": {},
-      "transforms": {},
+      "transforms": {"showLabel": false, "axisScale": 0.1},
       "imageMode": {},
       "synchronize": false,
       "foxglovePanelTitle": "Ground aligned detector output"

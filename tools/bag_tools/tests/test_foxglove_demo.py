@@ -12,6 +12,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from tools.bag_tools.foxglove_demo import convert
+from tools.bag_tools.foxglove_demo import _transform_matrix
 
 
 def _stamp(header):
@@ -52,7 +53,20 @@ def test_tiny_rosbag_gets_stamped_overlay(tmp_path):
     writer.write(conns['/camera/camera/aligned_depth_to_color/camera_info'], now, ts.serialize_cdr(camera_info, 'sensor_msgs/msg/CameraInfo'))
     writer.write(conns['/camera/camera/color/image_raw'], now + 1, ts.serialize_cdr(color, 'sensor_msgs/msg/Image'))
     writer.write(conns['/camera/camera/aligned_depth_to_color/image_raw'], now + 2, ts.serialize_cdr(depth, 'sensor_msgs/msg/Image'))
-    tf = t['tf2_msgs/msg/TFMessage']([])
+    def stamped(parent, child, xyz=(0., 0., 0.), q=(0., 0., 0., 1.)):
+        transform = t['geometry_msgs/msg/Transform'](
+            t['geometry_msgs/msg/Vector3'](*xyz), t['geometry_msgs/msg/Quaternion'](*q))
+        return t['geometry_msgs/msg/TransformStamped'](
+            t['std_msgs/msg/Header'](time_msg, parent), child, transform)
+
+    tf = t['tf2_msgs/msg/TFMessage']([
+        stamped('camera_link', 'camera_depth_frame'),
+        stamped('camera_depth_frame', 'camera_depth_optical_frame',
+                q=(-.5, .5, -.5, .5)),
+        stamped('camera_link', 'camera_color_frame', (-.0002249468, .01472403, -.0001190947),
+                (.0032448, .0036862, -.0030603, .99998325)),
+        stamped('camera_color_frame', 'camera_color_optical_frame', q=(-.5, .5, -.5, .5)),
+    ])
     writer.write(conns['/tf_static'], now + 3, ts.serialize_cdr(tf, 'tf2_msgs/msg/TFMessage'))
     writer.close()
 
@@ -66,6 +80,7 @@ def test_tiny_rosbag_gets_stamped_overlay(tmp_path):
     assert output.stat().st_size > 0
 
     observed = {}
+    static_transforms = []
     with output.open('rb') as stream:
         for schema, channel, message in make_reader(stream).iter_messages():
             if channel.topic in ('/wbr_obstacle_node/markers', '/wbr_obstacle_node/obstacle_points',
@@ -82,13 +97,41 @@ def test_tiny_rosbag_gets_stamped_overlay(tmp_path):
                 observed['advisory'] = ts.deserialize_cdr(message.data, schema.name).data
             elif channel.topic == '/tf':
                 tf = ts.deserialize_cdr(message.data, schema.name)
-                observed['tf'] = (tf.transforms[0].header.frame_id,
-                                  tf.transforms[0].child_frame_id,
-                                  tf.transforms[0].header.stamp.sec,
-                                  tf.transforms[0].header.stamp.nanosec)
+                observed['tf'] = tf.transforms[0]
+            elif channel.topic == '/tf_static':
+                static_transforms.extend(ts.deserialize_cdr(message.data, schema.name).transforms)
     assert observed['markers'] == (1, 234, 'camera_color_optical_frame')
     assert observed['points'] == observed['markers']
     assert observed['depth_points'] == observed['markers']
     assert observed['depth_fields'] == ['x', 'y', 'z', 'height']
-    assert observed['tf'] == ('wbr_ground', 'camera_depth_optical_frame', 1, 234)
+    assert (observed['tf'].header.frame_id, observed['tf'].child_frame_id,
+            observed['tf'].header.stamp.sec, observed['tf'].header.stamp.nanosec) == (
+                'wbr_ground', 'camera_link', 1, 234)
     assert 'plane_valid' in observed['advisory']
+
+    parents = {}
+    for transform in static_transforms + [observed['tf']]:
+        child, parent = transform.child_frame_id, transform.header.frame_id
+        assert child not in parents or parents[child] == parent
+        parents[child] = parent
+    assert parents == {
+        'camera_link': 'wbr_ground',
+        'camera_depth_frame': 'camera_link',
+        'camera_depth_optical_frame': 'camera_depth_frame',
+        'camera_color_frame': 'camera_link',
+        'camera_color_optical_frame': 'camera_color_frame',
+    }
+    for frame in (observed['markers'][2], observed['points'][2], observed['depth_points'][2],
+                  'camera_depth_optical_frame', 'camera_color_optical_frame'):
+        visited = set()
+        while frame != 'wbr_ground':
+            assert frame in parents and frame not in visited
+            visited.add(frame)
+            frame = parents[frame]
+
+    static_by_child = {transform.child_frame_id: transform for transform in static_transforms}
+    link_from_depth_optical = (_transform_matrix(static_by_child['camera_depth_frame'].transform)
+                               @ _transform_matrix(static_by_child['camera_depth_optical_frame'].transform))
+    ground_from_link = _transform_matrix(observed['tf'].transform)
+    floor_in_depth_optical = np.array([0., .3, 0., 1.])
+    assert abs((ground_from_link @ link_from_depth_optical @ floor_in_depth_optical)[2]) < 1e-6
