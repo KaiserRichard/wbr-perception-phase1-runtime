@@ -102,3 +102,16 @@ void bench_poll(bench_port *p, uint64_t now_us) {
 }
 
 int bench_linked(const bench_port *p) { return p->rx.state != LP_NO_LINK; }
+
+uint8_t bench_led_mask(const bench_port *p) {
+ if (!p->advisory_have_seq || p->advisory_stale ||
+     p->now_us - p->advisory_last_us >= BENCH_ADVISORY_STALE_US)
+  return 0;
+ switch (p->advisory_value) {
+  case 0: return 1u << 0; /* NONE -> GREEN */
+  case 1: return 1u << 1; /* JUMP_CANDIDATE -> YELLOW */
+  case 2: return 1u << 2; /* STOP_CANDIDATE -> RED */
+  case 3: return 1u << 3; /* UNCERTAIN -> BLUE */
+  default: return 0;
+ }
+}

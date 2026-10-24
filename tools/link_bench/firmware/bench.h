@@ -50,4 +50,7 @@ void bench_rx(bench_port *p, const uint8_t *data, size_t n, uint64_t now_us);
 void bench_poll(bench_port *p, uint64_t now_us);
 /* 1 when the receiver holds an accepted link (any state except NO_LINK). */
 int bench_linked(const bench_port *p);
+/* One-hot LED mask for the most recently accepted, non-stale advisory.
+ * Bit 0=GREEN, 1=YELLOW, 2=RED, 3=BLUE. Zero means no live advisory. */
+uint8_t bench_led_mask(const bench_port *p);
 #endif
