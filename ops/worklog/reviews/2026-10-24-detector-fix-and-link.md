@@ -28,3 +28,12 @@ Branches (pushed, not merged): `claude2/20261024-demo` (detector), `claude2/2026
 - Next: owner wires Nucleo (power from Pi 5V → E5V with JP5 on E5V, no USB cable today), flash over
   the ROM UART bootloader (BOOT0 → VDD), run synthetic + bag replay on real UART, logic analyzer.
 - Needs firmware-owner review before any use on the WBR STM32H7.
+
+## Nucleo state (evening)
+- Wired to the Pi, powered via E5V; running the OS-project firmware (`A5 5A` frames at 921600 baud,
+  matches heterogeneous-edge-ai-os `protocol/`). MCU TX → Pi RX verified. BOOT0 did not take effect.
+- Coordinator decision: overwrite only after a verified flash backup. Script on the Pi:
+  `~/wbr-link-20261024/nucleo_backup_flash.sh` (reads 512 KB twice and compares them, refuses to write
+  if the backup is not usable, then writes the bench bin and starts it). Not run yet: it needs BOOT0 + RESET.
+  An unattended watcher that would flash automatically was blocked by the permission classifier, so
+  flashing waits for the owner's go.
