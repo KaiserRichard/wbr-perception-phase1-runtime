@@ -11,6 +11,7 @@ from collections import Counter, deque
 
 import numpy as np
 from rosbags.highlevel import AnyReader
+from rosbags.rosbag2 import Reader as Rosbag2Reader
 from rosbags.typesys import Stores, get_typestore
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -115,7 +116,11 @@ def replay_bag(bag, *, depth_topic=None, info_topic=None, stride=1, out=".", wal
         raise ValueError("wall_roi_size must be >= 1")
     paths = _reader_paths(bag)
     typestore = get_typestore(Stores.ROS2_JAZZY)
-    reader = AnyReader(paths, default_typestore=typestore)
+    # A rosbag2 directory is read with the low-level reader, which does not
+    # parse every stored message definition: realsense2_camera_msgs/Metadata
+    # ships a definition with CRLF line endings that AnyReader rejects.
+    # Image/CameraInfo are decoded with the Jazzy typestore either way.
+    reader = Rosbag2Reader(bag) if bag.is_dir() else AnyReader(paths, default_typestore=typestore)
     reader.open()
     try:
         dt, it = _resolve_topics(reader, bag, depth_topic, info_topic)
