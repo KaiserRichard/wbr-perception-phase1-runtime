@@ -52,7 +52,7 @@ class ObstacleNode(Node):
             out = self.core.process(depth, self.K, frame_stamp_ns=stamp_ns, frame_id=frame_id)
             text = String(); text.data = json.dumps(out['advisory'], separators=(',', ':'), allow_nan=False)
             self.advisory_pub.publish(text)
-            byte_msg = UInt8MultiArray(); byte_msg.data = out['advisory_bytes']; self.bytes_pub.publish(byte_msg)
+            byte_msg = UInt8MultiArray(); byte_msg.data = list(out['advisory_bytes']); self.bytes_pub.publish(byte_msg)
             self.markers_pub.publish(self.to_markers(out['markers'], msg.header))
             if self.core.params.publish_obstacle_points:
                 cloud = point_cloud2.create_cloud(msg.header,
@@ -74,13 +74,14 @@ class ObstacleNode(Node):
             m.type = types[spec['type']]; m.action = Marker.ADD
             m.pose.orientation.w = 1.0
             pos = spec.get('position', spec.get('center', [0,0,0]))
-            m.pose.position.x, m.pose.position.y, m.pose.position.z = pos
-            scale = spec['scale']; m.scale.x, m.scale.y, m.scale.z = scale
-            m.color.r, m.color.g, m.color.b, m.color.a = spec['color']
+            m.pose.position.x, m.pose.position.y, m.pose.position.z = (float(v) for v in pos)
+            scale = spec['scale']; m.scale.x, m.scale.y, m.scale.z = (float(v) for v in scale)
+            m.color.r, m.color.g, m.color.b, m.color.a = (float(v) for v in spec['color'])
             m.text = spec.get('text', '')
             for xyz in spec.get('points', []):
                 from geometry_msgs.msg import Point
-                pt = Point(); pt.x, pt.y, pt.z = xyz; m.points.append(pt)
+                # ROS fields need Python floats, not numpy scalars.
+                pt = Point(); pt.x, pt.y, pt.z = (float(v) for v in xyz); m.points.append(pt)
             result.markers.append(m)
         return result
 
