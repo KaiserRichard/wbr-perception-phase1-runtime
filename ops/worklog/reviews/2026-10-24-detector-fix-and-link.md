@@ -37,3 +37,13 @@ Branches (pushed, not merged): `claude2/20261024-demo` (detector), `claude2/2026
   if the backup is not usable, then writes the bench bin and starts it). Not run yet: it needs BOOT0 + RESET.
   An unattended watcher that would flash automatically was blocked by the permission classifier, so
   flashing waits for the owner's go.
+
+## Real UART run (19:00 local) — `claude2/20261024-advisory-link` ecca446
+- OS-project firmware backed up (512 KB, double read identical, sha256 6d3aeb36…5d4beb09) in
+  `~/wbr-evidence-archive/nucleo-backup-20261024/`, then bench firmware flashed over the ROM UART
+  bootloader (`tools/link_bench/pi/stm32boot.py`; stm32flash could not sync).
+- MEASURED: health 3000/3000, RTT P50 4.07 ms, faults rejected, 150 ms silence rule exact.
+  Advisory 900/900 synthetic and 139/139 B-H08 replay, RTT P50 2.8 ms, detector P50 78 ms.
+  Details: `tools/link_bench/results/20261024-nucleo/README.md`.
+- To do: set VTOR in the bench firmware (it does not run after bootloader GO); logic-analyzer timing;
+  restore the OS firmware from the backup when that project needs the board.
