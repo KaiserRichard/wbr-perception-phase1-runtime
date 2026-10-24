@@ -57,15 +57,13 @@ Record box height/width, exact start and stopping distances from camera front pl
 
 **Owner:** aim camera at the same box, power the fan, and keep hands clear of blades and wiring. Use the documented UART wiring. Nucleo must run bench firmware; ROM-bootloader flash/backup procedure is `tools/link_bench/pi/stm32boot.py` and Nucleo README. Log any reboot/flash actions and preserve the existing backup; do not assume bootloader GO is needed after this VTOR fix.
 
-1. Run the same RGB-D camera launch above and start the live obstacle node as deployed on the Pi; save `/advisory`, markers, `/d435_orb/status`, and terminal output (actual node launch syntax is not present in this worktree; use the installed lab launch command and record it verbatim).
-2. Capture a fresh short RGB-D bag while the box is visible, then send that bag through detector and UART to Nucleo:
+1. Aim the camera at the same box, power the fan, and use the documented UART wiring. With ROS 2 Jazzy sourced, run the live chain script; it starts the D435 aligned-depth stream at 640×480×15 Hz, waits for the image topic, runs the live detector→UART sender for 60 s, then stops the driver:
 
 ```bash
-OUT="$HOME/wbr-evidence/lab-day-20261026/LIVE-uart"
-python3 tools/link_bench/pi/advisory_link.py --port /dev/ttyAMA0 --out "$OUT" --bag "$HOME/wbr-evidence/lab-day-20261026/A1-approach/rgbd-bag" --rate 1.0 --stride 1
+bash lab-day-20261026/live_chain.sh
 ```
 
-Record verbatim commands, fan state/speed, wiring and power photos, box distances, detector decisions, sent/echoed/lost counts, RTT percentiles, rejected echoes/stale events, UART port/baud, Nucleo reset state, and all errors. This bag replay is camera-derived detector→UART evidence; label it separately from any genuinely live camera-to-UART execution. Do not claim end-to-end live operation unless the live node itself feeds the UART bridge.
+The script accepts an optional new output directory; `UART_PORT` can override `/dev/ttyAMA0`. Record verbatim commands, fan state/speed, wiring and power photos, box distances, detector decisions, sent/echoed/lost counts, dropped frames, receipt-to-before-write latency, RTT percentiles, rejected echoes/stale events, UART port/baud, Nucleo reset state, and all errors. Keep `summary.json`, `packets.csv`, and `camera.log` together. Image header timestamps are metadata only; latency uses Pi monotonic time.
 
 ## Closeout
 

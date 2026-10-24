@@ -10,9 +10,6 @@ import sys
 from collections import Counter, deque
 
 import numpy as np
-from rosbags.highlevel import AnyReader
-from rosbags.rosbag2 import Reader as Rosbag2Reader
-from rosbags.typesys import Stores, get_typestore
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(_REPO_ROOT) not in sys.path:
@@ -109,6 +106,9 @@ def _resolve_topics(reader, path, depth_topic=None, info_topic=None):
 
 
 def replay_bag(bag, *, depth_topic=None, info_topic=None, stride=1, out=".", wall_roi_size=80):
+    from rosbags.highlevel import AnyReader
+    from rosbags.rosbag2 import Reader as Rosbag2Reader
+    from rosbags.typesys import Stores, get_typestore
     bag = Path(bag)
     if stride < 1:
         raise ValueError("stride must be >= 1")
