@@ -30,3 +30,8 @@ Still failing / open:
 - S1: the lamp pole at 1.42 m is a real obstacle, so "false detection" 1.0 is expected.
 - W2: 1.424 m vs 1.50 m tape (−5 %), same as the lab day. W1 on the same method is +0.6 cm,
   so this still points at the W2 setup, not the depth.
+
+Speed (MEASURED, detector only, B-H08 frames, `process_frame` p50/p95): Mac ~27 ms;
+Pi 5 (not throttled, 50–54 °C) 118/126 ms before → 67/76 ms after vectorising RANSAC
+scoring (4000-point subset) and labelling clusters on the cell grid. Results above are
+from the faster code.
