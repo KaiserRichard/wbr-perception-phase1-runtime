@@ -454,3 +454,5 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   and a passing first-20-second replay (300 poses, 20 clouds, max214 landmarks).
   Added existing-output protection and marked A complete; Codex handles review,
   owner/execution chat owns lab execution and experiment decisions.
+
+- 2026-10-24 (Claude 2): `lab-day-20261026/CHECKLIST.md` — A1 15 Hz, ORB-SLAM3 RGB-D during A1, journalctl watcher. Note: `ops/worklog/sessions/2026-10-24-monday-checklist-fix.md`.
