@@ -2,18 +2,18 @@
   "cases": 80,
   "height_error": {
     "count": 80,
-    "mean_abs": 0.00079772998991029,
-    "max_abs": 0.011062393796764769
+    "mean_abs": 0.0008368004162098265,
+    "max_abs": 0.011032400845128743
   },
   "distance_error": {
     "count": 80,
-    "mean_abs": 0.016116720811186945,
-    "max_abs": 0.043564493268198445
+    "mean_abs": 0.01611022776825566,
+    "max_abs": 0.04356299201080893
   },
   "width_error": {
     "count": 80,
-    "mean_abs": 0.0068121773414284255,
-    "max_abs": 0.01797891894943532
+    "mean_abs": 0.006811823440823879,
+    "max_abs": 0.01798113305527199
   },
   "confusion_matrix": {
     "NONE": {
@@ -24,9 +24,9 @@
     },
     "JUMP_CANDIDATE": {
       "NONE": 0,
-      "JUMP_CANDIDATE": 51,
+      "JUMP_CANDIDATE": 50,
       "STOP_CANDIDATE": 1,
-      "UNCERTAIN": 12
+      "UNCERTAIN": 13
     },
     "STOP_CANDIDATE": {
       "NONE": 0,
@@ -41,7 +41,7 @@
       "UNCERTAIN": 0
     }
   },
-  "mean_ms_per_frame": 59.767337876255624,
+  "mean_ms_per_frame": 69.336644623545,
   "controls": [
     {
       "case": "empty",
@@ -61,11 +61,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.00022890563145974707,
-      "distance_error_m": -0.0023669092258553626,
-      "width_error_m": -0.0028273585878460517,
+      "height_error_m": -0.0005665315469155496,
+      "distance_error_m": -0.0022399058437069796,
+      "width_error_m": -0.0028078353291048908,
       "advisory": "UNCERTAIN",
-      "ms_per_frame": 60.94148340635002
+      "ms_per_frame": 74.28250259254128
     },
     {
       "true_height": 0.03,
@@ -73,11 +73,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.00043368827572984325,
-      "distance_error_m": -0.002134788426352563,
-      "width_error_m": -0.0028015701105642554,
+      "height_error_m": -0.0006781399001974109,
+      "distance_error_m": -0.0020476143402583524,
+      "width_error_m": -0.002796629344958612,
       "advisory": "UNCERTAIN",
-      "ms_per_frame": 66.22122302651405
+      "ms_per_frame": 73.44838599674404
     },
     {
       "true_height": 0.03,
@@ -85,11 +85,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.00025230386661664883,
-      "distance_error_m": -0.001957465085230592,
-      "width_error_m": -0.0034263432443764064,
+      "height_error_m": -0.0001789827708026659,
+      "distance_error_m": -0.0019997569292300454,
+      "width_error_m": -0.003426796160347134,
       "advisory": "UNCERTAIN",
-      "ms_per_frame": 61.30083375610411
+      "ms_per_frame": 75.5425114184618
     },
     {
       "true_height": 0.03,
@@ -97,11 +97,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -0.0002533508892857139,
-      "distance_error_m": -0.0020186871351287605,
-      "width_error_m": -0.003465429885322835,
+      "height_error_m": -0.00030753083420501093,
+      "distance_error_m": -0.0019856416953824008,
+      "width_error_m": -0.0034617898264162617,
       "advisory": "UNCERTAIN",
-      "ms_per_frame": 59.28037802223116
+      "ms_per_frame": 72.98054757993668
     },
     {
       "true_height": 0.03,
@@ -109,11 +109,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.00010877186037594466,
-      "distance_error_m": -0.007999139529416888,
-      "width_error_m": -0.004322600765617579,
+      "height_error_m": -9.505172817769747e-05,
+      "distance_error_m": -0.00799411000199568,
+      "width_error_m": -0.004322563919234967,
       "advisory": "UNCERTAIN",
-      "ms_per_frame": 63.09865002986044
+      "ms_per_frame": 72.2607616102323
     },
     {
       "true_height": 0.03,
@@ -121,11 +121,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.00012218217174470025,
-      "distance_error_m": -0.007364457439035799,
-      "width_error_m": -0.002713852599821709,
+      "height_error_m": -0.0001113922696799885,
+      "distance_error_m": -0.007401604120562566,
+      "width_error_m": -0.0027139332624732115,
       "advisory": "UNCERTAIN",
-      "ms_per_frame": 56.73963977023959
+      "ms_per_frame": 80.93471061438322
     },
     {
       "true_height": 0.03,
@@ -133,11 +133,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.00020079906283340665,
-      "distance_error_m": -0.00785815075840246,
-      "width_error_m": -0.0019060055796161213,
+      "height_error_m": -0.00019034048804286718,
+      "distance_error_m": -0.007826136806179496,
+      "width_error_m": -0.0019069419733603321,
       "advisory": "UNCERTAIN",
-      "ms_per_frame": 58.70639819186181
+      "ms_per_frame": 79.92791698779911
     },
     {
       "true_height": 0.03,
@@ -145,11 +145,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -2.002566469891387e-05,
-      "distance_error_m": -0.008583806323256615,
-      "width_error_m": -0.002970755927312385,
+      "height_error_m": -2.0462648739200118e-05,
+      "distance_error_m": -0.008586877033395113,
+      "width_error_m": -0.002981785355620492,
       "advisory": "UNCERTAIN",
-      "ms_per_frame": 61.68793321121484
+      "ms_per_frame": 81.01546899415553
     },
     {
       "true_height": 0.03,
@@ -157,11 +157,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -6.946144957448164e-05,
-      "distance_error_m": -0.013052685958982568,
-      "width_error_m": -0.00627399108149157,
+      "height_error_m": -6.162367966880411e-05,
+      "distance_error_m": -0.013047467301922078,
+      "width_error_m": -0.0062739609898812,
       "advisory": "UNCERTAIN",
-      "ms_per_frame": 56.83234317693859
+      "ms_per_frame": 83.75783101655543
     },
     {
       "true_height": 0.03,
@@ -169,11 +169,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": 0.000293523100052262,
-      "distance_error_m": -0.008347790523607568,
-      "width_error_m": -0.006172152343649928,
+      "height_error_m": 0.00022815354114474884,
+      "distance_error_m": -0.008383308830929082,
+      "width_error_m": -0.006171716166782637,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 58.23306718375534
+      "ms_per_frame": 73.99752780329436
     },
     {
       "true_height": 0.03,
@@ -181,11 +181,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": 8.868627049887778e-05,
-      "distance_error_m": -0.009347488116454361,
-      "width_error_m": -0.009613879772510214,
+      "height_error_m": 6.351053431954967e-05,
+      "distance_error_m": -0.009356651865372045,
+      "width_error_m": -0.00961428388217278,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 58.53147660382092
+      "ms_per_frame": 80.67580740898848
     },
     {
       "true_height": 0.03,
@@ -193,59 +193,59 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": 8.25820069985661e-06,
-      "distance_error_m": -0.01320253638054325,
-      "width_error_m": -0.008000707793478556,
-      "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 58.07227059267461
-    },
-    {
-      "true_height": 0.03,
-      "true_distance": 2.0,
-      "true_width": 0.3,
-      "pitch_deg": 0.0,
-      "seed": 0,
-      "height_error_m": -0.0007809905033871745,
-      "distance_error_m": -0.010792206778147406,
-      "width_error_m": -0.011682635643290584,
+      "height_error_m": -2.9018026900085037e-05,
+      "distance_error_m": -0.013226023490618521,
+      "width_error_m": -0.00800145802762281,
       "advisory": "UNCERTAIN",
-      "ms_per_frame": 55.50161257851869
+      "ms_per_frame": 68.81696861237288
     },
     {
       "true_height": 0.03,
       "true_distance": 2.0,
       "true_width": 0.3,
       "pitch_deg": 0.0,
-      "seed": 1,
-      "height_error_m": -0.001145134449515084,
-      "distance_error_m": -0.018178510200214992,
-      "width_error_m": -0.010313557906258264,
+      "seed": 0,
+      "height_error_m": -0.0005908210808140135,
+      "distance_error_m": -0.010743691863033034,
+      "width_error_m": -0.01168255735490692,
       "advisory": "UNCERTAIN",
-      "ms_per_frame": 56.15586738567799
+      "ms_per_frame": 70.56074561551213
     },
     {
       "true_height": 0.03,
       "true_distance": 2.0,
       "true_width": 0.3,
-      "pitch_deg": 3.0,
-      "seed": 0,
-      "height_error_m": 4.87797570793147e-05,
-      "distance_error_m": -0.01726798312484701,
-      "width_error_m": -0.007586360344796372,
-      "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 64.40660362131894
-    },
-    {
-      "true_height": 0.03,
-      "true_distance": 2.0,
-      "true_width": 0.3,
-      "pitch_deg": 3.0,
+      "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -7.2919113311420425e-06,
-      "distance_error_m": -0.00821506741935929,
-      "width_error_m": -0.008513959141587368,
+      "height_error_m": -0.0012664156314970143,
+      "distance_error_m": -0.01820735500181736,
+      "width_error_m": -0.010313572059606868,
       "advisory": "UNCERTAIN",
-      "ms_per_frame": 58.17983062006533
+      "ms_per_frame": 74.35174321290106
+    },
+    {
+      "true_height": 0.03,
+      "true_distance": 2.0,
+      "true_width": 0.3,
+      "pitch_deg": 3.0,
+      "seed": 0,
+      "height_error_m": 2.9391418376600864e-06,
+      "distance_error_m": -0.017278280714829286,
+      "width_error_m": -0.007586179195679277,
+      "advisory": "JUMP_CANDIDATE",
+      "ms_per_frame": 78.71818558778614
+    },
+    {
+      "true_height": 0.03,
+      "true_distance": 2.0,
+      "true_width": 0.3,
+      "pitch_deg": 3.0,
+      "seed": 1,
+      "height_error_m": -1.7614075040112143e-05,
+      "distance_error_m": -0.008219176523101002,
+      "width_error_m": -0.008513692359720604,
+      "advisory": "UNCERTAIN",
+      "ms_per_frame": 77.71022417582572
     },
     {
       "true_height": 0.05,
@@ -253,11 +253,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.00025404931827231747,
-      "distance_error_m": -0.002451977724233445,
-      "width_error_m": -0.002934375812722545,
+      "height_error_m": -0.0005925361688891989,
+      "distance_error_m": -0.0023298033986304256,
+      "width_error_m": -0.0029208104478962715,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 55.42111562099308
+      "ms_per_frame": 68.84782360866666
     },
     {
       "true_height": 0.05,
@@ -265,11 +265,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.00046624935519586075,
-      "distance_error_m": -0.002466635584885357,
-      "width_error_m": -0.003197990387761085,
+      "height_error_m": -0.0007202255964956078,
+      "distance_error_m": -0.0023762232665150984,
+      "width_error_m": -0.003197042684049356,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 57.42306541651487
+      "ms_per_frame": 72.96612840145826
     },
     {
       "true_height": 0.05,
@@ -277,11 +277,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.00027550907305823324,
-      "distance_error_m": -0.0024636172823179203,
-      "width_error_m": -0.002477659552068856,
+      "height_error_m": -0.0002019380682645594,
+      "distance_error_m": -0.0025027832661687066,
+      "width_error_m": -0.0024801270846120937,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 72.53462562803179
+      "ms_per_frame": 68.60657383222133
     },
     {
       "true_height": 0.05,
@@ -289,11 +289,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -0.00021615016897463812,
-      "distance_error_m": -0.0026083935417745008,
-      "width_error_m": -0.0025747586262612754,
+      "height_error_m": -0.00026775083971759817,
+      "distance_error_m": -0.0025776170455284464,
+      "width_error_m": -0.0025701801458559714,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 66.89582720864564
+      "ms_per_frame": 70.1811422361061
     },
     {
       "true_height": 0.05,
@@ -301,11 +301,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.00011310484741318405,
-      "distance_error_m": -0.009996481365230458,
-      "width_error_m": -0.0042993323821382545,
+      "height_error_m": -0.0001049184302243239,
+      "distance_error_m": -0.00999164687724774,
+      "width_error_m": -0.004300913707825316,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 59.46946581825614
+      "ms_per_frame": 64.99397098086774
     },
     {
       "true_height": 0.05,
@@ -313,11 +313,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.00016926592951323205,
-      "distance_error_m": -0.009953920576878494,
-      "width_error_m": -0.00443073807979627,
+      "height_error_m": -0.00015276551376448844,
+      "distance_error_m": -0.009988198486894362,
+      "width_error_m": -0.004430871979166917,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 57.610964798368514
+      "ms_per_frame": 67.78400796465576
     },
     {
       "true_height": 0.05,
@@ -325,11 +325,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.00014142845500260404,
-      "distance_error_m": -0.00944859384069674,
-      "width_error_m": -0.0015570695517362343,
+      "height_error_m": -0.00012254141682106756,
+      "distance_error_m": -0.009419387640216104,
+      "width_error_m": -0.0015556972331846608,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 63.64672197960317
+      "ms_per_frame": 72.18790941406041
     },
     {
       "true_height": 0.05,
@@ -337,11 +337,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -9.519339950296579e-05,
-      "distance_error_m": -0.009365683473878228,
-      "width_error_m": -0.0014726791444579224,
+      "height_error_m": -9.199593407134554e-05,
+      "distance_error_m": -0.009369175957388731,
+      "width_error_m": -0.0014737785903857215,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 57.8263184055686
+      "ms_per_frame": 68.02702802233398
     },
     {
       "true_height": 0.05,
@@ -349,11 +349,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.00042718923160724176,
-      "distance_error_m": -0.018357123948770315,
-      "width_error_m": -0.009480712486239218,
+      "height_error_m": -0.0004318803957279599,
+      "distance_error_m": -0.01835177088294926,
+      "width_error_m": -0.009480122110786249,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 57.10091621149331
+      "ms_per_frame": 73.8952788291499
     },
     {
       "true_height": 0.05,
@@ -361,11 +361,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.0005088859464823375,
-      "distance_error_m": -0.01935561468769298,
-      "width_error_m": -0.009196046554906911,
+      "height_error_m": -0.0005833655515591757,
+      "distance_error_m": -0.01939091054535491,
+      "width_error_m": -0.009194358087519616,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 57.3497602250427
+      "ms_per_frame": 75.88893778156489
     },
     {
       "true_height": 0.05,
@@ -373,11 +373,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.0004389675923853614,
-      "distance_error_m": -0.01672020697746368,
-      "width_error_m": -0.010376565929580861,
+      "height_error_m": -0.00046107404434968247,
+      "distance_error_m": -0.016729692207021474,
+      "width_error_m": -0.010377213651788397,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 58.908839197829366
+      "ms_per_frame": 83.89937761239707
     },
     {
       "true_height": 0.05,
@@ -385,11 +385,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -0.0006309385457076849,
-      "distance_error_m": -0.015287504008804742,
-      "width_error_m": -0.01017442755555159,
+      "height_error_m": -0.0007012689239615649,
+      "distance_error_m": -0.015309539563233443,
+      "width_error_m": -0.010175377299073418,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 61.84186437167227
+      "ms_per_frame": 93.78614979796112
     },
     {
       "true_height": 0.05,
@@ -397,11 +397,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.00026807459973733627,
-      "distance_error_m": -0.026024619575144126,
-      "width_error_m": -0.00898049271847251,
+      "height_error_m": -2.77290959899007e-05,
+      "distance_error_m": -0.025976343516133094,
+      "width_error_m": -0.008980005319238094,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 77.36907482612878
+      "ms_per_frame": 104.67674497049302
     },
     {
       "true_height": 0.05,
@@ -409,11 +409,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.0001859652407261575,
-      "distance_error_m": -0.02714788839601323,
-      "width_error_m": -0.008224584520106826,
+      "height_error_m": -0.00030148119799235096,
+      "distance_error_m": -0.027174402746650284,
+      "width_error_m": -0.008225549568818769,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 90.61456420458853
+      "ms_per_frame": 95.98092399537563
     },
     {
       "true_height": 0.05,
@@ -421,11 +421,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.0006224581729160766,
-      "distance_error_m": -0.026858846561585326,
-      "width_error_m": -0.016654748100495664,
+      "height_error_m": -0.0006534480293012984,
+      "distance_error_m": -0.026869050767177383,
+      "width_error_m": -0.016654782305795868,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 59.09900602418929
+      "ms_per_frame": 121.87585041392595
     },
     {
       "true_height": 0.05,
@@ -433,11 +433,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -7.560673263637407e-05,
-      "distance_error_m": -0.02325341499960709,
-      "width_error_m": -0.017653729960317055,
+      "height_error_m": -8.349484252177797e-05,
+      "distance_error_m": -0.023256045976264295,
+      "width_error_m": -0.017654781740003123,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 58.60832298640162
+      "ms_per_frame": 77.16571101918817
     },
     {
       "true_height": 0.08,
@@ -445,11 +445,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.0002788605471849559,
-      "distance_error_m": -0.0027231020377458393,
-      "width_error_m": -0.0028419254992694265,
+      "height_error_m": -0.0006365108177437823,
+      "distance_error_m": -0.0025987692428922626,
+      "width_error_m": -0.002838545940582027,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 57.20855938270688
+      "ms_per_frame": 67.6252102246508
     },
     {
       "true_height": 0.08,
@@ -457,11 +457,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.0004585142057394881,
-      "distance_error_m": -0.0027783985008754675,
-      "width_error_m": -0.003162178111210945,
+      "height_error_m": -0.0007164665382632662,
+      "distance_error_m": -0.002700507866255253,
+      "width_error_m": -0.003155560246719924,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 95.25356581434608
+      "ms_per_frame": 61.89886638894677
     },
     {
       "true_height": 0.08,
@@ -469,11 +469,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.00028346160521293406,
-      "distance_error_m": -0.002740982180876095,
-      "width_error_m": -0.0016202356204352841,
+      "height_error_m": -0.00021469661350549674,
+      "distance_error_m": -0.002781821942431928,
+      "width_error_m": -0.0016241213895047957,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 59.825070784427226
+      "ms_per_frame": 65.34319282509387
     },
     {
       "true_height": 0.08,
@@ -481,11 +481,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -0.00018550514565547627,
-      "distance_error_m": -0.0027078459319901382,
-      "width_error_m": -0.0015888799787492913,
+      "height_error_m": -0.00024646443533639373,
+      "distance_error_m": -0.002678104133268411,
+      "width_error_m": -0.0015859832581092692,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 59.422823577187955
+      "ms_per_frame": 68.64213480148464
     },
     {
       "true_height": 0.08,
@@ -493,11 +493,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.00012156954451846003,
-      "distance_error_m": -0.010886354554863309,
-      "width_error_m": -0.004631224376476117,
+      "height_error_m": -0.00010403400792703688,
+      "distance_error_m": -0.010881981174070576,
+      "width_error_m": -0.004629624214139649,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 58.32030940800905
+      "ms_per_frame": 63.270469405688345
     },
     {
       "true_height": 0.08,
@@ -505,11 +505,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": 1.6960781948724413e-05,
-      "distance_error_m": -0.01097084930497716,
-      "width_error_m": -0.0042463065267624445,
+      "height_error_m": 1.9546016134672217e-05,
+      "distance_error_m": -0.011006490535099167,
+      "width_error_m": -0.004245507334429133,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 56.278213183395565
+      "ms_per_frame": 61.70803364366293
     },
     {
       "true_height": 0.08,
@@ -517,11 +517,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.000233846851970268,
-      "distance_error_m": -0.01110324352298031,
-      "width_error_m": -0.0016200563316057237,
+      "height_error_m": -0.00022968025356921717,
+      "distance_error_m": -0.011074438123099273,
+      "width_error_m": -0.0016187877627695801,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 59.136617416515946
+      "ms_per_frame": 63.34938583895564
     },
     {
       "true_height": 0.08,
@@ -529,11 +529,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -0.00022102587658727468,
-      "distance_error_m": -0.012558453181010676,
-      "width_error_m": -0.0008419260658351635,
+      "height_error_m": -0.00022490818529842527,
+      "distance_error_m": -0.01256146956242199,
+      "width_error_m": -0.0008436172962530963,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 58.76646405085921
+      "ms_per_frame": 67.06434320658445
     },
     {
       "true_height": 0.08,
@@ -541,11 +541,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.00014335153398777056,
-      "distance_error_m": -0.021194437919492604,
-      "width_error_m": -0.009977699151521302,
+      "height_error_m": -0.00012762488872801458,
+      "distance_error_m": -0.021189368444303414,
+      "width_error_m": -0.009975328813279394,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 55.02617917954922
+      "ms_per_frame": 63.33067640662193
     },
     {
       "true_height": 0.08,
@@ -553,11 +553,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.00033696901524428446,
-      "distance_error_m": -0.023021188208323995,
-      "width_error_m": -0.010214620834163635,
+      "height_error_m": -0.00041489943071158775,
+      "distance_error_m": -0.023050597641921522,
+      "width_error_m": -0.010215412013932668,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 56.77349118050188
+      "ms_per_frame": 64.45987240877002
     },
     {
       "true_height": 0.08,
@@ -565,11 +565,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.00032579797643132735,
-      "distance_error_m": -0.021269445908332907,
-      "width_error_m": -0.008487746914585648,
+      "height_error_m": -0.0003601793807470194,
+      "distance_error_m": -0.021277516949067543,
+      "width_error_m": -0.008485641876572025,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 60.332016786560416
+      "ms_per_frame": 66.38304977677763
     },
     {
       "true_height": 0.08,
@@ -577,11 +577,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -0.0009237626682805228,
-      "distance_error_m": -0.019018339461648104,
-      "width_error_m": -0.009652080221564718,
+      "height_error_m": -0.0009855271856134135,
+      "distance_error_m": -0.01903941002274312,
+      "width_error_m": -0.00964852931252369,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 59.74644517991692
+      "ms_per_frame": 64.07700057607144
     },
     {
       "true_height": 0.08,
@@ -589,11 +589,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.0008635697844042584,
-      "distance_error_m": -0.03558456398256582,
-      "width_error_m": -0.008769518501404339,
+      "height_error_m": -0.000652871496626406,
+      "distance_error_m": -0.0355453548439808,
+      "width_error_m": -0.008770242161050879,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 56.92988040391356
+      "ms_per_frame": 61.16637699306011
     },
     {
       "true_height": 0.08,
@@ -601,11 +601,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.0006804742568336797,
-      "distance_error_m": -0.03202216973610894,
-      "width_error_m": -0.008466956309305329,
+      "height_error_m": -0.0008036669859806944,
+      "distance_error_m": -0.03204987254938785,
+      "width_error_m": -0.008463925500979463,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 57.34380739741027
+      "ms_per_frame": 69.99088281299919
     },
     {
       "true_height": 0.08,
@@ -613,11 +613,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.0002330173846854383,
-      "distance_error_m": -0.035543993726164125,
-      "width_error_m": -0.016846152086599064,
+      "height_error_m": -0.0002782180593901007,
+      "distance_error_m": -0.03555218748279754,
+      "width_error_m": -0.016842928827513926,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 59.65679860673845
+      "ms_per_frame": 61.82067359331995
     },
     {
       "true_height": 0.08,
@@ -625,11 +625,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -0.0016824632967970127,
-      "distance_error_m": -0.03339824560633575,
-      "width_error_m": -0.01797891894943532,
+      "height_error_m": -0.0016957581059299648,
+      "distance_error_m": -0.03340073005524169,
+      "width_error_m": -0.01798113305527199,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 58.486693585291505
+      "ms_per_frame": 61.67480864096433
     },
     {
       "true_height": 0.12,
@@ -637,11 +637,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.0002678947548499927,
-      "distance_error_m": -0.0027951163365749765,
-      "width_error_m": -0.0028335202385043057,
+      "height_error_m": -0.0006429102405776377,
+      "distance_error_m": -0.0026804908766734914,
+      "width_error_m": -0.002832815740051564,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 57.20590162090957
+      "ms_per_frame": 57.655860972590744
     },
     {
       "true_height": 0.12,
@@ -649,11 +649,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.00043546949767847565,
-      "distance_error_m": -0.002817930236146793,
-      "width_error_m": -0.0031040322759429695,
+      "height_error_m": -0.0007034846950807749,
+      "distance_error_m": -0.00272989204239088,
+      "width_error_m": -0.0031024543148610584,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 56.05222920421511
+      "ms_per_frame": 59.66573359910399
     },
     {
       "true_height": 0.12,
@@ -661,11 +661,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.00027407630549114437,
-      "distance_error_m": -0.002865613151243507,
-      "width_error_m": -0.0017621618261803307,
+      "height_error_m": -0.00020267404047430437,
+      "distance_error_m": -0.0029050913468470774,
+      "width_error_m": -0.0017626175160831425,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 59.26652839407325
+      "ms_per_frame": 66.71711001545191
     },
     {
       "true_height": 0.12,
@@ -673,11 +673,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -0.00021992287167182933,
-      "distance_error_m": -0.0030328255750011746,
-      "width_error_m": -0.002011477982805876,
+      "height_error_m": -0.0002794083255525104,
+      "distance_error_m": -0.003008311105342276,
+      "width_error_m": -0.002009755505451405,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 59.232600848190486
+      "ms_per_frame": 63.34822280332446
     },
     {
       "true_height": 0.12,
@@ -685,11 +685,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.00011204959760359456,
-      "distance_error_m": -0.011253281371526036,
-      "width_error_m": -0.004835926853394901,
+      "height_error_m": -0.00011309354361177526,
+      "distance_error_m": -0.011248982498363369,
+      "width_error_m": -0.004832336851984087,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 57.60376260150224
+      "ms_per_frame": 64.07808479852974
     },
     {
       "true_height": 0.12,
@@ -697,11 +697,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -4.6843627377585184e-05,
-      "distance_error_m": -0.011233206303585264,
-      "width_error_m": -0.004513346352181313,
+      "height_error_m": -3.47300344443191e-05,
+      "distance_error_m": -0.011266846837227784,
+      "width_error_m": -0.004509282175280627,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 57.410671026445925
+      "ms_per_frame": 62.72657639347017
     },
     {
       "true_height": 0.12,
@@ -709,11 +709,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -6.143873321744209e-05,
-      "distance_error_m": -0.011919053200465934,
-      "width_error_m": -0.0017736793793520778,
+      "height_error_m": -4.2599924080552465e-05,
+      "distance_error_m": -0.011888887298789008,
+      "width_error_m": -0.001771961215667417,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 58.993679052218795
+      "ms_per_frame": 63.81458383984864
     },
     {
       "true_height": 0.12,
@@ -721,11 +721,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": 4.0265885518281364e-05,
-      "distance_error_m": -0.01253571977873802,
-      "width_error_m": -0.0011060830013004952,
+      "height_error_m": 2.715463078428737e-05,
+      "distance_error_m": -0.012561595139708448,
+      "width_error_m": -0.0011057868720446007,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 58.993236254900694
+      "ms_per_frame": 65.62697859480977
     },
     {
       "true_height": 0.12,
@@ -733,11 +733,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.0009448586929979297,
-      "distance_error_m": -0.02455196002708271,
-      "width_error_m": -0.01101516328662705,
+      "height_error_m": -0.0009176195608419646,
+      "distance_error_m": -0.024548194100062037,
+      "width_error_m": -0.011019188139538116,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 56.25747719313949
+      "ms_per_frame": 65.32720341347158
     },
     {
       "true_height": 0.12,
@@ -745,11 +745,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.00040239322601501315,
-      "distance_error_m": -0.025249124663295985,
-      "width_error_m": -0.011625863272096804,
+      "height_error_m": -0.0004785734946224085,
+      "distance_error_m": -0.02527274356958875,
+      "width_error_m": -0.011630189747032171,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 57.59493859950453
+      "ms_per_frame": 62.227192195132375
     },
     {
       "true_height": 0.12,
@@ -757,11 +757,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.00040072533019533396,
-      "distance_error_m": -0.024545307165380503,
-      "width_error_m": -0.008487376348998044,
+      "height_error_m": -0.00043309461420071305,
+      "distance_error_m": -0.02455224570734682,
+      "width_error_m": -0.008486610408804884,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 58.22628680616617
+      "ms_per_frame": 63.904650579206645
     },
     {
       "true_height": 0.12,
@@ -769,11 +769,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -0.00022805964864153205,
-      "distance_error_m": -0.02459534113432249,
-      "width_error_m": -0.009218887233292561,
+      "height_error_m": -0.0002843254410723056,
+      "distance_error_m": -0.02461274289415738,
+      "width_error_m": -0.009215544838658996,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 59.37691698782146
+      "ms_per_frame": 64.37908159568906
     },
     {
       "true_height": 0.12,
@@ -781,11 +781,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.0004024186639470795,
-      "distance_error_m": -0.03759802727187167,
-      "width_error_m": -0.008166694637012306,
+      "height_error_m": -0.0001967178885378118,
+      "distance_error_m": -0.037564101481219137,
+      "width_error_m": -0.008164712205033176,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 57.8194135800004
+      "ms_per_frame": 63.36211797315627
     },
     {
       "true_height": 0.12,
@@ -793,11 +793,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.0007733416048957276,
-      "distance_error_m": -0.034569216032690475,
-      "width_error_m": -0.006443775774181981,
+      "height_error_m": -0.0008991298895422856,
+      "distance_error_m": -0.03458813156604257,
+      "width_error_m": -0.0064428883715876295,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 58.902679407037795
+      "ms_per_frame": 63.81457238458097
     },
     {
       "true_height": 0.12,
@@ -805,11 +805,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.0006079182205067368,
-      "distance_error_m": -0.03889066036327793,
-      "width_error_m": -0.017648938740249642,
+      "height_error_m": -0.0006677592064452675,
+      "distance_error_m": -0.03889823431011674,
+      "width_error_m": -0.017651116806499945,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 58.80245682783425
+      "ms_per_frame": 66.72524919267744
     },
     {
       "true_height": 0.12,
@@ -817,11 +817,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -0.0010925594945587203,
-      "distance_error_m": -0.04146555825736553,
-      "width_error_m": -0.017399463197383336,
+      "height_error_m": -0.0011220773888525049,
+      "distance_error_m": -0.04146810541395429,
+      "width_error_m": -0.01740626495478026,
       "advisory": "JUMP_CANDIDATE",
-      "ms_per_frame": 59.43598740268499
+      "ms_per_frame": 64.47047777473927
     },
     {
       "true_height": 0.2,
@@ -829,11 +829,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.0003055344625556289,
-      "distance_error_m": -0.00290422360667425,
-      "width_error_m": -0.002848613430003699,
+      "height_error_m": -0.0006815554875700958,
+      "distance_error_m": -0.0028117306578656076,
+      "width_error_m": -0.0028427148458422535,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 54.266794002614915
+      "ms_per_frame": 58.304508798755705
     },
     {
       "true_height": 0.2,
@@ -841,11 +841,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.0004916039247043757,
-      "distance_error_m": -0.0029853114891618127,
-      "width_error_m": -0.0029797516186370054,
+      "height_error_m": -0.000764512184735,
+      "distance_error_m": -0.0029268151704962553,
+      "width_error_m": -0.002991587598395906,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 54.790315381251276
+      "ms_per_frame": 61.42813100013882
     },
     {
       "true_height": 0.2,
@@ -853,11 +853,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.00024879215463055604,
-      "distance_error_m": -0.0029440234012999,
-      "width_error_m": -0.003249051764533495,
+      "height_error_m": -0.0002488504022303828,
+      "distance_error_m": -0.0029583248249340777,
+      "width_error_m": -0.0032525569266458887,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 57.55358680617064
+      "ms_per_frame": 64.0715636080131
     },
     {
       "true_height": 0.2,
@@ -865,11 +865,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -0.00028824725572135224,
-      "distance_error_m": -0.003083602068394642,
-      "width_error_m": -0.0035141321119649405,
+      "height_error_m": -0.0002149021797891726,
+      "distance_error_m": -0.0031127652900907465,
+      "width_error_m": -0.0035151992759124284,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 57.82158321235329
+      "ms_per_frame": 60.92507899738848
     },
     {
       "true_height": 0.2,
@@ -877,11 +877,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.000319243235355815,
-      "distance_error_m": -0.011768937853482209,
-      "width_error_m": -0.004642478321161991,
+      "height_error_m": -0.00031431594849437583,
+      "distance_error_m": -0.011766924552146896,
+      "width_error_m": -0.004636815348009027,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 57.854980789124966
+      "ms_per_frame": 60.073883226141334
     },
     {
       "true_height": 0.2,
@@ -889,11 +889,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.0003704069422010292,
-      "distance_error_m": -0.011846241734100205,
-      "width_error_m": -0.003814375714090379,
+      "height_error_m": -0.0003437687759001995,
+      "distance_error_m": -0.011868462793724888,
+      "width_error_m": -0.003819185494429278,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 58.37318864651024
+      "ms_per_frame": 59.833989245817065
     },
     {
       "true_height": 0.2,
@@ -901,11 +901,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.0003421716288858345,
-      "distance_error_m": -0.011918352050600545,
-      "width_error_m": -0.0018743231673895022,
+      "height_error_m": -0.0003534489473971114,
+      "distance_error_m": -0.011934273002985218,
+      "width_error_m": -0.001885638584033289,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 60.140430997125804
+      "ms_per_frame": 62.7886324422434
     },
     {
       "true_height": 0.2,
@@ -913,11 +913,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -0.00044589078094836587,
-      "distance_error_m": -0.012476217415435475,
-      "width_error_m": -0.0014107078275066853,
+      "height_error_m": -0.0004621958344721566,
+      "distance_error_m": -0.012510486133872512,
+      "width_error_m": -0.0014109224261217856,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 57.75035060942173
+      "ms_per_frame": 60.83652938250452
     },
     {
       "true_height": 0.2,
@@ -925,11 +925,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.0011198485227257304,
-      "distance_error_m": -0.02680048749169317,
-      "width_error_m": -0.010753123135623044,
+      "height_error_m": -0.0011040939198000421,
+      "distance_error_m": -0.02679852827821727,
+      "width_error_m": -0.01075661438319414,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 56.342912232503295
+      "ms_per_frame": 60.883294604718685
     },
     {
       "true_height": 0.2,
@@ -937,11 +937,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.0008484457299237635,
-      "distance_error_m": -0.02899501211693223,
-      "width_error_m": -0.01149026417507698,
+      "height_error_m": -0.00092644227998262,
+      "distance_error_m": -0.029033331996112244,
+      "width_error_m": -0.011495281686139835,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 58.68805521167815
+      "ms_per_frame": 55.89897979516536
     },
     {
       "true_height": 0.2,
@@ -949,11 +949,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.00025696910900813164,
-      "distance_error_m": -0.02665737368925969,
-      "width_error_m": -0.009634587247293325,
+      "height_error_m": -0.0002751688707251787,
+      "distance_error_m": -0.026664741998653874,
+      "width_error_m": -0.009636156628895554,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 57.4412728426978
+      "ms_per_frame": 63.59537038952112
     },
     {
       "true_height": 0.2,
@@ -961,11 +961,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -0.00017905945174798155,
-      "distance_error_m": -0.027808173564049632,
-      "width_error_m": -0.009596304282696033,
+      "height_error_m": -0.00022648322233659313,
+      "distance_error_m": -0.027820920250240855,
+      "width_error_m": -0.00958165298860797,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 57.05124076921493
+      "ms_per_frame": 65.17015160061419
     },
     {
       "true_height": 0.2,
@@ -973,11 +973,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 0,
-      "height_error_m": -0.007923447532493105,
-      "distance_error_m": -0.04251817073805775,
-      "width_error_m": -0.008234388886131705,
+      "height_error_m": -0.007978674179155043,
+      "distance_error_m": -0.04253224509830855,
+      "width_error_m": -0.008242085236180474,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 55.957798357121646
+      "ms_per_frame": 71.0949692176655
     },
     {
       "true_height": 0.2,
@@ -985,11 +985,11 @@
       "true_width": 0.3,
       "pitch_deg": 0.0,
       "seed": 1,
-      "height_error_m": -0.008001243106296324,
-      "distance_error_m": -0.043564493268198445,
-      "width_error_m": -0.00787353098594823,
+      "height_error_m": -0.007991568870057308,
+      "distance_error_m": -0.04356299201080893,
+      "width_error_m": -0.007873048839523555,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 56.084228376857936
+      "ms_per_frame": 62.84264458809048
     },
     {
       "true_height": 0.2,
@@ -997,11 +997,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 0,
-      "height_error_m": -0.011062393796764769,
-      "distance_error_m": -0.04231446903583058,
-      "width_error_m": -0.01673493240673013,
+      "height_error_m": -0.011032400845128743,
+      "distance_error_m": -0.04231158529414447,
+      "width_error_m": -0.016736683149666864,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 58.62130301538855
+      "ms_per_frame": 63.79784683231264
     },
     {
       "true_height": 0.2,
@@ -1009,11 +1009,11 @@
       "true_width": 0.3,
       "pitch_deg": 3.0,
       "seed": 1,
-      "height_error_m": -0.009364525254197426,
-      "distance_error_m": -0.04286482576911266,
-      "width_error_m": -0.017153734270905885,
+      "height_error_m": -0.009362304081150907,
+      "distance_error_m": -0.04286468284533096,
+      "width_error_m": -0.017154010023432642,
       "advisory": "STOP_CANDIDATE",
-      "ms_per_frame": 57.35722300596535
+      "ms_per_frame": 65.99192437715828
     }
   ]
 }

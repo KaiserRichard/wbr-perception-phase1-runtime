@@ -46,7 +46,7 @@ def _normal_angles(n):
 def estimate_plane(depth, *, fx=386.953, fy=386.953, cx=321.034, cy=241.040,
                    stride=1, iterations=160, threshold=0.012, seed=0,
                    prior=None, max_deviation=None, min_inliers=100,
-                   min_height=0.05):
+                   min_height=0.05, score_points=4000):
     """Estimate plane with 3-point RANSAC and SVD refinement.
 
     prior may be ``(normal, camera_height)``. ``max_deviation`` is a tuple
@@ -67,32 +67,34 @@ def estimate_plane(depth, *, fx=386.953, fy=386.953, cx=321.034, cy=241.040,
             max_deviation = (np.deg2rad(12), 0.10)
     else:
         pn = None; ph = None
-    for _ in range(iterations):
-        ids = rng.choice(len(pts), 3, replace=False)
-        a, b, c = pts[ids]
-        n = np.cross(b-a, c-a); norm = np.linalg.norm(n)
-        if norm < 1e-10:
-            continue
-        n /= norm
-        d = -float(n @ a)
-        if d < 0:
-            n, d = -n, -d
-        # A plane through (or almost through) the camera centre has no defined
-        # side; real data hit this when the view was filled by a near wall.
-        if d < min_height:
-            continue
-        if pn is not None:
-            ang = np.arccos(np.clip(n @ pn, -1, 1))
-            # n faces the camera (d > 0), so a floor below the camera points
-            # along the prior; surfaces above the camera (seat/desk undersides)
-            # point the opposite way and are rejected.
-            if ang > max_deviation[0] or abs(d-ph) > max_deviation[1]:
-                continue
-        residual = np.abs(pts @ n + d)
-        mask = residual <= threshold
-        count = int(mask.sum())
-        if best is None or count > best[0]:
-            best = count, mask
+    # All hypotheses at once: sample triples, build normals, apply the gates,
+    # then score the survivors on a fixed random subset of points. Scoring every
+    # hypothesis on every point was most of the per-frame time on the Pi.
+    tri = rng.integers(0, len(pts), size=(iterations, 3))
+    a, b, c = pts[tri[:, 0]], pts[tri[:, 1]], pts[tri[:, 2]]
+    n = np.cross(b-a, c-a); norm = np.linalg.norm(n, axis=1)
+    ok = (norm >= 1e-10) & (tri[:, 0] != tri[:, 1]) & (tri[:, 1] != tri[:, 2]) & (tri[:, 0] != tri[:, 2])
+    n = n[ok] / norm[ok, None]; a = a[ok]
+    d = -np.einsum("ij,ij->i", n, a)
+    flip = d < 0
+    n[flip] *= -1; d[flip] *= -1
+    # A plane through (or almost through) the camera centre has no defined
+    # side; real data hit this when the view was filled by a near wall.
+    keep = d >= min_height
+    if pn is not None:
+        # n faces the camera (d > 0), so a floor below the camera points
+        # along the prior; surfaces above the camera (seat/desk undersides)
+        # point the opposite way and are rejected.
+        ang = np.arccos(np.clip(n @ pn, -1, 1))
+        keep &= (ang <= max_deviation[0]) & (np.abs(d-ph) <= max_deviation[1])
+    n, d = n[keep], d[keep]
+    best = None
+    if len(n):
+        sub = pts if len(pts) <= score_points else pts[rng.choice(len(pts), score_points, replace=False)]
+        counts = (np.abs(sub @ n.T + d) <= threshold).sum(axis=0)
+        i = int(np.argmax(counts))
+        mask = np.abs(pts @ n[i] + d[i]) <= threshold
+        best = int(mask.sum()), mask
     if best is None or best[0] < min_inliers:
         return empty
     mask = best[1]

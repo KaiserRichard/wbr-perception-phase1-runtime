@@ -45,25 +45,34 @@ class FrameResult:
     timing_ms: float = 0.0
 
 
-def _components(x, y, z, h, cell):
-    keys = np.floor(np.column_stack((x, y))/cell).astype(int)
-    groups = {}
-    for i, key in enumerate(map(tuple, keys)):
-        groups.setdefault(key, []).append(i)
-    unseen = set(groups); comps=[]
-    while unseen:
-        seed=unseen.pop(); stack=[seed]; cells=[seed]
+def _components(x, y, cell):
+    """Group points into connected 2D cells (cells up to two apart connect).
+
+    Labels a small occupancy grid instead of the points: a few hundred cells
+    per frame, so the Python flood fill is cheap. Linking cells two apart
+    bridges one-cell gaps left by the edge filter and sparse far returns,
+    which otherwise split a box into fragments and let a 5-point fragment
+    become the "nearest".
+    """
+    ix=np.floor(x/cell).astype(int); iy=np.floor(y/cell).astype(int)
+    ix-=ix.min(); iy-=iy.min()
+    W=iy.max()+1; flat=ix*W+iy
+    occupied=np.unique(flat); label={int(c):-1 for c in occupied}; nlab=0
+    for c in label:
+        if label[c]>=0: continue
+        label[c]=nlab; stack=[c]
         while stack:
-            a,b=stack.pop()
-            # Cells up to two apart are connected: bridges one-cell gaps left by
-            # the edge filter and sparse far returns, which otherwise split a box
-            # into fragments and let a 5-point fragment become the "nearest".
-            for q in ((a+i,b+j) for i in range(-2,3) for j in range(-2,3)):
-                if q in unseen:
-                    unseen.remove(q); stack.append(q); cells.append(q)
-        ids=np.array([i for k in cells for i in groups[k]])
-        comps.append(ids)
-    return comps
+            q=stack.pop(); a,b=divmod(q,W)
+            for i in range(-2,3):
+                for j in range(-2,3):
+                    if 0<=b+j<W:
+                        r=(a+i)*W+b+j
+                        if label.get(r,0)==-1: label[r]=nlab; stack.append(r)
+        nlab+=1
+    lut=np.array([label[int(c)] for c in occupied])
+    labels=lut[np.searchsorted(occupied,flat)]
+    order=np.argsort(labels,kind="stable"); bounds=np.searchsorted(labels[order],np.arange(nlab+1))
+    return [order[bounds[k]:bounds[k+1]] for k in range(nlab)]
 
 
 def ground_coords(depth_m, K, plane, stride=1):
@@ -125,7 +134,7 @@ def process_frame(depth_m, K, params=None, state=None):
     x=forward[mask]; y=lateral[mask]; hh=h[mask]; hz=horiz[mask]
     clusters=[]
     if len(x):
-        for ids in _components(x,y,None,hh,p.cell_size):
+        for ids in _components(x,y,p.cell_size):
             if len(ids)<p.min_cells: continue
             top=hh[ids][hz[ids]]
             if len(top)>=p.top_min_points:
