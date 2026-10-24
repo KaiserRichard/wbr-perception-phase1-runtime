@@ -11,6 +11,7 @@ import struct
 import sys
 import time
 from collections import Counter
+import threading
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
@@ -54,7 +55,8 @@ class Runner:
                 row['echo_result'] = result; row['accepted_count'] = rec['accepted_count']
                 row['rejected_count'] = rec['rejected_count']; row['stale'] = rec['stale']
 
-    def send(self, values, detector_before, detector_after, frame_stamp_ns=0, fault=None):
+    def send(self, values, detector_before, detector_after, frame_stamp_ns=0, fault=None,
+             frame_receipt_pi_ns=None):
         self.seq = (self.seq + 1) & 0xffffffff
         seq = self.seq
         wire_seq=seq
@@ -76,12 +78,18 @@ class Runner:
                 vals['height_m'], vals['width_m'], vals['plane_pitch_rad'], vals['plane_height_m'])
             raw=struct.pack('<BBHQI', lp.VERSION, lp.TERRAIN_ADVISORY, 42, SESSION, wire_seq)+payload
             raw += struct.pack('<I', lp.crc32c(raw)); wire=lp.cobs_encode(raw)+b'\0'
-        row={'seq':wire_seq, 'frame_stamp_ns':frame_stamp_ns, 'detector_before_ns':detector_before,
+        row={'seq':wire_seq, 'advisory':vals['advisory'], 'height_m':vals['height_m'], 'distance_m':vals['distance_m'],
+             'frame_stamp_ns':frame_stamp_ns, 'frame_receipt_pi_ns':frame_receipt_pi_ns,
+             'detector_before_ns':detector_before,
              'detector_after_ns':detector_after, 'detector_ns':detector_after-detector_before,
-             'before_write_ns':None, 'echo_ns':None, 'rtt_ns':None, 'echo_result':None,
+             'before_write_ns':None, 'receipt_to_before_write_ns':None,
+             'echo_ns':None, 'rtt_ns':None, 'echo_result':None,
              'accepted_count':None, 'rejected_count':None, 'stale':None, 'fault':fault or ''}
         self.pending[wire_seq]=row
-        row['before_write_ns']=self.link.send(wire,mark=True); self.drain(.02)
+        row['before_write_ns']=self.link.send(wire,mark=True)
+        if frame_receipt_pi_ns is not None:
+            row['receipt_to_before_write_ns']=row['before_write_ns']-frame_receipt_pi_ns
+        self.drain(.02)
         self.rows.append(row)
         return seq
 
@@ -118,7 +126,105 @@ def bag_frames(path, stride):
     finally: reader.close()
 
 
+def handle_ros_frame(msg, K, runner, plane_state, decision_state, params=None, decision_params=None,
+                     receipt_pi_ns=None):
+    """Run a ROS Image without importing rclpy, enabling host-side fake-message tests."""
+    from tools.obstacle_decision.replay_bag import _stamp_ns, decode_depth
+    from tools.obstacle_decision.detect import Params, process_frame
+    from tools.obstacle_decision.decide import DecisionParams, update
+    before=time.monotonic_ns()
+    frame,plane_state=process_frame(decode_depth(msg),K,params or Params(),plane_state)
+    decision,decision_state=update(frame,decision_state,decision_params or DecisionParams())
+    after=time.monotonic_ns(); nearest=frame.nearest
+    values=dict(advisory=int(decision.advisory),confidence=float(decision.confidence),
+        distance_m=nearest.distance_m if nearest else 0.,height_m=nearest.height_m if nearest else 0.,
+        width_m=nearest.width_m if nearest else 0.,plane_valid=int(frame.plane_valid),
+        plane_pitch_rad=frame.plane_pitch_rad if math.isfinite(frame.plane_pitch_rad) else 0.,
+        plane_height_m=frame.plane_height_m if math.isfinite(frame.plane_height_m) else 0.)
+    runner.send(values,before,after,_stamp_ns(msg),frame_receipt_pi_ns=receipt_pi_ns)
+    return plane_state,decision_state,after-before
+
+
+def write_results(args, runner, detector_times, frames, mode, dropped_frames=0):
+    out=Path(args.out); out.mkdir(parents=True,exist_ok=True)
+    fields=list(runner.rows[0]) if runner.rows else ['seq','frame_stamp_ns','frame_receipt_pi_ns','detector_before_ns','detector_after_ns','detector_ns','before_write_ns','receipt_to_before_write_ns','echo_ns','rtt_ns','echo_result','accepted_count','rejected_count','stale','fault']
+    with (out/'packets.csv').open('w',newline='') as f:
+        w=csv.DictWriter(f,fieldnames=fields); w.writeheader(); w.writerows(runner.rows)
+    detector=detector_times or [r['detector_ns'] for r in runner.rows if not r['fault']]
+    sent=sum(1 for r in runner.rows if not r['fault']); echoed=sum(1 for r in runner.rows if r['echo_ns'] is not None and not r['fault'])
+    summary={'mode':mode,'frames':frames,'sent':sent,'echoed':echoed,
+        'loss':sent-echoed,'detector_time_us':stats_ns(detector),'send_echo_rtt_us':stats_ns([r['rtt_ns'] for r in runner.rows if r['rtt_ns'] is not None and not r['fault']]),
+        'rejected_echoes':runner.echo_rejected,'mcu_accepted_count':runner.accepted_count,
+        'mcu_rejected_count':runner.rejected_count,'echo_result_codes':dict(runner.result_codes),
+        'stale_events':runner.stale_events,'dropped_frames':dropped_frames,
+        'clock':'all processing/RTT timestamps are Pi CLOCK_MONOTONIC; frame_stamp_ns is stored only',
+        'unmatched_echoes':len(runner.pending)}
+    (out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n'); print(json.dumps(summary,indent=2))
+
+
+def run_ros(args):
+    # ROS dependencies are deliberately isolated to this mode.
+    import rclpy
+    from rclpy.node import Node
+    from rclpy.qos import QoSProfile, QoSHistoryPolicy, QoSReliabilityPolicy
+    from sensor_msgs.msg import CameraInfo, Image
+    from tools.obstacle_decision.replay_bag import _intrinsics
+    from tools.obstacle_decision.detect import Params
+    from tools.obstacle_decision.decide import DecisionParams
+    link=lb.Link(args.port,args.baud); runner=Runner(link)
+    link.marker=lb.GpioMarker(args.marker_gpio) if args.marker_gpio is not None else None
+    sensor_qos=QoSProfile(history=QoSHistoryPolicy.KEEP_LAST,depth=1,
+                          reliability=QoSReliabilityPolicy.BEST_EFFORT)
+    class LiveDetector(Node):
+        def __init__(self):
+            super().__init__('advisory_link'); self.lock=threading.Condition()
+            self.pending=None; self.stopping=False; self.K=None; self.dropped=0; self.frames=0
+            self.detector_times=[]; self.plane_state={}; self.decision_state={}
+            self.params=Params(); self.dp=DecisionParams()
+            self.create_subscription(CameraInfo,'/camera/camera/color/camera_info',self.info_cb,sensor_qos)
+            self.create_subscription(Image,'/camera/camera/aligned_depth_to_color/image_raw',self.image_cb,sensor_qos)
+            self.worker=threading.Thread(target=self.work,name='advisory-detector',daemon=True); self.worker.start()
+        def info_cb(self,msg):
+            try: k=_intrinsics(msg)
+            except Exception as exc:
+                self.get_logger().error(f'invalid camera_info: {exc}'); return
+            with self.lock: self.K=k
+        def image_cb(self,msg):
+            receipt=time.monotonic_ns()
+            with self.lock:
+                if self.K is None: self.dropped+=1; return
+                if self.pending is not None: self.dropped+=1
+                self.pending=(msg,self.K.copy(),receipt); self.lock.notify()
+        def work(self):
+            while True:
+                with self.lock:
+                    while self.pending is None and not self.stopping: self.lock.wait()
+                    if self.pending is None and self.stopping: return
+                    item=self.pending; self.pending=None
+                try:
+                    self.plane_state,self.decision_state,elapsed=handle_ros_frame(
+                        item[0],item[1],runner,self.plane_state,self.decision_state,
+                        self.params,self.dp,item[2])
+                    self.detector_times.append(elapsed); self.frames+=1
+                except Exception as exc:
+                    self.dropped+=1; self.get_logger().error(f'dropped depth frame: {exc}')
+        def stop(self):
+            with self.lock: self.stopping=True; self.lock.notify_all()
+            self.worker.join()
+    rclpy.init(); node=LiveDetector(); end=time.monotonic()+args.duration
+    try:
+        while rclpy.ok() and time.monotonic()<end:
+            rclpy.spin_once(node,timeout_sec=min(.1,max(0,end-time.monotonic())))
+    finally:
+        node.stop(); runner.drain(.15); rclpy.shutdown()
+        if link.marker: os.close(link.marker.fd)
+        os.close(link.fd)
+    write_results(args,runner,node.detector_times,node.frames,'ros',node.dropped)
+
+
 def run(args):
+    if args.ros:
+        return run_ros(args)
     link=lb.Link(args.port,args.baud); runner=Runner(link); link.marker=lb.GpioMarker(args.marker_gpio) if args.marker_gpio is not None else None
     detector_times=[]; previous_stamp=None; due=time.monotonic_ns(); frames=0
     try:
@@ -160,26 +266,14 @@ def run(args):
     finally:
         if link.marker: os.close(link.marker.fd)
         os.close(link.fd)
-    out=Path(args.out); out.mkdir(parents=True,exist_ok=True)
-    fields=list(runner.rows[0]) if runner.rows else ['seq','frame_stamp_ns','detector_before_ns','detector_after_ns','detector_ns','before_write_ns','echo_ns','rtt_ns','echo_result','accepted_count','rejected_count','stale','fault']
-    with (out/'packets.csv').open('w',newline='') as f:
-        w=csv.DictWriter(f,fieldnames=fields); w.writeheader(); w.writerows(runner.rows)
-    detector=detector_times or [r['detector_ns'] for r in runner.rows if not r['fault']]
-    sent=sum(1 for r in runner.rows if not r['fault']); echoed=sum(1 for r in runner.rows if r['echo_ns'] is not None and not r['fault'])
-    summary={'mode':'synthetic' if args.synthetic else 'bag','frames':frames,'sent':sent,'echoed':echoed,
-        'loss':sent-echoed,'detector_time_us':stats_ns(detector),'send_echo_rtt_us':stats_ns([r['rtt_ns'] for r in runner.rows if r['rtt_ns'] is not None and not r['fault']]),
-        'rejected_echoes':runner.echo_rejected,'mcu_accepted_count':runner.accepted_count,
-        'mcu_rejected_count':runner.rejected_count,'echo_result_codes':dict(runner.result_codes),
-        'stale_events':runner.stale_events,'clock':'all processing/RTT timestamps are Pi CLOCK_MONOTONIC; frame_stamp_ns is stored only',
-        'unmatched_echoes':len(runner.pending)}
-    (out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n'); print(json.dumps(summary,indent=2))
+    write_results(args,runner,detector_times,frames,'synthetic' if args.synthetic else 'bag')
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__); p.add_argument('--port',default='/dev/ttyAMA0'); p.add_argument('--baud',type=int,default=460800); p.add_argument('--out',required=True); p.add_argument('--marker-gpio',type=int); p.add_argument('--faults',action='store_true')
-    mode=p.add_mutually_exclusive_group(required=True); mode.add_argument('--synthetic',nargs=2,type=float,metavar=('RATE_HZ','DURATION_S')); mode.add_argument('--bag')
-    p.add_argument('--rate',type=float,default=1.0); p.add_argument('--stride',type=int,default=1); args=p.parse_args()
-    if args.stride<1 or args.rate<=0 or (args.synthetic and (args.synthetic[0]<=0 or args.synthetic[1]<=0)): p.error('rate, duration, and stride must be positive')
+    mode=p.add_mutually_exclusive_group(required=True); mode.add_argument('--synthetic',nargs=2,type=float,metavar=('RATE_HZ','DURATION_S')); mode.add_argument('--bag'); mode.add_argument('--ros',action='store_true')
+    p.add_argument('--rate',type=float,default=1.0); p.add_argument('--stride',type=int,default=1); p.add_argument('--duration',type=float,default=60.0); args=p.parse_args()
+    if args.stride<1 or args.rate<=0 or args.duration<=0 or (args.synthetic and (args.synthetic[0]<=0 or args.synthetic[1]<=0)): p.error('rate, duration, and stride must be positive')
     run(args)
 
 if __name__=='__main__': main()

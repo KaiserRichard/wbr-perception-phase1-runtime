@@ -25,6 +25,37 @@ def frozen(name):
     raise KeyError(name)
 
 
+class LiveFrameHandler(unittest.TestCase):
+    def test_fake_ros_image_flows_through_detector_and_fake_link(self):
+        import importlib.util
+        import numpy as np
+        spec=importlib.util.spec_from_file_location('advisory_link',HERE/'pi/advisory_link.py')
+        al=importlib.util.module_from_spec(spec); spec.loader.exec_module(al)
+        class FakeLink:
+            dropping=True; synced=False
+            def send(self,wire,mark=False):
+                self.wire=wire
+                return time.monotonic_ns()
+            def poll(self,wait=0): return []
+        class FakeImage:
+            height=24; width=32; step=64; encoding='16UC1'; is_bigendian=0
+            data=bytes(24*64)
+            class Header:
+                class Stamp: sec=123; nanosec=456
+                stamp=Stamp()
+            header=Header()
+        fake=FakeLink(); runner=al.Runner(fake)
+        receipt=time.monotonic_ns()
+        ps,ds,elapsed=al.handle_ros_frame(FakeImage(),
+            np.array([[100.,0.,16.],[0.,100.,12.],[0.,0.,1.]]),runner,{}, {},receipt_pi_ns=receipt)
+        self.assertIsInstance(ps,dict); self.assertIsInstance(ds,dict)
+        self.assertGreaterEqual(elapsed,0); self.assertTrue(fake.wire.endswith(b'\0'))
+        row=runner.rows[0]
+        self.assertEqual(row['frame_stamp_ns'],123000000456)
+        self.assertEqual(row['frame_receipt_pi_ns'],receipt)
+        self.assertGreaterEqual(row['receipt_to_before_write_ns'],0)
+
+
 class Decoder(unittest.TestCase):
     def test_frozen_c_status_vector(self):
         wire = frozen('status')
