@@ -81,7 +81,7 @@ class Runner:
              'before_write_ns':None, 'echo_ns':None, 'rtt_ns':None, 'echo_result':None,
              'accepted_count':None, 'rejected_count':None, 'stale':None, 'fault':fault or ''}
         self.pending[wire_seq]=row
-        row['before_write_ns']=self.link.send(wire,mark=True); self.poll(0)
+        row['before_write_ns']=self.link.send(wire,mark=True); self.drain(.02)
         self.rows.append(row)
         return seq
 
@@ -129,7 +129,7 @@ def run(args):
                 values=dict(advisory=1,confidence=.8,distance_m=1.0,height_m=.06,width_m=.25,
                     plane_valid=1,plane_pitch_rad=0.,plane_height_m=.4)
                 runner.send(values,before,after)
-                due += int(period*1e9); time.sleep(max(0,(due-time.monotonic_ns())/1e9)); runner.poll(0)
+                due += int(period*1e9); runner.drain(max(0,(due-time.monotonic_ns())/1e9))
                 frames+=1
         else:
             from tools.obstacle_decision.replay_bag import _stamp_ns
@@ -148,7 +148,7 @@ def run(args):
                     plane_height_m=frame.plane_height_m if math.isfinite(frame.plane_height_m) else 0.)
                 runner.send(values,before,after,frame_stamp); frames+=1
                 if previous_stamp is not None and stamp>previous_stamp:
-                    due += int((stamp-previous_stamp)/args.rate); time.sleep(max(0,(due-time.monotonic_ns())/1e9))
+                    due += int((stamp-previous_stamp)/args.rate); runner.drain(max(0,(due-time.monotonic_ns())/1e9))
                 previous_stamp=stamp; runner.poll(0)
         if args.faults:
             default=dict(advisory=0,confidence=.5,distance_m=0.,height_m=0.,width_m=0.,plane_valid=0,plane_pitch_rad=0.,plane_height_m=0.)

@@ -1,0 +1,30 @@
+{
+  "mode": "bag",
+  "frames": 139,
+  "sent": 139,
+  "echoed": 139,
+  "loss": 0,
+  "detector_time_us": {
+    "n": 139,
+    "p50": 78054.993,
+    "p95": 82738.059,
+    "p99": 83251.377,
+    "max": 83515.229
+  },
+  "send_echo_rtt_us": {
+    "n": 139,
+    "p50": 2820.709,
+    "p95": 2834.061,
+    "p99": 4242.378,
+    "max": 4255.267
+  },
+  "rejected_echoes": 0,
+  "mcu_accepted_count": 2080,
+  "mcu_rejected_count": 8,
+  "echo_result_codes": {
+    "NONE": 143
+  },
+  "stale_events": 1,
+  "clock": "all processing/RTT timestamps are Pi CLOCK_MONOTONIC; frame_stamp_ns is stored only",
+  "unmatched_echoes": 0
+}
