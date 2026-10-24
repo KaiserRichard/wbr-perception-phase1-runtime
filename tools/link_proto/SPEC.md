@@ -26,7 +26,7 @@ units. Header offsets are absolute decoded offsets:
 | Offset | Bytes | Field |
 |---|---|---|
 | 0 | 1 | version u8 = 1 |
-| 1 | 1 | type u8: 1 PerceptionHealth, 2 BodyVelocityRef, 3 McuStatus |
+| 1 | 1 | type u8: 1 PerceptionHealth, 2 BodyVelocityRef, 3 McuStatus, 4 TerrainAdvisory, 5 AdvisoryEcho |
 | 2 | 2 | payload_length u16, exact type size |
 | 4 | 8 | session u64: Pi boot ID for Pi records, MCU boot ID for status |
 | 12 | 4 | packet sequence u32, separate sequence per type/session |
@@ -136,6 +136,24 @@ it. New accepted reference replaces the lease; duplicate/old references cannot.
 
 Status pack/unpack is supplied; Pi status acceptance policy is outside scope.
 Controller populates actual observations; no battery value/action is synthesized.
+
+## TerrainAdvisory (42 B, PROPOSED)
+
+Type 4 is informational Pi→MCU data for the isolated link bench. Payload offsets:
+Pi monotonic timestamp u64 at 0, source frame stamp u64 at 8, advisory u8 at 16
+(0 NONE, 1 JUMP_CANDIDATE, 2 STOP_CANDIDATE, 3 UNCERTAIN), plane_valid u8 at
+17, then six binary32 values at 18, 22, 26, 30, 34, and 38: confidence,
+obstacle distance, obstacle height, obstacle width, plane pitch, and camera
+height above plane. All six floats must be finite; advisory is at most 3 and
+plane_valid is 0 or 1. This record never grants permission or commands motion.
+
+## AdvisoryEcho (27 B, PROPOSED)
+
+Type 5 is MCU→Pi bench diagnostics: sample_mcu_ns u64 at 0, echoed advisory
+sequence u32 at 8, advisory u8 at 12, result u8 at 13 (0 accepted, otherwise
+the existing `lp_reason` code), accepted count u32 at 14, rejected count u32 at
+18, stale u8 at 22, and milliseconds since last accepted advisory u32 at 23.
+Stale means no accepted advisory for 300 ms. This echo is not controller state.
 Uninitialized sequence fields are zero, interpreted with state (zero is also a
 valid wrapped sequence). Clock domain is implicit MCU monotonic, scoped by header
 MCU boot ID. Pi cannot subtract these stamps from its own or source clock stamps.

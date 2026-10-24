@@ -29,6 +29,13 @@ def examples():
             last_estimate_seq=7, last_ref_seq=9, faults=0,
             action_mcu_ns=2000000, battery_mv=24000, fsm=2,
             armed=1, operator_enable=1, state=2, reason=0, battery_valid=1),
+        'advisory': lp.terrain_advisory(0x0102030405060708, 11,
+            pi_monotonic_ns=10002000000, frame_stamp_ns=2000000000,
+            advisory=1, confidence=0.75, distance_m=1.25, height_m=0.08,
+            width_m=0.3, plane_valid=1, plane_pitch_rad=-0.1, plane_height_m=0.42),
+        'echo': lp.advisory_echo(42, 12, sample_mcu_ns=3000000,
+            advisory_seq=11, advisory=1, result=0, accepted_count=9,
+            rejected_count=2, stale=0, ms_since_accepted=15),
     }
 
 
@@ -58,6 +65,21 @@ class EncoderTests(unittest.TestCase):
                     mapping_revision=1, frame_id=1, reset_counter=0,
                     pi_creation_ns=1, mapped_mcu_creation_ns=1, lease_us=100000,
                     forward_m_s=value, yaw_rad_s=0)
+
+    def test_advisory_validation_and_echo_decode(self):
+        for value in [float('nan'), float('inf'), -float('inf')]:
+            with self.assertRaises(ValueError):
+                lp.terrain_advisory(1, 1, pi_monotonic_ns=1, frame_stamp_ns=1,
+                    advisory=0, confidence=value, distance_m=0, height_m=0,
+                    width_m=0, plane_valid=0, plane_pitch_rad=0, plane_height_m=0)
+        args=dict(pi_monotonic_ns=1,frame_stamp_ns=1,confidence=0.,distance_m=0.,
+            height_m=0.,width_m=0.,plane_pitch_rad=0.,plane_height_m=0.)
+        for advisory,valid in ((4,0),(0,2)):
+            with self.assertRaises(ValueError): lp.terrain_advisory(1,1,advisory=advisory,plane_valid=valid,**args)
+        malformed=lp._wire(lp.TERRAIN_ADVISORY,1,1,b'\0'*41)
+        with self.assertRaises(ValueError): lp.unpack(malformed)
+        header, body = lp.unpack(examples()['echo'])
+        self.assertEqual((header['type'], body['result'], body['advisory_seq']), (5, 0, 11))
 
 
 if __name__ == '__main__':

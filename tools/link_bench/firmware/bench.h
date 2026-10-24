@@ -15,6 +15,8 @@
 #define BENCH_MAPPING_REVISION 0xF446u
 #define BENCH_TRANSFORM_REVISION 0xF446u
 #define BENCH_STATUS_PERIOD_US 50000u /* 20 Hz heartbeat status, SPEC rate */
+#define BENCH_ADVISORY_STALE_US 300000u
+#define BENCH_ADVISORY_ECHO_PERIOD_US 100000u
 
 typedef void (*bench_tx_fn)(void *ctx, const uint8_t *data, size_t n);
 /* Optional hardware-timing hook: called once per packet that passed COBS/CRC/layout
@@ -31,6 +33,9 @@ typedef struct {
  uint64_t last_status_us;
  lp_state reported_state;
  uint32_t accepted, rejected, status_sent, tx_dropped;
+ uint32_t advisory_seq, advisory_echo_seq, advisory_accepted, advisory_rejected;
+ uint64_t advisory_last_us, advisory_boot_us, advisory_echo_us;
+ uint8_t advisory_value, advisory_stale, advisory_have_seq;
  bench_tx_fn tx;
  void *tx_ctx;
  bench_mark_fn mark; /* may be NULL; set after bench_init */

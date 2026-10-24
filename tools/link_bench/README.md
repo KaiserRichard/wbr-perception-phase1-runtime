@@ -90,6 +90,59 @@ the `dialout` group or `sudo`.
 
 Writes `summary.json`, `rtt.csv`, `faults.csv`, `timeout.csv`.
 
+## TerrainAdvisory link (bench only)
+
+Type 4 carries the proposed 42-byte `TerrainAdvisory`; type 5 returns the
+27-byte MCU echo with accept/reject reason, counters, staleness, and age. The
+MCU only validates and reports these records. It has no advisory-driven action.
+Both USART1 and USART2 use this same path, session `WBRLINK1`, and increasing
+advisory sequence numbers. The advisory becomes stale after 300 ms without an
+accepted packet; while stale the MCU sends echoes at 10 Hz.
+
+Build and flash the bench image (same wiring shown above):
+
+```sh
+make -C tools/link_bench/firmware
+cp tools/link_bench/firmware/build/link_bench_f446.bin /Volumes/NOD_F446RE/
+# or: st-flash --reset write tools/link_bench/firmware/build/link_bench_f446.bin 0x08000000
+```
+
+Run on the Pi from the repository root (or copy this tree so the shared Python
+modules resolve):
+
+```sh
+python3 tools/link_bench/pi/advisory_link.py --port /dev/ttyAMA0 --out OUT --synthetic 30 60
+python3 tools/link_bench/pi/advisory_link.py --port /dev/ttyAMA0 --out OUT --bag /path/to/rosbag2_or_mcap --rate 1.0 --stride 1
+python3 tools/link_bench/pi/advisory_link.py --port /dev/ttyAMA0 --out OUT --synthetic 10 5 --faults
+```
+
+Install `rosbags`, `numpy`, and the MCAP ROS 2 support package for bag replay.
+The bag mode calls the existing `process_frame` and temporal `update` functions;
+it stores each camera frame stamp but uses only Pi `CLOCK_MONOTONIC` for detector
+time and send→echo round-trip latency. `--marker-gpio 17` toggles the Pi marker
+after the per-packet send timestamp, as in the standard bench script. Outputs
+are `summary.json` and `packets.csv` in `--out`.
+
+The `--faults` phase sends bad CRC, old sequence, wrong session, a NaN float,
+waits silently for 400 ms, then sends a valid recovery packet. Expected echo
+reasons are `WIRE`, `SEQUENCE`, `SESSION`, and `FIELDS`; stale must assert during
+the silence and clear after recovery.
+
+For a logic-analyzer capture, keep the wiring/probes and 12 MHz analyzer setup
+above, and use:
+
+```sh
+python3 tools/link_bench/pi/advisory_link.py --port /dev/ttyAMA0 --out OUT --synthetic 30 10 --marker-gpio 17
+```
+
+Probe D0/D1/D2/D3 at PA10/PA9/Pi GPIO17/PA8. For a 62-byte decoded advisory
+record, COBS plus delimiter is 64 bytes maximum: `64 × 10 / 460800 = 1.389 ms`
+(CALCULATED). The 47-byte decoded echo record is 49 wire bytes maximum:
+`49 × 10 / 460800 = 1.063 ms` (CALCULATED). The full-duplex serialization floor
+is therefore 2.452 ms per send/echo pair. At 30 Hz each direction uses at most
+19.2 kbit/s and 14.7 kbit/s respectively (CALCULATED); measured Pi RTT also
+includes scheduling and UART wake-up.
+
 ## Hardware timing with a logic analyzer (optional)
 
 The Pi-clock RTT includes Python and kernel time on both ends. A logic analyzer puts

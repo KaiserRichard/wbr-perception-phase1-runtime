@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
  }
  if (argc > 1) {
   FILE *f = fopen(argv[1], "w");
-  if (f) { fprintf(f, "accepted=%u rejected=%u wire_errors=%u status_sent=%u tx_dropped=%u\n", p.accepted, p.rejected, p.stream.errors, p.status_sent, p.tx_dropped); fclose(f); }
+  if (f) { fprintf(f, "accepted=%u rejected=%u wire_errors=%u status_sent=%u tx_dropped=%u advisory_accepted=%u advisory_rejected=%u advisory_stale=%u\n", p.accepted, p.rejected, p.stream.errors, p.status_sent, p.tx_dropped, p.advisory_accepted, p.advisory_rejected, p.advisory_stale); fclose(f); }
  }
  return 0;
 }

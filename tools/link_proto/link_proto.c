@@ -35,10 +35,19 @@ size_t lp_cobs_decode(const uint8_t *s,size_t n,uint8_t *d,size_t cap) {
  }
  return out;
 }
-static size_t payload_size(uint8_t type) { return type==LP_HEALTH?LP_HEALTH_SIZE:type==LP_BODY_REF?LP_REF_SIZE:type==LP_MCU_STATUS?LP_STATUS_SIZE:0; }
+static size_t payload_size(uint8_t type) { return type==LP_HEALTH?LP_HEALTH_SIZE:type==LP_BODY_REF?LP_REF_SIZE:type==LP_MCU_STATUS?LP_STATUS_SIZE:type==LP_TERRAIN_ADVISORY?LP_ADVISORY_SIZE:type==LP_ADVISORY_ECHO?LP_ADVISORY_ECHO_SIZE:0; }
 size_t lp_pack(const lp_message *m,uint8_t *wire,size_t cap) {
  uint8_t raw[LP_MAX_RAW],*p=raw+16; size_t n=payload_size(m->type),enc;
  if(n==0 || cap<2) return 0;
+ if(m->type==LP_TERRAIN_ADVISORY) {
+  const lp_advisory *a=&m->data.advisory;
+  if(a->advisory>3 || a->plane_valid>1 || !finitefloat(a->confidence) || !finitefloat(a->distance_m) ||
+   !finitefloat(a->height_m) || !finitefloat(a->width_m) || !finitefloat(a->plane_pitch_rad) || !finitefloat(a->plane_height_m)) return 0;
+ }
+ if(m->type==LP_ADVISORY_ECHO) {
+  const lp_advisory_echo *e=&m->data.echo;
+  if(e->advisory>3 || e->result>LP_REASON_LEASE || e->stale>1) return 0;
+ }
  memset(raw,0,sizeof(raw)); raw[0]=LP_VERSION; raw[1]=m->type;
  put(raw+2,n,2); put(raw+4,m->session,8); put(raw+12,m->seq,4);
  if(m->type==LP_HEALTH) {
@@ -54,12 +63,21 @@ size_t lp_pack(const lp_message *m,uint8_t *wire,size_t cap) {
   put(p+12,r->frame_id,2); p[14]=r->reset_counter;
   put(p+16,r->pi_creation_ns,8); put(p+24,r->mapped_mcu_creation_ns,8); put(p+32,r->lease_us,4);
   putfloat(p+36,r->forward_m_s); putfloat(p+40,r->yaw_rad_s);
- } else {
+ } else if(m->type==LP_MCU_STATUS) {
   const lp_status *s=&m->data.status;
   put(p,s->sample_mcu_ns,8); put(p+8,s->last_health_seq,4); put(p+12,s->last_estimate_seq,4);
   put(p+16,s->last_ref_seq,4); put(p+20,s->faults,4); put(p+24,s->action_mcu_ns,8);
   put(p+32,s->battery_mv,2); p[34]=s->fsm; p[35]=s->armed; p[36]=s->operator_enable;
   p[37]=s->state; p[38]=s->reason; p[39]=s->battery_valid;
+ } else if(m->type==LP_TERRAIN_ADVISORY) {
+  const lp_advisory *a=&m->data.advisory;
+  put(p,a->pi_monotonic_ns,8); put(p+8,a->frame_stamp_ns,8); p[16]=a->advisory; p[17]=a->plane_valid;
+  putfloat(p+18,a->confidence); putfloat(p+22,a->distance_m); putfloat(p+26,a->height_m); putfloat(p+30,a->width_m);
+  putfloat(p+34,a->plane_pitch_rad); putfloat(p+38,a->plane_height_m);
+ } else {
+  const lp_advisory_echo *e=&m->data.echo;
+  put(p,e->sample_mcu_ns,8); put(p+8,e->advisory_seq,4); p[12]=e->advisory; p[13]=e->result;
+  put(p+14,e->accepted_count,4); put(p+18,e->rejected_count,4); p[22]=e->stale; put(p+23,e->ms_since_accepted,4);
  }
  put(raw+16+n,lp_crc32c(raw,16+n),4);
  enc=lp_cobs_encode(raw,20+n,wire,cap-1); if(enc==0) return 0; wire[enc]=0; return enc+1;
@@ -91,7 +109,7 @@ int lp_unpack(const uint8_t *raw,size_t n,lp_message *m) {
   r->pi_creation_ns=get(p+16,8); r->mapped_mcu_creation_ns=get(p+24,8); r->lease_us=(uint32_t)get(p+32,4);
   r->forward_m_s=getfloat(p+36); r->yaw_rad_s=getfloat(p+40);
   if(!finitefloat(r->forward_m_s) || !finitefloat(r->yaw_rad_s)) return 0;
- } else {
+ } else if(m->type==LP_MCU_STATUS) {
   lp_status *s=&m->data.status;
   for(i=40;i<44;i++) if(p[i]!=0) return 0;
   s->sample_mcu_ns=get(p,8); s->last_health_seq=(uint32_t)get(p+8,4); s->last_estimate_seq=(uint32_t)get(p+12,4);
@@ -99,6 +117,17 @@ int lp_unpack(const uint8_t *raw,size_t n,lp_message *m) {
   s->battery_mv=(uint16_t)get(p+32,2); s->fsm=p[34]; s->armed=p[35]; s->operator_enable=p[36];
   s->state=p[37]; s->reason=p[38]; s->battery_valid=p[39];
   if(s->armed>1 || s->operator_enable>1 || s->battery_valid>1 || s->state>LP_RESET_PENDING_REENABLE || s->reason>LP_REASON_LEASE) return 0;
+ } else if(m->type==LP_TERRAIN_ADVISORY) {
+  lp_advisory *a=&m->data.advisory;
+  a->pi_monotonic_ns=get(p,8); a->frame_stamp_ns=get(p+8,8); a->advisory=p[16]; a->plane_valid=p[17];
+  a->confidence=getfloat(p+18); a->distance_m=getfloat(p+22); a->height_m=getfloat(p+26); a->width_m=getfloat(p+30);
+  a->plane_pitch_rad=getfloat(p+34); a->plane_height_m=getfloat(p+38);
+  if(a->advisory>3 || a->plane_valid>1 || !finitefloat(a->confidence) || !finitefloat(a->distance_m) || !finitefloat(a->height_m) || !finitefloat(a->width_m) || !finitefloat(a->plane_pitch_rad) || !finitefloat(a->plane_height_m)) return 0;
+ } else {
+  lp_advisory_echo *e=&m->data.echo;
+  e->sample_mcu_ns=get(p,8); e->advisory_seq=(uint32_t)get(p+8,4); e->advisory=p[12]; e->result=p[13];
+  e->accepted_count=(uint32_t)get(p+14,4); e->rejected_count=(uint32_t)get(p+18,4); e->stale=p[22]; e->ms_since_accepted=(uint32_t)get(p+23,4);
+  if(e->advisory>3 || e->result>LP_REASON_LEASE || e->stale>1) return 0;
  }
  return 1;
 }
@@ -109,8 +138,13 @@ void lp_stream_feed(lp_stream *s,const uint8_t *data,size_t n,lp_packet_fn packe
   if(data[i]==0) {
    if(s->dropping || s->used!=0) {
     len=s->dropping?0:lp_cobs_decode(s->encoded,s->used,raw,sizeof(raw));
+    s->last_type=len>=2?raw[1]:0;
+    s->last_seq=len>=16?(uint32_t)get(raw+12,4):0;
+    s->last_advisory=s->last_type==LP_TERRAIN_ADVISORY && len>32?raw[32]:0;
     if(len!=0 && lp_unpack(raw,len,&m)) { s->packets++; if(packet) packet(context,&m); }
-    else { s->errors++; if(error) error(context); }
+    else { s->errors++; s->last_reason=LP_REASON_WIRE;
+     if(s->last_type==LP_TERRAIN_ADVISORY && len>=20 && get(raw+len-4,4)==lp_crc32c(raw,len-4)) s->last_reason=LP_REASON_FIELDS;
+     if(error) error(context); }
    }
    s->used=0; s->dropping=0;
   } else if(!s->dropping) {
