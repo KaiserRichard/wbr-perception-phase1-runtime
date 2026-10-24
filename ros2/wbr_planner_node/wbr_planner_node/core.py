@@ -38,6 +38,10 @@ class PlannerCore:
         self.previous_stamp_ns = None
         self.start_position = None
         self.start_stamp_ns = None
+        self.discontinuity = False
+        self.recovery_pose = None
+        self.recovery_stamp_ns = None
+        self.recovery_count = 0
 
     def update(self, depth_m, K, T_wc, stamp_ns):
         """Fuse one depth frame and return a JSON-safe advisory dictionary.
@@ -57,10 +61,35 @@ class PlannerCore:
             return self._result("NO_POSE", stamp_ns, started, [], None)
         if depth.ndim != 2 or depth.size == 0:
             raise ValueError("depth must be a nonempty 2D array")
-        if self.previous_pose is not None:
+        if self.previous_pose is not None and not self.discontinuity:
             dt = (stamp_ns - self.previous_stamp_ns) * 1e-9
             if dt <= 0 or np.linalg.norm(pose[:3, 3] - self.previous_pose[:3, 3]) / dt > 1.0 or self._rotation_delta(self.previous_pose, pose) / dt > math.radians(60):
+                self.discontinuity = True
+                self.recovery_pose = pose.copy()
+                self.recovery_stamp_ns = stamp_ns
+                self.recovery_count = 1
                 return self._result("NO_POSE", stamp_ns, started, [], None, timings)
+        if self.discontinuity:
+            dt = (stamp_ns - self.recovery_stamp_ns) * 1e-9
+            valid = (dt > 0 and
+                     np.linalg.norm(pose[:3, 3] - self.recovery_pose[:3, 3]) / dt <= 1.0 and
+                     self._rotation_delta(self.recovery_pose, pose) / dt <= math.radians(60))
+            self.recovery_count = self.recovery_count + 1 if valid else 1
+            self.recovery_pose = pose.copy()
+            self.recovery_stamp_ns = stamp_ns
+            if self.recovery_count < 3:
+                return self._result("NO_POSE", stamp_ns, started, [], None, timings)
+            # Three consecutive locally consistent poses establish a new map epoch.
+            self.grid = None
+            self.T_map_world = None
+            self.previous_pose = None
+            self.previous_stamp_ns = None
+            self.start_position = None
+            self.start_stamp_ns = None
+            self.discontinuity = False
+            self.recovery_pose = None
+            self.recovery_stamp_ns = None
+            self.recovery_count = 0
 
         if self.T_map_world is None:
             try:
@@ -132,25 +161,51 @@ class PlannerCore:
 
     def _choose(self, camera, outputs):
         current_x, current_y = float(camera[0]), float(camera[1])
+        if current_x >= self.goal_forward_m:
+            return {"action": "GOAL_REACHED", "target_offset_m": current_y,
+                    "current_lateral_m": current_y, "shift_needed_m": 0.0,
+                    "distance_to_goal_m": 0.0, "unknown_fraction": 0.0,
+                    "cost": 0.0, "goal_x_m": self.goal_forward_m}
         x0 = max(0.0, current_x)
         x1 = self.goal_forward_m
         candidates = np.round(np.arange(-0.6, 0.6001, 0.05), 2)
         best = None
+        grid_x0 = self.grid.center_xy[0] - self.grid.size_m/2
+        grid_y0 = self.grid.center_xy[1] - self.grid.size_m/2
+        grid_x1 = grid_x0 + self.grid.size_m
+        grid_y1 = grid_y0 + self.grid.size_m
+        # Model the lateral transition close to the robot, then check the
+        # target corridor for the remaining route. This allows an early shift
+        # around an obstacle farther ahead while still checking the crossing.
+        transition_end = min(x1, x0 + max(2*self.robot_half_width_m, self.resolution_m))
         for target_y in candidates:
-            xlo = max(x0, self.grid.center_xy[0] - self.grid.size_m/2)
-            xhi = min(x1, self.grid.center_xy[0] + self.grid.size_m/2)
+            xlo = max(x0, grid_x0)
+            xhi = min(x1, grid_x1)
+            lane_xlo = max(transition_end, xlo)
+            lane_xhi = xhi
+            # Check the lateral transition footprint at the near-field segment.
+            sweep_ylo = min(target_y, current_y) - self.robot_half_width_m
+            sweep_yhi = max(target_y, current_y) + self.robot_half_width_m
             ylo = target_y - self.robot_half_width_m
             yhi = target_y + self.robot_half_width_m
             # Grid columns are map x; grid rows are reversed map y.
-            col0 = max(0, int(math.floor((xlo - (self.grid.center_xy[0] - self.grid.size_m/2)) / self.grid.resolution_m)))
-            col1 = min(self.grid.n, int(math.ceil((xhi - (self.grid.center_xy[0] - self.grid.size_m/2)) / self.grid.resolution_m)))
-            row0 = max(0, int(math.floor(((self.grid.center_xy[1] + self.grid.size_m/2) - yhi) / self.grid.resolution_m)))
-            row1 = min(self.grid.n, int(math.ceil(((self.grid.center_xy[1] + self.grid.size_m/2) - ylo) / self.grid.resolution_m)))
+            sweep_col0 = max(0, int(math.floor((xlo-grid_x0)/self.grid.resolution_m)))
+            sweep_col1 = min(self.grid.n, int(math.ceil((min(transition_end, xhi)-grid_x0)/self.grid.resolution_m)))
+            lane_col0 = max(0, int(math.floor((lane_xlo-grid_x0)/self.grid.resolution_m)))
+            lane_col1 = min(self.grid.n, int(math.ceil((lane_xhi-grid_x0)/self.grid.resolution_m)))
+            sweep_row0 = max(0, int(math.floor((grid_y1-sweep_yhi)/self.grid.resolution_m)))
+            sweep_row1 = min(self.grid.n, int(math.ceil((grid_y1-sweep_ylo)/self.grid.resolution_m)))
+            row0 = max(0, int(math.floor((grid_y1-yhi)/self.grid.resolution_m)))
+            row1 = min(self.grid.n, int(math.ceil((grid_y1-ylo)/self.grid.resolution_m)))
             # Occupancy grid arrays are [row(y), col(x)].
-            region_obs = outputs["obstacle"][row0:row1, col0:col1]
-            region_known = outputs["known"][row0:row1, col0:col1]
-            blocked = bool(region_obs.any())
-            unknown_fraction = 1.0 - float(region_known.mean()) if region_known.size else 1.0
+            sweep_obs = outputs["obstacle"][sweep_row0:sweep_row1, sweep_col0:sweep_col1]
+            lane_obs = outputs["obstacle"][row0:row1, lane_col0:lane_col1]
+            region_known = outputs["known"][row0:row1, lane_col0:lane_col1]
+            sweep_valid = transition_end > xlo and sweep_row1 > sweep_row0 and sweep_col1 > sweep_col0
+            lane_valid = xhi > lane_xlo and row1 > row0 and lane_col1 > lane_col0
+            valid_region = sweep_valid or lane_valid
+            blocked = (not valid_region) or bool(sweep_obs.any()) or bool(lane_obs.any())
+            unknown_fraction = 1.0-float(region_known.mean()) if lane_valid else 1.0
             cost = (1e6 if blocked else 0.) + abs(float(target_y)) + .5*unknown_fraction
             item = (cost, float(target_y), blocked, unknown_fraction)
             if best is None or item[0] < best[0]:

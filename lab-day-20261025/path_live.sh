@@ -28,36 +28,17 @@ for setup in "$ROS_SETUP" "$CAMERA_SETUP" "$PLANNER_SETUP"; do
     exit 1
   fi
 done
+source "$SCRIPT_ROOT/ros2/wbr_planner_node/path_live_traps.sh"
 # shellcheck disable=SC1090
-source "$ROS_SETUP"
-# shellcheck disable=SC1090
-source "$CAMERA_SETUP"
-# shellcheck disable=SC1090
-source "$PLANNER_SETUP"
+source_ros_setups "$ROS_SETUP" "$CAMERA_SETUP" "$PLANNER_SETUP"
 export PYTHONPATH="$SCRIPT_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 export ROS_DOMAIN_ID=201
 export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
 
 pids=()
 labels=()
-cleanup() {
-  trap - INT TERM EXIT
-  for pid in "${pids[@]}"; do kill -INT -- "-$pid" 2>/dev/null || true; done
-  for pid in "${pids[@]}"; do
-    for _ in {1..30}; do
-      kill -0 "$pid" 2>/dev/null || break
-      sleep 0.2
-    done
-    kill -TERM -- "-$pid" 2>/dev/null || true
-  done
-  for pid in "${pids[@]}"; do wait "$pid" 2>/dev/null || true; done
-  if [[ -n ${monitor_pid:-} ]]; then
-    kill "$monitor_pid" 2>/dev/null || true
-    wait "$monitor_pid" 2>/dev/null || true
-  fi
-  echo "Stopped live path session at $(date -Is)" >> "$RUN_DIR/session.log"
-}
-trap cleanup INT TERM EXIT
+monitor_pid=""
+install_path_traps
 start_job() {
   local label=$1 logfile=$2
   shift 2
@@ -102,7 +83,8 @@ start_job bag bag.log ros2 bag record --storage sqlite3 --output "$RUN_DIR/bag" 
   /camera/camera/color/camera_info \
   /camera/camera/depth/camera_info \
   /d435_orb/pose /d435_orb/status \
-  /wbr_planner_node/suggestion /wbr_planner_node/markers
+  /wbr_planner_node/suggestion /wbr_planner_node/markers \
+  /wbr_planner_node/grid /tf /tf_static
 
 echo "Live planner running for ${DURATION}s; Foxglove bridge port 8765" | tee -a "$RUN_DIR/session.log"
 for ((elapsed=0; elapsed<DURATION; elapsed++)); do sleep 1; done

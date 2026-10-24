@@ -16,6 +16,8 @@ from geometry_msgs.msg import PoseStamped
 from tf2_ros import TransformBroadcaster
 
 from .core import PlannerCore
+from .adapter_logic import (PendingFrame, core_parameters, current_arrow_geometry,
+                            nearest_pose)
 
 
 class PlannerNode(Node):
@@ -30,7 +32,7 @@ class PlannerNode(Node):
         self.declare_parameter('info_topic', '/camera/camera/color/camera_info')
         self.declare_parameter('pose_topic', '/d435_orb/pose')
         p = {k: self.get_parameter(k).value for k in defaults}
-        self.core = PlannerCore(**p)
+        self.core = PlannerCore(**core_parameters(p))
         self.max_rate_hz = float(p['max_rate_hz'])
         if self.max_rate_hz <= 0:
             raise ValueError('max_rate_hz must be positive')
@@ -74,10 +76,7 @@ class PlannerNode(Node):
             self.get_logger().warning(f'invalid pose: {exc}')
 
     def _nearest_pose(self, stamp):
-        if not self.poses:
-            return None
-        delta, pose = min(self.poses, key=lambda item: abs(item[0]-stamp))
-        return pose if abs(delta-stamp) <= 50_000_000 else None
+        return nearest_pose(self.poses, stamp)
 
     def depth_cb(self, msg):
         now = time.monotonic()
@@ -87,14 +86,15 @@ class PlannerNode(Node):
         stamp = int(msg.header.stamp.sec)*1_000_000_000 + int(msg.header.stamp.nanosec)
         # One bounded pending frame lets pose_cb receive the ORB result that
         # follows the source image. Additional depth frames are dropped.
-        self.pending_frame = (msg, stamp, now)
+        self.pending_frame = PendingFrame(msg, stamp, now)
 
     def poll_pending(self):
         if self.pending_frame is None:
             return
-        msg, stamp, queued_mono = self.pending_frame
+        pending = self.pending_frame
+        msg, stamp = pending.message, pending.stamp_ns
         pose = self._nearest_pose(stamp)
-        if pose is None and time.monotonic()-queued_mono < 0.050:
+        if pending.should_wait(pose, time.monotonic()):
             return
         self.pending_frame = None
         try:
@@ -153,8 +153,8 @@ class PlannerNode(Node):
         if out.get('current_lateral_m') is not None:
             x = self.core.previous_pose
             cur = self.core._camera_map_position(x)
-            result.append(marker('current', 2, Marker.ARROW, [float(cur[0]),float(cur[1]),.05], [.35,.06,.06], [1.,1.,0.,1.],
-                                 [[float(cur[0]),float(cur[1]),.05],[float(cur[0]+.25),float(cur[1]),.05]]))
+            marker_pos, arrow_points = current_arrow_geometry(cur[:2])
+            result.append(marker('current', 2, Marker.ARROW, marker_pos, [.35,.06,.06], [1.,1.,0.,1.], arrow_points))
             target = float(out['target_offset_m'])
             half = self.core.robot_half_width_m
             result.append(marker('chosen_corridor', 3, Marker.LINE_LIST, [0,0,0], [.025,.0,.0], color,
