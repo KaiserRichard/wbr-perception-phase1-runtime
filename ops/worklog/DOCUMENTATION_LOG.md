@@ -473,3 +473,20 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Limitations / review: Foxglove GUI import/render is unverified; current default
   detector parameters are used. Review file:
   `ops/worklog/reviews/2026-10-24-foxglove-demo.md`.
+
+### DOC-20261024-FOXGLOVE-FRAME: Ground-aligned Foxglove demo view
+- Time / author: 2026-10-24 +07; Codex.
+- Branch: `claude2/20261024-foxglove-demo`; local changes only, uncommitted.
+- Files: converter, Foxglove layout, bag-tools README, integration test, and
+  worklog session/review/CURRENT.
+- Changes and reason: publish per-depth ground-to-camera TF and height-bearing
+  point cloud, add a ground-frame obstacle cue, and configure a fixed ground
+  view so the Foxglove demo matches the detector's fitted-plane convention.
+- Evidence: six requested source bags were regenerated to `foxglove-demo-out/`.
+  Exact per-topic counts and advisory histograms are in
+  `ops/worklog/sessions/2026-10-24-foxglove-demo.md`.
+- Validation: requested Python ran the extended focused test: 1 passed. It
+  checks TF parent/child/stamp and the `x,y,z,height` point-cloud schema.
+- Limitations / review: GUI rendering and layout color-field behavior are
+  unverified; review is recorded in
+  `ops/worklog/reviews/2026-10-24-foxglove-demo.md`.

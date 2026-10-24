@@ -32,6 +32,8 @@ OUT_TOPICS = {
     'markers': '/wbr_obstacle_node/markers',
     'advisory': '/wbr_obstacle_node/advisory',
     'points': '/wbr_obstacle_node/obstacle_points',
+    'depth_points': '/wbr_obstacle_node/depth_points',
+    'tf': '/tf',
 }
 
 
@@ -56,6 +58,8 @@ def _create_messages(ts):
         'MarkerArray': t['visualization_msgs/msg/MarkerArray'], 'String': t['std_msgs/msg/String'],
         'PointField': t['sensor_msgs/msg/PointField'], 'PointCloud2': t['sensor_msgs/msg/PointCloud2'],
         'CompressedImage': t['sensor_msgs/msg/CompressedImage'], 'MeshFile': t['visualization_msgs/msg/MeshFile'],
+        'Transform': t['geometry_msgs/msg/Transform'], 'TransformStamped': t['geometry_msgs/msg/TransformStamped'],
+        'TFMessage': t['tf2_msgs/msg/TFMessage'],
     }
 
 
@@ -68,8 +72,9 @@ def _marker_array(specs, header, m):
         color = m['Color'](*map(float, spec['color']))
         pose = m['Pose'](m['Point'](*map(float, xyz)), m['Quaternion'](0.0, 0.0, 0.0, 1.0))
         points = [m['Point'](*map(float, p)) for p in spec.get('points', [])]
+        marker_header = m['Header'](header.stamp, spec.get('frame_id', header.frame_id))
         markers.append(m['Marker'](
-            header, spec['ns'], int(spec['id']), enums[spec['type']], 0, pose,
+            marker_header, spec['ns'], int(spec['id']), enums[spec['type']], 0, pose,
             m['Vector3'](*map(float, scale)), color, m['Duration'](0, 0), False,
             points, [], '', m['CompressedImage'](header, '', np.empty(0, dtype=np.uint8)),
             [], spec.get('text', ''), '', m['MeshFile']('', np.empty(0, dtype=np.uint8)), False,
@@ -82,6 +87,94 @@ def _pointcloud(points, header, m):
     data = np.asarray(points, dtype='<f4').reshape(-1, 3).tobytes()
     return m['PointCloud2'](header, 1, len(points), fields, False, 12, len(points) * 12,
                             np.frombuffer(data, dtype=np.uint8).copy(), True)
+
+
+def _height_pointcloud(depth_m, K, plane, header, m, stride=4):
+    """Camera-frame XYZ plus signed height above the fitted floor plane."""
+    stride = max(1, int(stride))
+    dep = np.asarray(depth_m, dtype=np.float32)[::stride, ::stride]
+    rows, cols = np.mgrid[0:depth_m.shape[0]:stride, 0:depth_m.shape[1]:stride]
+    fx, fy, cx, cy = K[0, 0], K[1, 1], K[0, 2], K[1, 2]
+    valid = np.isfinite(dep) & (dep > 0)
+    z = dep[valid]
+    x = (cols[valid] - cx) * z / fx
+    y = (rows[valid] - cy) * z / fy
+    n = np.asarray(plane.normal, dtype=np.float32)
+    height = x * n[0] + y * n[1] + z * n[2] + float(plane.camera_height)
+    packed = np.column_stack((x, y, z, height)).astype('<f4', copy=False)
+    fields = [m['PointField'](name, offset, 7, 1)
+              for name, offset in (('x', 0), ('y', 4), ('z', 8), ('height', 12))]
+    data = packed.tobytes()
+    return m['PointCloud2'](header, 1, len(packed), fields, False, 16, len(data),
+                            np.frombuffer(data, dtype=np.uint8).copy(), True)
+
+
+def _ground_transform(plane, stamp, m):
+    """Return TFMessage for wbr_ground -> camera_depth_optical_frame."""
+    n = np.asarray(plane.normal, dtype=np.float64).copy()
+    n /= np.linalg.norm(n)
+    forward = np.array([0.0, 0.0, 1.0]) - n[2] * n
+    forward /= np.linalg.norm(forward)
+    left = np.cross(n, forward)
+    # Columns are ground axes expressed in camera coordinates. TF needs the
+    # inverse rotation: camera orientation expressed in the ground frame.
+    ground_in_camera = np.column_stack((forward, left, n))
+    rotation = ground_in_camera.T
+    trace = float(np.trace(rotation))
+    if trace > 0:
+        s = np.sqrt(trace + 1.0) * 2.0
+        q = ((rotation[2, 1] - rotation[1, 2]) / s,
+             (rotation[0, 2] - rotation[2, 0]) / s,
+             (rotation[1, 0] - rotation[0, 1]) / s, 0.25 * s)
+    else:
+        i = int(np.argmax(np.diag(rotation)))
+        if i == 0:
+            s = np.sqrt(1.0 + rotation[0, 0] - rotation[1, 1] - rotation[2, 2]) * 2.0
+            q = (0.25 * s, (rotation[0, 1] + rotation[1, 0]) / s,
+                 (rotation[0, 2] + rotation[2, 0]) / s,
+                 (rotation[2, 1] - rotation[1, 2]) / s)
+        elif i == 1:
+            s = np.sqrt(1.0 + rotation[1, 1] - rotation[0, 0] - rotation[2, 2]) * 2.0
+            q = ((rotation[0, 1] + rotation[1, 0]) / s, 0.25 * s,
+                 (rotation[1, 2] + rotation[2, 1]) / s,
+                 (rotation[0, 2] - rotation[2, 0]) / s)
+        else:
+            s = np.sqrt(1.0 + rotation[2, 2] - rotation[0, 0] - rotation[1, 1]) * 2.0
+            q = ((rotation[0, 2] + rotation[2, 0]) / s,
+                 (rotation[1, 2] + rotation[2, 1]) / s, 0.25 * s,
+                 (rotation[1, 0] - rotation[0, 1]) / s)
+    t = m['Transform'](m['Vector3'](0.0, 0.0, float(plane.camera_height)),
+                      m['Quaternion'](*map(float, q)))
+    stamped = m['TransformStamped'](
+        m['Header'](stamp, 'wbr_ground'), 'camera_depth_optical_frame', t)
+    return m['TFMessage']([stamped])
+
+
+def _demo_obstacle_markers(advisory, frame_result):
+    """Ground-frame solid obstacle and readable status label."""
+    cluster = frame_result.nearest
+    if cluster is None:
+        return []
+    name = str(advisory['advisory'])
+    if name.startswith('JUMP'):
+        label, color = 'JUMP', [0.05, 0.85, 0.2, 1.0]
+    elif name.startswith('STOP'):
+        label, color = 'STOP', [0.95, 0.05, 0.05, 1.0]
+    else:
+        label, color = 'UNCERTAIN', [1.0, 0.75, 0.0, 1.0]
+    width = max(float(cluster.width_m), 0.04)
+    depth = max(float(cluster.depth_m), 0.04)
+    height = max(float(cluster.height_m), 0.01)
+    distance = float(cluster.distance_m)
+    center = [distance + depth / 2.0, 0.0, height / 2.0]
+    text = f"{label} {height * 100:.1f} cm @ {distance:.2f} m"
+    return [
+        {'ns': 'demo_obstacle', 'id': 100, 'type': 'CUBE', 'frame_id': 'wbr_ground',
+         'center': center, 'scale': [depth, width, height], 'color': color, 'text': ''},
+        {'ns': 'demo_obstacle_label', 'id': 101, 'type': 'TEXT_VIEW_FACING',
+         'frame_id': 'wbr_ground', 'position': [center[0], center[1], height + 0.12],
+         'scale': [0.0, 0.0, 0.22], 'color': color, 'text': text},
+    ]
 
 
 def convert(bag_dir: str | Path, output: str | Path):
@@ -116,6 +209,8 @@ def convert(bag_dir: str | Path, output: str | Path):
         register(OUT_TOPICS['markers'], 'visualization_msgs/msg/MarkerArray')
         register(OUT_TOPICS['advisory'], 'std_msgs/msg/String')
         register(OUT_TOPICS['points'], 'sensor_msgs/msg/PointCloud2')
+        register(OUT_TOPICS['depth_points'], 'sensor_msgs/msg/PointCloud2')
+        register(OUT_TOPICS['tf'], 'tf2_msgs/msg/TFMessage')
         selected = [c for c in reader.connections if c.topic in required]
         # Camera calibration is static in these recordings. Seed it before the
         # time-ordered pass because some bags begin recording images before the
@@ -130,6 +225,7 @@ def convert(bag_dir: str | Path, output: str | Path):
         if latest_k is None:
             raise ValueError(f'no valid CameraInfo on {COLOR_INFO}')
         counts, histogram = Counter(), Counter()
+        last_plane = type('Plane', (), {'normal': np.array([0.0, -1.0, 0.0]), 'camera_height': 0.30})()
 
         for conn, log_time, raw in reader.messages(connections=selected):
             log_time = int(log_time)
@@ -148,13 +244,21 @@ def convert(bag_dir: str | Path, output: str | Path):
                 stamp = int(msg.header.stamp.sec) * 1_000_000_000 + int(msg.header.stamp.nanosec)
                 out = core.process(depth_m, latest_k, frame_stamp_ns=stamp, frame_id=msg.header.frame_id)
                 header = msg.header
-                marker_array = _marker_array(out['markers'], header, m)
+                plane = core.detect_state.get('plane')
+                if plane is not None:
+                    last_plane = plane
+                marker_array = _marker_array(
+                    out['markers'] + _demo_obstacle_markers(out['advisory'], out['frame_result']), header, m)
+                tf_message = _ground_transform(last_plane, header.stamp, m)
                 advisory = {key: out['advisory'][key] for key in (
                     'advisory', 'height_m', 'distance_m', 'width_m', 'confidence', 'plane_valid')}
                 generated = (
                     (OUT_TOPICS['markers'], 'visualization_msgs/msg/MarkerArray', marker_array),
                     (OUT_TOPICS['advisory'], 'std_msgs/msg/String', m['String'](json.dumps(advisory, separators=(',', ':'), allow_nan=False))),
                     (OUT_TOPICS['points'], 'sensor_msgs/msg/PointCloud2', _pointcloud(out['points'], header, m)),
+                    (OUT_TOPICS['depth_points'], 'sensor_msgs/msg/PointCloud2',
+                     _height_pointcloud(depth_m, latest_k, last_plane, header, m, stride=4)),
+                    (OUT_TOPICS['tf'], 'tf2_msgs/msg/TFMessage', tf_message),
                 )
                 for topic, msgtype, output_msg in generated:
                     writer.add_message(channels[topic], log_time,

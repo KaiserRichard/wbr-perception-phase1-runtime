@@ -1,16 +1,18 @@
-# Foxglove offline detector demo
+# Foxglove offline detector demo (frame/layout follow-up)
 
-- Changes: offline SQLite bag converter, importable Foxglove layout, README
-  instructions, and synthetic rosbag integration test. No commits or pushes.
-- Verification: `python -m pytest -q tools/bag_tools/tests/test_foxglove_demo.py`
-  passed (1 test). Every message in all six MCAPs deserialized with the Jazzy
-  typestore; source depth and marker header stamps/frame IDs matched, `/tf_static`
-  existed, and RealSense Metadata was absent.
-- Outputs: worktree fallback `foxglove-demo-out/`; six MCAPs, 51.4–67.7 MiB.
-  Archive path was outside the writable sandbox. Per-run exact counts and
-  advisory histograms are in session `ops/worklog/sessions/2026-10-24-foxglove-demo.md`.
-- Limitations: Foxglove GUI import/rendering was not available for validation.
-  Detector state uses current default `CoreParams`; output is offline current
-  detector replay, not the node's historical live output.
+- Changes: per-frame `/tf` aligns `wbr_ground` to the optical camera using the
+  fitted/reused plane, marker array retains optical core markers and adds
+  ground-frame obstacle cube/text, and stride-4 `/depth_points` has a `height`
+  field. Layout fixed frame is `wbr_ground`, with follow mode off and both clouds
+  enabled. README and the integration test were updated. No commits or pushes.
+- Verification: requested Python ran
+  `python -m pytest tools/bag_tools/tests/test_foxglove_demo.py -q`: 1 passed.
+  The test checks one generated `/tf`, parent/child IDs and stamp, and the
+  depth-cloud field names. Six MCAPs regenerated in `foxglove-demo-out/`; per-run
+  counts and histograms are in `ops/worklog/sessions/2026-10-24-foxglove-demo.md`.
+- Limitations: Foxglove GUI import/rendering and the layout's height color-field
+  appearance were not available for validation. The converter uses current
+  default `CoreParams`; this is offline current detector replay, not historical
+  live node output.
 - Claude: review this file and `tools/bag_tools/foxglove_demo_layout.json` for
-  Foxglove layout importability.
+  TF geometry and Foxglove layout importability.

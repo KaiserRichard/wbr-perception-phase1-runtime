@@ -34,3 +34,36 @@
   `tools/bag_tools/foxglove_demo_layout.json` through Layouts > Import from file.
   Copy artifacts to the evidence archive after this worktree is accessible to
   that destination.
+
+## Frame and layout follow-up
+
+- Updated the converter to publish one `/tf` per aligned depth frame, parent
+  `wbr_ground` to child `camera_depth_optical_frame`. Ground axes follow
+  `detect.ground_coords`: forward, left, up; origin is the floor below the
+  camera. The last plane is retained if plane fitting stops yielding one.
+- Kept core markers in their optical frame. Added a ground-frame solid obstacle
+  cube (longitudinal depth × lateral width × height) and a status/height/range
+  label. Added `/wbr_obstacle_node/depth_points`, stride 4, fields `x,y,z,height`.
+- Layout now fixes the 3D panel to `wbr_ground`, disables following, shows both
+  point clouds and markers, uses the color Image panel, and leaves advisory
+  height/distance visible in Raw Messages.
+- Re-ran with the requested Python at
+  `/private/tmp/claude-501/-Users-quockaiser-Desktop-Research-wbr-wt-claude2/86f1e3fb-27f1-4b36-ad4d-133cc09819f7/scratchpad/venv/bin/python`.
+  Focused pytest: 1 passed. Six outputs are in `foxglove-demo-out/`.
+- Follow-up counts (each generated topic has one message per aligned depth
+  frame; `/tf_static` retained):
+
+  | Run | Color | Depth | Color info | Depth info | `/tf` | Generated each | Bytes |
+  |---|---:|---:|---:|---:|---:|---:|---:|
+  | B-H02 | 134 | 138 | 139 | 139 | 138 | 138 | 93,626,419 |
+  | B-H05 | 110 | 110 | 111 | 111 | 110 | 110 | 75,257,483 |
+  | B-H08 | 137 | 139 | 139 | 140 | 139 | 139 | 94,823,676 |
+  | B-H13 | 109 | 110 | 111 | 111 | 110 | 110 | 74,621,094 |
+  | B-H26b | 108 | 109 | 110 | 110 | 109 | 109 | 75,011,442 |
+  | S1-empty | 108 | 110 | 106 | 111 | 110 | 110 | 72,880,838 |
+- Generated each = advisory, markers, obstacle_points, depth_points, and `/tf`.
+  Histogram remains B-H02 UNCERTAIN 138; B-H05 JUMP_CANDIDATE 108 / UNCERTAIN
+  2; B-H08 JUMP_CANDIDATE 137 / UNCERTAIN 2; B-H13 STOP_CANDIDATE 108 /
+  UNCERTAIN 2; B-H26b STOP_CANDIDATE 107 / UNCERTAIN 2; S1-empty
+  STOP_CANDIDATE 108 / UNCERTAIN 2.
+- GUI import/render and visual color-field styling remain unverified.

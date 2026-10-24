@@ -61,19 +61,34 @@ def test_tiny_rosbag_gets_stamped_overlay(tmp_path):
     assert result['message_counts']['/wbr_obstacle_node/advisory'] == 1
     assert result['message_counts']['/wbr_obstacle_node/markers'] == 1
     assert result['message_counts']['/wbr_obstacle_node/obstacle_points'] == 1
+    assert result['message_counts']['/wbr_obstacle_node/depth_points'] == 1
+    assert result['message_counts']['/tf'] == 1
     assert output.stat().st_size > 0
 
     observed = {}
     with output.open('rb') as stream:
         for schema, channel, message in make_reader(stream).iter_messages():
-            if channel.topic in ('/wbr_obstacle_node/markers', '/wbr_obstacle_node/obstacle_points'):
+            if channel.topic in ('/wbr_obstacle_node/markers', '/wbr_obstacle_node/obstacle_points',
+                                  '/wbr_obstacle_node/depth_points'):
                 decoded = ts.deserialize_cdr(message.data, schema.name)
                 if channel.topic.endswith('/markers'):
                     observed['markers'] = _stamp(decoded.markers[0].header)
-                else:
+                elif channel.topic.endswith('/obstacle_points'):
                     observed['points'] = _stamp(decoded.header)
+                else:
+                    observed['depth_points'] = _stamp(decoded.header)
+                    observed['depth_fields'] = [field.name for field in decoded.fields]
             elif channel.topic == '/wbr_obstacle_node/advisory':
                 observed['advisory'] = ts.deserialize_cdr(message.data, schema.name).data
+            elif channel.topic == '/tf':
+                tf = ts.deserialize_cdr(message.data, schema.name)
+                observed['tf'] = (tf.transforms[0].header.frame_id,
+                                  tf.transforms[0].child_frame_id,
+                                  tf.transforms[0].header.stamp.sec,
+                                  tf.transforms[0].header.stamp.nanosec)
     assert observed['markers'] == (1, 234, 'camera_color_optical_frame')
     assert observed['points'] == observed['markers']
+    assert observed['depth_points'] == observed['markers']
+    assert observed['depth_fields'] == ['x', 'y', 'z', 'height']
+    assert observed['tf'] == ('wbr_ground', 'camera_depth_optical_frame', 1, 234)
     assert 'plane_valid' in observed['advisory']

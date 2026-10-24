@@ -17,6 +17,8 @@ advisory JSON deliberately contains the requested six fields only.
 
 In Foxglove, use **File > Open local file** to open the MCAP. Import
 `foxglove_demo_layout.json` from the **Layouts** menu (Import from file) to get
-the color Image panel, detector 3D panel, and advisory Raw Messages panel. The
-3D scene uses `camera_color_optical_frame`; the MCAP includes `/tf_static` so
-the recorded camera frame tree is available.
+the color Image panel, ground-aligned detector 3D panel, and advisory Raw
+Messages panel. Each depth frame adds `/tf` from `wbr_ground` to
+`camera_depth_optical_frame`, and `/wbr_obstacle_node/depth_points` carries
+camera-frame XYZ plus height above the fitted floor. The 3D panel uses
+`wbr_ground`; recorded `/tf_static` is retained unchanged.

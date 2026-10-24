@@ -29,35 +29,34 @@
     "3D!detector": {
       "topics": {
         "/wbr_obstacle_node/markers": {"visible": true},
-        "/camera/camera/aligned_depth_to_color/image_raw": {"visible": true},
+        "/wbr_obstacle_node/depth_points": {"visible": true, "colorField": "height", "pointSize": 3},
         "/wbr_obstacle_node/obstacle_points": {"visible": true}
       },
       "cameraState": {
-        "distance": 2.5,
+        "distance": 1.28,
         "perspective": true,
-        "phi": 60,
-        "target": [0, 0, 1],
+        "phi": 57.5,
+        "target": [1, 0, 0.4],
         "targetOffset": [0, 0, 0],
         "targetOrientation": [0, 0, 0, 1],
-        "thetaOffset": 0,
+        "thetaOffset": 180,
         "fovy": 45,
         "near": 0.01,
         "far": 100
       },
-      "followMode": "follow-pose",
-      "followTf": "camera_color_optical_frame",
-      "fixedFrame": "camera_color_optical_frame",
+      "followMode": "follow-none",
+      "fixedFrame": "wbr_ground",
       "scene": {},
       "transforms": {},
       "imageMode": {},
       "synchronize": false,
-      "foxglovePanelTitle": "Detector output"
+      "foxglovePanelTitle": "Ground aligned detector output"
     },
     "RawMessages!advisory": {
       "topicPath": "/wbr_obstacle_node/advisory",
       "diffEnabled": false,
       "defaultExpanded": false,
-      "foxglovePanelTitle": "Advisory JSON"
+      "foxglovePanelTitle": "Advisory height and distance"
     }
   },
   "layout": {
