@@ -32,11 +32,19 @@
 #define TIM2_CNT REG(TIM2_BASE + 0x24u)
 #define TIM2_PSC REG(TIM2_BASE + 0x28u)
 #define TIM2_ARR REG(TIM2_BASE + 0x2Cu)
-#define USART2_BASE 0x40004400u
-#define USART_SR REG(USART2_BASE + 0x00u)
-#define USART_DR REG(USART2_BASE + 0x04u)
-#define USART_BRR REG(USART2_BASE + 0x08u)
-#define USART_CR1 REG(USART2_BASE + 0x0Cu)
+#ifdef UROS_USART1
+/* micro-ROS over USART1 PA9/PA10 (Arduino D8/D2) = the Pi GPIO UART wires, no USB needed */
+#define UROS_USART_BASE 0x40011000u
+#else
+/* micro-ROS over USART2 PA2/PA3 = ST-Link virtual COM port */
+#define UROS_USART_BASE 0x40004400u
+#endif
+#define RCC_APB2ENR REG(RCC_BASE + 0x44u)
+#define GPIOA_AFRH REG(GPIOA_BASE + 0x24u)
+#define USART_SR REG(UROS_USART_BASE + 0x00u)
+#define USART_DR REG(UROS_USART_BASE + 0x04u)
+#define USART_BRR REG(UROS_USART_BASE + 0x08u)
+#define USART_CR1 REG(UROS_USART_BASE + 0x0Cu)
 #define USART_SR_PE (1u << 0)
 #define USART_SR_FE (1u << 1)
 #define USART_SR_NF (1u << 2)

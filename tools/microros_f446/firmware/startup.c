@@ -15,8 +15,14 @@ static void (*const vectors[16 + 97])(void) = {
   [0] = (void (*)(void))&_estack,
   [1] = Reset_Handler,
   [2 ... 15] = default_handler,
-  [16 ... 16 + 37] = default_handler,
+  [16 ... 16 + 36] = default_handler,
+#ifdef UROS_USART1
+  [16 + 37] = USART2_IRQHandler, /* same RX handler, USART1 vector */
+  [16 + 38] = default_handler,
+#else
+  [16 + 37] = default_handler,
   [16 + 38] = USART2_IRQHandler,
+#endif
   [16 + 39 ... 16 + 96] = default_handler,
 };
 

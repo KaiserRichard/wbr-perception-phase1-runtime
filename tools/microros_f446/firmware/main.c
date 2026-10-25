@@ -78,7 +78,7 @@ static void clock_init(void) {
   for (i = 0; i < 2000000u && (RCC_CFGR & (3u << 2)) != (2u << 2); ++i) {}
 }
 
-static void gpio_af7(unsigned pin) {
+__attribute__((unused)) static void gpio_af7(unsigned pin) {
   GPIOA_MODER = (GPIOA_MODER & ~(3u << (2u * pin))) | (2u << (2u * pin));
   GPIOA_OSPEEDR |= 2u << (2u * pin);
   GPIOA_AFRL = (GPIOA_AFRL & ~(15u << (4u * pin))) | (7u << (4u * pin));
@@ -90,10 +90,21 @@ static void gpio_output(volatile uint32_t *moder, unsigned pin) {
 
 static void peripherals_init(void) {
   RCC_AHB1ENR |= 7u;
+#ifdef UROS_USART1
+  RCC_APB1ENR |= 1u << 0;            /* TIM2 */
+  RCC_APB2ENR |= 1u << 4;            /* USART1 */
+  (void)RCC_APB2ENR;
+  for (unsigned pin = 9; pin <= 10; ++pin) {
+    GPIOA_MODER = (GPIOA_MODER & ~(3u << (2u * pin))) | (2u << (2u * pin));
+    GPIOA_AFRH = (GPIOA_AFRH & ~(15u << (4u * (pin - 8u)))) | (7u << (4u * (pin - 8u)));
+  }
+  GPIOA_PUPDR = (GPIOA_PUPDR & ~(3u << 20)) | (1u << 20); /* RX pull-up */
+#else
   RCC_APB1ENR |= (1u << 0) | (1u << 17);
   (void)RCC_APB1ENR;
   gpio_af7(2); gpio_af7(3);
   GPIOA_PUPDR = (GPIOA_PUPDR & ~(3u << 6)) | (1u << 6);
+#endif
   GPIOA_BSRR = 1u << (5u + 16u);
   gpio_output(&GPIOA_MODER, 5); /* LD2 */
   GPIOB_BSRR = (1u << 21) | (1u << 20) | (1u << 26);
@@ -107,9 +118,17 @@ static void peripherals_init(void) {
   TIM2_EGR = 1u;
   TIM2_CR1 = 1u;
   /* PLL path: USART2 PCLK1=42 MHz. HSI fallback uses 16 MHz SYSCLK, APB1=8 MHz. */
+#ifdef UROS_USART1
+  USART_BRR = (usart2_clock_hz * 2u + BAUD / 2u) / BAUD; /* USART1 on PCLK2 = 2 x PCLK1 */
+#else
   USART_BRR = (usart2_clock_hz + BAUD / 2u) / BAUD;
+#endif
   USART_CR1 = (1u << 13) | (1u << 3) | (1u << 2) | (1u << 5);
+#ifdef UROS_USART1
+  NVIC_ISER1 = 1u << (37u - 32u);
+#else
   NVIC_ISER1 = 1u << (38u - 32u);
+#endif
 }
 
 void USART2_IRQHandler(void) {

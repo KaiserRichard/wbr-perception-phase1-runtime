@@ -7,7 +7,7 @@ ROOT := ..
 LIBROOT := $(ROOT)/libbuild/micro_ros_stm32cubemx_utils/microros_static_library/libmicroros
 INCLUDES := -I. -I$(LIBROOT)/microros_include
 CPUFLAGS := -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard
-CFLAGS := $(CPUFLAGS) -std=gnu11 -O2 -g -Wall -Wextra -Werror \
+CFLAGS := $(CPUFLAGS) $(DEFS) -std=gnu11 -O2 -g -Wall -Wextra -Werror \
           -ffunction-sections -fdata-sections -fno-common -fno-unwind-tables \
           -fno-asynchronous-unwind-tables -DSTM32F446xx $(INCLUDES)
 LDFLAGS := $(CPUFLAGS) -T f446.ld -nostartfiles --specs=nano.specs --specs=nosys.specs \
@@ -16,7 +16,7 @@ LDFLAGS := $(CPUFLAGS) -T f446.ld -nostartfiles --specs=nano.specs --specs=nosys
 SOURCES := startup.c main.c syscalls.c
 ARCHIVE := $(LIBROOT)/libmicroros.a
 ELF := build/microros_f446.elf
-BIN := prebuilt/microros_f446.bin
+BIN ?= prebuilt/microros_f446.bin
 
 .PHONY: all clean size checksum
 all: $(BIN) checksum
