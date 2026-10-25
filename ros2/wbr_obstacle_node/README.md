@@ -20,6 +20,10 @@ Private outputs (`/wbr_obstacle_node/...` when launched with the default name):
 - `~/advisory_bytes` (`std_msgs/UInt8MultiArray`): proposed
   `TerrainAdvisory` codec frame. Informational only; firmware review is required
   before any firmware use.
+- `/terrain_advisory` (`std_msgs/Float64MultiArray`, Best Effort depth 1): fixed
+  eight-value advisory for the STM32. The topic name is configurable with the
+  `advisory_topic` parameter; see `docs/interfaces/TERRAIN_ADVISORY_TOPIC.md`
+  for field order and receiver freshness rules.
 - `~/markers` (`visualization_msgs/MarkerArray`): ground patch, obstacle cube
   and height text, plus corridor lines in the depth message's optical frame.
 - `~/obstacle_points` (`sensor_msgs/PointCloud2`): optionally published,
@@ -62,8 +66,9 @@ frame (often `camera_color_optical_frame`).
 `jump_min_h`, `jump_max_h`, `confirm_n`, `confirm_m`, `ema_alpha`, `near_m`,
 `hysteresis_frames`, `max_rate_hz`, `publish_obstacle_points`, `point_stride`,
 and `corridor_length_m` map directly to detector, decision, rate, and output
-settings. Frames arriving before the rate interval expires are dropped in the
-subscription callback, with no queue or backlog.
+settings. `advisory_topic` selects the STM32 advisory output topic. Frames
+arriving before the rate interval expires are dropped in the subscription
+callback, with no queue or backlog.
 
 ## Mac core checks
 

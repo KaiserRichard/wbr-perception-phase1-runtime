@@ -75,6 +75,7 @@ class AdvisoryCore:
         self.detect_state = {}
         self.decision_state = {}
         self.sequence = 0
+        self.advisory_sequence = 0
 
     def process(self, depth_m, K, *, frame_stamp_ns=0, frame_id='camera_depth_optical_frame',
                  now_monotonic=None):
@@ -114,9 +115,30 @@ class AdvisoryCore:
             width_m=_finite_or_zero(decision.width_m), plane_valid=frame.plane_valid,
             plane_pitch_rad=_finite_or_zero(frame.plane_pitch_rad),
             plane_height_m=_finite_or_zero(frame.plane_height_m))
+        sequence = self.advisory_sequence
+        self.advisory_sequence += 1
         self.sequence = (self.sequence + 1) & 0xffffffff
         return {'advisory': advisory, 'markers': markers, 'points': points,
-                'advisory_bytes': list(wire), 'frame_result': frame}
+                'advisory_bytes': list(wire), 'sequence': sequence,
+                'frame_result': frame}
+
+
+def pack_terrain_advisory(advisory, sequence, age_s):
+    """Pack the fixed Float64MultiArray layout for the STM32 advisory topic."""
+    code = int(advisory['advisory_code'])
+    if code < 0 or code > 3:
+        raise ValueError(f'advisory code must be in [0, 3], got {code}')
+    confidence = min(1.0, max(0.0, _finite_or_zero(advisory.get('confidence'))))
+    return [
+        float(code),
+        _finite_or_zero(advisory.get('distance_m')),
+        _finite_or_zero(advisory.get('height_m')),
+        _finite_or_zero(advisory.get('width_m')),
+        confidence,
+        1.0 if advisory.get('plane_valid', False) else 0.0,
+        float(sequence),
+        max(0.0, _finite_or_zero(age_s)),
+    ]
 
 
 def marker_specs(advisory, corridor_half_width, corridor_length_m, frame_id):
