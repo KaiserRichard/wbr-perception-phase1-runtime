@@ -54,6 +54,35 @@ MPLBACKEND=Agg MPLCONFIGDIR=/private/tmp/wbr-mpl-cache \
 The evaluation stride is 4 pixels and the grid is 4 m at 5 cm resolution.
 See [REPORT.md](REPORT.md) for the recorded run and measured host timing.
 
+## Map a recorded RGB-D bag
+
+`from_bag.py` reads a rosbag2 directory with the ROS 2 Jazzy typestore (SQLite
+or MCAP). It pairs aligned 16UC1 millimetre depth images with the nearest
+`/d435_orb/pose` header stamp within 50 ms, using the documented `T_wc` camera
+pose in `slam_world`. CameraInfo supplies the aligned image intrinsics. The
+first usable floor plane establishes the fixed gravity-aligned map frame; pose
+translation jumps above 1 m/s and rotation jumps above 60 degrees/s are skipped.
+The output directory contains `height_map.png`, `obstacle_classes.png` and
+`summary.json` (including frame counts, map bounds, obstacle centroid and
+processing time).
+
+```sh
+MPLBACKEND=Agg MPLCONFIGDIR=/private/tmp/wbr-mpl-cache \
+  ~/Desktop/Research/wbr-venvs/perception/bin/python tools/local_map/from_bag.py \
+  /path/to/rosbag2-directory --out /path/to/local-map
+# Optional expected centroid in gravity-aligned map coordinates (x,y,height):
+~/Desktop/Research/wbr-venvs/perception/bin/python tools/local_map/from_bag.py \
+  /path/to/rosbag2-directory --out /path/to/local-map --expected-box 0.0,1.5,0.05
+```
+
+Run the SQLite bag integration test and existing grid tests with:
+
+```sh
+MPLBACKEND=Agg MPLCONFIGDIR=/private/tmp/wbr-mpl-cache \
+  ~/Desktop/Research/wbr-venvs/perception/bin/python \
+  -m unittest discover -s tools/local_map/tests -v
+```
+
 ## Limits
 
 This is synthetic-only evidence. The per-frame ORB pose quality on the robot's

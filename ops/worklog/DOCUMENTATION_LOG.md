@@ -490,3 +490,4 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Limitations / review: GUI rendering and layout color-field behavior are
   unverified; review is recorded in
   `ops/worklog/reviews/2026-10-24-foxglove-demo.md`.
+- 2026-10-24 (Claude 2): `lab-day-20261026/CHECKLIST.md` — A1 15 Hz, ORB-SLAM3 RGB-D during A1, journalctl watcher. Note: `ops/worklog/sessions/2026-10-24-monday-checklist-fix.md`.

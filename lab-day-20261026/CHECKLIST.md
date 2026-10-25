@@ -1,12 +1,14 @@
 # Lab checklist — Monday, 2026-10-26
 
+> Changed 2026-10-24 evening by Claude 2 (owner request): A1 at 15 Hz instead of 30 Hz; ORB-SLAM3 RGB-D started during A1; kernel watcher via `journalctl -kf` (no sudo). See `ops/worklog/sessions/2026-10-24-monday-checklist-fix.md`.
+
 Keep camera mount, exposure/profile, power and lighting fixed. Push by hand only; no motor commands. Make a new run directory each time and retain failed runs. Pi run root: `$HOME/wbr-evidence/lab-day-20261026`.
 
 ## Before runs
 
 - [ ] Measure camera height and down-tilt; photograph mount, wiring and scene. Tape a 3.00 m straight course and mark start/end.
 - [ ] Confirm D435 serial `317422076650`, USB `5000M`, Pi supply/throttle, free space, and Nucleo UART wiring from `tools/link_bench/results/20261024-nucleo/README.md` (Pi pins 8/10/6 → D2/D8/GND; Pi 5V pin 2 → Nucleo E5V, JP5 on E5V).
-- [ ] Start a saved kernel watcher in another terminal: `sudo dmesg -w | tee "$HOME/wbr-evidence/lab-day-20261026/dmesg-live.log"`.
+- [ ] Start a saved kernel watcher in another terminal (no sudo needed): `journalctl -kf | tee "$HOME/wbr-evidence/lab-day-20261026/kernel-live.log"`.
 - [ ] For stereo runs use the verified 15 Hz capture runner and settings below. Check every output path is new.
 
 ## M1 — stereo lab map, 180 s
@@ -40,10 +42,22 @@ Start camera in terminal 1:
 ```bash
 source /opt/ros/jazzy/setup.bash
 source /home/richard/wbr-camera-ros-build-20261021-04/install/setup.bash
-ros2 launch wbr_orb_node d435_camera.launch.py mode:=rgbd serial:=317422076650 width:=640 height:=480 fps:=30
+ros2 launch wbr_orb_node d435_camera.launch.py mode:=rgbd serial:=317422076650 width:=640 height:=480 fps:=15
 ```
 
-In terminal 2, run the verified RGB-D recorder (Ctrl-C once after the approach):
+15 Hz, not 30: colour + raw depth + aligned depth is 32 MB/s at 15 Hz and 64 MB/s at 30 Hz; the microSD sustained 56.3 MB/s in the 2026-10-24 write test.
+
+In terminal 2, start ORB-SLAM3 RGB-D so the bag also holds `/d435_orb/pose` and `/d435_orb/status` (needed for the local map). The settings file is the 15 Hz copy made on 2026-10-24:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+source /home/richard/wbr-camera-ros-build-20261021-04/install/setup.bash
+ros2 launch wbr_orb_node d435_slam.launch.py mode:=rgbd \
+  vocabulary:=/home/richard/orbslam3/ORB_SLAM3/Vocabulary/ORBvoc.txt \
+  settings:=/home/richard/wbr-evidence/mobile-demo-20261024-01/setup/rgbd-ros-15fps.yaml
+```
+
+Wait until `ros2 topic echo /d435_orb/pose --once` prints a pose. In terminal 3, run the verified RGB-D recorder (Ctrl-C once after the approach):
 
 ```bash
 RUN="$HOME/wbr-evidence/lab-day-20261026/A1-approach"
@@ -57,15 +71,13 @@ Record box height/width, exact start and stopping distances from camera front pl
 
 **Owner:** aim camera at the same box, power the fan, and keep hands clear of blades and wiring. Use the documented UART wiring. Nucleo must run bench firmware; ROM-bootloader flash/backup procedure is `tools/link_bench/pi/stm32boot.py` and Nucleo README. Log any reboot/flash actions and preserve the existing backup; do not assume bootloader GO is needed after this VTOR fix.
 
-1. Run the same RGB-D camera launch above and start the live obstacle node as deployed on the Pi; save `/advisory`, markers, `/d435_orb/status`, and terminal output (actual node launch syntax is not present in this worktree; use the installed lab launch command and record it verbatim).
-2. Capture a fresh short RGB-D bag while the box is visible, then send that bag through detector and UART to Nucleo:
+1. Aim the camera at the same box, power the fan, and use the documented UART wiring. With ROS 2 Jazzy sourced, run the live chain script; it starts the D435 aligned-depth stream at 640×480×15 Hz, waits for the image topic, runs the live detector→UART sender for 60 s, then stops the driver:
 
 ```bash
-OUT="$HOME/wbr-evidence/lab-day-20261026/LIVE-uart"
-python3 tools/link_bench/pi/advisory_link.py --port /dev/ttyAMA0 --out "$OUT" --bag "$HOME/wbr-evidence/lab-day-20261026/A1-approach/rgbd-bag" --rate 1.0 --stride 1
+bash lab-day-20261026/live_chain.sh
 ```
 
-Record verbatim commands, fan state/speed, wiring and power photos, box distances, detector decisions, sent/echoed/lost counts, RTT percentiles, rejected echoes/stale events, UART port/baud, Nucleo reset state, and all errors. This bag replay is camera-derived detector→UART evidence; label it separately from any genuinely live camera-to-UART execution. Do not claim end-to-end live operation unless the live node itself feeds the UART bridge.
+The script accepts an optional new output directory; `UART_PORT` can override `/dev/ttyAMA0`. Record verbatim commands, fan state/speed, wiring and power photos, box distances, detector decisions, sent/echoed/lost counts, dropped frames, receipt-to-before-write latency, RTT percentiles, rejected echoes/stale events, UART port/baud, Nucleo reset state, and all errors. Keep `summary.json`, `packets.csv`, and `camera.log` together. Image header timestamps are metadata only; latency uses Pi monotonic time.
 
 ## Closeout
 
