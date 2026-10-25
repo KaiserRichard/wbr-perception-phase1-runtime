@@ -2,8 +2,10 @@ import csv
 import json
 from pathlib import Path
 import tempfile
+import sys
 import unittest
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 from tools.link_bench.pi.summarize_live import summarize_run
 
 
