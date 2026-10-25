@@ -1,4 +1,4 @@
-> Written by AGY (web research), 25 Oct 2026. Claude 2 opened all six arXiv links in the reference table and confirmed title/authors match; the first AGY draft had fabricated arXiv citations and was discarded. Numbers quoted from sources were not independently re-checked; treat them as pointers to read, not evidence.
+> Written by AGY (web research), 25 Oct 2026. Claude 2 opened all five arXiv links in the reference table and confirmed title/authors match; the first AGY draft had fabricated arXiv citations and was discarded. Numbers quoted from sources were not independently re-checked; treat them as pointers to read, not evidence.
 
 # Technical Research Report: Perception-Triggered Obstacle Clearance and Embedded Control Architecture for a Wheeled-Biped Robot (WBR)
 
