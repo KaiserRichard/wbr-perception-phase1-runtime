@@ -9,9 +9,7 @@ from __future__ import annotations
 
 import argparse
 import csv
-from collections import Counter
 from pathlib import Path
-import statistics
 import sys
 
 import numpy as np
@@ -73,7 +71,8 @@ def _stamp_ns(msg):
     return int(msg.header.stamp.sec) * 1_000_000_000 + int(msg.header.stamp.nanosec)
 
 
-def _replay(bag_dir: Path, max_forward: float, range_hysteresis: float):
+def _replay(bag_dir: Path, max_forward: float, range_hysteresis: float,
+            window_start_ns: int, window_end_ns: int):
     params = Params()
     old_params = DecisionParams(height_hysteresis_m=0.0)
     new_params = DecisionParams()
@@ -84,13 +83,16 @@ def _replay(bag_dir: Path, max_forward: float, range_hysteresis: float):
     }
     with readable_mcap(_reader_path(bag_dir)) as (reader_path, recovered_tail_bytes):
         for stamp, msg, K in _frames(reader_path):
+            if stamp < window_start_ns or stamp > window_end_ns:
+                continue
             frame, detector_state = process_frame(decode_depth(msg), K, params, detector_state)
             for mode in modes.values():
                 limited, mode['range_state'] = in_range(
                     frame, max_forward, mode['range_hysteresis'], mode['range_state'])
                 decision, mode['decision_state'] = update(
                     limited, mode['decision_state'], mode['params'])
-                mode['rows'].append((stamp, int(decision.advisory)))
+                mode['rows'].append((stamp, int(decision.advisory),
+                                     decision.distance_m, decision.height_m))
     for mode in modes.values():
         mode['rows'].sort(key=lambda row: row[0])
     modes['recovered_tail_bytes'] = recovered_tail_bytes
@@ -107,88 +109,72 @@ def _live_packets(path: Path):
 
 def _metrics(rows):
     if not rows:
-        return {'transitions': [], 'seconds': {}, 'duration_s': 0.0}
-    stamps = [stamp for stamp, _ in rows]
-    positive_dt = [(b - a) / 1e9 for a, b in zip(stamps, stamps[1:]) if b > a]
-    tail = statistics.median(positive_dt) if positive_dt else 0.0
-    elapsed = [(b - a) / 1e9 if b > a else 0.0 for a, b in zip(stamps, stamps[1:])] + [tail]
-    seconds = Counter()
-    for (_, code), dt in zip(rows, elapsed):
-        seconds[NAMES.get(code, f'UNKNOWN_{code}')] += dt
-    start = stamps[0]
+        return {'transitions': []}
+    start = rows[0][0]
     transitions = [
         ((stamp - start) / 1e9, code)
-        for (stamp, code), (_, previous) in zip(rows[1:], rows[:-1])
+        for (stamp, code, *_), (_, previous, *__) in zip(rows[1:], rows[:-1])
         if code != previous
     ]
-    return {'transitions': transitions, 'seconds': dict(seconds), 'duration_s': sum(elapsed)}
+    return {'transitions': transitions}
 
 
-def _format_transitions(events):
-    return ', '.join(f'{t:.3f}s {NAMES.get(code, code)}' for t, code in events) or 'none'
-
-
-def _format_times(seconds):
-    order = ('NONE', 'JUMP_CANDIDATE', 'STOP_CANDIDATE', 'UNCERTAIN')
-    return ', '.join(f'{name} {seconds.get(name, 0.0):.2f}s' for name in order if seconds.get(name, 0.0) > 0.0005) or 'none'
+def _fmt_value(value):
+    return f'{value:.3f}' if np.isfinite(value) else 'n/a'
 
 
 def report(archive: Path, output: Path, *, max_forward=1.3, range_hysteresis=0.10):
     results = []
     for run in RUNS:
         run_dir = archive / run
-        modes = _replay(run_dir / 'camera-bag', max_forward, range_hysteresis)
         live_rows = _live_packets(run_dir / 'packets.csv')
+        if not live_rows:
+            raise ValueError(f'{run_dir / "packets.csv"}: no live packets')
+        window_start_ns = min(stamp for stamp, _ in live_rows)
+        window_end_ns = max(stamp for stamp, _ in live_rows)
+        window_s = (window_end_ns - window_start_ns) / 1e9
+        modes = _replay(run_dir / 'camera-bag', max_forward, range_hysteresis,
+                        window_start_ns, window_end_ns)
+        live_rows = [(stamp, code, float('nan'), float('nan'))
+                     for stamp, code in live_rows
+                     if window_start_ns <= stamp <= window_end_ns]
         old_rows, new_rows = modes['old']['rows'], modes['new']['rows']
         old_metrics, new_metrics, live_metrics = map(_metrics, (old_rows, new_rows, live_rows))
-        old_by_stamp = dict(old_rows)
-        matched = [(old_by_stamp[stamp], code) for stamp, code in live_rows if stamp in old_by_stamp]
-        agreement = (sum(a == b for a, b in matched) / len(matched)) if matched else 0.0
-        results.append((run, modes, live_rows, old_metrics, new_metrics, live_metrics, len(matched), agreement))
+        results.append((run, modes, live_rows, old_metrics, new_metrics, live_metrics,
+                        window_s, window_start_ns))
 
     lines = [
         '# Lab day 2026-10-25 advisory flicker report', '',
-        f'Range cutoff: {max_forward:.2f} m nearest face; accepted clusters retain the live {range_hysteresis:.2f} m range hysteresis.',
-        'Old replay sets both range and height hysteresis to 0; new replay uses the live range hysteresis and `DecisionParams` default height hysteresis (0.01 m).',
-        'Durations use bag/header timestamps, assigning each frame state until the next frame and using the median frame period for the final sample. Transition times are relative to the first depth frame or live packet in each sequence.', '',
-        '| Run | Bag frames | Old transitions | New transitions | Live packets / transitions | Old vs live at matched frame stamps |',
-        '|---|---:|---:|---:|---:|---:|',
+        'Replay frames are limited to each run’s inclusive live packet timestamp range; transition rates use that window length.',
+        f'Old replay has zero range/height hysteresis; new replay uses {range_hysteresis:.2f} m range hysteresis and 0.01 m height hysteresis. Approach transition distance/height are the new decision output at the transition frame (metres).', '',
+        '| Run | Window (s) | Old transitions / min⁻¹ | New transitions / min⁻¹ | Live transitions / min⁻¹ |',
+        '|---|---:|---:|---:|---:|',
     ]
-    for run, modes, live_rows, old_m, new_m, live_m, matched_n, agreement in results:
+    for run, modes, live_rows, old_m, new_m, live_m, window_s, _ in results:
+        rate = window_s / 60.0 if window_s > 0 else float('nan')
         lines.append(
-            f'| {run} | {len(modes["old"]["rows"])} | {len(old_m["transitions"])} | '
-            f'{len(new_m["transitions"])} | {len(live_rows)} / {len(live_m["transitions"])} | '
-            f'{matched_n} matched, {agreement:.1%} agreement |'
+            f'| {run} | {window_s:.2f} | {len(old_m["transitions"])} / {len(old_m["transitions"])/rate:.1f} | '
+            f'{len(new_m["transitions"])} / {len(new_m["transitions"])/rate:.1f} | '
+            f'{len(live_m["transitions"])} / {len(live_m["transitions"])/rate:.1f} |'
         )
-    lines.extend(['', '## Advisory time and transition times', ''])
-    for run, modes, live_rows, old_m, new_m, live_m, matched_n, agreement in results:
-        lines.extend([
-            f'### {run}', '',
-        ])
-        if modes['recovered_tail_bytes']:
-            lines.append(f'- Source recovery: omitted {modes["recovered_tail_bytes"]:,} incomplete trailing MCAP bytes from a temporary copy; the archived file was unchanged.')
-        lines.extend([
-            f'- Old time: {_format_times(old_m["seconds"])} ({old_m["duration_s"]:.2f}s total).',
-            f'- Old transitions ({len(old_m["transitions"])}): {_format_transitions(old_m["transitions"])}.',
-            f'- New time: {_format_times(new_m["seconds"])} ({new_m["duration_s"]:.2f}s total).',
-            f'- New transitions ({len(new_m["transitions"])}): {_format_transitions(new_m["transitions"])}.',
-            f'- Live time: {_format_times(live_m["seconds"])} ({live_m["duration_s"]:.2f}s observed across packet intervals).',
-            f'- Live transitions ({len(live_m["transitions"])}): {_format_transitions(live_m["transitions"])}.',
-        ])
-        if matched_n < len(live_rows):
-            lines.append(f'- Timestamp matches: {matched_n}/{len(live_rows)} live packets; unmatched packets are excluded from agreement.')
+    lines.extend(['', '## New replay transitions', ''])
+    for run, modes, live_rows, old_m, new_m, live_m, window_s, window_start_ns in results:
+        events = []
+        prev = None
+        for stamp, code, distance, height in modes['new']['rows']:
+            if prev is not None and code != prev:
+                events.append((stamp, code, distance, height))
+            prev = code
+        lines.append(f'### {run} ({len(events)} transitions)')
+        if run.startswith('4-approach'):
+            lines.extend(f'- {(stamp-window_start_ns)/1e9:.3f}s {NAMES.get(code, code)}: distance {_fmt_value(distance)} m, height {_fmt_value(height)} m'
+                         for stamp, code, distance, height in events)
+        else:
+            lines.extend(f'- {(stamp-window_start_ns)/1e9:.3f}s {NAMES.get(code, code)}'
+                         for stamp, code, _, _ in events)
+        if not events:
+            lines.append('- none')
         lines.append('')
-    fewer = sum(len(new['transitions']) < len(old['transitions']) for _, modes, *_ in results
-                for old, new in [( _metrics(modes['old']['rows']), _metrics(modes['new']['rows']) )])
-    same = sum(_metrics(modes['old']['rows'])['transitions'] == _metrics(modes['new']['rows'])['transitions']
-               for _, modes, *_ in results)
-    mean_agreement = statistics.mean(row[-1] for row in results)
-    conclusion = [
-        f'Across five runs, new defaults produced fewer transitions in {fewer}/5 runs; transition sequences were identical in {same}/5.',
-        f'Old replay matched the live advisory on {mean_agreement:.1%} of exact shared frame stamps on average; live packet loss/drop means this is a sampled comparison.',
-        'These results describe replayed detector output for these takes; they do not establish general flicker performance or hardware timing.',
-    ]
-    lines.extend(['## Conclusion', '', *conclusion, ''])
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text('\n'.join(lines))
     return results
