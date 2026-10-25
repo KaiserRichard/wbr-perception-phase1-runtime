@@ -31,5 +31,5 @@ for _ in $(seq 1 90); do
 done
 if [[ $ready != 1 ]]; then echo "timed out waiting for $topic; see $out/camera.log" >&2; exit 1; fi
 
-python3 "$repo/tools/link_bench/pi/advisory_link.py" --port "$port" --out "$out" --ros --duration 60
+python3 "$repo/tools/link_bench/pi/advisory_link.py" --port "$port" --out "$out" --ros --duration "${DURATION:-60}" --max-forward "${MAX_FORWARD:-3.0}"
 echo "live run complete: $out"

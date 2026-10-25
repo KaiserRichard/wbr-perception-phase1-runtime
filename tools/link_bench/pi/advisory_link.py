@@ -180,7 +180,7 @@ def run_ros(args):
             super().__init__('advisory_link'); self.lock=threading.Condition()
             self.pending=None; self.stopping=False; self.K=None; self.dropped=0; self.frames=0
             self.detector_times=[]; self.plane_state={}; self.decision_state={}
-            self.params=Params(); self.dp=DecisionParams()
+            self.params=Params(max_forward=args.max_forward); self.dp=DecisionParams()
             self.create_subscription(CameraInfo,'/camera/camera/color/camera_info',self.info_cb,sensor_qos)
             self.create_subscription(Image,'/camera/camera/aligned_depth_to_color/image_raw',self.image_cb,sensor_qos)
             self.worker=threading.Thread(target=self.work,name='advisory-detector',daemon=True); self.worker.start()
@@ -241,7 +241,7 @@ def run(args):
             from tools.obstacle_decision.replay_bag import _stamp_ns
             from tools.obstacle_decision.detect import Params, process_frame
             from tools.obstacle_decision.decide import DecisionParams, update
-            ps={}; ds={}; params=Params(); dp=DecisionParams()
+            ps={}; ds={}; params=Params(max_forward=args.max_forward); dp=DecisionParams()
             for msg,K,stamp in bag_frames(args.bag,args.stride):
                 frame_stamp=_stamp_ns(msg); before=time.monotonic_ns()
                 frame,ps=process_frame(__import__('tools.obstacle_decision.replay_bag',fromlist=['decode_depth']).decode_depth(msg),K,params,ps)
@@ -272,7 +272,7 @@ def run(args):
 def main():
     p=argparse.ArgumentParser(description=__doc__); p.add_argument('--port',default='/dev/ttyAMA0'); p.add_argument('--baud',type=int,default=460800); p.add_argument('--out',required=True); p.add_argument('--marker-gpio',type=int); p.add_argument('--faults',action='store_true')
     mode=p.add_mutually_exclusive_group(required=True); mode.add_argument('--synthetic',nargs=2,type=float,metavar=('RATE_HZ','DURATION_S')); mode.add_argument('--bag'); mode.add_argument('--ros',action='store_true')
-    p.add_argument('--rate',type=float,default=1.0); p.add_argument('--stride',type=int,default=1); p.add_argument('--duration',type=float,default=60.0); args=p.parse_args()
+    p.add_argument('--rate',type=float,default=1.0); p.add_argument('--stride',type=int,default=1); p.add_argument('--duration',type=float,default=60.0); p.add_argument('--max-forward',type=float,default=3.0,help='ignore obstacles farther than this (m), e.g. the wall past a short table'); args=p.parse_args()
     if args.stride<1 or args.rate<=0 or args.duration<=0 or (args.synthetic and (args.synthetic[0]<=0 or args.synthetic[1]<=0)): p.error('rate, duration, and stride must be positive')
     run(args)
 
