@@ -8,6 +8,7 @@
  * Timing marker: PA8 (Arduino D7) toggles once per USART1 packet that decodes
  *   (COBS + CRC + layout OK), for a logic analyzer. USART2 packets do not toggle it.
  * LD2 (PA5): on while USART1 or USART2 holds an accepted link, off in NO_LINK.
+ * Advisory LEDs: PB5 green, PB4 yellow, PB10 red, PC7 blue (active high).
  * Clock: 84 MHz from the ST-Link 8 MHz MCO (HSE bypass), HSI 16 MHz fallback.
  * Time base: TIM2 32-bit free-running at 1 MHz, extended to 64 bit. */
 #include "f446.h"
@@ -56,7 +57,7 @@ static void gpio_af7(uint32_t pin) {
 }
 
 static void periph_init(void) {
- RCC_AHB1ENR |= 1u;                       /* GPIOA */
+ RCC_AHB1ENR |= 7u;                       /* GPIOA/B/C */
  RCC_APB1ENR |= (1u << 0) | (1u << 17) | (1u << 28); /* TIM2, USART2, PWR */
  RCC_APB2ENR |= 1u << 4;                  /* USART1 */
  (void)RCC_APB2ENR;
@@ -65,6 +66,16 @@ static void periph_init(void) {
  GPIOA_MODER = (GPIOA_MODER & ~(3u << 10)) | (1u << 10); /* PA5 LD2 output */
  GPIOA_MODER = (GPIOA_MODER & ~(3u << 16)) | (1u << 16); /* PA8 timing marker output */
  GPIOA_OSPEEDR |= 3u << 16;
+ /* Drive LED latches low before enabling push-pull, low-speed outputs. */
+ GPIOB_BSRR = (1u << (5 + 16)) | (1u << (4 + 16)) | (1u << (10 + 16));
+ GPIOC_BSRR = 1u << (7 + 16);
+ GPIOB_OTYPER &= ~((1u << 5) | (1u << 4) | (1u << 10));
+ GPIOC_OTYPER &= ~(1u << 7);
+ GPIOB_OSPEEDR &= ~((3u << 10) | (3u << 8) | (3u << 20));
+ GPIOC_OSPEEDR &= ~(3u << 14);
+ GPIOB_MODER = (GPIOB_MODER & ~((3u << 10) | (3u << 8) | (3u << 20))) |
+               (1u << 10) | (1u << 8) | (1u << 20);
+ GPIOC_MODER = (GPIOC_MODER & ~(3u << 14)) | (1u << 14);
  TIM2_PSC = 84u - 1u; TIM2_ARR = 0xFFFFFFFFu; TIM2_EGR = 1u; TIM2_CR1 = 1u; /* 84 MHz timer clock -> 1 MHz */
  USART_BRR(USART1_BASE) = (84000000u + BAUD / 2) / BAUD; /* 182 -> 461538 baud, +0.16 % */
  USART_BRR(USART2_BASE) = (42000000u + BAUD / 2) / BAUD; /* 91 -> 461538 baud, +0.16 % */
@@ -135,6 +146,17 @@ static void service(uart *u, uint64_t now) {
  bench_poll(&u->bench, now);
 }
 
+static void advisory_leds(uint8_t mask) {
+ uint32_t bset = 0, breset = (1u << 5) | (1u << 4) | (1u << 10);
+ uint32_t cset = 0, creset = 1u << 7;
+ if (mask & (1u << 0)) bset |= 1u << 5, breset &= ~(1u << 5);
+ if (mask & (1u << 1)) bset |= 1u << 4, breset &= ~(1u << 4);
+ if (mask & (1u << 2)) bset |= 1u << 10, breset &= ~(1u << 10);
+ if (mask & (1u << 3)) cset |= 1u << 7, creset = 0;
+ GPIOB_BSRR = bset | (breset << 16);
+ GPIOC_BSRR = cset | (creset << 16);
+}
+
 int main(void) {
  uint64_t id;
  u1.base = USART1_BASE; u2.base = USART2_BASE;
@@ -146,8 +168,14 @@ int main(void) {
  u1.bench.mark = mark;
  for (;;) {
   uint64_t now = micros();
+  uint8_t led_mask;
   service(&u1, now);
   service(&u2, now);
   GPIOA_BSRR = (bench_linked(&u1.bench) || bench_linked(&u2.bench)) ? (1u << 5) : (1u << 21);
+  led_mask = bench_led_mask(&u1.bench);
+  if (!led_mask && ((now / 250000u) & 1u)) led_mask = 1u << 2;
+  /* UNCERTAIN also blinks yellow at 4 Hz, for rigs without a blue LED on D9. */
+  if (led_mask == (1u << 3) && ((now / 125000u) & 1u)) led_mask |= 1u << 1;
+  advisory_leds(led_mask);
  }
 }

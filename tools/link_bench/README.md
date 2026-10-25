@@ -54,6 +54,13 @@ Prebuilt binary: [`firmware/prebuilt/link_bench_f446.bin`](firmware/prebuilt/)
 (SHA-256 in `SHA256SUMS`, built with Arm GNU Toolchain 13.2.rel1 from this tree).
 Rebuild with `make -C tools/link_bench/firmware`.
 
+### Prebuilt binary history
+
+| Image | SHA-256 |
+|---|---|
+| Previous image, before advisory LEDs | `91d7702fb81625d31b641419597770d352f51a72e7be2340bb4c6dbf2219fcce` |
+| Current image with advisory LEDs | `07f0af8dfe1759e76432205df35527ce8a6febfdf3804cfe6ebd74fd0266551a` |
+
 Flash (pick one):
 
 ```sh
@@ -127,6 +134,32 @@ The `--faults` phase sends bad CRC, old sequence, wrong session, a NaN float,
 waits silently for 400 ms, then sends a valid recovery packet. Expected echo
 reasons are `WIRE`, `SEQUENCE`, `SESSION`, and `FIELDS`; stale must assert during
 the silence and clear after recovery.
+
+## LED test
+
+The four external LEDs show the latest accepted TerrainAdvisory from USART1.
+Each LED is active high with one 330 Ω series resistor. The STM32 pins are
+push-pull, low speed, and start low (all LEDs off).
+
+| Nucleo Arduino pin | MCU pin | Color | Accepted advisory |
+|---|---|---|---|
+| D4 | PB5 | Green | `NONE` |
+| D5 | PB4 | Yellow | `JUMP_CANDIDATE` |
+| D6 | PB10 | Red | `STOP_CANDIDATE` |
+| D9 | PC7 | Blue | `UNCERTAIN` |
+
+Wire each LED in series with its 330 Ω resistor from the listed pin to GND.
+Only one advisory LED is lit at a time. A rejected packet leaves the previous
+accepted indication unchanged. Before the first accepted advisory, if no
+advisory arrives for 300 ms, or after reset, all four are off and RED blinks at
+2 Hz to show that the advisory feed is absent or stale. A fresh `NONE` advisory
+lights GREEN; it is distinct from the no-feed indication.
+
+For the operator check, run the advisory sender with the obstacle decision
+pipeline active. Approach an obstacle slowly while watching the LEDs. Stop as
+soon as RED lights, then use a tape measure to record the obstacle distance.
+This is a diagnostic observation of the advisory threshold; the LEDs do not
+control the robot or grant permission to jump.
 
 For a logic-analyzer capture, keep the wiring/probes and 12 MHz analyzer setup
 above, and use:
