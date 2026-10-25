@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
 from tools.link_proto.py import link_proto as lp
 from tools.obstacle_decision import advisory_codec
+from tools.obstacle_decision.range_filter import in_range as _filter_in_range
 
 spec = importlib.util.spec_from_file_location('link_bench', Path(__file__).with_name('link_bench.py'))
 lb = importlib.util.module_from_spec(spec); spec.loader.exec_module(lb)
@@ -133,14 +134,8 @@ def in_range(frame, max_m=None, range_hysteresis=0.10, state=None):
     """Keep only obstacles whose nearest face is within range (whole clusters are kept, so a
     box straddling the limit keeps its top face and its height is not clipped). A previously
     accepted obstacle remains accepted through the range hysteresis band."""
-    import dataclasses
     max_m=ADVISORY_RANGE_M if max_m is None else max_m
-    state={} if state is None else state
-    was_accepted=state.get('in_range',False)
-    cutoff=max_m+(range_hysteresis if was_accepted else 0.)
-    inside=[c for c in frame.clusters if c.distance_m<=cutoff]
-    state['in_range']=bool(inside)
-    return dataclasses.replace(frame, clusters=inside, nearest=min(inside,key=lambda c:c.distance_m) if inside else None)
+    return _filter_in_range(frame, max_m, range_hysteresis, state)[0]
 
 
 def handle_ros_frame(msg, K, runner, plane_state, decision_state, params=None, decision_params=None,

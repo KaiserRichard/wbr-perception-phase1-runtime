@@ -499,3 +499,10 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Changes and reason: add per-run range hysteresis (0.10 m default) and height-class hysteresis (0.01 m default) to prevent LED advisory flicker at lab-observed range and height thresholds.
 - Validation: decision suite 13 passed; link-bench suite 11 passed, 1 skipped (QEMU and ARM toolchain unavailable); C LED test passed. Commands and host backend setup are recorded in `ops/worklog/sessions/2026-10-25-advisory-hysteresis.md`.
 - Limitations: host tests only; live LED behavior awaits owner/execution-chat validation.
+
+### DOC-20261025-LAB-FLICKER: offline overlays and replay comparison
+- Time / author: 2026-10-25 +07; Codex.
+- Branch: `claude2/20261025-lab-fixes`; local changes only, uncommitted.
+- Files: `tools/bag_tools/foxglove_demo.py`, `tools/bag_tools/mcap_recovery.py`, `tools/obstacle_decision/flicker_check.py`, `tools/obstacle_decision/range_filter.py`, and `ops/worklog/sessions/2026-10-25-lab-flicker.md`.
+- Changes: support MCAP rosbag directories and incomplete trailing MCAP capture recovery via a temporary copy; apply the live 1.30 m forward limit and 0.10 m range hysteresis; generate a reproducible old/new replay comparison against exact live frame stamps.
+- Results: five visualization bags and the flicker report are in `foxglove-out/` (9.0 GB total). Detailed run counts, transition timestamps, and the r3 recovery limitation are in the session log and report.
