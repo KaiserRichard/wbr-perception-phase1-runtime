@@ -59,10 +59,16 @@ class Bridge:
         self.received = self.forwarded = self.dropped = self.echoed = 0
         self.pending = {}
         self.rtts_ns = []
+        self.seq_base = (time.monotonic_ns() // 1_000_000) & 0x7FFFFFFF
+        self.echo_results = {}
 
     def receive(self, data, logger):
         self.received += 1
         try:
+            # The MCU only accepts a wire sequence newer than the last one it saw (also from
+            # earlier runs), so offset the topic counter by this run's start time in ms.
+            topic_seq = int(float(data[6])) if len(data) == 8 and math.isfinite(float(data[6])) else 0
+            data = list(data); data[6] = float((self.seq_base + topic_seq) & 0xFFFFFFFF)
             sequence, packet = message_to_packet(data)
         except (ValueError, TypeError) as exc:
             self.dropped += 1
@@ -76,6 +82,8 @@ class Bridge:
         for received_ns, record in self.link.poll(0):
             if record.get('type') != lp.ADVISORY_ECHO:
                 continue
+            result = record.get('result', 0)
+            self.echo_results[result] = self.echo_results.get(result, 0) + 1
             sent_ns = self.pending.pop(record.get('advisory_seq'), None)
             if sent_ns is not None:
                 self.echoed += 1
@@ -92,6 +100,7 @@ class Bridge:
         def percentile(p):
             return None if not rtts_us else rtts_us[max(0, math.ceil(p * len(rtts_us)) - 1)]
         summary = {
+            'echo_result_codes': {str(k): v for k, v in sorted(self.echo_results.items())},
             'received': self.received, 'forwarded': self.forwarded,
             'dropped': self.dropped, 'echoed': self.echoed,
             'rtt_us': {'n': len(rtts_us), 'p50': percentile(.50), 'p99': percentile(.99)},
