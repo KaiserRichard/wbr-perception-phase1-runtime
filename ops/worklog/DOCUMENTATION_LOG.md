@@ -455,7 +455,56 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   Added existing-output protection and marked A complete; Codex handles review,
   owner/execution chat owns lab execution and experiment decisions.
 
+### DOC-20261024-FOXGLOVE-DEMO: Recompute obstacle overlay in MCAP for offline viewing
+- Time / author: 2026-10-24 +07; Codex.
+- Branch / base: `claude2/20261024-foxglove-demo`; `origin/main` at session start.
+- Files: `tools/bag_tools/foxglove_demo.py`, `foxglove_demo_layout.json`,
+  `README.md`, `tests/test_foxglove_demo.py`, and worklog session/review/CURRENT.
+- Changes and reason: create six Foxglove-viewable outputs with the current
+  `AdvisoryCore` output stamped per aligned depth frame, retaining source color,
+  aligned depth, camera-info and static TF while skipping RealSense Metadata.
+- Evidence: exact run counts and advisory histograms are in
+  `ops/worklog/sessions/2026-10-24-foxglove-demo.md`; MCAPs are in
+  `foxglove-demo-out/`. The requested external archive path is outside this
+  workspace's write sandbox.
+- Validation: six MCAPs read back with all output schemas deserialized; detector
+  marker stamps/frame IDs match aligned depth; no Metadata topics; TF present.
+  `python -m pytest -q tools/bag_tools/tests/test_foxglove_demo.py`: 1 passed.
+- Limitations / review: Foxglove GUI import/render is unverified; current default
+  detector parameters are used. Review file:
+  `ops/worklog/reviews/2026-10-24-foxglove-demo.md`.
+
+### DOC-20261024-FOXGLOVE-FRAME: Ground-aligned Foxglove demo view
+- Time / author: 2026-10-24 +07; Codex.
+- Branch: `claude2/20261024-foxglove-demo`; local changes only, uncommitted.
+- Files: converter, Foxglove layout, bag-tools README, integration test, and
+  worklog session/review/CURRENT.
+- Changes and reason: publish per-depth ground-to-camera TF and height-bearing
+  point cloud, add a ground-frame obstacle cue, and configure a fixed ground
+  view so the Foxglove demo matches the detector's fitted-plane convention.
+- Evidence: six requested source bags were regenerated to `foxglove-demo-out/`.
+  Exact per-topic counts and advisory histograms are in
+  `ops/worklog/sessions/2026-10-24-foxglove-demo.md`.
+- Validation: requested Python ran the extended focused test: 1 passed. It
+  checks TF parent/child/stamp and the `x,y,z,height` point-cloud schema.
+- Limitations / review: GUI rendering and layout color-field behavior are
+  unverified; review is recorded in
+  `ops/worklog/reviews/2026-10-24-foxglove-demo.md`.
 - 2026-10-24 (Claude 2): `lab-day-20261026/CHECKLIST.md` — A1 15 Hz, ORB-SLAM3 RGB-D during A1, journalctl watcher. Note: `ops/worklog/sessions/2026-10-24-monday-checklist-fix.md`.
 
 ### DOC-20261025-TERRAIN-ADVISORY-PROPOSAL: Firmware-owner review proposal
 - Added `docs/proposals/TERRAIN_ADVISORY_FIRMWARE_PROPOSAL.md` for STM32H7 firmware-owner review. It describes the candidate receive-only interface, repository-backed obstacle/UART/bag evidence with MEASURED/CALCULATED/ASSUMED labels, safety and stale-data behavior, unresolved interface/clock decisions, F446 build-size reference, H7 bench plan, and an unfilled `Live LED tests 25 Oct` section. No hardware test or firmware integration is claimed. Session: `ops/worklog/sessions/2026-10-25-terrain-advisory-proposal.md`.
+### DOC-20261025-ADVISORY-HYSTERESIS: LED advisory flicker fixes
+- Time / author: 2026-10-25 +07; Codex.
+- Branch: `claude2/20261025-lab-fixes`; local changes only, uncommitted.
+- Files: `tools/link_bench/pi/advisory_link.py`, `tools/link_bench/tests/test_link_bench.py`, `tools/obstacle_decision/decide.py`, `tools/obstacle_decision/tests/test_obstacle_decision.py`, and worklog session/CURRENT.
+- Changes and reason: add per-run range hysteresis (0.10 m default) and height-class hysteresis (0.01 m default) to prevent LED advisory flicker at lab-observed range and height thresholds.
+- Validation: decision suite 13 passed; link-bench suite 11 passed, 1 skipped (QEMU and ARM toolchain unavailable); C LED test passed. Commands and host backend setup are recorded in `ops/worklog/sessions/2026-10-25-advisory-hysteresis.md`.
+- Limitations: host tests only; live LED behavior awaits owner/execution-chat validation.
+
+### DOC-20261025-LAB-FLICKER: offline overlays and replay comparison
+- Time / author: 2026-10-25 +07; Codex.
+- Branch: `claude2/20261025-lab-fixes`; local changes only, uncommitted.
+- Files: `tools/bag_tools/foxglove_demo.py`, `tools/bag_tools/mcap_recovery.py`, `tools/obstacle_decision/flicker_check.py`, `tools/obstacle_decision/range_filter.py`, and `ops/worklog/sessions/2026-10-25-lab-flicker.md`.
+- Changes: support MCAP rosbag directories and incomplete trailing MCAP capture recovery via a temporary copy; apply the live 1.30 m forward limit and 0.10 m range hysteresis; generate a reproducible old/new replay comparison against exact live frame stamps.
+- Results: five visualization bags and the flicker report are in `foxglove-out/` (9.0 GB total). Detailed run counts, transition timestamps, and the r3 recovery limitation are in the session log and report.

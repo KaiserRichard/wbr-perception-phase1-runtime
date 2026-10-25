@@ -26,6 +26,22 @@ def frozen(name):
 
 
 class LiveFrameHandler(unittest.TestCase):
+    def test_range_hysteresis_holds_obstacle_near_limit(self):
+        from tools.obstacle_decision.detect import Cluster, FrameResult
+        spec=importlib.util.spec_from_file_location('advisory_link_range',HERE/'pi/advisory_link.py')
+        al=importlib.util.module_from_spec(spec); spec.loader.exec_module(al)
+        state={}
+        def filtered(distance):
+            cluster=Cluster(distance,.1,.2,.1,20)
+            frame=FrameResult(True,False,0,.3,0.,0.,cluster,[cluster])
+            return al.in_range(frame,max_m=1.3,range_hysteresis=.1,state=state)
+        for distance in (1.28,1.32,1.29,1.32,1.28):
+            with self.subTest(distance=distance):
+                self.assertIsNotNone(filtered(distance).nearest)
+        self.assertIsNone(filtered(1.401).nearest)
+        self.assertIsNone(filtered(1.32).nearest)
+        self.assertIsNotNone(filtered(1.30).nearest)
+
     def test_fake_ros_image_flows_through_detector_and_fake_link(self):
         import importlib.util
         import numpy as np
