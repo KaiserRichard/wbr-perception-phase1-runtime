@@ -455,4 +455,39 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   Added existing-output protection and marked A complete; Codex handles review,
   owner/execution chat owns lab execution and experiment decisions.
 
+### DOC-20261024-FOXGLOVE-DEMO: Recompute obstacle overlay in MCAP for offline viewing
+- Time / author: 2026-10-24 +07; Codex.
+- Branch / base: `claude2/20261024-foxglove-demo`; `origin/main` at session start.
+- Files: `tools/bag_tools/foxglove_demo.py`, `foxglove_demo_layout.json`,
+  `README.md`, `tests/test_foxglove_demo.py`, and worklog session/review/CURRENT.
+- Changes and reason: create six Foxglove-viewable outputs with the current
+  `AdvisoryCore` output stamped per aligned depth frame, retaining source color,
+  aligned depth, camera-info and static TF while skipping RealSense Metadata.
+- Evidence: exact run counts and advisory histograms are in
+  `ops/worklog/sessions/2026-10-24-foxglove-demo.md`; MCAPs are in
+  `foxglove-demo-out/`. The requested external archive path is outside this
+  workspace's write sandbox.
+- Validation: six MCAPs read back with all output schemas deserialized; detector
+  marker stamps/frame IDs match aligned depth; no Metadata topics; TF present.
+  `python -m pytest -q tools/bag_tools/tests/test_foxglove_demo.py`: 1 passed.
+- Limitations / review: Foxglove GUI import/render is unverified; current default
+  detector parameters are used. Review file:
+  `ops/worklog/reviews/2026-10-24-foxglove-demo.md`.
+
+### DOC-20261024-FOXGLOVE-FRAME: Ground-aligned Foxglove demo view
+- Time / author: 2026-10-24 +07; Codex.
+- Branch: `claude2/20261024-foxglove-demo`; local changes only, uncommitted.
+- Files: converter, Foxglove layout, bag-tools README, integration test, and
+  worklog session/review/CURRENT.
+- Changes and reason: publish per-depth ground-to-camera TF and height-bearing
+  point cloud, add a ground-frame obstacle cue, and configure a fixed ground
+  view so the Foxglove demo matches the detector's fitted-plane convention.
+- Evidence: six requested source bags were regenerated to `foxglove-demo-out/`.
+  Exact per-topic counts and advisory histograms are in
+  `ops/worklog/sessions/2026-10-24-foxglove-demo.md`.
+- Validation: requested Python ran the extended focused test: 1 passed. It
+  checks TF parent/child/stamp and the `x,y,z,height` point-cloud schema.
+- Limitations / review: GUI rendering and layout color-field behavior are
+  unverified; review is recorded in
+  `ops/worklog/reviews/2026-10-24-foxglove-demo.md`.
 - 2026-10-24 (Claude 2): `lab-day-20261026/CHECKLIST.md` — A1 15 Hz, ORB-SLAM3 RGB-D during A1, journalctl watcher. Note: `ops/worklog/sessions/2026-10-24-monday-checklist-fix.md`.
