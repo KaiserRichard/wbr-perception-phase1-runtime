@@ -1,0 +1,5 @@
+/firmware/build/
+/firmware/*.elf
+/firmware/*.map
+/libbuild/
+/libbuild.log
