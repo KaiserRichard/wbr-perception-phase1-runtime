@@ -18,8 +18,10 @@ if [[ ! -d "$BAG_DIR" ]]; then
   exit 1
 fi
 
+set +u  # ROS setup scripts read unset variables
 source "$ROS_SETUP"
 source "$WS/install/setup.bash"
+set -u
 export PYTHONPATH="$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 
 pids=()
