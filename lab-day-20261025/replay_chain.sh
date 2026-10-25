@@ -33,7 +33,7 @@ stop_children() {
 trap stop_children EXIT INT TERM
 
 setsid ros2 run wbr_obstacle_node obstacle_node --ros-args \
-  -p algo_path:="$REPO_ROOT" -p near_m:=1.3 &
+  -p algo_path:="$REPO_ROOT" -p range_limit_m:="${RANGE_LIMIT_M:-1.3}" &
 pids+=("$!")
 setsid python3 "$REPO_ROOT/tools/link_bench/pi/topic_to_nucleo.py" &
 pids+=("$!")

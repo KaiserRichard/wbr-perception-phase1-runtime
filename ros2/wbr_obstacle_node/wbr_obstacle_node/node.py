@@ -23,6 +23,9 @@ class ObstacleNode(Node):
         self.declare_parameter('depth_topic', '/camera/camera/aligned_depth_to_color/image_raw')
         self.declare_parameter('info_topic', '/camera/camera/color/camera_info')
         self.declare_parameter('advisory_topic', '/terrain_advisory')
+        # Ignore obstacles whose nearest face is beyond this range (0 = off), e.g. the wall past a short table.
+        self.declare_parameter('range_limit_m', 0.0)
+        self.declare_parameter('range_hysteresis_m', 0.10)
         for name, value in vars(defaults).items():
             self.declare_parameter(name, value)
         params = CoreParams(**{name: self.get_parameter(name).value for name in vars(defaults)})
@@ -56,7 +59,10 @@ class ObstacleNode(Node):
             depth = depth_to_metres(image, msg.encoding)
             stamp_ns = msg.header.stamp.sec * 1_000_000_000 + msg.header.stamp.nanosec
             frame_id = msg.header.frame_id
-            out = self.core.process(depth, self.K, frame_stamp_ns=stamp_ns, frame_id=frame_id)
+            limit = float(self.get_parameter('range_limit_m').value)
+            out = self.core.process(depth, self.K, frame_stamp_ns=stamp_ns, frame_id=frame_id,
+                                    range_limit_m=limit if limit > 0 else None,
+                                    range_hysteresis=float(self.get_parameter('range_hysteresis_m').value))
             text = String(); text.data = json.dumps(out['advisory'], separators=(',', ':'), allow_nan=False)
             terrain_msg = Float64MultiArray()
             terrain_msg.data = pack_terrain_advisory(
