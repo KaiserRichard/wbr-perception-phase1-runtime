@@ -126,6 +126,18 @@ def bag_frames(path, stride):
     finally: reader.close()
 
 
+ADVISORY_RANGE_M=3.0  # set from --max-forward
+
+
+def in_range(frame, max_m=None):
+    """Keep only obstacles whose nearest face is within range (whole clusters are kept, so a
+    box straddling the limit keeps its top face and its height is not clipped)."""
+    import dataclasses
+    max_m=ADVISORY_RANGE_M if max_m is None else max_m
+    inside=[c for c in frame.clusters if c.distance_m<=max_m]
+    return dataclasses.replace(frame, clusters=inside, nearest=min(inside,key=lambda c:c.distance_m) if inside else None)
+
+
 def handle_ros_frame(msg, K, runner, plane_state, decision_state, params=None, decision_params=None,
                      receipt_pi_ns=None):
     """Run a ROS Image without importing rclpy, enabling host-side fake-message tests."""
@@ -134,6 +146,7 @@ def handle_ros_frame(msg, K, runner, plane_state, decision_state, params=None, d
     from tools.obstacle_decision.decide import DecisionParams, update
     before=time.monotonic_ns()
     frame,plane_state=process_frame(decode_depth(msg),K,params or Params(),plane_state)
+    frame=in_range(frame)
     decision,decision_state=update(frame,decision_state,decision_params or DecisionParams())
     after=time.monotonic_ns(); nearest=frame.nearest
     values=dict(advisory=int(decision.advisory),confidence=float(decision.confidence),
@@ -180,7 +193,7 @@ def run_ros(args):
             super().__init__('advisory_link'); self.lock=threading.Condition()
             self.pending=None; self.stopping=False; self.K=None; self.dropped=0; self.frames=0
             self.detector_times=[]; self.plane_state={}; self.decision_state={}
-            self.params=Params(max_forward=args.max_forward); self.dp=DecisionParams()
+            self.params=Params(); self.dp=DecisionParams()
             self.create_subscription(CameraInfo,'/camera/camera/color/camera_info',self.info_cb,sensor_qos)
             self.create_subscription(Image,'/camera/camera/aligned_depth_to_color/image_raw',self.image_cb,sensor_qos)
             self.worker=threading.Thread(target=self.work,name='advisory-detector',daemon=True); self.worker.start()
@@ -223,6 +236,7 @@ def run_ros(args):
 
 
 def run(args):
+    global ADVISORY_RANGE_M; ADVISORY_RANGE_M=args.max_forward
     if args.ros:
         return run_ros(args)
     link=lb.Link(args.port,args.baud); runner=Runner(link); link.marker=lb.GpioMarker(args.marker_gpio) if args.marker_gpio is not None else None
@@ -241,10 +255,10 @@ def run(args):
             from tools.obstacle_decision.replay_bag import _stamp_ns
             from tools.obstacle_decision.detect import Params, process_frame
             from tools.obstacle_decision.decide import DecisionParams, update
-            ps={}; ds={}; params=Params(max_forward=args.max_forward); dp=DecisionParams()
+            ps={}; ds={}; params=Params(); dp=DecisionParams()
             for msg,K,stamp in bag_frames(args.bag,args.stride):
                 frame_stamp=_stamp_ns(msg); before=time.monotonic_ns()
-                frame,ps=process_frame(__import__('tools.obstacle_decision.replay_bag',fromlist=['decode_depth']).decode_depth(msg),K,params,ps)
+                frame,ps=process_frame(__import__('tools.obstacle_decision.replay_bag',fromlist=['decode_depth']).decode_depth(msg),K,params,ps); frame=in_range(frame)
                 decision,ds=update(frame,ds,dp); after=time.monotonic_ns(); detector_times.append(after-before)
                 nearest=frame.nearest
                 values=dict(advisory=int(decision.advisory),confidence=float(decision.confidence),
