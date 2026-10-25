@@ -32,6 +32,40 @@ class TestObstacleDecision(unittest.TestCase):
             f=SimpleNamespace(nearest=SimpleNamespace(distance_m=1.,height_m=.05,width_m=.3) if exists else None,plane_valid=True)
             out,state=update(f,state,params)
         self.assertNotEqual(out.advisory,Advisory.JUMP_CANDIDATE)
+    def test_height_hysteresis_around_jump_max(self):
+        from types import SimpleNamespace
+        params=DecisionParams(confirm_n=1,confirm_m=1,ema_alpha=1.)
+        state={}; outputs=[]
+        for height in (.115,.125,.115,.125,.115,.125):
+            frame=SimpleNamespace(nearest=SimpleNamespace(distance_m=1.,height_m=height,width_m=.3),plane_valid=True)
+            decision,state=update(frame,state,params); outputs.append(decision.advisory)
+        self.assertEqual(outputs,[Advisory.JUMP_CANDIDATE]*len(outputs))
+        # A confirmed jump changes class above 12 cm + 1 cm, then remains STOP
+        # while readings oscillate inside the hysteresis band.
+        for height,expected in ((.131,Advisory.STOP_CANDIDATE),(.125,Advisory.STOP_CANDIDATE),
+                                (.109,Advisory.JUMP_CANDIDATE),(.115,Advisory.JUMP_CANDIDATE)):
+            frame=SimpleNamespace(nearest=SimpleNamespace(distance_m=1.,height_m=height,width_m=.3),plane_valid=True)
+            decision,state=update(frame,state,params)
+            self.assertEqual(decision.advisory,expected)
+    def test_height_hysteresis_at_jump_min(self):
+        from types import SimpleNamespace
+        params=DecisionParams(confirm_n=1,confirm_m=1,ema_alpha=1.)
+        state={}; outputs=[]
+        for height in (.025,.035,.025,.035,.025):
+            frame=SimpleNamespace(nearest=SimpleNamespace(distance_m=1.,height_m=height,width_m=.3),plane_valid=True)
+            decision,state=update(frame,state,params); outputs.append(decision.advisory)
+        # UNCERTAIN also means 'not confirmed yet', so the first confirmed frame decides without a margin;
+        # after that the 1 cm hysteresis must hold JUMP (no flicker back to UNCERTAIN).
+        self.assertEqual(outputs,[Advisory.UNCERTAIN]+[Advisory.JUMP_CANDIDATE]*(len(outputs)-1))
+        frame=SimpleNamespace(nearest=SimpleNamespace(distance_m=1.,height_m=.045,width_m=.3),plane_valid=True)
+        decision,state=update(frame,state,params)
+        self.assertEqual(decision.advisory,Advisory.JUMP_CANDIDATE)
+        frame=SimpleNamespace(nearest=SimpleNamespace(distance_m=1.,height_m=.025,width_m=.3),plane_valid=True)
+        decision,state=update(frame,state,params)
+        self.assertEqual(decision.advisory,Advisory.JUMP_CANDIDATE)
+        frame=SimpleNamespace(nearest=SimpleNamespace(distance_m=1.,height_m=.019,width_m=.3),plane_valid=True)
+        decision,state=update(frame,state,params)
+        self.assertEqual(decision.advisory,Advisory.UNCERTAIN)
     def test_codec_round_trip(self):
         wire=encode(123,7,pi_monotonic_ns=1000,frame_stamp_ns=900,advisory=1,confidence=.8,
             distance_m=1.2,height_m=.05,width_m=.3,plane_valid=True,plane_pitch_rad=.02,plane_height_m=.30)

@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
 from tools.link_proto.py import link_proto as lp
 from tools.obstacle_decision import advisory_codec
+from tools.obstacle_decision.range_filter import in_range as _filter_in_range
 
 spec = importlib.util.spec_from_file_location('link_bench', Path(__file__).with_name('link_bench.py'))
 lb = importlib.util.module_from_spec(spec); spec.loader.exec_module(lb)
@@ -126,14 +127,26 @@ def bag_frames(path, stride):
     finally: reader.close()
 
 
+ADVISORY_RANGE_M=3.0  # set from --max-forward
+
+
+def in_range(frame, max_m=None, range_hysteresis=0.10, state=None):
+    """Keep only obstacles whose nearest face is within range (whole clusters are kept, so a
+    box straddling the limit keeps its top face and its height is not clipped). A previously
+    accepted obstacle remains accepted through the range hysteresis band."""
+    max_m=ADVISORY_RANGE_M if max_m is None else max_m
+    return _filter_in_range(frame, max_m, range_hysteresis, state)[0]
+
+
 def handle_ros_frame(msg, K, runner, plane_state, decision_state, params=None, decision_params=None,
-                     receipt_pi_ns=None):
+                     receipt_pi_ns=None, range_state=None, max_forward=None, range_hysteresis=0.10):
     """Run a ROS Image without importing rclpy, enabling host-side fake-message tests."""
     from tools.obstacle_decision.replay_bag import _stamp_ns, decode_depth
     from tools.obstacle_decision.detect import Params, process_frame
     from tools.obstacle_decision.decide import DecisionParams, update
     before=time.monotonic_ns()
     frame,plane_state=process_frame(decode_depth(msg),K,params or Params(),plane_state)
+    frame=in_range(frame,max_forward,range_hysteresis,range_state)
     decision,decision_state=update(frame,decision_state,decision_params or DecisionParams())
     after=time.monotonic_ns(); nearest=frame.nearest
     values=dict(advisory=int(decision.advisory),confidence=float(decision.confidence),
@@ -179,7 +192,7 @@ def run_ros(args):
         def __init__(self):
             super().__init__('advisory_link'); self.lock=threading.Condition()
             self.pending=None; self.stopping=False; self.K=None; self.dropped=0; self.frames=0
-            self.detector_times=[]; self.plane_state={}; self.decision_state={}
+            self.detector_times=[]; self.plane_state={}; self.decision_state={}; self.range_state={}
             self.params=Params(); self.dp=DecisionParams()
             self.create_subscription(CameraInfo,'/camera/camera/color/camera_info',self.info_cb,sensor_qos)
             self.create_subscription(Image,'/camera/camera/aligned_depth_to_color/image_raw',self.image_cb,sensor_qos)
@@ -204,7 +217,7 @@ def run_ros(args):
                 try:
                     self.plane_state,self.decision_state,elapsed=handle_ros_frame(
                         item[0],item[1],runner,self.plane_state,self.decision_state,
-                        self.params,self.dp,item[2])
+                        self.params,self.dp,item[2],self.range_state,args.max_forward,args.range_hysteresis)
                     self.detector_times.append(elapsed); self.frames+=1
                 except Exception as exc:
                     self.dropped+=1; self.get_logger().error(f'dropped depth frame: {exc}')
@@ -223,6 +236,7 @@ def run_ros(args):
 
 
 def run(args):
+    global ADVISORY_RANGE_M; ADVISORY_RANGE_M=args.max_forward
     if args.ros:
         return run_ros(args)
     link=lb.Link(args.port,args.baud); runner=Runner(link); link.marker=lb.GpioMarker(args.marker_gpio) if args.marker_gpio is not None else None
@@ -241,10 +255,10 @@ def run(args):
             from tools.obstacle_decision.replay_bag import _stamp_ns
             from tools.obstacle_decision.detect import Params, process_frame
             from tools.obstacle_decision.decide import DecisionParams, update
-            ps={}; ds={}; params=Params(); dp=DecisionParams()
+            ps={}; ds={}; range_state={}; params=Params(); dp=DecisionParams()
             for msg,K,stamp in bag_frames(args.bag,args.stride):
                 frame_stamp=_stamp_ns(msg); before=time.monotonic_ns()
-                frame,ps=process_frame(__import__('tools.obstacle_decision.replay_bag',fromlist=['decode_depth']).decode_depth(msg),K,params,ps)
+                frame,ps=process_frame(__import__('tools.obstacle_decision.replay_bag',fromlist=['decode_depth']).decode_depth(msg),K,params,ps); frame=in_range(frame,args.max_forward,args.range_hysteresis,range_state)
                 decision,ds=update(frame,ds,dp); after=time.monotonic_ns(); detector_times.append(after-before)
                 nearest=frame.nearest
                 values=dict(advisory=int(decision.advisory),confidence=float(decision.confidence),
@@ -272,8 +286,8 @@ def run(args):
 def main():
     p=argparse.ArgumentParser(description=__doc__); p.add_argument('--port',default='/dev/ttyAMA0'); p.add_argument('--baud',type=int,default=460800); p.add_argument('--out',required=True); p.add_argument('--marker-gpio',type=int); p.add_argument('--faults',action='store_true')
     mode=p.add_mutually_exclusive_group(required=True); mode.add_argument('--synthetic',nargs=2,type=float,metavar=('RATE_HZ','DURATION_S')); mode.add_argument('--bag'); mode.add_argument('--ros',action='store_true')
-    p.add_argument('--rate',type=float,default=1.0); p.add_argument('--stride',type=int,default=1); p.add_argument('--duration',type=float,default=60.0); args=p.parse_args()
-    if args.stride<1 or args.rate<=0 or args.duration<=0 or (args.synthetic and (args.synthetic[0]<=0 or args.synthetic[1]<=0)): p.error('rate, duration, and stride must be positive')
+    p.add_argument('--rate',type=float,default=1.0); p.add_argument('--stride',type=int,default=1); p.add_argument('--duration',type=float,default=60.0); p.add_argument('--max-forward',type=float,default=3.0,help='ignore obstacles farther than this (m), e.g. the wall past a short table'); p.add_argument('--range-hysteresis',type=float,default=.10,help='keep an accepted obstacle until it exceeds max-forward by this many metres'); args=p.parse_args()
+    if args.stride<1 or args.rate<=0 or args.duration<=0 or args.max_forward<0 or args.range_hysteresis<0 or (args.synthetic and (args.synthetic[0]<=0 or args.synthetic[1]<=0)): p.error('rate, duration, stride, and range settings must be non-negative/positive')
     run(args)
 
 if __name__=='__main__': main()

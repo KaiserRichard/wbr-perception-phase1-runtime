@@ -15,6 +15,7 @@ class DecisionParams:
     ema_alpha: float=.4    # ASSUMED
     near_m: float=1.5      # ASSUMED
     hysteresis_frames: int=2 # ASSUMED
+    height_hysteresis_m: float=.01 # ASSUMED, metres
 
 @dataclass
 class Decision:
@@ -40,7 +41,19 @@ def update(frame, state=None, params=None, forward_speed_m_s=None):
     elif not frame.plane_valid:
         target=Advisory.STOP_CANDIDATE if (math.isfinite(dist) and dist<=p.near_m) else Advisory.UNCERTAIN
     elif confirmed:
-        target=(Advisory.STOP_CANDIDATE if height>p.jump_max_h else Advisory.JUMP_CANDIDATE if p.jump_min_h<=height<=p.jump_max_h else Advisory.UNCERTAIN)
+        prev=s.get('advisory',Advisory.NONE)
+        h=p.height_hysteresis_m
+        if not math.isfinite(height):
+            target=Advisory.UNCERTAIN
+        elif prev==Advisory.JUMP_CANDIDATE:
+            target=(Advisory.STOP_CANDIDATE if height>p.jump_max_h+h else
+                    Advisory.UNCERTAIN if height<p.jump_min_h-h else Advisory.JUMP_CANDIDATE)
+        elif prev==Advisory.STOP_CANDIDATE:
+            target=(Advisory.JUMP_CANDIDATE if height<p.jump_max_h-h and height>=p.jump_min_h+h else
+                    Advisory.UNCERTAIN if height<p.jump_min_h+h else Advisory.STOP_CANDIDATE)
+        else:
+            # From NONE or UNCERTAIN (which also means "not confirmed yet") decide without a margin.
+            target=(Advisory.STOP_CANDIDATE if height>p.jump_max_h else Advisory.JUMP_CANDIDATE if p.jump_min_h<=height<=p.jump_max_h else Advisory.UNCERTAIN)
     else: target=Advisory.UNCERTAIN if candidate else Advisory.NONE
     prev=s.get('advisory',Advisory.NONE); streak=s.get('clear_streak',0)
     if target==Advisory.NONE and prev!=Advisory.NONE:
