@@ -190,4 +190,5 @@ def main(args=None):
     try:
         rclpy.spin(node)
     finally:
-        node.destroy_node(); rclpy.shutdown()
+        node.destroy_node()
+        if rclpy.ok(): rclpy.shutdown()
