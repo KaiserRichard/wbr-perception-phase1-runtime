@@ -346,3 +346,7 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Incorporate saved Scenario A evidence into the current report: 362 paired
   frames and passing first-20-second map replay. Keep GUI/continuous-live
   tracking/moving-capture claims separate from these observed results.
+
+### D-20261025-AGV-F446-IMU-SCOPE: Omit optional MPU6050 in first AGV base
+- Keep this first velocity-control port focused on motor command, feedback and safety. Do not publish `/imu/data` until a separate I2C1 driver is implemented and verified; the README identifies PB6/PB7 at 400 kHz as the intended wiring.
+- Require a library rebuild using `tools/agv_f446/colcon.meta` before ROS runtime use because the currently linked archive allows fewer entities than this node creates.

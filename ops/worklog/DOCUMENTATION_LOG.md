@@ -517,3 +517,7 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Files: `tools/bag_tools/foxglove_demo.py`, `tools/bag_tools/mcap_recovery.py`, `tools/obstacle_decision/flicker_check.py`, `tools/obstacle_decision/range_filter.py`, and `ops/worklog/sessions/2026-10-25-lab-flicker.md`.
 - Changes: support MCAP rosbag directories and incomplete trailing MCAP capture recovery via a temporary copy; apply the live 1.30 m forward limit and 0.10 m range hysteresis; generate a reproducible old/new replay comparison against exact live frame stamps.
 - Results: five visualization bags and the flicker report are in `foxglove-out/` (9.0 GB total). Detailed run counts, transition timestamps, and the r3 recovery limitation are in the session log and report.
+
+### DOC-20261025-AGV-F446: Nucleo-F446RE velocity base port
+- Added `tools/agv_f446/README.md` with the velocity-only ROS contract, CAN and loopback wiring, library rebuild, build/flash commands, Pi serial agent and home test plan. Explicitly records that MPU6050 `/imu/data` is omitted and lists hardware items still unverified.
+- Added the AGV firmware source and library configuration documentation, including the existing archive entity-limit mismatch. Session results: `ops/worklog/sessions/2026-10-25-agv-f446.md`.
