@@ -492,6 +492,8 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   `ops/worklog/reviews/2026-10-24-foxglove-demo.md`.
 - 2026-10-24 (Claude 2): `lab-day-20261026/CHECKLIST.md` — A1 15 Hz, ORB-SLAM3 RGB-D during A1, journalctl watcher. Note: `ops/worklog/sessions/2026-10-24-monday-checklist-fix.md`.
 
+### DOC-20261025-TERRAIN-ADVISORY-PROPOSAL: Firmware-owner review proposal
+- Added `docs/proposals/TERRAIN_ADVISORY_FIRMWARE_PROPOSAL.md` for STM32H7 firmware-owner review. It describes the candidate receive-only interface, repository-backed obstacle/UART/bag evidence with MEASURED/CALCULATED/ASSUMED labels, safety and stale-data behavior, unresolved interface/clock decisions, F446 build-size reference, H7 bench plan, and an unfilled `Live LED tests 25 Oct` section. No hardware test or firmware integration is claimed. Session: `ops/worklog/sessions/2026-10-25-terrain-advisory-proposal.md`.
 ### DOC-20261025-ADVISORY-HYSTERESIS: LED advisory flicker fixes
 - Time / author: 2026-10-25 +07; Codex.
 - Branch: `claude2/20261025-lab-fixes`; local changes only, uncommitted.
