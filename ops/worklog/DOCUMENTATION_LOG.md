@@ -491,3 +491,11 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   unverified; review is recorded in
   `ops/worklog/reviews/2026-10-24-foxglove-demo.md`.
 - 2026-10-24 (Claude 2): `lab-day-20261026/CHECKLIST.md` — A1 15 Hz, ORB-SLAM3 RGB-D during A1, journalctl watcher. Note: `ops/worklog/sessions/2026-10-24-monday-checklist-fix.md`.
+
+### DOC-20261025-ADVISORY-HYSTERESIS: LED advisory flicker fixes
+- Time / author: 2026-10-25 +07; Codex.
+- Branch: `claude2/20261025-lab-fixes`; local changes only, uncommitted.
+- Files: `tools/link_bench/pi/advisory_link.py`, `tools/link_bench/tests/test_link_bench.py`, `tools/obstacle_decision/decide.py`, `tools/obstacle_decision/tests/test_obstacle_decision.py`, and worklog session/CURRENT.
+- Changes and reason: add per-run range hysteresis (0.10 m default) and height-class hysteresis (0.01 m default) to prevent LED advisory flicker at lab-observed range and height thresholds.
+- Validation: decision suite 13 passed; link-bench suite 11 passed, 1 skipped (QEMU and ARM toolchain unavailable); C LED test passed. Commands and host backend setup are recorded in `ops/worklog/sessions/2026-10-25-advisory-hysteresis.md`.
+- Limitations: host tests only; live LED behavior awaits owner/execution-chat validation.
