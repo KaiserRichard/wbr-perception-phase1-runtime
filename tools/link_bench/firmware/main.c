@@ -174,6 +174,8 @@ int main(void) {
   GPIOA_BSRR = (bench_linked(&u1.bench) || bench_linked(&u2.bench)) ? (1u << 5) : (1u << 21);
   led_mask = bench_led_mask(&u1.bench);
   if (!led_mask && ((now / 250000u) & 1u)) led_mask = 1u << 2;
+  /* UNCERTAIN also blinks yellow at 4 Hz, for rigs without a blue LED on D9. */
+  if (led_mask == (1u << 3) && ((now / 125000u) & 1u)) led_mask |= 1u << 1;
   advisory_leds(led_mask);
  }
 }

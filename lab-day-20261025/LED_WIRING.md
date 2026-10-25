@@ -18,7 +18,7 @@ the F446 pin limit is 25 mA.
 | Green | D4 | PB5 | NONE: path clear |
 | Yellow | D5 | PB4 | JUMP_CANDIDATE |
 | Red | D6 | PB10 | STOP_CANDIDATE |
-| Blue | D9 | PC7 | UNCERTAIN |
+| Blue (any LED, optional) | D9 | PC7 | UNCERTAIN (also yellow blinking 4 Hz) |
 | (rail) | GND | GND | breadboard ground rail |
 
 All off with red blinking 2 Hz = no link or advisory older than 300 ms.
