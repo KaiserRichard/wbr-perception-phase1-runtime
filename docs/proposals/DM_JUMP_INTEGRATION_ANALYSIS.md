@@ -57,3 +57,11 @@ Keep the first integration telemetry-only. If later approved, the local FSM coul
 5. Observe ISR duration, decoder worst-case time, task stack watermark, queue/ring overflow, and balance-task timing under sustained traffic. Confirm all advisory values—including `JUMP_CANDIDATE`—remain telemetry only and there are no FDCAN motor commands caused by the input. Keep motors unpowered throughout.
 
 Evidence basis: proposal and bench results at `/Users/quockaiser/Desktop/Research/wbr-wt-c2-demo/docs/proposals/TERRAIN_ADVISORY_FIRMWARE_PROPOSAL.md:64-125, 149-161`; candidate codec specification at `/Users/quockaiser/Desktop/Research/wbr-wt-c2-demo/tools/link_proto/SPEC.md:19-47, 140-159`. Both label the protocol as proposed and require firmware-owner review.
+
+## 7. Update 25 Oct: the Pi link will be USB, not a UART
+
+The owner reports the Pi ↔ robot board link is planned over USB. Checked in this firmware (read-only):
+- No USB stack is configured: the IOC peripheral list (`CtrlBoard-H7_IMU.ioc:105-118`) has no USB_OTG/USB_DEVICE entry, and no `usbd_cdc`/`CDC_Transmit` code exists. `RCC.USBFreq_Value=240000000` (`CtrlBoard-H7_IMU.ioc:389`) is not a valid 48 MHz USB clock, so a USB clock source (HSI48 or PLL3) must be configured.
+- If the board's USB connector goes to the MCU's own USB pins (PA11/PA12 for USB_OTG_HS with the internal FS PHY on the H723, board routing UNKNOWN), the owner adds a USB CDC device in CubeMX. The TerrainAdvisory framing is a byte stream and works unchanged over CDC; the Pi side opens `/dev/ttyACM*` (the 25 Oct self-test already ran over a USB CDC port on the Nucleo's ST-Link, 9420 echoes).
+- The parser design in section 3 is unchanged except the input: copy CDC receive callbacks into the bounded ring (the CDC receive callback runs in USB interrupt context: copy only, decode in the low-priority task). USB interrupt priority must respect the FreeRTOS syscall limit like the UART IRQ.
+- If the connector instead goes through a USB-to-UART bridge chip, the MCU side is a UART (possibly the already-used USART1); then section 2 applies. Confirm on the board before choosing.
