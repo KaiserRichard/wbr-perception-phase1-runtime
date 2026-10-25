@@ -521,3 +521,9 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 ### DOC-20261025-AGV-F446: Nucleo-F446RE velocity base port
 - Added `tools/agv_f446/README.md` with the velocity-only ROS contract, CAN and loopback wiring, library rebuild, build/flash commands, Pi serial agent and home test plan. Explicitly records that MPU6050 `/imu/data` is omitted and lists hardware items still unverified.
 - Added the AGV firmware source and library configuration documentation, including the existing archive entity-limit mismatch. Session results: `ops/worklog/sessions/2026-10-25-agv-f446.md`.
+### DOC-20261025-F446-HOME-TEST: F446 AGV home acceptance tooling and guide
+- Time / author: 2026-10-25 +07; Codex.
+- Branch: `claude2/20261025-agv-hometest`; local, uncommitted.
+- Files: `tools/agv_f446_test/agv_home_test.py`, `tools/agv_f446_test/tests/`, `tools/agv_f446_test/HOME_TEST_GUIDE.md`, worklog session/CURRENT.
+- Changes: ROS acceptance sequence with CSV/JSON evidence; pure kinematic/status checks and standard-library tests; home wiring, flash, agent and troubleshooting guide. F446 pin assignment compatibility is explicitly delegated to firmware README review.
+- Validation: `python3 -m unittest -v` (10 passed) and `python3 -m py_compile agv_home_test.py tests/test_checks.py` passed. No ROS hardware run or firmware modification.
