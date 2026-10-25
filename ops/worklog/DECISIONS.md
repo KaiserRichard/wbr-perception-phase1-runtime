@@ -3,6 +3,14 @@
 Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STATE.md`,
 `docs/NEXT_GATE.md` and merged PR descriptions.
 
+### D-20261025-TERRAIN-ADVISORY-BOUNDARY: Keep obstacle output advisory-only
+- The Pi sends a Best Effort, depth-1 fixed array; the STM32 validates it and
+  expires it after 300 ms using only its local tick. Stale or initially absent
+  data resolves to `UNCERTAIN`.
+- The topic cannot command motion. Balance and jump remain STM32-owned. A future
+  jump gate would require an operator request, fresh `JUMP_CANDIDATE`, and a
+  distance window selected by the owner.
+
 ### D-20261019-1: Single acquisition profile n3_640x480_30
 - Decided by: owner
 - Decision: IR1+IR2 Y8 640x480 at 30 Hz, gyro 200 Hz, accel 100 Hz, emitter OFF for N2, N3 and calibration.

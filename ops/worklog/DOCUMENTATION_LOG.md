@@ -4,6 +4,15 @@ Append-only audit trail. Add one entry per documentation change set using the
 format in README.md. Entries describe evidence and review state; they are not
 approval or proof of unrun tests. Never rewrite finalized earlier entries.
 
+### DOC-20261025-TERRAIN-ADVISORY-TOPIC: Publish obstacle advisory to STM32
+- Added the fixed eight-value `/terrain_advisory` Float64MultiArray interface,
+  Best Effort depth-1 publisher and `advisory_topic` parameter. Kept existing
+  obstacle topics and introduced a ROS-independent packing function/test.
+- Documented field order, Pi-vs-MCU clock boundary, 300 ms receiver freshness,
+  retained STM32 balance/jump authority and a non-compiled rclc example.
+- Focused package suite: 7 passed. No ROS runtime, firmware build or hardware
+  verification. Session: `ops/worklog/sessions/2026-10-25-terrain-advisory-topic.md`.
+
 ### DOC-20261020-1: Simulation inventory, DM-jump audit and documentation logging rule
 - Time / author: 2026-10-20 10:56 +07; Codex. This entry also records the earlier same-session edits made before the owner required a dedicated documentation log.
 - Branch / base: chatgpt/20261020-simulation-control; base 6929fb4. Local working changes; no resulting commit or PR yet.

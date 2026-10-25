@@ -8,7 +8,8 @@ HERE = pathlib.Path(__file__).resolve()
 sys.path.insert(0, str(HERE.parents[1]))
 sys.path.insert(0, str(HERE.parents[3]))
 from wbr_obstacle_node.core import (AdvisoryCore, CoreParams, FrameRateLimiter,
-                                    depth_to_metres, marker_specs)
+                                    depth_to_metres, marker_specs,
+                                    pack_terrain_advisory)
 
 ROOT = HERE.parents[3]
 
@@ -36,6 +37,23 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(len(specs[0]['points']), 6)
         self.assertEqual(len(specs[3]['points']), 4)
         self.assertAlmostEqual(specs[1]['scale'][1], .05)
+
+    def test_terrain_advisory_array_packing(self):
+        advisory = {'advisory_code': 1, 'distance_m': 1.25, 'height_m': .05,
+                    'width_m': .30, 'confidence': .8, 'plane_valid': True}
+        self.assertEqual(pack_terrain_advisory(advisory, 42, .012),
+                         [1.0, 1.25, .05, .30, .8, 1.0, 42.0, .012])
+
+    def test_terrain_advisory_missing_values_are_finite_zeros(self):
+        advisory = {'advisory_code': 0, 'distance_m': None, 'height_m': None,
+                    'width_m': None, 'confidence': float('nan'), 'plane_valid': False}
+        packed = pack_terrain_advisory(advisory, 0, float('inf'))
+        self.assertEqual(packed, [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+        self.assertTrue(all(np.isfinite(packed)))
+
+    def test_terrain_advisory_rejects_unknown_code(self):
+        with self.assertRaises(ValueError):
+            pack_terrain_advisory({'advisory_code': 4}, 1, 0.0)
 
     def test_synthetic_five_cm_box(self):
         from tools.ground_plane import synth

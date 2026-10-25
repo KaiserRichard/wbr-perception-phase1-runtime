@@ -5,12 +5,14 @@ import time
 import numpy as np
 import rclpy
 from rclpy.node import Node
+from rclpy.qos import QoSProfile, ReliabilityPolicy
 from sensor_msgs.msg import CameraInfo, Image, PointCloud2, PointField
-from std_msgs.msg import String, UInt8MultiArray
+from std_msgs.msg import Float64MultiArray, String, UInt8MultiArray
 from visualization_msgs.msg import Marker, MarkerArray
 from sensor_msgs_py import point_cloud2
 
-from .core import AdvisoryCore, CoreParams, FrameRateLimiter, depth_to_metres
+from .core import (AdvisoryCore, CoreParams, FrameRateLimiter,
+                   depth_to_metres, pack_terrain_advisory)
 
 
 class ObstacleNode(Node):
@@ -20,6 +22,10 @@ class ObstacleNode(Node):
         self.declare_parameter('algo_path', '')
         self.declare_parameter('depth_topic', '/camera/camera/aligned_depth_to_color/image_raw')
         self.declare_parameter('info_topic', '/camera/camera/color/camera_info')
+        self.declare_parameter('advisory_topic', '/terrain_advisory')
+        # Ignore obstacles whose nearest face is beyond this range (0 = off), e.g. the wall past a short table.
+        self.declare_parameter('range_limit_m', 0.0)
+        self.declare_parameter('range_hysteresis_m', 0.10)
         for name, value in vars(defaults).items():
             self.declare_parameter(name, value)
         params = CoreParams(**{name: self.get_parameter(name).value for name in vars(defaults)})
@@ -29,7 +35,10 @@ class ObstacleNode(Node):
         self.core = AdvisoryCore(algo_path, params)
         self.limiter = FrameRateLimiter(params.max_rate_hz)
         self.K = None
+        advisory_qos = QoSProfile(depth=1, reliability=ReliabilityPolicy.BEST_EFFORT)
         self.advisory_pub = self.create_publisher(String, '~/advisory', 10)
+        self.terrain_advisory_pub = self.create_publisher(
+            Float64MultiArray, self.get_parameter('advisory_topic').value, advisory_qos)
         self.bytes_pub = self.create_publisher(UInt8MultiArray, '~/advisory_bytes', 10)
         self.markers_pub = self.create_publisher(MarkerArray, '~/markers', 10)
         self.points_pub = self.create_publisher(PointCloud2, '~/obstacle_points', 2)
@@ -41,6 +50,7 @@ class ObstacleNode(Node):
         self.K = np.asarray(msg.k, dtype=np.float64).reshape(3, 3)
 
     def depth_cb(self, msg):
+        receipt_monotonic = time.monotonic()
         if not self.limiter.accept(time.monotonic()) or self.K is None:
             return
         try:
@@ -49,8 +59,15 @@ class ObstacleNode(Node):
             depth = depth_to_metres(image, msg.encoding)
             stamp_ns = msg.header.stamp.sec * 1_000_000_000 + msg.header.stamp.nanosec
             frame_id = msg.header.frame_id
-            out = self.core.process(depth, self.K, frame_stamp_ns=stamp_ns, frame_id=frame_id)
+            limit = float(self.get_parameter('range_limit_m').value)
+            out = self.core.process(depth, self.K, frame_stamp_ns=stamp_ns, frame_id=frame_id,
+                                    range_limit_m=limit if limit > 0 else None,
+                                    range_hysteresis=float(self.get_parameter('range_hysteresis_m').value))
             text = String(); text.data = json.dumps(out['advisory'], separators=(',', ':'), allow_nan=False)
+            terrain_msg = Float64MultiArray()
+            terrain_msg.data = pack_terrain_advisory(
+                out['advisory'], out['sequence'], time.monotonic() - receipt_monotonic)
+            self.terrain_advisory_pub.publish(terrain_msg)
             self.advisory_pub.publish(text)
             byte_msg = UInt8MultiArray(); byte_msg.data = list(out['advisory_bytes']); self.bytes_pub.publish(byte_msg)
             self.markers_pub.publish(self.to_markers(out['markers'], msg.header))
