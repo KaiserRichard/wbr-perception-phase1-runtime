@@ -288,14 +288,20 @@ def _make_ros_messages(ts, cloud, poses, stamp):
     return pc, path, tfmsg
 
 
-def _layout(path):
-    doc={"configById":{"3D!dense-map":{"topics":{"/dense_map":{"visible":True,"colorField":"intensity","pointSize":2}},
-        "cameraState":{"distance":3,"perspective":True,"phi":60,"target":[0,0,0],
-        "targetOffset":[0,0,0],"targetOrientation":[0,0,0,1],"thetaOffset":0,"fovy":45,"near":0.01,"far":100},
-        "followMode":"follow-none","fixedFrame":"map","scene":{},"transforms":{"showLabel":False,"axisScale":0.1},
-        "imageMode":{},"synchronize":False,"foxglovePanelTitle":"Dense stereo map"},
+def _layout(path, growing=False):
+    cloud_topic = "/dense_map_growing" if growing else "/dense_map"
+    image_panel = {"topicPath": LEFT_IMAGE, "imageMode": "fit", "foxglovePanelTitle": "Infrared left"}
+    cloud_panel = {"topics": {cloud_topic: {"visible": True, "colorField": "intensity",
+        "colorMode": "colormap", "colorMap": "turbo", "pointSize": 2},
+        "/orb/path": {"visible": True}},
+        "cameraState": {"distance": 3, "perspective": True, "phi": 60, "target": [0,0,0],
+        "targetOffset": [0,0,0], "targetOrientation": [0,0,0,1], "thetaOffset": 0, "fovy": 45,
+        "near": 0.01, "far": 100}, "followMode": "follow-none", "fixedFrame": "map", "scene": {},
+        "transforms": {"showLabel": False, "axisScale": 0.1}, "imageMode": {}, "synchronize": False,
+        "foxglovePanelTitle": "Dense stereo map"}
+    doc={"configById":{"3D!dense-map": cloud_panel, "Image!infra1": image_panel,
         "RawMessages!path":{"topicPath":"/orb/path","foxglovePanelTitle":"ORB trajectory"}},
-        "layout":{"first":"3D!dense-map","second":"RawMessages!path","direction":"row","splitPercentage":80},
+        "layout":{"first":"Image!infra1","second":"3D!dense-map","direction":"row","splitPercentage":30},
         "globalVariables":{},"playbackConfig":{"speed":1},"userNodes":{}}
     path.write_text(json.dumps(doc,indent=2)+"\n")
 
@@ -320,8 +326,78 @@ def _write_mcap(path, cloud, poses, stamp):
         writer.finish()
 
 
+def _limited_voxel_cloud(points, voxel, cap=150_000):
+    if not len(points):
+        return np.empty((0, 4), dtype=np.float32)
+    keys = np.floor(points[:, :3] / voxel).astype(np.int64)
+    _, inverse = np.unique(keys, axis=0, return_inverse=True)
+    counts = np.bincount(inverse)
+    sums = np.zeros((len(counts), 4), dtype=np.float64)
+    np.add.at(sums, inverse, points)
+    cloud = (sums / counts[:, None]).astype(np.float32)
+    if len(cloud) > cap:
+        # Deterministic spatially distributed thinning after voxel reduction.
+        cloud = cloud[np.linspace(0, len(cloud)-1, cap, dtype=np.int64)]
+    return cloud
+
+
+def _write_growing_mcap(path, events, poses, image_records, camera_info_records, voxel):
+    """Write time-aligned cloud snapshots, trajectory, transforms and source imagery."""
+    ts = get_typestore(Stores.ROS2_JAZZY)
+    t = ts.types
+    channels = {}
+    with path.open("wb") as stream:
+        writer = Writer(stream); writer.start(profile="ros2")
+        kinds = {"/dense_map_growing": "sensor_msgs/msg/PointCloud2", "/orb/path": "nav_msgs/msg/Path",
+                 "/tf": "tf2_msgs/msg/TFMessage", "/camera/camera/infra1/image_rect_raw": "sensor_msgs/msg/Image",
+                 "/camera/camera/infra1/camera_info": "sensor_msgs/msg/CameraInfo"}
+        for topic, kind in kinds.items():
+            definition, _ = ts.generate_msgdef(kind, ros_version=2)
+            schema = writer.register_schema(kind, "ros2msg", definition.encode())
+            channels[topic] = writer.register_channel(topic, "cdr", schema)
+        # Camera info is static but carries the sensor's original header stamp.
+        for stamp, raw in camera_info_records:
+            writer.add_message(channel_id=channels["/camera/camera/infra1/camera_info"], log_time=stamp,
+                               publish_time=stamp, sequence=0, data=raw)
+        accumulated = []
+        next_snapshot = None
+        for stamp, frame_points, pose_index in events:
+            accumulated.append(frame_points)
+            if next_snapshot is None:
+                next_snapshot = stamp
+            if stamp < next_snapshot:
+                continue
+            next_snapshot = stamp + 500_000_000
+            partial_poses = poses[:pose_index+1]
+            cloud = _limited_voxel_cloud(np.concatenate(accumulated), voxel)
+            pc, orb_path, _ = _make_ros_messages(ts, cloud, partial_poses, stamp)
+            # map -> slam_world and slam_world -> orb_camera at the corresponding pose.
+            _, _, base_tf = _make_ros_messages(ts, cloud, [], stamp)
+            base_tf.transforms[0].header.stamp = t["builtin_interfaces/msg/Time"](
+                stamp//1_000_000_000, stamp%1_000_000_000)
+            pmsg = poses[pose_index][2]
+            q = pmsg.pose.orientation; p = pmsg.pose.position
+            world_camera = t["geometry_msgs/msg/Transform"](
+                t["geometry_msgs/msg/Vector3"](float(p.x), float(p.y), float(p.z)),
+                t["geometry_msgs/msg/Quaternion"](float(q.x), float(q.y), float(q.z), float(q.w)))
+            tf_camera = t["geometry_msgs/msg/TransformStamped"](
+                t["std_msgs/msg/Header"](t["builtin_interfaces/msg/Time"](stamp//1_000_000_000, stamp%1_000_000_000), WORLD_FRAME),
+                "orb_camera", world_camera)
+            tfmsg = t["tf2_msgs/msg/TFMessage"](base_tf.transforms + [tf_camera])
+            for topic, kind, msg in (("/dense_map_growing", "sensor_msgs/msg/PointCloud2", pc),
+                                     ("/orb/path", "nav_msgs/msg/Path", orb_path),
+                                     ("/tf", "tf2_msgs/msg/TFMessage", tfmsg)):
+                writer.add_message(channel_id=channels[topic], log_time=stamp, publish_time=stamp,
+                                   sequence=0, data=ts.serialize_cdr(msg, kind))
+        # Preserve every left infrared frame at its source header time.
+        for stamp, raw in image_records:
+            writer.add_message(channel_id=channels["/camera/camera/infra1/image_rect_raw"], log_time=stamp,
+                               publish_time=stamp, sequence=0, data=raw)
+        writer.finish()
+
+
 def run(sensor_bag, pose_bag, stereo_yaml, out, *, every=3, stride=3,
-        voxel=0.01, min_frames=2, min_depth=0.3, max_depth=3.0, pose_tol_ms=20):
+        voxel=0.01, min_frames=2, min_depth=0.3, max_depth=3.0, pose_tol_ms=20, growing=False):
     sensor_bag,pose_bag,stereo_yaml,out=map(Path,(sensor_bag,pose_bag,stereo_yaml,out))
     if every<1 or stride<1 or voxel<=0: raise ValueError("every/stride/voxel must be positive")
     yaml=stereo_yaml.read_text(); m=re.search(r"^Stereo\.b:\s*([0-9.eE+-]+)",yaml,re.M)
@@ -331,7 +407,7 @@ def run(sensor_bag, pose_bag, stereo_yaml, out, *, every=3, stride=3,
     if abs(calibration.baseline_m-yaml_baseline)>0.002:
         raise ValueError(f"camera_info baseline {calibration.baseline_m:.6f} and stereo.yaml {yaml_baseline:.6f} disagree")
     poses=read_poses(pose_bag); pose_stamps=[p[0] for p in poses]
-    decoder=Decoder(); infos={}; pairs={}; pending={}
+    decoder=Decoder(); infos={}; pairs={}; pending={}; growing_events=[]; image_records=[]; camera_info_records=[]
     # The MCAP reader returns source records in log order; CameraInfo is cached,
     # and images are paired strictly by their ROS header stamps.
     with open(sensor_bag/"sensor-bag_0.mcap","rb") as stream:
@@ -342,11 +418,15 @@ def run(sensor_bag, pose_bag, stereo_yaml, out, *, every=3, stride=3,
             msg=decoder.decode(schema,raw)
             if channel.topic in (LEFT_INFO,RIGHT_INFO):
                 infos[channel.topic]=msg
+                if growing and channel.topic == LEFT_INFO:
+                    camera_info_records.append((stamp_ns(msg), raw.data))
                 continue
             side="left" if channel.topic==LEFT_IMAGE else "right"
             counts[side]+=1; stamp=stamp_ns(msg)
             slot=pending.setdefault(stamp,{})
             slot[side]=image_to_array(msg)
+            if growing and side == "left":
+                image_records.append((stamp, raw.data))
             if "left" not in slot or "right" not in slot: continue
             left,right=slot["left"],slot["right"]; del pending[stamp]
             index=pair_index; pair_index+=1; counts["pairs"]+=1
@@ -365,6 +445,8 @@ def run(sensor_bag, pose_bag, stereo_yaml, out, *, every=3, stride=3,
             world=camera@T[:3,:3].T+T[:3,3]
             Tmw=map_transform(); mapped=world@Tmw[:3,:3].T
             points=np.column_stack((mapped,inten[mask]))
+            if growing:
+                growing_events.append((stamp, points.astype(np.float32), pose_stamps.index(pose[0])))
             raw_xyz.append(points); frame_ids.append(np.full(len(points),frames_used,dtype=np.int32))
             frames_used+=1
     if frames_used==0: raise RuntimeError("no stereo pairs matched an ORB pose within tolerance")
@@ -386,7 +468,9 @@ def run(sensor_bag, pose_bag, stereo_yaml, out, *, every=3, stride=3,
     _write_ply(out/"map_dense.ply",cloud)
     stamp=poses[-1][0]
     _write_mcap(out/"map_dense.mcap",cloud,poses,stamp)
-    _layout(out/"foxglove_layout.json")
+    _layout(out/"foxglove_layout.json", growing=growing)
+    if growing:
+        _write_growing_mcap(out/"map_growing.mcap", growing_events, poses, image_records, camera_info_records, voxel)
     # Top-down in map (x forward, y left).
     import matplotlib
     matplotlib.use("Agg")
@@ -413,9 +497,10 @@ def main():
     p.add_argument("--voxel",type=float,default=.01); p.add_argument("--min-frames",type=int,default=2)
     p.add_argument("--min-depth",type=float,default=.3); p.add_argument("--max-depth",type=float,default=3.)
     p.add_argument("--pose-tol-ms",type=float,default=20.)
+    p.add_argument("--growing",action="store_true",help="also write a time-ordered growing map MCAP for Foxglove")
     a=p.parse_args()
     result=run(a.sensor_bag,a.pose_bag,a.stereo_yaml,a.out,every=a.every,stride=a.stride,
-        voxel=a.voxel,min_frames=a.min_frames,min_depth=a.min_depth,max_depth=a.max_depth,pose_tol_ms=a.pose_tol_ms)
+        voxel=a.voxel,min_frames=a.min_frames,min_depth=a.min_depth,max_depth=a.max_depth,pose_tol_ms=a.pose_tol_ms,growing=a.growing)
     print(json.dumps(result,indent=2))
 
 
