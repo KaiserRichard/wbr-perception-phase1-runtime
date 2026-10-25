@@ -1,6 +1,8 @@
 """Small rosbag2-to-MCAP integration test for the offline demo converter."""
 from pathlib import Path
 import sys
+import tempfile
+import unittest
 
 import numpy as np
 from mcap.reader import make_reader
@@ -19,7 +21,7 @@ def _stamp(header):
     return (header.stamp.sec, header.stamp.nanosec, header.frame_id)
 
 
-def test_tiny_rosbag_gets_stamped_overlay(tmp_path):
+def _tiny_rosbag_gets_stamped_overlay(tmp_path):
     ts = get_typestore(Stores.ROS2_JAZZY)
     t = ts.types
     bag = tmp_path / 'tiny'
@@ -135,3 +137,13 @@ def test_tiny_rosbag_gets_stamped_overlay(tmp_path):
     ground_from_link = _transform_matrix(observed['tf'].transform)
     floor_in_depth_optical = np.array([0., .3, 0., 1.])
     assert abs((ground_from_link @ link_from_depth_optical @ floor_in_depth_optical)[2]) < 1e-6
+
+
+class FoxgloveDemoTests(unittest.TestCase):
+    def test_tiny_rosbag_gets_stamped_overlay(self):
+        with tempfile.TemporaryDirectory() as d:
+            _tiny_rosbag_gets_stamped_overlay(Path(d))
+
+
+if __name__ == "__main__":
+    unittest.main()
