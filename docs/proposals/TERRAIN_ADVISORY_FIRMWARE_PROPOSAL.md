@@ -81,18 +81,25 @@ The two timers serve different purposes and need owner approval.
 The Pi detector-only timing in the lab README was **67/76 ms P50/P95 (MEASURED)** on a non-throttled Pi 5 after
 optimization, versus **118/126 ms (MEASURED)** before it. This is slower than a 15 Hz frame period on much of the
 distribution; the live chain's drop/age behavior must be measured before any freshness guarantee.
-`ops/worklog/sessions/2026-10-25-live-advisory-summary.md` reports no live Pi/ROS/bag run. Saved-bag evidence is
-not live-camera evidence.
+`ops/worklog/sessions/2026-10-25-live-advisory-summary.md` predates these physical tests and records no live Pi/ROS/bag run at that time. Saved-bag evidence is not live-camera evidence.
 
 ### Live LED tests 25 Oct
 
-**TODO — fill after the physical test; no results are recorded yet.**
+Cardboard rig; D435(i) 29 cm above the table, with tilt estimated at 12–13° by inclinometer and 13–14° by plane fit/ORB path. Pi 5→Nucleo-F446RE GPIO UART at 460800 baud (USB-powered). LED firmware: green `NONE`, yellow `JUMP`, red `STOP`, D9 plus yellow blink `UNCERTAIN`, red 2 Hz blink when stale. Advisory range limit: 1.3 m for whole clusters. Live detector was about 100 ms/frame; advisories about 8 Hz. Each run lasted 60 s.
 
-- Board and firmware image/hash: TODO
-- LED wiring and advisory cases observed (`NONE`, `JUMP_CANDIDATE`, `STOP_CANDIDATE`, `UNCERTAIN`): TODO
-- Stale/offline indication and recovery observations: TODO
-- Pi live detector rate, frame drops, advisory counts, timestamps, and UART accept/reject/loss results: TODO
-- Operator notes, exact run directory, and limitations: TODO
+| Run | Measured result |
+|---|---|
+| LED self-test | All four states and stale blink seen; 9,420 echoes. |
+| Empty table (lamp removed) | `NONE` 553/553 frames; echoed 553/553. |
+| Books, 4.6 cm at 1.00 m | `JUMP` 561/563 (two `UNCERTAIN` while confirming); estimated height 4.75 cm, distance 0.998 m; echoed 563/563; RTT P50 2.8 ms. |
+| Box, 13.1 cm at 1.00 m; removed at ~42 s | `STOP` until 42.6 s, then `NONE`; estimated height 13.4 cm, distance 0.993 m; echoed 603/603. |
+| Approach, box initially at 1.6 m | Detection at 1.3 m limit; tape 1.285–1.31 m, detector 1.27–1.30 m. Live LED flickered at range edge; run 1 also flickered at the 12 cm height threshold. |
+| ORB-SLAM3 stereo map along table | Forward leg 2.009 m against 2.00 m tape; one map, no pose jumps. Return leg not completed within the 45 s recording. |
+
+- Every listed per-run advisory was echoed; no UART loss was observed in these counts. Stale indication was exercised in self-test.
+- Replaying recordings within each 60 s window with 0.10 m range and 0.01 m height hysteresis reduced transitions 156→2 (run 2) and 218→25 (run 3). These are replay results, not observed live LED behavior. Evidence: `ops/worklog/reviews/2026-10-25-flicker-report-window.md` (on branch `claude2/20261025-lab-fixes`).
+- Remaining run-3 changes came from a ~2–3 cm object (likely a power cable) at 1.1–1.2 m toggling `UNCERTAIN`/`NONE`, and nearest-object switching between a ~9 cm object at ~1.2 m and the box.
+- These are bench observations on the cardboard setup, not general performance or a safety-rated clearance. Return leg was not captured. Raw recordings: `~/wbr-evidence-archive/lab-day-20261025/` on the Mac (120 files, SHA-256 verified against the Pi).
 
 ## Proposed receive-side behavior
 
@@ -128,6 +135,7 @@ number.
   queue is appropriate.
 - Choose the advisory stale timeout; the current **300 ms (ASSUMED/proposed)** differs from the bench `NO_LINK` silence
   rule of **150 ms (ASSUMED/proposed)**.
+- Treat **0.10 m range hysteresis and 0.01 m height hysteresis as proposals** pending owner selection. Obstacles within about **1 cm of the 12 cm height threshold** are inherently ambiguous at the observed measurement variation.
 - Define whether `UNCERTAIN` means “not yet temporally confirmed” (as used for the small book) or “measurement
   below/near a decision band.” Decide how consumer logic distinguishes stale/no-feed from a fresh `NONE`.
 - Review the tracking-state enum in `tools/perception_health/SPEC.md`: it lists `SYSTEM_NOT_READY=0`, `NO_IMAGES_YET=1`,
