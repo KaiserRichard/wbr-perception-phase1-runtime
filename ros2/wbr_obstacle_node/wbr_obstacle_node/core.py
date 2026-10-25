@@ -74,16 +74,20 @@ class AdvisoryCore:
         self.codec = importlib.import_module('tools.obstacle_decision.advisory_codec')
         self.detect_state = {}
         self.decision_state = {}
+        self.range_state = {}
         self.sequence = 0
         self.advisory_sequence = 0
 
     def process(self, depth_m, K, *, frame_stamp_ns=0, frame_id='camera_depth_optical_frame',
-                 now_monotonic=None):
+                 now_monotonic=None, range_limit_m=None, range_hysteresis=0.10):
         p = self.params
         started = time.perf_counter()
         dp = self.detect.Params(**{f.name: getattr(p, f.name) for f in fields(self.detect.Params)
                                   if hasattr(p, f.name)})
         frame, self.detect_state = self.detect.process_frame(depth_m, K, dp, self.detect_state)
+        if range_limit_m is not None:
+            from tools.obstacle_decision.range_filter import in_range
+            frame, self.range_state = in_range(frame, range_limit_m, range_hysteresis, self.range_state)
         decision_params = self.decide.DecisionParams(**{
             f.name: getattr(p, f.name) for f in fields(self.decide.DecisionParams)
             if hasattr(p, f.name)})

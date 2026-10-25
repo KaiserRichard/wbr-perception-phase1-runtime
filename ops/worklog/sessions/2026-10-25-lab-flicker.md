@@ -1,0 +1,17 @@
+# Lab day overlays and advisory flicker replay
+
+- Branch: `claude2/20261025-lab-fixes`; local changes and outputs left uncommitted.
+- Read-only inputs: `/Users/quockaiser/wbr-evidence-archive/lab-day-20261025/{2-books46,3-box13,4-approach,4-approach-r2,4-approach-r3}`.
+- Added shared live-equivalent nearest-face range filter; Foxglove conversion now reads rosbag2 MCAP and uses range limit 1.30 m, range hysteresis 0.10 m.
+- `4-approach-r3/camera-bag/camera-bag_0.mcap` lacked `metadata.yaml` and its final 1,535,989 bytes were an incomplete MCAP record. `mcap_recovery.py` copied the complete record prefix to a temporary file, appended an empty footer, and left archive bytes unchanged. Unindexed input is traversed in storage order.
+- Replay command: `/private/tmp/claude-501/-Users-quockaiser-Desktop-Research-wbr-wt-claude2/86f1e3fb-27f1-4b36-ad4d-133cc09819f7/scratchpad/venv/bin/python tools/obstacle_decision/flicker_check.py /Users/quockaiser/wbr-evidence-archive/lab-day-20261025 ./foxglove-out/FLICKER_REPORT.md` — completed for all five runs.
+- Overlay commands (all completed; each used the specified Python environment):
+  - `/private/tmp/claude-501/-Users-quockaiser-Desktop-Research-wbr-wt-claude2/86f1e3fb-27f1-4b36-ad4d-133cc09819f7/scratchpad/venv/bin/python tools/bag_tools/foxglove_demo.py /Users/quockaiser/wbr-evidence-archive/lab-day-20261025/2-books46/camera-bag ./foxglove-out/2-books46.mcap --max-forward 1.3 --range-hysteresis 0.10`
+  - `/private/tmp/claude-501/-Users-quockaiser-Desktop-Research-wbr-wt-claude2/86f1e3fb-27f1-4b36-ad4d-133cc09819f7/scratchpad/venv/bin/python tools/bag_tools/foxglove_demo.py /Users/quockaiser/wbr-evidence-archive/lab-day-20261025/3-box13/camera-bag ./foxglove-out/3-box13.mcap --max-forward 1.3 --range-hysteresis 0.10`
+  - `/private/tmp/claude-501/-Users-quockaiser-Desktop-Research-wbr-wt-claude2/86f1e3fb-27f1-4b36-ad4d-133cc09819f7/scratchpad/venv/bin/python tools/bag_tools/foxglove_demo.py /Users/quockaiser/wbr-evidence-archive/lab-day-20261025/4-approach/camera-bag ./foxglove-out/4-approach.mcap --max-forward 1.3 --range-hysteresis 0.10`
+  - `/private/tmp/claude-501/-Users-quockaiser-Desktop-Research-wbr-wt-claude2/86f1e3fb-27f1-4b36-ad4d-133cc09819f7/scratchpad/venv/bin/python tools/bag_tools/foxglove_demo.py /Users/quockaiser/wbr-evidence-archive/lab-day-20261025/4-approach-r2/camera-bag ./foxglove-out/4-approach-r2.mcap --max-forward 1.3 --range-hysteresis 0.10`
+  - `/private/tmp/claude-501/-Users-quockaiser-Desktop-Research-wbr-wt-claude2/86f1e3fb-27f1-4b36-ad4d-133cc09819f7/scratchpad/venv/bin/python tools/bag_tools/foxglove_demo.py /Users/quockaiser/wbr-evidence-archive/lab-day-20261025/4-approach-r3/camera-bag ./foxglove-out/4-approach-r3.mcap --max-forward 1.3 --range-hysteresis 0.10`
+- Output MCAP sizes range 1,669,129,793–2,079,207,562 bytes. Layout copied from `tools/bag_tools/foxglove_demo_layout.json` and compared byte-for-byte.
+- Replay transition counts old/new: 2-books46 1/1; 3-box13 2/2; 4-approach 62/53; 4-approach-r2 561/30; 4-approach-r3 651/37. Exact-stamp old/live agreement: 99.8%, 99.7%, 50.7%, 89.3%, 85.1% respectively. Full advisory duration and transition times: `foxglove-out/FLICKER_REPORT.md`.
+- Total output directory size: 9.0 GB. No tests were added or run; the requested replay and conversion commands were executed on the archived data.
+- Limitation: r3 replay/conversion covers 2,465 complete depth frames from the recovered prefix, not a cleanly finalized source bag. Foxglove GUI rendering was not checked.

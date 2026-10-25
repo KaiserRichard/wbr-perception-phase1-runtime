@@ -1,8 +1,9 @@
 """Create a Foxglove MCAP with offline WBR obstacle-detector overlays.
 
 Usage: foxglove_demo.py BAG_DIR OUT.mcap
-The bag must be a rosbag2 SQLite directory containing RealSense color and
-aligned-depth topics. RealSense Metadata connections are deliberately skipped.
+The bag must be a rosbag2 SQLite/MCAP directory (or an MCAP file) containing
+RealSense color and aligned-depth topics. RealSense Metadata connections are
+deliberately skipped.
 """
 from __future__ import annotations
 
@@ -22,6 +23,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from ros2.wbr_obstacle_node.wbr_obstacle_node.core import AdvisoryCore, CoreParams, depth_to_metres
+from tools.bag_tools.mcap_recovery import messages as bag_messages, readable_mcap
 
 COLOR = '/camera/camera/color/image_raw'
 DEPTH = '/camera/camera/aligned_depth_to_color/image_raw'
@@ -224,15 +226,31 @@ def _demo_obstacle_markers(advisory, frame_result):
     ]
 
 
-def convert(bag_dir: str | Path, output: str | Path):
+def _bag_reader_path(bag_dir):
+    if bag_dir.is_file():
+        if bag_dir.suffix.lower() not in ('.mcap', '.db3'):
+            raise ValueError(f'unsupported rosbag2 file: {bag_dir}')
+        return bag_dir
+    if not bag_dir.is_dir():
+        raise ValueError(f'bag path does not exist: {bag_dir}')
+    if (bag_dir / 'metadata.yaml').is_file():
+        return bag_dir
+    mcap_files = sorted(bag_dir.glob('*.mcap'))
+    if len(mcap_files) == 1:
+        return mcap_files[0]
+    raise ValueError(f'expected rosbag2 metadata.yaml or one MCAP file in {bag_dir}')
+
+
+def convert(bag_dir: str | Path, output: str | Path, *, max_forward=1.3,
+            range_hysteresis=0.10):
     bag_dir, output = Path(bag_dir), Path(output)
-    if not bag_dir.is_dir() or not (bag_dir / 'metadata.yaml').is_file():
-        raise ValueError(f'expected a rosbag2 directory with metadata.yaml: {bag_dir}')
+    reader_path = _bag_reader_path(bag_dir)
     output.parent.mkdir(parents=True, exist_ok=True)
     ts = get_typestore(Stores.ROS2_JAZZY)
     m = _create_messages(ts)
     core = AdvisoryCore(str(REPO_ROOT), CoreParams())
-    with Reader(bag_dir) as reader, output.open('wb') as stream:
+    with readable_mcap(reader_path) as (readable_path, recovered_tail_bytes), \
+            Reader(readable_path) as reader, output.open('wb') as stream:
         writer = Writer(stream)
         writer.start(profile='ros2')
         channels, schemas = {}, {}
@@ -279,7 +297,7 @@ def convert(bag_dir: str | Path, output: str | Path):
         counts, histogram = Counter(), Counter()
         last_plane = type('Plane', (), {'normal': np.array([0.0, -1.0, 0.0]), 'camera_height': 0.30})()
 
-        for conn, log_time, raw in reader.messages(connections=selected):
+        for conn, log_time, raw in bag_messages(reader, readable_path, selected):
             log_time = int(log_time)
             msg = ts.deserialize_cdr(raw, conn.msgtype)
             writer.add_message(channels[conn.topic], log_time, raw, publish_time=log_time)
@@ -294,7 +312,9 @@ def convert(bag_dir: str | Path, output: str | Path):
                 arr = _image_array(msg)
                 depth_m = depth_to_metres(arr, msg.encoding)
                 stamp = int(msg.header.stamp.sec) * 1_000_000_000 + int(msg.header.stamp.nanosec)
-                out = core.process(depth_m, latest_k, frame_stamp_ns=stamp, frame_id=msg.header.frame_id)
+                out = core.process(depth_m, latest_k, frame_stamp_ns=stamp,
+                                   frame_id=msg.header.frame_id, range_limit_m=max_forward,
+                                   range_hysteresis=range_hysteresis)
                 header = msg.header
                 plane = core.detect_state.get('plane')
                 if plane is not None:
@@ -318,7 +338,10 @@ def convert(bag_dir: str | Path, output: str | Path):
                     counts[topic] += 1
                 histogram[advisory['advisory']] += 1
         writer.finish()
-    return {'output': str(output), 'message_counts': dict(sorted(counts.items())),
+    return {'output': str(output), 'source_recovered_tail_bytes': recovered_tail_bytes,
+            'max_forward_m': max_forward,
+            'range_hysteresis_m': range_hysteresis,
+            'message_counts': dict(sorted(counts.items())),
             'advisory_histogram': dict(sorted(histogram.items())), 'size_bytes': output.stat().st_size}
 
 
@@ -326,8 +349,14 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('bag_dir')
     parser.add_argument('output_mcap')
+    parser.add_argument('--max-forward', type=float, default=1.3)
+    parser.add_argument('--range-hysteresis', type=float, default=0.10)
     args = parser.parse_args(argv)
-    print(json.dumps(convert(args.bag_dir, args.output_mcap), indent=2))
+    if args.max_forward < 0 or args.range_hysteresis < 0:
+        parser.error('--max-forward and --range-hysteresis must be non-negative')
+    print(json.dumps(convert(args.bag_dir, args.output_mcap,
+                             max_forward=args.max_forward,
+                             range_hysteresis=args.range_hysteresis), indent=2))
 
 
 if __name__ == '__main__':
