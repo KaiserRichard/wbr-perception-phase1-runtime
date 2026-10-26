@@ -1,0 +1,568 @@
+From 264be5e22f8407773a9c41bd69aa49b0aa2880ea Mon Sep 17 00:00:00 2001
+From: KaiserRichard <kaiserquoc@gmail.com>
+Date: Mon, 26 Oct 2026 13:12:20 +0700
+Subject: [PATCH] Add receive-only /terrain_advisory subscriber,
+ /terrain_advisory_ack, LCD status line
+
+Advisory has no path to motor commands, modes, timeouts or RC. Written by codex-e, reviewed by Claude.
+
+Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
+---
+ Core/Src/freertos.c         | 70 ++++++++++++++++++++++++++++++--
+ Makefile                    |  1 +
+ TERRAIN_ADVISORY_CHANGES.md | 56 ++++++++++++++++++++++++++
+ User/APP/lcd_task.c         | 47 +++++++++++++++++++---
+ User/APP/terrain_advisory.c | 80 +++++++++++++++++++++++++++++++++++++
+ User/APP/terrain_advisory.h | 36 +++++++++++++++++
+ docs/topics.md              | 36 ++++++++++++++++-
+ 7 files changed, 316 insertions(+), 10 deletions(-)
+ create mode 100644 TERRAIN_ADVISORY_CHANGES.md
+ create mode 100644 User/APP/terrain_advisory.c
+ create mode 100644 User/APP/terrain_advisory.h
+
+diff --git a/Core/Src/freertos.c b/Core/Src/freertos.c
+index 789b75a..4556f2c 100644
+--- a/Core/Src/freertos.c
++++ b/Core/Src/freertos.c
+@@ -41,6 +41,7 @@
+ #include <std_msgs/msg/bool.h>
+ #include <std_msgs/msg/u_int8.h>
+ #include <std_msgs/msg/float64_multi_array.h>
++#include <std_msgs/msg/u_int32.h>
+ #include <string.h>
+ #include <math.h>
+ #include "INS_task.h"
+@@ -50,6 +51,7 @@
+ #include "BMI088driver.h"
+ #include "bsp_dwt.h"
+ #include "lcd_task.h"
++#include "terrain_advisory.h"
+ #include "spi.h"
+ /* USER CODE END Includes */
+ 
+@@ -95,10 +97,12 @@ static rcl_publisher_t    pub_motor_fb;
+ static rcl_publisher_t    pub_motor_status;
+ static rcl_publisher_t    pub_imu;
+ static rcl_publisher_t    pub_imu_debug;
++static rcl_publisher_t    pub_terrain_advisory_ack;
+ static rcl_subscription_t sub_cmd_vel;
+ static rcl_subscription_t sub_motor_enable;
+ static rcl_subscription_t sub_cmd_mit;
+ static rcl_subscription_t sub_cmd_torque;
++static rcl_subscription_t sub_terrain_advisory;
+ static rclc_support_t     support;
+ static rcl_allocator_t    allocator;
+ static rcl_node_t         node;
+@@ -113,6 +117,9 @@ static geometry_msgs__msg__Twist    cmd_vel_msg;
+ static std_msgs__msg__Bool          motor_enable_msg;
+ static std_msgs__msg__Float64MultiArray cmd_mit_msg;
+ static std_msgs__msg__Float64MultiArray cmd_torque_msg;
++static std_msgs__msg__Float64MultiArray terrain_advisory_msg;
++static std_msgs__msg__UInt32 terrain_advisory_ack_msg;
++static double terrain_advisory_data[TERRAIN_ADVISORY_DATA_LEN];
+ 
+ /* Static buffers for incoming /cmd_mit. micro-ROS deserialises sequences into
+    caller-owned memory and drops any message that does not fit, so layout.dim
+@@ -147,7 +154,8 @@ enum {
+   ENT_MOTOR_FB = 1U << 2, ENT_MOTOR_STATUS = 1U << 3, ENT_IMU = 1U << 4,
+   ENT_CMD_VEL = 1U << 5, ENT_MOTOR_ENABLE = 1U << 6, ENT_CMD_MIT = 1U << 7,
+   ENT_EXECUTOR = 1U << 8, ENT_CMD_TORQUE = 1U << 9,
+-  ENT_IMU_DEBUG = 1U << 10
++  ENT_IMU_DEBUG = 1U << 10, ENT_TERRAIN_ADVISORY = 1U << 11,
++  ENT_TERRAIN_ADVISORY_ACK = 1U << 12
+ };
+ static uint32_t g_entities;
+ static bool g_time_synced;
+@@ -224,6 +232,7 @@ static void cmd_vel_callback(const void *msg_in);
+ static void motor_enable_callback(const void *msg_in);
+ static void cmd_mit_callback(const void *msg_in);
+ static void cmd_torque_callback(const void *msg_in);
++static void terrain_advisory_callback(const void *msg_in);
+ 
+ bool cubemx_transport_open(struct uxrCustomTransport * transport);
+ bool cubemx_transport_close(struct uxrCustomTransport * transport);
+@@ -323,6 +332,7 @@ void StartDefaultTask(void *argument)
+   uint32_t last_pub_ms = 0U;
+   uint32_t last_ping_ms = 0U;
+   uint32_t last_imu_ms = 0U;
++  uint32_t last_terrain_ack_ms = 0U;
+   uint32_t last_sync_ms = 0U;
+   uint8_t ping_misses = 0U;
+ 
+@@ -349,6 +359,7 @@ void StartDefaultTask(void *argument)
+           last_pub_ms = HAL_GetTick();
+           last_ping_ms = HAL_GetTick();
+           last_imu_ms = HAL_GetTick();
++          last_terrain_ack_ms = HAL_GetTick();
+           last_sync_ms = HAL_GetTick();
+           ping_misses = 0U;
+         }
+@@ -372,6 +383,16 @@ void StartDefaultTask(void *argument)
+ 
+         uint32_t now = HAL_GetTick();
+ 
++        if ((now - last_terrain_ack_ms) >= 100U)
++        {
++          last_terrain_ack_ms = now;
++          TerrainAdvisorySnapshot_t advisory = terrain_advisory_get_snapshot(now);
++          terrain_advisory_ack_msg.data = advisory.last_seq;
++          rcl_ret_t ack_ret = rcl_publish(&pub_terrain_advisory_ack,
++                                          &terrain_advisory_ack_msg, NULL);
++          if (ack_ret != RCL_RET_OK) rcl_reset_error();
++        }
++
+         /* Publish a coherent, calibrated IMU sample at 50 Hz. Acquisition time
+          * is retained even if USB/executor work delays this loop. */
+         if ((now - last_imu_ms) >= 20U)
+@@ -539,10 +560,12 @@ static bool create_entities(void)
+   pub_motor_status = rcl_get_zero_initialized_publisher();
+   pub_imu = rcl_get_zero_initialized_publisher();
+   pub_imu_debug = rcl_get_zero_initialized_publisher();
++  pub_terrain_advisory_ack = rcl_get_zero_initialized_publisher();
+   sub_cmd_vel = rcl_get_zero_initialized_subscription();
+   sub_motor_enable = rcl_get_zero_initialized_subscription();
+   sub_cmd_mit = rcl_get_zero_initialized_subscription();
+   sub_cmd_torque = rcl_get_zero_initialized_subscription();
++  sub_terrain_advisory = rcl_get_zero_initialized_subscription();
+   executor = rclc_executor_get_zero_initialized_executor();
+   g_entities = 0U;
+   g_time_synced = false;
+@@ -597,6 +620,14 @@ static bool create_entities(void)
+   imu_debug_msg.data.size = 22;
+   imu_debug_msg.data.capacity = 22;
+ 
++  stage = "publisher /terrain_advisory_ack";
++  rc = rclc_publisher_init_default(&pub_terrain_advisory_ack, &node,
++    ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, UInt32), "terrain_advisory_ack");
++  if (rc != RCL_RET_OK) goto fail;
++  g_entities |= ENT_TERRAIN_ADVISORY_ACK;
++  (void)rmw_uros_set_publisher_session_timeout(
++    rcl_publisher_get_rmw_handle(&pub_terrain_advisory_ack), 20);
++
+   stage = "subscription /cmd_vel";
+   rc = rclc_subscription_init_best_effort(&sub_cmd_vel, &node,
+     ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Twist), "cmd_vel");
+@@ -621,6 +652,12 @@ static bool create_entities(void)
+   if (rc != RCL_RET_OK) goto fail;
+   g_entities |= ENT_CMD_TORQUE;
+ 
++  stage = "subscription /terrain_advisory";
++  rc = rclc_subscription_init_best_effort(&sub_terrain_advisory, &node,
++    ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float64MultiArray), "terrain_advisory");
++  if (rc != RCL_RET_OK) goto fail;
++  g_entities |= ENT_TERRAIN_ADVISORY;
++
+   memset(&cmd_vel_msg, 0, sizeof(cmd_vel_msg));
+   memset(&motor_enable_msg, 0, sizeof(motor_enable_msg));
+   memset(&cmd_mit_msg, 0, sizeof(cmd_mit_msg));
+@@ -651,11 +688,21 @@ static bool create_entities(void)
+   cmd_torque_msg.data.size           = 0U;
+   cmd_torque_msg.data.capacity       = CMD_TORQUE_LEN;
+ 
++  memset(&terrain_advisory_msg, 0, sizeof(terrain_advisory_msg));
++  terrain_advisory_msg.data.data = terrain_advisory_data;
++  terrain_advisory_msg.data.size = 0U;
++  terrain_advisory_msg.data.capacity = TERRAIN_ADVISORY_DATA_LEN;
++
+   stage = "executor";
+-  rc = rclc_executor_init(&executor, &support.context, 4, &allocator);
++  rc = rclc_executor_init(&executor, &support.context, 5, &allocator);
+   if (rc != RCL_RET_OK) goto fail;
+   g_entities |= ENT_EXECUTOR;
+ 
++  stage = "executor /terrain_advisory";
++  rc = rclc_executor_add_subscription(&executor, &sub_terrain_advisory,
++    &terrain_advisory_msg, &terrain_advisory_callback, ON_NEW_DATA);
++  if (rc != RCL_RET_OK) goto fail;
++
+   stage = "executor /cmd_vel";
+   rc = rclc_executor_add_subscription(&executor, &sub_cmd_vel, &cmd_vel_msg,
+     &cmd_vel_callback, ON_NEW_DATA);
+@@ -729,7 +776,7 @@ static bool create_entities(void)
+   }
+   printf("[ROS] Time sync %s; sensor publication requires synchronized time.\r\n",
+          g_time_synced ? "OK" : "pending");
+-  printf("[ROS] Node [stm32h7_node] Ready | Pub: [/motor_fb, /motor_status, /imu/data] | Sub: [/cmd_vel, /cmd_mit, /cmd_torque, /motor_enable]\r\n");
++  printf("[ROS] Node [stm32h7_node] Ready | Pub: [/motor_fb, /motor_status, /imu/data, /terrain_advisory_ack] | Sub: [/cmd_vel, /cmd_mit, /cmd_torque, /motor_enable, /terrain_advisory]\r\n");
+   return true;
+ 
+ fail:
+@@ -747,10 +794,12 @@ static void destroy_entities(void)
+     (void)rmw_uros_set_context_entity_destroy_session_timeout(
+       rcl_context_get_rmw_context(&support.context), 0);
+   if (g_entities & ENT_EXECUTOR) rc = rclc_executor_fini(&executor);
++  if (g_entities & ENT_TERRAIN_ADVISORY) rc = rcl_subscription_fini(&sub_terrain_advisory, &node);
+   if (g_entities & ENT_CMD_TORQUE) rc = rcl_subscription_fini(&sub_cmd_torque, &node);
+   if (g_entities & ENT_CMD_MIT) rc = rcl_subscription_fini(&sub_cmd_mit, &node);
+   if (g_entities & ENT_MOTOR_ENABLE) rc = rcl_subscription_fini(&sub_motor_enable, &node);
+   if (g_entities & ENT_CMD_VEL) rc = rcl_subscription_fini(&sub_cmd_vel, &node);
++  if (g_entities & ENT_TERRAIN_ADVISORY_ACK) rc = rcl_publisher_fini(&pub_terrain_advisory_ack, &node);
+   if (g_entities & ENT_IMU_DEBUG) rc = rcl_publisher_fini(&pub_imu_debug, &node);
+   if (g_entities & ENT_IMU) rc = rcl_publisher_fini(&pub_imu, &node);
+   if (g_entities & ENT_MOTOR_STATUS) rc = rcl_publisher_fini(&pub_motor_status, &node);
+@@ -924,6 +973,21 @@ static void cmd_torque_callback(const void *msg_in)
+   motor_mit_cmd_set(&left, &right);
+ }
+ 
++/* Receive-only advisory input. It is validated and copied into its isolated
++ * snapshot; it has no path to motor commands, modes, watchdogs or RC state. */
++static void terrain_advisory_callback(const void *msg_in)
++{
++  const std_msgs__msg__Float64MultiArray *msg =
++    (const std_msgs__msg__Float64MultiArray *)msg_in;
++  if (msg == NULL)
++  {
++    (void)terrain_advisory_store(NULL, 0U, HAL_GetTick());
++    return;
++  }
++
++  (void)terrain_advisory_store(msg->data.data, msg->data.size, HAL_GetTick());
++}
++
+ /* Callback: /motor_enable → motor_enable_set() */
+ static void motor_enable_callback(const void *msg_in)
+ {
+diff --git a/Makefile b/Makefile
+index 7d4490e..ec90ee5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -39,6 +39,7 @@ C_SOURCES =  \
+ Core/Src/main.c \
+ Core/Src/gpio.c \
+ Core/Src/freertos.c \
++User/APP/terrain_advisory.c \
+ Core/Src/dma.c \
+ Core/Src/usart.c \
+ Core/Src/stm32h7xx_it.c \
+diff --git a/TERRAIN_ADVISORY_CHANGES.md b/TERRAIN_ADVISORY_CHANGES.md
+new file mode 100644
+index 0000000..5559444
+--- /dev/null
++++ b/TERRAIN_ADVISORY_CHANGES.md
+@@ -0,0 +1,56 @@
++# Terrain advisory receive path
++
++## Changes
++
++- `Core/Src/freertos.c:99-122, 335-394` adds the `/terrain_advisory` subscriber storage and a 10 Hz `/terrain_advisory_ack` publisher. The subscriber uses a static eight-double buffer and Best Effort QoS. Its callback at lines 978-989 only passes the received array to the advisory snapshot module; it does not call any motor, mode, timeout, or RC API.
++- `Core/Src/freertos.c:623-721, 795-809` creates and destroys the new ROS entities, adds the subscription to the executor, and raises executor capacity from four to five handles.
++- `User/APP/terrain_advisory.c:14-79` and `User/APP/terrain_advisory.h:1-36` validate the eight-value array, keep accepted/rejected counters and the last accepted sequence, copy snapshots inside a short FreeRTOS critical section, and report UNCERTAIN once the local receive age reaches 300 ms. Invalid messages increment `rejected` without changing the accepted snapshot or its freshness tick.
++- `User/APP/lcd_task.c:178-184, 455-489` uses the existing 20 Hz LCD refresh to show `ADV:STALE` or the current code, distance, and height on the System Stats page.
++- `Makefile:42` includes the module in `C_SOURCES`.
++- `docs/topics.md:26, 218-248` documents the topic fields, QoS, rate, and CLI examples.
++
++The interface contract implemented here is the one supplied in the task because `docs/interfaces/TERRAIN_ADVISORY_TOPIC.md` is absent from this checkout.
++
++## Resource impact
++
++- Static subscription data storage adds 8 doubles (64 bytes). The module's snapshot and bookkeeping add approximately another 64 bytes of static storage, plus the small ROS message/entity structs. No heap allocation is performed in the callback.
++- The executor handle capacity increases by one, from 4 to 5. The static library is configured for 5 subscriptions, so that pool is now full.
++- The firmware has 4 publishers before this change and the static library allows 10. Adding the ack publisher uses 5 of 10 slots, so `micro_ros_stm32cubemx_utils/microros_static_library/library_generation/colcon.meta` does not need an update or library rebuild for publisher capacity.
++- Motor command behavior, modes, watchdogs, and RC logic were not changed. The advisory is currently informational only.
++
++## Bench check (motors disabled)
++
++1. Keep the wheels lifted or otherwise mechanically safe, and disable motor outputs with `/motor_enable` before connecting the ROS 2 publisher. Check the device's `RC` state and do not publish any motor command topic.
++2. Start the agent and verify discovery:
++
++   ```bash
++   ros2 node info /stm32h7_node
++   ros2 topic echo /terrain_advisory_ack
++   ```
++
++   The ack publishes at about 10 Hz and remains zero until a valid advisory is received.
++
++3. Publish a valid STOP_CANDIDATE sample (code 2, 0.99 m distance, 13 cm height, 40 cm width, 0.95 confidence, valid plane, sequence 42, source age 20 ms):
++
++   ```bash
++   ros2 topic pub -r 10 /terrain_advisory std_msgs/msg/Float64MultiArray \
++     "{data: [2.0, 0.99, 0.13, 0.40, 0.95, 1.0, 42.0, 0.02]}"
++   ```
++
++   The System Stats LCD page should show `ADV:STOP 0.99m 13cm`; `/terrain_advisory_ack` should report 42.
++
++4. Stop the publisher. Within 300 ms the LCD should change to `ADV:STALE`; the ack should retain 42. Restart with another valid sequence and confirm that both update.
++5. With motors still disabled, test validation using a short array or invalid field. For example, confidence `1.1` must not update the LCD snapshot's freshness or ack sequence:
++
++   ```bash
++   ros2 topic pub -1 /terrain_advisory std_msgs/msg/Float64MultiArray \
++     "{data: [2.0, 0.99, 0.13, 0.40, 1.1, 1.0, 43.0, 0.02]}"
++   ```
++
++6. For the unplug check, first publish a valid sample, then disconnect the terrain-advisory source or stop its host publisher while leaving the LCD powered. The display should become `ADV:STALE` after 300 ms and the ack should keep its last accepted sequence. If disconnecting the USB transport itself, the firmware's existing agent reconnect behavior also applies; verify freshness after the link is restored.
++
++## Unverified
++
++- No build, test, script, or Make target was run, as requested. Compiler/linker compatibility and the rebuilt firmware image therefore remain unverified.
++- No board or micro-ROS Agent was available, so topic discovery, reliable ack behavior, real receive timing, LCD formatting, and the unplug procedure remain unverified on hardware.
++- With the required eight-double static buffer, a serialized message longer than the buffer may be rejected by micro-ROS during deserialization before the callback runs. Short wrong-length messages are counted by the module; over-capacity messages may not increment its rejected counter. Confirm this behavior with the exact generated micro-ROS library during bench commissioning.
+diff --git a/User/APP/lcd_task.c b/User/APP/lcd_task.c
+index 78ad2bd..d8b736a 100644
+--- a/User/APP/lcd_task.c
++++ b/User/APP/lcd_task.c
+@@ -3,6 +3,7 @@
+ #include "motor_task.h"
+ #include "INS_task.h"
+ #include "observe_task.h"
++#include "terrain_advisory.h"
+ #include "can_bsp.h"
+ #include "bsp_navkey.h"
+ #include "bsp_sbus.h"
+@@ -176,10 +177,11 @@ static void LCD_RenderPageBackground(uint8_t page)
+ 
+             LCD_DrawCard(2, 120, 276, 95, "HARDWARE & RTOS DIAGNOSTICS", UI_COLOR_BORDER);
+             LCD_ShowString(6, 136, (const uint8_t *)"MCU Clock : STM32H723 @ 192 MHz", UI_COLOR_WHITE, UI_COLOR_PANEL, 12, 0);
+-            LCD_ShowString(6, 151, (const uint8_t *)"RTOS Heap : 96 KB (heap_4: OK)", UI_COLOR_GREEN, UI_COLOR_PANEL, 12, 0);
+-            LCD_ShowString(6, 166, (const uint8_t *)"Tasks     : 5 Running (All OK)", UI_COLOR_WHITE, UI_COLOR_PANEL, 12, 0);
+-            LCD_ShowString(6, 181, (const uint8_t *)"RC Link   : UART5 (PD2) 100k 8E2", UI_COLOR_MUTED, UI_COLOR_PANEL, 12, 0);
+-            LCD_ShowString(6, 196, (const uint8_t *)"RC Status :", UI_COLOR_MUTED, UI_COLOR_PANEL, 12, 0);
++            LCD_ShowString(6, 149, (const uint8_t *)"RTOS Heap : 96 KB (heap_4: OK)", UI_COLOR_GREEN, UI_COLOR_PANEL, 12, 0);
++            LCD_ShowString(6, 162, (const uint8_t *)"Tasks     : 5 Running (All OK)", UI_COLOR_WHITE, UI_COLOR_PANEL, 12, 0);
++            LCD_ShowString(6, 175, (const uint8_t *)"RC Link   : UART5 (PD2) 100k 8E2", UI_COLOR_MUTED, UI_COLOR_PANEL, 12, 0);
++            LCD_ShowString(6, 188, (const uint8_t *)"RC Status :", UI_COLOR_MUTED, UI_COLOR_PANEL, 12, 0);
++            LCD_ShowString(6, 201, (const uint8_t *)"Terrain Adv:", UI_COLOR_MUTED, UI_COLOR_PANEL, 12, 0);
+             break;
+     }
+ 
+@@ -453,6 +455,39 @@ void LCD_Debug_Update(void)
+         /* ── PAGE 3: COMMUNICATION & SYSTEM DIAGNOSTICS ───────────── */
+         case 3:
+         {
++            TerrainAdvisorySnapshot_t advisory = terrain_advisory_get_snapshot(HAL_GetTick());
++            const char *advisory_name = "UNCERT";
++            uint16_t advisory_color = UI_COLOR_YELLOW;
++            if (!advisory.stale)
++            {
++                switch (advisory.code)
++                {
++                    case TERRAIN_ADVISORY_NONE:
++                        advisory_name = "NONE";
++                        advisory_color = UI_COLOR_GREEN;
++                        break;
++                    case TERRAIN_ADVISORY_JUMP_CANDIDATE:
++                        advisory_name = "JUMP";
++                        advisory_color = UI_COLOR_YELLOW;
++                        break;
++                    case TERRAIN_ADVISORY_STOP_CANDIDATE:
++                        advisory_name = "STOP";
++                        advisory_color = UI_COLOR_RED;
++                        break;
++                    default:
++                        advisory_name = "UNCERT";
++                        advisory_color = UI_COLOR_YELLOW;
++                        break;
++                }
++                snprintf(buf, sizeof(buf), "ADV:%s %.2fm %.0fcm", advisory_name,
++                         advisory.distance_m, advisory.height_m * 100.0);
++            }
++            else
++            {
++                snprintf(buf, sizeof(buf), "ADV:STALE");
++            }
++            LCD_ShowString(84, 201, (const uint8_t *)buf, advisory_color, UI_COLOR_PANEL, 12, 0);
++
+             snprintf(buf, sizeof(buf), "#%-6lu msgs (%4.1f Hz)", metrics.cmd_rx_count, (double)metrics.cmd_rate_hz);
+             LCD_ShowString(84, 56, (const uint8_t *)buf, UI_COLOR_YELLOW, UI_COLOR_PANEL, 12, 0);
+ 
+@@ -471,9 +506,9 @@ void LCD_Debug_Update(void)
+                  * RC_CH_VX / RC_CH_WZ in bsp_sbus.h to match. */
+                 snprintf(buf, sizeof(buf), "C1:%4u C2:%4u C3:%4u C4:%4u",
+                          sbus.ch[0], sbus.ch[1], sbus.ch[2], sbus.ch[3]);
+-                LCD_ShowString(84, 196, (const uint8_t *)buf, UI_COLOR_GREEN, UI_COLOR_PANEL, 12, 0);
++                LCD_ShowString(84, 188, (const uint8_t *)buf, UI_COLOR_GREEN, UI_COLOR_PANEL, 12, 0);
+             } else {
+-                LCD_ShowString(84, 196, (const uint8_t *)"NO SIGNAL (OFFLINE)            ", UI_COLOR_MUTED, UI_COLOR_PANEL, 12, 0);
++                LCD_ShowString(84, 188, (const uint8_t *)"NO SIGNAL (OFFLINE)            ", UI_COLOR_MUTED, UI_COLOR_PANEL, 12, 0);
+             }
+ 
+             LCD_ShowString(6, 224, (const uint8_t *)"PAGE: SYSTEM & TELEM", UI_COLOR_WHITE, 0x0128, 12, 0);
+diff --git a/User/APP/terrain_advisory.c b/User/APP/terrain_advisory.c
+new file mode 100644
+index 0000000..970e366
+--- /dev/null
++++ b/User/APP/terrain_advisory.c
+@@ -0,0 +1,80 @@
++#include "terrain_advisory.h"
++
++#include "task.h"
++#include <limits.h>
++#include <math.h>
++
++static TerrainAdvisorySnapshot_t s_advisory = {
++    .code = TERRAIN_ADVISORY_UNCERTAIN,
++    .stale = 1U
++};
++static uint32_t s_last_update_ms;
++static uint8_t s_has_update;
++
++bool terrain_advisory_validate(const double *data, size_t len)
++{
++    if (data == NULL || len != TERRAIN_ADVISORY_DATA_LEN) return false;
++
++    for (size_t i = 0U; i < TERRAIN_ADVISORY_DATA_LEN; i++)
++    {
++        if (!isfinite(data[i])) return false;
++    }
++
++    if (data[0] < 0.0 || data[0] > 3.0 || floor(data[0]) != data[0]) return false;
++    if (data[1] < 0.0 || data[2] < 0.0 || data[3] < 0.0) return false;
++    if (data[4] < 0.0 || data[4] > 1.0) return false;
++    if (data[5] != 0.0 && data[5] != 1.0) return false;
++
++    return true;
++}
++
++bool terrain_advisory_store(const double *data, size_t len, uint32_t now_ms)
++{
++    if (!terrain_advisory_validate(data, len))
++    {
++        taskENTER_CRITICAL();
++        s_advisory.rejected++;
++        taskEXIT_CRITICAL();
++        return false;
++    }
++
++    taskENTER_CRITICAL();
++    s_advisory.code = (TerrainAdvisoryCode_t)data[0];
++    s_advisory.distance_m = data[1];
++    s_advisory.height_m = data[2];
++    s_advisory.width_m = data[3];
++    s_advisory.confidence = data[4];
++    s_advisory.plane_valid = (uint8_t)data[5];
++    /* Sequence is carried as a finite float64 in the specified array. Keep
++     * the UInt32 ack conversion defined even for an out-of-range input. */
++    if (data[6] <= 0.0) s_advisory.last_seq = 0U;
++    else if (data[6] >= (double)UINT32_MAX) s_advisory.last_seq = UINT32_MAX;
++    else s_advisory.last_seq = (uint32_t)data[6];
++    s_advisory.accepted++;
++    s_last_update_ms = now_ms;
++    s_has_update = 1U;
++    taskEXIT_CRITICAL();
++    return true;
++}
++
++TerrainAdvisorySnapshot_t terrain_advisory_get_snapshot(uint32_t now_ms)
++{
++    TerrainAdvisorySnapshot_t snapshot;
++
++    taskENTER_CRITICAL();
++    snapshot = s_advisory;
++    if (!s_has_update)
++    {
++        snapshot.age_ms = UINT32_MAX;
++        snapshot.stale = 1U;
++    }
++    else
++    {
++        snapshot.age_ms = now_ms - s_last_update_ms;
++        snapshot.stale = (snapshot.age_ms >= TERRAIN_ADVISORY_STALE_MS) ? 1U : 0U;
++        if (snapshot.stale) snapshot.code = TERRAIN_ADVISORY_UNCERTAIN;
++    }
++    taskEXIT_CRITICAL();
++
++    return snapshot;
++}
+diff --git a/User/APP/terrain_advisory.h b/User/APP/terrain_advisory.h
+new file mode 100644
+index 0000000..05093cd
+--- /dev/null
++++ b/User/APP/terrain_advisory.h
+@@ -0,0 +1,36 @@
++#ifndef TERRAIN_ADVISORY_H
++#define TERRAIN_ADVISORY_H
++
++#include <stdbool.h>
++#include <stddef.h>
++#include <stdint.h>
++
++#define TERRAIN_ADVISORY_DATA_LEN 8U
++#define TERRAIN_ADVISORY_STALE_MS 300U
++
++typedef enum {
++    TERRAIN_ADVISORY_NONE = 0,
++    TERRAIN_ADVISORY_JUMP_CANDIDATE = 1,
++    TERRAIN_ADVISORY_STOP_CANDIDATE = 2,
++    TERRAIN_ADVISORY_UNCERTAIN = 3
++} TerrainAdvisoryCode_t;
++
++typedef struct {
++    TerrainAdvisoryCode_t code;
++    double distance_m;
++    double height_m;
++    double width_m;
++    double confidence;
++    uint8_t plane_valid;
++    uint32_t last_seq;
++    uint32_t accepted;
++    uint32_t rejected;
++    uint32_t age_ms;
++    uint8_t stale;
++} TerrainAdvisorySnapshot_t;
++
++bool terrain_advisory_validate(const double *data, size_t len);
++bool terrain_advisory_store(const double *data, size_t len, uint32_t now_ms);
++TerrainAdvisorySnapshot_t terrain_advisory_get_snapshot(uint32_t now_ms);
++
++#endif /* TERRAIN_ADVISORY_H */
+diff --git a/docs/topics.md b/docs/topics.md
+index 5b11664..837a820 100644
+--- a/docs/topics.md
++++ b/docs/topics.md
+@@ -24,6 +24,8 @@ This document details the ROS 2 interface contract implemented by the `stm32h7_n
+ | `/motor_status` | Publisher | `std_msgs/msg/UInt8` | **Reliable** | **5 Hz** | System health, CAN status, timeout and control-mode bitmask |
+ | `/imu/data` | Publisher | `sensor_msgs/msg/Imu` | **Best Effort** | **50 Hz target** | Calibrated gyro, gravity-inclusive acceleration and relative orientation |
+ | `/imu/debug` | Publisher | `std_msgs/msg/Float64MultiArray` | **Best Effort** | **5 Hz target** | IMU initialization, raw readings and calibration progress |
++| `/terrain_advisory` | Subscriber | `std_msgs/msg/Float64MultiArray` | **Best Effort** | On-demand | Receive-only terrain classification and geometry; never affects motion |
++| `/terrain_advisory_ack` | Publisher | `std_msgs/msg/UInt32` | **Reliable** | **10 Hz** | Sequence number of the last accepted terrain advisory |
+ 
+ ---
+ 
+@@ -213,12 +215,44 @@ are diagnostic telemetry, not an estimator input. The fixed array indices are:
+ ros2 topic echo /imu/debug --qos-reliability best_effort
+ ```
+ 
++### 3.8 `/terrain_advisory` (Receive-only terrain status)
++
++- **Type:** `std_msgs/msg/Float64MultiArray`; Best Effort.
++- **`data` (exactly 8 finite values):**
++
++| Index | Field | Accepted values |
++|:---:|---|---|
++| `0` | Classification code | Integer: `0` NONE, `1` JUMP_CANDIDATE, `2` STOP_CANDIDATE, `3` UNCERTAIN |
++| `1` | `distance_m` | `>= 0` |
++| `2` | `height_m` | `>= 0` |
++| `3` | `width_m` | `>= 0` |
++| `4` | `confidence` | `[0, 1]` |
++| `5` | `plane_valid` | `0` or `1` |
++| `6` | `sequence` | Finite sequence value; acknowledged as UInt32 |
++| `7` | `age_s` | Finite source age in seconds |
++
++Messages with a wrong length, non-finite values, invalid code/plane flag, negative geometry, or out-of-range confidence are rejected and counted. Rejected messages do not refresh freshness. The MCU uses its own receive tick: after 300 ms without a valid message, the reported state becomes UNCERTAIN. At boot, before the first valid message, it is stale/UNCERTAIN. This advisory is display and telemetry only; it does not change motor commands, modes, watchdogs, or RC behavior.
++
++```bash
++ros2 topic pub -r 10 /terrain_advisory std_msgs/msg/Float64MultiArray \
++  "{data: [2.0, 0.99, 0.13, 0.40, 0.95, 1.0, 42.0, 0.02]}"
++```
++
++### 3.9 `/terrain_advisory_ack` (Last accepted sequence)
++
++- **Type:** `std_msgs/msg/UInt32`; Reliable, published at 10 Hz.
++- **Data:** index 6 from the last accepted `/terrain_advisory` message converted to UInt32 (fractional values truncate; values below zero map to zero and values above UInt32 range map to `4294967295`). Before any valid message, this is zero. The value remains at the last accepted sequence if messages stop or a later message is rejected.
++
++```bash
++ros2 topic echo /terrain_advisory_ack
++```
++
+ ---
+ 
+ ## 4. QoS Compatibility Note
+ 
+ > [!IMPORTANT]
+-> `/cmd_vel`, `/cmd_mit`, `/cmd_torque`, `/motor_fb` and `/imu/data` use **Best Effort** reliability.
++> `/cmd_vel`, `/cmd_mit`, `/cmd_torque`, `/motor_fb`, `/imu/data` and `/terrain_advisory` use **Best Effort** reliability.
+ > When subscribing via ROS 2 CLI tools, always specify the matching QoS profile:
+ > ```bash
+ > ros2 topic echo /motor_fb --qos-reliability best_effort
+-- 
+2.52.0
+

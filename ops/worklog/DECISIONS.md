@@ -346,3 +346,15 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Incorporate saved Scenario A evidence into the current report: 362 paired
   frames and passing first-20-second map replay. Keep GUI/continuous-live
   tracking/moving-capture claims separate from these observed results.
+
+### D-20261026-CAN-MONITOR-FAULT-FIELDS: Keep protocol evidence separate
+- The H7 decoder defines the type-2 feedback fault field but does not define
+  further type-21 fault-frame payload semantics. Preserve the feedback's raw
+  6-bit fault value and report bytes 0..3 of type-21 frames as a separate raw
+  big-endian uint32, without inferring a fault meaning.
+- Include the latest commanded `RUN_MODE` write and temperature in the stats
+  array so the requested read-only viewer can display both command mode and
+  thermal state while retaining all required bus counters.
+- Evidence/limits: H7 `robstride_drv.h` and `robstride_drv.c`; software tests
+  cover type-21 extraction and type-18 run-mode parsing. Real motor semantics
+  remain unverified.
