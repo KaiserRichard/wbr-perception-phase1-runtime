@@ -1,4 +1,4 @@
-From 264be5e22f8407773a9c41bd69aa49b0aa2880ea Mon Sep 17 00:00:00 2001
+From 6c678354ded21c39ea5fe1132a57288b3939d0cc Mon Sep 17 00:00:00 2001
 From: KaiserRichard <kaiserquoc@gmail.com>
 Date: Mon, 26 Oct 2026 13:12:20 +0700
 Subject: [PATCH] Add receive-only /terrain_advisory subscriber,
@@ -10,12 +10,12 @@ Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
 ---
  Core/Src/freertos.c         | 70 ++++++++++++++++++++++++++++++--
  Makefile                    |  1 +
- TERRAIN_ADVISORY_CHANGES.md | 56 ++++++++++++++++++++++++++
- User/APP/lcd_task.c         | 47 +++++++++++++++++++---
- User/APP/terrain_advisory.c | 80 +++++++++++++++++++++++++++++++++++++
+ TERRAIN_ADVISORY_CHANGES.md | 56 +++++++++++++++++++++++++
+ User/APP/lcd_task.c         | 47 ++++++++++++++++++---
+ User/APP/terrain_advisory.c | 81 +++++++++++++++++++++++++++++++++++++
  User/APP/terrain_advisory.h | 36 +++++++++++++++++
  docs/topics.md              | 36 ++++++++++++++++-
- 7 files changed, 316 insertions(+), 10 deletions(-)
+ 7 files changed, 317 insertions(+), 10 deletions(-)
  create mode 100644 TERRAIN_ADVISORY_CHANGES.md
  create mode 100644 User/APP/terrain_advisory.c
  create mode 100644 User/APP/terrain_advisory.h
@@ -378,12 +378,13 @@ index 78ad2bd..d8b736a 100644
              LCD_ShowString(6, 224, (const uint8_t *)"PAGE: SYSTEM & TELEM", UI_COLOR_WHITE, 0x0128, 12, 0);
 diff --git a/User/APP/terrain_advisory.c b/User/APP/terrain_advisory.c
 new file mode 100644
-index 0000000..970e366
+index 0000000..0ff9622
 --- /dev/null
 +++ b/User/APP/terrain_advisory.c
-@@ -0,0 +1,80 @@
+@@ -0,0 +1,81 @@
 +#include "terrain_advisory.h"
 +
++#include "FreeRTOS.h"
 +#include "task.h"
 +#include <limits.h>
 +#include <math.h>

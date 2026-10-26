@@ -54,3 +54,11 @@ The interface contract implemented here is the one supplied in the task because 
 - No build, test, script, or Make target was run, as requested. Compiler/linker compatibility and the rebuilt firmware image therefore remain unverified.
 - No board or micro-ROS Agent was available, so topic discovery, reliable ack behavior, real receive timing, LCD formatting, and the unplug procedure remain unverified on hardware.
 - With the required eight-double static buffer, a serialized message longer than the buffer may be rejected by micro-ROS during deserialization before the callback runs. Short wrong-length messages are counted by the module; over-capacity messages may not increment its rejected counter. Confirm this behavior with the exact generated micro-ROS library during bench commissioning.
+
+## Build check (Claude 2, 26 Oct)
+
+Built on macOS with Arm GNU Toolchain 14.2.Rel1 and the senior's prebuilt libmicroros v1.0.0
+(SHA-256 3c7bb1a2...4ab6b verified; fetched with `gh release download`, because the fetch script's
+`${VAR,,}` needs bash 4 and macOS ships bash 3). One fix to Codex's code: `terrain_advisory.c` must
+include `FreeRTOS.h` before `task.h`. Result: text 207184, data 14880, bss 273864 B; `prebuilt/microros_H7_terrain_advisory.bin`.
+Only pre-existing warnings (LCD font tables). Not run on hardware.
