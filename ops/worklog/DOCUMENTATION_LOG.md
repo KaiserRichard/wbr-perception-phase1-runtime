@@ -531,3 +531,9 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Validation: checked source line references while drafting; verified all six lessons meet 150–300 line requirement. Corrected BTR value to `0x801A0002`; calculated 42 MHz / (3 × 14 tq) = 1 Mbit/s. No tests, builds, network, or hardware activity.
 - Limitations: `tools/agv_f446`, `tools/agv_f446_test`, and `tools/supervisor_demo` are absent from this checkout. The `safety_filter` source was not available; the reported QoS mismatch is attributed to the task brief and publisher policy is cited. The scenario procedures are plans, not test results.
 - Review state: local, uncommitted, no push. Session notes: `ops/worklog/sessions/2026-10-26-firmware-lessons.md`.
+
+### DOC-20261026-LESSONS-FORMAT: Repair study pack Markdown rendering
+- Files: `docs/lessons/01_can_and_robstride.md`, `docs/lessons/03_agv_base_firmware.md`, `docs/lessons/04_wbr_balance_lqr_vmc.md`, `docs/lessons/05_wbr_jump_sequence.md`, `tools/lint_markdown.py`, `ops/worklog/sessions/2026-10-26-lessons-format.md`.
+- Changes: corrected display-math delimiter layout without changing formulas or technical text; added a standard-library linter for the requested Markdown rules.
+- Validation: `python3 tools/lint_markdown.py` reported `0 issues across 7 file(s)`; `git diff --check` passed. HTML rendering skipped because the Python `markdown` module is unavailable.
+- Review state: local, uncommitted, no push. Details: `ops/worklog/sessions/2026-10-26-lessons-format.md`.

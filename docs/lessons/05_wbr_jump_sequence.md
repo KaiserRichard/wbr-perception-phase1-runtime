@@ -118,9 +118,11 @@ freshness (`TERRAIN_ADVISORY_TOPIC.md:30-37`).
 
 If a future owner-approved jump gate is added, its logical form is
 
-$$\text{jump request} = \text{operator request}\;\land\;
+$$
+\text{jump request} = \text{operator request}\;\land\;
 \text{fresh advisory is JUMP\_CANDIDATE}\;\land\;
-d_{min}<d<d_{max}.$$
+d_{min}<d<d_{max}.
+$$
 
 The interface explicitly leaves the distance window to the owner
 (`TERRAIN_ADVISORY_TOPIC.md:38-42`). A concrete distance interval, required
