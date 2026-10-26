@@ -1,6 +1,7 @@
 #ifndef AGV_LOGIC_H
 #define AGV_LOGIC_H
 #include <stdint.h>
+#include <stddef.h>
 #include <math.h>
 #define AGV_WHEEL_R 0.060f
 #define AGV_WHEEL_BASE 0.345f
@@ -26,8 +27,23 @@
 #define AGV_STATUS_ENABLED 0x10u
 #define AGV_STATUS_TIMEOUT 0x20u
 #define AGV_STATUS_MODE_MIT 0x40u
+#define AGV_STATUS_IMU_ABSENT 0x80u
 
 typedef struct { float position, velocity, torque; uint8_t mode, fault, motor_id, master_id; uint16_t position_code; } agv_feedback_t;
+static inline int agv_advisory_valid(const double values[8], size_t size) {
+  if (values == 0 || size != 8u) return 0;
+  for (size_t i = 0; i < 8u; ++i) if (!isfinite(values[i])) return 0;
+  double code = values[0], sequence = values[6];
+  return code >= 0.0 && code <= 3.0 && trunc(code) == code &&
+         sequence >= 0.0 && sequence <= 4294967295.0 && trunc(sequence) == sequence;
+}
+static inline void agv_mpu6050_scale(const int16_t raw[6], float accel[3], float gyro[3]) {
+  const float g = 9.80665f;
+  for (unsigned i = 0; i < 3u; ++i) {
+    accel[i] = ((float)raw[i] / 8192.0f) * g;
+    gyro[i] = ((float)raw[i + 3u] / 65.5f) * (0.017453292519943295f);
+  }
+}
 static inline void agv_kinematics(float vx, float wz, float *left, float *right) {
   /* Double intermediates prevent finite float64 ROS inputs near FLT_MAX from
      overflowing before the common saturation scale is applied. */

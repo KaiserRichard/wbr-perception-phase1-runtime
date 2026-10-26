@@ -527,3 +527,7 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Files: `tools/agv_f446_test/agv_home_test.py`, `tools/agv_f446_test/tests/`, `tools/agv_f446_test/HOME_TEST_GUIDE.md`, worklog session/CURRENT.
 - Changes: ROS acceptance sequence with CSV/JSON evidence; pure kinematic/status checks and standard-library tests; home wiring, flash, agent and troubleshooting guide. F446 pin assignment compatibility is explicitly delegated to firmware README review.
 - Validation: `python3 -m unittest -v` (10 passed) and `python3 -m py_compile agv_home_test.py tests/test_checks.py` passed. No ROS hardware run or firmware modification.
+
+### DOC-20261026-AGV-F446-DEMO: Advisory and MPU6050 demo-board extension
+- Updated `tools/agv_f446/README.md` with demo-board role, terrain advisory and IMU contracts, LEDs D4/D5/D6/D9 with 220 ohm resistors, MPU6050 PB6/PB7 wiring, rebuilt archive limits and actual image sizes.
+- Recorded the firmware/build/test scope in `ops/worklog/sessions/2026-10-26-agv-f446-demo.md`. Hardware behavior remains unverified.

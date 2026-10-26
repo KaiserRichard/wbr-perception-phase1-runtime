@@ -4,6 +4,14 @@
 #include "../firmware/agv_logic.h"
 static void closef(float a,float b,float e){assert(fabsf(a-b)<e);}
 int main(void){
+ double advisory[8]={1.0,0.5,0.2,0.3,0.9,1.0,4294967295.0,0.01};
+ assert(agv_advisory_valid(advisory,8));
+ assert(!agv_advisory_valid(advisory,7));
+ advisory[0]=1.5;assert(!agv_advisory_valid(advisory,8));advisory[0]=4;assert(!agv_advisory_valid(advisory,8));
+ advisory[0]=1;advisory[6]=4294967296.0;assert(!agv_advisory_valid(advisory,8));
+ advisory[6]=3;advisory[4]=NAN;assert(!agv_advisory_valid(advisory,8));
+ int16_t raw_imu[6]={8192,-8192,4096,655,-655,0};float accel[3],gyro[3];
+ agv_mpu6050_scale(raw_imu,accel,gyro);closef(accel[0],9.80665f,1e-5f);closef(accel[1],-9.80665f,1e-5f);closef(accel[2],4.903325f,1e-5f);closef(gyro[0],0.1745329f,1e-5f);closef(gyro[1],-0.1745329f,1e-5f);closef(gyro[2],0,1e-7f);
  float l,r; agv_kinematics(0.6f,0,&l,&r); closef(l,-10,1e-5f);closef(r,10,1e-5f);
  agv_kinematics(0,1,&l,&r);closef(l,2.875f,1e-4f);closef(r,2.875f,1e-4f);
  agv_kinematics(3.0f,2.0f,&l,&r);assert(fabsf(l)<=20.0001f&&fabsf(r)<=20.0001f);closef(fabsf(l/r),fabsf((3-.345f)/(3+.345f)),1e-4f);
@@ -16,6 +24,6 @@ int main(void){
  assert(parsed.motor_id==AGV_MOTOR_ID&&parsed.master_id==AGV_CAN_MASTER_ID);
  closef(parsed.position,0,0.001f);closef(parsed.velocity,0,0.001f);closef(parsed.torque,0,0.002f);
  assert(agv_rs_parse(&parsed,agv_rs_id(1,0,AGV_CAN_MASTER_ID),fb,8)<0);
- puts("PASS: kinematics, curvature scaling, extended ID, parameter packing, feedback parse/rejection");
+ puts("PASS: advisory validation, MPU6050 SI scaling, kinematics, curvature scaling, extended ID, parameter packing, feedback parse/rejection");
  return 0;
 }
