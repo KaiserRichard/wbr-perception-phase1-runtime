@@ -33,3 +33,9 @@ __pycache__/
 # Editors
 .vscode/
 .idea/
+reports/**/*.aux
+reports/**/*.log
+reports/**/*.fls
+reports/**/*.fdb_latexmk
+reports/**/*.out
+reports/**/*.xdv

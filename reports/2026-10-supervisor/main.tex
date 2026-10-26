@@ -1,0 +1,118 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,margin=1.45cm,top=1.35cm,bottom=1.35cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage[vietnamese]{babel}
+\usepackage{graphicx,float,subcaption,booktabs,array,tabularx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\renewcommand{\arraystretch}{1.07}
+\setlength{\textfloatsep}{6pt plus 2pt minus 2pt}
+\setlength{\intextsep}{6pt plus 2pt minus 2pt}
+\setlength{\tabcolsep}{4pt}
+\pagestyle{plain}
+\newcommand{\meas}{\textbf{Đo được}}
+\newcommand{\est}{\textbf{Ước lượng}}
+\newcommand{\pending}{\textbf{Chờ thử}}
+\newcommand{\photo}[2]{\fbox{\begin{minipage}[c][#1][c]{0.95\linewidth}\centering\small\textbf{[ẢNH: #2]}\end{minipage}}}
+\begin{document}
+\begin{center}
+{\Large\bfseries Báo cáo tiến độ gửi giảng viên hướng dẫn}\\[-1pt]
+{\normalsize Nhận thức, advisory địa hình và giao tiếp bộ điều khiển}\par
+\small 26/10/2026 \quad|\quad Trạng thái bằng chứng: thử bàn / phần mềm; chưa chạy trên WBR thật
+\end{center}
+\vspace{-5pt}
+\section{Mục tiêu và bối cảnh}
+Raspberry Pi 5 cùng camera Intel RealSense D435 đảm nhiệm nhận thức: ORB-SLAM3 và phát hiện vật cản. STM32 tiếp tục giữ quyền cân bằng, điều khiển cơ cấu và quyết định nhảy. Trong khi chờ nhóm hoàn thiện WBR và bo STM32H7 mới cho AGV, từng mắt xích đang được kiểm tra trên rig bàn và board minh hoạ; kết quả dưới đây không phải nghiệm thu robot.
+
+\photo{0.65cm}{rig bìa trên bàn: thấy toàn bộ D435, chiều cao/góc gá và vật cản thử; chụp nghiêng 45 độ để thể hiện bố trí.}
+
+\section{Kiến trúc hệ thống}
+\begin{figure}[H]\centering
+\begin{tikzpicture}[node distance=5mm and 5mm, >=Latex,
+ box/.style={draw,rounded corners,align=center,minimum height=10mm,text width=29mm,font=\small},
+ good/.style={box,fill=green!9,draw=green!45!black}, wait/.style={box,fill=orange!10,draw=orange!70!black},
+ arr/.style={->,thick}]
+\node[good] (cam) {D435\\\scriptsize kiểm tra hình ảnh / rig bàn};
+\node[good,right=of cam] (pi) {Pi 5\\ORB-SLAM3 + obstacle detector\\safety filter / demo};
+\node[good,right=of pi] (link) {micro-ROS\\USB hoặc UART\\advisory / lệnh};
+\node[wait,right=of link] (mcu) {STM32\\subscriber, lọc cục bộ, CAN};
+\node[wait,right=of mcu] (mot) {RobStride / motors\\robot thật};
+\draw[arr] (cam)--(pi); \draw[arr] (pi)--(link); \draw[arr] (link)--(mcu); \draw[arr] (mcu)--(mot);
+\node[draw=green!45!black,fill=green!9,anchor=north west,font=\scriptsize,align=left] at ([yshift=-3mm]cam.south west) {Xanh: đã kiểm tra trên bàn / replay};
+\node[draw=orange!70!black,fill=orange!10,anchor=north east,font=\scriptsize,align=right] at ([yshift=-3mm]mot.south east) {Cam: cần board / tích hợp};
+\end{tikzpicture}
+\caption{Luồng dữ liệu và trạng thái xác minh. Board F446RE là board minh hoạ; phần CAN/fake motor và IMU chưa hoàn tất thử vật lý.}
+\end{figure}
+
+\section{Kết quả đã đạt}
+\small
+\begin{tabularx}{\linewidth}{@{}p{0.23\linewidth}X p{0.24\linewidth}@{}}
+\toprule
+Khâu & Kết quả chính & Nhãn / phạm vi\\
+\midrule
+Phát hiện vật cản & Trên 6 lần chạy hộp, sai số trung vị chiều cao sau hiệu chỉnh $-0.2$ đến $+0.4$ cm; khoảng cách $-1.6$ đến $+0.3$ cm. Sách 2.45 cm được phân loại UNCERTAIN thay vì JUMP. & \meas{}; dữ liệu bàn 24/10, đã dùng các lượt để chọn ngưỡng (không có tập giữ lại).\\
+ORB-SLAM3 & Đoạn thẳng: 2.009 m so với thước 2.00 m; một map, không thấy nhảy pose. EuRoC MH01: ATE RMSE SE(3) 3.68--4.16 cm qua 3 lượt, 3,639 cặp mỗi lượt. & Tính từ dữ liệu offline; căn chỉnh SE(3), không đại diện độ chính xác live trên Pi.\\
+Bản đồ dày & 225 khung, 354,244 điểm; độ phân giải 1 cm; RMS mặt bàn 5.76 mm. & \meas{}; hậu xử lý từ pose; map theo hệ camera, chưa căn theo trọng lực.\\
+LED / advisory & Bàn trống NONE 553/553; sách 4.6 cm JUMP 561/563 (2 UNCERTAIN); hộp 13.1 cm STOP rồi NONE khi dọn. LED self-test đủ 4 trạng thái và timeout, 9,420 phản hồi. & \meas{}; rig bìa, D435 cao 29 cm, nghiêng khoảng 13°.\\
+UART / micro-ROS & UART RTT 2.8 ms (P50 2.81 ms; P99 2.82 ms) trong bài synthetic; replay bag hộp: 139/139. Nucleo-F446RE xác nhận 712/712 và 739/739 advisory. & \meas{}; bàn, Pi--Nucleo; không phải board WBR.\\
+Giảm flicker & Replay 60 s: lượt approach-r2 156 xuống 2 lần đổi trạng thái/phút; r3 218.6 xuống 25.1. Hysteresis khoảng cách 0.10 m, chiều cao 0.01 m. & \meas{}; replay trong cửa sổ live; LED live vẫn ghi 128--157 lần/phút ở hai lượt tương ứng.\\
+\bottomrule
+\end{tabularx}
+\normalsize
+\vspace{-2mm}
+\begin{figure}[H]\centering
+\begin{subfigure}[t]{0.48\linewidth}\centering\includegraphics[width=\linewidth,height=3.1cm,keepaspectratio]{figures/orbslam3-topdown.png}\caption{Quỹ đạo và map thưa, đoạn 2 m.}\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}\centering\includegraphics[width=\linewidth,height=3.1cm,keepaspectratio]{figures/dense-map-topdown.png}\caption{Bản đồ dày đặc.}\end{subfigure}
+\caption{Ảnh từ bộ bằng chứng lab ngày 25/10.}\end{figure}
+\begin{figure}[H]\centering
+\begin{subfigure}[t]{0.48\linewidth}\centering\includegraphics[width=\linewidth,height=2.8cm,keepaspectratio]{figures/height-estimated-vs-measured.png}\caption{Chiều cao ước lượng so với đo.}\end{subfigure}\hfill
+\begin{subfigure}[t]{0.48\linewidth}\centering\includegraphics[width=\linewidth,height=2.8cm,keepaspectratio]{figures/distance-error-vs-distance.png}\caption{Sai số khoảng cách theo cự ly.}\end{subfigure}
+\caption{Đánh giá lại các lượt bàn 24/10; các lượt được dùng khi chỉnh phương pháp, không phải kiểm định độc lập.}\end{figure}
+
+\section{Board minh hoạ F446RE}
+Nucleo-F446RE thay vai trò giao diện STM32H7 để trình diễn micro-ROS và luồng \texttt{/cmd\_vel}; kiểm tra phần mềm ngày 26/10 xác nhận chuỗi đến topic \texttt{/cmd\_vel}. Demo nhận lại bản ghi camera, safety filter là chính sách minh hoạ; endpoint CAN tạo phản hồi motor giả. Không suy ra dừng xe thật hay đáp ứng RobStride. CAN loopback và IMU MPU6050 đang \pending{} do cần hàn header module.
+
+\begin{tabularx}{\linewidth}{@{}X p{0.36\linewidth}@{}}\toprule
+Hạng mục & Kết quả ghi nhận\\\midrule
+CAN loopback / fake motor & \fbox{\parbox[c][0.48cm][c]{0.93\linewidth}{\centering\scriptsize Bổ sung sau khi hàn: kết quả CAN loopback}}\\
+Kết quả CAN & \rule{0.93\linewidth}{0.35pt}\\
+IMU MPU6050 & \fbox{\parbox[c][0.48cm][c]{0.93\linewidth}{\centering\scriptsize Bổ sung sau khi hàn: kết quả IMU}}\\
+Kết quả IMU & \rule{0.93\linewidth}{0.35pt}\\
+Đèn advisory & Đã thử trên board F446\\
+Chuỗi demo đến \texttt{/cmd\_vel} & Đã xác minh phần mềm 26/10\\\bottomrule\end{tabularx}
+
+\photo{1.15cm}{board F446 nhìn từ trên xuống, thấy rõ Nucleo, module CAN, dây nối và LED đỏ/xanh đang sáng; chụp sau khi hàn header và chạy thử.}
+
+\section{Firmware STM32H7 và giám sát CAN}
+Firmware AGV H7 đã thêm subscriber \texttt{/terrain\_advisory}, vùng đệm tĩnh 8 số thực, kiểm tra dữ liệu, bộ đếm hợp lệ/từ chối, tuổi dữ liệu 300 ms và hiển thị LCD; callback không gọi đường điều khiển motor. Tăng executor từ 4 lên 5 handle. Bản build đo được: text 207,184 B, data 14,880 B, bss 273,864 B. Đường xử lý lệnh và motor giữ nguyên. \pending{} xác minh nạp/chạy trên bo H7 mới. Monitor CAN hai bus ở chế độ listen-only đã sẵn sàng bằng firmware F446; chưa ghi nhận bus vật lý.
+
+\section{Video demo}
+\begin{minipage}{\linewidth}\centering\fbox{\parbox[c][0.72cm][c]{0.94\linewidth}{\centering\small [LIÊN KẾT / QR VIDEO: chủ dự án bổ sung sau khi quay]}}\end{minipage}
+\textbf{Kịch bản quay 60--90 giây:} (1) toàn cảnh rig D435 và board; (2) Foxglove phát lại video và topic advisory; (3) hộp xuất hiện, STOP và LED đỏ; (4) vùng không vật cản, NONE và LED xanh; (5) màn hình \texttt{/cmd\_vel}, trạng thái safety filter, fake wheel feedback/IMU; (6) cận cảnh board và nhắc rõ đây là phát lại dữ liệu, CAN motor giả. Quay đôi: điện thoại quay LED đồng thời ghi màn hình Foxglove, sau đó ghép chia đôi màn hình; giữ máy ổn định, thêm chú thích, không cắt ghép để hàm ý cảm biến hoặc motor thật.
+
+\photo{0.9cm}{ảnh chụp màn hình Foxglove trong demo: camera replay, terrain advisory, safety-filter state và fake wheel feedback cùng xuất hiện.}
+
+\section{Kế hoạch tiếp theo}
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item [\textbf{[ngày]}] Hàn header module; xác minh CAN loopback và đọc IMU trên F446, lưu log / ảnh.
+\item [\textbf{[ngày]}] Cùng người phụ trách board chọn bo đích (H7 AGV hay WBR); thử subscriber chỉ hiển thị, motor disable, xác nhận stale/invalid.
+\item [\textbf{[ngày]}] Chạy camera live qua Pi tới board; đo sequence, latency, mất gói và stale sau rút link.
+\item [\textbf{[ngày]}] Chạy đồng thời ORB-SLAM3 + detector trên Pi; đo FPS, CPU, nhiệt độ, rớt khung và latency advisory.
+\item [\textbf{[ngày]}] Chỉ sau khi duyệt gate và quy trình an toàn: thử trên giá đỡ / dây giữ; chưa cấp quyền nhảy từ Pi.
+\end{itemize}
+\section{Hạn chế hiện tại}
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item ORB-SLAM3 và detector chưa chạy đồng thời trên camera live; chưa có số tải Pi trong chế độ kết hợp.
+\item Lượt ORB 2 m bị cắt trước lượt quay về; EuRoC là kết quả offline, lệch frame/extrinsic còn là giả thiết trong phép so sánh.
+\item Hysteresis giảm flicker khi replay nhưng flicker LED live còn cao ở mép ngưỡng; chưa chứng minh cải thiện ngoài rig.
+\item CAN, IMU trên F446 và firmware H7 chưa được kiểm chứng vật lý; demo dùng camera replay và motor giả.
+\item Ngưỡng phân loại và khoảng cách nhảy chưa được xác nhận trên WBR; chưa có thử nghiệm robot thật hoặc đánh giá an toàn chức năng.
+\end{itemize}
+\vfill\scriptsize Nguồn nội bộ: báo cáo lab 25/10; đánh giá detector và UART 24/10; giao diện advisory; ghi chú build H7; kịch bản demo F446. Số liệu đo và phạm vi thử được ghi cạnh từng kết quả.
+\end{document}
