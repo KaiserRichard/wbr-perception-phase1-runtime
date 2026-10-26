@@ -48,6 +48,7 @@ def _ros_main():
     import rclpy
     from geometry_msgs.msg import Twist
     from rclpy.node import Node
+    from rclpy.qos import QoSProfile, ReliabilityPolicy
     from std_msgs.msg import Float64MultiArray, String
 
     class SafetyFilter(Node):
@@ -60,7 +61,9 @@ def _ros_main():
             self.last_received = None
             self.last_jump_logged = False
             self.create_subscription(Twist, '/cmd_vel_teleop', self.on_command, 10)
-            self.create_subscription(Float64MultiArray, '/terrain_advisory', self.on_advisory, 10)
+            # /terrain_advisory is published Best Effort; a Reliable subscription would get nothing.
+            advisory_qos = QoSProfile(depth=1, reliability=ReliabilityPolicy.BEST_EFFORT)
+            self.create_subscription(Float64MultiArray, '/terrain_advisory', self.on_advisory, advisory_qos)
             self.command_pub = self.create_publisher(Twist, '/cmd_vel', 10)
             self.state_pub = self.create_publisher(String, '/safety_filter/state', 10)
 
