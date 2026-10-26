@@ -1,0 +1,62 @@
+{
+  "configById": {
+    "Image!camera": {
+      "imageMode": {
+        "imageTopic": "/camera/camera/color/image_raw",
+        "calibrationTopic": "/camera/camera/color/camera_info"
+      },
+      "synchronize": false,
+      "foxglovePanelTitle": "Recorded camera view"
+    },
+    "RawMessages!advisory": {
+      "topicPath": "/terrain_advisory",
+      "diffEnabled": false,
+      "defaultExpanded": true,
+      "foxglovePanelTitle": "Perception terrain advisory"
+    },
+    "RawMessages!filter": {
+      "topicPath": "/safety_filter/state",
+      "diffEnabled": false,
+      "defaultExpanded": true,
+      "foxglovePanelTitle": "Demo filter decision"
+    },
+    "Plot!wheels": {
+      "paths": [
+        {"value": "/motor_fb.velocity[0]", "enabled": true, "label": "fake wheel 0"},
+        {"value": "/motor_fb.velocity[1]", "enabled": true, "label": "fake wheel 1"},
+        {"value": "/cmd_vel.linear.x", "enabled": true, "label": "filtered forward command"}
+      ],
+      "foxglovePanelTitle": "Filtered command and fake wheel speeds"
+    },
+    "Plot!imu": {
+      "paths": [
+        {"value": "/imu/data.linear_acceleration.z", "enabled": true, "label": "vertical acceleration"}
+      ],
+      "foxglovePanelTitle": "F446 IMU acceleration"
+    }
+  },
+  "layout": {
+    "first": "Image!camera",
+    "second": {
+      "first": "RawMessages!advisory",
+      "second": {
+        "first": "RawMessages!filter",
+        "second": {
+          "first": "Plot!wheels",
+          "second": "Plot!imu",
+          "direction": "column",
+          "splitPercentage": 72
+        },
+        "direction": "column",
+        "splitPercentage": 42
+      },
+      "direction": "column",
+      "splitPercentage": 38
+    },
+    "direction": "row",
+    "splitPercentage": 48
+  },
+  "globalVariables": {},
+  "playbackConfig": {"speed": 1},
+  "userNodes": {}
+}

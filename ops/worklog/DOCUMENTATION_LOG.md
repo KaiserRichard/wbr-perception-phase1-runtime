@@ -531,3 +531,13 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 ### DOC-20261026-AGV-F446-DEMO: Advisory and MPU6050 demo-board extension
 - Updated `tools/agv_f446/README.md` with demo-board role, terrain advisory and IMU contracts, LEDs D4/D5/D6/D9 with 220 ohm resistors, MPU6050 PB6/PB7 wiring, rebuilt archive limits and actual image sizes.
 - Recorded the firmware/build/test scope in `ops/worklog/sessions/2026-10-26-agv-f446-demo.md`. Hardware behavior remains unverified.
+### DOC-20261026-SUPERVISOR-DEMO: Recorded perception-to-controller bench demo
+- Time / author: 2026-10-26 +07; Codex.
+- Branch: `claude2/20261026-supervisor-demo`; local changes only, uncommitted.
+- Files: `tools/supervisor_demo/` scripts, tests, Foxglove layout, walkthrough,
+  and `ops/worklog/sessions/2026-10-26-supervisor-demo.md`.
+- Changes: add the requested ROS 2 demo policy adapter and 20 Hz drive pattern,
+  launch recorded bag replay with perception/agent/filter/optional Foxglove,
+  and explain stand-ins and limitations for the supervisor.
+- Validation: six pure Python policy tests passed. ROS launch, bag replay, serial,
+  F446, CAN fake motor, and Foxglove GUI are unverified.
