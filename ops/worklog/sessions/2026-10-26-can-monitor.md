@@ -1,0 +1,12 @@
+# CAN monitor firmware and Pi viewer
+
+- Scope: local branch `claude2/20261026-can-monitor`; working tree only. No commit, push, network access, or hardware flash.
+- Decision recorded: keep type-2 feedback's 6-bit fault value distinct from the raw type-21 four-byte word; expose latest run-mode write and temperature in stats. See `ops/worklog/DECISIONS.md`.
+- Read `ops/worklog/CURRENT.md`, `ops/USER_PROFILE.md`, F446 bare-metal micro-ROS base, `origin/claude2/20261025-agv-f446` bxCAN/RobStride logic, and the H7 `robstride_drv.c`, `robstride_drv.h`, `hardware.md`, and `porting.md` sources under the corrected `/private/tmp/claude-501/-Users-quockaiser-...` path.
+- Added `tools/can_monitor/`: silent bxCAN receiver for CAN1/PB8-PB9 and CAN2/PB12-PB13; all-ID 32-bit filters, CAN2SB=14, 1 Mbit/s timing for 42 MHz and 16 MHz APB1; decoder for RobStride types 0/1/2/3/4/6/17/18/21/22/23/24/25/26; micro-ROS JointState at 20 Hz and UInt32MultiArray stats at 5 Hz; Pi rclpy table/CSV helper; wiring, agent, bench, and Foxglove documentation.
+- SAFETY implementation checked in source: CAN_BTR SILM bit 31 is set before leaving initialization on both controllers. Receive driver exports no CAN transmit function; all-ID zero-mask filters accept standard and extended IDs.
+- First decoder-test attempt failed because the Makefile had not created `build/`; Makefile now creates it. First firmware link then exposed missing ROSIDL sequence includes/API names, ignored `rcl` results under `-Werror`, and missing PB GPIO register definitions; corrected those and rebuilt.
+- Final command: `make test && make LIBROOT="$HOME/Desktop/Research/agv-libbuild/micro_ros_stm32cubemx_utils/microros_static_library/libmicroros"` from `tools/can_monitor/`.
+- Result: decoder test reports 6 cases passed; arm-none-eabi-gcc build succeeds. Final ELF size: text 62,728, data 7,432, bss 14,504, total 84,664 bytes; binary 70,172 bytes. SHA256 `db346167ea8f3c0f4da2c891f9310065721f9df57e7001bf480e8ecab8adb039`.
+- `python3 -m py_compile view_can_monitor.py` passed using a temporary cache prefix. `git diff --check` passed. No target execution or serial runtime test.
+- Unverified: UART electrical/interoperability, actual SILENT behavior on the selected module/board, bxCAN bitrate on hardware, H7 traffic capture and decoded values, ROS 2 topic compatibility at the requested rates, bench/stand checks, temperature/fault interpretation, and Pi viewer runtime.

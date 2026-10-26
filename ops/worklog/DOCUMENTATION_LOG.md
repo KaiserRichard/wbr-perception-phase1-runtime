@@ -1,5 +1,11 @@
 # Documentation change log
 
+### DOC-20261026-CAN-MONITOR: Document a passive dual-bus RobStride monitor
+- Files: `tools/can_monitor/README.md`; `ops/worklog/CURRENT.md`; `ops/worklog/DECISIONS.md`; `ops/worklog/sessions/2026-10-26-can-monitor.md`; `ops/worklog/reviews/2026-10-26-can-monitor.md`.
+- Added wiring and receive-only safety boundary, local build/flash instructions, Pi Agent/viewer command, stats field layout, no-robot and on-stand bench checks, Foxglove tips, and explicit unverified status.
+- Evidence: local decoder test (6 cases), micro-ROS F446 cross-build (84,592-byte ELF; 70,108-byte binary), checksum recorded in session/review. No hardware or ROS runtime test.
+- Review state: local uncommitted work; Claude review line prepared in the review file. Hardware behavior is not claimed.
+
 Append-only audit trail. Add one entry per documentation change set using the
 format in README.md. Entries describe evidence and review state; they are not
 approval or proof of unrun tests. Never rewrite finalized earlier entries.
