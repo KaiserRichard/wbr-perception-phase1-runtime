@@ -50,8 +50,10 @@ For a no-slip differential-drive model, left/right tangential speeds are
 $v_L=v-\omega W/2$ and $v_R=v+\omega W/2$.
 Dividing by radius gives wheel angular speeds:
 
-$$\omega_L=\frac{v-\omega W/2}{R},\qquad
-\omega_R=\frac{v+\omega W/2}{R}$$
+$$
+\omega_L=\frac{v-\omega W/2}{R},\qquad
+\omega_R=\frac{v+\omega W/2}{R}
+$$
 
 The implementation computes exactly this pair and then multiplies each side
 by its motor installation sign (`User/Algorithm/Kinematics/kinematics.c:8-23`).
@@ -63,21 +65,29 @@ The interface profile gives $R=0.060\text{ m}$ and $W=0.345\text{ m}$
 Choose $v=0.30\text{ m/s}$ and $\omega=0.80\text{ rad/s}$.
 The half-track yaw contribution at each wheel is
 
-$$\omega W/2 = 0.80\cdot0.345/2=0.138\text{ m/s}.$$
+$$
+\omega W/2 = 0.80\cdot0.345/2=0.138\text{ m/s}.
+$$
 
 Then
 
-$$\omega_L=(0.300-0.138)/0.060=2.70\text{ rad/s},$$
+$$
+\omega_L=(0.300-0.138)/0.060=2.70\text{ rad/s},
+$$
 
-$$\omega_R=(0.300+0.138)/0.060=7.30\text{ rad/s}.$$
+$$
+\omega_R=(0.300+0.138)/0.060=7.30\text{ rad/s}.
+$$
 
 The right wheel runs faster, so the robot curves left under the chosen positive
 yaw convention. Wheel speed is shaft radians per second after sign correction.
 
 The forward speed and yaw rate can be recovered from measured wheel rates:
 
-$$v=\frac{R}{2}(\omega_R+\omega_L),\qquad
-\omega=\frac{R}{W}(\omega_R-\omega_L).$$
+$$
+v=\frac{R}{2}(\omega_R+\omega_L),\qquad
+\omega=\frac{R}{W}(\omega_R-\omega_L).
+$$
 
 Check units: $R\omega_i$ is m/s; $R/W$ is dimensionless, leaving rad/s for yaw.
 
@@ -87,8 +97,10 @@ Each motor command is limited to ±20 rad/s. If either computed wheel exceeds
 that range, the motor task scales both by one common positive factor
 (`User/APP/motor_task.c:543-563`).
 
-$$s=\min\left(1,\frac{20}{\max(|\omega_L|,|\omega_R|)}\right),
-\quad \omega'_L=s\omega_L,\quad \omega'_R=s\omega_R.$$
+$$
+s=\min\left(1,\frac{20}{\max(|\omega_L|,|\omega_R|)}\right),
+\quad \omega'_L=s\omega_L,\quad \omega'_R=s\omega_R.
+$$
 
 The ratio between wheel speeds stays unchanged. Since
 $\omega/v=(\omega_R-\omega_L)/(W(\omega_R+\omega_L)/2)$, this common scaling

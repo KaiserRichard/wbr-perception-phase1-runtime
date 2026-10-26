@@ -68,8 +68,10 @@ whether a receiver acknowledged it.
 
 A CAN bit is divided into time quanta (tq). For bxCAN:
 
-$$T_{bit} = T_{q} (1 + BS1 + BS2), \qquad
-T_q = \frac{BRP+1}{f_{CAN}}$$
+$$
+T_{bit} = T_{q} (1 + BS1 + BS2), \qquad
+T_q = \frac{BRP+1}{f_{CAN}}
+$$
 
 Here `1` is the Sync Segment. Register fields encode `BRP-1`, `BS1-1`, and
 `BS2-1`; always distinguish the encoded field from the actual count.
@@ -78,8 +80,10 @@ The monitor's 42 MHz branch sets BTR fields with `BRP field = 2`,
 `TS1 field = 10`, and `TS2 field = 1` (`tools/can_monitor/firmware/can_rx.c:45-48`).
 Therefore the actual divider is 3, BS1 is 11 tq, and BS2 is 2 tq.
 
-$$N_{tq}=1+11+2=14, \qquad
-f_{bit}=\frac{42\,000\,000}{3\cdot14}=1\,000\,000\;bit/s$$
+$$
+N_{tq}=1+11+2=14, \qquad
+f_{bit}=\frac{42\,000\,000}{3\cdot14}=1\,000\,000\;bit/s
+$$
 
 The literal value written is `0x801A0002`: bit 31 enables SILM, bit 20 encodes
 TS2=1, bits 16–19 encode TS1=10, and the BRP field is 2.
@@ -87,7 +91,9 @@ This is a calculated decode of the register expression, not a scope measurement.
 
 The sample point is at the end of Sync + BS1:
 
-$$\text{sample fraction}=\frac{1+11}{14}=0.8571\quad (85.7\%)$$
+$$
+\text{sample fraction}=\frac{1+11}{14}=0.8571\quad (85.7\%)
+$$
 
 That timing must match the network's nominal bitrate and have a suitable sample
 point for propagation delay and oscillator tolerance. A correct bitrate alone
@@ -177,7 +183,9 @@ on one shared physical bus.
 
 For an unsigned $n$-bit value, linear scaling maps integer codes to a range:
 
-$$x = x_{min} + \frac{c}{2^n-1}(x_{max}-x_{min})$$
+$$
+x = x_{min} + \frac{c}{2^n-1}(x_{max}-x_{min})
+$$
 
 The driver uses this form in `uint_to_float` and the inverse form in
 `float_to_uint` (`robstride_drv.c:12-26`).
@@ -188,7 +196,9 @@ For extended MIT control, the ranges are position ±12.57 rad, command velocity
 Worked example: encode zero position over $[-12.57,+12.57]$.
 The ideal code is
 
-$$c=\frac{0-(-12.57)}{25.14}(65535)=32767.5$$
+$$
+c=\frac{0-(-12.57)}{25.14}(65535)=32767.5
+$$
 
 The C conversion truncates the positive floating result to integer 32767
 (`robstride_drv.c:12-19`). Decoding that code gives approximately

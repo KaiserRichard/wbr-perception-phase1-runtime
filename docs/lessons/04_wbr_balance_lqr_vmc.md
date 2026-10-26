@@ -20,7 +20,9 @@ of mass falls outside the recoverable region.
 Linear Quadratic Regulator (LQR) assumes a linearized discrete-time model
 $x_{k+1}=Ax_k+Bu_k$ and minimizes a quadratic cost
 
-$$J=\sum_{k=0}^{\infty}(x_k^TQx_k+u_k^TRu_k).$$
+$$
+J=\sum_{k=0}^{\infty}(x_k^TQx_k+u_k^TRu_k).
+$$
 
 For a stabilizable model and suitable positive-semidefinite $Q$ and positive
 $R$, the solution yields a feedback matrix $K$. The common control form is
@@ -36,7 +38,9 @@ another six-signal contribution for virtual tangential leg effort
 
 The right-side feedback terms correspond approximately to
 
-$$x_R = [\theta,\dot\theta,\tilde{x},\tilde{v},\phi_R,\dot\phi_R]^T,$$
+$$
+x_R = [\theta,\dot\theta,\tilde{x},\tilde{v},\phi_R,\dot\phi_R]^T,
+$$
 
 where $\theta$ and $\dot\theta$ are the effective leg/body angle and rate;
 $\tilde{x}=x_{filter}-x_{set}$; $\tilde{v}=v_{filter}-v_{set}$;
@@ -78,7 +82,9 @@ measured leg length.
 
 Each row is evaluated as
 
-$$K_i(L_0)=a_{i3}L_0^3+a_{i2}L_0^2+a_{i1}L_0+a_{i0}.$$
+$$
+K_i(L_0)=a_{i3}L_0^3+a_{i2}L_0^2+a_{i1}L_0+a_{i0}.
+$$
 
 The polynomial helper implements this expression directly
 (`User/Algorithm/VMC/VMC_calc.c:220-228`). The coefficient table has 12 rows
@@ -96,7 +102,9 @@ The wheel torque combines the first six terms; the virtual tangential effort
 uses the next six (`chassisR_task.c:195-209`). In matrix notation, ignoring
 side-specific signs and extra corrections:
 
-$$\tau_w=K_{w}(L_0)^T x,\qquad T_p=K_p(L_0)^T x.$$
+$$
+\tau_w=K_{w}(L_0)^T x,\qquad T_p=K_p(L_0)^T x.
+$$
 
 Stored gains already include their signs. The equations above describe the
 sum seen in source, not a universally portable `-Kx` convention.
@@ -117,12 +125,16 @@ Let $q=[q_1,q_2]^T$ be actuated joint angles and let
 $y=[L_0,\alpha]^T$ be virtual leg length and orientation. Around a pose, the
 kinematic Jacobian is
 
-$$J(q)=\frac{\partial y}{\partial q},\qquad \dot y=J\dot q.$$
+$$
+J(q)=\frac{\partial y}{\partial q},\qquad \dot y=J\dot q.
+$$
 
 Power consistency requires $\tau_q^T\dot q=F_y^T\dot y$.
 Since $\dot y=J\dot q$, this yields
 
-$$\tau_q=J^TF_y.$$
+$$
+\tau_q=J^TF_y.
+$$
 
 The code expresses this mapping as two by two coefficients multiplying
 virtual axial effort $F_0$ and tangential effort $T_p$
