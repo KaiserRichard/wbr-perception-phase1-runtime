@@ -537,3 +537,14 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Changes: corrected display-math delimiter layout without changing formulas or technical text; added a standard-library linter for the requested Markdown rules.
 - Validation: `python3 tools/lint_markdown.py` reported `0 issues across 7 file(s)`; `git diff --check` passed. HTML rendering skipped because the Python `markdown` module is unavailable.
 - Review state: local, uncommitted, no push. Details: `ops/worklog/sessions/2026-10-26-lessons-format.md`.
+
+### DOC-20261027-SUPERVISOR-REPORT: Focus Vietnamese report on WBR perception
+- Revised `reports/2026-10-supervisor/main.tex` and its PDF after D435i confirmation:
+  requested identity/title, ORB-SLAM3 focus, shorter results, neutral diagrams,
+  future integration plan and preserved placeholders; eight pages, full-width figures.
+- Added attributed, unchanged Commons concept illustration and source/build README.
+- Corrected data interpretations from saved logs: EuRoC dataset IMU and matched
+  pose/reference count; full plot versus six-run subset; lamp clustering failure;
+  growing dense-map variant; UART B-H08 replay. Measured values were not changed.
+- XeLaTeX build and rendered-page QA pass; no new packages or hardware activity.
+  See `sessions/2026-10-27-supervisor-report-edit.md`.
