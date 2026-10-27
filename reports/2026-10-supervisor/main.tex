@@ -36,10 +36,10 @@ GVHD: \textbf{PGS.TS. Mạc Thị Thoa}\\[4pt]
 \textbf{Visual SLAM} là định vị và dựng bản đồ đồng thời từ chuỗi ảnh: camera vừa ước lượng vị trí, hướng nhìn của chính nó (\emph{pose}), vừa xác định các mốc không gian trong cảnh. Đầu ra gồm quỹ đạo camera và bản đồ các điểm 3D, khác với một ảnh độ sâu chỉ mô tả cảnh tại một thời điểm.
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth]{figures/visual-slam-reference.png}
-\caption{Minh hoạ nguyên lý Visual SLAM: ảnh camera bên trái và bản đồ điểm không gian bên phải. Ảnh tham khảo ORB-SLAM2 của Alejandro Silvestri, Wikimedia Commons, CC BY-SA 4.0 [3]; giữ nguyên ảnh. Đây là minh hoạ khái niệm, không phải kết quả đề tài hay phép so sánh thuật toán.}
+\caption{Minh hoạ nguyên lý Visual SLAM: ảnh camera bên trái và bản đồ điểm không gian bên phải. Ảnh tham khảo ORB-SLAM2 của Alejandro Silvestri, Wikimedia Commons, CC BY-SA 4.0 [3].}
 \label{fig:slam-reference}
 \end{figure}
-\textbf{Giá trị đối với WBR.} Khi bánh trượt hoặc rời sàn, chuyển động suy ra chỉ từ bánh xe có thể không phản ánh đúng chuyển động thân robot. Thị giác cung cấp thêm nguồn ước lượng từ môi trường. Kết hợp quỹ đạo với độ sâu mở ra khả năng đặt vật cản vào bản đồ cục bộ, thay vì chỉ phản ứng với từng ảnh rời rạc. Lợi ích này là \emph{định hướng tích hợp}; mức cải thiện trên WBR cần được đo khi robot sẵn sàng.
+\textbf{Vai trò của thị giác trong định vị WBR.} Khi bánh trượt hoặc rời sàn, chuyển động suy ra chỉ từ bánh xe có thể không phản ánh đúng chuyển động thân robot. Thị giác cung cấp thêm nguồn ước lượng từ môi trường. Kết hợp quỹ đạo với độ sâu mở ra khả năng đặt vật cản vào bản đồ cục bộ, thay vì chỉ phản ứng với từng ảnh rời rạc. Lợi ích này là \emph{định hướng tích hợp}; mức cải thiện trên WBR cần được đo khi robot sẵn sàng.
 
 \newpage
 \subsection*{Cách ORB-SLAM3 tạo pose và bản đồ}
@@ -113,7 +113,7 @@ STM32 phải tự kiểm tra tính hợp lệ, tuổi dữ liệu và điều ki
 Định vị ORB-SLAM3 & Offline: đoạn tiến 2.009 m so với thước 2.00 m; một map, không thấy nhảy pose trong đoạn đã ghi. EuRoC MH01 (offline stereo--quán tính trên Pi 5): ATE RMSE 3.68--4.16 cm qua 3 lượt; 3,639 cặp pose--tham chiếu mỗi lượt, căn chỉnh SE(3).\\
 Bản đồ dày & Hậu xử lý 225 khung: 354,244 điểm, lọc voxel 1 cm; RMS khớp mặt bàn 5.76 mm. Chưa đánh giá độ chính xác hình học tuyệt đối.\\
 Kích thước vật cản & 6 lượt vật cản sau hiệu chỉnh: sai số trung vị chiều cao sau hiệu chỉnh $-0.2$ đến $+0.4$ cm; khoảng cách $-1.6$ đến $+0.3$ cm. Sách 2.45 cm được giữ ở UNCERTAIN.\\
-Advisory trên bàn & Bàn trống: NONE 553/553; sách 4.6 cm: JUMP 561/563, còn lại 2 UNCERTAIN; hộp 13.1 cm: STOP rồi NONE khi dọn.\\
+Advisory trên bàn & Bàn trống: NONE 553/553; sách 4.6 cm: JUMP 561/563, còn lại 2 UNCERTAIN; hộp 13.1 cm: STOP rồi NONE khi dọn. LED tự kiểm tra đủ 4 trạng thái và timeout, 9,420 phản hồi.\\
 Giao tiếp & UART (cổng truyền nối tiếp), dữ liệu tổng hợp: thời gian khứ hồi (RTT) 2.8 ms (P50 2.81 ms; P99 2.82 ms); phát lại bản ghi vật cản 139/139. Nucleo-F446RE xác nhận 712/712 và 739/739 advisory. Đây là các phiên thử, không phải cam kết không mất gói.\\
 Ổn định advisory & Replay 60 s: approach-r2 giảm 156 xuống 2 lần đổi trạng thái/phút; r3 giảm 218.6 xuống 25.1, với hysteresis (vùng trễ để hạn chế đổi trạng thái) khoảng cách 0.10 m, chiều cao 0.01 m. LED live vẫn 128--157 lần/phút; chưa chứng minh cải thiện live.\\
 \bottomrule
@@ -134,7 +134,7 @@ Giao tiếp & UART (cổng truyền nối tiếp), dữ liệu tổng hợp: th�
 Đã ghép độ sâu stereo theo pose camera để tái dựng hình học bằng \textbf{hậu xử lý}. Voxel 1 cm là bước lọc điểm; RMS mặt bàn 5.76 mm là độ khớp mặt phẳng, không phải độ chính xác tuyệt đối. Bản đồ chưa căn theo trọng lực và chưa dùng cho lập quỹ đạo nhảy.
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth]{figures/dense-map-topdown.png}
-\caption{Bản đồ dày, dữ liệu lab 25/10. Giữ nguyên nhãn D435 của ảnh kết quả gốc; tên camera trong báo cáo theo xác nhận của chủ đề tài là D435i.}
+\caption{Bản đồ dày dựng từ ảnh stereo D435i và pose ORB-SLAM3, dữ liệu lab ngày 25/10.}
 \label{fig:dense}
 \end{figure}
 
@@ -143,16 +143,16 @@ Giao tiếp & UART (cổng truyền nối tiếp), dữ liệu tổng hợp: th�
 Ở lượt \texttt{B-H05-D1p3}, sách cạnh chân đèn bị gộp cùng cấu trúc lân cận; chiều cao ước lượng là của cụm ghép, không riêng quyển sách. Nhật ký còn ghi góc gá thay đổi sau lần Pi mất nguồn; chưa tách được ảnh hưởng từng yếu tố. Đồ thị giữ cả trường hợp này, nên khác nhóm sáu lượt sau hiệu chỉnh trong bảng.
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth]{figures/height-estimated-vs-measured.png}
-\caption{Chiều cao ước lượng so với đo trên bàn ngày 24/10. Đường đứt biểu diễn ước lượng bằng giá trị đo; giữ nguyên cả lượt phát hiện sai B-H05-D1p3. Dữ liệu đã được dùng để chỉnh phương pháp, không phải kiểm định độc lập.}
+\caption{Chiều cao ước lượng so với đo trên bàn ngày 24/10. Đường đứt là ước lượng bằng giá trị đo; các chấm xanh biểu diễn những lượt đo vật cản riêng. Dấu X đỏ là lượt B-H05-D1p3: sách bị gộp với chân đèn thành một cụm, cho advisory STOP. Giữ trường hợp này để thể hiện lỗi phân cụm.}
 \label{fig:height}
 \end{figure}
 
 \newpage
-\subsection*{Ước lượng khoảng cách và truyền advisory}
-Đã phân biệt bàn trống, sách, hộp và truyền advisory tới Nucleo-F446RE. LED tự kiểm tra đủ 4 trạng thái và timeout (hết hạn dữ liệu), ghi nhận 9,420 phản hồi. Đây là kiểm tra nhận thức/giao tiếp trên bàn; chưa kiểm tra dừng hoặc nhảy trên WBR.
+\subsection*{Sai số khoảng cách trong từng lượt thử}
+Mỗi hàng trong Hình~\ref{fig:distance} là một lượt thử vật cản; chấm thể hiện sai số khoảng cách trung vị theo các khung hình. Nhiều lượt cùng cự ly nhưng dùng vật cản khác nhau nên có sai số khác nhau. Sai số âm nghĩa là ước lượng vật gần hơn giá trị đo; sai số dương là xa hơn.
 \begin{figure}[H]\centering
 \includegraphics[width=\linewidth]{figures/distance-error-vs-distance.png}
-\caption{Sai số khoảng cách (ước lượng trừ giá trị đo) theo cự ly, đánh giá bàn ngày 24/10. Các lượt đã được dùng để chỉnh phương pháp; đồ thị gồm cả lượt B-H05-D1p3 phát hiện sai, không chỉ nhóm sau hiệu chỉnh. Chưa đánh giá trên robot chuyển động.}
+\caption{Sai số khoảng cách theo từng lượt thử trên bàn ngày 24/10, đơn vị cm. Đường 0 là không lệch so với thước. Dấu X đánh dấu lượt bị gộp sách với chân đèn; không coi đó là phép đo riêng của sách. Các lượt đã được dùng để chỉnh phương pháp, chưa phải kiểm định độc lập.}
 \label{fig:distance}
 \end{figure}
 

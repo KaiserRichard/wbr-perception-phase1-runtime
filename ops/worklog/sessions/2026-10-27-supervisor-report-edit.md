@@ -20,3 +20,17 @@
 - Final checks: eight pages rendered; original placeholders and all five date
   slots preserved; no new packages; measured result figures unchanged.
 - Sources and rebuild instructions are in the report README. No new measurements.
+
+## Owner follow-up: caption and plot clarity
+
+- Preserved Claude's newly committed height-plot annotation (e23de0d); caption
+  now identifies its red X as the merged book/lamp failure.
+- Removed the requested extra caption caveats; replaced the WBR subheading with
+  natural wording and relabelled the report dense map D435i from the archived
+  PLY, without changing the archived source.
+- Replaced the unlabelled distance scatter with signed cm error per trial, object
+  and tape-distance labels, zero reference and a separate failure marker. All
+  eight saved rows remain; JSON receipt stores exact plotted values/input hashes.
+- Local evaluation says 1.30m/136 processed frames vs relayed 1.38m/137; kept
+  saved values, noted discrepancy in README, did not add disputed numbers.
+- Rebuilt with XeLaTeX and inspected eight pages. No new measurements/packages.

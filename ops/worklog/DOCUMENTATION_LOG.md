@@ -548,3 +548,13 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   growing dense-map variant; UART B-H08 replay. Measured values were not changed.
 - XeLaTeX build and rendered-page QA pass; no new packages or hardware activity.
   See `sessions/2026-10-27-supervisor-report-edit.md`.
+
+### DOC-20261027-REPORT-PLOT-CLARITY: Make distance results interpretable
+- Owner-requested caption/subheading edits; D435i dense-map report title corrected.
+- Distance plot now shows saved error in cm by named trial; preserves all rows
+  and flags book/lamp merged-cluster case separately. Claude's height figure is
+  retained, with its red-X meaning in the caption.
+- Added reproducible saved-data rendering and input/value receipt. Original
+  evaluation JSON and archived PLY unchanged; numerical discrepancy from the
+  relayed Claude message documented without substituting unverified values.
+- XeLaTeX and eight-page visual QA pass; no new package or hardware operation.
