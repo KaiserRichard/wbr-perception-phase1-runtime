@@ -34,3 +34,14 @@
 - Local evaluation says 1.30m/136 processed frames vs relayed 1.38m/137; kept
   saved values, noted discrepancy in README, did not add disputed numbers.
 - Rebuilt with XeLaTeX and inspected eight pages. No new measurements/packages.
+
+## Owner-supplied rig photographs
+
+- Replaced only the rig photo placeholder with the two supplied bench photos,
+  grouped side by side as a full-width figure on page 2. Original image bytes
+  copied to `figures/rig-bench-overview.png` and `figures/rig-bench-side.png`.
+- Second photo rotated 90 degrees counter-clockwise by LaTeX (`angle=90`),
+  without modifying the source photo. Captions describe the visible bench setup.
+- XeLaTeX succeeds; eight pages, no layout/font/reference warnings. Rendered page
+  2 inspected: both photos upright and fitted; board/CAN/IMU/video/date slots stay.
+- Owner requested insertion only; no deliverable links sent again.

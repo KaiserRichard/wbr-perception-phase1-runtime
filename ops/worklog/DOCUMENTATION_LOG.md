@@ -558,3 +558,9 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   evaluation JSON and archived PLY unchanged; numerical discrepancy from the
   relayed Claude message documented without substituting unverified values.
 - XeLaTeX and eight-page visual QA pass; no new package or hardware operation.
+
+### DOC-20261027-REPORT-RIG-PHOTOS: Insert owner bench photos
+- Replaced the report rig placeholder with two supplied photographs, second
+  rotated left in LaTeX; original assets copied unchanged under `figures/`.
+- Eight-page XeLaTeX build and page-2 visual check pass. Remaining placeholders
+  and reported results unchanged; no new package or hardware test.

@@ -72,3 +72,11 @@ message says 1.38 m and 137 frames for B-H05-D1p3, while the saved evaluation us
 1.30 m and 136 processed frames (134 STOP_CANDIDATE, 2 UNCERTAIN). This revision
 keeps the saved evaluation values. Neither the relayed distance nor denominator
 is introduced as a new report result.
+
+## Owner-supplied bench photos
+
+`rig-bench-overview.png` and `rig-bench-side.png` are the two photographs supplied
+by the owner for the rig placeholder. Original image bytes are retained; the
+second is displayed 90 degrees counter-clockwise using LaTeX `angle=90`.
+They illustrate the bench setup, not newly measured camera mounting parameters.
+The board/CAN/IMU and video/date placeholders remain pending owner evidence.
