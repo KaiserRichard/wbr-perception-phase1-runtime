@@ -114,6 +114,11 @@ Luồng dự kiến là \textbf{camera $\rightarrow$ nhận thức trên Pi $\ri
 \end{figure}
 STM32 phải tự kiểm tra tính hợp lệ, tuổi dữ liệu và điều kiện an toàn trước khi sử dụng advisory. Phân công này nhằm giữ vòng cân bằng độc lập với tải thị giác trên Linux; hành vi toàn hệ thống khi Pi hoặc đường truyền lỗi còn cần thử trên bo đích.
 
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{figures/breadboard-wiring.pdf}
+\caption{Sơ đồ đấu nối bàn thử: Raspberry Pi 5 -- Nucleo-F446RE qua UART, hai mô-đun CAN SN65HVD230 nối với nhau, GY-521 (MPU6050) qua I2C và bốn LED trạng thái. Kết nối khớp với bàn thử; vị trí linh kiện trên breadboard chỉ mang tính minh họa. Hình linh kiện từ Fritzing (CC-BY-SA 3.0).}
+\end{figure}
+
 \section{Kết quả đã đạt}
 \textbf{Điều kiện đọc kết quả.} Các phép đo dùng rig bìa trên bàn hoặc dữ liệu phát lại; camera cao 29 cm, nghiêng khoảng 13\textdegree{} trong bài advisory. Cách gá, quy đổi hệ tọa độ, chất lượng độ sâu và ngưỡng phát hiện là các yếu tố cần kiểm soát. Chưa có thí nghiệm tách riêng để quy toàn bộ sai số cho rig. Các lượt đánh giá vật cản đã được dùng để chọn ngưỡng, nên chưa phải tập kiểm định độc lập.
 \par\smallskip

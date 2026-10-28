@@ -569,3 +569,4 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Added `figures/breadboard-wiring.{png,pdf,svg}` (hand-routed, strict check PASS),
   `tools/wiring_diagram` README rewrite and skill `ops/lab-assistant/skills/wbr-wiring-diagram/SKILL.md`.
 - `main.tex` not edited (ChatGPT editing); include line handed to the owner.
+- 2026-10-28 (later): owner asked; `main.tex` had no edits since 27 Oct, so the wiring figure was added after the architecture section (xelatex build OK, page 4).
