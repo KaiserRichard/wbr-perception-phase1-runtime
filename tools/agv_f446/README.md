@@ -171,6 +171,35 @@ ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyAMA0 -b 115200
 ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyACM0 -b 115200
 ```
 
+## CAN register correction (2026-10-29)
+
+The original bench image produced no command-following feedback. The driver
+double-added the shared filter offset and set RTR on outgoing payload frames.
+Filter offsets now use CAN1's peripheral base, CAN2SB is set in FMR (not FM1R),
+and data frames leave RTR clear. Pins, ROS interfaces and bit timing are unchanged.
+
+Build with `make -C tools/agv_f446/firmware all DEFS="-DUROS_USART1 -DCAN_LOOPBACK_TEST"`.
+Use a fresh worktree/build directory when changing flags: the Makefile does not
+track flag changes. Convert `build/agv_f446.elf` using `arm-none-eabi-objcopy -O binary`
+to a unique evidence image; existing prebuilt images remain historical artifacts.
+
+Host regression commands from the repository root:
+
+```sh
+cc -std=c11 -Wall -Wextra -Werror tools/agv_f446/tests/test_can_registers.c -lm -o /tmp/wbr-can-registers
+/tmp/wbr-can-registers
+cc -std=c11 -Wall -Wextra -Werror tools/agv_f446/tests/test_logic.c -lm -o /tmp/wbr-agv-logic
+/tmp/wbr-agv-logic
+```
+
+The register model checks shared-filter addresses, bank split, frame type, all
+mailboxes and busy-mailbox handling; it does not model electrical behavior.
+Before flashing, verify the image hash and archive a double-read flash backup.
+Repeat the home test with unchanged thresholds and require nonzero feedback
+matching commands. An unchanged zero baseline cannot prove NaN rejection or
+stopping behavior. Retain failed CSV/JSON and report remaining hardware or
+fake-endpoint limitations separately. See the bench review for actual results.
+
 ## Home test plan (loopback image)
 
 1. Wire the two CAN transceiver modules as above, power the Nucleo, start the
