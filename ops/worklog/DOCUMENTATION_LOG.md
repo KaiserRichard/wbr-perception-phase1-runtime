@@ -564,3 +564,8 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   rotated left in LaTeX; original assets copied unchanged under `figures/`.
 - Eight-page XeLaTeX build and page-2 visual check pass. Remaining placeholders
   and reported results unchanged; no new package or hardware test.
+
+### DOC-20261028-WIRING-DIAGRAM: Breadboard wiring picture + skill
+- Added `figures/breadboard-wiring.{png,pdf,svg}` (hand-routed, strict check PASS),
+  `tools/wiring_diagram` README rewrite and skill `ops/lab-assistant/skills/wbr-wiring-diagram/SKILL.md`.
+- `main.tex` not edited (ChatGPT editing); include line handed to the owner.

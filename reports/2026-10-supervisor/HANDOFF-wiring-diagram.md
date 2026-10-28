@@ -1,5 +1,7 @@
 # Handoff: breadboard-style wiring diagram + skill (2026-10-28)
 
+**Status 2026-10-28: done.** Picture `figures/breadboard-wiring.png` (strict PASS); method in `ops/lab-assistant/skills/wbr-wiring-diagram/SKILL.md`.
+
 ## Goal
 1. A clean Fritzing-style "breadboard view" picture of the F446 bench (real board drawings, coloured wires pin to pin) for the supervisor report.
 2. A reusable skill so later diagrams are made the same way by ChatGPT/Codex/Claude.

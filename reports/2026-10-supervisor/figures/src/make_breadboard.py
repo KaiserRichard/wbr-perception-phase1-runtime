@@ -1,15 +1,10 @@
 #!/usr/bin/env python3
-"""Compatibility entry point for the reusable wiring diagram tool."""
+"""Render figures/breadboard-wiring.{png,pdf,svg} from bench_wiring.yaml (strict check)."""
 from pathlib import Path
 import subprocess
 import sys
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[3]
-TOOL = ROOT / "tools/wiring_diagram/wiring_diagram.py"
-SPEC = HERE / "bench_wiring.yaml"
-OUT = HERE.parent
-raise SystemExit(subprocess.call([
-    sys.executable, str(TOOL), str(SPEC), "--output-dir", str(OUT),
-    "--png-width", "2400",
-]))
+TOOL = HERE.parents[3] / "tools/wiring_diagram/wiring_diagram.py"
+raise SystemExit(subprocess.call([sys.executable, str(TOOL), str(HERE / "bench_wiring.yaml"),
+                                  "--output-dir", str(HERE.parent), "--strict"]))

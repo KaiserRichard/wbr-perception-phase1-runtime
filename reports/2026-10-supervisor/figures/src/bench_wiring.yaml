@@ -1,541 +1,135 @@
-{
-  "title": "Bench wiring: Pi 5, NUCLEO-F446RE, CAN, IMU, LEDs",
-  "canvas": [
-    2400,
-    1500
-  ],
-  "output": "breadboard-wiring",
-  "parts": [
-    {
-      "id": "pi",
-      "svg": "parts/raspberry-pi-4B_1_breadboard.svg",
-      "fzp": "parts/raspberry-pi-4B_1.fzp",
-      "x": 70,
-      "y": 120,
-      "scale": 0.149,
-      "title": "Raspberry Pi 5 \u00b7 Pi 4B drawing",
-      "extra_pins": {
-        "GPIO14": "connector7pin",
-        "GPIO15": "connector9pin",
-        "GND": "connector5pin"
-      }
-    },
-    {
-      "id": "nuc",
-      "svg": "parts/STM32_Nucleo_board_breadboard.svg",
-      "fzp": "parts/STM32_Nucleo_board.fzp",
-      "x": 730,
-      "y": 280,
-      "scale": 3.35,
-      "title": "NUCLEO-F446RE",
-      "extra_pins": {
-        "D2": "connector1163",
-        "D8": "connector1151",
-        "D4": "connector1165",
-        "D5": "connector1166",
-        "D6": "connector1167",
-        "D9": "connector1152",
-        "POWER_GND": "connector1189",
-        "POWER_3V3": "connector1186",
-        "ARD_GND": "connector1188",
-        "PA10": "connector2235",
-        "PA9": "connector2229",
-        "PB9": "connector2221",
-        "PB8": "connector2220",
-        "PB6": "connector2227",
-        "PB7": "connector3329",
-        "PB13": "connector2214",
-        "PB12": "connector227"
-      }
-    },
-    {
-      "id": "imu",
-      "svg": "parts/MPU6050_GY521_9.svg",
-      "fzp": "parts/InvenSense_MPU6050.fzp",
-      "x": 1900,
-      "y": 650,
-      "scale": 0.29,
-      "title": "GY-521 / MPU6050"
-    },
-    {
-      "id": "can1",
-      "svg": "parts/sn65hvd230_module.svg",
-      "x": 1750,
-      "y": 180,
-      "scale": 1,
-      "title": "SN65HVD230 #1",
-      "extra_pins": {
-        "VCC": [
-          16,
-          35
-        ],
-        "GND": [
-          16,
-          67
-        ],
-        "CTX": [
-          16,
-          99
-        ],
-        "CRX": [
-          304,
-          35
-        ],
-        "CANH": [
-          304,
-          67
-        ],
-        "CANL": [
-          304,
-          99
-        ]
-      }
-    },
-    {
-      "id": "can2",
-      "svg": "parts/sn65hvd230_module.svg",
-      "x": 1750,
-      "y": 390,
-      "scale": 1,
-      "title": "SN65HVD230 #2 \u00b7 fake motor",
-      "extra_pins": {
-        "VCC": [
-          16,
-          35
-        ],
-        "GND": [
-          16,
-          67
-        ],
-        "CTX": [
-          16,
-          99
-        ],
-        "CRX": [
-          304,
-          35
-        ],
-        "CANH": [
-          304,
-          67
-        ],
-        "CANL": [
-          304,
-          99
-        ]
-      }
-    },
-    {
-      "id": "board",
-      "svg": "parts/sn65hvd230_module.svg",
-      "x": 790,
-      "y": 1060,
-      "scale": 1,
-      "title": "Half-size breadboard \u00b7 LED outputs",
-      "obstacle": false,
-      "extra_pins": {
-        "vcc": [
-          90,
-          46
-        ],
-        "gnd": [
-          90,
-          90
-        ],
-        "s1": [
-          255,
-          182
-        ],
-        "ro1": [
-          310,
-          182
-        ],
-        "a1": [
-          315,
-          182
-        ],
-        "k1": [
-          355,
-          182
-        ],
-        "s2": [
-          455,
-          182
-        ],
-        "ro2": [
-          510,
-          182
-        ],
-        "a2": [
-          515,
-          182
-        ],
-        "k2": [
-          555,
-          182
-        ],
-        "s3": [
-          655,
-          182
-        ],
-        "ro3": [
-          710,
-          182
-        ],
-        "a3": [
-          715,
-          182
-        ],
-        "k3": [
-          755,
-          182
-        ],
-        "s4": [
-          855,
-          182
-        ],
-        "ro4": [
-          910,
-          182
-        ],
-        "a4": [
-          915,
-          182
-        ],
-        "k4": [
-          955,
-          182
-        ]
-      }
-    }
-  ],
-  "rails": {
-    "rail": {
-      "vcc": [
-        1020,
-        1136
-      ],
-      "gnd": [
-        1020,
-        1180
-      ]
-    }
-  },
-  "connections": [
-    {
-      "id": "Pi UART TX",
-      "from": "pi.GPIO14",
-      "to": "nuc.PA10",
-      "colour": "#ef7d00",
-      "via": [
-        "above_nucleo"
-      ]
-    },
-    {
-      "id": "Pi UART RX",
-      "from": "pi.GPIO15",
-      "to": "nuc.PA9",
-      "colour": "#e4b400",
-      "via": [
-        "above_nucleo"
-      ]
-    },
-    {
-      "id": "Pi GND",
-      "from": "pi.GND",
-      "to": "nuc.ARD_GND",
-      "colour": "#202124",
-      "via": [
-        "above_nucleo"
-      ]
-    },
-    {
-      "id": "CAN1 TX / SDA",
-      "from": "nuc.PB9",
-      "to": "can1.CTX",
-      "colour": "#7b2cbf",
-      "via": [
-        "above_nucleo"
-      ]
-    },
-    {
-      "id": "CAN1 RX",
-      "from": "nuc.PB8",
-      "to": "can1.CRX",
-      "colour": "#1674c8",
-      "via": [
-        "above_nucleo"
-      ]
-    },
-    {
-      "id": "CAN2 TX",
-      "from": "nuc.PB13",
-      "to": "can2.CTX",
-      "colour": "#8549a8",
-      "via": [
-        "above_nucleo"
-      ]
-    },
-    {
-      "id": "CAN2 RX",
-      "from": "nuc.PB12",
-      "to": "can2.CRX",
-      "colour": "#3784bd",
-      "via": [
-        "above_nucleo"
-      ]
-    },
-    {
-      "id": "CANH bus",
-      "from": "can1.CANH",
-      "to": "can2.CANH",
-      "colour": "#b4a900",
-      "via": [
-        "right_bus"
-      ]
-    },
-    {
-      "id": "CANL bus",
-      "from": "can1.CANL",
-      "to": "can2.CANL",
-      "colour": "#27a35b",
-      "via": [
-        "right_bus"
-      ]
-    },
-    {
-      "id": "IMU SCL",
-      "from": "nuc.PB6",
-      "to": "imu.SCL",
-      "colour": "#00aeca",
-      "via": [
-        "right_bus"
-      ]
-    },
-    {
-      "id": "IMU SDA",
-      "from": "nuc.PB7",
-      "to": "imu.SDA",
-      "colour": "#228b45",
-      "via": [
-        "right_bus"
-      ]
-    },
-    {
-      "id": "Nucleo 3V3 rail",
-      "from": "nuc.POWER_3V3",
-      "to": "rail.vcc",
-      "colour": "#d62828",
-      "via": [
-        "power_gap"
-      ]
-    },
-    {
-      "id": "Nucleo GND rail",
-      "from": "nuc.POWER_GND",
-      "to": "rail.gnd",
-      "colour": "#202124",
-      "via": [
-        "power_gap"
-      ]
-    },
-    {
-      "id": "CAN1 VCC",
-      "from": "rail.vcc",
-      "to": "can1.VCC",
-      "colour": "#d62828",
-      "via": [
-        "above_nucleo"
-      ]
-    },
-    {
-      "id": "CAN1 GND",
-      "from": "rail.gnd",
-      "to": "can1.GND",
-      "colour": "#202124",
-      "via": [
-        "above_nucleo"
-      ]
-    },
-    {
-      "id": "CAN2 VCC",
-      "from": "rail.vcc",
-      "to": "can2.VCC",
-      "colour": "#d62828",
-      "via": [
-        "above_nucleo"
-      ]
-    },
-    {
-      "id": "CAN2 GND",
-      "from": "rail.gnd",
-      "to": "can2.GND",
-      "colour": "#202124",
-      "via": [
-        "above_nucleo"
-      ]
-    },
-    {
-      "id": "D4 LED signal",
-      "from": "nuc.D4",
-      "to": "board.s1",
-      "colour": "#228b45",
-      "via": [
-        "power_gap"
-      ]
-    },
-    {
-      "id": "D4 resistor",
-      "from": "board.ro1",
-      "to": "board.a1",
-      "colour": "#9b5537"
-    },
-    {
-      "id": "D4 LED cathode",
-      "from": "board.k1",
-      "to": "rail.gnd",
-      "colour": "#202124",
-      "via": [
-        "power_gap"
-      ]
-    },
-    {
-      "id": "D5 LED signal",
-      "from": "nuc.D5",
-      "to": "board.s2",
-      "colour": "#e0ad00",
-      "via": [
-        "power_gap"
-      ]
-    },
-    {
-      "id": "D5 resistor",
-      "from": "board.ro2",
-      "to": "board.a2",
-      "colour": "#9b5537"
-    },
-    {
-      "id": "D5 LED cathode",
-      "from": "board.k2",
-      "to": "rail.gnd",
-      "colour": "#202124",
-      "via": [
-        "power_gap"
-      ]
-    },
-    {
-      "id": "D6 LED signal",
-      "from": "nuc.D6",
-      "to": "board.s3",
-      "colour": "#d62828",
-      "via": [
-        "power_gap"
-      ]
-    },
-    {
-      "id": "D6 resistor",
-      "from": "board.ro3",
-      "to": "board.a3",
-      "colour": "#9b5537"
-    },
-    {
-      "id": "D6 LED cathode",
-      "from": "board.k3",
-      "to": "rail.gnd",
-      "colour": "#202124",
-      "via": [
-        "power_gap"
-      ]
-    },
-    {
-      "id": "D9 LED signal",
-      "from": "nuc.D9",
-      "to": "board.s4",
-      "colour": "#228b45",
-      "via": [
-        "power_gap"
-      ]
-    },
-    {
-      "id": "D9 resistor",
-      "from": "board.ro4",
-      "to": "board.a4",
-      "colour": "#9b5537"
-    },
-    {
-      "id": "D9 LED cathode",
-      "from": "board.k4",
-      "to": "rail.gnd",
-      "colour": "#202124",
-      "via": [
-        "power_gap"
-      ]
-    }
-  ],
-  "legend": [
-    {
-      "colour": "#d62828",
-      "label": "3V3"
-    },
-    {
-      "colour": "#202124",
-      "label": "GND"
-    },
-    {
-      "colour": "#ef7d00",
-      "label": "UART TX"
-    },
-    {
-      "colour": "#e4b400",
-      "label": "UART RX"
-    },
-    {
-      "colour": "#7b2cbf",
-      "label": "CAN TX"
-    },
-    {
-      "colour": "#1674c8",
-      "label": "CAN RX"
-    },
-    {
-      "colour": "#b4a900",
-      "label": "CANH"
-    },
-    {
-      "colour": "#27a35b",
-      "label": "CANL / SDA"
-    }
-  ],
-  "channels": {
-    "above_nucleo": {
-      "bounds": [
-        520,
-        80,
-        920,
-        130
-      ],
-      "axis": "horizontal",
-      "spacing": 10
-    },
-    "right_bus": {
-      "bounds": [
-        1835,
-        350,
-        50,
-        650
-      ],
-      "axis": "vertical",
-      "spacing": 12
-    },
-    "power_gap": {
-      "bounds": [
-        720,
-        900,
-        850,
-        60
-      ],
-      "axis": "horizontal",
-      "spacing": 10
-    }
-  }
-}
+# Bench wiring, F446 demo rig (Pi 5 + NUCLEO-F446RE + 2x SN65HVD230 + GY-521 + 4 LEDs).
+# Render:  reports/2026-10-supervisor/figures/src/.venv/bin/python tools/wiring_diagram/wiring_diagram.py \
+#            reports/2026-10-supervisor/figures/src/bench_wiring.yaml --output-dir reports/2026-10-supervisor/figures --strict
+# Pins:    ... wiring_diagram.py <spec> --print-pins nuc 'D[0-9]'
+# Every wire is routed by hand: 'y=N' / 'x=N' move along one axis, [x, y] is an absolute corner.
+# Pin truth: tools/link_bench/README.md, tools/microros_f446/README.md, HANDOFF-wiring-diagram.md.
+title: "Bench wiring: Raspberry Pi 5, NUCLEO-F446RE, 2 x CAN transceiver, MPU6050, advisory LEDs"
+canvas: [2450, 1975]
+output: breadboard-wiring
+parts:
+  - id: pi
+    svg: ../../../../tools/wiring_diagram/parts/raspberry-pi-4B_1_breadboard.svg
+    fzp: ../../../../tools/wiring_diagram/parts/raspberry-pi-4B_1.fzp
+    x: 40
+    y: 700
+    scale: 0.213
+    title: "Raspberry Pi 5 (Pi 4B drawing; same 40-pin header)"
+    title_xy: [40, 1222]
+    extra_pins: {USB: [3460, 1074]}          # upper USB-A port, local SVG units
+  - id: nuc
+    svg: ../../../../tools/wiring_diagram/parts/STM32_Nucleo_board_breadboard.svg
+    fzp: ../../../../tools/wiring_diagram/parts/STM32_Nucleo_board.fzp
+    x: 900
+    y: 740
+    scale: 3.0
+    title: "NUCLEO-F446RE"
+    title_xy: [905, 728]
+    extra_pins: {USB: [1, 62.9]}            # ST-LINK mini-USB on the left edge
+  - id: can1
+    svg: ../../../../tools/wiring_diagram/parts/sn65hvd230_module.svg
+    svg_pin_prefix: pin_
+    x: 1830
+    y: 120
+    scale: 1.08
+    title: "CAN #1 (SN65HVD230)"
+    title_xy: [2200, 190]
+  - id: can2
+    svg: ../../../../tools/wiring_diagram/parts/sn65hvd230_module.svg
+    svg_pin_prefix: pin_
+    x: 1830
+    y: 360
+    scale: 1.08
+    title: "CAN #2 (\"fake motor\")"
+    title_xy: [2200, 450]
+  - id: imu
+    svg: ../../../../tools/wiring_diagram/parts/MPU6050_GY521_9.svg
+    fzp: ../../../../tools/wiring_diagram/parts/InvenSense_MPU6050.fzp
+    x: 1830
+    y: 590
+    scale: 0.216
+    title: "GY-521 MPU6050"
+    title_xy: [2200, 690]
+  - id: bb
+    kind: breadboard
+    x: 898.9
+    y: 1440
+    cols: 30
+    pitch: 21.6
+    title: "Breadboard: rails + LEDs"
+    title_xy: [905, 1428]
+
+components:
+  - {kind: resistor, from: bb.e23, to: bb.f23, ohms: 330}
+  - {kind: led, anode: bb.i23, cathode: bb.i24, colour: "#43d14b"}
+  - {kind: resistor, from: bb.e25, to: bb.f25, ohms: 330}
+  - {kind: led, anode: bb.i25, cathode: bb.i26, colour: "#ffd21f"}
+  - {kind: resistor, from: bb.e27, to: bb.f27, ohms: 330}
+  - {kind: led, anode: bb.i27, cathode: bb.i28, colour: "#f23a2e"}
+  - {kind: resistor, from: bb.e29, to: bb.f29, ohms: 150}
+  - {kind: led, anode: bb.i29, cathode: bb.i30, colour: "#2f7bff"}
+
+wires:
+  # --- Pi <-> Nucleo (UART + common ground), arches above everything
+  - {id: UART Pi TX, from: pi.connector7, to: nuc.connector1163, colour: "#fb8c00", via: [y=100, x=1525.3]}
+  - {id: UART Pi RX, from: pi.connector9, to: nuc.connector1151, colour: "#fdd835", via: [y=130, x=1382.8]}
+  - {id: Pi GND, from: pi.connector5, to: nuc.connector1157, colour: "#212121", via: [y=115, x=1253.2]}
+  - {id: USB, from: pi.USB, to: nuc.USB, colour: "#9e9e9e", width: 9}
+  # --- CAN controllers -> transceivers
+  - {id: CAN1 TX, from: nuc.connector1159, to: can1.CTX, colour: "#8e24aa", via: [y=209.6]}
+  - {id: CAN1 RX, from: nuc.connector1160, to: can1.CRX, colour: "#1e88e5", via: [y=231.2]}
+  - {id: CAN2 TX, from: nuc.connector2214, to: can2.CTX, colour: "#ec407a", via: [y=449.6]}
+  - {id: CAN2 RX, from: nuc.connector227, to: can2.CRX, colour: "#4fc3f7", via: [y=471.2]}
+  - {id: CANH, from: can1.CANH, to: can2.CANH, colour: "#c0ca33", via: [x=2075, y=398.9]}
+  - {id: CANL, from: can1.CANL, to: can2.CANL, colour: "#2e7d32", via: [x=2060, y=439.9]}
+  # --- I2C
+  - {id: IMU SCL, from: nuc.connector1153, to: imu.SCL, colour: "#00acc1", via: [y=810.7, x=1342, y=644.0]}
+  - {id: IMU SDA, from: nuc.connector3329, to: imu.SDA, colour: "#00796b", via: [y=1352, x=1790, y=665.6]}
+  # --- advisory LEDs: Nucleo pin -> row a; 330/150 ohm e->f; LED i(c)/i(c+1); cathode j -> B- rail
+  - {id: LED D9 blue, from: nuc.connector1152, to: bb.a29, colour: "#283593", via: [y=675, x=1745, y=1412, x=1546.9]}
+  - {id: LED D6 red, from: nuc.connector1167, to: bb.a27, colour: "#795548", via: [y=692, x=1725, y=1397, x=1503.7]}
+  - {id: LED D5 yellow, from: nuc.connector1166, to: bb.a25, colour: "#ffb300", via: [y=709, x=1705, y=1382, x=1460.5]}
+  - {id: LED D4 green, from: nuc.connector1165, to: bb.a23, colour: "#43a047", via: [y=810.7, x=1493.2, y=726, x=1685, y=1367, x=1417.3]}
+  - {id: K D4, from: bb.j24, to: bb.B-24, colour: "#212121"}
+  - {id: K D5, from: bb.j26, to: bb.B-26, colour: "#212121"}
+  - {id: K D6, from: bb.j28, to: bb.B-28, colour: "#212121"}
+  - {id: K D9, from: bb.j30, to: bb.B-30, colour: "#212121"}
+  # --- power: Nucleo POWER header -> top rails; rail links; bottom rails -> modules
+  - {id: 3V3 rail, from: nuc.connector1186, to: bb.T+19, colour: "#e53935"}
+  - {id: GND rail, from: nuc.connector1188, to: bb.T-21, colour: "#212121"}
+  - {id: GND rail link, from: bb.T-1, to: bb.B-1, colour: "#212121", via: [x=878, y=1802.9]}
+  - {id: 3V3 rail link, from: bb.T+30, to: bb.B+30, colour: "#e53935", via: [x=1640, y=1824.5]}
+  - {id: IMU VCC, from: bb.B+13, to: imu.VCC, colour: "#e53935", via: [y=1870, x=2110, y=555, x=1825, y=600.8]}
+  - {id: IMU GND, from: bb.B-12, to: imu.GND, colour: "#212121", via: [y=1884, x=2125, y=540, x=1810, y=622.4]}
+  - {id: CAN2 3V3, from: bb.B+11, to: can2.3V3, colour: "#e53935", via: [y=1898, x=2140, y=315, x=1825, y=406.4]}
+  - {id: CAN2 GND, from: bb.B-10, to: can2.GND, colour: "#212121", via: [y=1912, x=2155, y=300, x=1810, y=428.0]}
+  - {id: CAN1 3V3, from: bb.B+9, to: can1.3V3, colour: "#e53935", via: [y=1926, x=2170, y=106, x=1825, y=166.4]}
+  - {id: CAN1 GND, from: bb.B-8, to: can1.GND, colour: "#212121", via: [y=1940, x=2185, y=92, x=1810, y=188.0]}
+
+notes:
+  - {x: 2200, y: 300, size: 14, text: "CAN bus 1 Mbit/s\n120 Ω on each module\n(not measured)"}
+  - {x: 40, y: 1800, size: 13, colour: "#555555", text: "Board drawings: Fritzing parts library (Raspberry Pi 4B, Nucleo-64, GY-521), CC-BY-SA 3.0.\nCAN modules, breadboard, resistors and LEDs drawn by tools/wiring_diagram. Positions on the\nbreadboard are illustrative; every connection matches the bench pin table."}
+
+legend:
+  x: 40
+  y: 1320
+  size: 15
+  title: "Wires (pin names as on the NUCLEO silkscreen / CN10 morpho)"
+  items:
+    - {colour: "#fb8c00", label: "Pi pin 8 GPIO14 TXD → D2 = PA10 USART1 RX"}
+    - {colour: "#fdd835", label: "Pi pin 10 GPIO15 RXD ← D8 = PA9 USART1 TX"}
+    - {colour: "#212121", label: "GND (Pi pin 6 → CN5 GND; rails; modules; LED cathodes)"}
+    - {colour: "#e53935", label: "3V3 (POWER header → rails → module VCC)"}
+    - {colour: "#9e9e9e", label: "USB-A → ST-LINK mini-USB (power + flashing)"}
+    - {colour: "#8e24aa", label: "D14 = PB9 CAN1 TX → CAN #1 CTX"}
+    - {colour: "#1e88e5", label: "D15 = PB8 CAN1 RX ← CAN #1 CRX"}
+    - {colour: "#ec407a", label: "CN10-30 = PB13 CAN2 TX → CAN #2 CTX"}
+    - {colour: "#4fc3f7", label: "CN10-16 = PB12 CAN2 RX ← CAN #2 CRX"}
+    - {colour: "#c0ca33", label: "CANH  CAN #1 ↔ CAN #2"}
+    - {colour: "#2e7d32", label: "CANL  CAN #1 ↔ CAN #2"}
+    - {colour: "#00acc1", label: "D10 = PB6 I2C1 SCL → MPU6050 SCL"}
+    - {colour: "#00796b", label: "CN7-21 = PB7 I2C1 SDA ↔ MPU6050 SDA"}
+    - {colour: "#43a047", label: "D4 = PB5 → 330 Ω → green LED: CLEAR (NONE)"}
+    - {colour: "#ffb300", label: "D5 = PB4 → 330 Ω → yellow LED: JUMP; blink = UNCERTAIN"}
+    - {colour: "#795548", label: "D6 = PB10 → 330 Ω → red LED: STOP; blink = no Pi data"}
+    - {colour: "#283593", label: "D9 = PC7 → 150 Ω → blue LED: UNCERTAIN"}
