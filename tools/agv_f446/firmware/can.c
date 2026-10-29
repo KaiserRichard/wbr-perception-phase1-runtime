@@ -18,11 +18,18 @@
 #define RDT0R 0x1B4u
 #define RDL0R 0x1B8u
 #define RDH0R 0x1BCu
+/* 42 MHz APB1, 14 tq (1+11+2): /3 = 1 Mbit/s (robot). CAN_BENCH_500K: /6 = 500 kbit/s, for
+   breadboard transceivers whose slope-control resistor limits them below 1 Mbit/s. */
+#ifdef CAN_BENCH_500K
+#define CAN_BTR_VALUE ((1u<<20)|(10u<<16)|5u)
+#else
+#define CAN_BTR_VALUE ((1u<<20)|(10u<<16)|2u)
+#endif
 static void gpio_can(unsigned pin){GPIOB_MODER=(GPIOB_MODER&~(3u<<(2*pin)))|(2u<<(2*pin));GPIOB_OSPEEDR|=3u<<(2*pin);GPIOB_PUPDR&=~(3u<<(2*pin));GPIOB_AFRH=(GPIOB_AFRH&~(15u<<(4*(pin-8))))|(9u<<(4*(pin-8)));}
 /* Shared filters are offsets from CAN1, not from CAN1 + 0x200 again.
  * Caller holds FINIT while configuring mask-mode, FIFO0, accept-all banks. */
 static void filter(unsigned bank){uint32_t f=CAN1;REG(f+0x204u)&=~(1u<<bank);REG(f+0x20cu)|=1u<<bank;REG(f+0x214u)&=~(1u<<bank);REG(f+0x240u+bank*8u)=0;REG(f+0x244u+bank*8u)=0;REG(f+0x21cu)|=1u<<bank;}
-static void one_init(uint32_t b){CREG(b,MCR)=1u; while(!(CREG(b,MSR)&1u)){} CREG(b,MCR)=1u|(1u<<6); /* INRQ + ABOM */ CREG(b,BTR)=(1u<<20)|(10u<<16)|2u; CREG(b,MCR)&=~1u; while(CREG(b,MSR)&1u){} }
+static void one_init(uint32_t b){CREG(b,MCR)=1u; while(!(CREG(b,MSR)&1u)){} CREG(b,MCR)=1u|(1u<<6); /* INRQ + ABOM */ CREG(b,BTR)=CAN_BTR_VALUE; CREG(b,MCR)&=~1u; while(CREG(b,MSR)&1u){} }
 void can_init(void){RCC_AHB1ENR|=1u<<1;RCC_APB1ENR|=(1u<<25)|(1u<<26);(void)RCC_APB1ENR;gpio_can(8);gpio_can(9);gpio_can(12);gpio_can(13);one_init(CAN1);one_init(CAN2);REG(CAN1+0x200u)=(REG(CAN1+0x200u)&~(0x3fu<<8))|(14u<<8)|1u;filter(0);filter(14);REG(CAN1+0x200u)&=~1u;}
 /* IDE=1 selects extended identifiers; RTR stays zero for payload data frames. */
 int can_send(unsigned bus,uint32_t id,const uint8_t d[8]){uint32_t b=bus?CAN2:CAN1,tsr=CREG(b,TSR);unsigned m;for(m=0;m<3u;m++)if(tsr&(1u<<(26u+m)))break;if(m==3u)return -1;uint32_t o=m*0x10u;CREG(b,TI0R+o)=((id&0x1fffffffu)<<3)|(1u<<2);CREG(b,TDT0R+o)=8u;CREG(b,TDL0R+o)=d[0]|((uint32_t)d[1]<<8)|((uint32_t)d[2]<<16)|((uint32_t)d[3]<<24);CREG(b,TDH0R+o)=d[4]|((uint32_t)d[5]<<8)|((uint32_t)d[6]<<16)|((uint32_t)d[7]<<24);CREG(b,TI0R+o)|=1u;return 0;}
