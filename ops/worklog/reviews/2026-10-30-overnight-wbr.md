@@ -24,3 +24,7 @@ Limits: no camera or Nucleo used; no flashing, motors or reboot; PRs open, not m
    - Pi runs: planner 24 suggestions / 0 errors; obstacle node 53 advisories, STOP_CANDIDATE at 0.130 m height.
 8. **perception_health integration: DONE, PR #163 (stacked on #157).** 24/24 + 29/29 + MCU PASS. PTY test fixed with a monotonic deadline; e2e fixtures use a test-only age override (cause INFERRED: subprocess startup counted against the 100 ms hold).
 9. **Preflight: DONE, in PR #158** (commit 8d38256). Read-only `preflight.sh` run on the Pi: **PASS, exit 0** (WARN: D435i absent). LED image staged on the Pi, SHA verified.
+10. **LIVE rehearsal, no camera/Nucleo: DONE, in PR #158** (`REHEARSAL_LIVE_SIM.md`). Pi lab checkout `advisory_link.py --ros`, 24 Oct bags, `host/sim.c` as Nucleo: B-H13 STOP 0.131 m, B-H05 JUMP 0.044 m, S1 STOP (pole 1.44 m); 641 accepted / 0 rejected; receipt→send P50 ≈ 100 ms. Real UART/LEDs/camera not covered.
+11. **lab_results.py: DONE, PR #164 (stacked on #158).** Evidence root → results table; 11/11 tests; reproduces the rehearsal numbers.
+
+Merge order suggestion is left to the owner (stacks: #163 on #157, #164 on #158). End of night: Pi powered off and Mac put to sleep by `overnight-queue/auto_sleep.sh` once idle.
