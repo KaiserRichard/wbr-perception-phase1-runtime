@@ -112,8 +112,9 @@ Python reference (same noise seeds, same initial state).
 the host must deliver state before each tick or the MCU reuses the last state
 and counts a miss. This needs a plant that runs at least as fast as real time.
 MEASURED on this Mac: the Python MuJoCo environment plus trace recording costs
-about 4–5 ms of wall time per 2 ms tick with six episodes in parallel, so the
-current host stack cannot keep up. Real time belongs to a later
+about 7 ms of wall time per 2 ms tick (1963 s for 320 × 5000 ticks with six
+episodes in parallel on a shared machine), so the current host stack cannot
+keep up. Real time belongs to a later
 hardware-in-the-loop rung with a C plant or the real robot.
 
 ## 4. How link latency enters the result
@@ -151,7 +152,44 @@ byte-for-byte against the recorded `K_used` hashes). The `pil` controller
 sends $y_k$ over the link and applies the returned command. In each PIL tick the
 runner also computes the Python command from the same observation.
 
-RESULTS_FULL_PANEL
+**MEASURED, fake MCU on the Mac (2026-10-30, 320 episodes, 6 parallel jobs, 1963 s):**
+
+| Delay | Python balance / push success | PIL balance / push success | Mean recovery, balance (s) | Mean recovery after push (s) |
+|---|---:|---:|---:|---:|
+| 2 ms | 20/20, 20/20 | 20/20, 20/20 | 1.7608 | 2.7432 |
+| 3 ms | 20/20, 20/20 | 20/20, 20/20 | 1.7683 | 2.7488 |
+| 4 ms | 20/20, 20/20 | 20/20, 20/20 | 1.7756 | 2.7547 |
+| 5 ms | 20/20, 20/20 | 20/20, 20/20 | 1.7828 | 2.7583 |
+
+- Python **160/160**, PIL **160/160**, 0 outcome mismatches in 160 pairs.
+  The recovery means equal the archived table in
+  [sim/rl/RESULTS_2026-10-20.md](../../sim/rl/RESULTS_2026-10-20.md) to all
+  four printed decimals, so this runner reproduces the original evaluator.
+- Largest PIL-vs-Python difference over all 800 000 ticks: torque
+  2.0e-11 N·m, true state 2.4e-12, recovery time 0 s. That residue is
+  NumPy's summation order vs the C loop, plus the C library keeping its own
+  torque estimate; it does not grow over 10 s.
+- Pty round trip (host Python + fake MCU): median of per-episode medians
+  0.46 ms, worst per-episode p99 18 ms, worst single tick 117 ms on a loaded
+  Mac. Lockstep makes these spikes harmless; in real time each would be a
+  missed deadline.
+- Fake MCU `wbr_lqr_step` on the Mac's i9: median 0.56 µs, worst 0.76 ms
+  (OS preemption). This says nothing about the F446.
+
+**MEASURED, unmodelled latency (`--link-delay-ticks N`, PIL on the fake MCU,
+push scenario, noise seeds 1000–1009):**
+
+| Extra delay | 2 ms profile: success, mean recovery, peak tilt | 5 ms profile: success, mean recovery, peak tilt |
+|---|---|---|
+| N = 0 (0 ms) | 10/10, 2.7448 s, 8.01° | 10/10, 2.7604 s, 8.04° |
+| N = 1 (2 ms) | 10/10, 2.7472 s, 8.03° | 10/10, 2.7616 s, 8.07° |
+| N = 2 (4 ms) | 10/10, 2.7490 s, 8.05° | 10/10, 2.7636 s, 8.11° |
+| N = 3 (6 ms) | 10/10, 2.7516 s, 8.09° | 10/10, 2.7660 s, 8.16° |
+
+Up to 6 ms of extra delay the push is still recovered in every case, about
+7 ms slower and about 0.1° higher peak tilt. This does not show the delay
+margin: N > 3 was not run, and the margin belongs to this ASSUMED plant only.
+The trend has the expected sign: more unmodelled delay, more overshoot.
 
 **Fault isolation: what evidence points where**
 
@@ -197,7 +235,7 @@ width disagreeing by more than ~1 µs (check the timer clock).
 | `sim/pil/firmware/` | F446RE build: USART2 (ST-Link VCP) 460800, PA8 marker, DWT |
 | `sim/pil/frame.py`, `link.py` | Host framing, serial link, fake MCU launcher |
 | `sim/pil/run.py` | Lockstep panel runner and Python comparison |
-| `sim/pil/tests/` | 15 quick tests (frames, fake MCU fixture replay, runner) |
+| `sim/pil/tests/` | 16 quick tests (frames, fake MCU fixture replay, runner); the QEMU firmware replay skips without `qemu-system-arm` |
 
 Known limits: lockstep only; no retransmission or duplicate detection; one MCU
 per run; the host sim is ASSUMED physics (see `sim/README.md`); PIL cannot

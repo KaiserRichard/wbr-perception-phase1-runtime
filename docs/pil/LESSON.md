@@ -88,8 +88,11 @@ $2 + 6 = 8$ ms while its gains and torque estimate assume 2 ms. The extra
 already reached the motors when they have not.
 
 How to observe this without real time: run the lockstep panel with
-`--link-delay-ticks 3`. MEASURED results for 1 and 2 extra ticks are in
-`docs/pil/DESIGN.md` §5.
+`--link-delay-ticks 3`. MEASURED in the simulation (fake MCU, push, 2 ms profile,
+10 seeds): 10/10 still recover, mean recovery after the push 2.7448 s → 2.7516 s,
+peak tilt 8.01° → 8.09°. In this ASSUMED model the controller tolerates the
+extra 6 ms with little cost. That is a model result, not a robot margin
+(`docs/pil/DESIGN.md` §5).
 
 What this example teaches: the link, not the chip, dominates. Removing USB
 (direct UART on the robot), using float32 frames, or raising the baud rate
