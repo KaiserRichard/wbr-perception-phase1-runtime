@@ -103,3 +103,4 @@ All rows are MEASURED. SUMMARY PASS 10/10.
 - `pi/flash_safe.py` is `stm32boot.py` with a sync that accepts ACK/NACK only on an
   otherwise quiet line, so a running app cannot fake it (worked once, 30 Oct). Open it
   **before** pressing RESET: reopening the port after the bootloader has started got no reply.
+- `pi/flash_magic.py` (send the reset command, then flash on the same open port) has **never succeeded**: its only run targeted a GO-started image whose UART was garbled. Treat it as untested.
