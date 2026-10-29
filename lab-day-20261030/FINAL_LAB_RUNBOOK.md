@@ -37,6 +37,10 @@ cd ~/imu-can-bench
 **0 PASS:** readback matches `link_bench_f446.bin` or the LED-image flash verifies. **FAIL/STOP:** no candidate match (record the backup SHA; nothing is lost because the backup is kept), backup/read/verify failure, or wrong image; do not proceed to LIVE. M1, L1 and A1 do not use the Nucleo and may run anyway.
 
 ## Preflight (before M1)
+Run this first, from the Mac in the repository root (read-only; it streams the script to the Pi, nothing is copied):
+```bash
+ssh wbr-pi5 'bash -s' < lab-day-20261030/preflight.sh
+```
 ```bash
 ssh wbr-pi5
 rs-enumerate-devices
@@ -101,6 +105,7 @@ RECORD=1 DURATION=60 bash lab-day-20261026/live_chain.sh "$RUN"
 Keep `summary.json`, `packets.csv`, `camera.log`, `record.log`, camera bag and wiring/power photos. Record fan state/speed, distances, LED/decision, sent/echoed/lost counts, dropped frames, receipt-to-before-write latency, round-trip time (RTT) percentiles, rejects/stale events, port/baud and reset state. **LIVE PASS:** script completes, packets echo and expected LED response is observed; **FAIL:** script/echo/LED evidence fails. No advisory is motor control.
 
 ## P1 — live path test (last)
+**Setup:** the planner goal is fixed at 3 m (`goal_forward_m`, no override in `path_live.sh`), so give it about 3 m of clear floor ahead of the start mark, with no wall, pole or table edge inside the lane. Otherwise every suggestion is `BLOCKED` whatever the box does (see `ros2/wbr_planner_node/EMPTY_SCENE_DIAG.md`, PR #162).
 Run the 90 s advice-only planner test. In Foxglove use `ws://<pi-address>:8765`, fixed frame `wbr_map`, grid/markers and raw `/wbr_planner_node/suggestion`; record display, suggestions, logs and bag. The planner has no motor or serial interface.
 ```bash
 cd ~/wbr-demo-20261026
