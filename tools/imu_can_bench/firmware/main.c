@@ -366,7 +366,7 @@ static void leds(int imu_ok, int can_ok, int fault) {
 
 static int c1_init_ok, c2_init_ok, imu_up;
 static void print_boot(void) {
-  puts_("BOOT fw=imu_can_bench ver=2"); kv("sysclk", SYSCLK); kv("can_bps", CAN_KBPS * 1000u); kv("imu_hz", 100u); putc_('\n');
+  puts_("BOOT fw=imu_can_bench ver=3"); kv("sysclk", SYSCLK); kv("can_bps", CAN_KBPS * 1000u); kv("imu_hz", 100u); putc_('\n');
   puts_("PIN"); kv("c1rx_idle", (uint32_t)pin_res[0]); kv("c2rx_idle", (uint32_t)pin_res[1]);
   kv("c1tx_c1rx", (uint32_t)pin_res[2]); kv("c1tx_c2rx", (uint32_t)pin_res[3]);
   kv("c2tx_c2rx", (uint32_t)pin_res[4]); kv("c2tx_c1rx", (uint32_t)pin_res[5]);
@@ -481,6 +481,14 @@ static void (*const vectors[16 + 97])(void) = {
 };
 void Reset_Handler(void) {
   VTOR = 0x08000000u;
+  /* Started by the ROM bootloader's GO command, the core keeps PRIMASK set (SysTick would
+   * never tick, so every ms-based wait hangs) and USART1/CAN keep its configuration.
+   * Reset those peripherals and enable interrupts so GO behaves like a power-on reset. */
+  RCC_AHB1RSTR = 7u; RCC_AHB1RSTR = 0;
+  RCC_APB1RSTR = (1u << 21) | (1u << 25) | (1u << 26); RCC_APB1RSTR = 0;
+  RCC_APB2RSTR = 1u << 4; RCC_APB2RSTR = 0;
+  SYST_CSR = 0;
+  __asm volatile("cpsie i" ::: "memory");
   uint32_t *s = &_sidata, *d = &_sdata;
   while (d < &_edata) *d++ = *s++;
   for (d = &_sbss; d < &_ebss;) *d++ = 0;

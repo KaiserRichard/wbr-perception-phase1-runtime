@@ -46,3 +46,18 @@
 - `loopback_fake` emulates only the left wheel, its echo applies `LEFT_SIGN` twice, and both fake motors share ID 1
   on the joined bus, so `agv_home_test.py` cannot reach 8/8 on this bench regardless of wiring.
 - IMU: no re-init after one failed read; an all-zero read is not rejected.
+
+## Night, 22:50–00:30 (fake-motor fix)
+- Sign convention: H723 `docs/topics.md` defines `/motor_fb` in wheel frame, so `agv_home_test.py` defaults go to +1/+1 (thresholds unchanged).
+- canfix02 (two-way fake, 1 Mbit/s): flashed (backup = canfix01, `verify True`), started via GO, session up.
+  - MEASURED: home test 5/8; feedback [0,0]; status 16, no fresh or bus-off bit.
+- codex-e review (read-only, log in the side-session notes, `codex-logs/FAKEMOTOR-REVIEW-e.log`):
+  - Identical command IDs from both controllers on one bus are never ACKed. INFERRED as the main cause.
+  - `status(now)` freshness underflow. CONFIRMED in source.
+  - Both fixed in canfix04 (built, not flashed).
+- Flashing problems, all MEASURED:
+  - Reopening the port after the bootloader started: no reply.
+  - Running app bytes faked an ACK (`expected ACK, got a5`).
+  - `flash_safe.py` (ACK only on a quiet line) synced and flashed once: PASS.
+  - Bench image started by GO prints garbled UART (v2 and v3), so 1M results are invalid and the magic reset is never received: BLOCKED.
+- End state: flash = bench 1M v3 `575eb692…`, BOOT0 fitted, Pi jobs stopped, port free.

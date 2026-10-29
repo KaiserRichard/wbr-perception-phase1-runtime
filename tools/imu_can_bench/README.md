@@ -94,3 +94,12 @@ All rows are MEASURED. SUMMARY PASS 10/10.
 
   Its 5/8 result is not evidence for or against the CAN hardware. This tool is the
   hardware check.
+
+- **GO start (FAIL):** started by the ROM bootloader's GO command (BOOT0 fitted), the bench
+  image prints garbled UART, at no standard baud the Pi could read. That happened on v2 and
+  v3 (v3 resets USART1/CAN/GPIO and enables IRQs at startup). It runs correctly only after a
+  real RESET with BOOT0 removed. The cause is not found (INFERRED: clock state left by the
+  bootloader). The canfix (micro-ROS) images do start correctly via GO.
+- `pi/flash_safe.py` is `stm32boot.py` with a sync that accepts ACK/NACK only on an
+  otherwise quiet line, so a running app cannot fake it (worked once, 30 Oct). Open it
+  **before** pressing RESET: reopening the port after the bootloader has started got no reply.
