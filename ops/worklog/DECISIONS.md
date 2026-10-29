@@ -353,3 +353,8 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 
 ### D-20261026-AGV-F446-DEMO-IMU
 - Owner authorized integrating the MPU6050 in the F446 demo board, superseding the 2026-10-25 decision to omit `/imu/data` from the initial base image. Keep terrain advisory display-only and expose sensor absence through `/motor_status` bit 7. Hardware validation remains a separate bench step.
+
+### D-20261029-F446-BENCH-ISOLATION
+- Owner authorized Pi access, backup-first flashing and fixes on an isolated feature branch for the Nucleo demo only; no real motors, team boards or PR merge.
+- Correct demonstrated bxCAN register/frame defects without changing pin mapping, topics or acceptance thresholds. Reconnect accessories with power off and isolate subsystems during electrical diagnosis.
+- Do not count zero-baseline NaN/stop checks as proof of a working command-feedback path. Retain failed runs and report IMU intermittency separately.
