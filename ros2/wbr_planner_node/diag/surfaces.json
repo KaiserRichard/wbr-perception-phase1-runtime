@@ -1,0 +1,562 @@
+{
+  "S1-empty": {
+    "lanes": [
+      {
+        "target": -0.6,
+        "cells": 73,
+        "x_min": 0.7250000000000001,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.55,
+        "cells": 87,
+        "x_min": 0.7250000000000001,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.5,
+        "cells": 85,
+        "x_min": 0.7250000000000001,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.45,
+        "cells": 83,
+        "x_min": 0.7250000000000001,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.4,
+        "cells": 88,
+        "x_min": 0.7250000000000001,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.35,
+        "cells": 84,
+        "x_min": 0.7250000000000001,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.3,
+        "cells": 84,
+        "x_min": 0.7250000000000001,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.25,
+        "cells": 73,
+        "x_min": 0.7250000000000001,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.2,
+        "cells": 67,
+        "x_min": 0.7250000000000001,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.15,
+        "cells": 62,
+        "x_min": 1.1749999999999998,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.1,
+        "cells": 52,
+        "x_min": 1.2750000000000004,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.05,
+        "cells": 52,
+        "x_min": 1.4249999999999998,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": 0.0,
+        "cells": 46,
+        "x_min": 1.4249999999999998,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": 0.05,
+        "cells": 46,
+        "x_min": 1.4249999999999998,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": 0.1,
+        "cells": 48,
+        "x_min": 1.4249999999999998,
+        "x_max": 1.8250000000000002
+      },
+      {
+        "target": 0.15,
+        "cells": 43,
+        "x_min": 1.4249999999999998,
+        "x_max": 1.8250000000000002
+      },
+      {
+        "target": 0.2,
+        "cells": 49,
+        "x_min": 1.4249999999999998,
+        "x_max": 1.9750000000000005
+      },
+      {
+        "target": 0.25,
+        "cells": 44,
+        "x_min": 1.4750000000000005,
+        "x_max": 1.9750000000000005
+      },
+      {
+        "target": 0.3,
+        "cells": 47,
+        "x_min": 1.4750000000000005,
+        "x_max": 2.125
+      },
+      {
+        "target": 0.35,
+        "cells": 62,
+        "x_min": 1.4750000000000005,
+        "x_max": 2.2750000000000004
+      },
+      {
+        "target": 0.4,
+        "cells": 58,
+        "x_min": 1.4750000000000005,
+        "x_max": 2.2750000000000004
+      },
+      {
+        "target": 0.45,
+        "cells": 73,
+        "x_min": 1.4750000000000005,
+        "x_max": 2.2750000000000004
+      },
+      {
+        "target": 0.5,
+        "cells": 69,
+        "x_min": 1.5250000000000004,
+        "x_max": 2.2750000000000004
+      },
+      {
+        "target": 0.55,
+        "cells": 75,
+        "x_min": 1.625,
+        "x_max": 2.2750000000000004
+      },
+      {
+        "target": 0.6,
+        "cells": 99,
+        "x_min": 1.6749999999999998,
+        "x_max": 2.7250000000000005
+      }
+    ],
+    "remove_obstacles_beyond_x": {
+      "1.0": {
+        "action": "GO_STRAIGHT",
+        "target_offset_m": 0.0,
+        "current_lateral_m": 0.0,
+        "shift_needed_m": 0.0,
+        "distance_to_goal_m": 3.0,
+        "unknown_fraction": 0.556,
+        "cost": 0.278,
+        "goal_x_m": 3.0
+      },
+      "1.3": {
+        "action": "GO_STRAIGHT",
+        "target_offset_m": 0.0,
+        "current_lateral_m": 0.0,
+        "shift_needed_m": 0.0,
+        "distance_to_goal_m": 3.0,
+        "unknown_fraction": 0.556,
+        "cost": 0.278,
+        "goal_x_m": 3.0
+      },
+      "1.5": {
+        "action": "SHIFT_LEFT",
+        "target_offset_m": 0.5,
+        "current_lateral_m": 0.0,
+        "shift_needed_m": 0.5,
+        "distance_to_goal_m": 3.0,
+        "unknown_fraction": 0.8280000000000001,
+        "cost": 0.914,
+        "goal_x_m": 3.0
+      },
+      "1.7": {
+        "action": "BLOCKED",
+        "target_offset_m": 0.0,
+        "current_lateral_m": 0.0,
+        "shift_needed_m": 0.0,
+        "distance_to_goal_m": 3.0,
+        "unknown_fraction": 0.556,
+        "cost": 1000000.278,
+        "goal_x_m": 3.0
+      },
+      "2.0": {
+        "action": "BLOCKED",
+        "target_offset_m": 0.0,
+        "current_lateral_m": 0.0,
+        "shift_needed_m": 0.0,
+        "distance_to_goal_m": 3.0,
+        "unknown_fraction": 0.556,
+        "cost": 1000000.278,
+        "goal_x_m": 3.0
+      },
+      "3.0": {
+        "action": "BLOCKED",
+        "target_offset_m": 0.0,
+        "current_lateral_m": 0.0,
+        "shift_needed_m": 0.0,
+        "distance_to_goal_m": 3.0,
+        "unknown_fraction": 0.556,
+        "cost": 1000000.278,
+        "goal_x_m": 3.0
+      }
+    },
+    "nearest_point": [
+      0.7445519859159929,
+      -0.40251327091216565,
+      0.10039184342924587
+    ],
+    "topics": [
+      [
+        1,
+        "/camera/camera/depth/image_rect_raw",
+        "sensor_msgs/msg/Image"
+      ],
+      [
+        2,
+        "/camera/camera/aligned_depth_to_color/camera_info",
+        "sensor_msgs/msg/CameraInfo"
+      ],
+      [
+        3,
+        "/camera/camera/color/metadata",
+        "realsense2_camera_msgs/msg/Metadata"
+      ],
+      [
+        4,
+        "/tf_static",
+        "tf2_msgs/msg/TFMessage"
+      ],
+      [
+        5,
+        "/camera/camera/aligned_depth_to_color/image_raw",
+        "sensor_msgs/msg/Image"
+      ],
+      [
+        6,
+        "/camera/camera/color/camera_info",
+        "sensor_msgs/msg/CameraInfo"
+      ],
+      [
+        7,
+        "/camera/camera/color/image_raw",
+        "sensor_msgs/msg/Image"
+      ],
+      [
+        8,
+        "/camera/camera/depth/camera_info",
+        "sensor_msgs/msg/CameraInfo"
+      ],
+      [
+        9,
+        "/camera/camera/depth/metadata",
+        "realsense2_camera_msgs/msg/Metadata"
+      ]
+    ]
+  },
+  "B-H13": {
+    "lanes": [
+      {
+        "target": -0.6,
+        "cells": 76,
+        "x_min": 0.7750000000000004,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.55,
+        "cells": 85,
+        "x_min": 0.7750000000000004,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.5,
+        "cells": 80,
+        "x_min": 0.7750000000000004,
+        "x_max": 1.625
+      },
+      {
+        "target": -0.45,
+        "cells": 81,
+        "x_min": 0.7750000000000004,
+        "x_max": 1.625
+      },
+      {
+        "target": -0.4,
+        "cells": 96,
+        "x_min": 0.7750000000000004,
+        "x_max": 1.625
+      },
+      {
+        "target": -0.35,
+        "cells": 92,
+        "x_min": 0.7750000000000004,
+        "x_max": 1.625
+      },
+      {
+        "target": -0.3,
+        "cells": 101,
+        "x_min": 0.7750000000000004,
+        "x_max": 1.625
+      },
+      {
+        "target": -0.25,
+        "cells": 88,
+        "x_min": 0.7750000000000004,
+        "x_max": 1.625
+      },
+      {
+        "target": -0.2,
+        "cells": 85,
+        "x_min": 0.7750000000000004,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.15,
+        "cells": 87,
+        "x_min": 0.9750000000000001,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.1,
+        "cells": 77,
+        "x_min": 0.9750000000000001,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": -0.05,
+        "cells": 82,
+        "x_min": 0.9750000000000001,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": 0.0,
+        "cells": 77,
+        "x_min": 0.9750000000000001,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": 0.05,
+        "cells": 75,
+        "x_min": 0.9750000000000001,
+        "x_max": 1.6749999999999998
+      },
+      {
+        "target": 0.1,
+        "cells": 73,
+        "x_min": 0.9750000000000001,
+        "x_max": 1.875
+      },
+      {
+        "target": 0.15,
+        "cells": 63,
+        "x_min": 0.9750000000000001,
+        "x_max": 1.875
+      },
+      {
+        "target": 0.2,
+        "cells": 63,
+        "x_min": 0.9750000000000001,
+        "x_max": 2.0250000000000004
+      },
+      {
+        "target": 0.25,
+        "cells": 54,
+        "x_min": 0.9750000000000001,
+        "x_max": 2.0250000000000004
+      },
+      {
+        "target": 0.3,
+        "cells": 52,
+        "x_min": 1.0250000000000004,
+        "x_max": 2.125
+      },
+      {
+        "target": 0.35,
+        "cells": 62,
+        "x_min": 1.4750000000000005,
+        "x_max": 2.2250000000000005
+      },
+      {
+        "target": 0.4,
+        "cells": 57,
+        "x_min": 1.4750000000000005,
+        "x_max": 2.2250000000000005
+      },
+      {
+        "target": 0.45,
+        "cells": 71,
+        "x_min": 1.4750000000000005,
+        "x_max": 2.2250000000000005
+      },
+      {
+        "target": 0.5,
+        "cells": 66,
+        "x_min": 1.5750000000000002,
+        "x_max": 2.2250000000000005
+      },
+      {
+        "target": 0.55,
+        "cells": 71,
+        "x_min": 1.625,
+        "x_max": 2.2250000000000005
+      },
+      {
+        "target": 0.6,
+        "cells": 95,
+        "x_min": 1.7250000000000005,
+        "x_max": 2.575
+      }
+    ],
+    "remove_obstacles_beyond_x": {
+      "1.0": {
+        "action": "SHIFT_LEFT",
+        "target_offset_m": 0.3,
+        "current_lateral_m": 0.0,
+        "shift_needed_m": 0.3,
+        "distance_to_goal_m": 3.0,
+        "unknown_fraction": 0.762,
+        "cost": 0.681,
+        "goal_x_m": 3.0
+      },
+      "1.3": {
+        "action": "SHIFT_LEFT",
+        "target_offset_m": 0.35,
+        "current_lateral_m": 0.0,
+        "shift_needed_m": 0.35,
+        "distance_to_goal_m": 3.0,
+        "unknown_fraction": 0.7781818181818182,
+        "cost": 0.739090909090909,
+        "goal_x_m": 3.0
+      },
+      "1.5": {
+        "action": "SHIFT_LEFT",
+        "target_offset_m": 0.5,
+        "current_lateral_m": 0.0,
+        "shift_needed_m": 0.5,
+        "distance_to_goal_m": 3.0,
+        "unknown_fraction": 0.832,
+        "cost": 0.9159999999999999,
+        "goal_x_m": 3.0
+      },
+      "1.7": {
+        "action": "SHIFT_LEFT",
+        "target_offset_m": 0.6,
+        "current_lateral_m": 0.0,
+        "shift_needed_m": 0.6,
+        "distance_to_goal_m": 3.0,
+        "unknown_fraction": 0.7890909090909091,
+        "cost": 0.9945454545454545,
+        "goal_x_m": 3.0
+      },
+      "2.0": {
+        "action": "BLOCKED",
+        "target_offset_m": 0.0,
+        "current_lateral_m": 0.0,
+        "shift_needed_m": 0.0,
+        "distance_to_goal_m": 3.0,
+        "unknown_fraction": 0.606,
+        "cost": 1000000.303,
+        "goal_x_m": 3.0
+      },
+      "3.0": {
+        "action": "BLOCKED",
+        "target_offset_m": 0.0,
+        "current_lateral_m": 0.0,
+        "shift_needed_m": 0.0,
+        "distance_to_goal_m": 3.0,
+        "unknown_fraction": 0.606,
+        "cost": 1000000.303,
+        "goal_x_m": 3.0
+      }
+    },
+    "nearest_point": [
+      0.7681274449302086,
+      -0.4136522674022306,
+      0.09251139698956967
+    ],
+    "topics": [
+      [
+        1,
+        "/camera/camera/depth/camera_info",
+        "sensor_msgs/msg/CameraInfo"
+      ],
+      [
+        2,
+        "/camera/camera/depth/image_rect_raw",
+        "sensor_msgs/msg/Image"
+      ],
+      [
+        3,
+        "/camera/camera/aligned_depth_to_color/camera_info",
+        "sensor_msgs/msg/CameraInfo"
+      ],
+      [
+        4,
+        "/camera/camera/color/metadata",
+        "realsense2_camera_msgs/msg/Metadata"
+      ],
+      [
+        5,
+        "/tf_static",
+        "tf2_msgs/msg/TFMessage"
+      ],
+      [
+        6,
+        "/camera/camera/aligned_depth_to_color/image_raw",
+        "sensor_msgs/msg/Image"
+      ],
+      [
+        7,
+        "/camera/camera/color/camera_info",
+        "sensor_msgs/msg/CameraInfo"
+      ],
+      [
+        8,
+        "/camera/camera/color/image_raw",
+        "sensor_msgs/msg/Image"
+      ],
+      [
+        9,
+        "/camera/camera/depth/metadata",
+        "realsense2_camera_msgs/msg/Metadata"
+      ]
+    ]
+  },
+  "LIVE": {
+    "counts": {
+      "/wbr_obstacle_node/advisory": {
+        "JUMP_CANDIDATE": 221,
+        "STOP_CANDIDATE": 25
+      }
+    },
+    "examples": {
+      "/wbr_obstacle_node/advisory": {
+        "advisory": "JUMP_CANDIDATE",
+        "advisory_code": 1,
+        "confidence": 1.0,
+        "distance_m": 1.0210244629786385,
+        "height_m": 0.03516194608991516,
+        "width_m": 0.23518993619550044,
+        "plane_valid": true,
+        "plane_height_m": 0.292556055887623,
+        "plane_pitch_rad": 0.1956908247835169,
+        "frame_stamp_ns": 1792815252407114014,
+        "frame_id": "camera_color_optical_frame",
+        "processing_ms": 281.8274249998467
+      }
+    }
+  }
+}

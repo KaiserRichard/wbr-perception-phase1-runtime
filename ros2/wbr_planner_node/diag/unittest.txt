@@ -1,0 +1,7 @@
+...........
+----------------------------------------------------------------------
+Ran 11 tests in 6.071s
+
+OK
+box sequence core runtime ms/frame: mean=221.50, max=259.15
+clear sequence core runtime ms/frame: mean=214.10, max=259.37
