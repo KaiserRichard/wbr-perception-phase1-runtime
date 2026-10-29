@@ -127,3 +127,7 @@ The 25 Oct workspace's planner source equals main and rebuilt cleanly on 30 Oct.
 find "$HOME/wbr-evidence/lab-day-20261030" -type f -print0 | sort -z | xargs -0 sha256sum > "$HOME/wbr-evidence/lab-day-20261030.SHA256SUMS"
 ```
 Save one run-sheet row per ID and checksum the complete evidence root before copying. Stop if image identity, camera enumeration, throttling, storage, UART, or evidence capture fails. The link bench is diagnostic only; no motor control is present.
+
+### After the lab
+On the Mac, from the repository root (optional physical measurements: `EVIDENCE_ROOT/run_sheet.csv`; columns documented in `lab_results.py`):
+`~/Desktop/Research/wbr-venvs/perception/bin/python lab-day-20261030/lab_results.py EVIDENCE_ROOT --out results.md --json results.json`
