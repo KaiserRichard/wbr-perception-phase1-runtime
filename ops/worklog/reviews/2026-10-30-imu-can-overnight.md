@@ -18,3 +18,9 @@
 - UNKNOWN: 1 Mbit/s on these transceivers (bench images started via GO print garbled UART, so both 1M runs are invalid); CANH-unplug test; 120 Ω value.
 - BOARD STATE: flash = `agv_f446_home_canfix04_500k.bin`, SHA256 `d33f7c975520e65398588d4c3f1c4a3e8d26f6ddf6be6364ecaf5b2da99545bd`, read-back verified. BOOT0 fitted, so it starts in the ROM bootloader. canfix01 backups are in `~/wbr-evidence-archive/imu-can-bench-20261029/`.
 - Pi released for the camera reboot; no jobs left; ttyAMA0 free.
+
+## Update ~01:10
+- canfix05_500k flashed (backup identical, `verify True`). **Home test 8/8 PASS (MEASURED)**, with one caveat: the disabled-at-end check passes only on tolerance (0.33 rad/s < 0.5, no fresh bit). Stop-reply delivery is still unproven.
+- **BOARD STATE:** flash = `agv_f446_home_canfix05_500k.bin` SHA256 `13279727ab597f5e777699b1e744e801ffbf7a3cfbeefc9ae744df571621b9ed`, verified, running (GO). BOOT0 still fitted.
+  - For the demo after any power cycle: remove BOOT0, press RESET, then start the agent (a second start may be needed).
+- Pi: agent stopped, no jobs, ttyAMA0 free.
