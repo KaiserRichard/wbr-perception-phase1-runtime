@@ -15,3 +15,12 @@
    - Also: the LED image is not on the Pi yet (scp step added).
 
 Limits: no camera or Nucleo used; no flashing, motors or reboot; PRs open, not merged. The runbook's canfix01 banner is UNVERIFIED.
+
+## Wave 2 (00:40–01:10; Codex e/d/g/h, all checked by Claude)
+6. **Planner "empty" BLOCKED: DONE, PR #162, not a bug (INFERRED from MEASURED replay).** S1 was a strip ending at a lamp pole (~1.42 m) and wall (~1.60 m), both inside the 3 m goal. Ablation: obstacles kept only before 1.3 m → GO_STRAIGHT. Floor fit 0.293 m / 9.6°. **P1 needs ~3 m of clear floor** (added to the runbook).
+7. **Lab fixes: DONE, PR #161.**
+   - `path_live.sh` now defaults to ws-20261025; LED_REPORT hash corrected; quiet Ctrl-C in both nodes.
+   - Review caught a worker bug, `from rclpy.exceptions import RCLError` (absent on Jazzy), which **crashed the node on the Pi**; fixed.
+   - Pi runs: planner 24 suggestions / 0 errors; obstacle node 53 advisories, STOP_CANDIDATE at 0.130 m height.
+8. **perception_health integration: DONE, PR #163 (stacked on #157).** 24/24 + 29/29 + MCU PASS. PTY test fixed with a monotonic deadline; e2e fixtures use a test-only age override (cause INFERRED: subprocess startup counted against the 100 ms hold).
+9. **Preflight: DONE, in PR #158** (commit 8d38256). Read-only `preflight.sh` run on the Pi: **PASS, exit 0** (WARN: D435i absent). LED image staged on the Pi, SHA verified.
