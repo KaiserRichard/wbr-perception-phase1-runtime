@@ -17,9 +17,13 @@ Command: `make -C tools/link_bench/firmware`
 | data | 0 |
 | bss | 5120 |
 | ELF total (text + data + bss) | 12688 |
-| prebuilt binary | 7572 |
+| prebuilt binary | 7620 (post-d29beae; 7572 before) |
 
-SHA-256 of `firmware/prebuilt/link_bench_f446.bin`:
+Current (post-d29beae) SHA-256 of `firmware/prebuilt/link_bench_f446.bin`:
+
+`bf5721b44c0d9eafa4b5b53fb75f1ceec8c6e3c72a0c81d5a6bfd7635fe003ed`
+
+Pre-d29beae image SHA-256:
 
 `07f0af8dfe1759e76432205df35527ce8a6febfdf3804cfe6ebd74fd0266551a`
 

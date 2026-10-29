@@ -19,7 +19,7 @@ if [[ -e "$RUN_DIR/bag" ]]; then
 fi
 SCRIPT_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 CAMERA_SETUP=${CAMERA_SETUP:-/home/richard/wbr-camera-ros-build-20261021-04/install/setup.bash}
-PLANNER_SETUP=${PLANNER_SETUP:-/home/richard/wbr-demo-ws-20261024/install/setup.bash}
+PLANNER_SETUP=${PLANNER_SETUP:-/home/richard/wbr-demo-ws-20261025/install/setup.bash}
 export WBR_REPO_ROOT=${WBR_REPO_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}
 ROS_SETUP=${ROS_SETUP:-/opt/ros/jazzy/setup.bash}
 for setup in "$ROS_SETUP" "$CAMERA_SETUP" "$PLANNER_SETUP"; do
