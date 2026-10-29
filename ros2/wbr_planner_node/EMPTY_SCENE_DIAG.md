@@ -122,4 +122,4 @@ clear sequence core runtime ms/frame: mean=214.10, max=259.37
 
 ## Implication for the P1 lab test (Claude review, 30 Oct)
 
-`path_live.sh` launches `planner.launch.py` with the default `goal_forward_m = 3.0` and no override. P1 therefore needs about 3 m of clear floor ahead of the start mark (no wall, pole or table edge inside the swept lane), or every suggestion is `BLOCKED` whatever the box does. The 12 large `.npz` intermediates are not committed. `replay_empty.py` regenerates them; copies are in `~/wbr-evidence-archive/overnight-20261030-01/planner-diag/`.
+`path_live.sh` launches `planner.launch.py` with the default `goal_forward_m = 3.0` and no override. P1 therefore needs about 3 m of clear floor ahead of the start mark (no wall, pole or table edge inside the swept lane), or every suggestion is `BLOCKED` whatever the box does. The two large `.npz` intermediates (~470 KB each) are not committed. `replay_empty.py` regenerates them; copies are in `~/wbr-evidence-archive/overnight-20261030-01/planner-diag/`.
