@@ -541,3 +541,9 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
   and explain stand-ins and limitations for the supervisor.
 - Validation: six pure Python policy tests passed. ROS launch, bag replay, serial,
   F446, CAN fake motor, and Foxglove GUI are unverified.
+
+### DOC-20261029-F446-BENCH
+- Branch chatgpt/20261028-f446-home-test; draft PR154, no merge.
+- Updated AGV README with CAN register correction, build, host regression and hardware validation limits.
+- Added 28/29 Oct bench review and 29 Oct session with failures, backup/image hashes, flash verification, evidence paths and pending CAN/IMU/demo work.
+- Existing archived images retained; no topics, thresholds or physical pin mapping changed.
