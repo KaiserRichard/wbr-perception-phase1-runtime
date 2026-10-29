@@ -16,19 +16,19 @@ from agv_home_test import (
 class KinematicsChecks(unittest.TestCase):
     def test_forward_uses_configured_feedback_signs(self):
         left, right = expected_wheel_speeds(0.3, 0.0)
-        self.assertAlmostEqual(left, -5.0)
+        self.assertAlmostEqual(left, 5.0)  # wheel frame per docs/topics.md
         self.assertAlmostEqual(right, 5.0)
 
     def test_turning_produces_differential_targets(self):
         left, right = expected_wheel_speeds(0.2, 0.5)
-        self.assertAlmostEqual(left, -(0.2 - 0.345 * 0.5 / 2) / 0.06)
+        self.assertAlmostEqual(left, (0.2 - 0.345 * 0.5 / 2) / 0.06)
         self.assertAlmostEqual(right, (0.2 + 0.345 * 0.5 / 2) / 0.06)
 
     def test_saturation_scales_both_wheels_to_limit(self):
         left, right = expected_wheel_speeds(2.0, 0.0)
         self.assertAlmostEqual(abs(left), 20.0)
         self.assertAlmostEqual(abs(right), 20.0)
-        ok, _ = check_common_scale((left, right), (-2 / 0.06, 2 / 0.06), 0.01)
+        ok, _ = check_common_scale((left, right), (2 / 0.06, 2 / 0.06), 0.01)
         self.assertTrue(ok)
 
     def test_saturation_preserves_turning_ratio(self):

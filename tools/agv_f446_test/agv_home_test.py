@@ -18,13 +18,15 @@ from dataclasses import asdict, dataclass
 from typing import Any, Iterable, Sequence
 
 
-# Defaults match User/Config/robot_config.h in the read-only H723 source tree:
-# WHEEL_RADIUS=0.060 m, WHEEL_BASE=0.345 m, MOTOR_LEFT_SIGN=-1,
-# MOTOR_RIGHT_SIGN=+1. Source: docs/topics.md for kinematics/saturation and
-# User/Config/robot_config.h for the current mechanical/sign configuration.
+# Geometry matches User/Config/robot_config.h in the read-only H723 source tree:
+# WHEEL_RADIUS=0.060 m, WHEEL_BASE=0.345 m. The feedback signs are +1/+1 because
+# docs/topics.md defines /motor_fb in wheel frame (positive = forward on both
+# wheels); the firmware already multiplies by MOTOR_LEFT_SIGN=-1 /
+# MOTOR_RIGHT_SIGN=+1 before publishing. Pass --left-sign -1 to check a raw
+# motor-frame publisher instead.
 DEFAULT_WHEEL_RADIUS = 0.060
 DEFAULT_WHEEL_BASE = 0.345
-DEFAULT_LEFT_SIGN = -1.0
+DEFAULT_LEFT_SIGN = 1.0
 DEFAULT_RIGHT_SIGN = 1.0
 MAX_WHEEL_SPEED = 20.0
 TIMEOUT_STATUS_BIT = 0x20
