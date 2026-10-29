@@ -4,9 +4,10 @@
  *   BOOT/PIN/IMUID/LOOP/NORM  boot results, repeated every 5 s
  *   I,ms,fresh,ax,ay,az,temp,gx,gy,gz  raw MPU6050 sample (+-4 g, +-500 dps)
  *   STAT k=v ...               cumulative counters, once per second
- * Send "BOOTLOADER\n" on USART1 to jump into the ROM bootloader (no BOOT0).
+ * Send "BOOTLOADER" on USART1 to system-reset; with BOOT0 fitted that lands in the ROM
+ * bootloader, so several images can be flashed with the jumper left in place.
  *
- * Clock: HSI 16 MHz only (no HSE/PLL dependency). CAN 500 kbit/s, 16 tq, SP 87.5 %.
+ * Clock: HSI 16 MHz only (no HSE/PLL dependency). CAN_KBPS 500 (default) or 1000, 16 tq, SP 87.5 %.
  * CAN1 PB8 RX / PB9 TX, CAN2 PB12 RX / PB13 TX, I2C1 PB6 SCL / PB7 SDA.
  * LEDs: D4 PB5 green = IMU ok, D9 PC7 blue = CAN round trip ok,
  *       D6 PB10 red = any fault, D5 PB4 yellow = 1 Hz heartbeat. */
@@ -73,7 +74,11 @@
 #define VTOR REG(0xE000ED08u)
 
 #define SYSCLK 16000000u
-#define CAN_BTR_500K ((1u << 20) | (12u << 16) | 1u) /* /2 -> 8 MHz, 1+13+2 tq */
+#ifndef CAN_KBPS
+#define CAN_KBPS 500u
+#endif
+/* 16 tq per bit (1+13+2): prescaler 16 MHz / (16 * kbit/s) */
+#define CAN_BTR ((1u << 20) | (12u << 16) | (SYSCLK / (16000u * CAN_KBPS) - 1u))
 #define ID_PING 0x101u
 #define ID_ECHO 0x202u
 #define ID_LOOP 0x111u
@@ -321,7 +326,7 @@ static void can_loopback_test(void) {
   static const uint32_t bases[2] = {CAN1, CAN2};
   for (unsigned k = 0; k < 2u; k++) {
     uint32_t b = bases[k], ovr = 0;
-    if (!can_config(b, CAN_BTR_500K | (1u << 30) | (1u << 31))) continue;
+    if (!can_config(b, CAN_BTR | (1u << 30) | (1u << 31))) continue;
     for (uint32_t n = 0; n < 10u; n++) {
       uint8_t d[8] = {(uint8_t)n, (uint8_t)k, 0x55, 0xAA, 0, 0, 0, 0};
       if (!can_send(b, ID_LOOP, d)) continue;
@@ -335,19 +340,14 @@ static void can_loopback_test(void) {
   }
 }
 
-/* ---- ROM bootloader entry for one-command reflashing ---- */
-static void jump_to_bootloader(void) {
-  puts_("JUMP bootloader\n"); uart_flush();
-  __asm volatile("cpsid i" ::: "memory");
-  SYST_CSR = 0;
-  RCC_APB1RSTR = (1u << 21) | (1u << 25) | (1u << 26); RCC_APB1RSTR = 0;
-  RCC_APB2RSTR = 1u << 4; RCC_APB2RSTR = 0;
-  RCC_AHB1RSTR = 7u; RCC_AHB1RSTR = 0;
-  RCC_APB1ENR = 0; RCC_APB2ENR = 1u << 14;           /* SYSCFG only */
-  REG(0x40013800u) = 1u;                             /* SYSCFG_MEMRMP: system flash at 0 */
-  VTOR = 0x1FFF0000u;
-  uint32_t sp = REG(0x1FFF0000u), pc = REG(0x1FFF0004u);
-  __asm volatile("msr msp, %0\n cpsie i\n bx %1" :: "r"(sp), "r"(pc) : "memory");
+/* ---- reset for reflashing ----
+ * A direct jump into the ROM bootloader stopped the app but the bootloader never answered
+ * on USART1 (29 Oct), so reset instead: with BOOT0 fitted the ROM bootloader starts from a
+ * clean reset state. */
+static void reset_to_bootloader(void) {
+  puts_("RESET for bootloader (needs BOOT0 fitted)\n"); uart_flush();
+  REG(0xE000ED0Cu) = 0x05FA0004u; /* SCB AIRCR: SYSRESETREQ */
+  for (;;) {}
 }
 static void rx_poll(void) {
   static const char magic[] = "BOOTLOADER";
@@ -355,7 +355,7 @@ static void rx_poll(void) {
   uint32_t sr = U_SR;
   if (!(sr & ((1u << 5) | (1u << 3)))) return;
   char c = (char)U_DR;
-  if (c == magic[pos]) { if (magic[++pos] == '\0') jump_to_bootloader(); }
+  if (c == magic[pos]) { if (magic[++pos] == '\0') reset_to_bootloader(); }
   else pos = (c == magic[0]) ? 1u : 0u;
 }
 
@@ -366,7 +366,7 @@ static void leds(int imu_ok, int can_ok, int fault) {
 
 static int c1_init_ok, c2_init_ok, imu_up;
 static void print_boot(void) {
-  puts_("BOOT fw=imu_can_bench ver=1"); kv("sysclk", SYSCLK); kv("can_bps", 500000u); kv("imu_hz", 100u); putc_('\n');
+  puts_("BOOT fw=imu_can_bench ver=2"); kv("sysclk", SYSCLK); kv("can_bps", CAN_KBPS * 1000u); kv("imu_hz", 100u); putc_('\n');
   puts_("PIN"); kv("c1rx_idle", (uint32_t)pin_res[0]); kv("c2rx_idle", (uint32_t)pin_res[1]);
   kv("c1tx_c1rx", (uint32_t)pin_res[2]); kv("c1tx_c2rx", (uint32_t)pin_res[3]);
   kv("c2tx_c2rx", (uint32_t)pin_res[4]); kv("c2tx_c1rx", (uint32_t)pin_res[5]);
@@ -392,8 +392,8 @@ int main(void) {
   RCC_APB1ENR |= (1u << 25) | (1u << 26); (void)RCC_APB1ENR; /* CAN2 needs the CAN1 clock */
   can_filters(); can_pins();
   can_loopback_test();
-  c1_init_ok = can_config(CAN1, CAN_BTR_500K);
-  c2_init_ok = can_config(CAN2, CAN_BTR_500K);
+  c1_init_ok = can_config(CAN1, CAN_BTR);
+  c2_init_ok = can_config(CAN2, CAN_BTR);
   print_boot();
 
   uint32_t next_poll = ms, next_ping = ms, next_stat = ms + 1000u, next_boot = ms + 5000u, next_retry = 0;
