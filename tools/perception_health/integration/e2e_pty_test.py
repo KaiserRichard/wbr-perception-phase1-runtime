@@ -162,6 +162,8 @@ def replay(directory, silence=False, primary_fresh=False):
     policy = json.loads((directory.parent / "policy.json").read_text())
     config_path = directory.parent / "integration_config.json"
     config = json.loads(config_path.read_text()) if config_path.exists() else CONFIG
+    if directory.name in ("mapped_ok", "lost_latched"):
+        policy.update({k: v for k, v in config["synthetic_policy_overrides"].items() if k != "source"})
     if silence:
         policy.update({k: v for k, v in config["silence_policy_overrides"].items() if k != "source"})
     # Independent primary freshness is an explicit simulation input. The health
