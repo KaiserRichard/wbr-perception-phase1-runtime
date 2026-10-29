@@ -1,6 +1,6 @@
 # Overnight 2026-10-30: PIL bench rungs 3–4 (Mac only, nothing flashed)
 
-- **DONE** host PIL (`sim/pil`): COBS + CRC-32C frames reusing `tools/link_proto`, lockstep MuJoCo stepper, fake MCU (same C behind a pty), 16 unit tests (15 pass, 1 QEMU test skipped). PR: PR_LINK
+- **DONE** host PIL (`sim/pil`): COBS + CRC-32C frames reusing `tools/link_proto`, lockstep MuJoCo stepper, fake MCU (same C behind a pty), 16 unit tests (15 pass, 1 QEMU test skipped). PR: https://github.com/KaiserRichard/wbr-perception-phase1-runtime/pull/160
 - **DONE, MEASURED (fake MCU):** Python LQR 160/160 and PIL 160/160, 0 outcome mismatches. Per-cell mean recovery equals the archived RESULTS table (e.g. 2 ms push 2.7432 s). Max PIL−Python difference: torque 2.0e-11 N·m, state 2.4e-12.
 - **DONE, MEASURED (fake MCU):** unmodelled link latency of +2/4/6 ms (push, 2 ms and 5 ms profiles, 10 seeds): still 10/10; recovery 2.7448 → 2.7516 s at 2 ms. ASSUMED plant only.
 - **CALCULATED:** 460800 8N1, 62 B STATE + 54 B TORQUE = 2.517 ms > 2 ms, so real-time 500 Hz lockstep over this link is impossible; lockstep (sim owns the clock) is the design.
