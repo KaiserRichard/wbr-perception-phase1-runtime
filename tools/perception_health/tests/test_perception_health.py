@@ -10,7 +10,7 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual(crc16_ccitt_false(b"123456789"), 0x29B1)
         line = next(x for x in (ROOT / "tests/vectors.txt").read_text().splitlines() if x.startswith("PH_HEALTH"))
         expected = bytes.fromhex(line.split()[1])
-        value = PerceptionHealth(0x0102030405060708,0x11223344,3,0x5566,1,0x7788,3)
+        value = PerceptionHealth(0x0102030405060708,0x11223344,TRACKING_STATES["OK"],0x5566,1,0x7788,3)
         self.assertEqual(encode_health(0x1234,value), expected)
         self.assertEqual(decode_health_payload(expected[7:-2]),value)
 
@@ -22,7 +22,7 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual([x[0:2] for x in got],[(2,13355),(2,13356)])
 
     def test_crc_and_len_errors_resync(self):
-        valid=encode_health(1,PerceptionHealth(1,1,3,0,1,10,3))
+        valid=encode_health(1,PerceptionHealth(1,1,TRACKING_STATES["OK"],0,1,10,3))
         bad=bytearray(valid); bad[-1]^=1
         parser=StreamParser(); frames=parser.feed(bytes(bad)+b"\xa5\x5a\x03\x05\x00\x00\x41"+valid)
         self.assertEqual(parser.crc_errors,1); self.assertEqual(parser.len_errors,1)
@@ -31,6 +31,16 @@ class ProtocolTests(unittest.TestCase):
     def test_saturation_and_invalid_clock(self):
         self.assertEqual(saturating_age_us(9_000_000_000_000_000,0),U32_MAX)
         with self.assertRaises(ValueError): saturating_age_us(1,2)
+
+    def test_upstream_tracking_wire_values_and_invalid_value_hold(self):
+        self.assertEqual(TRACKING_STATES["OK"], 2)
+        self.assertEqual(TRACKING_STATES["OK_KLT"], 5)
+        self.assertEqual(TRACKING_STATES["SYSTEM_NOT_READY"], 255)
+        model = SupervisorModel(primary_fresh=True)
+        model.update(1000, Event("heartbeat", 1000, session_id=9, wire_seq=0))
+        model.update(1100, Event("health", 1100, age_at_send_us=1000,
+                                 tracking_state=6, flags=3, wire_seq=1))
+        self.assertEqual((model.state, model.reason), ("HOLD", "SOURCE_AGE_HOLD"))
 
     def test_v3_heartbeat_matches_upstream_layout(self):
         frame=encode_heartbeat(0x1234,0x0102030405060708,0x1112131415161718)
@@ -44,7 +54,7 @@ class ProtocolTests(unittest.TestCase):
             map_source_time(1,{"camera_domain":"D435i_global_time","pi_domain":"host_steady"})
 
     def test_non_boolean_imu_status_is_rejected(self):
-        malformed=PAYLOAD.pack(1,1,3,2,0,10,3)
+        malformed=PAYLOAD.pack(1,1,TRACKING_STATES["OK"],2,0,10,3)
         with self.assertRaisesRegex(ValueError,"0 or 1"):
             decode_health_payload(malformed)
         self.assertTrue(json_true({"imu_initialized":True},"imu_initialized"))
@@ -56,21 +66,21 @@ class ModelTests(unittest.TestCase):
     def ev(self,kind,received_us,age=0,state=0,flags=0,**kwargs):
         seq=self.seq; self.seq=(self.seq+1)&0xFFFF
         return Event(kind,received_us,age,state,flags,wire_seq=seq,**kwargs)
-    def start(self, age=1000, state=3, flags=3):
+    def start(self, age=1000, state=TRACKING_STATES["OK"], flags=3):
         self.m.update(1000,self.ev("heartbeat",1000,session_id=9))
         self.m.update(1100,self.ev("health",1100,age,state,flags))
     def test_fresh_then_hold_age(self):
         self.start(); self.assertEqual(self.m.state,"FRESH")
-        self.m.update(1100+self.m.c["pose_age_hold_us"],self.ev("health",1100+self.m.c["pose_age_hold_us"],age=100000,state=3,flags=3))
+        self.m.update(1100+self.m.c["pose_age_hold_us"],self.ev("health",1100+self.m.c["pose_age_hold_us"],age=100000,state=TRACKING_STATES["OK"],flags=3))
         self.assertEqual((self.m.state,self.m.reason),("HOLD","SOURCE_AGE_HOLD"))
     def test_lost_latches_until_rearm(self):
-        self.start(); self.m.update(1200,self.ev("health",1200,state=5,flags=3))
+        self.start(); self.m.update(1200,self.ev("health",1200,state=TRACKING_STATES["LOST"],flags=3))
         self.assertEqual((self.m.state,self.m.reason),("FAILSAFE","SOURCE_AGE_TIMEOUT"))
         self.assertFalse(self.m.rearm(1300), "rearm must wait for the configured healthy interval")
         now=1301
         while now <= 1_001_301:
             self.m.update(now,self.ev("heartbeat",now,session_id=9))
-            self.m.update(now,self.ev("health",now,age=1000,state=3,flags=3))
+            self.m.update(now,self.ev("health",now,age=1000,state=TRACKING_STATES["OK"],flags=3))
             now += 50_000
         self.assertTrue(self.m.rearm(1_001_301)); self.assertEqual(self.m.state,"INIT")
 
@@ -80,19 +90,19 @@ class ModelTests(unittest.TestCase):
 
     def test_invalid_imu_boolean_downgrades(self):
         self.m.update(1000,self.ev("heartbeat",1000,session_id=9))
-        self.m.update(1100,self.ev("health",1100,age=1000,state=3,flags=3,imu_initialized=2))
+        self.m.update(1100,self.ev("health",1100,age=1000,state=TRACKING_STATES["OK"],flags=3,imu_initialized=2))
         self.assertEqual(self.m.state,"HOLD")
 
     def test_duplicate_wire_sequence_does_not_refresh_health(self):
         self.start()
         last_health=self.m.last_health
-        duplicate=self.ev("health",1200,age=1000,state=3,flags=3)
+        duplicate=self.ev("health",1200,age=1000,state=TRACKING_STATES["OK"],flags=3)
         duplicate.wire_seq=(self.seq-2)&0xFFFF
         self.m.update(1200,duplicate)
         self.assertEqual(self.m.last_health,last_health)
 
     def test_session_change_cannot_exit_latched_failsafe(self):
-        self.start(); self.m.update(1200,self.ev("health",1200,state=5,flags=3))
+        self.start(); self.m.update(1200,self.ev("health",1200,state=TRACKING_STATES["LOST"],flags=3))
         self.m.update(1300,self.ev("heartbeat",1300,session_id=10))
         self.assertTrue(self.m.latched)
         self.assertEqual(self.m.state,"FAILSAFE")
@@ -100,7 +110,7 @@ class ModelTests(unittest.TestCase):
     def test_health_alone_cannot_enable_fresh(self):
         model=SupervisorModel()
         model.update(1000,Event("heartbeat",1000,session_id=9,wire_seq=0))
-        model.update(1100,Event("health",1100,age_at_send_us=1000,tracking_state=3,flags=3,wire_seq=1))
+        model.update(1100,Event("health",1100,age_at_send_us=1000,tracking_state=TRACKING_STATES["OK"],flags=3,wire_seq=1))
         self.assertEqual(model.state,"INIT")
     def test_missing_mapping_holds_then_silence_fails(self):
         self.start(flags=0); self.assertEqual(self.m.state,"HOLD")
@@ -117,7 +127,7 @@ class ModelTests(unittest.TestCase):
                 step = min(self.m.c["receipt_silence_hold_us"], self.m.c["heartbeat_timeout_us"]) // 4
                 for now in range(1100, 1100 + 2 * self.m.c["pose_age_timeout_us"], step):
                     self.m.update(now, self.ev("heartbeat", now, session_id=9))
-                    self.m.update(now, self.ev("health", now, age=U32_MAX, state=3, flags=flags))
+                    self.m.update(now, self.ev("health", now, age=U32_MAX, state=TRACKING_STATES["OK"], flags=flags))
                     self.m.update(now + 1)
                     self.assertEqual((self.m.state, self.m.reason), ("HOLD", "SOURCE_AGE_HOLD"))
                     self.assertFalse(self.m.latched)
@@ -135,15 +145,15 @@ class ModelTests(unittest.TestCase):
         self.setUp()
         self.start(age=U32_MAX, flags=0)
         now = 1000 + self.m.c["heartbeat_timeout_us"]
-        self.m.update(now - 1, self.ev("health", now - 1, age=U32_MAX, state=3, flags=0))
+        self.m.update(now - 1, self.ev("health", now - 1, age=U32_MAX, state=TRACKING_STATES["OK"], flags=0))
         self.m.update(now)
         self.assertEqual((self.m.state, self.m.reason), ("FAILSAFE", "HEARTBEAT_TIMEOUT"))
 
     def test_unknown_age_recovery_and_lost_still_latches(self):
         self.start(age=U32_MAX, flags=0)
-        self.m.update(1200, self.ev("health", 1200, age=1000, state=3, flags=3))
+        self.m.update(1200, self.ev("health", 1200, age=1000, state=TRACKING_STATES["OK"], flags=3))
         self.assertEqual(self.m.state, "FRESH")
-        self.m.update(1300, self.ev("health", 1300, age=U32_MAX, state=5, flags=0))
+        self.m.update(1300, self.ev("health", 1300, age=U32_MAX, state=TRACKING_STATES["LOST"], flags=0))
         self.assertEqual((self.m.state, self.m.reason), ("FAILSAFE", "SOURCE_AGE_TIMEOUT"))
 
     def test_valid_saturation_and_expired_age_cannot_be_hidden_by_unknown(self):
@@ -152,7 +162,7 @@ class ModelTests(unittest.TestCase):
         self.setUp()
         self.start()
         now = 1100 + self.m.c["pose_age_timeout_us"] - self.m.c["transit_bound_us"] - 1000
-        self.m.update(now, self.ev("health", now, age=U32_MAX, state=3, flags=0))
+        self.m.update(now, self.ev("health", now, age=U32_MAX, state=TRACKING_STATES["OK"], flags=0))
         self.assertEqual((self.m.state, self.m.reason), ("FAILSAFE", "SOURCE_AGE_TIMEOUT"))
 
     def test_source_age_timeout_uses_upstream_reason(self):
@@ -171,14 +181,14 @@ class ModelTests(unittest.TestCase):
         self.start(); self.m.update(1099)
         self.assertEqual((self.m.state,self.m.reason),("FAILSAFE","CLOCK_REGRESSION"))
     def test_degraded_tracking_holds_and_reset_counter_survives_wire(self):
-        self.start(state=4); self.assertEqual(self.m.state,"HOLD")
+        self.start(state=TRACKING_STATES["RECENTLY_LOST"]); self.assertEqual(self.m.state,"HOLD")
         self.m.update(1200); self.assertEqual(self.m.state,"HOLD")
 
     def test_map_reset_counter_change_downgrades(self):
         self.m.update(1000,self.ev("heartbeat",1000,session_id=9))
-        self.m.update(1100,self.ev("health",1100,age=1000,state=3,flags=3,map_reset_counter=4))
+        self.m.update(1100,self.ev("health",1100,age=1000,state=TRACKING_STATES["OK"],flags=3,map_reset_counter=4))
         self.assertEqual(self.m.state,"FRESH")
-        self.m.update(1200,self.ev("health",1200,age=1000,state=3,flags=3,map_reset_counter=5))
+        self.m.update(1200,self.ev("health",1200,age=1000,state=TRACKING_STATES["OK"],flags=3,map_reset_counter=5))
         self.assertEqual((self.m.state,self.m.reason),("HOLD","SOURCE_AGE_HOLD"))
 
 class PtyTests(unittest.TestCase):

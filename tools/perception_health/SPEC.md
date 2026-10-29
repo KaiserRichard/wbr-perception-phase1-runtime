@@ -16,7 +16,7 @@ Use `tools/perception_health/upstream_snapshot/PROTOCOL.md`: `A5 5A | version=3 
 | 16 | `tracked_features` | u16 LE raw count reported by estimator; no covariance or confidence fabricated |
 | 18 | `flags` | u8 bitfield |
 
-Tracking enum mirrors ORB-SLAM3 `Tracking.h` names: 0 SYSTEM_NOT_READY, 1 NO_IMAGES_YET, 2 NOT_INITIALIZED, 3 OK, 4 RECENTLY_LOST, 5 LOST, 6 OK_KLT. Source pin/evidence: official ORB-SLAM3 `include/Tracking.h`; this checkout does not contain the initialized third-party source file, so enum agreement remains **SOURCE-SUPPORTED by the upstream names in the ticket, not locally source-verified**. Unknown enum values are invalid and MUST downgrade to HOLD (`SOURCE_AGE_HOLD`); LOST downgrades to latched FAILSAFE (`SOURCE_AGE_TIMEOUT`).
+Tracking enum matches ORB-SLAM3 upstream `Tracking.h` at commit `4452a3c`: `NO_IMAGES_YET=0`, `NOT_INITIALIZED=1`, `OK=2`, `RECENTLY_LOST=3`, `LOST=4`, and `OK_KLT=5`. Upstream `SYSTEM_NOT_READY=-1` is represented as `255` (`0xFF`) in this u8 field. These values were locally source-verified at `/Users/quockaiser/Desktop/Robotics Learning&Work space/wbr-perception-phase1/repos/ORB_SLAM3/include/Tracking.h`, lines 121–129, commit `4452a3c`. Any other u8 value is invalid and MUST downgrade to HOLD (`SOURCE_AGE_HOLD`); LOST downgrades to latched FAILSAFE (`SOURCE_AGE_TIMEOUT`).
 
 | Bit | Name | Set/clear meaning |
 |---:|---|---|
