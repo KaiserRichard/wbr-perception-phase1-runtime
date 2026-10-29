@@ -1,10 +1,14 @@
 # Course projects (OS + CN): overnight 2026-10-29/30, Claude 2
 
-- BLOCKED: the Pi reboot was denied twice by my permission check, even with the owner's approval relayed. So the camera check, OS-T1 and CN-T1/T2 did not run. Camera software is already built (`. /opt/rpi-cam/env.sh`).
+- DONE, Pi camera (after the owner's reboot at 00:45): imx219 detected, `throttled=0x0`.
+- PASS, OS-T1 (9000 frames, 30 fps, 640x480): 0 drops, mean interval 33.323 ms (−0.03 %), jitter P99 0.030 ms, capture->receive 10.4 ms P50 / 14.7 ms max (always positive). Fixes on PR #10: accept libcamera `FrameStartup` frames (all early frames were rejected); runbook needs a socket receiver (`scripts/pi/hea_sink.py`).
+- CN-T1 (Pi camera -> Mac over Ethernet, 65 s, pcap on the Pi): 5 of 6 checks pass (sequence, marker, SSRC, RTCP, no malformed). Timestamp step FAILS as defined: 5860–6171 ticks, 98.9 % within ±1 ms of 6000, because the timestamp is the pipe-read time.
+- PASS, CN-T2 (5 runs x 65 s, playout 50 ms, ONNX on the Mac): 0 packet loss in every run, on-time 99.9–100 %, capture->AI result P50 65.9–67.5 ms, P95 72.1–72.4 ms (reference for later scenarios). Latency starts at the pipe read, not the sensor. The after-run `throttled` file is missing.
+- NOTE: a stale background job ran at the same time as the first CN-T2 attempt. Those runs are kept in `rtp/results/_contaminated-20261030/` and not used.
 - DONE, CN (local branch `work/RTP0`, 98 tests pass): ns-3 sweeps CN-T3/T5. Frame loss matches 1-(1-p)^n, e.g. 5 % loss with 11 packets per frame: calculated 43.1 %, simulated 43.6 %.
 - DONE, CN simulator fix (SIM3): playout is now anchored on the first packet's arrival and jitter is netem-like. CN-T4 rerun: with normal jitter of 20 ms, late frames fall from 99.9 % at D=20 ms to 0.02 % at D=100 ms. The simulation matches the calculated values.
 - DONE, CN-T8 (SIM2 + ABR1 adaptive bitrate): at 15 % loss, on-time frames rise from 18 % to 61 % (controller floor aligned with hardware). The 5 s recovery criterion FAILS: quality climbs only +5 per 3 RTCP receiver reports. Conductor fix: ABR never stepped up, because random jitter rises reset its clean-report count.
 - DONE, OS PRs (not merged): #11 FW3 MPU6050 task (conductor fixed the I2C clock: it gave 48 kHz, now 400 kHz), #12 FW4 CAN state output (500 kbit/s, bit timing checked), #13 camera report chapter in English and Vietnamese. #7 also has the OS-T5 baud fix: 921600, not 115200.
 - DONE: the CN report draft `rtp/report/DRAFT_EN.md` (English) has the CN-T3/T4/T5/T8 simulation tables; hardware sections are PENDING. AGY literature notes are in `rtp/report/LITERATURE_NOTES.md`; check citations before using them.
 - OPEN: camera timestamps use CLOCK_BOOTTIME but the bridge's age check uses CLOCK_MONOTONIC_RAW. Resolve this before using bridge or STM32 age as camera AoI. A worker found it.
-- Physical step: reboot the Pi (or allow this session to), then I check imx219 and run OS-T1 and CN-T1/T2.
+- Next: CN-T3/T4 with netem on the Pi (needs sudo tc), CN-T9 latency breakdown, OS-T2 inference on camera frames. The AN1 metrics read `rtcp.csv`, but the runs write `sender_rtcp.csv`/`receiver_rtcp.csv`, so packet loss from RR shows NaN. Align the names.
