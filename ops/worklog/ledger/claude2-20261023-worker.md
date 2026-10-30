@@ -1,0 +1,1 @@
+- 2026-10-30 16:55 | owner + Claude 2 | RL reopened as a research axis (closed since 22 Oct); new plan: GPU at the cafe, precision-weighted reward, team-report params | DONE (decision) | research/rl/BRIEF-R0.md, codex-e drafting PLAN.md
