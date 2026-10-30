@@ -1,0 +1,12 @@
+__pycache__/
+.venv/
+.venv*/
+models/*.onnx
+models/*.pt
+out/*
+!out/overlay-B-H13-0000.png
+!out/overlay-B-H05-0000.png
+!out/overlay-S1-empty-0000.png
+.venv/
+__pycache__/
+out/
