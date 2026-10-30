@@ -1,0 +1,238 @@
+schema_version: 1
+manifest_id: C1-T12-report-candidate-2026-10-30
+status: BLOCKED_ASSEMBLY_PROVENANCE
+scope: WBR simulation planning only; not an executable config or validated hardware model
+evidence_labels:
+  SOURCE-SUPPORTED: Stated in owner brief or cited local artifact; not necessarily measured
+  INFERRED: Proposed mapping or procedure
+  ASSUMED: Unvalidated numerical choice or physical property
+provenance:
+  evidence: SOURCE-SUPPORTED
+  primary_report_file: null
+  primary_report_page: null
+  primary_report_revision: null
+  local_transcriptions:
+    - research/rl/BRIEF-R0.md:16
+    - research/rl/PLAN.md:7
+    - research/rl/REVIEW-2026-10-30.md:51
+  limitation: Team-report PDF/page and assembly definitions were not supplied locally; no page citation invented
+  blockers:
+    - Recover report page and reconcile CAD/BOM membership with body/leg/wheel partition
+    - Resolve whether leg and wheel masses are per side, per component, or combined assemblies
+    - Resolve motor housing/rotor, battery, electronics, bearings and fastener ownership without double counting
+  aggregation_rule: Never multiply report masses by two or divide among links until assembly scope is resolved
+parameters:
+  body_mass:
+    value: 3.5
+    unit: kg
+    belongs_to: Report body assembly; rotating chassis lump in a reduced candidate
+    report_assembly_scope: Body part membership unresolved; not established as total robot mass
+    evidence: SOURCE-SUPPORTED
+  leg_mass:
+    value: 0.2
+    unit: kg
+    belongs_to: Report leg assembly; link-by-link and left/right allocation unresolved
+    report_assembly_scope: UNKNOWN per side versus pair; not automatically four rods or two whole mechanisms
+    evidence: SOURCE-SUPPORTED
+  wheel_mass:
+    value: 0.7
+    unit: kg
+    belongs_to: Report wheel assembly; tire/rotor/housing/axle membership unresolved
+    report_assembly_scope: UNKNOWN per wheel versus pair
+    evidence: SOURCE-SUPPORTED
+  l1:
+    value: 0.075
+    unit: m
+    belongs_to: Five-bar proximal link AB; repeated mechanism on each side only after geometry mapping
+    evidence: SOURCE-SUPPORTED
+  l4:
+    value: 0.075
+    unit: m
+    belongs_to: Five-bar proximal link ED
+    evidence: SOURCE-SUPPORTED
+  l2:
+    value: 0.14
+    unit: m
+    belongs_to: Five-bar distal link BC
+    evidence: SOURCE-SUPPORTED
+  l3:
+    value: 0.14
+    unit: m
+    belongs_to: Five-bar distal link DC
+    evidence: SOURCE-SUPPORTED
+  l5:
+    value: 0.08
+    unit: m
+    belongs_to: Chassis-fixed five-bar pivot spacing AE; not a fifth moving rod
+    evidence: SOURCE-SUPPORTED
+  wheel_radius:
+    value: 0.0603
+    unit: m
+    belongs_to: Ideal rolling wheel radius in both sides' kinematics
+    evidence: SOURCE-SUPPORTED
+    limitation: Source constant; loaded effective rolling radius unmeasured
+inertias:
+  common_unit: kg m^2
+  tensor_order: [Ixx, Iyy, Izz, Ixy, Ixz, Iyz]
+  frame_rule: Body COM axes must be specified before use; rolling axis must be matched to model axis
+  evidence: ASSUMED
+  body_COM_pitch:
+    value: 0.018
+    unit: kg m^2
+    belongs_to: Reduced body lump about its COM pitch axis
+    evidence: ASSUMED
+    origin: Legacy illustrative scalar; retained only as explicit candidate assumption, not mass-rescaled truth
+  equivalent_leg_COM_pitch:
+    value: 0.0012
+    unit: kg m^2
+    belongs_to: Combined equivalent rigid-leg lump about its COM pitch axis
+    evidence: ASSUMED
+    origin: Legacy illustrative scalar; not an identified five-bar inertia
+  wheel_pair_rolling:
+    value: 0.0011
+    unit: kg m^2
+    belongs_to: Combined wheel/axle rolling-axis lump; slider armature I/r^2 in reduced model
+    evidence: ASSUMED
+    origin: Legacy illustrative scalar; aggregation must be reconciled before new model generation
+  body_tensor:
+    value: null
+    unit: kg m^2
+    belongs_to: Report body assembly COM in declared body frame
+    evidence: ASSUMED
+  left_wheel_tensor:
+    value: null
+    unit: kg m^2
+    belongs_to: Left wheel assembly COM
+    evidence: ASSUMED
+  right_wheel_tensor:
+    value: null
+    unit: kg m^2
+    belongs_to: Right wheel assembly COM
+    evidence: ASSUMED
+  fivebar_link_tensors:
+    value: null
+    unit: kg m^2
+    belongs_to: Each of l1,l2,l3,l4 on left and right mechanisms, about each link COM
+    evidence: ASSUMED
+    limitation: Requires individual masses, shapes, material and mounting; equal-rod allocation is unvalidated
+  null_rule: Null means unknown, never zero; physical 3D model generation is blocked until explicit assumed tensors exist
+candidate_reduction:
+  evidence: ASSUMED
+  not_active_in_sim: true
+  mapping: Candidate body/combined-equivalent-leg/combined-wheel masses 3.5/0.2/0.7 only IF report assembly definitions support it
+  fixed_axle_to_hip_length: {value: 0.16, unit: m, belongs_to: Equivalent rigid leg, evidence: ASSUMED}
+  body_com: {value: 0.06, unit: m, belongs_to: Body COM above hip, evidence: ASSUMED}
+  leg_com: {value: 0.08, unit: m, belongs_to: Equivalent leg COM above axle, evidence: ASSUMED}
+  gravity: {value: 9.81, unit: m/s^2, belongs_to: World minus-z, evidence: ASSUMED}
+  wheel_pair_cap: {value: 2.0, unit: N m, belongs_to: Combined virtual wheel input, evidence: ASSUMED}
+  hip_pair_cap: {value: 4.0, unit: N m, belongs_to: Combined virtual hip input, evidence: ASSUMED}
+  motor_lag: {value: 0.005, unit: s, belongs_to: Both aggregate actuator channels, evidence: ASSUMED}
+  default_delay: {value: 0.002, unit: s, belongs_to: Sensor-to-actuation path, evidence: ASSUMED}
+  timestep: {value: 0.002, unit: s, belongs_to: Plant and baseline tick, evidence: ASSUMED}
+  warning: These are not DM motor specifications or physical capability; replace only through a versioned protocol
+legacy_audit:
+  evidence: SOURCE-SUPPORTED
+  method: Local rg of parameter identifiers, numeric assignments and config-loading paths; no sim files changed
+  scope: All active parameter definitions/generators and direct legacy config consumers below; references/tests are distinguished from independent numeric sources
+  numerical_discrepancies:
+    - location: sim/configs/assumed_planar.json:13
+      quantity: body_mass
+      current: 2.0
+      report: 3.5
+      unit: kg
+      current_ownership: Body lump of unspecified part membership
+    - location: sim/configs/assumed_planar.json:10
+      quantity: leg_mass
+      current: 0.5
+      report: 0.2
+      unit: kg
+      current_ownership: Both legs replaced by one rigid equivalent leg
+      caveat: Numeric difference; assembly equivalence unresolved
+    - location: sim/configs/assumed_planar.json:7
+      quantity: wheel_mass
+      current: 0.6
+      report: 0.7
+      unit: kg
+      current_ownership: Combined wheel pair
+      caveat: Numeric difference; assembly equivalence unresolved
+  matches_not_conflicts:
+    - {location: 'sim/configs/assumed_planar.json:6', quantity: wheel_radius, value: 0.0603, unit: m}
+    - {location: 'sim/configs/assumed_planar.json:24', quantity: l1_l4, value: 0.075, unit: m}
+    - {location: 'sim/configs/assumed_planar.json:25', quantity: l2_l3, value: 0.14, unit: m}
+    - {location: 'sim/configs/assumed_planar.json:26', quantity: l5, value: 0.08, unit: m}
+    - {location: 'sim/fivebar/geometry.py:32', quantity: l1_l4_defaults, value: 0.075, unit: m}
+    - {location: 'sim/fivebar/geometry.py:33', quantity: l2_l3_defaults, value: 0.14, unit: m}
+    - {location: 'sim/fivebar/geometry.py:36', quantity: l5_default, value: 0.08, unit: m}
+    - {location: 'sim/parity/fixtures/shared_vectors.json:49', quantity: Matching five-bar geometry fixture}
+  different_model_quantities_not_conflicting_measurements:
+    - {location: 'sim/configs/assumed_planar.json:9', quantity: Fixed equivalent axle-to-hip length, value: 0.16, unit: m, evidence: ASSUMED}
+    - {location: 'sim/configs/assumed_planar.json:8', quantity: Wheel rolling inertia, value: 0.0011, unit: kg m^2, evidence: ASSUMED}
+    - {location: 'sim/configs/assumed_planar.json:12', quantity: Equivalent leg COM pitch inertia, value: 0.0012, unit: kg m^2, evidence: ASSUMED}
+    - {location: 'sim/configs/assumed_planar.json:15', quantity: Body COM pitch inertia, value: 0.018, unit: kg m^2, evidence: ASSUMED}
+    - {location: 'sim/configs/assumed_planar.json:11', quantity: Leg COM, value: 0.08, unit: m, evidence: ASSUMED}
+    - {location: 'sim/configs/assumed_planar.json:14', quantity: Body COM, value: 0.06, unit: m, evidence: ASSUMED}
+    - {location: 'sim/configs/assumed_planar.json:17', quantity: Pair wheel cap, value: 2.0, unit: N m, evidence: ASSUMED}
+    - {location: 'sim/configs/assumed_planar.json:18', quantity: Pair virtual hip cap, value: 4.0, unit: N m, evidence: ASSUMED}
+  generators_using_legacy_values:
+    - {location: 'sim/planar.py:73', use: Wheel lump mass0.6 and isotropic inertia0.0011 plus rolling armature at line72}
+    - {location: 'sim/planar.py:77', use: Rigid equivalent leg mass0.5 and inertia0.0012}
+    - {location: 'sim/planar.py:81', use: Body mass2.0 and isotropic inertia0.018}
+    - {location: 'sim/fivebar/model.py:21', use: Leg mass0.5 divided among four rods at0.125 kg each with assumed6 mm rod radius}
+    - {location: 'sim/fivebar/model.py:24', use: ASSUMED axial/transverse rod inertias derived from those masses and source lengths}
+    - {location: 'sim/fivebar/model.py:45', use: Body mass2.0 and isotropic inertia0.018}
+    - {location: 'sim/fivebar/model.py:67', use: Wheel inertia0.0011 as armature; line68 mass0.6 and isotropic inertia}
+    - {location: 'sim/gain_schedule/model.py:45', use: Reference length0.16; lines50-52 scale equivalent length/COM/inertia but retain old masses}
+    - {location: 'sim/gain_schedule/stress.py:118', use: Synthetic body mass/inertia multipliers of old2.0/0.018; not report parameters}
+  direct_consumers_and_frozen_derivatives:
+    - {location: 'sim/configs/assumed_actuator_noise.json:4', use: Hash-pinned base config; lag/noise/delay assumed; frozen gains later in this file}
+    - {location: 'sim/augmented.py:55', use: Loads legacy base; line147 constructs legacy Plant}
+    - {location: 'sim/run_planar.py:196', use: CLI legacy config loader then Plant at line199}
+    - {location: 'sim/run_augmented.py:23', use: Synthesizes legacy baseline Plant; line124 emits legacy MJCF}
+    - {location: 'sim/view.py:33', use: Legacy visual Plant}
+    - {location: 'sim/rl/protocol.json:5', use: Legacy baseline source; line7 plant_contract selects augmented legacy config}
+    - {location: 'sim/rl/environment.py:76', use: load_experiment resolves old base through plant_contract}
+    - {location: 'sim/rl/v2.py:31', use: Imports legacy runtime/config loader; v2 environment inherits that contract}
+    - {location: 'sim/rl/v3_pilot.py:187', use: Inherits v2 recipe and old plant; stopped recipe must not resume}
+    - {location: 'sim/rl/training.py:51', use: Legacy protocol/WbrEnv through load_protocol}
+    - {location: 'sim/rl/evaluation.py:78', use: Legacy protocol/environment paired evaluation}
+    - {location: 'sim/rl/provenance.py:100', use: Hashes old model config; not an independent mass definition}
+    - {location: 'sim/fivebar/model.py:167', use: CLI loads old base config}
+    - {location: 'sim/fivebar/compare.py:161', use: Loads old base for full/reduced comparison}
+    - {location: 'sim/fivebar/linearize.py:288', use: Default old base; line157 constructs full/reduced plants}
+    - {location: 'sim/fivebar/delayed_linear.py:266', use: Loads old base for delayed design}
+    - {location: 'sim/fivebar/ramp.py:200', use: Plant from legacy schedule reference config}
+    - {location: 'sim/fivebar/ramp_panel.py:133', use: Plant from legacy schedule; line274 builds RequiredTorque Plant}
+    - {location: 'sim/gain_schedule/run.py:25', use: Default old augmented config; line76 loads and line92 transforms it}
+    - {location: 'sim/gain_schedule/combined.py:205', use: Loads old config then line226 transforms it}
+    - {location: 'sim/gain_schedule/stress.py:39', use: Default old config; line349 loads it}
+    - {location: 'sim/video/render.py:182', use: Legacy model provenance via augmented Demo; not independent values}
+    - {location: 'sim/policy_export/export.py:21', use: Legacy v2 action contract; no new-model revalidation}
+    - {location: 'sim/control_c/record_fixtures.py:108', use: Legacy model loader and archived gains}
+    - {location: 'sim/control_c/gains.inc:3', use: Frozen old-model gain array; not valid new-model gains}
+    - {location: 'sim/control_c/fixtures/recorded.json:1', use: Archived old-model gains/traces; retain hashes unchanged}
+    - {location: 'sim/control_c/wbr_lqr.c:14', use: Hardcoded assumed pair torque caps2/4 N m; not physical DM limits}
+    - {location: 'sim/fivebar/PROVENANCE.json:12', use: Documents reuse of old aggregate masses and four-rod allocation}
+    - {location: 'sim/fivebar/README.md:125', use: Explicit old0.5 kg equivalent leg split among four rods}
+    - {location: 'sim/README.md:107', use: Documents assumed masses/inertias/caps and0.16 m rigid leg}
+    - {location: 'sim/gain_schedule/README.md:46', use: Documents old0.16 m reference and scaled inertia/COM family}
+  explicit_legacy_test_expectations:
+    - {location: 'sim/gain_schedule/tests/test_stress.py:97', use: Old body mass2.0 times3=6.0; line98 inertia0.018 times3=0.054; line101 nominal2.0}
+    - {location: 'sim/gain_schedule/tests/test_fitting.py:165', use: Old leg inertia0.0012 scaled to0.001875}
+    - {location: 'sim/fivebar/tests/test_linearize.py:137', use: Old leg inertia0.0012 times1.25 squared}
+    - {location: 'sim/tests/test_planar.py:45', use: Mass/inertia equations consume old config; not new numeric definitions}
+  additional_test_config_readers:
+    - sim/fivebar/tests/test_delayed_linear.py:123
+    - sim/fivebar/tests/test_geometry.py:21
+    - sim/fivebar/tests/test_linearize.py:97
+    - sim/fivebar/tests/test_model.py:15
+    - sim/fivebar/tests/test_ramp.py:21
+    - sim/fivebar/tests/test_ramp_panel.py:20
+    - sim/gain_schedule/tests/test_fitting.py:160
+    - sim/gain_schedule/tests/test_geometry.py:19
+    - sim/gain_schedule/tests/test_runner.py:31
+    - sim/tests/test_augmented.py:21
+    - sim/tests/test_augmented_eval.py:24
+    - sim/tests/test_planar.py:16
+    - sim/video/tests/test_render.py:78
+    - sim/video/tests/test_render.py:126
+  test_and_documentation_rule: Other tests/README/results reference these same legacy sources; examples and arbitrary state/torque samples are not alternative physical masses. Preserve old tests/results; new model needs its own expectations.

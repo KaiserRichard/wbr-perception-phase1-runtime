@@ -1,5 +1,11 @@
 # Current state
-Updated 2026-10-30 +07 · C1-T11 worker, uncommitted; conductor owns integration.
+Updated 2026-10-30 +07 · C1-T12, uncommitted; no network or training.
+
+## RL plan revision (C1-T12)
+- `research/rl/PLAN-v2.md` (118 lines) and `params_manifest.yaml` complete; document checks PASS.
+- G1: five×1M seeds, bounded reference governor above LQR, unseen-delay tracking; one12 h CPU budget.
+- NO-GO pending report assembly/page resolution, runnable G1 bundle and15-minute Windows smoke.
+- Session: `ops/worklog/sessions/2026-10-30-c1-t12-rl-plan-v2.md`; no sim/owner-only code changed.
 
 ## Portable cafe bundle (C1-T11)
 - Scripts in `research/rl/bundle/`: networked Mac builder, offline Windows launch,
