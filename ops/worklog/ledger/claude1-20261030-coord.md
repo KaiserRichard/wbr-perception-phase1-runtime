@@ -1,1 +1,3 @@
 - 2026-10-30 17:15 | claude1 | took over coordination; dispatched T1 (codex-e), T2 (codex-c), T3 P1 run (shell), T5 (codex-d) | PARTIAL | ops/worklog/RUNNING.md
+- 2026-10-30 17:50 | claude1 | merged #161, #158 (restore fix), #165 (replay gate); research PR #186 opened | DONE | PRs
+- 2026-10-30 17:55 | claude1 | T3 bench_twin.bin eb79538a flashed + verified via Pi; backup sha 240bce95 in /home/richard/wbr-evidence/t3-flash-172837; UART shows I-lines at 100 Hz and STAT, imu_err=0; CAN loop not exercised | DONE | /home/richard/wbr-evidence/t3-flash-172837.log
