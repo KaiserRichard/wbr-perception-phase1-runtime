@@ -18,6 +18,7 @@ import time
 import mujoco
 
 from tools.imu_view import stream
+from sim.models import make_wbr_3d_simple as gen
 from tools.imu_view.filter import Madgwick, TiltFilters, quat_from_pitch_roll
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -62,7 +63,10 @@ class Pipeline:
     def apply(self, data):
         f = self.filters
         for name, est in (("robot", f.comp), ("ghost_acc", f.acc), ("ghost_gyro", f.gyro)):
-            data.mocap_quat[self.mocap[name]] = quat_from_pitch_roll(est.pitch, est.roll)
+            i = self.mocap[name]
+            data.mocap_quat[i] = quat_from_pitch_roll(est.pitch, est.roll)
+            if data.mocap_pos[i][2] > -1:   # hidden ghosts stay hidden
+                data.mocap_pos[i][2] = axle_height(est.pitch, est.roll)
 
     def text(self):
         f, m = self.filters, self.madgwick.pitch_roll()
@@ -79,6 +83,18 @@ class Pipeline:
         if self.line_stats is not None and self.line_stats.bad:
             left += f"\nUART: {self.line_stats.bad} bad lines (check stty 8N1)"
         return left + "\npitch>0 nose down, roll>0 left up; yaw not shown", right
+
+
+def axle_height(pitch, roll):
+    """Axle-centre height that keeps the LOWER wheel touching the floor.
+
+    Pitch alone rolls the wheels (axle stays at r). Roll on flat ground cannot keep both
+    wheels down with fixed legs, so the robot tips onto one wheel and the other lifts.
+    Only the z part of the world wheel axis matters: a_z = cos(pitch) sin(roll).
+    """
+    a_z = math.cos(pitch) * math.sin(roll)
+    lowest_rim = gen.R_WHEEL * math.sqrt(max(0.0, 1 - a_z * a_z)) + gen.WHEEL_HALF_WIDTH * abs(a_z)
+    return gen.Y_WHEEL * abs(a_z) + lowest_rim
 
 
 def axes_det(axes):
