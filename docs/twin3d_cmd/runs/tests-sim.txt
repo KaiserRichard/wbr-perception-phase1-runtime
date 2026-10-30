@@ -1,0 +1,26 @@
+test_active_requests_and_expired_edges_never_queue (tests.test_commands.CommandTests.test_active_requests_and_expired_edges_never_queue) ... ok
+test_duplicate_pending_request_does_not_cancel_first (tests.test_commands.CommandTests.test_duplicate_pending_request_does_not_cancel_first) ... ok
+test_hold_qualifying_during_jump_is_consumed (tests.test_commands.CommandTests.test_hold_qualifying_during_jump_is_consumed) ... ok
+test_last_writer_and_one_shot_edge_survives_heartbeat (tests.test_commands.CommandTests.test_last_writer_and_one_shot_edge_survives_heartbeat) ... ok
+test_limits_units_and_invalid_values (tests.test_commands.CommandTests.test_limits_units_and_invalid_values) ... ok
+test_monotonic_clock_required (tests.test_commands.CommandTests.test_monotonic_clock_required) ... ok
+test_rate_bound_in_both_directions (tests.test_commands.CommandTests.test_rate_bound_in_both_directions) ... ok
+test_source_hold_strictly_greater_than_ten_and_release (tests.test_commands.CommandTests.test_source_hold_strictly_greater_than_ten_and_release) ... ok
+test_watchdog_boundary_and_ramp (tests.test_commands.CommandTests.test_watchdog_boundary_and_ramp) ... ok
+test_keyboard_arbitration_heartbeat_reset_and_overlay_no_rendering (tests.test_physics.PhysicsTests.test_keyboard_arbitration_heartbeat_reset_and_overlay_no_rendering) ... ok
+test_one_jump_repeated_active_presses_and_physical_landing (tests.test_physics.PhysicsTests.test_one_jump_repeated_active_presses_and_physical_landing) ... ok
+test_reset_preserves_passive_viewer_data_reference (tests.test_physics.PhysicsTests.test_reset_preserves_passive_viewer_data_reference) ... ok
+test_script_format_and_duration_validation (tests.test_physics.PhysicsTests.test_script_format_and_duration_validation) ... ok
+test_scripted_watchdog_tracking_and_stop_actual_physics (tests.test_physics.PhysicsTests.test_scripted_watchdog_tracking_and_stop_actual_physics) ... ok
+test_udp_headless_path_and_csv_with_real_localhost_socket (tests.test_physics.PhysicsTests.test_udp_headless_path_and_csv_with_real_localhost_socket) ... skipped 'sandbox blocks real localhost UDP bind: [Errno 1] Operation not permitted'
+test_yaw_logged_but_no_planar_effect (tests.test_physics.PhysicsTests.test_yaw_logged_but_no_planar_effect) ... ok
+test_real_localhost_socket_rejects_without_watchdog_refresh (tests.test_udp.UDPTests.test_real_localhost_socket_rejects_without_watchdog_refresh) ... skipped 'sandbox blocks real localhost UDP bind: [Errno 1] Operation not permitted'
+test_roundtrip_and_strict_schema (tests.test_udp.UDPTests.test_roundtrip_and_strict_schema) ... ok
+test_sender_cli_one_jump_edge_and_multiple_heartbeats (tests.test_udp.UDPTests.test_sender_cli_one_jump_edge_and_multiple_heartbeats) ... skipped 'sandbox blocks real localhost UDP bind: [Errno 1] Operation not permitted'
+test_sequence_timestamp_staleness_and_source_restart (tests.test_udp.UDPTests.test_sequence_timestamp_staleness_and_source_restart) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 8.083s
+
+OK (skipped=3)
+DISCOVERED: 3 test files, 20 tests, 3 skipped

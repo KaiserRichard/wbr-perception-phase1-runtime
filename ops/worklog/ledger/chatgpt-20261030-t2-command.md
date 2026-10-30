@@ -1,0 +1,1 @@
+- 2026-10-30 22:10 | claude1 + codex-k | T2 teleop viewer: arrows speed, Enter jump with auto re-arm, Home reset, End quit (avoids MuJoCo built-in keys); owner manually verified driving + repeated jumps PASS | DONE | sim/twin3d_cmd
