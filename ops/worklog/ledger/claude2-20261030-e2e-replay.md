@@ -1,0 +1,1 @@
+- 2026-10-30 17:45 | claude1 + codex-e | real-UART replay gated (--live-uart-confirmed + typed confirm); nonzero exit on failed/zero/mismatched echoes | DONE | PR #165
