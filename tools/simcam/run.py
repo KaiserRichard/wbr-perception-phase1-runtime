@@ -8,7 +8,7 @@ from pathlib import Path
 
 import numpy as np
 
-from tools.jump_gate.gate import JumpGate, Phase, Tick
+from tools.jump_gate.gate import JumpGate, Tick
 from tools.jump_gate.timeline import SyntheticPose, synthetic_pose
 from tools.obstacle_decision import detect, decide
 from tools.wbr_pose.jump_demo import LAND_L0
@@ -80,7 +80,7 @@ class PerceptionLoop:
     """Stateful integration, independent of rendering and transport.
 
     Always run the unmodified detector, including during flight. Clear its plane
-    cache on crouch/first landing; clear decision EMA/votes whenever inhibited.
+    cache and decision EMA/votes only on crouch entry/first tick after flight.
     Recovery therefore requires fresh post-impact geometry and confirmation.
     """
 
@@ -108,8 +108,6 @@ class PerceptionLoop:
             plane_valid=frame.plane_valid, raw_advisory=decision.advisory,
             raw_confidence=decision.confidence, plane_stamp_s=float(t))
         gated = self.gate.update(tick)
-        if gated.phase != Phase.STAND:
-            self.decision_state = {}
         self.previous_pose = pose.phase
         return frame, decision, gated, reset
 

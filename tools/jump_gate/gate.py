@@ -14,7 +14,8 @@ from tools.obstacle_decision.decide import Advisory
 
 ASSUMED_TELEMETRY_MAX_AGE_S = 0.050
 ASSUMED_CONTACT_DWELL_S = 0.100
-ASSUMED_STABLE_RATE_DEG_S = 5.0  # Strictly below, as in the research note.
+ASSUMED_STABLE_RATE_DEG_S = 5.0  # Strictly below for SETTLE -> STAND only.
+ASSUMED_WOBBLE_LIMIT_DEG_S = 60.0  # STAND inhibition above this; not a hardware limit.
 ASSUMED_FRESH_PLANE_COUNT = 3
 ASSUMED_PLANE_DWELL_S = 0.200
 # Additional replay assumption: maximum age of a held depth/advisory observation.
@@ -148,8 +149,11 @@ class JumpGate:
         if self.phase not in (Phase.SETTLE, Phase.STAND):
             self._reset_history()
             self.phase = Phase.SETTLE
-        stable = (abs(tick.pitch_rate_deg_s) < ASSUMED_STABLE_RATE_DEG_S
-                  and abs(tick.roll_rate_deg_s) < ASSUMED_STABLE_RATE_DEG_S)
+        rate = max(abs(tick.pitch_rate_deg_s), abs(tick.roll_rate_deg_s))
+        # Post-jump recovery still requires the strict stability dwell. Once in
+        # STAND, ordinary balancing wobble reduces confidence without a reset.
+        stable = (rate <= ASSUMED_WOBBLE_LIMIT_DEG_S if self.phase == Phase.STAND
+                  else rate < ASSUMED_STABLE_RATE_DEG_S)
         plane_ok = (tick.plane_valid is True
                     and t - stamp <= ASSUMED_PLANE_MAX_AGE_S + ASSUMED_TIME_EPSILON_S)
         try:
@@ -183,6 +187,12 @@ class JumpGate:
             return self._inhibit(Phase.SETTLE, "settle_contact_and_fresh_plane_dwell")
         self.phase = Phase.STAND
         if raw == Advisory.UNCERTAIN:
-            return GateOutput(raw, 0.0, self.phase, "raw_uncertain_no_promotion")
-        return GateOutput(raw, confidence * ASSUMED_STAND_QUALITY, self.phase,
-                          "stand_fresh_raw_advisory")
+            reason = "raw_uncertain_no_promotion"
+            if rate > ASSUMED_STABLE_RATE_DEG_S:
+                reason += ";wobble_confidence_scaled"
+            return GateOutput(raw, 0.0, self.phase, reason)
+        wobble_quality = max(0.0, 1.0 - rate / ASSUMED_WOBBLE_LIMIT_DEG_S)
+        reason = ("wobble_confidence_scaled" if rate > ASSUMED_STABLE_RATE_DEG_S
+                  else "stand_fresh_raw_advisory")
+        return GateOutput(raw, confidence * ASSUMED_STAND_QUALITY * wobble_quality,
+                          self.phase, reason)

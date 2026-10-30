@@ -3,7 +3,7 @@ import unittest
 
 from tools.jump_gate.gate import (
     ASSUMED_CONTACT_DWELL_S, ASSUMED_PLANE_DWELL_S, ASSUMED_STABLE_RATE_DEG_S,
-    ASSUMED_TELEMETRY_MAX_AGE_S, JumpGate, Phase, Tick,
+    ASSUMED_TELEMETRY_MAX_AGE_S, ASSUMED_WOBBLE_LIMIT_DEG_S, JumpGate, Phase, Tick,
 )
 from tools.obstacle_decision.decide import Advisory
 
@@ -134,12 +134,66 @@ class GateTests(unittest.TestCase):
         self.assert_inhibited(gate.update(clean(.3)), Phase.SETTLE)
         self.assertEqual(gate.update(clean(.4)).phase, Phase.STAND)
 
-    def test_attitude_limit_is_strict_and_checks_both_axes(self):
+    def test_settle_attitude_limit_is_strict_and_checks_both_axes(self):
         for axis in ("pitch_rate_deg_s", "roll_rate_deg_s"):
             for sign in (-1, 1):
                 gate = self.stand()
-                self.assert_inhibited(gate.update(clean(.3, **{axis: sign * ASSUMED_STABLE_RATE_DEG_S})),
-                                      Phase.SETTLE)
+                self.assert_inhibited(gate.update(clean(.3, jump_status=0)), Phase.CROUCH)
+                for t in (.4, .5, .6):
+                    self.assert_inhibited(gate.update(clean(
+                        t, **{axis: sign * ASSUMED_STABLE_RATE_DEG_S})), Phase.SETTLE)
+                for t in (.7, .8):
+                    self.assert_inhibited(gate.update(clean(t)), Phase.SETTLE)
+                self.assertEqual(gate.update(clean(.9)).phase, Phase.STAND)
+
+    def test_stand_wobble_keeps_stop_and_scales_confidence_on_both_axes(self):
+        for axis in ("pitch_rate_deg_s", "roll_rate_deg_s"):
+            for sign in (-1, 1):
+                with self.subTest(axis=axis, sign=sign):
+                    gate = self.stand()
+                    for t in (.3, .4, .5):
+                        result = gate.update(clean(t, raw_advisory=Advisory.STOP_CANDIDATE,
+                                                   **{axis: sign * 15.0}))
+                        self.assertEqual(result.phase, Phase.STAND)
+                        self.assertEqual(result.advisory, Advisory.STOP_CANDIDATE)
+                        self.assertAlmostEqual(result.confidence, .8 * (1 - 15 / 60))
+                        self.assertEqual(result.reason, "wobble_confidence_scaled")
+                    self.assertEqual(gate.update(clean(.6)).confidence, .8)
+
+    def test_stand_rate_above_wobble_limit_inhibits_and_requires_settle(self):
+        for axis in ("pitch_rate_deg_s", "roll_rate_deg_s"):
+            for sign in (-1, 1):
+                with self.subTest(axis=axis, sign=sign):
+                    gate = self.stand()
+                    result = gate.update(clean(.3, raw_advisory=Advisory.STOP_CANDIDATE,
+                                               **{axis: sign * 80.0}))
+                    self.assert_inhibited(result, Phase.SETTLE)
+                    self.assertEqual(result.reason, "unstable_attitude")
+                    self.assert_inhibited(gate.update(clean(.4, **{axis: sign * 15.0})),
+                                          Phase.SETTLE)
+                    for t in (.5, .6):
+                        self.assert_inhibited(gate.update(clean(t)), Phase.SETTLE)
+                    self.assertEqual(gate.update(clean(.7)).phase, Phase.STAND)
+
+    def test_stand_confidence_uses_max_absolute_rate_and_clamps_at_limit(self):
+        for raw in (Advisory.NONE, Advisory.JUMP_CANDIDATE, Advisory.STOP_CANDIDATE):
+            with self.subTest(raw=raw):
+                gate = self.stand()
+                result = gate.update(clean(.3, pitch_rate_deg_s=10, roll_rate_deg_s=-15,
+                                           raw_advisory=raw))
+                self.assertEqual(result.advisory, raw)
+                self.assertAlmostEqual(result.confidence, .6)
+                result = gate.update(clean(.4, pitch_rate_deg_s=ASSUMED_WOBBLE_LIMIT_DEG_S,
+                                           raw_advisory=raw))
+                self.assertEqual(result.phase, Phase.STAND)
+                self.assertEqual(result.advisory, raw)
+                self.assertEqual(result.confidence, 0)
+
+    def test_wobble_never_promotes_raw_uncertain(self):
+        gate = self.stand()
+        result = gate.update(clean(.3, pitch_rate_deg_s=15, raw_advisory=Advisory.UNCERTAIN))
+        self.assert_inhibited(result, Phase.STAND)
+        self.assertIn("wobble_confidence_scaled", result.reason)
 
     def test_repeated_plane_never_completes_dwell_and_stale_plane_inhibits(self):
         gate = JumpGate()
