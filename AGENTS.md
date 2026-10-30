@@ -34,6 +34,11 @@ Then start working on the next step.
   what's broken, next step. Keep it under ~40 lines.
 - `ops/worklog/sessions/YYYY-MM-DD-<topic>.md`: what was run, what happened, what
   was fixed. Bullet points, no essays.
+- `ops/worklog/ledger/<branch-name-with-slashes-as-dashes>.md` (owner rule, 2026-10-30): every
+  branch keeps its own ledger. When a task, run or fix finishes, append ONE line:
+  `- YYYY-MM-DD HH:MM | who (session/worker) | what | status DONE/PARTIAL/BLOCKED | evidence (number, file, PR)`.
+  Commit it with the work. Don't write long summaries there. On request, `agy` aggregates all
+  ledgers and reviews across branches (`ops/secretary/`), and Claude only reads and spot-checks that digest.
 Record documentation changes in `ops/worklog/DOCUMENTATION_LOG.md` and decisions
 in `ops/worklog/DECISIONS.md`, following the owner's current logging instruction.
 Keep learning notes concise but complete: render Markdown math properly, explain
