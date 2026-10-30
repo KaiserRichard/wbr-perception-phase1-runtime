@@ -8,3 +8,6 @@
 - Codex sandbox: cannot commit, push or render (CGL). The conductor did those steps for every PR.
 - agy: three failed runs (flag order, `--effort` on Opus, then quota). Retry after the reset.
 - Open: owner check in the Foxglove GUI; the DM-jump phi1/phi4 convention is unverified (#171); real IMU/contact telemetry is needed in November.
+- Round 4: #174 simcam (codex-k): scenario JSON → MuJoCo depth → the real detector → jump gate. #175 sim_scenarios (codex-e): 13 scenarios, 12/12 scored PASS after the conductor fixed the contract (`jump_at_s` = CROUCH start; range measured from the camera; tiny box 0.015 m).
+- Found in simulation: the ±2 m floor edge produced false STOPs (fixed). The box leaves the view within ~0.32 m of the camera (mount 3° down, 0.21 m, ASSUMED); round 5 studies the mount. A flicker at 0.020 m was a floor-edge artifact and is retracted.
+- Round 5 (running): simcam driven by the owner's live IMU recording (archived at `~/wbr-evidence-archive/imu-view-live-20261030/`, codex-k), and the camera mount study (codex-e).
