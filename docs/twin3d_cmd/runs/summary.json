@@ -1,0 +1,60 @@
+{
+  "label": "CALCULATED checks on MEASURED simulation outputs",
+  "assumed_tracking_tolerance_m_s": 0.08,
+  "assumed_stop_tolerance_m_s": 0.03,
+  "criteria_revised_after_initial_failure": true,
+  "scenarios": {
+    "drive": {
+      "passed": true,
+      "checks": {
+        "nonempty": true,
+        "physics": true,
+        "tracking_window": true,
+        "tracking": true
+      },
+      "label": "MEASURED in simulation",
+      "final_v": 0.3415568131129617,
+      "final_v_ref": 0.3,
+      "jump_count": 0.0,
+      "ignored_jumps": 0.0,
+      "peak_pitch_rad": 0.01814312211045989,
+      "tracking_max_error": 0.07002927093916744
+    },
+    "watchdog": {
+      "passed": true,
+      "checks": {
+        "nonempty": true,
+        "physics": true,
+        "tracking_window": true,
+        "tracking": true,
+        "stop_window": true,
+        "watchdog_stop": true
+      },
+      "label": "MEASURED in simulation",
+      "final_v": -0.002954065013818223,
+      "final_v_ref": 0.0,
+      "jump_count": 0.0,
+      "ignored_jumps": 0.0,
+      "peak_pitch_rad": 0.019304762418708373,
+      "tracking_max_error": 0.07002927093916744
+    },
+    "jump": {
+      "passed": true,
+      "checks": {
+        "nonempty": true,
+        "physics": true,
+        "one_jump": true,
+        "ignored_repeats": true,
+        "phases": true,
+        "flight_and_landing": true
+      },
+      "label": "MEASURED in simulation",
+      "final_v": 0.0,
+      "final_v_ref": 0.0,
+      "jump_count": 1.0,
+      "ignored_jumps": 4.0,
+      "peak_pitch_rad": 0.0,
+      "tracking_max_error": 0.3
+    }
+  }
+}

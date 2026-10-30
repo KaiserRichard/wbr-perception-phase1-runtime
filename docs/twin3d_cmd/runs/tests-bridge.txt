@@ -1,0 +1,10 @@
+test_actual_localhost_bridge_to_receiver_protocol (tests.test_core.BridgeTests.test_actual_localhost_bridge_to_receiver_protocol) ... skipped 'sandbox blocks real localhost UDP bind: [Errno 1] Operation not permitted'
+test_callbacks_send_once_and_jump_does_not_replay_stale_twist (tests.test_core.BridgeTests.test_callbacks_send_once_and_jump_does_not_replay_stale_twist) ... ok
+test_import_node_without_ros (tests.test_core.BridgeTests.test_import_node_without_ros) ... ok
+test_serialization_limits_and_validation (tests.test_core.BridgeTests.test_serialization_limits_and_validation) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.015s
+
+OK (skipped=1)
+DISCOVERED: 1 test files, 4 tests, 1 skipped
