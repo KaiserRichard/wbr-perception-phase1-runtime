@@ -29,12 +29,12 @@
     },
     {
       "t_from": 1.0,
-      "t_to": 2.51,
+      "t_to": 2.4,
       "advisory": "UNCERTAIN",
-      "note": "Research gating table: CROUCH/PUSH/FLIGHT/LAND/SETTLE => UNCERTAIN; jump_at_s = start of CROUCH (simcam contract); CROUCH..SETTLE lasts total_time() - STAND_S = 1.51 s. Timing and recovery are ASSUMED."
+      "note": "Jump gate spec (#169 table, tools/jump_gate): UNCERTAIN from CROUCH start until SETTLE dwell is met = LAND tick (CROUCH+1.07 s rounded to the 10 Hz tick) + 0.3 s dwell. The scripted SETTLE lasts 0.40 s but the gate may return to STAND earlier by design."
     },
     {
-      "t_from": 2.51,
+      "t_from": 2.4,
       "t_to": 7,
       "advisory": "JUMP_CANDIDATE",
       "note": "Research gate returns to STAND after SETTLE; rebuild DecisionParams.confirm_n=3 fresh samples, no cached EMA promotion."

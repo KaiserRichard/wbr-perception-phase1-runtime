@@ -183,3 +183,5 @@ All 13 scenarios were run through `tools/simcam/run.py` (MuJoCo depth, the real 
   - `max_forward` is measured from the camera, which sits 0.15 m ahead of the axle;
   - the tiny box is 0.015 m (0.020 m equals the detector minimum).
 - One simcam fix: the floor now covers the scenario. A ±2 m floor edge showed up as STOP for an 80 mm box.
+
+- Gate fix (#178): jump windows now end at LAND + settle dwell (the gate spec), not at the end of the scripted SETTLE. The earlier pass came from simcam wiping detector history. Re-scored: 12/12 PASS.
