@@ -16,7 +16,17 @@
 - OS-T3/T4 with the camera (PR #15), first attempts INVALID; both causes fixed on PR #15 and the attempts are kept on the Pi under `results/_invalid-*`:
   - (1) Clock mismatch: the bridge rejected every camera result as finishing after its send time, because CLOCK_MONOTONIC ran 27.2 ms ahead of MONOTONIC_RAW (NTP slew). Fix: camera t_input is now mapped to MONOTONIC_RAW, the bridge clock. Measured: capture->receive 10.2–11.0 ms, offset drift 14 µs over 60 frames. This closes the OPEN clock item below.
   - (2) pipeline_summary crashed on camera-ring rows (`overwritten`/`torn`) that have no completion time.
-  - RUNNING from 08:58: clean rerun, early runs all valid. Hold process `course-stage-hold` is up until ~10:40.
+  - (3) P1 runs start the pipeline through sudo, which drops LD_LIBRARY_PATH; hea_cam is now linked with DT_RPATH (libcamera and libpisp). Invalid attempts are kept on the Pi.
+- FAIL as defined, OS-T3 (camera 15 fps, 33/33 runs valid; PR #15 `results/2026-10-30_os_t3_contention`):
+  - Idle: P99 P0 59.9 / P1 59.6 ms.
+  - Cache-stream stressor: P99 355.3 vs 355.4 ms (equal).
+  - Memory-bandwidth stressor: P99 408.2 vs 421.9 ms (P1 worse).
+  - Under stress P50 > 320 ms, above the 100 ms period, so both profiles miss almost every deadline.
+  - INFERRED: inference is slowed by shared memory-bandwidth and cache contention, which scheduling priority cannot fix (inference stays SCHED_OTHER; stressors run on other cores).
+- OS-T4 (38/39 runs valid; `results/2026-10-30_os_t4_policy`):
+  - PASS, input side: latest-value lowers time-average AoI in every run, 93 vs 192 ms idle and 223–235 vs 321–337 ms under memrate.
+  - FAIL, bridge side: no effect, 191.5 vs 192.1 ms idle and 332 vs 329 ms under memrate. The bridge is not the bottleneck.
+  - Unbounded FIFO queue growth is not established.
 - NOTE: a stale background job ran at the same time as the first CN-T2 attempt. Those runs are kept in `rtp/results/_contaminated-20261030/` and not used.
 - DONE, CN (local branch `work/RTP0`, 98 tests pass): ns-3 sweeps CN-T3/T5. Frame loss matches 1-(1-p)^n, e.g. 5 % loss with 11 packets per frame: calculated 43.1 %, simulated 43.6 %.
 - DONE, CN simulator fix (SIM3): playout is now anchored on the first packet's arrival and jitter is netem-like. CN-T4 rerun: with normal jitter of 20 ms, late frames fall from 99.9 % at D=20 ms to 0.02 % at D=100 ms. The simulation matches the calculated values.
@@ -24,4 +34,4 @@
 - DONE, OS PRs (not merged): #11 FW3 MPU6050 task (conductor fixed the I2C clock: it gave 48 kHz, now 400 kHz), #12 FW4 CAN state output (500 kbit/s, bit timing checked), #13 camera report chapter in English and Vietnamese. #7 also has the OS-T5 baud fix: 921600, not 115200.
 - DONE: the CN report draft `rtp/report/DRAFT_EN.md` (English) has the CN-T3/T4/T5/T8 simulation tables; hardware sections are PENDING. AGY literature notes are in `rtp/report/LITERATURE_NOTES.md`; check citations before using them.
 - FIXED (CLK1, PR #15): camera timestamps now use the bridge clock (MONOTONIC_RAW). The earlier BOOTTIME vs RAW mismatch is resolved.
-- Next: OS-T3/T4 results, then the Vietnamese report versions (RPT2). 
+- Next: the Vietnamese report versions (RPT2). 
