@@ -154,6 +154,26 @@ class EndToEndTests(unittest.TestCase):
         self.assertNotIn("FRESH", [row["state"] for row in trace])
         self.assertTrue(all(row["primary_fresh"] is False for row in trace))
 
+    def test_replay_legacy_saved_config_preserves_recorded_policy(self):
+        with tempfile.TemporaryDirectory(dir=HERE / "tests") as temp:
+            saved = Path(temp) / "saved"
+            shutil.copytree(self.out, saved)
+            config_path = saved / "integration_config.json"
+            config = json.loads(config_path.read_text())
+            config.pop("synthetic_policy_overrides")
+            config_path.write_text(json.dumps(config))
+
+            policy_path = saved / "policy.json"
+            policy = json.loads(policy_path.read_text())
+            policy["pose_age_hold_us"] = 1
+            policy_path.write_text(json.dumps(policy))
+
+            trace, health, integrity, _ = e2e.replay(saved / "mapped_ok", primary_fresh=True)
+
+        self.assertTrue(integrity)
+        self.assertTrue(health)
+        self.assertTrue(all(row["state"] == "HOLD" for row in trace if row["kind"] == "health"))
+
     def test_mapped_ok_is_fresh(self):
         states, _, health = self.states("mapped_ok")
         self.assertEqual(states, ["FRESH"] * len(health))
