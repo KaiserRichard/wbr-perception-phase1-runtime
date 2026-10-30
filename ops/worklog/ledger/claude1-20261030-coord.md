@@ -1,3 +1,4 @@
 - 2026-10-30 17:15 | claude1 | took over coordination; dispatched T1 (codex-e), T2 (codex-c), T3 P1 run (shell), T5 (codex-d) | PARTIAL | ops/worklog/RUNNING.md
 - 2026-10-30 17:50 | claude1 | merged #161, #158 (restore fix), #165 (replay gate); research PR #186 opened | DONE | PRs
 - 2026-10-30 17:55 | claude1 | T3 bench_twin.bin eb79538a flashed + verified via Pi; backup sha 240bce95 in /home/richard/wbr-evidence/t3-flash-172837; UART shows I-lines at 100 Hz and STAT, imu_err=0; CAN loop not exercised | DONE | /home/richard/wbr-evidence/t3-flash-172837.log
+- 2026-10-30 18:00 | claude1 | T3 CAN loop on bench (CAN1<->CAN2, 4 fake DM motors, zero-gain commands, 10 s): STAT sent=32 fed_back=32 lost=0, latency mean 5.7 ms max 11.4 ms, CAN errors 0; only ~32 of ~100 cmd/s attempted were sent, cause unknown | PARTIAL | ~/wbr-evidence/t3-canloop-*.txt on Pi
