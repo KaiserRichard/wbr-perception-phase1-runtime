@@ -537,3 +537,9 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Changes: corrected display-math delimiter layout without changing formulas or technical text; added a standard-library linter for the requested Markdown rules.
 - Validation: `python3 tools/lint_markdown.py` reported `0 issues across 7 file(s)`; `git diff --check` passed. HTML rendering skipped because the Python `markdown` module is unavailable.
 - Review state: local, uncommitted, no push. Details: `ops/worklog/sessions/2026-10-26-lessons-format.md`.
+
+### DOC-20261030-C1-T13-DEMO-VIDEO: Home supervisor recording guide
+- Added `ops/demo/DEMO_VIDEO_GUIDE.md`: five-minute preparation and six scenes (4 min 25 s), exact local commands/paths, Foxglove layouts/topics, narration, success and failure paths; no live D435i or real motor operation.
+- Read all 19 `ops/demo-src/` files and inspected coordinator/task-worktree source plus local archives. Marked Pi deployment/runtime UNVERIFIED after sandbox SSH denial; distinguished recorded/synthetic streams and flat-ground viewer from saved 8 cm physics evidence.
+- Validation: guide 156 lines, Markdown lint 0 issues; saved T1 corrected checker PASS (10/10); local MCAP topic summaries read. No graphical, serial or firmware execution.
+- Updated CURRENT and `sessions/2026-10-30-c1-t13-demo-guide.md`; scope decision recorded in DECISIONS. All changes uncommitted as requested.

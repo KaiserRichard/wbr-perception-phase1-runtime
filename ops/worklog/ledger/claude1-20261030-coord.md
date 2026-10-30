@@ -5,3 +5,4 @@
 - 2026-10-30 18:40 | claude1 | T3 v2 37cb50dd flashed+verified (backup 1ef12ccb). pi_loop 460800: 20/s ok, 100/s run1 99 sent/fed_back per s; then CAN errors climb (c1 TEC 105, c2 REC 126, txerr 4, lost 5) and run3 1000/1000 rejected, sent 0. Suspect CAN physical layer (termination/wiring) | PARTIAL | ~/wbr-evidence/t3v2-* on Pi
 - 2026-10-30 18:50 | claude1 | restored imu_can_bench 937c2857 (T3 backup in ~/wbr-evidence/icb-restore-*); bench_check 8/10: IMU all PASS, internal CAN loopback 10/10 PASS, but pins c1tx_c2rx=1 (CAN1 TX does not reach CAN2 RX) and round trip 0/1900, CAN1 bus-off. Bus wiring/transceiver fault, not T3 firmware | DONE | ~/wbr-evidence/icb-check-* on Pi
 - 2026-10-30 20:45 | claude1 + agy | handoff to next Claude written | DONE | ops/worklog/reviews/2026-10-30-handoff-claude1-to-next.md
+- 2026-10-30 20:55 | claude1 + codex-k | demo video guide, 6 scenes ~4.5 min | DONE | ops/demo/DEMO_VIDEO_GUIDE.md

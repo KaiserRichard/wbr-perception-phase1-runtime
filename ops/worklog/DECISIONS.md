@@ -358,3 +358,8 @@ Append-only. Format in `README.md`. Earlier decisions live in `docs/PROJECT_STAT
 - Evidence/limits: H7 `robstride_drv.h` and `robstride_drv.c`; software tests
   cover type-21 extraction and type-18 run-mode parsing. Real motor semantics
   remain unverified.
+
+### D-20261030-C1-T13-HOME-DEMO: Recording scope
+- Owner-specified home demo uses installed T3 bench_twin v2 at 460800 8N1 for live MPU6050/isolated fake-DM CAN; D435i is lab-only, so camera/perception scenes use retained recordings. No firmware swap, motor enable or real motor operation.
+- Use existing task-worktree source paths where coordinator lacks T1/T3/T4. T2 provides a flat-ground viewer of T1; demonstrate the 8 cm obstacle result separately through the corrected saved T1 batch. Keep arbitrary T4 alignment/synthetic signals and different camera recording dates explicit.
+- Evidence: `sessions/2026-10-30-c1-t13-demo-guide.md`; no new hardware or GUI validation, no commit.

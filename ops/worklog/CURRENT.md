@@ -1,4 +1,7 @@
 # Current state
+## C1-T13 demo guide (2026-10-30)
+- Uncommitted `ops/demo/DEMO_VIDEO_GUIDE.md`: six home-video scenes, no camera/firmware swap/real motors; all 19 demo sources read. Exact local task-worktree and archive paths checked; Pi SSH blocked by sandbox, remote steps labelled UNVERIFIED.
+- Saved T1 checker PASS, 10/10 corrected jumps; guide Markdown lint PASS. GUI/physical recording remains owner-run. Session: `sessions/2026-10-30-c1-t13-demo-guide.md`. Earlier project state follows unchanged.
 Updated 2026-10-22 +07; owner accepted v3 FAIL and merged PR128. V3 line STOPPED; no tuning/retry/full training. Claude review PR129 is owner-managed. Hardware data is the priority; camera execution remains with owner/execution chat.
 ## Simulation
 - PR122/PR123 follow-up: saved-data verification matched all30 cases/150030 rows; 1940 source-geometry exclusions are A-side outer reach in L20 combined-target (5×151) and stronger-sample (5×237), after the 3.000–3.150s push pulse; co-varying mass/delay/wheel-map inputs preclude push-only attribution. Separate reachable balance-only peaks: A0.40542578868132084Nm (L20 stronger seed1 tick10), E0.35224760632453234Nm (L12 stronger seed1 tick9); total torque remains UNKNOWN (radial reaction absent). Review: `reviews/2026-10-22-motor-load-followup.md`; exact attribution/receipt in `~/wbr-evidence-archive/sim-motor-load-followup-20261022-01/review123-followup-01`. Stop margin sweeps pending actual motor/gear, assembly and timing data.
