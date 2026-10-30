@@ -60,45 +60,49 @@ class TwinTests(unittest.TestCase):
         cls.tmp = tempfile.TemporaryDirectory()
         tmp = pathlib.Path(cls.tmp.name)
         path = REF / 'DM_Motor/dm4310_drv.c'
-        cls.ref_hash = hashlib.sha256(path.read_bytes()).hexdigest()
-        src = path.read_text()
-        hdr = (path.with_suffix('.h')).read_text()
-        definitions = '\n'.join(re.findall(r'^#define (?:P_|V_|T_|KP_|KD_|MIT_|POS_|SPEED_).*', hdr, re.M))
-        types = '\n'.join(re.findall(r'typedef struct\s*\{.*?\}\s*\w+;', hdr, re.S))
-        funcs = '\n'.join(function(src, n) for n in ('float_to_uint', 'uint_to_float', 'mit_ctrl', 'mit_ctrl2', 'enable_motor_mode', 'disable_motor_mode', 'dm4310_fbdata', 'dm6215_fbdata'))
-        # Stub only the HAL send boundary; function bodies are verbatim from 6855ef8.
-        reference = '#include <stdint.h>\n#include <string.h>\ntypedef int hcan_t;\n#define FDCAN_DLC_BYTES_8 8\n' + definitions + '\n' + types + '''
-static uint8_t captured[8];
-static uint32_t captured_id;
-void canx_send_data(hcan_t *h,uint16_t id,uint8_t *d,int n) {
- (void)h; (void)n; captured_id=id; memcpy(captured,d,8);
-}
-''' + funcs + '''
-uint32_t ref_pack(int wheel,uint16_t id,float p,float v,float kp,float kd,float t,uint8_t *d) {
- if(wheel) mit_ctrl2(0,id,p,v,kp,kd,t); else mit_ctrl(0,id,p,v,kp,kd,t);
- memcpy(d,captured,8); return captured_id;
-}
-void ref_feedback(int wheel,uint8_t *d,float *out) {
- motor_fbpara_t f;
- if(wheel) { Wheel_Motor_t m={0}; dm6215_fbdata(&m,d,8); f=m.para; }
- else { Joint_Motor_t m={0}; dm4310_fbdata(&m,d,8); f=m.para; }
- out[0]=f.pos; out[1]=f.vel; out[2]=f.tor; out[3]=f.id;
- out[4]=f.state; out[5]=f.Tmos; out[6]=f.Tcoil;
-}
-'''
-        (tmp / 'ref.c').write_text(reference)
-        subprocess.run(['cc', '-shared', '-fPIC', '-O2', str(tmp / 'ref.c'), '-o', str(tmp / 'ref.so')], check=True)
+        cls.has_ref = path.is_file() and path.with_suffix('.h').is_file()
+        if cls.has_ref:
+            cls.ref_hash = hashlib.sha256(path.read_bytes()).hexdigest()
+            src = path.read_text()
+            hdr = (path.with_suffix('.h')).read_text()
+            definitions = '\n'.join(re.findall(r'^#define (?:P_|V_|T_|KP_|KD_|MIT_|POS_|SPEED_).*', hdr, re.M))
+            types = '\n'.join(re.findall(r'typedef struct\s*\{.*?\}\s*\w+;', hdr, re.S))
+            funcs = '\n'.join(function(src, n) for n in ('float_to_uint', 'uint_to_float', 'mit_ctrl', 'mit_ctrl2', 'enable_motor_mode', 'disable_motor_mode', 'dm4310_fbdata', 'dm6215_fbdata'))
+            # Stub only the HAL send boundary; function bodies are verbatim from 6855ef8.
+            reference = '#include <stdint.h>\n#include <string.h>\ntypedef int hcan_t;\n#define FDCAN_DLC_BYTES_8 8\n' + definitions + '\n' + types + '''
+    static uint8_t captured[8];
+    static uint32_t captured_id;
+    void canx_send_data(hcan_t *h,uint16_t id,uint8_t *d,int n) {
+     (void)h; (void)n; captured_id=id; memcpy(captured,d,8);
+    }
+    ''' + funcs + '''
+    uint32_t ref_pack(int wheel,uint16_t id,float p,float v,float kp,float kd,float t,uint8_t *d) {
+     if(wheel) mit_ctrl2(0,id,p,v,kp,kd,t); else mit_ctrl(0,id,p,v,kp,kd,t);
+     memcpy(d,captured,8); return captured_id;
+    }
+    void ref_feedback(int wheel,uint8_t *d,float *out) {
+     motor_fbpara_t f;
+     if(wheel) { Wheel_Motor_t m={0}; dm6215_fbdata(&m,d,8); f=m.para; }
+     else { Joint_Motor_t m={0}; dm4310_fbdata(&m,d,8); f=m.para; }
+     out[0]=f.pos; out[1]=f.vel; out[2]=f.tor; out[3]=f.id;
+     out[4]=f.state; out[5]=f.Tmos; out[6]=f.Tcoil;
+    }
+    '''
+            (tmp / 'ref.c').write_text(reference)
+            subprocess.run(['cc', '-shared', '-fPIC', '-O2', str(tmp / 'ref.c'), '-o', str(tmp / 'ref.so')], check=True)
         subprocess.run(['cc', '-shared', '-fPIC', '-std=c11', '-O2', '-Wall', '-Wextra', '-Werror', '-I' + str(ROOT / 'firmware'),
                         *(str(ROOT / f) for f in ('firmware/dm.c', 'firmware/twin.c', 'firmware/link_proto.c', 'tests/harness.c')),
                         '-o', str(tmp / 'twin.so')], check=True)
         cls.lib = C.CDLL(str(tmp / 'twin.so'))
-        cls.ref = C.CDLL(str(tmp / 'ref.so'))
+        if cls.has_ref:
+            cls.ref = C.CDLL(str(tmp / 'ref.so'))
         cls.lib.dm_encode.argtypes = [F, F, F, C.c_uint]; cls.lib.dm_encode.restype = C.c_uint32
         cls.lib.dm_decode.argtypes = [C.c_uint32, F, F, C.c_uint]; cls.lib.dm_decode.restype = F
-        cls.ref.float_to_uint.argtypes = [F, F, F, C.c_int]
-        cls.ref.uint_to_float.argtypes = [C.c_int, F, F, C.c_int]; cls.ref.uint_to_float.restype = F
-        cls.ref.ref_pack.argtypes = [C.c_int, C.c_uint16] + [F] * 5 + [C.POINTER(U8)]
-        cls.ref.ref_feedback.argtypes = [C.c_int, C.POINTER(U8), C.POINTER(F)]
+        if cls.has_ref:
+            cls.ref.float_to_uint.argtypes = [F, F, F, C.c_int]
+            cls.ref.uint_to_float.argtypes = [C.c_int, F, F, C.c_int]; cls.ref.uint_to_float.restype = F
+            cls.ref.ref_pack.argtypes = [C.c_int, C.c_uint16] + [F] * 5 + [C.POINTER(U8)]
+            cls.ref.ref_feedback.argtypes = [C.c_int, C.POINTER(U8), C.POINTER(F)]
         cls.lib.twin_format.argtypes = [C.c_char_p, C.c_size_t, C.c_uint32, C.POINTER(Fb)]
         cls.lib.twin_format.restype = C.c_size_t
         cls.lib.dm_motor_step.argtypes = [C.POINTER(Motor), F]
@@ -108,7 +112,8 @@ void ref_feedback(int wheel,uint8_t *d,float *out) {
     @classmethod
     def tearDownClass(cls):
         # Evidence that reading/extracting/compiling never changed the reference.
-        assert hashlib.sha256((REF / 'DM_Motor/dm4310_drv.c').read_bytes()).hexdigest() == cls.ref_hash
+        if cls.has_ref:
+            assert hashlib.sha256((REF / 'DM_Motor/dm4310_drv.c').read_bytes()).hexdigest() == cls.ref_hash
         cls.tmp.cleanup()
 
     def setUp(self):
@@ -128,6 +133,8 @@ void ref_feedback(int wheel,uint8_t *d,float *out) {
         return out[0][1][1]
 
     def test_reference_conversions_and_clipping(self):
+        if not self.has_ref:
+            self.skipTest(f"DMJUMP_REF missing driver .c/.h at {REF}; reference comparison only skipped")
         rng = random.Random(4310)
         for lo, hi, bits in ((-12.5, 12.5, 16), (-30, 30, 12), (-10, 10, 12),
                              (-12, 12, 16), (-45, 45, 12), (-18, 18, 12), (0, 500, 12), (0, 5, 12)):
@@ -139,6 +146,8 @@ void ref_feedback(int wheel,uint8_t *d,float *out) {
             self.assertEqual(self.lib.dm_encode(hi + 1000, lo, hi, bits), (1 << bits) - 1)
 
     def test_mit_bytes_against_reference_and_roundtrip(self):
+        if not self.has_ref:
+            self.skipTest(f"DMJUMP_REF missing driver .c/.h at {REF}; reference comparison only skipped")
         rng = random.Random(6215)
         for id_ in host.IDS:
             pm, vm, tm = (12, 45, 18) if id_ in (0, 1) else (12.5, 30, 10)
@@ -158,6 +167,8 @@ void ref_feedback(int wheel,uint8_t *d,float *out) {
             self.assertEqual([getattr(decoded, k) for k in ('p', 'v', 'kp', 'kd', 't')], [pm, -vm, 500, 5, -tm])
 
     def test_feedback_against_reference(self):
+        if not self.has_ref:
+            self.skipTest(f"DMJUMP_REF missing driver .c/.h at {REF}; reference comparison only skipped")
         for id_ in host.IDS:
             f = Fb(1.2, -3.4, 2.5, id_, 9, 34, 38); d = Data(); y = Fb(); ref = (F * 7)()
             self.lib.dm_pack_feedback(C.byref(f), d)
@@ -251,6 +262,57 @@ void ref_feedback(int wheel,uint8_t *d,float *out) {
         self.feed(b'\x04' + b'\xff' * 210 + b'\0' + host.advisory(5, 0))
         self.assertEqual(self.lib.h_leds(), 1)
 
+    def test_cr_lf_and_long_burst_no_loss(self):
+        for seq in range(1000):
+            terminator = (b'\r', b'\n', b'\r\n')[seq % 3]
+            self.feed(host.command(seq, host.IDS[seq % 4]).rstrip(b'\n') + terminator)
+        self.assertEqual(self.lib.h_commands(), 1000)
+        self.assertEqual(self.lib.h_errors(), 0)
+
+    def test_binary_stall_overflow_and_rx_gap_recover(self):
+        self.feed(b'\x04abc', 1)
+        self.lib.h_poll(101)
+        self.assertEqual(self.lib.h_timeout(), 1)
+        self.feed(host.command(1, 6), 102)
+        self.assertEqual(self.lib.h_commands(), 1)
+        self.feed(b'\x04' + b'x' * 1024, 103)
+        self.assertGreater(self.lib.h_binary_overflow(), 0)
+        self.lib.h_gap()
+        self.feed(host.command(2, 8), 104)
+        self.assertEqual(self.lib.h_commands(), 2)
+        self.assertGreater(self.lib.h_errors(), 1)
+
+    def test_rx_queue_full_wrap_error_and_gap_marker(self):
+        self.lib.h_rx_init()
+        for i in range(1023): self.lib.h_rx_push(i % 256, 0)
+        self.lib.h_rx_push(42, 0)
+        self.assertEqual(self.lib.h_rx_drop(), 1)
+        self.assertEqual(self.lib.h_rx_pop(), 0)
+        self.lib.h_rx_push(42, 0)
+        for i in range(1, 1023): self.assertEqual(self.lib.h_rx_pop(), i % 256)
+        self.assertEqual(self.lib.h_rx_pop(), 256 + 42)
+        self.assertEqual(self.lib.h_rx_pop(), -1)
+        self.lib.h_rx_push(42, 1)
+        self.assertEqual(self.lib.h_rx_error(), 1)
+        self.lib.h_rx_push(43, 0)
+        self.assertEqual(self.lib.h_rx_pop(), 256 + 43)
+        for i in range(10000):
+            self.lib.h_rx_push(i % 256, 0)
+            self.assertEqual(self.lib.h_rx_pop(), i % 256)
+
+    def test_tx_status_reservation_and_maximum_length(self):
+        # Repeated ordinary admissions, including wrap, must preserve one STAT.
+        for tail in (0, 100, 4095):
+            head = tail
+            while self.lib.h_tx_fits(head, tail, 64, 0): head = (head + 64) % 4096
+            self.assertTrue(self.lib.h_tx_fits(head, tail, 1536, 1))
+        source = (ROOT / 'firmware/main.c').read_text()
+        stat = source[source.index('puts_("STAT")'):]
+        stat = stat[:stat.index("putc_('\\n')")]
+        keys = re.findall(r'kvh?\("([^" ]+)"', stat)
+        maximum = len('STAT\n') + sum(1 + len(k) + 1 + 10 for k in keys)
+        self.assertLessEqual(maximum, 1536)
+
     def test_bandwidth_bound_uses_actual_formats(self):
         imu = 'I,4294967295,1' + ',-32768' * 7 + '\n'
         self.assertEqual(len(imu), 64)
@@ -260,8 +322,8 @@ void ref_feedback(int wheel,uint8_t *d,float *out) {
         n = self.lib.twin_format(b, 80, 0xFFFFFFFF, C.byref(f)); self.assertLessEqual(n, 48)
         for id_ in host.IDS: self.assertLessEqual(len(host.command(0xFFFFFFFF, id_, *([-999998]*5))), 128)
         budget = host.bandwidth()
-        self.assertEqual((budget['tx_bytes_s'], budget['rx_bytes_s']), (9148, 3210))
-        self.assertLess(budget['tx_fraction'], .80); self.assertLess(budget['rx_fraction'], .28)
+        self.assertEqual((budget['tx_bytes_s'], budget['rx_bytes_s']), (12796, 13450))
+        self.assertLess(budget['tx_fraction'], .80); self.assertLess(budget['rx_fraction'], .30)
 
     def test_optional_agv_codec_compiles_only_when_explicitly_selected(self):
         # Compile check only: this does not assert AGV velocity-mode readiness.

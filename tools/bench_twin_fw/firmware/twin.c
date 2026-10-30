@@ -60,7 +60,7 @@ static void echo(twin_link *s,uint32_t seq,uint8_t value,lp_reason result) {
  /* ASSUMED mixed UART envelope: 0 + unchanged COBS wire + LF.
   * Keeps every following I-line at the start of a text line. */
  out[0]=0; size_t n=lp_pack(&m,out+1,LP_MAX_WIRE);
- if(n) { out[n+1]='\n'; s->tx(s->ctx,out,n+2); }
+ if(n) { out[n+1]='\n'; s->tx(s->ctx,out,n+2); } else s->echo_encode_drop++;
  s->echo_at=s->now;
 }
 static void packet(void *ctx,const lp_message *m) {
@@ -82,25 +82,45 @@ static void error(void *ctx) {
 void twin_init(twin_link *s,uint64_t boot_id,twin_tx tx,twin_on_command command,void *ctx) {
  *s=(twin_link){0}; s->boot_id=boot_id; s->tx=tx; s->command=command; s->ctx=ctx;
 }
+void twin_rx_gap(twin_link *s) {
+ s->rx_gap++; s->parse_errors++;
+ s->mode=0; s->used=0; s->overflow=0; s->stream=(lp_stream){0};
+}
+static void expire(twin_link *s,uint32_t now) {
+ if(s->mode && (uint32_t)(now-s->byte_at)>=100u) {
+  s->mux_timeout++; s->parse_errors++;
+  s->mode=0; s->used=0; s->overflow=0; s->stream=(lp_stream){0};
+ }
+}
 void twin_poll(twin_link *s,uint32_t now) {
+ expire(s,now);
  s->uptime_ms+=(uint32_t)(now-s->now); s->now=now;
  if(!twin_leds(s) && (uint32_t)(now-s->echo_at)>=100u) echo(s,s->seq,s->value,LP_REASON_NONE);
 }
 void twin_feed(twin_link *s,uint8_t b,uint32_t now) {
+ expire(s,now); s->byte_at=now;
  s->uptime_ms+=(uint32_t)(now-s->now); s->now=now;
  if(!s->mode) {
   if(b==0 || b=='\n' || b=='\r') return;
   s->mode=(b=='C' || b=='E' || b=='D')?1:2;
  }
  if(s->mode==2) {
+  s->binary_bytes++;
+  /* Canonical stream only reports overflow when a delimiter arrives. Without
+   * zero, it can swallow unlimited C-lines with no error. Count and leave the
+   * binary mode immediately at its bounded capacity instead. */
+  if(b && s->stream.used==sizeof(s->stream.encoded)) {
+   s->binary_overflow++; s->parse_errors++;
+   s->stream=(lp_stream){0}; s->mode=0; return;
+  }
   lp_stream_feed(&s->stream,&b,1,packet,error,s);
   if(!b) s->mode=0;
- } else if(b=='\n' || b==0) {
+ } else if(b=='\n' || b=='\r' || b==0) {
   twin_command c;
   s->line[s->used]=0;
-  if(b=='\n' && !s->overflow && twin_parse(s->line,&c)) s->command(s->ctx,&c);
+  if(b && !s->overflow && twin_parse(s->line,&c)) { s->text_ok++; s->command(s->ctx,&c); }
   else s->parse_errors++;
   s->used=0; s->overflow=0; s->mode=0;
  } else if(s->used<TWIN_LINE_CAP-1) s->line[s->used++]=(char)b;
- else s->overflow=1;
+ else if(!s->overflow) { s->overflow=1; s->text_overflow++; }
 }

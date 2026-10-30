@@ -60,7 +60,8 @@ micro-ROS is linked. Canonical `tools/link_proto` is included through tiny
 wrappers, avoiding an independent protocol fork. Host tests use `cc`, ctypes
 and Python unittest; no pip packages or hardware are needed. Override
 `DMJUMP_REF` only to another read-only checkout of the same reference.
-Missing reference files fail the tests rather than silently skipping the cross-check.
+Missing reference driver .c/.h files skip only the three reference comparisons
+with an explicit DMJUMP_REF message; firmware/host regression tests still run.
 
 Tests execute the actual bench C pack/unpack, model, line parser/formatter and
 mixed UART receiver. They compile the reference converters, MIT packers and
@@ -72,9 +73,10 @@ Build/test observations are **MEASURED on the Mac only**, recorded in WORKLOG.
 
 ## UART records and multiplexing
 
-**SOURCE-SUPPORTED configuration:** USART1 PA9/PA10, nominal 115200 baud 8N1,
-HSI 16 MHz; inherited from `tools/imu_can_bench/firmware/main.c:76,383-385`.
-The baud divider is 139, giving approximately 115108 baud (**CALCULATED**).
+**C1-T9 application configuration:** USART1 PA9/PA10, nominal **460800 baud
+8N1**, HSI 16 MHz. Divider 35 gives approximately 457143 baud (-0.79%, calculated).
+`flash_safe` and the ROM bootloader still use **115200 8E1**; this change only
+sets the running application baud. No bootloader tool was changed.
 All text grammar, rates and queue limits below are **ASSUMED bench choices**.
 
 | Direction | Record | Meaning |
@@ -92,7 +94,7 @@ queued commands advance its high-water mark; retries use a newer sequence after
 acceptance. Rejected/busy commands are counted, with no per-command ACK; `seq`
 is not present in the DM wire or M-line. Text permits signed decimal numbers
 with 1..6 digits before and at most 6 after the decimal, no exponent/NaN/Inf,
-no spaces, and optional CR before LF. Text buffer is 128 bytes including NUL.
+no spaces; LF, CRLF and CR terminate text commands. Text buffer is 128 bytes including NUL.
 Commands outside DM physical ranges clip; invalid grammar/IDs reject.
 All fake motors start disabled. `host.py` supplies command/advisory encoders and
 a byte-stream decoder; it never opens a serial device.
@@ -104,7 +106,12 @@ binary record; finish an interrupted text record with LF or zero. Do not
 interleave bytes from separate writers. UART receive uses a 1024-byte interrupt
 queue, so I2C polling does not depend on per-byte main-loop service. UART output
 uses a 4096-byte ring and admits or drops complete records. Counters expose
-receive overflow/error and output record drops.
+receive overflow/error and output record drops. The ISR publishes a volatile
+byte plus gap marker before advancing head; main consumes it before releasing
+tail. A gap resets partial parser state. RX service is capped at 256 bytes/pass
+so continuous input cannot starve CAN, TX and status. Parser idle timeout is
+100 ms. Binary overflow is counted immediately and exits binary mode, rather
+than waiting indefinitely for a zero delimiter.
 
 The binary echo can itself contain LF. Use `host.Decoder` before dispatching
 records to consumers. Each binary output envelope ends in LF, so subsequent
@@ -138,38 +145,59 @@ The diagnostic header session is UID-derived and repeats across resets
 (**ASSUMED limitation**); reset the host decoder and command/advisory sequence
 state whenever the BOOT line appears. It is not a globally unique MCU boot ID.
 
-### Bandwidth at 115200
+### C1-T9 rates and Pi runner
 
-**ASSUMED traffic envelope:** 100 I-lines/s; aggregate 20 C/E/D commands/s
-(5 Hz per motor), one feedback per command; at most 10 advisory attempts/s
-including rejects; conservatively up to 20 echo packets/s (10 immediate replies
-plus 10 stale periodic echoes); one STAT/s. Serialize commands
-per motor, waiting for feedback or the 100 ms loss timeout. No autonomous
-feedback stream is emitted. More advisory attempts or motor commands require
-a fresh budget; queue admission does not establish a scheduling guarantee.
+M telemetry defaults to **20 Hz per motor**, emitted on feedback arrivals only;
+it does not change `fed_back` counting or the one-pending-command gate.
+Configure with `make -B -C tools/bench_twin_fw M_HZ=50` (0 disables M-lines;
+valid range 0..1000). Rebuild with `M_HZ=20` for the default artifact.
+`m_decimated` counts deliberately omitted feedback records.
 
-**CALCULATED lengths:** maximum I-line is 64 B (10-digit ms and seven
-`-32768` values), M-line conservatively 48 B, command at most 128 B, STAT
-conservatively 768 B. Type 4 is 42+20 decoded bytes, at most 64 B on wire plus
-one prefix =65 B. Type 5 is 27+20 decoded bytes, at most 49 B wire plus prefix
-and LF =51 B. These type sizes are **SOURCE-SUPPORTED** by
-`tools/link_proto/link_proto.h:14-15` and `tools/link_proto/SPEC.md`.
+At 100 aggregate commands/s, conservative TX budget is 100×64 I + 80×48 M
++ 20×51 echoes + 1536 STAT = **12796 B/s (27.77% of 46080 B/s)**.
+RX commands/advisories budget is 100×128 + 10×65 = **13450 B/s (29.19%)**.
+At 400 aggregate commands/s the conservative RX bound exceeds wire capacity;
+use actual encoded lengths when choosing a different rate. These calculations
+are capacity bounds, not measured firmware throughput.
 
-| Direction / component | Bytes per second | Evidence |
-|---|---:|---|
-| MCU TX: IMU | 100 × 64 = 6400 | CALCULATED |
-| MCU TX: motor feedback | 20 × 48 = 960 | CALCULATED |
-| MCU TX: advisory echoes | 20 × 51 = 1020 | CALCULATED |
-| MCU TX: status | 768 | CALCULATED bound |
-| MCU TX total | 9148 = 79.410% of 11520 B/s | CALCULATED 10 serial bits/byte |
-| Host TX: commands + advisories | 20 × 128 + 10 × 65 = 3210 = 27.865% | CALCULATED |
+Ordinary records leave **1536 bytes reserved for STAT** in the 4096-byte TX
+ring. Tests bound the maximum status length (all counters at ten digits) to
+939 bytes. A due STAT is retained until admission succeeds if the physical TX
+stalls; `stat_defer` counts retry iterations. Latency intervals reset only when
+STAT is queued. Reserved space prevents telemetry admission from dropping STAT;
+it cannot guarantee delivery through a disconnected or stalled physical link.
 
-Full duplex gives each direction its own capacity; do not sum the two fractions.
-The single BOOT line has an additional conservative 256 B startup allowance
-(**ASSUMED**); first-second TX remains below 82%. The old 37 B I-line budget was
-incorrect. These are wire-capacity calculations, not measured sustained rates,
-latency, clock accuracy or interrupt/sensor performance. `host.bandwidth()` and
-host tests check these bounds against the actual compiled formatters/encoders.
+For a future owner-run isolated fixture test (not executed by this ticket):
+
+```sh
+python3 -m pip install pyserial
+python3 tools/bench_twin_fw/pi_loop.py /dev/ttyUSB0 --rate 100 --seconds 10 \
+  --raw-log c1-t9-rx.jsonl > c1-t9-report.jsonl
+```
+
+Use a fresh application session with no other UART owner. The runner emits
+**C only, p=v=kp=kd=t=0**; it never enables a motor. One thread owns reads and
+`host.Decoder`; the writer uses absolute deadlines from integer schedule slots,
+round-robins IDs 6/8/0/1, retries partial writes and skips overdue slots rather
+than bursting. Every complete write includes timestamp, sequence and length.
+Raw RX chunks have monotonic timestamps. STAT reports normalize cumulative
+counter deltas by MCU elapsed time, including sent/fed_back/rejected and drop
+counters. BOOT/reset, decoder errors, serial failures and 3 seconds without STAT
+fail the run. It drains for 2.2 seconds after writing; first STAT is a baseline,
+so per-second reports do not account for commands sent before that baseline.
+Writer totals count host write completions, not proof of MCU receipt.
+
+New diagnostics: `rx_bytes` counts SR/DR receive/error events, `rx_queued` and
+`rx_processed` trace the byte queue; `rx_drop` counts full-queue bytes and
+`rx_error` hardware error events (overrun can represent more than one lost wire
+byte). `text_ok` must equal `sent + rejected` modulo uint32. `rx_gap` counts
+parser resets at queued gap markers. `binary_bytes`, `binary_overflow`,
+`mux_timeout`, `text_overflow`, `parse_error` expose parser routing/loss.
+`uart_drop` counts whole ordinary records refused at TX admission;
+`tx_byte_drop` counts defensive character overflow; `m_format_drop` and
+`echo_encode_drop` cover formatter failures. `m_decimated` is intentional
+telemetry suppression, not CAN loss. These counters overlap; do not sum all
+of them as unique lost commands.
 
 ## CAN/model/counter behavior
 

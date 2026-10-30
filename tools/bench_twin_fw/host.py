@@ -72,16 +72,12 @@ class Decoder:
         return result
 
 
-def bandwidth():
-    """CALCULATED, each full-duplex direction has 11520 bytes/s at 8N1.
+def bandwidth(command_hz=100, m_hz=20):
+    """Conservative 460800 8N1 wire budget; M rate is per motor.
 
-    I 64 B from uint32 ms + seven signed int16 values. M conservatively 48 B
-    for supported IDs/ranges/three decimals. STAT <=768 B (admission bound).
-    Advisory=64 wire+1 prefix; echo=49 wire+prefix+LF=51. Boot=256 B once.
+    STAT bound 1536 B; up to 20 echoes/s; 100 fresh IMU samples/s.
     """
-    # Up to 10 immediate replies plus 10 periodic stale echoes per second.
-    tx = 100 * 64 + 20 * 48 + 20 * 51 + 768
-    # Command <=127 B without LF; conservative full 128 B bound includes LF.
-    rx = 20 * 128 + 10 * 65
+    tx = 100 * 64 + min(command_hz, 4 * m_hz) * 48 + 20 * 51 + 1536
+    rx = command_hz * 128 + 10 * 65
     return dict(tx_bytes_s=tx, rx_bytes_s=rx,
-                tx_fraction=tx / 11520, rx_fraction=rx / 11520)
+                tx_fraction=tx / 46080, rx_fraction=rx / 46080)

@@ -1,6 +1,13 @@
 /* F446 bench-only DM twin. Derived GPIO/I2C/startup from imu_can_bench. */
 #include <stdint.h>
 #include "twin.h"
+#include "uart_queue.h"
+#ifndef M_HZ
+#define M_HZ 20u /* per motor; 0 disables M telemetry */
+#endif
+#if M_HZ < 0 || M_HZ > 1000
+#error M_HZ must be 0..1000
+#endif
 #include <stddef.h>
 
 #define REG(a) (*(volatile uint32_t *)(uintptr_t)(a))
@@ -94,15 +101,14 @@ static void pin_set(uint32_t port, unsigned pin, int high) {
 static int pin_get(uint32_t port, unsigned pin) { return (int)((REG(port + IDR) >> pin) & 1u); }
 
 /* ---- UART: ring buffer pumped from the main loop, never blocks the CAN service ---- */
-#define TXN 4096u
 static char txb[TXN];
-static uint32_t txh, txt, tx_drop;
+static uint32_t txh, txt, tx_drop, tx_byte_drop, stat_defer;
 static void uart_pump(void) {
   while (txt != txh && (U_SR & (1u << 7))) { U_DR = (uint8_t)txb[txt]; txt = (txt + 1u) % TXN; }
 }
 static void putc_(char c) {
   uint32_t n = (txh + 1u) % TXN;
-  if (n == txt) { tx_drop++; return; }
+  if (n == txt) { tx_byte_drop++; return; }
   txb[txh] = c; txh = n;
 }
 static void puts_(const char *s) { while (*s) putc_(*s++); }
@@ -120,24 +126,19 @@ static void kv(const char *k, uint32_t v) { putc_(' '); puts_(k); putc_('='); pu
 static void kvh(const char *k, uint32_t v, int d) { putc_(' '); puts_(k); putc_('='); puthex(v, d); }
 /* Atomic record admission: never truncate a text line or binary envelope. */
 static int reserve(unsigned n) {
-  if ((txt + TXN - txh - 1u) % TXN >= n) return 1;
+  if (uart_tx_fits(txh,txt,n,0)) return 1;
   tx_drop++; return 0;
 }
 static void tx_record(void *ctx, const uint8_t *d, size_t n) {
   (void)ctx;
   if (reserve((unsigned)n)) for(size_t i=0;i<n;i++) putc_((char)d[i]);
 }
-#define RXN 1024u /* ASSUMED bounded interrupt RX queue */
-static uint8_t rxb[RXN];
-static volatile uint32_t rxh, rxt, rx_drop, rx_error;
+static uart_rx rxq;
 void USART1_IRQHandler(void) {
   uint32_t sr=U_SR;
-  if(sr & ((1u<<5)|(15u<<0))) {
+  if(sr & ((1u<<5)|15u)) {
     uint8_t b=(uint8_t)U_DR; /* SR then DR clears ORE/FE/NE/PE */
-    if(sr & 15u) { rx_error++; return; }
-    uint32_t n=(rxh+1u)%RXN;
-    if(n==rxt) rx_drop++;
-    else { rxb[rxh]=b; rxh=n; }
+    uart_rx_push(&rxq,b,(sr&15u)!=0);
   }
 }
 
@@ -337,7 +338,7 @@ static void leds(void) {
 int main(void) {
   clock_init(); RCC_AHB1ENR|=7u; RCC_APB2ENR|=1u<<4;
   pin_af(GPIOA,9,7u); pin_af(GPIOA,10,7u);
-  U_BRR=(SYSCLK+57600u)/115200u;
+  U_BRR=(SYSCLK+230400u)/460800u; /* 8N1; ROM flash_safe stays 115200 8E1 */
   U_CR1=(1u<<13)|(1u<<3)|(1u<<2)|(1u<<5); /* RXNE interrupt */
   REG(0xe000e104u)=1u<<(37u-32u); /* NVIC ISER1 USART1 */
   static const unsigned pins[3]={4,5,10};
@@ -353,13 +354,19 @@ int main(void) {
   can_filters(); can_pins();
   int c1_ok=can_config(CAN1,CAN_BTR), c2_ok=can_config(CAN2,CAN_BTR);
   puts_("BOOT fw=bench_twin_dm bench_only=1 not_micro_ros=1 not_agv_ready=1");
-  kv("can_bps",500000); kv("imu_hz",100); kv("c1_init",c1_ok); kv("c2_init",c2_ok);
+  kv("uart_bps",460800); kv("m_hz",M_HZ); kv("can_bps",500000); kv("imu_hz",100); kv("c1_init",c1_ok); kv("c2_init",c2_ok);
   kvh("imu_addr",imu_addr,2); kvh("imu_who",imu_who,2); putc_('\n');
   uint32_t next_poll=ms, next_retry=0, next_stat=ms+1000, step_at=ms;
-  uint32_t imu_ok=0,imu_err=0,imu_stale=0;
+  uint32_t imu_ok=0,imu_err=0,imu_stale=0, m_decimated=0, m_format_drop=0;
+  uint32_t m_at[4]={0}, m_have[4]={0};
   for(;;) {
     uart_pump();
-    while(rxt!=rxh) { uint8_t b=rxb[rxt]; rxt=(rxt+1u)%RXN; twin_feed(&link,b,ms); }
+    uint16_t byte;
+    /* Bound RX work so a continuous sender cannot starve CAN, TX or STAT. */
+    for(unsigned n=0;n<256u && uart_rx_pop(&rxq,&byte);n++) {
+      if(byte&256u) twin_rx_gap(&link);
+      twin_feed(&link,(uint8_t)byte,ms);
+    }
     uint32_t now=ms;
     twin_poll(&link,now); leds();
     unsigned steps=0;
@@ -387,8 +394,11 @@ int main(void) {
         if(latency_last>latency_max) latency_max=latency_last;
         latency_sum+=latency_last; latency_n++; pending[k].active=0; fed_back++;
       } else unsolicited++;
-      char line[80]; size_t n=twin_format(line,sizeof(line),now,&f);
-      tx_record(0,(const uint8_t *)line,n);
+      if(M_HZ && (!m_have[k] || (uint32_t)(now-m_at[k]) >= (1000u+M_HZ-1u)/(M_HZ?M_HZ:1u))) {
+        m_have[k]=1; m_at[k]=now;
+        char line[80]; size_t n=twin_format(line,sizeof(line),now,&f);
+        if(n) tx_record(0,(const uint8_t *)line,n); else m_format_drop++;
+      } else m_decimated++;
     }
     for(int k=0;k<4;k++) if(pending[k].active && (uint32_t)(now-pending[k].at)>=100u) {
       /* The mailbox may already have completed and been reused for another ID.
@@ -418,20 +428,29 @@ int main(void) {
       } else if((int32_t)(now-next_retry)>=0) { next_retry=now+500; i2c_init(); imu_up=imu_init(); }
     }
     if((int32_t)(now-next_stat)>=0) {
-      next_stat=now+1000;
-      if(reserve(768)) {
+      /* Ordinary records always leave this space available. Retain a due
+       * STAT if TX is physically stalled; never advance its deadline on failure. */
+      if(uart_tx_fits(txh,txt,STAT_RESERVE,1)) {
+        next_stat=now+1000;
         puts_("STAT"); kv("ms",now); kv("sent",sent); kv("fed_back",fed_back); kv("lost",lost);
         kv("pending",sent-fed_back-lost); kv("rejected",rejected); kv("unsolicited",unsolicited);
         kv("lat_last_us",latency_last); kv("lat_mean_us",latency_n?latency_sum/latency_n:0);
         kv("lat_max_us",latency_max); kv("lat_n",latency_n);
         kv("imu_ok",imu_ok); kv("imu_err",imu_err); kv("imu_stale",imu_stale);
-        kv("uart_drop",tx_drop); kv("rx_drop",rx_drop); kv("rx_error",rx_error);
+        kv("uart_drop",tx_drop); kv("tx_byte_drop",tx_byte_drop); kv("stat_defer",stat_defer);
+        kv("rx_drop",rxq.drop); kv("rx_error",rxq.error);
+        kv("rx_bytes",rxq.bytes); kv("rx_queued",rxq.queued); kv("rx_processed",rxq.processed);
+        kv("text_ok",link.text_ok); kv("rx_gap",link.rx_gap); kv("mux_timeout",link.mux_timeout);
+        kv("binary_bytes",link.binary_bytes); kv("binary_overflow",link.binary_overflow);
+        kv("echo_encode_drop",link.echo_encode_drop); kv("text_overflow",link.text_overflow);
+        kv("m_decimated",m_decimated); kv("m_format_drop",m_format_drop);
+        kv("binary_other",link.other); kv("c1_other",c1.other); kv("c2_other",c2.other);
         kv("ad_ok",link.accepted); kv("ad_reject",link.rejected); kv("parse_error",link.parse_errors);
         kv("c1_txok",c1.txok); kv("c1_txerr",c1.txerr); kv("c1_ovr",c1.ovr); kv("c2_ovr",c2.ovr);
         kv("fb_busy",fb_busy); kv("model_skip_ms",model_skip);
         kvh("c1_esr",REG(CAN1+C_ESR),8); kvh("c2_esr",REG(CAN2+C_ESR),8); putc_('\n');
-      }
-      latency_sum=latency_n=latency_max=0;
+        latency_sum=latency_n=latency_max=0;
+      } else stat_defer++;
     }
   }
 }

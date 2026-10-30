@@ -64,3 +64,42 @@
 The tests extract verbatim reference C functions into a temporary translation
 unit, stub only CAN send/HAL types, and compare actual C bytes/conversions.
 The source driver hash is checked unchanged after the suite.
+
+## C1-T9 — 2026-10-30 (supersedes the earlier artifact/rate results above)
+
+- Owner scope: edit this directory only; no commit/device access. Read
+  RATE_ANALYSIS.md first, then session/profile notes. All changes remain local.
+- Source finding: a non-text byte enters binary mode until zero. Canonical
+  lp_stream overflow silently sets dropping and reports only at a later zero;
+  continuous valid LF-terminated C-lines can disappear there indefinitely with
+  zero parse errors. Added immediate counted binary overflow/recovery and 100 ms
+  idle timeout. CR-only records now dispatch; CRLF dispatches exactly once.
+- RX ring hardening: volatile slots, compiler publication barriers, gap markers
+  on overflow/error and parser reset on the next queued marker. Added event,
+  queued/processed-byte, parsed-command and parser-loss diagnostics. This is
+  defensive ordering; no hardware evidence establishes a compiler race as root
+  cause. RX drain limited to 256 bytes/pass to prevent service starvation.
+- TX admission never gated host_command in the old image; reserve already
+  counted refused output records. STAT itself could be refused for lack of
+  768 bytes. New ordinary admission leaves 1536 bytes for STAT. Due STAT retries
+  without advancing deadline/resetting latency; byte overflow and formatter
+  failures have separate counters. Maximum worst-case STAT is 939 bytes.
+- Decision: application 460800 8N1, divider 35 (~457143 baud); flash_safe/ROM
+  remains 115200 8E1. Default M_HZ=20 per motor, compile-time configurable 0..1000;
+  M decimation never changes feedback accounting. Firmware default restored.
+- Added pi_loop.py: one reader/decoder thread; fixed aggregate writer rate,
+  absolute integer slots, partial-write retries, no catch-up bursts, raw RX log,
+  per-write evidence and STAT-delta rates. C only, all five fields zero; no E/D.
+- Actual first runner regression failed: 11 writes in 0.1 s instead of 10 due to
+  floating accumulation. Integer schedule slots fixed it; regression passes.
+- Validation: make default PASS (text=17904/data=0/bss=7000); M_HZ=0 build PASS
+  before final counter-only additions; default final make test 18/18 PASS.
+  DMJUMP_REF=/private/tmp/c1-t9-missing-reference make test: 15 PASS/3 explicit
+  reference-only skips. CLI --help PASS without importing pyserial.
+- Final bin SHA-256:
+  37cb50dd53f658caecfd6da993fdaa598c0fafa505924e739a40ceb44b03a777
+- Documentation log: updated README configuration, counters, budget, reference
+  skip policy and runner invocation; added C1_T9_REVIEW.md for completed local
+  milestone/limitations. RATE_ANALYSIS.md owner-provided input left unchanged.
+- No UART, SSH, Pi, flash, real motor, commit, push or PR operation. No measured
+  hardware throughput claim; the 32-admission run's exact trigger is unproven.

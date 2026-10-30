@@ -18,6 +18,7 @@ typedef void (*twin_on_command)(void *ctx,const twin_command *c);
 typedef struct {
  lp_stream stream;
  uint32_t now,last,echo_at,seq,echo_seq,accepted,rejected,parse_errors,other;
+ uint32_t text_ok,rx_gap,mux_timeout,binary_bytes,binary_overflow,echo_encode_drop,text_overflow,byte_at;
  uint64_t boot_id,uptime_ms;
  uint8_t have,value,mode,overflow;
  size_t used;
@@ -28,6 +29,7 @@ typedef struct {
 } twin_link;
 void twin_init(twin_link *s,uint64_t boot_id,twin_tx tx,twin_on_command command,void *ctx);
 void twin_feed(twin_link *s,uint8_t byte,uint32_t now);
+void twin_rx_gap(twin_link *s);
 void twin_poll(twin_link *s,uint32_t now);
 uint8_t twin_leds(const twin_link *s);
 #endif

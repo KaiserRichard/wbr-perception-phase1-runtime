@@ -1,0 +1,1 @@
+- 2026-10-30 18:30 | claude1 + codex-e | T3 rate fix: drop counters on every RX path, UART 460800, M decimation 20 Hz, STAT TX reserve, pi_loop.py, CI skip when DM ref missing; bin 37cb50dd; 18 tests OK | DONE | PR #184
