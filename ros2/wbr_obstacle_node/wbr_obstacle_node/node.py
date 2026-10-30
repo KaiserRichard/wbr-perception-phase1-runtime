@@ -4,6 +4,7 @@ import time
 
 import numpy as np
 import rclpy
+from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy
 from sensor_msgs.msg import CameraInfo, Image, PointCloud2, PointField
@@ -50,6 +51,8 @@ class ObstacleNode(Node):
         self.K = np.asarray(msg.k, dtype=np.float64).reshape(3, 3)
 
     def depth_cb(self, msg):
+        if not rclpy.ok():
+            return
         receipt_monotonic = time.monotonic()
         if not self.limiter.accept(time.monotonic()) or self.K is None:
             return
@@ -67,9 +70,17 @@ class ObstacleNode(Node):
             terrain_msg = Float64MultiArray()
             terrain_msg.data = pack_terrain_advisory(
                 out['advisory'], out['sequence'], time.monotonic() - receipt_monotonic)
+            if not rclpy.ok():
+                return
             self.terrain_advisory_pub.publish(terrain_msg)
+            if not rclpy.ok():
+                return
             self.advisory_pub.publish(text)
+            if not rclpy.ok():
+                return
             byte_msg = UInt8MultiArray(); byte_msg.data = list(out['advisory_bytes']); self.bytes_pub.publish(byte_msg)
+            if not rclpy.ok():
+                return
             self.markers_pub.publish(self.to_markers(out['markers'], msg.header))
             if self.core.params.publish_obstacle_points:
                 cloud = point_cloud2.create_cloud(msg.header,
@@ -77,9 +88,14 @@ class ObstacleNode(Node):
                      PointField(name='y', offset=4, datatype=PointField.FLOAT32, count=1),
                      PointField(name='z', offset=8, datatype=PointField.FLOAT32, count=1)],
                     out['points'].tolist())
+                if not rclpy.ok():
+                    return
                 self.points_pub.publish(cloud)
         except (ValueError, IndexError) as exc:
             self.get_logger().warning(f'dropping malformed depth frame: {exc}')
+        except Exception:
+            if rclpy.ok():
+                raise  # only swallow publish failures during Ctrl-C shutdown
 
     @staticmethod
     def to_markers(specs, header):
@@ -105,9 +121,16 @@ class ObstacleNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = ObstacleNode()
+    node = None
     try:
-        rclpy.spin(node)
+        node = ObstacleNode()
+        try:
+            rclpy.spin(node)
+        except (KeyboardInterrupt, ExternalShutdownException):
+            pass
     finally:
-        node.destroy_node()
-        if rclpy.ok(): rclpy.shutdown()
+        try:
+            if node is not None:
+                node.destroy_node()
+        finally:
+            rclpy.try_shutdown()

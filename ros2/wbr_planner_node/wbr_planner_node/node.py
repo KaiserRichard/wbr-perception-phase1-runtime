@@ -8,6 +8,7 @@ import numpy as np
 import rclpy
 from geometry_msgs.msg import Point, TransformStamped
 from nav_msgs.msg import OccupancyGrid
+from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 from sensor_msgs.msg import CameraInfo, Image
 from std_msgs.msg import String
@@ -89,6 +90,9 @@ class PlannerNode(Node):
         self.pending_frame = PendingFrame(msg, stamp, now)
 
     def poll_pending(self):
+        if not rclpy.ok():
+            self.pending_frame = None
+            return
         if self.pending_frame is None:
             return
         pending = self.pending_frame
@@ -109,19 +113,27 @@ class PlannerNode(Node):
                 out = self.core.update(depth_m, self.K, pose, stamp)
             suggestion = String()
             suggestion.data = json.dumps(out, separators=(',', ':'), allow_nan=False)
+            if not rclpy.ok():
+                return
             self.suggestion_pub.publish(suggestion)
             if self.core.grid is not None:
                 self.publish_map(msg, out)
         except Exception as exc:
+            if not rclpy.ok():  # publish after Ctrl-C shutdown: exit quietly
+                return
             self.get_logger().error(f'planner frame failed; continuing: {type(exc).__name__}: {exc}')
 
     def publish_map(self, image, out):
+        if not rclpy.ok():
+            return
         header = image.header
         header.frame_id = 'wbr_map'
         markers = MarkerArray()
         action = out['action']
         color = (0.1, 0.8, 0.2, 0.9) if action == 'GO_STRAIGHT' else (1., .65, 0., .95)
         markers.markers.extend(self._basic_markers(out, color))
+        if not rclpy.ok():
+            return
         self.markers_pub.publish(markers)
         occupancy = self.core.occupancy(out['stamp_ns'])
         if occupancy:
@@ -132,7 +144,11 @@ class PlannerNode(Node):
             grid.info.origin.position.y = float(occupancy['origin_y'])
             grid.info.origin.orientation.w = 1.0
             grid.data = [int(v) for v in occupancy['data']]
+            if not rclpy.ok():
+                return
             self.grid_pub.publish(grid)
+        if not rclpy.ok():
+            return
         self.publish_tf(header)
 
     def _basic_markers(self, out, color):
@@ -169,6 +185,8 @@ class PlannerNode(Node):
         return result
 
     def publish_tf(self, header):
+        if not rclpy.ok():
+            return
         # T_map_world maps child coordinates in slam_world into parent
         # coordinates in wbr_map, which is the transform TF expects here.
         T = self.core.T_map_world
@@ -186,9 +204,16 @@ class PlannerNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = PlannerNode()
+    node = None
     try:
-        rclpy.spin(node)
+        node = PlannerNode()
+        try:
+            rclpy.spin(node)
+        except (KeyboardInterrupt, ExternalShutdownException):
+            pass
     finally:
-        node.destroy_node()
-        if rclpy.ok(): rclpy.shutdown()
+        try:
+            if node is not None:
+                node.destroy_node()
+        finally:
+            rclpy.try_shutdown()
