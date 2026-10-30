@@ -42,7 +42,8 @@ necessary explanation with a rigid line limit or unexplained formulas.
 
 ## Conducting Codex
 - Conductor plans, scopes, launches and independently runs worker results, then merges PRs only after green CI. Claude reviews completed milestones only.
-- Overnight owner override (2026-10-20): f conducts; Plus g/i/k take hard tasks (Astra Ultra), b/e/default medium tasks (Sol), d/h/j simple tasks. Check shared-account idle state and quota before dispatch; never interrupt unrelated work. Recheck refills every 30 minutes and at 06:30; move quota-limited partial work to an idle account of the same or lower tier. f implements only after all workers exhaust quota. Earlier b-conductor receipts remain historical.
+- Accounts (owner, 2026-10-30; supersedes the tiers below): **codex-e and codex-k are ChatGPT Plus**: use the default model, no `-m`. All other accounts are free plans and need `-m gpt-6-luna`. `agy` (print mode, `-p` last; `--effort` is not accepted by the Opus model) is also available for reading/report drafts.
+- Historical overnight override (2026-10-20): f conducts; Plus g/i/k take hard tasks (Astra Ultra), b/e/default medium tasks (Sol), d/h/j simple tasks. Check shared-account idle state and quota before dispatch; never interrupt unrelated work. Recheck refills every 30 minutes and at 06:30; move quota-limited partial work to an idle account of the same or lower tier. f implements only after all workers exhaust quota. Earlier b-conductor receipts remain historical.
 - One worker per task, each in its own worktree and `chatgpt/<YYYYMMDD>-<topic>` branch. Never use the shared Mac checkout or change its branch.
 - Give a short brief: goal, allowed files and exact command proving done. Build first; install missing dependencies and fix actual errors, preserving logs/failures.
 - Workers never run dd, format/partition/delete, force-push, command motors or flash STM32; only conductor merges. Keep Pi perception separate from hardware control.
