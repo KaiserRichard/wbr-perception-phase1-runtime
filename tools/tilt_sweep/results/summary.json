@@ -1,0 +1,38 @@
+{
+  "plane_fit": {
+    "height_error_m": {
+      "n": 435,
+      "mean_abs": 0.00020637476049326266,
+      "max_abs": 0.0025844847434390306
+    },
+    "distance_error_m": {
+      "n": 435,
+      "mean_abs": 0.01518091521569104,
+      "max_abs": 0.11646813149956503
+    },
+    "plane_invalid_n": 0,
+    "advisory_correct_n": 435,
+    "n": 486
+  },
+  "fixed_mount": {
+    "height_error_m": {
+      "n": 435,
+      "mean_abs": 0.12144875804737018,
+      "max_abs": 0.36134512350109593
+    },
+    "distance_error_m": {
+      "n": 435,
+      "mean_abs": 0.06845706801715944,
+      "max_abs": 0.21221781730651856
+    },
+    "plane_invalid_n": 0,
+    "advisory_correct_n": 204,
+    "n": 486
+  },
+  "analytic_d_sin_5deg_m": {
+    "0.5": 0.04357787137382908,
+    "1.0": 0.08715574274765817,
+    "1.3": 0.11330246557195561
+  },
+  "cases_per_method": 486
+}
