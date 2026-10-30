@@ -1,0 +1,14 @@
+{
+  "configById": {
+    "Image!brain": {"imageMode":{"imageTopic":"/camera/camera/color/image_raw","calibrationTopic":"/camera/camera/color/camera_info"},"synchronize":false,"foxglovePanelTitle":"BRAIN — recorded D435 camera"},
+    "RawMessages!advisory": {"topicPath":"/brain/advisory","diffEnabled":false,"defaultExpanded":true,"foxglovePanelTitle":"BRAIN — advisory and gate confidence"},
+    "Plot!body": {"paths":[{"value":"/body/imu.pitch_rad","enabled":true},{"value":"/body/imu.roll_rad","enabled":true},{"value":"/body/imu.pitch_rate_rad_s","enabled":true},{"value":"/body/imu.roll_rate_rad_s","enabled":true},{"value":"/body/leg_length.length_m","enabled":true}],"foxglovePanelTitle":"BODY — tilt, rates, leg length"},
+    "StateTransitions!phase": {"paths":[{"value":"/body/jump_phase.phase","enabled":true,"timestampMethod":"receiveTime"}],"isSynced":true,"foxglovePanelTitle":"BODY — jump phase"},
+    "Plot!bus": {"paths":[{"value":"/bus/stats.rate_hz","enabled":true},{"value":"/bus/stats.errors","enabled":true},{"value":"/bus/stats.busy","enabled":true}],"foxglovePanelTitle":"BUS — CAN rate, errors, busy"},
+    "RawMessages!feedback": {"topicPath":"/bus/motor_feedback","diffEnabled":false,"defaultExpanded":false,"foxglovePanelTitle":"BUS — motor feedback"},
+    "3D!twin": {"topics":{"/twin/scene":{"visible":true}},"fixedFrame":"base_link","followMode":"follow-none","cameraState":{"distance":1.1,"perspective":true,"phi":55,"target":[0,0,0],"targetOffset":[0,0,0],"targetOrientation":[0,0,0,1],"thetaOffset":180,"fovy":45,"near":0.01,"far":20},"foxglovePanelTitle":"TWIN — schematic body and legs (assumed geometry)"},
+    "RawMessages!scene": {"topicPath":"/twin/scene","diffEnabled":false,"defaultExpanded":false,"foxglovePanelTitle":"TWIN — scene messages"}
+  },
+  "layout":{"direction":"row","splitPercentage":50,"first":{"direction":"column","splitPercentage":50,"first":"Image!brain","second":"RawMessages!advisory"},"second":{"direction":"column","splitPercentage":50,"first":{"direction":"column","splitPercentage":55,"first":"Plot!body","second":"StateTransitions!phase"},"second":{"direction":"column","splitPercentage":50,"first":{"direction":"column","splitPercentage":55,"first":"Plot!bus","second":"RawMessages!feedback"},"second":{"direction":"column","splitPercentage":65,"first":"3D!twin","second":"RawMessages!scene"}}}},
+  "globalVariables":{},"playbackConfig":{"speed":1},"userNodes":{}
+}
