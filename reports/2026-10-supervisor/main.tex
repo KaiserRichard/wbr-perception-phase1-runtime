@@ -173,6 +173,32 @@ Mỗi hàng trong Hình~\ref{fig:distance} là một lượt thử vật cản; 
 \end{figure}
 
 \newpage
+% \subsection{Cập nhật đến 30/10}
+\subsection*{Cập nhật đến 30/10}
+Các kết quả đo đạc mới từ ngày 27/10 (toàn bộ là số liệu ĐO ĐẠC trừ khi có ghi chú riêng): Bàn thử nghiệm T3 (bench twin T3, một bản nạp Nucleo-F446RE) duy trì luồng dữ liệu IMU MPU6050 ở tần số 100~Hz; Raspberry Pi gửi lệnh chế độ MIT cho động cơ DM qua UART 460800 $\rightarrow$ CAN1 $\rightarrow$ 4 động cơ DM giả lập (2x DM-J4310 khớp hông, 2x DM-H6215 bánh xe) trên CAN2 $\rightarrow$ phản hồi ngược về Pi. Ở tốc độ 100 lệnh/s: 99 lệnh gửi và 99 phản hồi nhận về mỗi giây, 0 mất gói, 0 lỗi CAN, độ trễ khoảng 1.2~ms. Lần chạy đầu tiên phát hiện dây CAN bị lỏng (ngay cả bản nạp chuẩn imu\_can\_bench cũng lỗi 0/1900 trước khi cắm chặt lại dây, sau đó đạt 10/10 PASS và 2000/2000 lượt khứ hồi). Toàn bộ thử nghiệm chỉ dùng động cơ giả lập (fake motors), chưa từng điều khiển động cơ thật nào; WBR sử dụng động cơ DM qua bus CAN, không sử dụng micro-ROS.
+
+Trong bài thử phát lại toàn trình (end-to-end replay) từ các bản ghi bag D435i $\rightarrow$ node advisory trên Pi $\rightarrow$ UART phần cứng thật $\rightarrow$ bản nạp LED Nucleo: đạt 630/630 phản hồi (echoes) (PASS).
+
+Trên mô hình vật lý T1 (physics twin T1 trong MuJoCo, chỉ mô phỏng): robot đứng cân bằng 30~s, di chuyển 1.65~m và nhảy qua hộp 8~cm đạt 10/10 lượt thành công khi có cổng advisory khép vòng trong bộ điều khiển.
+
+Mô hình YOLO11n (COCO, ONNX, 640~px, CPU) được đánh giá trên các bản ghi bag D435i ngày 24/10 kèm độ sâu đã căn chỉnh: trên máy Mac đạt 22~FPS (toàn bộ pipeline đạt 18.8~FPS); trên Raspberry Pi 5 đạt 3.4~FPS với 4 luồng (2.4~FPS với 1 luồng), không bị giảm xung do nhiệt (no throttling). Sách trong lượt chạy B-H05 hoàn toàn không được phát hiện; các đối tượng như hộp, bậc thang và tường không thuộc các lớp của COCO, do đó việc nhận diện vật cản đòi hỏi một tập nhãn tinh chỉnh hoặc sử dụng luồng hình học độ sâu sẵn có.
+\par\smallskip
+\begin{tabularx}{\linewidth}{@{}p{0.24\linewidth}X@{}}
+\toprule
+\textbf{Nội dung} & \textbf{Số liệu đo đạc chính và phạm vi thử nghiệm}\\
+\midrule
+Bench twin T3 & Luồng IMU MPU6050 100~Hz. Pi gửi lệnh DM MIT-mode qua UART 460800 $\rightarrow$ CAN1 $\rightarrow$ 4 động cơ DM giả lập (2x DM-J4310 hông, 2x DM-H6215 bánh xe) trên CAN2 $\rightarrow$ phản hồi về Pi. Tại 100 lệnh/s: 99 gửi và 99 phản hồi/s, 0 mất gói, 0 lỗi CAN, trễ khoảng 1.2~ms. Lần đầu lỏng dây CAN (bản nạp imu\_can\_bench lỗi 0/1900; cắm lại đạt 10/10 PASS, 2000/2000 lượt khứ hồi). Chỉ motor giả, không điều khiển motor thật; WBR dùng motor DM qua CAN không micro-ROS.\\
+\midrule
+End-to-end replay & Bag D435i ghi sẵn $\rightarrow$ Pi advisory node $\rightarrow$ UART thật $\rightarrow$ Nucleo LED: 630/630 phản hồi (echoes) (PASS).\\
+\midrule
+Physics twin T1 & Chỉ mô phỏng (MuJoCo): đứng 30~s, di chuyển 1.65~m, nhảy qua hộp 8~cm đạt 10/10 với cổng advisory trong vòng điều khiển.\\
+\midrule
+YOLO11n (CPU) & ONNX, COCO, 640~px trên bag D435i 24/10 có độ sâu căn chỉnh: Mac 22~FPS (18.8~FPS toàn pipeline); Raspberry Pi 5 đạt 3.4~FPS (4 luồng), 2.4~FPS (1 luồng), không throttling. Không phát hiện được sách trong B-H05; hộp, bậc thang, tường không có trong COCO (cần fine-tune nhãn hoặc luồng hình học độ sâu).\\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+
+\newpage
 \section{Mục tiêu và định hướng triển khai tiếp theo}
 Ưu tiên là chạy thống nhất các khâu nhận thức trên Pi, rồi tích hợp advisory vào STM32 của WBR; đánh giá với cách gá camera và chuyển động thực của robot.
 \par\smallskip
@@ -200,6 +226,9 @@ IMU MPU6050 & \fbox{\parbox[c][0.48cm][c]{0.93\linewidth}{\centering\scriptsize 
 \textbf{Minh chứng demo sẽ bổ sung.} Video chỉ minh hoạ bản ghi camera, advisory và phản hồi trên bộ thử; ghi rõ phần phát lại và phản hồi motor giả, không hàm ý robot đã chấp hành.
 \begin{center}\fbox{\parbox[c][0.6cm][c]{0.96\linewidth}{\centering\small [LIÊN KẾT / QR VIDEO: chủ dự án bổ sung sau khi quay]}}\end{center}
 \photo{0.9cm}{ảnh chụp màn hình Foxglove trong demo: camera replay, terrain advisory, safety-filter state và fake wheel feedback cùng xuất hiện.}
+
+\par\smallskip
+\textbf{Định hướng triển khai tiếp theo (cập nhật 30/10).} Hai chương trình triển khai (theo lộ trình WBR): (a) tự chủ gắn với đối tượng ``đi tới hộp đỏ'' (``go to the red box'' object-grounded autonomy) kèm cơ chế từ chối dựa trên độ tươi dữ liệu (\emph{freshness-aware refusal}); (b) vượt bậc thang với sự trợ giúp của nhận thức (\emph{perception-aided step negotiation}) trong đó STM32 giữ cân bằng. Tái khởi động hướng học tăng cường (RL) với thí nghiệm đầu tiên được đăng ký trước G1: bộ điều phối lệnh có giới hạn học được (\emph{learned bounded command governor}) đặt phía trên bộ điều khiển LQR nhận biết độ trễ (\emph{delay-aware LQR}), kiểm thử trên độ trễ chưa từng thấy 6--10~ms; các thông số lấy từ báo cáo nhóm (3.5/0.2/0.7~kg, cơ cấu năm khâu năm thanh 0.075/0.14/0.08~m, bánh xe 0.0603~m; các giá trị quán tính là GIẢ ĐỊNH / ASSUMED).
 
 \subsection*{Tài liệu tham khảo và nguồn số liệu}
 {\footnotesize\raggedright
