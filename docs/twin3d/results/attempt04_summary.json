@@ -1,0 +1,24 @@
+{
+  "passed": false,
+  "jump_passes": 1,
+  "jump_runs": 1,
+  "unique_jump_seeds": 1,
+  "jump_criterion_passed": false,
+  "runs": [
+    {
+      "path": "docs/twin3d/runs/attempt04/jump_box-0.csv",
+      "scenario": "jump_box",
+      "seed": 0,
+      "duration_s": 7.000000000000672,
+      "peak_pitch_deg": 3.484597701079658,
+      "base_clear": true,
+      "gate_passed": null,
+      "min_wheel_clearance_m": 0.07014105354542648,
+      "traversed": true,
+      "no_box_contact": true,
+      "landing_s": 2.3649999999998506,
+      "upright_after_one_s": true,
+      "passed": true
+    }
+  ]
+}

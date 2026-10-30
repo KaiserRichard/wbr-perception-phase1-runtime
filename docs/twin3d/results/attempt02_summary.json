@@ -1,0 +1,48 @@
+{
+  "passed": false,
+  "jump_passes": 0,
+  "jump_runs": 1,
+  "unique_jump_seeds": 1,
+  "jump_criterion_passed": false,
+  "runs": [
+    {
+      "path": "docs/twin3d/runs/attempt02/drive-0.csv",
+      "scenario": "drive",
+      "seed": 0,
+      "duration_s": 6.000000000000338,
+      "peak_pitch_deg": 1.1643350588834949,
+      "base_clear": true,
+      "gate_passed": null,
+      "distance_m": 1.6518557406264867,
+      "one_m_time_s": 3.82399999999969,
+      "one_m_speed_m_s": 0.3042409262171334,
+      "final_speed_error_m_s": 0.0005233768401464722,
+      "passed": true
+    },
+    {
+      "path": "docs/twin3d/runs/attempt02/jump_box-0.csv",
+      "scenario": "jump_box",
+      "seed": 0,
+      "duration_s": 7.000000000000672,
+      "peak_pitch_deg": 16.450252266410153,
+      "base_clear": true,
+      "gate_passed": null,
+      "min_wheel_clearance_m": -0.038645275171827344,
+      "traversed": true,
+      "no_box_contact": false,
+      "landing_s": 2.668999999999817,
+      "upright_after_one_s": true,
+      "passed": false
+    },
+    {
+      "path": "docs/twin3d/runs/attempt02/stand-0.csv",
+      "scenario": "stand",
+      "seed": 0,
+      "duration_s": 30.00000000001368,
+      "peak_pitch_deg": 0.5276099875666959,
+      "base_clear": true,
+      "gate_passed": null,
+      "passed": true
+    }
+  ]
+}
