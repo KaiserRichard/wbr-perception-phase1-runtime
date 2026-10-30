@@ -2,7 +2,7 @@
 **Scope:** one session before the 31 Oct deadline. Robot Operating System (ROS) 2 and red-green-blue plus depth (RGB-D) are used below. Push/carry by hand only; no motor commands. Keep camera mount, profile, power and lighting fixed. Preserve failed runs. **Pass** below means the documented operation completed and its evidence was retained; it is not a system safety or accuracy claim.
 
 ## 0 — Nucleo-F446RE image check (mandatory first)
-Stop the micro-ROS agent before touching the universal asynchronous receiver-transmitter (UART). A text banner is not documented for the AGV `canfix01` image (**UNVERIFIED**); do not identify an image from LEDs alone. The inertial measurement unit (IMU)/controller area network (CAN) image prints `PIN`, `LOOP`, `NORM`, `I,...`, and `STAT` at 115200 baud. The link-bench image uses 460800 baud binary protocol; LD2 indicates link, and external red blinking at 2 Hz means no/stale advisory. These behaviors are clues, not definitive image identification.
+Stop the micro-ROS agent before touching the universal asynchronous receiver-transmitter (UART). The 30 Oct readback is expected to contain the measured pre-lab `canfix05` image; do not identify an image from LEDs alone. The inertial measurement unit (IMU)/controller area network (CAN) image prints `PIN`, `LOOP`, `NORM`, `I,...`, and `STAT` at 115200 baud. The link-bench image uses 460800 baud binary protocol; LD2 indicates link, and external red blinking at 2 Hz means no/stale advisory. These behaviors are clues, not definitive image identification.
 **Read-only flash identification:** `flash_safe.py` with no `--flash` (same readback path as `stm32boot.py`, with a quiet-line bootloader sync) reads the full 512 KiB twice, compares the reads and writes a backup/SHA file on the Pi; it does not erase or write Nucleo flash. It does require BOOT0 + RESET to enter read-only memory (ROM) bootloader, so the running application is reset. Open it before fitting BOOT0/pressing RESET; remove BOOT0 and press RESET afterward. Compare backup prefix with candidate `.bin` files using the command below. No match means **UNVERIFIED — STOP**. Do not use `flash.sh` for identification: it writes.
 ```bash
 # On the Mac, from the repository root (main): stage the LED image on the Pi (it is not there as of 30 Oct 00:30).
@@ -23,16 +23,18 @@ for IMG in ~/imu-can-bench/*.bin ~/course-stage/fw/*.bin; do
 done
 sha256sum "$BACKUP"
 ```
-The loop covers every image on the Pi: `imu_can_bench*.bin`, `agv_f446_home_canfix02/03/04*.bin`, `link_bench_f446.bin`, the canfix01 image and the course OS images. Image references: IMU/CAN `imu_can_bench.bin` SHA-256 `937c2857…721025a7`; `canfix01` `wbr-agv_f446_home_canfix01.bin` SHA-256 `f614cde0…ecf296`; LIVE needs the LED image `link_bench_f446.bin`, SHA-256 **`bf5721b44c0d9eafa4b5b53fb75f1ceec8c6e3c72a0c81d5a6bfd7635fe003ed`** (checked-in file and `SHA256SUMS` agree; the `07f0af8d…` value in `LED_REPORT.md` is stale, from before commit `d29beae` added the 4 Hz yellow UNCERTAIN blink). If the loop prints `MATCH …link_bench_f446.bin`, skip the flash below.
-`flash.sh`, `restore_canfix01.sh`, `flash_safe.py` and `stm32boot.py` are already in `~/imu-can-bench/` on the Pi (checked 30 Oct 00:30). Flash the LED image as follows. `flash.sh` backs up twice, then **writes** (mass erase, program, verify, and start image). At “waiting for bootloader”: fit BOOT0 → press RESET → allow flash/write/verify → remove BOOT0 → press RESET.
+The loop covers every image on the Pi: `imu_can_bench*.bin`, `agv_f446_home_canfix02/03/04*.bin`, `link_bench_f446.bin`, the `canfix05` image and the course OS images. Image references: IMU/CAN `imu_can_bench.bin` SHA-256 `937c2857…721025a7`; LIVE needs the LED image `link_bench_f446.bin`, SHA-256 **`bf5721b44c0d9eafa4b5b53fb75f1ceec8c6e3c72a0c81d5a6bfd7635fe003ed`** (checked-in file and `SHA256SUMS` agree; the `07f0af8d…` value in `LED_REPORT.md` is stale, from before commit `d29beae` added the 4 Hz yellow UNCERTAIN blink). If the loop prints `MATCH …link_bench_f446.bin`, skip the flash below.
+`flash.sh`, `flash_safe.py` and `stm32boot.py` are already in `~/imu-can-bench/` on the Pi (checked 30 Oct 00:30). Flash the LED image as follows. `flash.sh` backs up twice, then **writes** (mass erase, program, verify, and start image). At “waiting for bootloader”: fit BOOT0 → press RESET → allow flash/write/verify → remove BOOT0 → press RESET.
 ```bash
 cd ~/imu-can-bench
 ./flash.sh "$HOME/imu-can-bench/link_bench_f446.bin" bf5721b44c0d9eafa4b5b53fb75f1ceec8c6e3c72a0c81d5a6bfd7635fe003ed "$HOME/wbr-evidence/lab-day-20261030/step0-link-led-flash"
 ```
-After the session, restore the AGV image. This command **writes** flash; at its bootloader prompt fit BOOT0 → press RESET → allow restore/verify → remove BOOT0 → press RESET. Its default image path and SHA are embedded in the script.
+After the session, restore the exact Step 0 readback from the named backup file `flash-backup.bin`. First compare its current SHA-256 with the SHA-256 recorded by Step 0; proceed only if they match. This command **writes** flash; at its bootloader prompt fit BOOT0 → press RESET → allow flash/verify → remove BOOT0 → press RESET.
 ```bash
 cd ~/imu-can-bench
-./restore_canfix01.sh
+BACKUP="$HOME/wbr-evidence/lab-day-20261030/step0-readback/flash-backup.bin"
+sha256sum "$BACKUP"  # compare with the recorded Step 0 SHA-256; stop if it differs
+python3 ./flash_safe.py --port /dev/ttyAMA0 --out "$HOME/wbr-evidence/lab-day-20261030/restore-readback" --flash "$BACKUP"
 ```
 **0 PASS:** readback matches `link_bench_f446.bin` or the LED-image flash verifies. **FAIL/STOP:** no candidate match (record the backup SHA; nothing is lost because the backup is kept), backup/read/verify failure, or wrong image; do not proceed to LIVE. M1, L1 and A1 do not use the Nucleo and may run anyway.
 
@@ -123,7 +125,7 @@ The 25 Oct workspace's planner source equals main and rebuilt cleanly on 30 Oct.
 
 # Stop the saved kernel watcher with Ctrl-C. Do not delete failed outputs.
 
-# Restore canfix01 using the Step 0 command; keep its flash log and readback backup.
+# Restore the exact Step 0 readback from flash-backup.bin: check its SHA-256 against the Step 0 recorded SHA-256, then use flash_safe.py --flash as above. Stop on any mismatch; keep its flash log and readback backup.
 find "$HOME/wbr-evidence/lab-day-20261030" -type f -print0 | sort -z | xargs -0 sha256sum > "$HOME/wbr-evidence/lab-day-20261030.SHA256SUMS"
 ```
 Save one run-sheet row per ID and checksum the complete evidence root before copying. Stop if image identity, camera enumeration, throttling, storage, UART, or evidence capture fails. The link bench is diagnostic only; no motor control is present.
