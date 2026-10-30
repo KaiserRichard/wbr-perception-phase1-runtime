@@ -79,8 +79,12 @@ Steps:
    (bias calibration).
 
 ```bash
-ssh wbr-pi5 'stty -F /dev/ttyAMA0 115200 raw -echo && cat /dev/ttyAMA0' | ~/Desktop/Research/wbr-lab-ops/.venv/bin/mjpython -m tools.imu_view.view --stdin --save ~/imu_view_run.csv
+ssh wbr-pi5 'stty -F /dev/ttyAMA0 115200 raw -echo cs8 -parenb -cstopb && cat /dev/ttyAMA0' | ~/Desktop/Research/wbr-lab-ops/.venv/bin/mjpython -m tools.imu_view.view --stdin --save ~/imu_view_run.csv
 ```
+
+`cs8 -parenb -cstopb` forces 8N1. The flash tools leave the port at 8E1 (the bootloader's parity),
+and plain `raw` keeps that, which garbles the text. Garbled lines are skipped and counted in the overlay
+("UART: N bad lines").
 
 4. **Axis check** (do this before filming). Each line is one physical move, and the expected result:
 

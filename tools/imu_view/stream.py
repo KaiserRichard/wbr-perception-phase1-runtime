@@ -35,24 +35,41 @@ def parse_line(line):
         f = [int(x) for x in line.split(",")[1:]]
     except ValueError:
         return None
-    if len(f) != 9:
+    if len(f) == 9:      # I,ms,fresh,ax,ay,az,temp,gx,gy,gz (imu_can_bench)
+        ms, _fresh, ax, ay, az, _temp, gx, gy, gz = f
+    elif len(f) == 8:    # same without temp
+        ms, _fresh, ax, ay, az, gx, gy, gz = f
+    else:
         return None
-    ms, _fresh, ax, ay, az, _temp, gx, gy, gz = f
     k = math.radians(1.0) / GYRO_LSB_PER_DPS
     return Sample(ms / 1000.0, (ax / ACC_LSB_PER_G, ay / ACC_LSB_PER_G, az / ACC_LSB_PER_G),
                   (gx * k, gy * k, gz * k))
 
 
-def from_lines(lines):
+class LineStats:
+    """Counts what a live stream contained; bad = undecodable or malformed I-lines."""
+
+    def __init__(self):
+        self.ok = self.bad = 0
+
+
+def from_lines(lines, stats=None):
+    """str or bytes lines -> Samples. Garbage (wrong baud/parity, partial lines) is skipped and counted."""
+    stats = stats if stats is not None else LineStats()
     for line in lines:
+        if isinstance(line, bytes):
+            line = line.decode("ascii", errors="replace")
         s = parse_line(line)
         if s is not None:
+            stats.ok += 1
             yield s
+        elif "\ufffd" in line or line.lstrip().startswith("I,"):
+            stats.bad += 1
 
 
-def from_stdin():
-    """Live: pipe the Pi's UART in, e.g. ssh wbr-pi5 'cat /dev/ttyAMA0' | ... --stdin."""
-    return from_lines(sys.stdin)
+def from_stdin(stats=None):
+    """Live: pipe the Pi's UART in as bytes (8N1 set by stty, see README) ... | view --stdin."""
+    return from_lines(sys.stdin.buffer, stats)
 
 
 def from_csv(path):

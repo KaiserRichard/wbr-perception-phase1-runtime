@@ -2,7 +2,7 @@
 
   .venv/bin/mjpython -m tools.imu_view.view --fake
   .venv/bin/mjpython -m tools.imu_view.view --replay run.csv
-  ssh wbr-pi5 'stty -F /dev/ttyAMA0 115200 raw -echo && cat /dev/ttyAMA0' \
+  ssh wbr-pi5 'stty -F /dev/ttyAMA0 115200 raw -echo cs8 -parenb -cstopb && cat /dev/ttyAMA0' \
       | .venv/bin/mjpython -m tools.imu_view.view --stdin --save run.csv
   .venv/bin/python -m tools.imu_view.view --fake --record out/ --seconds 12   # headless PNG/GIF
 
@@ -36,6 +36,7 @@ class Pipeline:
         self._calib = []
         self.last_t = None
         self.status = "starting"
+        self.line_stats = None
         self.mocap = {n: model.body(n).mocapid[0] for n in ("robot", "ghost_acc", "ghost_gyro")}
 
     def push(self, raw):
@@ -75,6 +76,8 @@ class Pipeline:
             left += "\nfake truth"
             right += f"\npitch {d(self.truth[0]):+6.1f}  roll {d(self.truth[1]):+6.1f}"
         left += "\n" + ("" if self.status == "running" else self.status)
+        if self.line_stats is not None and self.line_stats.bad:
+            left += f"\nUART: {self.line_stats.bad} bad lines (check stty 8N1)"
         return left + "\npitch>0 nose down, roll>0 left up; yaw not shown", right
 
 
@@ -95,7 +98,8 @@ def source(a):
     if a.replay:
         rows = stream.from_csv(a.replay)
         return stream.paced(rows) if not a.record else rows
-    return stream.from_stdin()
+    a.line_stats = stream.LineStats()
+    return stream.from_stdin(a.line_stats)
 
 
 def run_viewer(a, model, data, pipe, samples, writer):
@@ -188,6 +192,7 @@ def main(argv=None):
         for name in ("ghost_acc", "ghost_gyro"):
             data.mocap_pos[pipe.mocap[name]][2] = -5.0
     samples = source(a)
+    pipe.line_stats = getattr(a, "line_stats", None)
     if a.record:
         run_record(a, model, data, pipe, samples)
         return

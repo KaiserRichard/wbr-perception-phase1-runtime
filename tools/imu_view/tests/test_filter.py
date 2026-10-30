@@ -126,6 +126,20 @@ class Stream(unittest.TestCase):
         out = list(stream.from_lines(lines))
         self.assertEqual(len(out), 1)
 
+    def test_garbage_bytes_skipped_and_counted(self):
+        """8E1-garbled UART bytes must not crash the live reader (no UnicodeDecodeError)."""
+        stats = stream.LineStats()
+        lines = [b"\xb3\xf9I\x8c,\xff\xfe\n", b"I,10,1,0,0,8192,0,0,0,0\n", b"\x80\x81\x82\n",
+                 b"I,20,1,0,0,7950,1,2,3\n"]
+        out = list(stream.from_lines(lines, stats))
+        self.assertEqual(len(out), 2)
+        self.assertEqual((stats.ok, stats.bad), (2, 2))
+
+    def test_line_without_temperature(self):
+        s = stream.parse_line("I,20,1,0,0,7950,131,0,0")
+        self.assertAlmostEqual(s.accel[2], 7950 / 8192)
+        self.assertAlmostEqual(math.degrees(s.gyro[0]), 2.0)
+
     def test_remap_upside_down(self):
         s = stream.Sample(0, (0.1, 0.2, -1.0), (1, 2, 3))
         r = stream.remap(s, ("x", "-y", "-z"))
