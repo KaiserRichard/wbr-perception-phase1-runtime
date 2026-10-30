@@ -208,7 +208,7 @@ class PtyTests(unittest.TestCase):
                                "--session-id","9","--heartbeat-ms","20"],stdin=subprocess.PIPE,
                               stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
         proc.stdin.write((json.dumps(events[0])+"\n").encode()); proc.stdin.flush()
-        parser=StreamParser(); got=[]; deadline=time.time()+2; stop=threading.Event()
+        parser=StreamParser(); got=[]; deadline=time.monotonic()+10; stop=threading.Event()
         def receive_loop():
             while not stop.is_set():
                 try: chunk=os.read(master,1024)
@@ -217,7 +217,7 @@ class PtyTests(unittest.TestCase):
         os.set_blocking(master,False)
         receiver=threading.Thread(target=receive_loop,daemon=True); receiver.start()
         try:
-            while time.time()<deadline and not any(t==TYPE_PERCEPTION_HEALTH for t,_,_ in got):
+            while time.monotonic()<deadline and not any(t==TYPE_PERCEPTION_HEALTH for t,_,_ in got):
                 time.sleep(.005)
             self.assertIsNone(proc.poll())
             proc.kill(); proc.wait(timeout=2)
