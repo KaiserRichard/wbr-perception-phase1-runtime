@@ -30,7 +30,7 @@ collect_repo() {
         count=$((count + 1))
         printf '\n### Branch: %s\n' "$branch" >> "$draft"
         git -C "$repo" log -m --since="@$cutoff" --format= --name-only "$ref" -- \
-            ':(glob)ops/worklog/reviews/*.md' | LC_ALL=C sort -u > "$scratch/paths"
+            ':(glob)ops/worklog/reviews/*.md' ':(glob)ops/worklog/ledger/*.md' | LC_ALL=C sort -u > "$scratch/paths"
         while IFS= read -r path; do
             [[ -n "$path" ]] || continue
             # A review deleted at the branch tip cannot be read with git show.
@@ -53,7 +53,7 @@ collect_repo() {
     fi
     if [[ "$include_worktree" == yes ]]; then
         branch=$(git -C "$repo" symbolic-ref --short -q HEAD || git -C "$repo" rev-parse --short HEAD)
-        for path in "$repo"/ops/worklog/reviews/*.md; do
+        for path in "$repo"/ops/worklog/reviews/*.md "$repo"/ops/worklog/ledger/*.md; do
             [[ -f "$path" ]] || continue
             path=${path#"$repo"/}
             last_date=$(git -C "$repo" log -1 --format=%cI -- "$path")
