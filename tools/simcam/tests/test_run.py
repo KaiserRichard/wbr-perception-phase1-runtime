@@ -4,6 +4,7 @@ from pathlib import Path
 import tempfile
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
@@ -141,12 +142,49 @@ class RealDetectorIntegrationTests(unittest.TestCase):
             if gated.phase != Phase.STAND:
                 self.assertEqual(gated.advisory, Advisory.UNCERTAIN)
                 self.assertEqual(gated.confidence, 0)
-                self.assertEqual(loop.decision_state, {})
             last = gated
         self.assertTrue({Phase.CROUCH, Phase.FLIGHT, Phase.LAND, Phase.SETTLE, Phase.STAND} <= phases)
         self.assertEqual(resets, [0.6, 1.7])  # LAND's 40ms interval is skipped at 10Hz.
         self.assertEqual(last.phase, Phase.STAND)
         self.assertEqual(last.advisory, Advisory.STOP_CANDIDATE)
+
+
+class HistoryTests(unittest.TestCase):
+    def test_histories_survive_inhibition_and_reset_only_on_crouch_entry_and_after_flight(self):
+        # Supply constant valid geometry without rendering; use the real decision
+        # and gate to check confirmation accumulates even while output is inhibited.
+        robot = example()["robot"]
+        robot["jump_at_s"] = .6
+        loop = PerceptionLoop()
+        nearest = SimpleNamespace(distance_m=1.0, height_m=.132, width_m=.3)
+        frame = SimpleNamespace(plane_valid=True, nearest=nearest)
+        detector_counts, resets, phases = [], [], set()
+
+        def process_frame(depth, K, state):
+            count = state.get("frames", 0) + 1
+            detector_counts.append(count)
+            return frame, {"frames": count}
+
+        with patch("tools.simcam.run.detect.process_frame", side_effect=process_frame):
+            since_reset = 0
+            for t in tick_times(2.8):
+                _, decision, gated, reset = loop.update(t, None, pose_at(t, robot), .25)
+                if reset:
+                    resets.append(t)
+                    since_reset = 0
+                since_reset += 1
+                phases.add(gated.phase)
+                self.assertEqual(detector_counts[-1], since_reset)
+                self.assertEqual(loop.decision_state["hist"], [True] * min(since_reset, 5))
+                self.assertEqual(loop.decision_state["ema"], (1.0, .132, .3))
+                if since_reset >= 3:
+                    self.assertEqual(decision.advisory, Advisory.STOP_CANDIDATE)
+                else:
+                    self.assertEqual(decision.advisory, Advisory.UNCERTAIN)
+                if gated.phase != Phase.STAND:
+                    self.assertEqual(gated.advisory, Advisory.UNCERTAIN)
+        self.assertEqual(resets, [.6, 1.7])
+        self.assertTrue({Phase.STAND, Phase.CROUCH, Phase.FLIGHT, Phase.LAND, Phase.SETTLE} <= phases)
 
 
 if __name__ == "__main__":

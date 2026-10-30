@@ -80,10 +80,18 @@ class GateIntegrationTests(unittest.TestCase):
             self.assertTrue(frame.plane_valid)
             if rate:
                 self.assertEqual(gated.reason, "unstable_attitude")
-                self.assertEqual(loop.decision_state, {})
+            self.assertEqual(len(loop.decision_state["hist"]), min(round(t * 10) + 1, 5))
             phases.append(gated.phase)
         self.assertEqual(phases[0], Phase.SETTLE)
         self.assertEqual(phases[-1], Phase.STAND)
+        _, decision, gated, reset = loop.update(.7, depth, pose, .25, Tilt(0, 0, 15, -10))
+        self.assertFalse(reset)
+        self.assertEqual(gated.phase, Phase.STAND)
+        self.assertEqual(gated.advisory, decision.advisory)
+        self.assertEqual(gated.reason, "wobble_confidence_scaled")
+        _, _, gated, _ = loop.update(.8, depth, pose, .25, Tilt(0, 0, 80, 0))
+        self.assertEqual(gated.phase, Phase.SETTLE)
+        self.assertEqual(gated.advisory, simcam.decide.Advisory.UNCERTAIN)
 
 
 def comparison_row(t, height, advisory="NONE", valid=True):

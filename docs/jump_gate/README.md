@@ -85,7 +85,7 @@ The output has `advisory`, `confidence`, `phase` and a machine-readable `reason`
 
 | Gate phase | Output |
 | --- | --- |
-| STAND | Current raw advisory and raw confidence times ASSUMED quality 1; raw UNCERTAIN stays UNCERTAIN with zero confidence |
+| STAND | Current raw advisory with rate-scaled confidence; raw UNCERTAIN stays UNCERTAIN with zero confidence |
 | CROUCH, including thrust | UNCERTAIN, confidence 0 |
 | FLIGHT | UNCERTAIN, confidence 0 |
 | LAND | UNCERTAIN, confidence 0; invalidate gate temporal evidence |
@@ -100,12 +100,50 @@ landing are inconsistent and yield UNKNOWN.
 
 All quality/timing thresholds are named **ASSUMED** constants in
 [gate.py](../../tools/jump_gate/gate.py): telemetry age at most 50 ms, continuous
-clean contact at least 100 ms, absolute pitch and roll rates strictly below 5 deg/s,
-and at least three distinct fresh planes spanning at least 200 ms. The additional
+clean contact at least 100 ms, absolute pitch and roll rates strictly below 5 deg/s
+for SETTLE to STAND, and at least three distinct fresh planes spanning at least
+200 ms. The additional
 ASSUMED held-plane/advisory age limit is 250 ms. Numerical boundary tolerance is
-1 ns. Any invalid/stale plane or unstable rate restarts the clean dwell.
+1 ns. Any invalid/stale plane restarts the clean dwell. During SETTLE, a rate at
+or above 5 deg/s also restarts it; during STAND, a rate above 60 deg/s does so.
 Startup also begins in SETTLE. After LAND, pre-jump contact and plane history is
 discarded; old observations cannot count toward recovery.
+
+## Balancing wobble and detector history fix (2026-10-30)
+
+The [measured-IMU simulation](../simcam_imu/README.md#conductor-run-2026-10-30-result)
+found ordinary scaled balancing motion reached 10–20 deg/s while detected box
+height remained accurate. The former 5 deg/s STAND exit rule repeatedly inhibited
+the gate, and simcam cleared decision confirmation on every inhibited tick.
+That prevented even the raw advisory from accumulating enough votes.
+
+The gate now separates ongoing STAND wobble from post-jump recovery:
+
+| ASSUMED constant | Value and use |
+| --- | --- |
+| `ASSUMED_STABLE_RATE_DEG_S` | 5 deg/s; both axes must be strictly below this throughout SETTLE recovery. Also the threshold above which STAND reports the wobble reason. |
+| `ASSUMED_WOBBLE_LIMIT_DEG_S` | 60 deg/s; STAND exits to SETTLE only when an absolute pitch/roll rate exceeds this limit. |
+| `ASSUMED_STAND_QUALITY` | 1; existing binary geometry/timing quality factor, now also multiplied by the wobble factor. |
+
+Let `rate = max(abs(pitch_rate_deg_s), abs(roll_rate_deg_s))`. In STAND the
+confidence is `c_raw * max(0, 1 - rate / ASSUMED_WOBBLE_LIMIT_DEG_S)` with the
+existing quality factor of 1. For example, raw STOP_CANDIDATE at confidence 0.8
+and rate 15 deg/s remains STOP_CANDIDATE at confidence 0.6, with reason
+`wobble_confidence_scaled`. Scaling applies even below 5 deg/s; the reason changes
+only above 5 deg/s. At exactly 60 deg/s the raw advisory remains at confidence 0;
+above it the gate emits UNCERTAIN in SETTLE and requires the original clean dwell.
+Raw UNCERTAIN always has confidence 0; under wobble its reason also includes
+`wobble_confidence_scaled`. Missing/nonfinite rates still enter UNKNOWN.
+These thresholds and confidence scores are unvalidated assumptions, not measured
+robot limits or calibrated probabilities.
+
+In [simcam's perception loop](../../tools/simcam/run.py), both detector plane
+cache and decision EMA/votes reset only on CROUCH entry and the first tick after
+FLIGHT (including when the sampled pose has already advanced past LAND).
+Every tick still runs detection/decision, so fresh confirmation can accumulate
+during SETTLE and other inhibited phases. Inhibition alone never clears these
+external histories. The gate's own contact/plane reset rules are unchanged;
+CROUCH, FLIGHT, LAND and SETTLE still emit only UNCERTAIN with confidence 0.
 
 ## Limits and observed result
 
