@@ -1,0 +1,1 @@
+- 2026-10-30 16:30 | Claude 2 | added the per-branch ledger rule to AGENTS.md | DONE | this PR
