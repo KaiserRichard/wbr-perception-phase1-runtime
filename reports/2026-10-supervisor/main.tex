@@ -1,0 +1,210 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,left=1.8cm,right=1.8cm,top=1.65cm,bottom=1.65cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage[vietnamese]{babel}
+\usepackage{graphicx,float,subcaption,booktabs,array,tabularx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{url}
+\definecolor{academic}{HTML}{293D50}
+\hypersetup{colorlinks=true,linkcolor=academic,urlcolor=academic}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\setlength{\tabcolsep}{5pt}
+\pagestyle{plain}
+\newcommand{\photo}[2]{\fbox{\begin{minipage}[c][#1][c]{0.96\linewidth}\centering\small\textbf{[ẢNH: #2]}\end{minipage}}}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries Báo cáo tiến độ}\\[5pt]
+{\large Nhận thức thị giác cho robot bánh--chân (WBR)}\\[7pt]
+Sinh viên: \textbf{Nguyễn Quốc Khánh} \quad MSSV: \textbf{20233464}\\[2pt]
+GVHD: \textbf{PGS.TS. Mạc Thị Thoa}\\[4pt]
+26/10/2026
+\end{center}
+\section{Mục tiêu và phạm vi}
+Đề tài phát triển khả năng nhận thức môi trường cho robot bánh--chân (\emph{wheel-biped robot}, WBR): ước lượng chuyển động bằng camera, dựng bản đồ cục bộ và phát hiện vật cản phía trước. Raspberry Pi 5 cùng Intel RealSense \textbf{D435i} xử lý thị giác; STM32 giữ quyền cân bằng, điều khiển động cơ và quyết định chấp hành.
+
+\textbf{Phạm vi hiện tại:} WBR và bo STM32H7 mới chưa sẵn sàng. Các kết quả là thử nghiệm trên bàn, xử lý bản ghi hoặc kiểm tra phần mềm; \textbf{chưa thử trên WBR thật}. Nucleo-F446RE chỉ được dùng để kiểm tra giao tiếp nhận dữ liệu.
+
+\section{Visual SLAM và vai trò của ORB-SLAM3}
+\textbf{Visual SLAM} là định vị và dựng bản đồ đồng thời từ chuỗi ảnh: camera vừa ước lượng vị trí, hướng nhìn của chính nó (\emph{pose}), vừa xác định các mốc không gian trong cảnh. Đầu ra gồm quỹ đạo camera và bản đồ các điểm 3D, khác với một ảnh độ sâu chỉ mô tả cảnh tại một thời điểm.
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{figures/visual-slam-reference.png}
+\caption{Minh hoạ nguyên lý Visual SLAM: ảnh camera bên trái và bản đồ điểm không gian bên phải. Ảnh tham khảo ORB-SLAM2 của Alejandro Silvestri, Wikimedia Commons, CC BY-SA 4.0 [3].}
+\label{fig:slam-reference}
+\end{figure}
+\textbf{Vai trò của thị giác trong định vị WBR.} Khi bánh trượt hoặc rời sàn, chuyển động suy ra chỉ từ bánh xe có thể không phản ánh đúng chuyển động thân robot. Thị giác cung cấp thêm nguồn ước lượng từ môi trường. Kết hợp quỹ đạo với độ sâu mở ra khả năng đặt vật cản vào bản đồ cục bộ, thay vì chỉ phản ứng với từng ảnh rời rạc. Lợi ích này là \emph{định hướng tích hợp}; mức cải thiện trên WBR cần được đo khi robot sẵn sàng.
+
+\newpage
+\subsection*{Cách ORB-SLAM3 tạo pose và bản đồ}
+Ảnh stereo là cặp ảnh từ hai góc nhìn; RGB-D gồm ảnh màu và ảnh độ sâu. ORB-SLAM3 [1] ghép các đặc trưng ảnh qua nhiều khung hình để ước lượng chuyển động camera. Hệ thống chọn \textbf{khung hình đại diện} (\emph{keyframe}) và giữ các mốc 3D có ích cho định vị trong bản đồ thưa, thay vì phủ kín mọi bề mặt.
+\begin{figure}[H]\centering
+\resizebox{\linewidth}{!}{\begin{tikzpicture}[>=Latex,
+ box/.style={draw=academic,rounded corners=2pt,align=center,minimum height=12mm,text width=34mm,font=\small,fill=black!2},
+ arr/.style={->,semithick,draw=academic},both/.style={<->,semithick,draw=academic}]
+\node[box] (img) at (0,0) {Ảnh stereo / RGB-D};
+\node[box] (track) at (5,0) {Tracking\\\scriptsize ước lượng pose camera};
+\node[box] (pose) at (10,0) {Quỹ đạo camera\\\scriptsize vị trí và hướng nhìn};
+\node[box] (local) at (0,-2.6) {Local Mapping\\\scriptsize thêm mốc 3D, tối ưu cục bộ};
+\node[box] (atlas) at (5,-2.6) {Atlas\\\scriptsize lưu các bản đồ và keyframe};
+\node[box] (loop) at (10,-2.6) {Loop Closing / Map merge\\\scriptsize nhận lại vùng cũ, hiệu chỉnh};
+\draw[arr] (img.east)--(track.west);
+\draw[arr] (track.east)--(pose.west);
+\draw[both] (track.south)--node[right,font=\scriptsize,align=left]{khai thác / cập nhật\\bản đồ}(atlas.north);
+\draw[both] (local.east)--(atlas.west);
+\draw[both] (atlas.east)--(loop.west);
+\end{tikzpicture}}
+\caption{Sơ đồ khái niệm rút gọn từ ORB-SLAM3 [1]. Tracking, Local Mapping và Loop Closing / Map merge là các tác vụ phối hợp qua bản đồ; không phải các bước bắt buộc chạy nối tiếp.}
+\end{figure}
+\textbf{Các khả năng phù hợp với hướng triển khai:}
+\begin{itemize}\setlength{\itemsep}{3pt}
+\item \textbf{Stereo và RGB-D:} sử dụng được cặp ảnh hoặc ảnh kèm độ sâu từ D435i; cấu hình stereo đã hiệu chuẩn cho phép ước lượng theo đơn vị mét.
+\item \textbf{Nhận lại vùng đã đi qua:} tái định vị để tìm lại pose; khép vòng (\emph{loop closing}) để hiệu chỉnh sai số tích luỹ; Atlas để quản lý và ghép nhiều bản đồ khi đủ liên hệ hình học.
+\item \textbf{Chạy trên bộ xử lý trung tâm (CPU):} phù hợp để khảo sát trên Pi 5 không có bộ xử lý đồ hoạ (GPU) rời. Khả năng của thư viện không thay cho phép đo tốc độ và tải khi chạy cùng bộ phát hiện vật cản.
+\end{itemize}
+\textbf{Cảm biến và giới hạn.} D435i có cặp camera hồng ngoại màn trập toàn cục (\emph{global shutter}) và bộ phát hồng ngoại hỗ trợ đo sâu [2]. Thiết bị có IMU (cảm biến quán tính), nhưng \textbf{chưa xác minh hợp nhất ảnh--IMU D435i}. Bài offline EuRoC dùng IMU của bộ dữ liệu. Ít đặc trưng, ảnh mờ, che khuất và phản xạ vẫn có thể làm giảm chất lượng; bộ phát hồng ngoại không bảo đảm SLAM luôn giữ được định vị.
+
+\textbf{Ranh giới đầu ra.} Pose camera chưa phải pose thân WBR: cần xác nhận phép biến đổi do vị trí gá. Bản đồ dày ở phần kết quả là hậu xử lý riêng, khác bản đồ thưa gốc của ORB-SLAM3.
+
+\begin{figure}[H]\centering
+\begin{subfigure}[t]{0.49\linewidth}\centering
+\includegraphics[width=\linewidth]{figures/rig-bench-overview.png}
+\caption{Toàn cảnh khu vực thử nghiệm.}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.49\linewidth}\centering
+\includegraphics[angle=90,width=\linewidth]{figures/rig-bench-side.png}
+\caption{Góc nhìn bên của bố trí thiết bị.}
+\end{subfigure}
+\caption{Bố trí thử nghiệm trên bàn với camera D435i, gá bìa và các vật thử.}
+\label{fig:bench-rig}
+\end{figure}
+
+\newpage
+\section{Kiến trúc hệ thống}
+Luồng dự kiến là \textbf{camera $\rightarrow$ nhận thức trên Pi $\rightarrow$ khuyến nghị địa hình $\rightarrow$ STM32}. Khuyến nghị (\emph{advisory}) có bốn trạng thái: \texttt{NONE} -- chưa ghi nhận vật cản cần xử lý; \texttt{STOP} -- khuyến nghị dừng; \texttt{JUMP} -- ứng viên để bộ điều khiển cân nhắc vượt; \texttt{UNCERTAIN} -- chưa đủ tin cậy. \textbf{JUMP không phải lệnh nhảy.}
+\begin{figure}[H]\centering
+\resizebox{\linewidth}{!}{\begin{tikzpicture}[>=Latex,
+ box/.style={draw=academic,rounded corners=2pt,align=center,minimum height=13mm,text width=27mm,font=\small,fill=black!2},
+ arr/.style={->,semithick,draw=academic},plan/.style={->,semithick,dashed,draw=academic}]
+\draw[dashed,draw=academic,rounded corners=3pt] (-0.4,1.15) rectangle (10.8,-4.1);
+\draw[dashed,draw=academic,rounded corners=3pt] (11.5,1.15) rectangle (18.6,-4.1);
+\node[anchor=south west,font=\small\bfseries,align=left,text=academic] at (-0.4,1.3) {Đã đo / kiểm thử từng khâu\\\scriptsize trên bàn, bản ghi hoặc phần mềm};
+\node[anchor=south west,font=\small\bfseries,align=left,text=academic] at (11.5,1.3) {Cần bo mạch / tích hợp\\\scriptsize chưa xác minh trên WBR};
+\node[box] (cam) at (1.35,0) {D435i\\\scriptsize ảnh stereo / độ sâu};
+\node[box] (pi) at (5.0,0) {Raspberry Pi 5\\\scriptsize SLAM; phát hiện vật cản};
+\node[box] (adv) at (9.05,0) {micro-ROS\\\scriptsize chỉ truyền advisory};
+\node[box] (record) at (5.0,-2.75) {Bản ghi / phát lại\\\scriptsize quỹ đạo, bản đồ, đánh giá};
+\node[box] (test) at (9.05,-2.75) {Nucleo-F446RE\\\scriptsize nhận dữ liệu, LED};
+\node[box] (mcu) at (13.4,0) {STM32 của WBR\\\scriptsize cân bằng, quyết định chấp hành};
+\node[box] (motor) at (16.7,-2.75) {Động cơ / cơ cấu\\\scriptsize thuộc quyền STM32};
+\draw[arr] (cam.east)--(pi.west);
+\draw[arr] (pi.east)--(adv.west);
+\draw[arr] (pi.south)--(record.north);
+\draw[arr] (adv.south)--(test.north);
+\draw[plan] (adv.east)--node[above,font=\scriptsize]{tích hợp}(mcu.west);
+\draw[plan] (mcu.south)|-(motor.west);
+\end{tikzpicture}}
+\caption{Nét đứt phân chia phạm vi đã kiểm thử và phần chờ tích hợp. Các khâu bên trái được thử riêng; chưa xác minh ORB-SLAM3 và bộ phát hiện vật cản chạy đồng thời trên luồng camera trực tiếp. Pi không gửi lệnh động cơ hoặc cấp quyền nhảy.}
+\end{figure}
+STM32 phải tự kiểm tra tính hợp lệ, tuổi dữ liệu và điều kiện an toàn trước khi sử dụng advisory. Phân công này nhằm giữ vòng cân bằng độc lập với tải thị giác trên Linux; hành vi toàn hệ thống khi Pi hoặc đường truyền lỗi còn cần thử trên bo đích.
+
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{figures/breadboard-wiring.pdf}
+\caption{Sơ đồ đấu nối bàn thử: Raspberry Pi 5 -- Nucleo-F446RE qua UART, hai mô-đun CAN SN65HVD230 nối với nhau, GY-521 (MPU6050) qua I2C và bốn LED trạng thái. Kết nối khớp với bàn thử; vị trí linh kiện trên breadboard chỉ mang tính minh họa. Hình linh kiện từ Fritzing (CC-BY-SA 3.0).}
+\end{figure}
+
+\section{Kết quả đã đạt}
+\textbf{Điều kiện đọc kết quả.} Các phép đo dùng rig bìa trên bàn hoặc dữ liệu phát lại; camera cao 29 cm, nghiêng khoảng 13\textdegree{} trong bài advisory. Cách gá, quy đổi hệ tọa độ, chất lượng độ sâu và ngưỡng phát hiện là các yếu tố cần kiểm soát. Chưa có thí nghiệm tách riêng để quy toàn bộ sai số cho rig. Các lượt đánh giá vật cản đã được dùng để chọn ngưỡng, nên chưa phải tập kiểm định độc lập.
+\par\smallskip
+\begin{tabularx}{\linewidth}{@{}p{0.21\linewidth}X@{}}
+\toprule
+\textbf{Nội dung} & \textbf{Bằng chứng chính và phạm vi}\\
+\midrule
+Định vị ORB-SLAM3 & Offline: đoạn tiến 2.009 m so với thước 2.00 m; một map, không thấy nhảy pose trong đoạn đã ghi. EuRoC MH01 (offline stereo--quán tính trên Pi 5): ATE RMSE 3.68--4.16 cm qua 3 lượt; 3,639 cặp pose--tham chiếu mỗi lượt, căn chỉnh SE(3).\\
+Bản đồ dày & Hậu xử lý 225 khung: 354,244 điểm, lọc voxel 1 cm; RMS khớp mặt bàn 5.76 mm. Chưa đánh giá độ chính xác hình học tuyệt đối.\\
+Kích thước vật cản & 6 lượt vật cản sau hiệu chỉnh: sai số trung vị chiều cao sau hiệu chỉnh $-0.2$ đến $+0.4$ cm; khoảng cách $-1.6$ đến $+0.3$ cm. Sách 2.45 cm được giữ ở UNCERTAIN.\\
+Advisory trên bàn & Bàn trống: NONE 553/553; sách 4.6 cm: JUMP 561/563, còn lại 2 UNCERTAIN; hộp 13.1 cm: STOP rồi NONE khi dọn. LED tự kiểm tra đủ 4 trạng thái và timeout, 9,420 phản hồi.\\
+Giao tiếp & UART (cổng truyền nối tiếp), dữ liệu tổng hợp: thời gian khứ hồi (RTT) 2.8 ms (P50 2.81 ms; P99 2.82 ms); phát lại bản ghi vật cản 139/139. Nucleo-F446RE xác nhận 712/712 và 739/739 advisory. Đây là các phiên thử, không phải cam kết không mất gói.\\
+Ổn định advisory & Replay 60 s: approach-r2 giảm 156 xuống 2 lần đổi trạng thái/phút; r3 giảm 218.6 xuống 25.1, với hysteresis (vùng trễ để hạn chế đổi trạng thái) khoảng cách 0.10 m, chiều cao 0.01 m. LED live vẫn 128--157 lần/phút; chưa chứng minh cải thiện live.\\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+
+\newpage
+\subsection*{Định vị và bản đồ thưa}
+Đã tạo được quỹ đạo camera và các mốc 3D của đoạn tiến 2 m; bản ghi kết thúc trước lượt quay về. Trên EuRoC, sai số quỹ đạo tuyệt đối (ATE) được tổng hợp bằng căn bậc hai trung bình bình phương (RMSE), sau căn chỉnh tịnh tiến--quay SE(3), giữ nguyên tỉ lệ. Đây là đánh giá offline, không phải độ chính xác camera trực tiếp.
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{figures/orbslam3-topdown.png}
+\caption{Quỹ đạo camera và bản đồ thưa của ORB-SLAM3, đoạn tiến 2 m; bộ bằng chứng lab ngày 25/10. Hệ tọa độ camera chưa được xác nhận tương đương hệ thân WBR.}
+\label{fig:sparse}
+\end{figure}
+
+\newpage
+\subsection*{Tái dựng hình học từ bản ghi}
+Đã ghép độ sâu stereo theo pose camera để tái dựng hình học bằng \textbf{hậu xử lý}. Voxel 1 cm là bước lọc điểm; RMS mặt bàn 5.76 mm là độ khớp mặt phẳng, không phải độ chính xác tuyệt đối. Bản đồ chưa căn theo trọng lực và chưa dùng cho lập quỹ đạo nhảy.
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{figures/dense-map-topdown.png}
+\caption{Bản đồ dày dựng từ ảnh stereo D435i và pose ORB-SLAM3, dữ liệu lab ngày 25/10.}
+\label{fig:dense}
+\end{figure}
+
+\newpage
+\subsection*{Ước lượng chiều cao vật cản}
+Ở lượt \texttt{B-H05-D1p3}, sách cạnh chân đèn bị gộp cùng cấu trúc lân cận; chiều cao ước lượng là của cụm ghép, không riêng quyển sách. Nhật ký còn ghi góc gá thay đổi sau lần Pi mất nguồn; chưa tách được ảnh hưởng từng yếu tố. Đồ thị giữ cả trường hợp này, nên khác nhóm sáu lượt sau hiệu chỉnh trong bảng.
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{figures/height-estimated-vs-measured.png}
+\caption{Chiều cao ước lượng so với đo trên bàn ngày 24/10. Đường đứt là ước lượng bằng giá trị đo; các chấm xanh biểu diễn những lượt đo vật cản riêng. Dấu X đỏ là lượt B-H05-D1p3: sách bị gộp với chân đèn thành một cụm, cho advisory STOP. Giữ trường hợp này để thể hiện lỗi phân cụm.}
+\label{fig:height}
+\end{figure}
+
+\newpage
+\subsection*{Sai số khoảng cách trong từng lượt thử}
+Mỗi hàng trong Hình~\ref{fig:distance} là một lượt thử vật cản; chấm thể hiện sai số khoảng cách trung vị theo các khung hình. Nhiều lượt cùng cự ly nhưng dùng vật cản khác nhau nên có sai số khác nhau. Sai số âm nghĩa là ước lượng vật gần hơn giá trị đo; sai số dương là xa hơn.
+\begin{figure}[H]\centering
+\includegraphics[width=\linewidth]{figures/distance-error-vs-distance.png}
+\caption{Sai số khoảng cách theo từng lượt thử trên bàn ngày 24/10, đơn vị cm. Đường 0 là không lệch so với thước. Dấu X đánh dấu lượt bị gộp sách với chân đèn; không coi đó là phép đo riêng của sách. Các lượt đã được dùng để chỉnh phương pháp, chưa phải kiểm định độc lập.}
+\label{fig:distance}
+\end{figure}
+
+\newpage
+\section{Mục tiêu và định hướng triển khai tiếp theo}
+Ưu tiên là chạy thống nhất các khâu nhận thức trên Pi, rồi tích hợp advisory vào STM32 của WBR; đánh giá với cách gá camera và chuyển động thực của robot.
+\par\smallskip
+\begin{tabularx}{\linewidth}{@{}p{0.10\linewidth}X@{}}
+\toprule
+\textbf{Mốc} & \textbf{Công việc và bằng chứng cần thu}\\
+\midrule
+\textbf{[ngày]} & Chuẩn hoá gá D435i, hệ tọa độ camera--thân; ghi đủ lượt đi--về để đánh giá định vị và khép vòng.\\
+\textbf{[ngày]} & Chạy đồng thời ORB-SLAM3 và bộ phát hiện vật cản trên camera trực tiếp; đo tốc độ khung hình (FPS), CPU, bộ nhớ, nhiệt độ, khung bị bỏ và độ trễ advisory.\\
+\textbf{[ngày]} & Dùng lượt thử vật cản độc lập; kiểm tra sai số kích thước/cự ly, phân cụm sai và đổi trạng thái gần ngưỡng.\\
+\textbf{[ngày]} & Khi bo đích sẵn sàng: thử nhận advisory, thứ tự gói, dữ liệu quá hạn/không hợp lệ; động cơ chưa kích hoạt.\\
+\textbf{[ngày]} & Sau thử bàn: tích hợp trên WBR có giá đỡ/dây giữ và đánh giá chuyển động thực; STM32 giữ quyền chấp hành.\\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\textbf{Phần cứng đang chờ.} Hàn header module và kiểm tra CAN (bus truyền thông) cùng IMU (cảm biến quán tính) trên bộ thử. Phần tích hợp bo H7, CAN vật lý và IMU chưa được coi là kết quả đã đạt.
+\par\smallskip
+\begin{tabularx}{\linewidth}{@{}p{0.24\linewidth}X@{}}
+CAN loopback / fake motor & \fbox{\parbox[c][0.48cm][c]{0.93\linewidth}{\centering\scriptsize Bổ sung sau khi hàn: kết quả CAN loopback}}\\[4pt]
+IMU MPU6050 & \fbox{\parbox[c][0.48cm][c]{0.93\linewidth}{\centering\scriptsize Bổ sung sau khi hàn: kết quả IMU}}\\
+\end{tabularx}
+\par\smallskip
+\photo{0.9cm}{board F446 nhìn từ trên xuống, thấy rõ Nucleo, module CAN, dây nối và LED đỏ/xanh đang sáng; chụp sau khi hàn header và chạy thử.}
+
+\textbf{Minh chứng demo sẽ bổ sung.} Video chỉ minh hoạ bản ghi camera, advisory và phản hồi trên bộ thử; ghi rõ phần phát lại và phản hồi motor giả, không hàm ý robot đã chấp hành.
+\begin{center}\fbox{\parbox[c][0.6cm][c]{0.96\linewidth}{\centering\small [LIÊN KẾT / QR VIDEO: chủ dự án bổ sung sau khi quay]}}\end{center}
+\photo{0.9cm}{ảnh chụp màn hình Foxglove trong demo: camera replay, terrain advisory, safety-filter state và fake wheel feedback cùng xuất hiện.}
+
+\subsection*{Tài liệu tham khảo và nguồn số liệu}
+{\footnotesize\raggedright
+[1] Campos et al., ``ORB-SLAM3: An Accurate Open-Source Library for Visual, Visual-Inertial, and Multi-Map SLAM,'' \emph{IEEE Transactions on Robotics}, 2021, arXiv:2007.11898. \url{https://arxiv.org/abs/2007.11898}.\par
+[2] Intel, \emph{RealSense D400 Series Datasheet}. Đặc tính camera; không dùng thay số liệu kiểm thử của đề tài.\par
+[3] Alejandro Silvestri, \emph{Visual SLAM ORB-SLAM2}, Wikimedia Commons. \href{https://commons.wikimedia.org/wiki/File:Visual_SLAM_ORB-SLAM2.png}{Trang ảnh và nguồn}; \href{https://creativecommons.org/licenses/by-sa/4.0/}{giấy phép CC BY-SA 4.0}.\par
+Nguồn nội bộ: báo cáo lab 25/10; đánh giá detector và UART 24/10; giao diện advisory. Số liệu giữ nguyên theo báo cáo nguồn, không bổ sung kết quả thử robot.}
+\end{document}

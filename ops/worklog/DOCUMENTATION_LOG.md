@@ -537,3 +537,36 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Changes: corrected display-math delimiter layout without changing formulas or technical text; added a standard-library linter for the requested Markdown rules.
 - Validation: `python3 tools/lint_markdown.py` reported `0 issues across 7 file(s)`; `git diff --check` passed. HTML rendering skipped because the Python `markdown` module is unavailable.
 - Review state: local, uncommitted, no push. Details: `ops/worklog/sessions/2026-10-26-lessons-format.md`.
+
+### DOC-20261027-SUPERVISOR-REPORT: Focus Vietnamese report on WBR perception
+- Revised `reports/2026-10-supervisor/main.tex` and its PDF after D435i confirmation:
+  requested identity/title, ORB-SLAM3 focus, shorter results, neutral diagrams,
+  future integration plan and preserved placeholders; eight pages, full-width figures.
+- Added attributed, unchanged Commons concept illustration and source/build README.
+- Corrected data interpretations from saved logs: EuRoC dataset IMU and matched
+  pose/reference count; full plot versus six-run subset; lamp clustering failure;
+  growing dense-map variant; UART B-H08 replay. Measured values were not changed.
+- XeLaTeX build and rendered-page QA pass; no new packages or hardware activity.
+  See `sessions/2026-10-27-supervisor-report-edit.md`.
+
+### DOC-20261027-REPORT-PLOT-CLARITY: Make distance results interpretable
+- Owner-requested caption/subheading edits; D435i dense-map report title corrected.
+- Distance plot now shows saved error in cm by named trial; preserves all rows
+  and flags book/lamp merged-cluster case separately. Claude's height figure is
+  retained, with its red-X meaning in the caption.
+- Added reproducible saved-data rendering and input/value receipt. Original
+  evaluation JSON and archived PLY unchanged; numerical discrepancy from the
+  relayed Claude message documented without substituting unverified values.
+- XeLaTeX and eight-page visual QA pass; no new package or hardware operation.
+
+### DOC-20261027-REPORT-RIG-PHOTOS: Insert owner bench photos
+- Replaced the report rig placeholder with two supplied photographs, second
+  rotated left in LaTeX; original assets copied unchanged under `figures/`.
+- Eight-page XeLaTeX build and page-2 visual check pass. Remaining placeholders
+  and reported results unchanged; no new package or hardware test.
+
+### DOC-20261028-WIRING-DIAGRAM: Breadboard wiring picture + skill
+- Added `figures/breadboard-wiring.{png,pdf,svg}` (hand-routed, strict check PASS),
+  `tools/wiring_diagram` README rewrite and skill `ops/lab-assistant/skills/wbr-wiring-diagram/SKILL.md`.
+- `main.tex` not edited (ChatGPT editing); include line handed to the owner.
+- 2026-10-28 (later): owner asked; `main.tex` had no edits since 27 Oct, so the wiring figure was added after the architecture section (xelatex build OK, page 4).
