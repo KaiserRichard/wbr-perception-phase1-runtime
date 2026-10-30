@@ -1,1 +1,2 @@
 - 2026-10-30 16:55 | owner + Claude 2 | RL reopened as a research axis (closed since 22 Oct); new plan: GPU at the cafe, precision-weighted reward, team-report params | DONE (decision) | research/rl/BRIEF-R0.md, codex-e drafting PLAN.md
+- 2026-10-30 17:30 | Claude 2 | handoff to Claude 1 written | DONE | ops/worklog/reviews/2026-10-30-handoff-to-claude1.md
