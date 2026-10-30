@@ -1,6 +1,6 @@
 # Afternoon report: 30 Oct 2026
 
-Nothing is merged. Statuses are as recorded in each source review. Read in this order:
+Update 16:45: #166–#178 (3D twin, jump gate, simcam) were merged to main on 30 Oct; everything else below is still open. Statuses are as recorded in each source review. Read in this order:
 this page → [STUDY_PACK](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/blob/claude2/20261030-research-scout/research/scout/STUDY_PACK.md) → [SYNTHESIS](https://github.com/KaiserRichard/wbr-perception-phase1-runtime/blob/claude2/20261030-research-scout/research/scout/SYNTHESIS.md) (PR #179).
 
 ## (a) What works now
