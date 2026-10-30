@@ -17,16 +17,17 @@ bash ops/secretary/collect.sh
 AGY is used because it is cheap, fast, and has plenty of quota; its output is a
 draft to be checked against the named sources.
 
-The collector fetches origin and reads recent remote branches with `git show`,
-without checking them out. “Recent” means a branch tip committer date within the
-last 72 hours; included reviews are files changed in that window, including
-merge changes, under `ops/worklog/reviews/*.md`. Deleted reviews are noted.
-Each review records repo, branch, path and last commit date. PNG/SVG inventories
-come from `git ls-tree` under `reports/`, `results/` and `docs/` on each branch.
+The collector fetches origin and reads every remote branch except
+`origin/HEAD`, without checking branches out. At each branch tip it includes
+every existing Markdown file under `ops/worklog/reviews/` and
+`ops/worklog/ledger/`, regardless of branch age or file commit date. Paths are
+deduplicated within each branch; each copy records repo, branch, path and last
+commit date. PNG/SVG inventories come from `git ls-tree` under `reports/`,
+`results/` and `docs/` on each branch.
 
 If present, `~/Desktop/OS/OS-project/heterogeneous-edge-ai-os` and `~/Desktop/CN`
-are also collected, including their local review files (which may be uncommitted
-or older than the remote-branch window). No checkout is changed. Open PR JSON is
+are also collected, including their local review and ledger files (which may be
+uncommitted). No checkout is changed. Open PR JSON is
 queried for this repo and `KaiserRichard/heterogeneous-edge-ai-os`; unavailable
 queries are recorded as BLOCKED rather than an empty list.
 
