@@ -12,8 +12,9 @@ PAYLOAD = struct.Struct("<QIBBHHB")
 HEARTBEAT = struct.Struct("<QQ")
 
 TRACKING_STATES = {
-    "SYSTEM_NOT_READY": 0, "NO_IMAGES_YET": 1, "NOT_INITIALIZED": 2,
-    "OK": 3, "RECENTLY_LOST": 4, "LOST": 5, "OK_KLT": 6,
+    # ORB-SLAM3 include/Tracking.h @ 4452a3c; upstream -1 is u8 value 255.
+    "SYSTEM_NOT_READY": 255, "NO_IMAGES_YET": 0, "NOT_INITIALIZED": 1,
+    "OK": 2, "RECENTLY_LOST": 3, "LOST": 4, "OK_KLT": 5,
 }
 TRACKING_NAMES = {v: k for k, v in TRACKING_STATES.items()}
 FLAG_AGE_VALID = 1 << 0

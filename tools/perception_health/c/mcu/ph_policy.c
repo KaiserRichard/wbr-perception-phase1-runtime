@@ -1,4 +1,5 @@
 #include "ph_policy.h"
+#include "../perception_health.h"
 #include <string.h>
 
 #define FLAG_AGE_VALID 1u
@@ -70,13 +71,13 @@ enum ph_downgrade ph_policy_update(struct ph_policy *p, uint32_t now, const stru
             p->last_health_us=received; p->have_health=1u;
             p->last_age_us=ev->health.pose_age_us; p->age_valid=(uint8_t)age_flags_valid(&ev->health);
             p->last_report_fresh=0u;
-            if (ev->health.tracking_state==5u) { p->latched=1u; p->have_healthy_since=0u; transition(p,PH_DOWNGRADE_FAILSAFE,PH_REASON_SOURCE_AGE_TIMEOUT); return p->requested; }
+            if (ev->health.tracking_state==PH_TRACKING_LOST) { p->latched=1u; p->have_healthy_since=0u; transition(p,PH_DOWNGRADE_FAILSAFE,PH_REASON_SOURCE_AGE_TIMEOUT); return p->requested; }
             if (!p->age_valid) { transition(p,PH_DOWNGRADE_HOLD,PH_REASON_SOURCE_AGE_HOLD); p->have_healthy_since=0u; return p->requested; }
             age=sat_add3(p->last_age_us,0u,p->c.transit_bound_us);
             if (age >= p->c.pose_age_timeout_us) { p->latched=1u; p->have_healthy_since=0u; transition(p,PH_DOWNGRADE_FAILSAFE,PH_REASON_SOURCE_AGE_TIMEOUT); return p->requested; }
             if (age >= p->c.pose_age_hold_us || (ev->health.flags & FLAG_DEGRADED) != 0u ||
                 ev->health.imu_initialized != 1u || reset_changed ||
-                (ev->health.tracking_state != 3u && ev->health.tracking_state != 6u)) {
+                (ev->health.tracking_state != PH_TRACKING_OK && ev->health.tracking_state != PH_TRACKING_OK_KLT)) {
                 transition(p,PH_DOWNGRADE_HOLD,PH_REASON_SOURCE_AGE_HOLD); p->have_healthy_since=0u; return p->requested;
             }
             p->last_report_fresh=1u;

@@ -26,14 +26,14 @@ def scenario(name, actions):
                      int(action == "NONE"), action, "NONE" if action == "NONE" else model.reason))
     return name, rows
 
-def good(t, kind, seq, session=42, age=1000, flags=3, tracking=3, imu=1, reset=0):
+def good(t, kind, seq, session=42, age=1000, flags=3, tracking=2, imu=1, reset=0):
     return (t, kind, seq, session, t, age, tracking, flags, imu, reset)
 
 def saved_input_excerpt():
     # This saved fixture has MEASURED D435i input association but SYNTHETIC fake
     # engine estimates; only the recorded estimator-state labels are reused.
     fixture = ROOT / "integration/tests/fixtures/real_excerpt.jsonl"
-    tracking = {"INITIALIZING": 2, "TRACKING": 3, "LOST": 5}
+    tracking = {"INITIALIZING": 1, "TRACKING": 2, "LOST": 4}
     rows = [good(0,"heartbeat",1)]
     for index, line in enumerate(fixture.read_text().splitlines(), 1):
         item = json.loads(line)
@@ -49,7 +49,7 @@ def main(path):
         scenario("silence_hold_timeout", [good(0,"heartbeat",1), good(100,"health",2),
             (200100,"-",0,0,0,0,0,0,0,0), (500100,"-",0,0,0,0,0,0,0,0)]),
         scenario("age_hold_unavailable_lost", [good(0,"heartbeat",1), good(10,"health",2,age=98000),
-            good(20,"health",3,age=U32,flags=0), good(30,"health",4,age=0,tracking=5)]),
+            good(20,"health",3,age=U32,flags=0), good(30,"health",4,age=0,tracking=4)]),
         scenario("valid_saturated_age", [good(0,"heartbeat",1), good(10,"health",2,age=U32,flags=3)]),
         scenario("saturation_and_wrap", [good(0xFFFFFF00,"heartbeat",1), good(0xFFFFFF10,"health",2,age=U32,flags=0),
             (0x100000100,"-",0,0,0,0,0,0,0,0)]),
