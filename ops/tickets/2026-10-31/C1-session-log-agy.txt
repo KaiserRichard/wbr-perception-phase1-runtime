@@ -1,0 +1,1 @@
+Read FACTS_DAY.md in this directory (the conductor writes it at the end of the day). Write SESSION-2026-10-31.md: max 40 lines, English: Summary (3 lines), Done (with PR numbers / files), Results (numbers exactly), Open items, Needs from owner. Do not invent facts. Only write that file.
