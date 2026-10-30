@@ -54,3 +54,13 @@
 - Worktrees: ~/.worktrees/wbr-c1-rl-review, ~/.worktrees/wbr-c1-roadmap, ~/.worktrees/wbr-c1-prreview
 - Cafe compute decision: ops/worklog/reviews/2026-10-20-cafe-compute-strategy.md (Cho Mo x3 only)
 - RL bundle source: branch claude1/20261030-rl-review, research/rl/bundle (run.bat, resume.bat, CHECKLIST.md)
+
+## Overnight jobs started 30 Oct ~23:55 (collect results on 31 Oct)
+Logs: ~/wbr-evidence/c1-20261030/t22..t27.log. Report folder: "~/Desktop/30:10 video /WBR_Phase1_Report" (note the colon and the trailing space).
+- t22 codex-k: owner's PDF comments (bigger diagrams, remove Evidence Appendix, Drive links https://drive.google.com/drive/folders/1g8vi4wmHtbJAhe8nm_MJynogYDxjnhWM, remove page-1 photo) -> report/WBR_Phase1_Report.pdf/.docx
+- t23 codex-e: Vietnamese version -> report_vi/BaoCao_WBR_GiaiDoan1.pdf/.docx
+- t24 codex-c: professor-style critique -> review_next/REVIEW_FOR_OWNER.md (owner says the report still needs many fixes)
+- t25 codex-a: MJCF generator from YAML manifest -> ~/.worktrees/wbr-c1-model (branch claude1/20261031-model-from-manifest, uncommitted)
+- t26 codex-j: YOLO 320/INT8 variants, Mac benchmark -> ~/wbr-evidence/c1-20261030/p1-run/VARIANTS.md
+- t27 codex-h: staged sim/compute plan -> ~/.worktrees/wbr-c1-simplan/research/compute/SIM_COMPUTE_PLAN.md (branch claude1/20261031-sim-compute-plan, uncommitted)
+Then: verify each, commit/push the two branches, post results to the owner. Pi was to be shut down by the owner. OS midterm docx: ~/.worktrees/OS-wt-report/report_vi/BaoCao_HDH_Nhom3Stars_GiuaKy.docx (uncommitted).
