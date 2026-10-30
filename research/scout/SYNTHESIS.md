@@ -1,0 +1,93 @@
+# S1 — Ranked first-paper directions
+
+Prepared 2026-10-30; synthesis of [T1](t1-wheel-legged.md), [T2](t2-freshness-safety.md), [T3](t3-venues.md), and [T4](t4-evidence-plan.md). This is a targeted literature assessment, not a systematic novelty certification. All nine papers in the reading list were independently opened and checked for identity, metadata and the claims used here; abstract-only checks are identified. No experiment was run for S1.
+
+## Evidence boundary and corrections
+
+- **MEASURED, reported by the brief:** Pi 5/D435i box geometry near 1 m; 630/630 UART echoes, round-trip time (RTT) median 2.83 ms; 300 ms advisory expiry. Raw echo logs and acquisition-to-MCU timestamps were not independently recovered here. RTT does not establish observation age, tail latency or MCU fallback correctness.
+- **Saved physical-camera evaluation:** [lab evaluation](../../tools/obstacle_decision/results/lab-20261024/evaluation.md) has seven passing box rows and one failing row: B-H05-D1p3 height error +0.524 m. Empty-floor S1 has false-detection rate 1.000 and outputs STOP_CANDIDATE while its plane-stability check passes; wall W2 also fails its range criterion. Thus the brief's geometry accuracy is a bounded pilot result, not a uniform validated envelope. STOP in the brief corresponds to STOP_CANDIDATE in this report; neither authorizes actuation.
+- **Reusable software/evidence:** [synthetic report](../../tools/obstacle_decision/REPORT.md), `tools/obstacle_decision/{replay_bag.py,eval_runs.py,advisory_codec.py}`, `tools/link_proto/`, `tools/link_bench/`, and recorded-camera worklogs. The 80-box synthetic sweep is regression evidence; its host processing time is not Pi timing. [2026-10-24 link review](../../ops/worklog/reviews/2026-10-24-terrain-advisory-link.md) records simulated silence/recovery and rejection tests, with physical UART then UNVERIFIED; the later brief reports echoes but does not validate every rejection/fallback case.
+- **ASSUMED/SIMULATION:** planar LQR and processor-in-the-loop 160/160 are controller/software context, not measured WBR dynamics or perception benefit. Weak PPO results cannot be the central competitive baseline. Saved ORB-SLAM3 loop endpoints are not independent ground truth.
+- **UNVERIFIED:** moving-WBR perception, physical stopping envelope, safe jumping/landing and certified safety. Robot arrival is expected in November 2026. No 2026-10-30 review files were found on this checkout; `gh pr list` failed with `error connecting to api.github.com`, so open PR evidence was unavailable.
+
+## 1 — Observation-age contracts for Pi-to-MCU terrain advice
+
+**Research question:** Can an observation-age contract prevent expired or replayed terrain advice from being consumed across stalls and reconnects while retaining more useful advice than a conservative receipt-time timeout?
+
+**Claimed contribution, conditional on results:** a precisely specified, MCU-enforced validity interval, bounded clock/age accounting, and a reproducible cross-device fault benchmark. The testable invariant is that accepted advice is valid at MCU consumption under stated assumptions; finite testing alone is not a universal proof. An embedded watchdog, CRC or age-of-information (AoI) metric is not the novelty.
+
+**Closest prior work and difference:** [R1] already measures camera-to-motor AoI on a physical robot; [R2] analyzes ROS 2 refreshing chains; [R3] generates runtime monitors. The possible increment is preserving observation-age and session validity across the asynchronous ROS/Pi-to-MCU advisory boundary, including restart, queued replay and local expiry. A single Pi/MCU port would be insufficient. ROS QoS and reliable micro-ROS transport must be treated as established mechanisms, not new inventions [D1–D2]. Novelty risk: **MEDIUM–HIGH**.
+
+**Before-robot experiments:** compare reliable transport alone, receipt-time 300 ms expiry, latest-value/bounded-queue plus source-age expiry, and the proposed complete contract on identical traces. Ablate source-age accounting and restart/session handling separately. Inject frozen capture with live producer, backlog, loss/bursts, corruption, duplicates, reorder, clock drift, sequence wrap, Pi/MCU reset and reconnect. Use real Pi/bench MCU without motor authority; measure capture-to-consumption age with clock-mapping uncertainty, stale acceptance, expiry/recovery delay, valid-advice availability, p95/p99/max age, CPU/RAM and wire cost. The latest-value/source-age baseline prevents attributing all gains to queue replacement.
+
+**After-robot experiments:** validate the same contract under actual sensor/CAN/controller scheduling and body motion, initially advisory logging only. Claims about stopping benefit require a separately authorized, controlled task study; keep balance and actuator authority on the STM32.
+
+**Reusable evidence:** codec/rejection vectors, simulated 400 ms silence/recovery, replay harness, course FRESH/HOLD/FAILSAFE design, and reported UART feasibility. Verify the actual target implementation and preserve the distinction between bench F446 evidence and the planned H723 robot.
+
+**Best venue/deadline:** provisional **IEEE ATC 2027**, embedded systems/communications fit; **2027 deadline UNANNOUNCED/UNVERIFIED** in sources checked. The opened [ATC 2026 call](https://atc-conf.org/welcome-to-atc-2026/the-international-conference-on-advanced-technologies-for-communications) is a closed-cycle scope reference, not a 2027 schedule. Recheck the new call before committing to submission.
+
+**Effort/risk:** **6–8 focused weeks** to a bench-scoped submission, plus **2–3 weeks** if adding robot integration after access. Main risk: results reduce to known timeout/queue behavior rather than a substantive contract and reusable failure analysis.
+
+## 2 — Selective geometric advice with a measured validity envelope
+
+**Research question:** Can corridor visibility and geometric uncertainty checks reduce incorrect candidate advice on unseen scenes at a useful acceptance rate on a single Pi 5?
+
+**Claimed contribution, conditional on results:** a transparent acceptance rule and released physical-camera failure dataset connecting observed wheel corridors/landing visibility to accepted-error versus coverage. Missing depth must mean unknown, not free space; JUMP_CANDIDATE describes geometry, not demonstrated jumpability.
+
+**Closest prior work and difference:** [R5] already selects leg/wheel motion from RGB-D terrain; [R4] models terrain-map spatial uncertainty; [R8] uses uncertain maps for perceptive locomotion. The potential difference is calibrated acceptance on held-out failure cases for this low-resource wheel-biped geometry, with measured compute and coverage costs. RANSAC plus thresholds, abstention or a cheaper processor alone is weak novelty. Novelty risk: **HIGH**.
+
+**Before-robot experiments:** reproduce the saved box/empty-floor failures; compare current plane/height plus temporal filtering, no temporal filter, depth-height baseline, and proposed visibility/uncertainty rule. Hold out sessions, object/material instances and placements; include slopes, drop-offs, occluded landing regions, reflective surfaces and depth holes. Report per-class confusion, incorrect-candidate rate, false-stop rate, abstention, accepted coverage, height/range errors and Pi latency/power. Compare error at matched coverage so stopping everywhere cannot win; ablate corridor and uncertainty checks independently.
+
+**After-robot experiments:** repeat on measured camera extrinsics and moving postures, vibration and pitch; establish geometry against surveyed targets. Optional supervised approach/stop utility trials need measured braking and fixed operator rules. No obstacle-crossing or landing claim without direct repeated evidence.
+
+**Reusable evidence:** physical bag run sheets/evaluation including failures, 80 synthetic cases, immutable replay/evaluation code, class thresholds and temporal-filter baseline. Current tabletop accuracy supports pilot design only; the empty-floor plane PASS is not classification success.
+
+**Best venue/deadline:** provisional **IEEE-RIVF 2027**, perception/robotics track if retained; **2027 deadline UNANNOUNCED/UNVERIFIED**. The [checked RIVF 2026 call](https://rivf2026.org/call-for-papers.html) allows six pages and includes Physical AI/Robotics; its 15 September 2026 deadline has passed and must not be recycled as a 2027 date.
+
+**Effort/risk:** **8–12 focused weeks**, including collection, held-out validation and writing; robot task utility adds roughly **3–4 weeks** after access. Main risk: an incremental threshold study or insufficient independent scenes to support calibrated error claims.
+
+## 3 — When does local mapping justify its freshness cost?
+
+**Research question:** Under Pi resource contention and wheel-biped camera motion, when does persistent local mapping improve obstacle decisions enough to offset observation age and registration error?
+
+**Claimed contribution, conditional on results:** a reproducible operating envelope relating mapping memory, computation age, occlusion and incorrect obstacle decisions on one measured edge platform. A useful negative result is possible, but a generic SLAM speed comparison is insufficient.
+
+**Closest prior work and difference:** [R7] already ablates visual-inertial odometry and sensing for resource-constrained locomotion; [R8] compares mapping designs. The possible difference is a decision-level trade-off measured on one Pi under real capture-age/resource pressure and body visibility changes. [R6] already separates MCU motion control and onboard computing; [R9] supplies a strong blind wheel-biped climbing reference, so “perception enables traversal” is not established by a mapping demo. Novelty risk: **HIGH**.
+
+**Before-robot experiments:** compare frame-local geometry, orientation/motion-aligned short history and SLAM-registered local mapping on identical recorded motion/occlusion scenes, then live Pi runs for timing. Sweep pitch, texture, speed and concurrent workload; ablate mapping persistence and CPU contention. Independently measure scene/trajectory ground truth; report decision errors/coverage, detection lead time, acquisition-to-decision age, registration error, thermal throttling, memory and electrical power. Replay cannot supply live timing evidence.
+
+**After-robot experiments:** repeat with measured body motion/extrinsics and a fixed controller; add controlled task trials only if claiming navigation benefit. Camera-rig results remain camera-rig results until this validation exists.
+
+**Reusable evidence:** ORB-SLAM3 recordings/builds, sparse-map export and replay tooling, local geometric detector, Pi resource logging. Existing loop endpoint agreement cannot validate map accuracy, nor can paced replay establish live capacity.
+
+**Best venue/deadline:** **Journal of Robotics and Mechatronics (JRM), regular submission; rolling, no annual deadline**. [Checked author instructions](https://www.fujipress.jp/main/wp-content/themes/Fujipress/JRM/pdf/jrm_ITA.pdf) and [author page](https://www.fujipress.jp/jrm/rb-authors/); budget publication charges. This is an applied robotics fit only with a substantive comparative result and adequate physical evidence.
+
+**Effort/risk:** **12–16 focused weeks**, assuming working robot access and independent reference measurements. Main risk: mapping, calibration and ground truth consume the schedule while the outcome duplicates existing VIO/mapping ablations.
+
+## First-paper recommendation and evidence standard
+
+Choose **direction 1** with a bounded systems claim: observation-age validity at MCU consumption under explicit faults. It reuses the most mature protocol/replay work, can establish its main result before robot delivery, and avoids making unvalidated locomotion central. Add geometry/closing-speed-dependent expiry only as a later extension after measuring motion and braking; a fixed 300 ms timeout is not a physical safety envelope. If the complete contract adds nothing over the latest-value/source-age baseline, report that outcome and reassess publication scope rather than manufacturing novelty.
+
+Direction 2 is second because the saved failures make it scientifically useful but also show that a stronger dataset and a principled acceptance rule are needed. Direction 3 is third because independent map/trajectory references and moving-platform experiments are expensive, with close mapping-ablation prior art. Autonomous jumping and RL-versus-LQR are later programs: neither has the physical evidence needed to displace these first-paper choices.
+
+For every direction, freeze hypotheses, configurations, exclusions and primary endpoint before confirmatory collection. Start perception planning at ≥30 independent placements per primary class/bin across ≥3 reset sessions, and link planning at ≥10 independent runs per condition; use pilot variance and desired confidence-interval width to size the final study. Frames within a scene are repeated measures. Report all failures and scene/run-clustered 95% intervals; zero observed violations is a finite-sample result, not zero risk. Match baseline tuning/data, retain failed captures and publish code/config hashes plus raw timestamp provenance. Week estimates are active work, excluding review delays and unavailable hardware.
+
+## Reading order — nine checked papers
+
+**CHECKED** below means opened during S1; it does not imply full-paper peer review by this scout. Entries marked preprint carry no inferred conference acceptance.
+
+1. **[R1] CHECKED, publisher abstract/accepted status.** Junyeong Jeon, Daniel Poul Mtowe, Dong Min Kim. [“Computation Offloading and Information Freshness in Edge-Assisted Networked Robotic Systems”](https://www.frontiersin.org/journals/robotics-and-ai/articles/10.3389/frobt.2026.1999591/abstract). **2026, Frontiers in Robotics and AI 13**, DOI 10.3389/frobt.2026.1999591; accepted 15 October, formatted version pending. Read first: closest physical-robot observation-to-actuation AoI precedent; generic AoI novelty is occupied.
+2. **[R2] CHECKED, institutional metadata/abstract.** Yue Tang, Xu Jiang, Nan Guan, Xiantong Luo, Maolin Yang, Wang Yi. [“Timing analysis of processing chains with data refreshing in ROS 2”](https://scholars.cityu.edu.hk/en/publications/timing-analysis-of-processing-chains-with-data-refreshing-in-ros-/). **2024, Journal of Systems Architecture 155, 103259.** Learn the established timing/refreshing analysis before claiming new queue-age mechanisms; DOI redirect failed, institutional source opened successfully.
+3. **[R3] CHECKED, author abstract/venue record.** Ivan Perez, Anastasia Mavridou, Tom Pressburger, Alexander Will, Patrick J. Martin. [“Monitoring ROS2: from Requirements to Autonomous Robots”](https://arxiv.org/abs/2209.14030). **2022, FMAS/ASYDE proceedings, EPTCS 371, 208–216.** Turn requirements into monitorable semantics; runtime monitoring itself is prior art.
+4. **[R4] CHECKED, publisher abstract/metadata.** Dominik Belter, Przemysław Łabecki, Péter Fankhauser, Roland Siegwart. [“RGB–D Terrain Perception and Dense Mapping for Legged Robots”](https://reference-global.com/article/10.1515/amcs-2016-0006). **2016, International Journal of Applied Mathematics and Computer Science 26(1).** Establish spatial uncertainty and terrain mapping foundations before proposing selective geometry.
+5. **[R5] CHECKED, institutional abstract/metadata.** Ting-Hao Wang, Pei-Chun Lin. [“A Reduced-Order-Model-Based Motion Selection Strategy in a Leg-Wheel Transformable Robot”](https://scholars.lib.ntu.edu.tw/entities/publication/e2ca58bb-ee17-4d98-89d7-9fca9f59efd0). **2022, IEEE/ASME Transactions on Mechatronics 27(5).** Closest RGB-D terrain-to-motion-selection precedent; identify what acceptance calibration would add.
+6. **[R6] CHECKED, full text.** Dingchuan Liu, Fangfang Yang, Xuanhong Liao, Ximin Lyu. [“DIABLO: A 6-DoF Wheeled Bipedal Robot Composed Entirely of Direct-Drive Joints”](https://arxiv.org/html/2407.21500v3). **2024, arXiv preprint 2407.21500v3.** Understand established wheel-biped LQR, onboard computer/MCU separation and watchdog architecture.
+7. **[R7] CHECKED, full text.** Davide Plozza, Patricia Apostol, Paul Joseph, Simon Schläpfer, Michele Magno. [“Robust Reinforcement Learning-Based Locomotion for Resource-Constrained Quadrupeds with Exteroceptive Sensing”](https://arxiv.org/html/2505.12537v2). **2025, arXiv preprint 2505.12537; v2 revised 2026.** Closest resource/sensor/VIO-ablation study; CPU reduction alone will not distinguish direction 3.
+8. **[R8] CHECKED, full text.** Chong Zhang, Victor Klemm, Fan Yang, Marco Hutter. [“Agile and Generalized Legged Locomotion via Attention-Based Neural Map Encoding”](https://arxiv.org/html/2601.08485v3). **2026, arXiv preprint 2601.08485v3.** AME-2 establishes strong uncertain-map/mapping comparisons; its TRON1 results concern legged configuration, not wheeled traversal.
+9. **[R9] CHECKED, full text.** Rankun Li, Hao Wang, Qi Li, Zhuo Han, Yifei Chu, Linqi Ye, Wende Xie, Wenlong Liao. [“CTBC: Contact-Triggered Blind Climbing for Wheeled Bipedal Robots with Instruction Learning and Reinforcement Learning”](https://arxiv.org/html/2509.02986v3). **2025, arXiv preprint 2509.02986; v3 revised 2026.** Learn the strong proprioceptive climbing alternative before attributing robot utility to depth perception.
+
+## Additional checked implementation sources and remaining uncertainty
+
+- **[D1] CHECKED, official design document:** Open Robotics/ROS 2, [“Quality of Service settings: deadline, liveliness, lifespan”](https://github.com/ros2/design/blob/gh-pages/articles/qos_deadline_liveliness_lifespan.md), 2018 design article. Existing middleware expiry/liveness mechanisms are necessary comparators; they do not establish physical terrain validity or application consumption semantics.
+- **[D2] CHECKED, official documentation:** eProsima, [“eProsima Micro XRCE-DDS Client”](https://micro-xrce-dds.docs.eprosima.com/en/latest/client.html), living documentation, version 3.0.1 accessed during S1. Reliable streams retain history/retry; reliable delivery is not an observation-age guarantee. This documents a possible micro-ROS path, not proof the measured UART bench used it.
+- **Coverage limits:** DM-jump's identity remains **UNVERIFIED** from T1; no novelty comparison can be asserted against it. ATC/RIVF 2027 calls were not located; no invented submission dates or acceptance rates are supplied. Further literature checking is required before a priority/first-ever claim. Only `research/scout/SYNTHESIS.md` is created by S1; no commits, worklog edits or S2 work.
