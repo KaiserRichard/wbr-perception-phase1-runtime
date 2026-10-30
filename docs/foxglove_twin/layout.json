@@ -1,0 +1,49 @@
+{
+  "configById": {
+    "Image!camera": {
+      "imageMode": {
+        "imageTopic": "/camera/camera/color/image_raw",
+        "calibrationTopic": "/camera/camera/color/camera_info"
+      },
+      "synchronize": false,
+      "foxglovePanelTitle": "Recorded D435 color"
+    },
+    "Image!twin": {
+      "imageMode": {"imageTopic": "/twin/image"},
+      "synchronize": false,
+      "foxglovePanelTitle": "MuJoCo twin — synthetic pose"
+    },
+    "RawMessages!advisory": {
+      "topicPath": "/twin/advisory",
+      "diffEnabled": false,
+      "defaultExpanded": true,
+      "foxglovePanelTitle": "Twin raw / gated advisory"
+    },
+    "StateTransitions!phase": {
+      "paths": [
+        {"value": "/twin/phase.message", "enabled": true, "timestampMethod": "receiveTime"}
+      ],
+      "isSynced": true,
+      "foxglovePanelTitle": "Twin gate phase"
+    }
+  },
+  "layout": {
+    "direction": "row",
+    "splitPercentage": 50,
+    "first": "Image!camera",
+    "second": {
+      "direction": "column",
+      "splitPercentage": 65,
+      "first": "Image!twin",
+      "second": {
+        "direction": "column",
+        "splitPercentage": 55,
+        "first": "RawMessages!advisory",
+        "second": "StateTransitions!phase"
+      }
+    }
+  },
+  "globalVariables": {},
+  "playbackConfig": {"speed": 1},
+  "userNodes": {}
+}
