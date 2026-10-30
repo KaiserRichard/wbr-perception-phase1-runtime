@@ -1,0 +1,1 @@
+- 2026-10-30 20:30 | claude1 + codex-e | portable Windows RL bundle (offline Python 3.12, CPU torch, SB3, mujoco wheels; run.bat/resume.bat, checkpoint to USB); built on Mac, 516 MB; Windows run UNVERIFIED | PARTIAL | research/rl/bundle, ~/wbr-evidence/c1-20261030/WBR-RL-BUNDLE

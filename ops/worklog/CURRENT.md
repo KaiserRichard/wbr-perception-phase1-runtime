@@ -1,33 +1,25 @@
 # Current state
-Updated 2026-10-22 +07; owner accepted v3 FAIL and merged PR128. V3 line STOPPED; no tuning/retry/full training. Claude review PR129 is owner-managed. Hardware data is the priority; camera execution remains with owner/execution chat.
-## Simulation
-- PR122/PR123 follow-up: saved-data verification matched all30 cases/150030 rows; 1940 source-geometry exclusions are A-side outer reach in L20 combined-target (5×151) and stronger-sample (5×237), after the 3.000–3.150s push pulse; co-varying mass/delay/wheel-map inputs preclude push-only attribution. Separate reachable balance-only peaks: A0.40542578868132084Nm (L20 stronger seed1 tick10), E0.35224760632453234Nm (L12 stronger seed1 tick9); total torque remains UNKNOWN (radial reaction absent). Review: `reviews/2026-10-22-motor-load-followup.md`; exact attribution/receipt in `~/wbr-evidence-archive/sim-motor-load-followup-20261022-01/review123-followup-01`. Stop margin sweeps pending actual motor/gear, assembly and timing data.
-- PR110 a/b/c code milestone complete: #114/#115/#116 merged green (both exact-head CI checks SUCCESS each); stress #115: 56 cases, 40 PASS/16 FAIL/0 ERROR; delayed five-bar local linear #114: 16/16 locally stable; prescribed-extension ramp #116: one 15 s run, 8/8 saved checks PASS. Review: `reviews/2026-10-22-control-margins.md`; assumed models only, no hardware/general robustness claim.
-- V3 seed42 pilot COMPLETE/exit0, 260000 transitions/130 updates; train460.101s, budget603.463s, eval420.730s. Strict0/100k/end=16/16/11 of16; survival16 each, leg-rate0 each; E0.292433/0.447293/0.826070. FAIL: final strict regression and both E screens; return/length screens PASS. Review `reviews/2026-10-22-v3-pilot-result.md`; archive `~/wbr-evidence-archive/sim-v3-pilot-20261022-01/`. Owner/Claude accepted FAIL; v3 STOPPED. Saved final metrics confirm 2 position failures (20 mm limit) and 3 recovery-deadline failures (>5 s), not 5 position failures. No tuning/retry/full/direct arm; reward/v2 unchanged.
-- Upstream firmware learning review (merged PR105): reviews/2026-10-21-team-foundation-reading.md. Three packs cover reduced-model/research foundations; firmware also needs five-bar/VMC, gain scheduling, estimation and hybrid timing. Study estimate20–32focused hours; no runtime change.
-- Obsidian three-pack illustrated revision under docs/learning/obsidian: supplied mechanical plates + worked dynamics/LQR, RL→PPO, residual/saved-runs/experiment. Review2026-10-21-illustrated-lessons.md; five filename-specific image prompts. Three extracted exercises/382MathJax expressions PASS; no new training.
-- Claude approved the assumed six-state planar LQR (PR44) and delay/lag/noise baseline (PR47–48). Hardware parameters remain ASSUMED/UNKNOWN; source gain parity remains the owner exercise.
-- PPO v1 complete: LQR160/160, PPO0/800. See sim/rl/RESULTS_2026-10-20.md; archived evidence retained.
-- PPO v2 COMPLETE 2026-10-21 12:13 +07 (PR55; frozen source f1b5ee7): eight exact3M-step seeds,all reloadPASS,1,280 evaluated cases; supervisor exited0.100Hz PPO versus unchanged500Hz LQR; no tuning.
-- Direct seeds0–4 strict[39,20,0,0,0], survival[160,160,120,160,160]:59/800 strict,760/800 survived. Residual seeds0–2:0/480 strict,480/480 survived; no extension. Reused LQR160/160. Legacy episode-length/return curves unavailable. Results: sim/rl/RESULTS_V2_2026-10-20.md; review2026-10-20-ppo-v2.md.
-- Owner resumed control13:52 +07, prioritizing j/k after idle/quota checks. Final table+7plots generated; j completed two LQR clips and76designs+four fits; k completed9mechanics cases. Review2026-10-21-control-followup.md. Restricted nonlinear follow-up COMPLETE/PASS; the authorized v3 pilot is reported above.
-- Evidence ~/wbr-evidence-archive/sim-ppo-v2-20261020-01; process/progress /private/tmp/wbr-ppo-v2-20261020/. Camera lab worktree updated to main; training runtime files unchanged.
-- sim/parity/student.py::gain_schedule remains owner-only. Separate live LQR viewer uses parameter-source-audit checkout; Desktop launcher remains available.
-## Completed control/software work
-- Historical dispatch is inactive; g/k share one login/quota. Check current idle/quota before any owner-authorized future delegation; no worker task is queued. Prior receipts: `/private/tmp/wbr-overnight-20261020/{B3-FINAL,A4-FINAL,A3-SWEEP}/`.
-- Host C LQR/export/reporting foundations: PR59/60/62–64/66/70/73 merged; independent C+policy integration 4 tests/1464 ticks, max LQR error7.88e-7 (limit1e-6). H7 cycle figures are analytical; no firmware deployment.
-- Reachable gains complete: PR103/104/106/107;36fresh designs/four fits/32midpoints PASS;400nonlinear cases, freshDARE200/200 and fitted200/200. Review `reviews/2026-10-21-reachable-control-validation.md`; assumed reachable family, no hardware/continuum claim. Recovery reused271cases+129new with unmodifiedd4b4249; original timing UNKNOWN.
-- Five-bar dynamics:9cases, one independently reproduced; mass/wheel-reaction differences remain. Review `reviews/2026-10-21-fivebar-dynamics.md`. LQR illustrative clips PR97 decoded/inspected, unscored; evidence `~/wbr-evidence-archive/sim-lqr-clips-20261021-01`.
-- Camera implementation PR77/79–81/84/87 accepted; live/replay limitations below. PPO stopped normally, container stopped, old automation paused; camera work belongs to WBR-Perception.
-## Hardware
-- Pi5/aarch64/3.9GiB; migrated SG128 boots, 113GiB root/80GiBfree. Read-only Mac preflight 2026-10-22: SSH `wbr-pi5` at192.168.50.2 passed; EXT5V5.167V,throttled0x0,temp51C; D435i317422076650/FW5.17.3.10 enumerated USB5000M; ROS/package/runner/map paths exist. Saved A now verifies stereo capture (362 paired frames) and ORB initialization; first20s replay validates300poses/20clouds/max214points. Live continuity, B/C and Foxglove GUI remain unverified.
-- Visual stereo/RGB-D+ROS pose accepted by Claude; review2026-10-21-camera-visual-pose.md. ImplementationPR77/79–81, reportPR84.
-- Recording fix: MCAP+stereo-only+reliable images/history100. rmem max/default4194304 intentionally retained for session; no persistent sysctl file. Stationary895/895 equal headers,zero observed gaps/transportlosses.
-- Fresh marked loop09:53:03–09:55:33+07:147.607s,2215left/2215right/2215CameraInfo each,identical headers,zero observed gaps/transportlosses. Owner confirms returned by120s and held30s; physical alignment not independently measured.
-- Full loop+logs copied to ~/wbr-evidence-archive/camera-recording-20261021-01; loopSHA5749908bb94a6c9a7e5496f3c8b58db3596cf5f53f2542502a1468dcd97703c8 matchesPi. Older lossy loops/replays remain evidence, not new-loop endpoints.
-- Native unified IMU interpolation corrected; isolated compile/link PASS, SDK body-from-camera Tbc/200Hz checks added. Single75s planar excitation exit0:final initialized61.8s,965poses,14.87trackedFPS,4loss transitions; VIBA1/2complete. Initial resets and late STOP/short stationary tail documented.
-- Local50camera-day+7native tests PASS; codePR87 accepted inPR88. All176morning archive artifacts SHAverified; calibration unchanged,allcamera/ROS/daemon stopped,PiFREE receipt10:15:21+07. PR90 follow-ups retained; native IMU callback fault injection remains deferred. Pi onlywithnewownerrelease; noPi access for Mac analysis.
-- Original3Mac runs: all2215pairs each; tracked2215/2215/2152,losses0/0/2,new maps afterinitial0/0/1,merges0/0/1,loop detectionsno/yes/no. Claude PR93 accepts only R1 open-loop endpoint0.018319m/14.267m as conditional evidence; R2/R3 endpoints are not drift. Report1of3losttracking, not repeatable tracking. No ground-truth or0.13%accuracy claim.
-- PR93follow-up: one fresh loopClosing0 run exit0,2215/2215tracked,map0,no loss/reset/loop/merge; conditional endpoint0.025485m/14.198601m. Unmeasured physical return/localBA remain limits; disabled-mode upstream pointer issue documented. Original R1/R2 proper SE3/no-scale alignment RMS0.009977m,p950.012041m,max0.113615m across2215exact shared stamps; agreement only.
-- Original runs >66.7ms calls6/135/14 of2215each (0.271/6.095/0.632%); tracked-only6/135/12. Paced15FPS is not capacity; no live-drop/Pi transfer claim. jPR94/kPR96;34focused tests and independent calculations PASS. Review2026-10-21-camera-review-followup.md; archive camera-recording-20261021-01/claude-review-followup-01 holds raw evidence/histograms/merge receipts. Container stopped; old automation paused.
-- Sparse-map feature on branch `chatgpt/20261021-orb-map-points`: `/d435_orb/map_points` publishes finite actual ORB `MapPoint` XYZ at max 1Hz in `slam_world`, with bounded candidate snapshots and metadata. Corrected isolated Pi build/ROS CTest pass; offline replay-04 yielded 20/20 nonempty clouds (max 965 points) and a retained MCAP. `LAB_DAY_EXECUTION.md` covers sequential 25/75/45s captures and per-run checks; K/E reviews corrected runner path, prerequisites, early-stop handling, replay coverage, stationary-A criteria. Today's SSH/camera enumeration and saved A capture/20s replay passed; runbook includes ROS shell fix and existing-output guards. Owner/execution chat runs lab commands; Codex reviews software/evidence. Full-duration map export, continuous live tracking/Foxglove GUI, reset/merge stress, RGB-D replay and accuracy remain unverified. See `reviews/2026-10-21-orb-map-points.md`, `ros2/wbr_orb_node/MAP_POINTS.md`, archive `~/wbr-evidence-archive/orb-map-points-20261021-01/`.
+Updated 2026-10-30 +07 · C1-T11 worker, uncommitted; conductor owns integration.
+
+## Portable cafe bundle (C1-T11)
+- Scripts in `research/rl/bundle/`: networked Mac builder, offline Windows launch,
+  real v2 smoke/timed seed,5-minute verified USB checkpoints and newest resume.
+- Read `ops/worklog/sessions/2026-10-30-c1-t11-portable-bundle.md` for commands/results.
+- Target: Chợ Mơ Training Station, Windows x64 unknown version, RTX3060 12GB,
+  32GB RAM, reset-on-shutdown disk, USB evidence,2–6h sessions.
+- Frozen legacy PPO v2 recipe stays CPU MuJoCo/PPO; no JAX/MJX/CUDA payload.
+  Minimal v2 change moves Unix-only supervisor import out of module import.
+- Validation:9 protocol +16 reporting tests PASS;6 RL modules blocked on missing
+  dependencies. Packaging/hash/corrupt-checkpoint fallback checks PASS.
+- Next: conductor runs builder with network, then Windows smoke/interruption/
+  resume. Downloads/Windows trainer execution remain UNVERIFIED. No commit requested.
+
+## Existing boundaries/state carried forward
+- V2 historical comparison complete; no new training executed by this ticket.
+- V3 seed42 FAIL remains STOPPED; no reward tuning/retry/full experiment authorized.
+- New R0 plan/review are proposals; this bundle benchmarks the legacy plant only.
+- Owner-only `sim/parity/student.py::gain_schedule` untouched.
+- STM32 owns balance/motor safety; no motor commands/flashing/hardware deployment.
+- Camera execution belongs to owner/WBR-Perception; no Pi access in this session.
+- Historical detailed receipts remain under sessions/reviews and evidence archive;
+  preceding CURRENT content is available from git history.

@@ -8,7 +8,6 @@ or automatically retrained. A final checkpoint can finish pending evaluation.
 
 import argparse
 from dataclasses import replace
-import fcntl
 from functools import lru_cache, partial
 import json
 import os
@@ -557,6 +556,8 @@ def summarize(outcomes):
 
 def experiment(out, smoke=False):
     """Sequential seeds, eight subprocess environments; never 40 training workers."""
+    import fcntl  # Unix experiment supervisor; portable runner uses its own lock.
+
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     # Released by the OS on exit/crash; leave file intact to avoid unlink races.
