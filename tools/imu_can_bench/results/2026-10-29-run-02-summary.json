@@ -1,0 +1,103 @@
+{
+  "checks": [
+    [
+      "pins",
+      "PASS",
+      "all as expected"
+    ],
+    [
+      "imu_who_am_i",
+      "PASS",
+      "addr=0x68 who=0x68 (want 0x68)"
+    ],
+    [
+      "imu_rate",
+      "PASS",
+      "99.48 Hz (want 100.0+-3.0)"
+    ],
+    [
+      "imu_accel_1g",
+      "PASS",
+      "|a|=9.629 m/s^2 mean=[-0.53, -0.108, 9.614] (want 9.81+-0.5, board flat)"
+    ],
+    [
+      "imu_gyro_rest",
+      "PASS",
+      "bias=[-3.251, 0.021, -0.18] dps std=[0.038, 0.035, 0.032] (want |bias|<=20.0, std<=1.0)"
+    ],
+    [
+      "can_loopback",
+      "PASS",
+      "{'c1_tx': 10, 'c1_rx': 10, 'c2_tx': 10, 'c2_rx': 10} (internal, no wiring involved; want 10/10 each)"
+    ],
+    [
+      "can_init_normal",
+      "PASS",
+      "{'c1_init': 1, 'c2_init': 1} (0 = RX never saw 11 recessive bits)"
+    ],
+    [
+      "imu_no_errors",
+      "PASS",
+      "read errors 0, re-inits 0 in 19 s"
+    ],
+    [
+      "can_round_trip",
+      "PASS",
+      "1900/1900 round trips, bad=0, CAN1 busy=0, bus-off events 0/0, CAN1 TEC=0 REC=0 LEC=0, CAN2 TEC=0 REC=0 LEC=0"
+    ],
+    [
+      "uart_no_drop",
+      "PASS",
+      "0 bytes dropped"
+    ]
+  ],
+  "measured": {
+    "imu_addr": 104,
+    "who_am_i": 104,
+    "imu_samples": 2002,
+    "imu_rate_hz": 99.48,
+    "accel_mean": [
+      -0.53,
+      -0.108,
+      9.614
+    ],
+    "accel_mag": 9.629,
+    "gyro_bias_dps": [
+      -3.251,
+      0.021,
+      -0.18
+    ],
+    "gyro_std_dps": [
+      0.038,
+      0.035,
+      0.032
+    ],
+    "temp_c": 28.3,
+    "window_s": 19.0,
+    "imu_err": 0,
+    "imu_reinit": 0,
+    "pings_sent": 1900,
+    "round_trips": 1900,
+    "bad": 0,
+    "c1_busy": 0,
+    "c1_txok": 1900,
+    "c2_txok": 1900,
+    "c1_boff_events": 0,
+    "c2_boff_events": 0,
+    "c1_esr": {
+      "tec": 0,
+      "rec": 0,
+      "lec": 0,
+      "boff": 0,
+      "epv": 0
+    },
+    "c2_esr": {
+      "tec": 0,
+      "rec": 0,
+      "lec": 0,
+      "boff": 0,
+      "epv": 0
+    },
+    "uart_drop": 0
+  }
+}

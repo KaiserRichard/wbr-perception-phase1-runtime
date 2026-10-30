@@ -1,0 +1,2 @@
+- 2026-10-30 18:30 | claude1 + codex-e | T3 rate fix: drop counters on every RX path, UART 460800, M decimation 20 Hz, STAT TX reserve, pi_loop.py, CI skip when DM ref missing; bin 37cb50dd; 18 tests OK | DONE | PR #184
+- 2026-10-30 19:10 | claude1 | T3 v2 37cb50dd on hardware after CAN rewire: 20/s 200/200; 100/s steady 99 sent+fed_back per s, lost 0, CAN ESR 0, lat_last 1.2 ms. Rejections only for host seq <= last accepted seq (pi_loop restarts seq at 1 each run; by design) | DONE | ~/wbr-evidence/t3v4-* on Pi

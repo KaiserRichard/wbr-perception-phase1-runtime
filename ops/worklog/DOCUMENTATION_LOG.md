@@ -537,3 +537,7 @@ approval or proof of unrun tests. Never rewrite finalized earlier entries.
 - Changes: corrected display-math delimiter layout without changing formulas or technical text; added a standard-library linter for the requested Markdown rules.
 - Validation: `python3 tools/lint_markdown.py` reported `0 issues across 7 file(s)`; `git diff --check` passed. HTML rendering skipped because the Python `markdown` module is unavailable.
 - Review state: local, uncommitted, no push. Details: `ops/worklog/sessions/2026-10-26-lessons-format.md`.
+
+### DOC-20261029-IMU-CAN-BENCH: IMU + dual-CAN bench tool and results
+- Files: `tools/imu_can_bench/` (README, firmware, Pi checker/flash/restore scripts, tests, results), `ops/worklog/sessions/2026-10-29-imu-can-bench.md`.
+- Validation: `make` and `make test` (6 tests) pass; hardware run-02 SUMMARY PASS 10/10; canfix01 restored with read-back verify.
