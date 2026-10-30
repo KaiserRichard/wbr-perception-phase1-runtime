@@ -1,0 +1,22 @@
+{
+  "status": "MEASURED",
+  "model": "models/yolo11n.onnx",
+  "model_sha256": "71325a29fb6e3f817798e1511079f665a422264a2ad00db18dbc263738c4e1c9",
+  "python_version": "3.12.13",
+  "platform": "macOS-15.7.9-x86_64-i386-64bit",
+  "machine": "x86_64",
+  "onnxruntime_version": "1.23.2",
+  "numpy_version": "2.5.4",
+  "providers": [
+    "CPUExecutionProvider"
+  ],
+  "threads": 0,
+  "warmup_inferences": 5,
+  "unique_frames": 50,
+  "passes": 10,
+  "timed_inferences": 500,
+  "prepare_seconds": 1.222634,
+  "inference_seconds": 29.347186,
+  "inference_fps": 17.037,
+  "prepare_plus_inference_fps": 16.356
+}
