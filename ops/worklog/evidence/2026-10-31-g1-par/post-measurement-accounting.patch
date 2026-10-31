@@ -1,0 +1,12 @@
+--- /private/tmp/wbr-g1-par-training-measured.py	2026-10-31 17:51:14
++++ sim/rl/g1/training.py	2026-10-31 17:51:14
+@@ -226,7 +226,8 @@
+                        elapsed_s_including_checkpoints=elapsed, transitions_per_second=steps/elapsed,
+                        max_rollout_update_s=model.max_update, reset_on_resume=resume,
+                        parent_process_cpu_s=time.process_time()-model.cpu_start,
+-                       worker_process_cpu_s=raw.env_method('cpu_seconds'),
++                       worker_process_cpu_s=raw.env_method('cpu_seconds') if subprocess else [],
++                       environment_backend='subprocess' if subprocess else 'in_process',
+                        host=platform.platform(), device='cpu',
+                        torch_num_threads=torch.get_num_threads(),
+                        thread_env={key:os.environ[key] for key in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS')},

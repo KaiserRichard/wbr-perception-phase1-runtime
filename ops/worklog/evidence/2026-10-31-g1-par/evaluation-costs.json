@@ -1,0 +1,149 @@
+{
+  "baseline": {
+    "costs": [
+      {
+        "case": {
+          "delay_s": 0.002,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2000
+        },
+        "simulation_and_inference_s": 11.632767411880195,
+        "load_and_case_s": 11.63923002104275,
+        "duration_s": 9.999999999999348
+      },
+      {
+        "case": {
+          "delay_s": 0.005,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2004
+        },
+        "simulation_and_inference_s": 11.801310594193637,
+        "load_and_case_s": 11.807738177943975,
+        "duration_s": 9.999999999999346
+      },
+      {
+        "case": {
+          "delay_s": 0.006,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2008
+        },
+        "simulation_and_inference_s": 11.81360227894038,
+        "load_and_case_s": 11.81955282506533,
+        "duration_s": 9.999999999999348
+      },
+      {
+        "case": {
+          "delay_s": 0.008,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2012
+        },
+        "simulation_and_inference_s": 11.787571859080344,
+        "load_and_case_s": 11.794052381068468,
+        "duration_s": 9.999999999999346
+      },
+      {
+        "case": {
+          "delay_s": 0.01,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2016
+        },
+        "simulation_and_inference_s": 11.90189893101342,
+        "load_and_case_s": 11.907531755976379,
+        "duration_s": 9.999999999999348
+      }
+    ],
+    "five_case_wall_s": 21.527971599949524,
+    "projected_200_case_wall_s": 485.7020299094729
+  },
+  "policy": {
+    "costs": [
+      {
+        "case": {
+          "delay_s": 0.002,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2000
+        },
+        "simulation_and_inference_s": 11.882543745916337,
+        "load_and_case_s": 19.09803369292058,
+        "duration_s": 9.999999999999348
+      },
+      {
+        "case": {
+          "delay_s": 0.005,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2004
+        },
+        "simulation_and_inference_s": 11.831797593040392,
+        "load_and_case_s": 19.046375527977943,
+        "duration_s": 9.999999999999346
+      },
+      {
+        "case": {
+          "delay_s": 0.006,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2008
+        },
+        "simulation_and_inference_s": 11.914168702904135,
+        "load_and_case_s": 19.129392861155793,
+        "duration_s": 9.999999999999348
+      },
+      {
+        "case": {
+          "delay_s": 0.008,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2012
+        },
+        "simulation_and_inference_s": 11.961022460833192,
+        "load_and_case_s": 19.172539129154757,
+        "duration_s": 9.999999999999346
+      },
+      {
+        "case": {
+          "delay_s": 0.01,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2016
+        },
+        "simulation_and_inference_s": 11.916690320940688,
+        "load_and_case_s": 19.128867948893458,
+        "duration_s": 9.999999999999348
+      }
+    ],
+    "five_case_wall_s": 25.053881644038484,
+    "projected_200_case_wall_s": 491.53375761653297
+  },
+  "projected_1200_case_s": 2943.3708179921377,
+  "jobs": 5,
+  "development_only": true,
+  "counts_as_final": false,
+  "method": "Pool startup/load once per controller + 40 cases per worker; worst of five measured development delays"
+}

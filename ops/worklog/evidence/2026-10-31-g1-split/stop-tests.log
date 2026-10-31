@@ -1,0 +1,17 @@
+test_cumulative_cap_and_unlimited_resume_past_old_90_minutes (sim.rl.g1.tests.test_wall_caps.WallCapTests.test_cumulative_cap_and_unlimited_resume_past_old_90_minutes) ... G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmptr6al5yl/checkpoints/000000008-3653e928
+RESUME: RNG/samplers/optimizer/normalizer restored; active episodes reset (discontinuity).
+RESUME: RNG/samplers/optimizer/normalizer restored; active episodes reset (discontinuity).
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmptr6al5yl/checkpoints/000000032-b4be9d5b
+RESUME: RNG/samplers/optimizer/normalizer restored; active episodes reset (discontinuity).
+ok
+test_full_ignores_historical_throughput_gate_only_when_uncapped (sim.rl.g1.tests.test_wall_caps.WallCapTests.test_full_ignores_historical_throughput_gate_only_when_uncapped) ... In /Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/lib/python3.12/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+In /Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/lib/python3.12/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+ok
+test_global_stop_checkpoints_active_update_and_blocks_queued_seeds (sim.rl.g1.tests.test_wall_caps.WallCapTests.test_global_stop_checkpoints_active_update_and_blocks_queued_seeds) ... G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpe7prqcs_/seed-0/checkpoints/000000008-29013a36
+ok
+test_invalid_caps (sim.rl.g1.tests.test_wall_caps.WallCapTests.test_invalid_caps) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 4.588s
+
+OK

@@ -1,0 +1,23 @@
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpvmdkf0in/single/seed-0/checkpoints/000000064-6df3d39e
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpvmdkf0in/single/seed-1/checkpoints/000000064-75f26b8f
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpvmdkf0in/single/seed-2/checkpoints/000000064-109dfd28
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpvmdkf0in/single/seed-3/checkpoints/000000064-d397b383
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpvmdkf0in/single/seed-4/checkpoints/000000064-c10e0c7b
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpvmdkf0in/kaggle/seed-1/checkpoints/000000064-eee53354
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpvmdkf0in/kaggle/seed-0/checkpoints/000000064-45adc364
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpvmdkf0in/kaggle/seed-2/checkpoints/000000064-d689dde4
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpvmdkf0in/colab/seed-3/checkpoints/000000064-4410c646
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpvmdkf0in/colab/seed-4/checkpoints/000000064-bcf6ceef
+test_refuses_corrupt_checkpoint_and_wrong_seed (sim.rl.g1.tests.test_split.SplitTests.test_refuses_corrupt_checkpoint_and_wrong_seed) ... ok
+test_refuses_mismatched_and_incomplete_parts (sim.rl.g1.tests.test_split.SplitTests.test_refuses_mismatched_and_incomplete_parts) ... ok
+test_refuses_missing_duplicate_or_existing_destination (sim.rl.g1.tests.test_split.SplitTests.test_refuses_missing_duplicate_or_existing_destination) ... ok
+test_seed_parser_and_resume_contract (sim.rl.g1.tests.test_split.SplitTests.test_seed_parser_and_resume_contract) ... ok
+test_single_machine_equals_split_merge (sim.rl.g1.tests.test_split.SplitTests.test_single_machine_equals_split_merge) ... ok
+test_subset_queue_skips_final_evaluation_and_keeps_gates (sim.rl.g1.tests.test_split.SplitTests.test_subset_queue_skips_final_evaluation_and_keeps_gates) ... In /Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/lib/python3.12/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+In /Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/lib/python3.12/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 122.565s
+
+OK

@@ -1,0 +1,16 @@
+test_five_seed_paired_interval_and_individual_engineering (test_metrics.MetricsTests.test_five_seed_paired_interval_and_individual_engineering) ... ok
+test_policy_numerical_failure_invalidates_comparison (test_metrics.MetricsTests.test_policy_numerical_failure_invalidates_comparison) ... FAIL
+test_thresholds_and_failed_precision (test_metrics.MetricsTests.test_thresholds_and_failed_precision) ... ok
+
+======================================================================
+FAIL: test_policy_numerical_failure_invalidates_comparison (test_metrics.MetricsTests.test_policy_numerical_failure_invalidates_comparison)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/.worktrees/wbr-c1-g1/sim/rl/g1/tests/test_metrics.py", line 48, in test_policy_numerical_failure_invalidates_comparison
+    self.assertFalse(result['valid'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.416s
+
+FAILED (failures=1)

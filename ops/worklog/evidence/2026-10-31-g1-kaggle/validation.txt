@@ -1,0 +1,18 @@
+G1-KAGGLE local validation · 2026-10-31 · no cloud service execution
+PASS nbformat: kaggle_g1.ipynb, colab_g1.ipynb (13 cells each)
+PASS Python compile: 6 code cells + embedded supervisor per notebook
+PASS make_bundle.sh: bash syntax; default invocation; external cwd; spaces in output path
+Bundle: sim/rl/g1/cloud/g1_code.zip, 87683 bytes, 32 allowed files + manifest
+PASS bundle CRC, manifest membership/hashes, no venv/data/results/checkpoints
+PASS both notebook loaders: zip and expanded source, recovery restore, traversal rejection
+PASS real snapshot selection: latest verified checkpoint; corrupt/incomplete excluded
+PASS real learning-curve plotting from temporary fixture episodes
+PASS mocked supervisor smoke→run, --jobs4, completed-run reuse
+PASS mocked supervisor retained smoke, recorded STOP clearing, resume
+PASS mocked supervisor failed-process status + finally recovery export
+PASS mocked supervisor interrupted smoke retained without retry
+PASS actual extracted-bundle EnvironmentTests: 6 tests, 6.767 seconds
+Local commands/temporary validators: ops/worklog/sessions/2026-10-31-g1-kaggle.md
+Not run: cloud Linux pip/bootstrap, Kaggle commit, Colab Drive auth, real cloud training
+ESTIMATE only: 4 vCPU, two training waves, 8.230721 h uncapped before setup/export
+Unchanged 90-minute/seed cap means NO-GO at assumed ~200-minute seed duration

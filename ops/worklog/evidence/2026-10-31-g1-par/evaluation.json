@@ -1,0 +1,683 @@
+{
+  "jobs": 5,
+  "development_only": true,
+  "counts_as_final": false,
+  "cases": [
+    {
+      "delay_s": 0.002,
+      "command": 0.0,
+      "pitch_deg": 5.0,
+      "push_N": -6.0,
+      "variant": 0,
+      "noise_seed": 2000
+    },
+    {
+      "delay_s": 0.005,
+      "command": 0.0,
+      "pitch_deg": 5.0,
+      "push_N": -6.0,
+      "variant": 0,
+      "noise_seed": 2004
+    },
+    {
+      "delay_s": 0.006,
+      "command": 0.0,
+      "pitch_deg": 5.0,
+      "push_N": -6.0,
+      "variant": 0,
+      "noise_seed": 2008
+    },
+    {
+      "delay_s": 0.008,
+      "command": 0.0,
+      "pitch_deg": 5.0,
+      "push_N": -6.0,
+      "variant": 0,
+      "noise_seed": 2012
+    },
+    {
+      "delay_s": 0.01,
+      "command": 0.0,
+      "pitch_deg": 5.0,
+      "push_N": -6.0,
+      "variant": 0,
+      "noise_seed": 2016
+    }
+  ],
+  "baseline": {
+    "rows": [
+      {
+        "case": {
+          "delay_s": 0.002,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2000
+        },
+        "survived": true,
+        "strict": true,
+        "numerical_failure": false,
+        "collision": false,
+        "caps_respected": true,
+        "E": 0.0022983418439923137,
+        "E_observed": 1.5253547718267069,
+        "final_window_complete": true,
+        "recovery_s": [
+          1.44,
+          3.4200000000000004
+        ],
+        "x_rmse": 0.00011011588662677644,
+        "v_rmse": 0.0005712736760241843,
+        "peak_angles_rates": [
+          0.06777715512629506,
+          0.08731882735763155,
+          0.4145610352244981,
+          0.4323921451103244
+        ],
+        "effort_Nm2_s": 0.0223459766867573,
+        "peak_torque_Nm": [
+          0.37408521551804297,
+          0.7732898945332654
+        ],
+        "saturation_channel_seconds": 0.0,
+        "torque_slew_500hz_peak": 262.96134874552376,
+        "request_slew_100hz_peak": 0.0,
+        "rejected_requests": 0,
+        "clipped_requests": 0,
+        "actuator_clipped_ticks": 0,
+        "action_mean": 0.0,
+        "action_sd": 0.0,
+        "duration_s": 9.999999999999348,
+        "inference_mean_s": 1.7950760666280984e-06,
+        "inference_max_s": 3.0028168112039566e-05
+      },
+      {
+        "case": {
+          "delay_s": 0.005,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2004
+        },
+        "survived": true,
+        "strict": true,
+        "numerical_failure": false,
+        "collision": false,
+        "caps_respected": true,
+        "E": 0.0025674704778124863,
+        "E_observed": 1.5775475909350936,
+        "final_window_complete": true,
+        "recovery_s": [
+          1.478,
+          3.4260000000000006
+        ],
+        "x_rmse": 6.711149787788894e-05,
+        "v_rmse": 0.0005149186485129548,
+        "peak_angles_rates": [
+          0.06832572740782533,
+          0.08749014561488727,
+          0.43646952679316775,
+          0.43193891484781716
+        ],
+        "effort_Nm2_s": 0.023668700565217405,
+        "peak_torque_Nm": [
+          0.38059521594150963,
+          0.7980624929777875
+        ],
+        "saturation_channel_seconds": 0.0,
+        "torque_slew_500hz_peak": 189.2962725397106,
+        "request_slew_100hz_peak": 0.0,
+        "rejected_requests": 0,
+        "clipped_requests": 0,
+        "actuator_clipped_ticks": 0,
+        "action_mean": 0.0,
+        "action_sd": 0.0,
+        "duration_s": 9.999999999999346,
+        "inference_mean_s": 1.9705386366695164e-06,
+        "inference_max_s": 2.5006942451000214e-05
+      },
+      {
+        "case": {
+          "delay_s": 0.006,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2008
+        },
+        "survived": true,
+        "strict": true,
+        "numerical_failure": false,
+        "collision": false,
+        "caps_respected": true,
+        "E": 0.002126740656644423,
+        "E_observed": 1.596536765430953,
+        "final_window_complete": true,
+        "recovery_s": [
+          1.468,
+          3.4340000000000006
+        ],
+        "x_rmse": 0.00012994868166556076,
+        "v_rmse": 0.0004555590303487373,
+        "peak_angles_rates": [
+          0.06855225357601509,
+          0.08755903431887804,
+          0.4443519428278357,
+          0.4316012934671779
+        ],
+        "effort_Nm2_s": 0.023819993610975573,
+        "peak_torque_Nm": [
+          0.3853250460285337,
+          0.8199323202466762
+        ],
+        "saturation_channel_seconds": 0.0,
+        "torque_slew_500hz_peak": 284.2808085149542,
+        "request_slew_100hz_peak": 0.0,
+        "rejected_requests": 0,
+        "clipped_requests": 0,
+        "actuator_clipped_ticks": 0,
+        "action_mean": 0.0,
+        "action_sd": 0.0,
+        "duration_s": 9.999999999999348,
+        "inference_mean_s": 1.899294788017869e-06,
+        "inference_max_s": 3.185705281794071e-05
+      },
+      {
+        "case": {
+          "delay_s": 0.008,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2012
+        },
+        "survived": true,
+        "strict": true,
+        "numerical_failure": false,
+        "collision": false,
+        "caps_respected": true,
+        "E": 0.0024205999290098333,
+        "E_observed": 1.6347636522824018,
+        "final_window_complete": true,
+        "recovery_s": [
+          1.464,
+          3.456
+        ],
+        "x_rmse": 0.0001452205768152328,
+        "v_rmse": 0.000624059647734923,
+        "peak_angles_rates": [
+          0.06892649113687982,
+          0.08775595270208254,
+          0.4601897385631554,
+          0.43722523240500966
+        ],
+        "effort_Nm2_s": 0.02478876001869172,
+        "peak_torque_Nm": [
+          0.4003361127251854,
+          0.8602528838827805
+        ],
+        "saturation_channel_seconds": 0.0,
+        "torque_slew_500hz_peak": 312.758696592407,
+        "request_slew_100hz_peak": 0.0,
+        "rejected_requests": 0,
+        "clipped_requests": 0,
+        "actuator_clipped_ticks": 0,
+        "action_mean": 0.0,
+        "action_sd": 0.0,
+        "duration_s": 9.999999999999346,
+        "inference_mean_s": 1.947744283825159e-06,
+        "inference_max_s": 7.983716204762459e-05
+      },
+      {
+        "case": {
+          "delay_s": 0.01,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2016
+        },
+        "survived": true,
+        "strict": true,
+        "numerical_failure": false,
+        "collision": false,
+        "caps_respected": true,
+        "E": 0.002701315944340245,
+        "E_observed": 1.6725679249485268,
+        "final_window_complete": true,
+        "recovery_s": [
+          1.448,
+          3.462
+        ],
+        "x_rmse": 5.14651776344349e-05,
+        "v_rmse": 0.000491778088621132,
+        "peak_angles_rates": [
+          0.06927150837017297,
+          0.08801019197304485,
+          0.4774195915197503,
+          0.4363244492079359
+        ],
+        "effort_Nm2_s": 0.02576774275471662,
+        "peak_torque_Nm": [
+          0.4079533306219287,
+          0.8953930188624053
+        ],
+        "saturation_channel_seconds": 0.0,
+        "torque_slew_500hz_peak": 310.0304703467323,
+        "request_slew_100hz_peak": 0.0,
+        "rejected_requests": 0,
+        "clipped_requests": 0,
+        "actuator_clipped_ticks": 0,
+        "action_mean": 0.0,
+        "action_sd": 0.0,
+        "duration_s": 9.999999999999348,
+        "inference_mean_s": 1.9529471173882482e-06,
+        "inference_max_s": 2.5420915335416794e-05
+      }
+    ],
+    "strata": {
+      "overall": {
+        "n": 5,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.0024228937703598603,
+        "E_observed_all_cases": 1.6013541410847363
+      },
+      "reference": {
+        "n": 2,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.0024329061609024,
+        "E_observed_all_cases": 1.5514511813809002
+      },
+      "difficult": {
+        "n": 3,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.0024162188433315005,
+        "E_observed_all_cases": 1.6346227808872937
+      },
+      "2ms": {
+        "n": 1,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.0022983418439923137,
+        "E_observed_all_cases": 1.5253547718267069
+      },
+      "5ms": {
+        "n": 1,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.0025674704778124863,
+        "E_observed_all_cases": 1.5775475909350936
+      },
+      "6ms": {
+        "n": 1,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.002126740656644423,
+        "E_observed_all_cases": 1.596536765430953
+      },
+      "8ms": {
+        "n": 1,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.0024205999290098333,
+        "E_observed_all_cases": 1.6347636522824018
+      },
+      "10ms": {
+        "n": 1,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.002701315944340245,
+        "E_observed_all_cases": 1.6725679249485268
+      }
+    },
+    "elapsed_s": 15.337910598842427
+  },
+  "policy": {
+    "rows": [
+      {
+        "case": {
+          "delay_s": 0.002,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2000
+        },
+        "survived": true,
+        "strict": true,
+        "numerical_failure": false,
+        "collision": false,
+        "caps_respected": true,
+        "E": 0.002305838946005338,
+        "E_observed": 1.5258724747202053,
+        "final_window_complete": true,
+        "recovery_s": [
+          1.44,
+          3.384
+        ],
+        "x_rmse": 0.00017419495115660226,
+        "v_rmse": 0.0005318417876457634,
+        "peak_angles_rates": [
+          0.06798205780775143,
+          0.08731882947499545,
+          0.414752795195666,
+          0.4328299373106542
+        ],
+        "effort_Nm2_s": 0.02242527357624633,
+        "peak_torque_Nm": [
+          0.3745673190480264,
+          0.7735517165006933
+        ],
+        "saturation_channel_seconds": 0.0,
+        "torque_slew_500hz_peak": 263.00382874423735,
+        "request_slew_100hz_peak": 0.1,
+        "rejected_requests": 0,
+        "clipped_requests": 44,
+        "actuator_clipped_ticks": 0,
+        "action_mean": -0.007934061927022413,
+        "action_sd": 0.016432617198160842,
+        "duration_s": 9.999999999999348,
+        "inference_mean_s": 0.0014708153039682656,
+        "inference_max_s": 0.07556557096540928
+      },
+      {
+        "case": {
+          "delay_s": 0.005,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2004
+        },
+        "survived": true,
+        "strict": true,
+        "numerical_failure": false,
+        "collision": false,
+        "caps_respected": true,
+        "E": 0.003073465613602467,
+        "E_observed": 1.565042410661295,
+        "final_window_complete": true,
+        "recovery_s": [
+          1.478,
+          3.4120000000000004
+        ],
+        "x_rmse": 0.000970047961874101,
+        "v_rmse": 0.000520940795490602,
+        "peak_angles_rates": [
+          0.0683879965148651,
+          0.08749014491805196,
+          0.4358611548518443,
+          0.43230556522109403
+        ],
+        "effort_Nm2_s": 0.023701832443573947,
+        "peak_torque_Nm": [
+          0.38054698532322295,
+          0.7980360115594956
+        ],
+        "saturation_channel_seconds": 0.0,
+        "torque_slew_500hz_peak": 189.29075695943587,
+        "request_slew_100hz_peak": 0.1,
+        "rejected_requests": 0,
+        "clipped_requests": 62,
+        "actuator_clipped_ticks": 0,
+        "action_mean": 0.01863518353411928,
+        "action_sd": 0.01736289511183518,
+        "duration_s": 9.999999999999346,
+        "inference_mean_s": 0.001403551526600495,
+        "inference_max_s": 0.0075095160864293575
+      },
+      {
+        "case": {
+          "delay_s": 0.006,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2008
+        },
+        "survived": true,
+        "strict": true,
+        "numerical_failure": false,
+        "collision": false,
+        "caps_respected": true,
+        "E": 0.0029416993417096596,
+        "E_observed": 1.5820530264955257,
+        "final_window_complete": true,
+        "recovery_s": [
+          1.448,
+          3.4260000000000006
+        ],
+        "x_rmse": 0.0012719932929103274,
+        "v_rmse": 0.0004651720095397891,
+        "peak_angles_rates": [
+          0.06861724314575515,
+          0.08755902884493433,
+          0.44391121142132794,
+          0.43171492533072653
+        ],
+        "effort_Nm2_s": 0.02383964046457725,
+        "peak_torque_Nm": [
+          0.3850514970117309,
+          0.8197837316603779
+        ],
+        "saturation_channel_seconds": 0.0,
+        "torque_slew_500hz_peak": 284.25670507988275,
+        "request_slew_100hz_peak": 0.1,
+        "rejected_requests": 0,
+        "clipped_requests": 68,
+        "actuator_clipped_ticks": 0,
+        "action_mean": 0.025091136650182307,
+        "action_sd": 0.01617757193583675,
+        "duration_s": 9.999999999999348,
+        "inference_mean_s": 0.0013878036215901374,
+        "inference_max_s": 0.007959035923704505
+      },
+      {
+        "case": {
+          "delay_s": 0.008,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2012
+        },
+        "survived": true,
+        "strict": true,
+        "numerical_failure": false,
+        "collision": false,
+        "caps_respected": true,
+        "E": 0.003201256234485988,
+        "E_observed": 1.6184078860481703,
+        "final_window_complete": true,
+        "recovery_s": [
+          1.464,
+          3.4600000000000004
+        ],
+        "x_rmse": 0.001040561775416707,
+        "v_rmse": 0.0006430963602277077,
+        "peak_angles_rates": [
+          0.06897716094642642,
+          0.08775594170772343,
+          0.4600441900776599,
+          0.43715848533407986
+        ],
+        "effort_Nm2_s": 0.024795467820238747,
+        "peak_torque_Nm": [
+          0.3997864583095566,
+          0.8599543181137439
+        ],
+        "saturation_channel_seconds": 0.0,
+        "torque_slew_500hz_peak": 312.7102644698069,
+        "request_slew_100hz_peak": 0.1,
+        "rejected_requests": 0,
+        "clipped_requests": 74,
+        "actuator_clipped_ticks": 0,
+        "action_mean": 0.027674670479027556,
+        "action_sd": 0.014994874652419865,
+        "duration_s": 9.999999999999346,
+        "inference_mean_s": 0.0014610595703125,
+        "inference_max_s": 0.04981820797547698
+      },
+      {
+        "case": {
+          "delay_s": 0.01,
+          "command": 0.0,
+          "pitch_deg": 5.0,
+          "push_N": -6.0,
+          "variant": 0,
+          "noise_seed": 2016
+        },
+        "survived": true,
+        "strict": true,
+        "numerical_failure": false,
+        "collision": false,
+        "caps_respected": true,
+        "E": 0.0034834111244909254,
+        "E_observed": 1.656391058109915,
+        "final_window_complete": true,
+        "recovery_s": [
+          1.448,
+          3.4600000000000004
+        ],
+        "x_rmse": 0.0012172383260713848,
+        "v_rmse": 0.0005315602066909993,
+        "peak_angles_rates": [
+          0.06929662692292705,
+          0.08801017410858662,
+          0.4760180570913369,
+          0.43587449134608663
+        ],
+        "effort_Nm2_s": 0.02575730260278359,
+        "peak_torque_Nm": [
+          0.4070597216261794,
+          0.8949076210388861
+        ],
+        "saturation_channel_seconds": 0.0,
+        "torque_slew_500hz_peak": 309.95173108946784,
+        "request_slew_100hz_peak": 0.1,
+        "rejected_requests": 0,
+        "clipped_requests": 31,
+        "actuator_clipped_ticks": 0,
+        "action_mean": 0.027446314907632767,
+        "action_sd": 0.013707044628365054,
+        "duration_s": 9.999999999999348,
+        "inference_mean_s": 0.0014539081358816474,
+        "inference_max_s": 0.04685321799479425
+      }
+    ],
+    "strata": {
+      "overall": {
+        "n": 5,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.0030011342520588754,
+        "E_observed_all_cases": 1.5895533712070224
+      },
+      "reference": {
+        "n": 2,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.0026896522798039025,
+        "E_observed_all_cases": 1.5454574426907501
+      },
+      "difficult": {
+        "n": 3,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.0032087889002288573,
+        "E_observed_all_cases": 1.618950656884537
+      },
+      "2ms": {
+        "n": 1,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.002305838946005338,
+        "E_observed_all_cases": 1.5258724747202053
+      },
+      "5ms": {
+        "n": 1,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.003073465613602467,
+        "E_observed_all_cases": 1.565042410661295
+      },
+      "6ms": {
+        "n": 1,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.0029416993417096596,
+        "E_observed_all_cases": 1.5820530264955257
+      },
+      "8ms": {
+        "n": 1,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.003201256234485988,
+        "E_observed_all_cases": 1.6184078860481703
+      },
+      "10ms": {
+        "n": 1,
+        "strict": 1.0,
+        "survival": 1.0,
+        "failed": 0,
+        "strict_failed": 0,
+        "numerical_failures": 0,
+        "E": 0.0034834111244909254,
+        "E_observed_all_cases": 1.656391058109915
+      }
+    },
+    "elapsed_s": 42.10051169991493
+  },
+  "elapsed_s": 60.16604261286557,
+  "projected_1200_case_s": 9033.618763936684
+}

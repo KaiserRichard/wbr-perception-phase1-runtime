@@ -1,4 +1,5 @@
 """Offline stdlib bootstrap; all durable outputs go beside this file on USB."""
+import argparse
 import datetime
 import json
 import os
@@ -13,8 +14,21 @@ ROOT = Path(__file__).resolve().parent
 
 
 def main():
-    mode = sys.argv[1] if len(sys.argv) > 1 else 'run'
-    minutes = sys.argv[2] if len(sys.argv) > 2 else '80'
+    parser = argparse.ArgumentParser(description='Frozen G1 recipe with optional runtime wall cap')
+    parser.add_argument('mode', choices=['run', 'resume', 'smoke'], nargs='?', default='run')
+    parser.add_argument('--jobs', type=int)
+    parser.add_argument('--seed-wall-cap-min', type=float,
+                        help='Cumulative per-seed minutes (default unlimited)')
+    args = parser.parse_args()
+    if args.jobs is not None and args.jobs < 1:
+        parser.error('--jobs must be at least 1')
+    import math
+    if args.seed_wall_cap_min is not None and (not math.isfinite(args.seed_wall_cap_min) or args.seed_wall_cap_min <= 0):
+        parser.error('--seed-wall-cap-min must be a finite positive number')
+    mode = args.mode
+    job_args = [] if args.jobs is None else ['--jobs', str(args.jobs)]
+    if args.seed_wall_cap_min is not None:
+        job_args += ['--seed-wall-cap-min', str(args.seed_wall_cap_min)]
     stamp = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
     receipt = ROOT / 'runs' / f'launch-{stamp}'
     receipt.mkdir(parents=True)
@@ -42,7 +56,7 @@ def main():
                 for block in iter(lambda: stream.read(1024*1024), b''): h.update(block)
             if h.hexdigest() != expected:
                 raise RuntimeError(f'Bundle hash mismatch: {name}')
-        work = Path(os.environ.get('WBR_WORK', str(Path(os.environ.get('LOCALAPPDATA', str(ROOT))) / 'WBR-C1-T11')))
+        work = Path(os.environ.get('WBR_WORK', str(Path(os.environ.get('LOCALAPPDATA', str(ROOT))) / 'WBR-G1')))
         work.mkdir(parents=True, exist_ok=True)
         for name in ('TEMP', 'TMP', 'UV_CACHE_DIR'):
             os.environ[name] = str(work / 'cache')
@@ -50,7 +64,7 @@ def main():
         os.environ.update(UV_PYTHON_DOWNLOADS='never', UV_OFFLINE='1', PYTHONNOUSERSITE='1')
         (receipt / 'host.json').write_text(json.dumps({'platform': platform.platform(),
             'machine': platform.machine(), 'cpu': platform.processor(), 'command': sys.argv,
-            'work': str(work), 'usb': str(ROOT), 'device': 'CPU PPO + CPU MuJoCo'}, indent=2))
+            'work': str(work), 'usb': str(ROOT), 'device': 'G1 CPU PPO + CPU MuJoCo'}, indent=2))
         try:
             gpu = subprocess.run(['nvidia-smi'], capture_output=True, text=True)
             (receipt / 'nvidia-smi.txt').write_text(gpu.stdout + gpu.stderr)
@@ -70,13 +84,12 @@ def main():
              '--find-links', ROOT / 'wheels', '--require-hashes', '-r', ROOT / 'locks/win-cpu.txt'])
         (receipt / 'setup.json').write_text(json.dumps({'elapsed_s': time.monotonic()-started}))
         if mode == 'resume':
-            # Runner searches all seed folders for the newest verified snapshot.
-            run([python, ROOT / 'portable.py', 'resume-latest', '--run', ROOT / 'runs', '--minutes', minutes])
+            run([python, ROOT / 'portable.py', 'resume-latest', '--run', ROOT / 'runs', *job_args])
+        elif mode == 'smoke':
+            run([python, ROOT / 'portable.py', 'smoke', '--run', ROOT / 'runs' / f'g1-smoke-{stamp}',
+                 '--smoke-seconds', str(600-(time.monotonic()-started)), *job_args])
         else:
-            smoke = ROOT / 'runs' / f'smoke-{stamp}'
-            run([python, ROOT / 'portable.py', 'smoke', '--run', smoke,
-                 '--smoke-seconds', str(600-(time.monotonic()-started))])
-            run([python, ROOT / 'portable.py', 'train', '--run', ROOT / 'runs' / f'seed-{stamp}', '--minutes', minutes])
+            run([python, ROOT / 'portable.py', 'run', '--run', ROOT / 'runs' / f'g1-{stamp}', *job_args])
         (receipt / 'success.txt').write_text('USB checkpoint reload verified; see segment receipts.\n')
 
 

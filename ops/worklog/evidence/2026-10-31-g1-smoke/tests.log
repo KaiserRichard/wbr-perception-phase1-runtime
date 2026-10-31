@@ -1,0 +1,28 @@
+test_fractional_actual_arrival (test_g1.DelayTests.test_fractional_actual_arrival) ... ok
+test_predictor_event_partition (test_g1.DelayTests.test_predictor_event_partition) ... ok
+test_recovery_completion_deadline (test_g1.DelayTests.test_recovery_completion_deadline) ... ok
+test_bounds_ramp_and_reversal (test_g1.EnvironmentTests.test_bounds_ramp_and_reversal) ... ok
+test_frozen_panels (test_g1.EnvironmentTests.test_frozen_panels) ... ok
+test_model_independent (test_g1.EnvironmentTests.test_model_independent) ... ok
+test_original_position_reference (test_g1.EnvironmentTests.test_original_position_reference) ... ok
+test_step_shapes_and_seed (test_g1.EnvironmentTests.test_step_shapes_and_seed) ... ok
+test_zero_action_identity (test_g1.EnvironmentTests.test_zero_action_identity) ... ok
+test_resume_and_corrupt_checkpoint_fallback (test_g1.ResumeTests.test_resume_and_corrupt_checkpoint_fallback) ... /Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/lib/python3.12/site-packages/matplotlib/_fontconfig_pattern.py:64: PyparsingDeprecationWarning: 'oneOf' deprecated - use 'one_of'
+  prop = Group((name + Suppress("=") + comma_separated(value)) | oneOf(_CONSTANTS))
+/Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/lib/python3.12/site-packages/matplotlib/_fontconfig_pattern.py:85: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+  parse = parser.parseString(pattern)
+/Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/lib/python3.12/site-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+  parser.resetCache()
+/Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/lib/python3.12/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+  ParserElement.enablePackrat()
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpupw793gs/checkpoints/000000008-d95b0106
+RESUME: RNG/samplers/optimizer/normalizer restored; active episodes reset (discontinuity).
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpupw793gs/checkpoints/000000032-ff901b88
+ok
+test_five_seed_paired_interval_and_individual_engineering (test_metrics.MetricsTests.test_five_seed_paired_interval_and_individual_engineering) ... ok
+test_thresholds_and_failed_precision (test_metrics.MetricsTests.test_thresholds_and_failed_precision) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 12.262s
+
+OK

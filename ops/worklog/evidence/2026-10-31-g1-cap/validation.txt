@@ -1,0 +1,12 @@
+colab_g1.ipynb: nbformat, 6 code cells and embedded supervisor PASS
+kaggle_g1.ipynb: nbformat, 6 code cells and embedded supervisor PASS
+ZIP CRC, exact manifest membership, all file hashes/current bytes PASS; 34 files + manifest
+Scientific recipe/config, model, cases, metrics, evaluation, original protocol functions, PLAN-v2/parameter manifest unchanged: PASS
+Only config change: obsolete runtime seed_wall_seconds 5400 -> null; CLI controls optional wall cap.
+Bundle: /Users/quockaiser/.worktrees/wbr-c1-g1/sim/rl/g1/cloud/g1_code.zip
+Bundle bytes: 93574
+G1 suite: 20/20 PASS (99.028s); final cap/configuration regressions: 6/6 PASS (4.986s); 21 distinct tests passed.
+Real Mac launcher/training/Windows bootstrap --help accept --seed-wall-cap-min: PASS
+Both notebooks: zip/expanded inputs, recovery restore, traversal rejection: PASS
+Existing supervisor fixtures (smoke/full, completed reuse, STOP clearing, failure export, interrupted smoke): PASS
+Kaggle/Colab service execution, Windows offline runtime and scientific completion were not performed.

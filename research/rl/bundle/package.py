@@ -25,6 +25,10 @@ def seal(out):
 def package(root, out):
     shutil.copytree(root / 'sim', out / 'source/sim', ignore=shutil.ignore_patterns(
         '__pycache__', '*.pyc', '.DS_Store', '*.npz', '*.zip', '*.pkl'))
+    protocols=out/'source/research/rl'
+    protocols.mkdir(parents=True,exist_ok=True)
+    for name in ('PLAN-v2.md','params_manifest.yaml','REVIEW-2026-10-30.md'):
+        shutil.copy2(root/'research/rl'/name,protocols/name)
     for name in ('portable.py', 'launch.py', 'run.bat', 'resume.bat', 'CHECKLIST.md'):
         shutil.copy2(root / 'research/rl/bundle' / name, out / name)
     lock = []
@@ -40,10 +44,10 @@ def package(root, out):
                         dest.write_bytes(z.read(name))
     (out / 'locks/win-cpu.txt').write_text('\n'.join(lock)+'\n')
     (out / 'source/revision.txt').write_text(subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True))
-    (out / 'source/working.patch').write_bytes(subprocess.check_output(['git', 'diff', '--', 'sim'], cwd=root))
+    (out / 'source/working.patch').write_bytes(subprocess.check_output(['git', 'diff', '--', 'sim', 'research/rl/bundle'], cwd=root))
     (out / 'bundle.json').write_text(json.dumps({
-        'ticket': 'C1-T11', 'python': '3.12.7+20241016', 'uv': '0.5.4',
-        'platform': 'win_amd64/cp312', 'backend': 'cpu', 'training': 'legacy PPO v2 portability benchmark',
+        'ticket': 'G1-CODE', 'python': '3.12.7+20241016', 'uv': '0.5.4',
+        'platform': 'win_amd64/cp312', 'backend': 'cpu', 'training': 'G1 bounded velocity-reference governor, parallel seeds0..4 x1M (--jobs)',
         'windows_validation': 'PENDING conductor', 'source_identity': 'SHA256SUMS covers copied working tree',
         'checkpoint_minutes': 5}, indent=2)+'\n')
     (out / 'licenses/UV-SOURCE.txt').write_text('uv 0.5.4: MIT OR Apache-2.0; https://github.com/astral-sh/uv/tree/0.5.4\n')

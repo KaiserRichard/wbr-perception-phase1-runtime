@@ -2,7 +2,7 @@
 # Networked Mac only. Never run on the cafe PC. Output must be a new directory.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
-OUT="${1:?usage: build_bundle.sh /absolute/path/WBR-C1-T11}"
+OUT="${1:?usage: build_bundle.sh /absolute/path/WBR-G1}"
 mkdir "$OUT"
 OUT="$(cd "$OUT" && pwd)"
 export BUNDLE_ROOT="$ROOT" BUNDLE_OUT="$OUT"
@@ -41,7 +41,7 @@ lines.append('tzdata==2025.2')
 (out / 'locks/requested.txt').write_text('\n'.join(lines)+'\n')
 PY
 "$PY" -m pip download --platform win_amd64 --python-version 312 --implementation cp --abi cp312 --only-binary=:all: --extra-index-url https://download.pytorch.org/whl/cpu -r "$OUT/locks/requested.txt" -d "$OUT/wheels"
-# No JAX/MJX/CUDA payload: frozen PPO v2 uses ordinary CPU MuJoCo + CPU torch.
+# No JAX/MJX/CUDA payload: G1 PPO uses ordinary CPU MuJoCo + CPU torch.
 "$PY" "$ROOT/research/rl/bundle/package.py" "$ROOT" "$OUT"
 # The build venv is Mac-specific; keep it outside the USB payload.
 mv "$OUT/.build-venv" "$OUT/../$(basename "$OUT")-mac-build-venv"

@@ -1,0 +1,43 @@
+{
+  "measured_aggregate_steps_per_second": 416.63408977568974,
+  "window": {
+    "startup_s": 34.10724559193477,
+    "initial_steps": [
+      2000,
+      2000,
+      2000,
+      2000,
+      2000
+    ],
+    "seconds": 120.00938287819736,
+    "final_steps": [
+      12000,
+      12000,
+      12000,
+      12000,
+      12000
+    ],
+    "completed_steps": [
+      10000,
+      10000,
+      10000,
+      10000,
+      10000
+    ]
+  },
+  "training_5M_hours": 3.3335939688388154,
+  "end_to_end_steps_per_second": 435.6846795987333,
+  "throughput_serial_reference": 338.7825000724824,
+  "tests": "15 PASS in100.933s after final receipt accounting correction; scientific values bit-identical; wall timing excluded",
+  "evaluation_1200_cases_seconds": 2943.3708179921377,
+  "evaluation_1200_cases_hours": 0.817603004997816,
+  "training_plus_evaluation_hours": 4.151196973836631,
+  "smoke_seconds": 600,
+  "pilot_training_cap_seconds": 1200,
+  "development_baseline_plus_pilot_eval_seconds": 118.17061741952784,
+  "whole_queue_uncapped_hours": 4.684022145342055,
+  "preregistered_seed_cap_seconds": 5400,
+  "projected_concurrent_seed_minutes": 200.0156381303289,
+  "actual_full_run_status": "NO-GO: projected seed time exceeds unchanged90min cap; readiness/pilot unresolved",
+  "caveat": "Short-window extrapolation; five frozen development cases and partial policy only. Final variants/learned policies, thermal behavior and USB performance are unmeasured. Includes pool/load once per controller, not per case."
+}

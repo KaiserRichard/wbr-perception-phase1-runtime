@@ -1,0 +1,9 @@
+{
+  "seed": 42,
+  "seconds": 600,
+  "transitions": 1000000,
+  "counts_as_final": false,
+  "counts_as_pilot": false,
+  "first_segment_deadline_seconds": 240,
+  "reserve_validation_seconds": 30
+}

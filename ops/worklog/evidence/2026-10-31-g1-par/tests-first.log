@@ -1,0 +1,35 @@
+test_fractional_actual_arrival (test_g1.DelayTests.test_fractional_actual_arrival) ... ok
+test_predictor_event_partition (test_g1.DelayTests.test_predictor_event_partition) ... ok
+test_recovery_completion_deadline (test_g1.DelayTests.test_recovery_completion_deadline) ... ok
+test_bounds_ramp_and_reversal (test_g1.EnvironmentTests.test_bounds_ramp_and_reversal) ... ok
+test_frozen_panels (test_g1.EnvironmentTests.test_frozen_panels) ... ok
+test_model_independent (test_g1.EnvironmentTests.test_model_independent) ... ok
+test_original_position_reference (test_g1.EnvironmentTests.test_original_position_reference) ... ok
+test_step_shapes_and_seed (test_g1.EnvironmentTests.test_step_shapes_and_seed) ... ok
+test_zero_action_identity (test_g1.EnvironmentTests.test_zero_action_identity) ... ok
+test_resume_and_corrupt_checkpoint_fallback (test_g1.ResumeTests.test_resume_and_corrupt_checkpoint_fallback) ... G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp6haks3kc/checkpoints/000000008-3067c831
+RESUME: RNG/samplers/optimizer/normalizer restored; active episodes reset (discontinuity).
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp6haks3kc/checkpoints/000000032-bd09bc59
+ok
+test_five_seed_paired_interval_and_individual_engineering (test_metrics.MetricsTests.test_five_seed_paired_interval_and_individual_engineering) ... ok
+test_policy_numerical_failure_invalidates_comparison (test_metrics.MetricsTests.test_policy_numerical_failure_invalidates_comparison) ... ok
+test_thresholds_and_failed_precision (test_metrics.MetricsTests.test_thresholds_and_failed_precision) ... ok
+test_job_limits (test_parallel.ParallelTests.test_job_limits) ... ok
+test_tiny_serial_parallel_bit_identity (test_parallel.ParallelTests.test_tiny_serial_parallel_bit_identity) ... G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpf67r4u9x/serial/seed-0/checkpoints/000000064-cfe06cd1
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpf67r4u9x/serial/seed-1/checkpoints/000000064-460b13ad
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpf67r4u9x/parallel/seed-1/checkpoints/000000064-5181cae5
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpf67r4u9x/parallel/seed-0/checkpoints/000000064-e8b7cb42
+FAIL
+
+======================================================================
+FAIL: test_tiny_serial_parallel_bit_identity (test_parallel.ParallelTests.test_tiny_serial_parallel_bit_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/quockaiser/.worktrees/wbr-c1-g1/sim/rl/g1/tests/test_parallel.py", line 52, in test_tiny_serial_parallel_bit_identity
+    self.assertEqual(pickle.dumps(s1['samplers']), pickle.dumps(s2['samplers']))
+AssertionError: b'\x80\x04\x95.\x03\x00\x00\x00\x00\x00\x00]\x94(]\x94([2072 chars]uee.' != b'\x80\x04\x95\x02\x03\x00\x00\x00\x00\x00\x00]\x94(]\x[1995 chars]uee.'
+
+----------------------------------------------------------------------
+Ran 15 tests in 28.901s
+
+FAILED (failures=1)

@@ -1,0 +1,11 @@
+--- a/sim/rl/g1/metrics.py
++++ b/sim/rl/g1/metrics.py
+@@ -89,7 +89,7 @@
+                         all(r['caps_respected'] and not r['numerical_failure'] for r in p))
+                    for s, p in zip(B, policies)]
+     regressions = all(s[k]['strict'] >= A[k]['strict']-.05-1e-12 for s in B for k in ('overall','reference'))
+-    valid = not any(r['numerical_failure'] for r in baseline)
++    valid = not any(r['numerical_failure'] for rows in [baseline, *policies] for r in rows)
+     ceiling = all(A[f'{d}ms']['strict'] >= .95 for d in DELAYS)
+     return dict(baseline=A, seeds={str(i):s for i,s in enumerate(B)}, seed_differences=diff.tolist(),
+                 mean_difficult_gain=mean, paired_seed_t95=[mean-half, mean+half], df=4,

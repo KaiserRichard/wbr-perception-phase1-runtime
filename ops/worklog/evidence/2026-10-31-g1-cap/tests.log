@@ -1,0 +1,252 @@
+test_fractional_actual_arrival (test_g1.DelayTests.test_fractional_actual_arrival) ... ok
+test_predictor_event_partition (test_g1.DelayTests.test_predictor_event_partition) ... ok
+test_recovery_completion_deadline (test_g1.DelayTests.test_recovery_completion_deadline) ... ok
+test_bounds_ramp_and_reversal (test_g1.EnvironmentTests.test_bounds_ramp_and_reversal) ... ok
+test_frozen_panels (test_g1.EnvironmentTests.test_frozen_panels) ... ok
+test_model_independent (test_g1.EnvironmentTests.test_model_independent) ... ok
+test_original_position_reference (test_g1.EnvironmentTests.test_original_position_reference) ... ok
+test_step_shapes_and_seed (test_g1.EnvironmentTests.test_step_shapes_and_seed) ... ok
+test_zero_action_identity (test_g1.EnvironmentTests.test_zero_action_identity) ... ok
+test_resume_and_corrupt_checkpoint_fallback (test_g1.ResumeTests.test_resume_and_corrupt_checkpoint_fallback) ... G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp45nx1ba7/checkpoints/000000008-5050c777
+RESUME: RNG/samplers/optimizer/normalizer restored; active episodes reset (discontinuity).
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp45nx1ba7/checkpoints/000000032-bab5073f
+ok
+test_five_seed_paired_interval_and_individual_engineering (test_metrics.MetricsTests.test_five_seed_paired_interval_and_individual_engineering) ... ok
+test_policy_numerical_failure_invalidates_comparison (test_metrics.MetricsTests.test_policy_numerical_failure_invalidates_comparison) ... ok
+test_thresholds_and_failed_precision (test_metrics.MetricsTests.test_thresholds_and_failed_precision) ... ok
+test_job_limits (test_parallel.ParallelTests.test_job_limits) ... ok
+test_tiny_serial_parallel_bit_identity (test_parallel.ParallelTests.test_tiny_serial_parallel_bit_identity) ... G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpw2wpa2si/serial/seed-0/checkpoints/000000064-59277e8b
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpw2wpa2si/serial/seed-1/checkpoints/000000064-67764297
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpw2wpa2si/parallel/seed-0/checkpoints/000000064-dda1388f
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpw2wpa2si/parallel/seed-1/checkpoints/000000064-59c86f72
+ok
+test_both_notebook_supervisors_soft_stop_export_and_resume (test_wall_caps.CloudCapTests.test_both_notebook_supervisors_soft_stop_export_and_resume) ... RUN: /Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/bin/python -u -m sim.rl.g1.runner run --out /private/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpupm0xwgl/g1-run --jobs 4 --seed-wall-cap-min 240.0
+SNAPSHOT /private/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpupm0xwgl/g1-recovery.zip: 1 verified checkpoints; []
+SNAPSHOT /private/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpupm0xwgl/g1-recovery.zip: 1 verified checkpoints; []
+{
+  "status": "PARTIAL",
+  "jobs": 4,
+  "identity": {
+    "research/rl/PLAN-v2.md": "f212a93014fe639e7bb3d202dbaac683fc9d9a3d62b5201ef123522ac6a3e8eb",
+    "research/rl/params_manifest.yaml": "0b2e586301c053f868258f739694a31362d2e81fe155b262469aed9c30f3cb71",
+    "sim/augmented.py": "24eb6c099b8acdfd660e342d61d3d8b3c6fa8bdd0c73e592b75de6be1c9c3c25",
+    "sim/augmented_lqr.py": "cb849b39c3c825cad842b8a938e78ac656d48d7aa81b3dd9b52dfeb2ddbd3109",
+    "sim/lqr.py": "247067e7f62c6c533d38830cfe8c2a37b2f32ef53fd6e5159f45075fe67ae843",
+    "sim/planar.py": "745539ffc146344f213ca1cacac69251e9756b02d094aba8a0cac68dc25aae3a",
+    "sim/rl/g1/__init__.py": "9dc26f04cd9bb21c530f43d5e96f9f7acb23d446a1605f3fe21a3169797c8300",
+    "sim/rl/g1/cases.json": "282fa31b09f332cc2eb3018d58b2acc825c208af5997cfd3880710a26bf1c789",
+    "sim/rl/g1/config.json": "12b58937056269c0237348cdc5d0b5d88fd0edb97562147b25c29a3f0b49ca46",
+    "sim/rl/g1/control.py": "23173055fe05067751014d1e58a1e79bdb6a309113002fcf114cdb1f029007ee",
+    "sim/rl/g1/environment.py": "d2a3e4282a2b80dbe9e12cc00c002a2871777217828c6f050dd9af53879ad569",
+    "sim/rl/g1/evaluation.py": "61343e9821cd2fcf4cdbd402e57a9c673d1df0a024af495467f221324a11c6a1",
+    "sim/rl/g1/metrics.py": "29ad30869f5bb9a06f685bcade062998055cfa990e2d5d2223292331d22ace6e",
+    "sim/rl/g1/model.json": "ee9ea1999fb6b2a840a2031f88cedc0eb0605d107ecc5758ef26c747f5871ce3",
+    "sim/rl/g1/parallel.py": "a1412dc17ba28f0952d216c56c08006b2cd148878cdfaa5f9817575d90558e58",
+    "sim/rl/g1/protocol.py": "823bb653749cc539721f462a18ce0aafa20e5ab48fc68f310fde845a24f85457",
+    "sim/rl/g1/runner.py": "ac99204e85d703b4e217eca81738100aad7bb87fe83532f26f693f3348236c3f",
+    "sim/rl/g1/smoke.json": "85e5a362a536579a58a35a749542040f76672d172d8871c67375d9415b0d17bc",
+    "sim/rl/g1/training.py": "5f8a6f1e56c2d702286241270445f161e7b0e51249032f0aa2a5c7c11844063d"
+  },
+  "checkpoint_seconds": 300,
+  "recovery_snapshot_seconds": 600,
+  "seed_wall_cap_min": 240.0,
+  "soft_stop_hours": 11.5,
+  "setup_elapsed_s": 3600.0,
+  "phase": "run",
+  "command": [
+    "/Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/bin/python",
+    "-u",
+    "-m",
+    "sim.rl.g1.runner",
+    "run",
+    "--out",
+    "/private/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpupm0xwgl/g1-run",
+    "--jobs",
+    "4",
+    "--seed-wall-cap-min",
+    "240.0"
+  ],
+  "error": "TimeoutError('Cloud time budget exhausted; retaining PARTIAL checkpoints')",
+  "resume_note": "RESUME.md",
+  "cloud_elapsed_s": 37890.0,
+  "session_elapsed_s": 41490.0,
+  "snapshot": {
+    "verified_checkpoints": 1,
+    "warnings": []
+  }
+}
+RUN: /Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/bin/python -u -m sim.rl.g1.runner run --out /private/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpupm0xwgl/g1-run --jobs 4
+SNAPSHOT /private/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpupm0xwgl/g1-recovery.zip: 1 verified checkpoints; []
+{
+  "status": "COMPLETE",
+  "jobs": 4,
+  "identity": {
+    "research/rl/PLAN-v2.md": "f212a93014fe639e7bb3d202dbaac683fc9d9a3d62b5201ef123522ac6a3e8eb",
+    "research/rl/params_manifest.yaml": "0b2e586301c053f868258f739694a31362d2e81fe155b262469aed9c30f3cb71",
+    "sim/augmented.py": "24eb6c099b8acdfd660e342d61d3d8b3c6fa8bdd0c73e592b75de6be1c9c3c25",
+    "sim/augmented_lqr.py": "cb849b39c3c825cad842b8a938e78ac656d48d7aa81b3dd9b52dfeb2ddbd3109",
+    "sim/lqr.py": "247067e7f62c6c533d38830cfe8c2a37b2f32ef53fd6e5159f45075fe67ae843",
+    "sim/planar.py": "745539ffc146344f213ca1cacac69251e9756b02d094aba8a0cac68dc25aae3a",
+    "sim/rl/g1/__init__.py": "9dc26f04cd9bb21c530f43d5e96f9f7acb23d446a1605f3fe21a3169797c8300",
+    "sim/rl/g1/cases.json": "282fa31b09f332cc2eb3018d58b2acc825c208af5997cfd3880710a26bf1c789",
+    "sim/rl/g1/config.json": "12b58937056269c0237348cdc5d0b5d88fd0edb97562147b25c29a3f0b49ca46",
+    "sim/rl/g1/control.py": "23173055fe05067751014d1e58a1e79bdb6a309113002fcf114cdb1f029007ee",
+    "sim/rl/g1/environment.py": "d2a3e4282a2b80dbe9e12cc00c002a2871777217828c6f050dd9af53879ad569",
+    "sim/rl/g1/evaluation.py": "61343e9821cd2fcf4cdbd402e57a9c673d1df0a024af495467f221324a11c6a1",
+    "sim/rl/g1/metrics.py": "29ad30869f5bb9a06f685bcade062998055cfa990e2d5d2223292331d22ace6e",
+    "sim/rl/g1/model.json": "ee9ea1999fb6b2a840a2031f88cedc0eb0605d107ecc5758ef26c747f5871ce3",
+    "sim/rl/g1/parallel.py": "a1412dc17ba28f0952d216c56c08006b2cd148878cdfaa5f9817575d90558e58",
+    "sim/rl/g1/protocol.py": "823bb653749cc539721f462a18ce0aafa20e5ab48fc68f310fde845a24f85457",
+    "sim/rl/g1/runner.py": "ac99204e85d703b4e217eca81738100aad7bb87fe83532f26f693f3348236c3f",
+    "sim/rl/g1/smoke.json": "85e5a362a536579a58a35a749542040f76672d172d8871c67375d9415b0d17bc",
+    "sim/rl/g1/training.py": "5f8a6f1e56c2d702286241270445f161e7b0e51249032f0aa2a5c7c11844063d"
+  },
+  "checkpoint_seconds": 300,
+  "recovery_snapshot_seconds": 600,
+  "seed_wall_cap_min": null,
+  "soft_stop_hours": 11.5,
+  "setup_elapsed_s": 0,
+  "phase": "run",
+  "command": [
+    "/Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/bin/python",
+    "-u",
+    "-m",
+    "sim.rl.g1.runner",
+    "run",
+    "--out",
+    "/private/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmpupm0xwgl/g1-run",
+    "--jobs",
+    "4"
+  ],
+  "returncode": 0,
+  "cloud_elapsed_s": 0.01583717903122306,
+  "session_elapsed_s": 0.01583717903122306,
+  "snapshot": {
+    "verified_checkpoints": 1,
+    "warnings": []
+  }
+}
+RUN: /Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/bin/python -u -m sim.rl.g1.runner run --out /private/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp8258mnpd/g1-run --jobs 4 --seed-wall-cap-min 240.0
+SNAPSHOT /private/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp8258mnpd/g1-recovery.zip: 1 verified checkpoints; []
+SNAPSHOT /private/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp8258mnpd/g1-recovery.zip: 1 verified checkpoints; []
+{
+  "status": "PARTIAL",
+  "jobs": 4,
+  "identity": {
+    "research/rl/PLAN-v2.md": "f212a93014fe639e7bb3d202dbaac683fc9d9a3d62b5201ef123522ac6a3e8eb",
+    "research/rl/params_manifest.yaml": "0b2e586301c053f868258f739694a31362d2e81fe155b262469aed9c30f3cb71",
+    "sim/augmented.py": "24eb6c099b8acdfd660e342d61d3d8b3c6fa8bdd0c73e592b75de6be1c9c3c25",
+    "sim/augmented_lqr.py": "cb849b39c3c825cad842b8a938e78ac656d48d7aa81b3dd9b52dfeb2ddbd3109",
+    "sim/lqr.py": "247067e7f62c6c533d38830cfe8c2a37b2f32ef53fd6e5159f45075fe67ae843",
+    "sim/planar.py": "745539ffc146344f213ca1cacac69251e9756b02d094aba8a0cac68dc25aae3a",
+    "sim/rl/g1/__init__.py": "9dc26f04cd9bb21c530f43d5e96f9f7acb23d446a1605f3fe21a3169797c8300",
+    "sim/rl/g1/cases.json": "282fa31b09f332cc2eb3018d58b2acc825c208af5997cfd3880710a26bf1c789",
+    "sim/rl/g1/config.json": "12b58937056269c0237348cdc5d0b5d88fd0edb97562147b25c29a3f0b49ca46",
+    "sim/rl/g1/control.py": "23173055fe05067751014d1e58a1e79bdb6a309113002fcf114cdb1f029007ee",
+    "sim/rl/g1/environment.py": "d2a3e4282a2b80dbe9e12cc00c002a2871777217828c6f050dd9af53879ad569",
+    "sim/rl/g1/evaluation.py": "61343e9821cd2fcf4cdbd402e57a9c673d1df0a024af495467f221324a11c6a1",
+    "sim/rl/g1/metrics.py": "29ad30869f5bb9a06f685bcade062998055cfa990e2d5d2223292331d22ace6e",
+    "sim/rl/g1/model.json": "ee9ea1999fb6b2a840a2031f88cedc0eb0605d107ecc5758ef26c747f5871ce3",
+    "sim/rl/g1/parallel.py": "a1412dc17ba28f0952d216c56c08006b2cd148878cdfaa5f9817575d90558e58",
+    "sim/rl/g1/protocol.py": "823bb653749cc539721f462a18ce0aafa20e5ab48fc68f310fde845a24f85457",
+    "sim/rl/g1/runner.py": "ac99204e85d703b4e217eca81738100aad7bb87fe83532f26f693f3348236c3f",
+    "sim/rl/g1/smoke.json": "85e5a362a536579a58a35a749542040f76672d172d8871c67375d9415b0d17bc",
+    "sim/rl/g1/training.py": "5f8a6f1e56c2d702286241270445f161e7b0e51249032f0aa2a5c7c11844063d"
+  },
+  "checkpoint_seconds": 300,
+  "recovery_snapshot_seconds": 600,
+  "seed_wall_cap_min": 240.0,
+  "soft_stop_hours": 11.5,
+  "setup_elapsed_s": 3600.0,
+  "phase": "run",
+  "command": [
+    "/Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/bin/python",
+    "-u",
+    "-m",
+    "sim.rl.g1.runner",
+    "run",
+    "--out",
+    "/private/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp8258mnpd/g1-run",
+    "--jobs",
+    "4",
+    "--seed-wall-cap-min",
+    "240.0"
+  ],
+  "error": "TimeoutError('Cloud time budget exhausted; retaining PARTIAL checkpoints')",
+  "resume_note": "RESUME.md",
+  "cloud_elapsed_s": 37890.0,
+  "session_elapsed_s": 41490.0,
+  "snapshot": {
+    "verified_checkpoints": 1,
+    "warnings": []
+  }
+}
+RUN: /Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/bin/python -u -m sim.rl.g1.runner run --out /private/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp8258mnpd/g1-run --jobs 4
+SNAPSHOT /private/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp8258mnpd/g1-recovery.zip: 1 verified checkpoints; []
+{
+  "status": "COMPLETE",
+  "jobs": 4,
+  "identity": {
+    "research/rl/PLAN-v2.md": "f212a93014fe639e7bb3d202dbaac683fc9d9a3d62b5201ef123522ac6a3e8eb",
+    "research/rl/params_manifest.yaml": "0b2e586301c053f868258f739694a31362d2e81fe155b262469aed9c30f3cb71",
+    "sim/augmented.py": "24eb6c099b8acdfd660e342d61d3d8b3c6fa8bdd0c73e592b75de6be1c9c3c25",
+    "sim/augmented_lqr.py": "cb849b39c3c825cad842b8a938e78ac656d48d7aa81b3dd9b52dfeb2ddbd3109",
+    "sim/lqr.py": "247067e7f62c6c533d38830cfe8c2a37b2f32ef53fd6e5159f45075fe67ae843",
+    "sim/planar.py": "745539ffc146344f213ca1cacac69251e9756b02d094aba8a0cac68dc25aae3a",
+    "sim/rl/g1/__init__.py": "9dc26f04cd9bb21c530f43d5e96f9f7acb23d446a1605f3fe21a3169797c8300",
+    "sim/rl/g1/cases.json": "282fa31b09f332cc2eb3018d58b2acc825c208af5997cfd3880710a26bf1c789",
+    "sim/rl/g1/config.json": "12b58937056269c0237348cdc5d0b5d88fd0edb97562147b25c29a3f0b49ca46",
+    "sim/rl/g1/control.py": "23173055fe05067751014d1e58a1e79bdb6a309113002fcf114cdb1f029007ee",
+    "sim/rl/g1/environment.py": "d2a3e4282a2b80dbe9e12cc00c002a2871777217828c6f050dd9af53879ad569",
+    "sim/rl/g1/evaluation.py": "61343e9821cd2fcf4cdbd402e57a9c673d1df0a024af495467f221324a11c6a1",
+    "sim/rl/g1/metrics.py": "29ad30869f5bb9a06f685bcade062998055cfa990e2d5d2223292331d22ace6e",
+    "sim/rl/g1/model.json": "ee9ea1999fb6b2a840a2031f88cedc0eb0605d107ecc5758ef26c747f5871ce3",
+    "sim/rl/g1/parallel.py": "a1412dc17ba28f0952d216c56c08006b2cd148878cdfaa5f9817575d90558e58",
+    "sim/rl/g1/protocol.py": "823bb653749cc539721f462a18ce0aafa20e5ab48fc68f310fde845a24f85457",
+    "sim/rl/g1/runner.py": "ac99204e85d703b4e217eca81738100aad7bb87fe83532f26f693f3348236c3f",
+    "sim/rl/g1/smoke.json": "85e5a362a536579a58a35a749542040f76672d172d8871c67375d9415b0d17bc",
+    "sim/rl/g1/training.py": "5f8a6f1e56c2d702286241270445f161e7b0e51249032f0aa2a5c7c11844063d"
+  },
+  "checkpoint_seconds": 300,
+  "recovery_snapshot_seconds": 600,
+  "seed_wall_cap_min": null,
+  "soft_stop_hours": 11.5,
+  "setup_elapsed_s": 0,
+  "phase": "run",
+  "command": [
+    "/Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/bin/python",
+    "-u",
+    "-m",
+    "sim.rl.g1.runner",
+    "run",
+    "--out",
+    "/private/var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp8258mnpd/g1-run",
+    "--jobs",
+    "4"
+  ],
+  "returncode": 0,
+  "cloud_elapsed_s": 0.025500116869807243,
+  "session_elapsed_s": 0.025500116869807243,
+  "snapshot": {
+    "verified_checkpoints": 1,
+    "warnings": []
+  }
+}
+ok
+test_cumulative_cap_and_unlimited_resume_past_old_90_minutes (test_wall_caps.WallCapTests.test_cumulative_cap_and_unlimited_resume_past_old_90_minutes) ... G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp1p4xmfg8/checkpoints/000000008-472cfa62
+RESUME: RNG/samplers/optimizer/normalizer restored; active episodes reset (discontinuity).
+RESUME: RNG/samplers/optimizer/normalizer restored; active episodes reset (discontinuity).
+G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp1p4xmfg8/checkpoints/000000032-16adec8b
+RESUME: RNG/samplers/optimizer/normalizer restored; active episodes reset (discontinuity).
+ok
+test_full_ignores_historical_throughput_gate_only_when_uncapped (test_wall_caps.WallCapTests.test_full_ignores_historical_throughput_gate_only_when_uncapped) ... In /Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/lib/python3.12/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'parseString' deprecated - use 'parse_string'
+In /Users/quockaiser/Desktop/Research/wbr-lab-ops/.venv/lib/python3.12/site-packages/matplotlib/mpl-data/stylelib/classic.mplstyle: 'resetCache' deprecated - use 'reset_cache'
+ok
+test_global_stop_checkpoints_active_update_and_blocks_queued_seeds (test_wall_caps.WallCapTests.test_global_stop_checkpoints_active_update_and_blocks_queued_seeds) ... G1 verified checkpoint: /var/folders/2k/d7w4x7fn0kz9s4h_zp41vvdh0000gn/T/tmp2sw536d1/seed-0/checkpoints/000000008-58552004
+ok
+test_invalid_caps (test_wall_caps.WallCapTests.test_invalid_caps) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 99.028s
+
+OK

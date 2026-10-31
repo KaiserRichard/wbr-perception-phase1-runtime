@@ -1,0 +1,15 @@
+{
+  "notebooks": "nbformat.validate + AST all code cells and embedded drivers PASS (system python3)",
+  "bundle": "sim/rl/g1/cloud/g1_code.zip",
+  "files": 37,
+  "bytes": 104648,
+  "bundle_sha256": "6934ca43eda71561b3b1e91111b837e18783a4fed64774a76c3261470de60906",
+  "bundle_validation": "ZIP integrity + all manifest hashes/current bytes PASS",
+  "extracted_merger_help": "PASS",
+  "split_parity": "6 tests PASS, 122.565s",
+  "cloud_fixtures": "3 tests PASS, 0.428s",
+  "full_suite": "29/29 PASS, 254.108s; final source",
+  "uncommitted": true,
+  "stop_regression": "4 tests PASS, 4.588s",
+  "code_hash": "42ca3b74908338591a856eb415a83ebac7b3804ede3e7e66442131188140f6ae"
+}
