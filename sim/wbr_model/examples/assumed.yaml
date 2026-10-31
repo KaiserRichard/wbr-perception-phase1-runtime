@@ -1,0 +1,39 @@
+schema_version: 1
+model:
+  leg_representation: equivalent_slider
+  gravity: {value: 9.81, unit: m/s^2, source: ASSUMED}
+  timestep: {value: 0.001, unit: s, source: ASSUMED}
+  hip_angle_limits:
+    min: {value: -1.2, unit: rad, source: ASSUMED}
+    max: {value: 1.2, unit: rad, source: ASSUMED}
+  leg_length_limits:
+    min: {value: 0.06, unit: m, source: team_report}
+    max: {value: 0.21, unit: m, source: team_report}
+masses:
+  base: {value: 3.5, unit: kg, source: team_report}
+  each_leg: {value: 0.1, unit: kg, source: ASSUMED}
+  each_wheel: {value: 0.7, unit: kg, source: team_report}
+  total_robot: {value: 5.1, unit: kg, source: ASSUMED}
+com:
+  base: {value: [0.0, 0.0, 0.0], unit: m, source: ASSUMED}
+  leg: {value: [0.0, 0.0, 0.07], unit: m, source: ASSUMED}
+  wheel: {value: [0.0, 0.0, 0.0], unit: m, source: ASSUMED}
+inertias:
+  base: {value: {Ixx: 0.02, Iyy: 0.03, Izz: 0.04, Ixy: 0.0, Ixz: 0.0, Iyz: 0.0}, unit: kg m^2, source: ASSUMED}
+  leg: {value: {Ixx: 0.0002, Iyy: 0.0002, Izz: 0.0001, Ixy: 0.0, Ixz: 0.0, Iyz: 0.0}, unit: kg m^2, source: ASSUMED}
+  wheel: {value: {Ixx: 0.0013, Iyy: 0.0025, Izz: 0.0013, Ixy: 0.0, Ixz: 0.0, Iyz: 0.0}, unit: kg m^2, source: ASSUMED}
+geometry:
+  l1: {value: 0.075, unit: m, source: team_report}
+  l2: {value: 0.14, unit: m, source: team_report}
+  l3: {value: 0.14, unit: m, source: team_report}
+  l4: {value: 0.075, unit: m, source: team_report}
+  l5: {value: 0.08, unit: m, source: team_report}
+  wheel_radius: {value: 0.0603, unit: m, source: team_report}
+  wheel_track: {value: 0.324, unit: m, source: ASSUMED}
+  wheel_width: {value: 0.036, unit: m, source: ASSUMED}
+  link_radius: {value: 0.008, unit: m, source: ASSUMED}
+  base_half_size: {value: [0.15, 0.10, 0.06], unit: m, source: ASSUMED}
+actuators:
+  wheel_torque: {value: 1.0, unit: N m, source: ASSUMED}
+  hip_torque: {value: 3.0, unit: N m, source: ASSUMED}
+  leg_force: {value: 100.0, unit: N, source: ASSUMED}
