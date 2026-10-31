@@ -8,6 +8,8 @@ marked **INFERRED**. Planned tests are not presented as executed results.
 
 ## Reading order
 
+For a single-file beginner version in English, see [Beginner Lessons](simple/LESSONS.md).
+
 1. [01 — CAN and RobStride](01_can_and_robstride.md)
 2. [02 — micro-ROS on an STM32](02_micro_ros_on_stm32.md)
 3. [03 — Differential-drive AGV base firmware](03_agv_base_firmware.md)
