@@ -6,6 +6,15 @@
 #define PH_TYPE 0x05u
 #define PH_PAYLOAD_LEN 19u
 #define PH_MAX_FRAME 28u
+enum ph_tracking_state {
+    PH_TRACKING_SYSTEM_NOT_READY = 255u,
+    PH_TRACKING_NO_IMAGES_YET = 0u,
+    PH_TRACKING_NOT_INITIALIZED = 1u,
+    PH_TRACKING_OK = 2u,
+    PH_TRACKING_RECENTLY_LOST = 3u,
+    PH_TRACKING_LOST = 4u,
+    PH_TRACKING_OK_KLT = 5u
+};
 struct ph_health {
     uint64_t linux_send_ns;
     uint32_t pose_age_us;

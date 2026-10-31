@@ -1,0 +1,7 @@
+BOOT fw=imu_can_bench ver=1 sysclk=16000000 can_bps=500000 imu_hz=100
+PIN c1rx_idle=1 c2rx_idle=1 c1tx_c1rx=0 c1tx_c2rx=0 c2tx_c2rx=0 c2tx_c1rx=0 scl=1 sda=1
+IMUID addr=0x68 who=0x68 init=1
+LOOP c1_tx=10 c1_rx=10 c2_tx=10 c2_rx=10
+NORM c1_init=1 c2_init=1
+STAT ms=80008 imu_ok=7958 imu_err=0 imu_stale=8043 imu_reinit=0 imu_up=1 c1_req=8001 c1_busy=0 c1_txok=8000 c1_txerr=0 c1_rx=8000 c1_ovr=0 c1_other=0 c1_boff_n=4 c1_esr=0x00000000 c2_rx=8000 c2_req=8000 c2_busy=0 c2_txok=8000 c2_txerr=0 c2_ovr=0 c2_other=0 c2_boff_n=0 c2_esr=0x00000000 sent=8001 match=8000 bad=0 uart_drop=0
+STAT ms=99008 imu_ok=9848 imu_err=0 imu_stale=9953 imu_reinit=0 imu_up=1 c1_req=9901 c1_busy=0 c1_txok=9900 c1_txerr=0 c1_rx=9900 c1_ovr=0 c1_other=0 c1_boff_n=4 c1_esr=0x00000000 c2_rx=9900 c2_req=9900 c2_busy=0 c2_txok=9900 c2_txerr=0 c2_ovr=0 c2_other=0 c2_boff_n=0 c2_esr=0x00000000 sent=9901 match=9900 bad=0 uart_drop=0

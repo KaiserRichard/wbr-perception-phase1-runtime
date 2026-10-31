@@ -33,13 +33,13 @@ static void sticky_latch_test(void)
     struct ph_rx_event ev;
     assert(ph_policy_init(&p,&cfg));
     memset(&ev,0,sizeof(ev)); ev.kind=PH_RX_HEALTH; ev.seq=1u;
-    ev.health.tracking_state=5u;
+    ev.health.tracking_state=PH_TRACKING_LOST;
     assert(ph_policy_update(&p,100u,&ev,100u,1u)==PH_DOWNGRADE_FAILSAFE);
     assert(p.latched);
     memset(&ev,0,sizeof(ev)); ev.kind=PH_RX_HEARTBEAT; ev.seq=2u; ev.session_id=42u;
     assert(ph_policy_update(&p,200u,&ev,200u,1u)==PH_DOWNGRADE_FAILSAFE);
     memset(&ev,0,sizeof(ev)); ev.kind=PH_RX_HEALTH; ev.seq=3u;
-    ev.health.pose_age_us=1000u; ev.health.tracking_state=3u;
+    ev.health.pose_age_us=1000u; ev.health.tracking_state=PH_TRACKING_OK;
     ev.health.imu_initialized=1u; ev.health.flags=3u;
     assert(ph_policy_update(&p,300u,&ev,300u,1u)==PH_DOWNGRADE_FAILSAFE);
     assert(p.latched && p.reason==PH_REASON_SOURCE_AGE_TIMEOUT);

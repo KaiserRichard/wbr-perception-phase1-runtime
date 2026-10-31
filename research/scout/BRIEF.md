@@ -5,7 +5,7 @@ Context (read for facts, don't redo the work):
 - The open PRs (`gh pr list`).
 
 What exists (MEASURED unless marked):
-- **Hardware:** a wheel-bipedal robot (WBR) arrives in Nov 2026: STM32H723, BMI088, RobStride motors on CAN, micro-ROS to a Pi 5.
+- **Hardware:** a wheel-bipedal robot (WBR) arrives in Nov 2026: STM32H723, BMI088, DM-J4310 hip and DM-H6215 wheel motors over CAN; Pi 5 advisory over COBS+CRC UART, no micro-ROS.
 - **Perception on a Pi 5 + RealSense D435i:**
   - ORB-SLAM3;
   - per-frame RANSAC floor plane, giving box height within ±1 cm and distance within 5 cm at 1 m;

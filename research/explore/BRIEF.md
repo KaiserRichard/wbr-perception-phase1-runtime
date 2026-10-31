@@ -8,7 +8,7 @@ What we have:
 - Hardware:
   - Pi 5 8 GB with no accelerator; RealSense D435i (lab loan) or Pi Camera v2; Intel MacBook (no NVIDIA GPU).
   - Nucleo-F446RE bench with MPU6050 + CAN.
-  - The robot arrives in Nov 2026: STM32H723 + BMI088, RobStride CAN motors, five-bar legs, micro-ROS to the Pi.
+  - The robot arrives in Nov 2026: STM32H723 + BMI088, DM-J4310 hip and DM-H6215 wheel motors over CAN, five-bar legs; Pi-to-MCU advisory over COBS+CRC UART, no micro-ROS.
 - Software:
   - ORB-SLAM3 on the Pi.
   - Depth-geometry obstacle detector giving NONE / JUMP / STOP / UNCERTAIN advice to the MCU.

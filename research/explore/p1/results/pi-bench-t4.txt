@@ -1,0 +1,24 @@
+temp=56.5'C
+{
+  "status": "MEASURED",
+  "model": "yolo11n.onnx",
+  "model_sha256": "71325a29fb6e3f817798e1511079f665a422264a2ad00db18dbc263738c4e1c9",
+  "python_version": "3.12.3",
+  "platform": "Linux-6.8.0-1065-raspi-aarch64-with-glibc2.39",
+  "machine": "aarch64",
+  "onnxruntime_version": "1.31.1",
+  "numpy_version": "2.5.4",
+  "providers": [
+    "CPUExecutionProvider"
+  ],
+  "threads": 4,
+  "warmup_inferences": 5,
+  "unique_frames": 50,
+  "passes": 10,
+  "timed_inferences": 500,
+  "prepare_seconds": 2.935316,
+  "inference_seconds": 145.891221,
+  "inference_fps": 3.427,
+  "prepare_plus_inference_fps": 3.36
+}
+throttled=0x0

@@ -1,0 +1,83 @@
+{
+  "status": "MEASURED",
+  "model": "models/yolo11n.onnx",
+  "model_sha256": "71325a29fb6e3f817798e1511079f665a422264a2ad00db18dbc263738c4e1c9",
+  "python_version": "3.12.13",
+  "platform": "macOS-15.7.9-x86_64-i386-64bit",
+  "machine": "x86_64",
+  "onnxruntime_version": "1.23.2",
+  "numpy_version": "2.5.4",
+  "providers": [
+    "CPUExecutionProvider"
+  ],
+  "intra_op_threads": 0,
+  "confidence_threshold": 0.25,
+  "iou_threshold": 0.45,
+  "depth_scale_m_per_unit_for_16UC1": 0.001,
+  "sync_slop_ms": 30.0,
+  "frames": 391,
+  "mac_model_only_seconds": 17.475383,
+  "mac_model_only_fps": 22.374,
+  "mac_pipeline_seconds_excluding_bag_decode_and_overlay_write": 20.809266,
+  "mac_pipeline_fps_excluding_bag_decode_and_overlay_write": 18.79,
+  "pi_benchmark_frames_exported": 50,
+  "runs": {
+    "B-H13": {
+      "context_from_lab_log": "Two 13.3 cm-high box stacks; front edge at 1.00 m by tape.",
+      "color_frames": 109,
+      "aligned_depth_frames": 110,
+      "paired_frames": 109,
+      "unmatched_color_frames": 0,
+      "unmatched_depth_frames": 1,
+      "detections": 321,
+      "model_seconds": 3.963744,
+      "model_fps": 27.499,
+      "pipeline_seconds": 4.820175,
+      "pipeline_fps": 22.613
+    },
+    "B-H05": {
+      "context_from_lab_log": "Books 4.50 cm high; front edge at 1.00 m by tape.",
+      "color_frames": 110,
+      "aligned_depth_frames": 110,
+      "paired_frames": 110,
+      "unmatched_color_frames": 0,
+      "unmatched_depth_frames": 0,
+      "detections": 328,
+      "model_seconds": 5.791124,
+      "model_fps": 18.995,
+      "pipeline_seconds": 6.6992,
+      "pipeline_fps": 16.42
+    },
+    "S1-empty": {
+      "context_from_lab_log": "Empty tabletop; nearest logged obstacle was the lamp pole at about 1.42 m.",
+      "color_frames": 108,
+      "aligned_depth_frames": 110,
+      "paired_frames": 108,
+      "unmatched_color_frames": 0,
+      "unmatched_depth_frames": 2,
+      "detections": 324,
+      "model_seconds": 4.674503,
+      "model_fps": 23.104,
+      "pipeline_seconds": 5.722107,
+      "pipeline_fps": 18.874
+    },
+    "W1": {
+      "context_from_lab_log": "Wall at 1.00 m by tape; no COCO wall class exists.",
+      "color_frames": 64,
+      "aligned_depth_frames": 64,
+      "paired_frames": 64,
+      "unmatched_color_frames": 0,
+      "unmatched_depth_frames": 0,
+      "detections": 175,
+      "model_seconds": 3.046012,
+      "model_fps": 21.011,
+      "pipeline_seconds": 3.567785,
+      "pipeline_fps": 17.938
+    }
+  },
+  "outputs": {
+    "detections_csv": "/Users/quockaiser/wbr-evidence/c1-20261030/p1-run/out/detections.csv",
+    "gif": "/Users/quockaiser/wbr-evidence/c1-20261030/p1-run/out/p1-detections.gif",
+    "pi_frames": "/Users/quockaiser/wbr-evidence/c1-20261030/p1-run/out/pi-bench/frames"
+  }
+}

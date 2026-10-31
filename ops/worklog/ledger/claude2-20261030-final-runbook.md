@@ -1,0 +1,1 @@
+- 2026-10-30 17:45 | claude1 + codex-g | restore = exact Step 0 readback with SHA check, canfix01 restore removed | DONE | PR #158
