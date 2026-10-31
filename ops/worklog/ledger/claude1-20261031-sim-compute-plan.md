@@ -1,0 +1,2 @@
+- 2026-10-31 16:30 | Codex (session) | wrote staged simulation compute plan with 10-minute benchmark gates and current-source pricing caveats | status DONE | evidence research/compute/SIM_COMPUTE_PLAN.md (59 lines)
+- 2026-10-31 07:32 +07 | Codex (resume session) | completed and source-dated staged compute plan after checking for partial output; no benchmark or commit | status DONE | evidence research/compute/SIM_COMPUTE_PLAN.md (69 lines), ops/worklog/sessions/2026-10-31-sim-compute-plan.md
