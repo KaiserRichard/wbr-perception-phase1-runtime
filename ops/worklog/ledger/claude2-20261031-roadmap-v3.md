@@ -1,0 +1,3 @@
+- 2026-10-31 19:40 | Claude 2 + codex-c (luna) | research/ROADMAP.md: 3 programs (grounded autonomy, RL G1→twin, SLAM+AI sidecar) with concrete compute (Mac, Pi, brother's 3060 6 GB, Chợ Mơ 4060/3060/4090, Kaggle/Colab); 5/5 citations spot-checked | DONE | research/ROADMAP.md
+- 2026-10-31 19:20 | Claude 2 | YOLO11n on live Pi Camera v2 via rpicam-vid: 2.40 FPS (1 thread) / 3.38 FPS (4 threads) end to end, throttled=0x0; scene was dark, so no detection-quality claim | DONE (MEASURED) | research/explore/p1/RESULTS.md, live_cam.py
+- 2026-10-31 19:00 | Claude 2 | Bench-twin T2 status: already done (#187 merged 30 Oct, owner-verified); no work needed | DONE | PR #187

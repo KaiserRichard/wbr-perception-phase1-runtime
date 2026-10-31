@@ -1,0 +1,24 @@
+{
+  "platform": "Linux-6.8.0-1065-raspi-aarch64-with-glibc2.39",
+  "model_sha256": "71325a29fb6e3f817798e1511079f665a422264a2ad00db18dbc263738c4e1c9",
+  "threads": 4,
+  "frames": 100,
+  "resolution": [
+    1280,
+    720
+  ],
+  "capture_ms_mean": 4.077294169992456,
+  "infer_plus_nms_fps": 3.438952059861539,
+  "end_to_end_fps": 3.3842129104099845,
+  "detections_by_class": {
+    "keyboard": 16
+  },
+  "overlays": [
+    "live-t4-0000.jpg",
+    "live-t4-0020.jpg",
+    "live-t4-0040.jpg",
+    "live-t4-0060.jpg",
+    "live-t4-0080.jpg"
+  ],
+  "throttled_after": "throttled=0x0"
+}
