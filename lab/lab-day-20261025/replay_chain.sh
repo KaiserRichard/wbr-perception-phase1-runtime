@@ -8,7 +8,7 @@ fi
 BAG_DIR=$(cd "$1" && pwd)
 WS=${WS:-"$HOME/wbr-demo-ws-20261025"}
 ROS_SETUP=${ROS_SETUP:-/opt/ros/jazzy/setup.bash}
-REPO_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+REPO_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 if [[ ! -f "$ROS_SETUP" || ! -f "$WS/install/setup.bash" ]]; then
   echo "Missing ROS or workspace setup: $ROS_SETUP, $WS/install/setup.bash" >&2
   exit 1
