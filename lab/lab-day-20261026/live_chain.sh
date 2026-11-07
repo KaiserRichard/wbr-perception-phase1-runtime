@@ -2,7 +2,7 @@
 # Live D435 aligned depth -> Pi detector -> UART advisory. Run after sourcing Jazzy.
 set -euo pipefail
 
-repo="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+repo="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 out="${1:-$HOME/wbr-evidence/lab-day-20261026/LIVE-chain-$(date +%Y%m%d-%H%M%S)}"
 port="${UART_PORT:-/dev/ttyAMA0}"
 test ! -e "$out" || { echo "output exists: $out" >&2; exit 1; }

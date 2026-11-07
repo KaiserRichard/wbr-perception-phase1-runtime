@@ -52,7 +52,7 @@ No profiles hide these helpers, and no `depends_on` establishes a camera-ready c
 
 The audit's final saved check at 19:16:57 shows no running containers and no attached D435i. That is **yesterday's final state**, not a new live hardware check today.
 
-Evidence: [baseline audit](../D435I_BASELINE_AUDIT.md), [host/package/image evidence](../experiments/2026-09-08-d435i-baseline/HOST.txt), [USB evidence](../experiments/2026-09-08-d435i-baseline/USB.txt), [final resumed check](../experiments/2026-09-08-d435i-baseline/RESUME_FINAL_CHECKS.txt). The parent repository's [README](../README.md) places this work before robot integration; STM32 control was outside the experiment.
+Evidence: [baseline audit](D435I_BASELINE_AUDIT.md), [host/package/image evidence](../experiments/2026-09-08-d435i-baseline/HOST.txt), [USB evidence](../experiments/2026-09-08-d435i-baseline/USB.txt), [final resumed check](../experiments/2026-09-08-d435i-baseline/RESUME_FINAL_CHECKS.txt). The parent repository's [README](../README.md) places this work before robot integration; STM32 control was outside the experiment.
 
 # 2. Docker concepts mapped to this project
 
@@ -585,7 +585,7 @@ Read these twelve files in this order. Follow the references within this documen
 
 | Order | Actual project file | What to look for |
 |---:|---|---|
-| 1 | [D435I_BASELINE_AUDIT.md](../D435I_BASELINE_AUDIT.md) | Separate observations from hypotheses; section 16 updates the initial findings |
+| 1 | [D435I_BASELINE_AUDIT.md](D435I_BASELINE_AUDIT.md) | Separate observations from hypotheses; section 16 updates the initial findings |
 | 2 | [W/docker-compose.yaml](../third_party/ORB_SLAM3_ROS2/docker-compose.yaml) | `include`, `extends`, source mount, GPU reservation, startup `colcon build` |
 | 3 | [C/docker-compose.yaml](../third_party/ORB_SLAM3_ROS2/ros2_realsense_d435i_camera_calibration/docker-compose.yaml) | Camera command, remapping, credentials and helper services |
 | 4 | [C/camera.Dockerfile](../third_party/ORB_SLAM3_ROS2/ros2_realsense_d435i_camera_calibration/camera.Dockerfile) | Binary apt installation, build arguments, copied configs, entrypoint |
